@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Михаил Пузырёв — Преподаватель, Hands-on Разработчик и&nbsp;AI-Архитектор</title>
+  <meta name="description" content="Официальная платформа Михаила Пузырёва. Скоростная разработка (Vibe Coding), ИИ-агенты, индивидуальное наставничество 1-на-1, закрытый клуб и корпоративное обучение.">
+  <meta name="robots" content="index, follow">
+  
+  <!-- OpenGraph -->
+  <meta property="og:title" content="Михаил Пузырёв — Преподаватель, Разработчик и AI-Архитектор">
+  <meta property="og:description" content="15+ лет в IT-продуктах и венчуре. Vibe Coding, прикладные ИИ-агенты, наставничество для предпринимателей и разработка под ключ.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://michaelpuzyrev.ru/">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- HEADER NAVIGATION -->
+  <header class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <strong>Михаил Пузыр<span class="accent-yo">ё</span>в</strong>
+        <span class="nav-logo-badge">ИИ-АРХИТЕКТОР</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="tracking.html">Трекинг & Эдвайзинг</a></li>
+        <li><a href="mentoring.html">Наставничество</a></li>
+        <li><a href="club.html">Клуб & База Знаний</a></li>
+        <li><a href="corporate.html">Корпорациям</a></li>
+        <li><a href="automation.html">Внедрение руками</a></li>
+        <li><a href="about.html">Обо&nbsp;мне & Проекты</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <a href="booking.html" class="nav-cta">Забронировать слот ↗</a>
+        <button class="nav-burger" aria-label="Открыть меню">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu">
+    <a href="index.html">Главная</a>
+    <a href="tracking.html">Трекинг & Эдвайзинг</a>
+    <a href="mentoring.html">Индивидуальное наставничество</a>
+    <a href="club.html">Клуб & База Знаний</a>
+    <a href="corporate.html">Корпоративные тренинги</a>
+    <a href="automation.html">Внедрение и Автоматизация</a>
+    <a href="about.html">Обо&nbsp;мне & Проекты</a>
+    <a href="booking.html" class="m-cta">Забронировать слот ↗</a>
+  </div>
+
+  <!-- HERO SECTION -->
+  <main>
+    <section class="hero">
+      <div class="hero-left">
+        <div class="hero-tag">
+          <span>ВАЙБКОДИНГ & ИИ</span>
+          <div class="hero-tag-pill">
+            <span class="pulse-dot"></span>
+            АКТУАЛЬНО 2026
+          </div>
+        </div>
+
+        <div class="hero-author-box" style="display:flex;align-items:center;gap:14px;margin-bottom:20px;min-width:0;">
+          <img src="img/mikhail_hero.jpg" alt="Михаил Пузырёв" style="width:54px;height:54px;border-radius:50%;object-fit:cover;border:2px solid var(--black);flex-shrink:0;">
+          <div style="min-width:0;">
+            <div style="font-weight:700;font-size:1.02rem;line-height:1.2;color:var(--black);">Михаил Пузырёв</div>
+            <div style="font-family:var(--mono);font-size:0.75rem;color:var(--gray);line-height:1.4;">AI-архитектор · Преподаватель · Hands-on инженер</div>
+          </div>
+        </div>
+
+        <h1 class="hero-title">
+          Создавайте AI-продукты и&nbsp;MVP за&nbsp;дни <em>вместо месяцев разработки</em>.
+        </h1>
+
+        <div class="hero-divider"></div>
+
+        <p class="hero-sub">
+          Освойте Vibe Coding, автоматизируйте рутину AI-агентами и&nbsp;запускайте проверенные IT-решения под&nbsp;руководством эксперта с&nbsp;15-летним опытом в&nbsp;стартапах и&nbsp;венчуре.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#products" class="btn-primary">Выбрать решение для&nbsp;себя ↓</a>
+          <a href="https://t.me/uncrn_sage" target="_blank" class="btn-secondary">Telegram @uncrn_sage ↗</a>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <!-- Interactive Simulator -->
+        <div class="simulator-card">
+          <div class="sim-bar">
+            <div class="window-dots">
+              <div class="dot dot-r"></div>
+              <div class="dot dot-y"></div>
+              <div class="dot dot-g"></div>
+            </div>
+            <div class="window-title">vibe-coding-engine.ts</div>
+            <div class="live-status">
+              <span class="pulse-dot"></span> RUNNING
+            </div>
+          </div>
+
+          <div class="sim-tabs">
+            <button class="sim-tab active" data-mode="mvp">01.&nbsp;Vibe Coding & MVP</button>
+            <button class="sim-tab" data-mode="agents">02.&nbsp;AI-Агенты & CRM</button>
+            <button class="sim-tab" data-mode="media">03.&nbsp;Медиа-фабрики</button>
+            <button class="sim-tab" data-mode="geo">04.&nbsp;GEO SEO</button>
+          </div>
+
+          <div class="sim-body">
+            <div class="sim-step active">
+              <div class="sim-step-label">01 / АРХИТЕКТУРА</div>
+              <div class="sim-step-title">Оцифровка бизнес-логики и&nbsp;юнит-экономики</div>
+              <div class="sim-step-desc">Снятие потребностей, определение точки монетизации и&nbsp;отказ от&nbsp;избыточных фичей.</div>
+              <div class="sim-tags">
+                <span class="sim-tag">Vibe Coding</span>
+                <span class="sim-tag">ROI First</span>
+                <span class="sim-tag">Supabase</span>
+              </div>
+            </div>
+            <div class="sim-step">
+              <div class="sim-step-label">02 / ГЕНЕРАЦИЯ & КОД</div>
+              <div class="sim-step-title">Сборка интерфейса и&nbsp;логики через AI-агентов</div>
+              <div class="sim-step-desc">Antigravity, Stitch MCP, Next.js, чистый HTML/CSS, защищенный API бэкенд.</div>
+              <div class="sim-tags">
+                <span class="sim-tag">Stitch MCP</span>
+                <span class="sim-tag">Fluid CSS</span>
+                <span class="sim-tag">FastAPI</span>
+              </div>
+            </div>
+            <div class="sim-step">
+              <div class="sim-step-label">03 / ЗАПУСК & ПЛАТЕЖИ</div>
+              <div class="sim-step-title">Деплой на&nbsp;хостинг и&nbsp;боевой тест за&nbsp;3-5&nbsp;дней</div>
+              <div class="sim-step-desc">Подключение оплат (ЮKassa/Т-Банк), сквозная Метрика и&nbsp;получение первых клиентов.</div>
+              <div class="sim-tags">
+                <span class="sim-tag">Beget</span>
+                <span class="sim-tag">ФЗ-152</span>
+                <span class="sim-tag">100% Prod</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metric Numbers -->
+        <div class="hero-stats">
+          <div class="h-stat">
+            <div class="h-stat-num">3000+</div>
+            <div class="h-stat-lab">стартапов разобрано</div>
+          </div>
+          <div class="h-stat">
+            <div class="h-stat-num">15+</div>
+            <div class="h-stat-lab">лет в&nbsp;IT & венчуре</div>
+          </div>
+          <div class="h-stat">
+            <div class="h-stat-num">1-2&nbsp;нед.</div>
+            <div class="h-stat-lab">запуск готового MVP</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KEY DIRECTIONS / PRODUCTS HUB -->
+    <section id="products" class="section section-border section-pad">
+      <div class="section-tag">МАТРИЦА НАПРАВЛЕНИЙ</div>
+      <h2 class="section-title">Готовые решения для&nbsp;роста вашего бизнеса</h2>
+      <p class="section-sub">Выберите необходимый формат: от&nbsp;персонального обучения и&nbsp;закрытого сообщества до&nbsp;корпоративных хакатонов и&nbsp;сборки сервисов под&nbsp;ключ.</p>
+
+      <div class="grid-3">
+        <!-- 1. Mentoring -->
+        <div class="feature-card">
+          <div class="card-num">01 / ТЕТ-А-ТЕТ</div>
+          <h3 class="card-title">Индивидуальное наставничество</h3>
+          <p class="card-desc">
+            Репетиторство для&nbsp;предпринимателей. Разбираем и&nbsp;внедряем нейросети прямо в&nbsp;ваши рабочие процессы, регламенты и&nbsp;CRM под&nbsp;запись.
+          </p>
+          <div class="card-footer">
+            <a href="mentoring.html" class="btn-secondary" style="padding:10px 20px;font-size:0.85rem;">Подробнее →</a>
+          </div>
+        </div>
+
+        <!-- 2. Club -->
+        <div class="feature-card">
+          <div class="card-num">02 / СООБЩЕСТВО</div>
+          <h3 class="card-title">Клуб и&nbsp;База Знаний</h3>
+          <p class="card-desc">
+            Закрытый клуб практиков нейросетей. Постоянный доступ к&nbsp;базе промптов, архитектурам ИИ-агентов, готовым скриптам и&nbsp;мастермайндам.
+          </p>
+          <div class="card-footer">
+            <a href="club.html" class="btn-secondary" style="padding:10px 20px;font-size:0.85rem;">Подробнее →</a>
+          </div>
+        </div>
+
+        <!-- 3. Hands-on Automation -->
+        <div class="feature-card">
+          <div class="card-num">03 / РАЗРАБОТКА РУКАМИ</div>
+          <h3 class="card-title">Вайбкод по&nbsp;подписке & MVP</h3>
+          <p class="card-desc">
+            Ваш персональный AI-CPO и&nbsp;разработчик. Сборка ботов, MVP сервисов, парсеров и&nbsp;сквозных CRM-интеграций за&nbsp;1–2&nbsp;недели.
+          </p>
+          <div class="card-footer">
+            <a href="automation.html" class="btn-secondary" style="padding:10px 20px;font-size:0.85rem;">Подробнее →</a>
+          </div>
+        </div>
+
+        <!-- 4. Corporate -->
+        <div class="feature-card">
+          <div class="card-num">04 / ДЛЯ КОМПАНИЙ</div>
+          <h3 class="card-title">Корпоративные тренинги</h3>
+          <p class="card-desc">
+            Хакатоны и&nbsp;практикумы по&nbsp;переводу отделов маркетинга, продаж и&nbsp;аналитики на&nbsp;рельсы ИИ-агентов. Опыт: Росатом, Сбер, TAVROS.
+          </p>
+          <div class="card-footer">
+            <a href="corporate.html" class="btn-secondary" style="padding:10px 20px;font-size:0.85rem;">Подробнее →</a>
+          </div>
+        </div>
+
+        <!-- 5. About & Projects -->
+        <div class="feature-card">
+          <div class="card-num">05 / ПОРТФОЛИО</div>
+          <h3 class="card-title">Кейсы & Проект aipsy.press</h3>
+          <p class="card-desc">
+            Полный профессиональный трек-рекорд, 3&nbsp;экзита и&nbsp;детальный разбор реальных продуктов: от&nbsp;медиа-машин до&nbsp;ботов-суммаризаторов.
+          </p>
+          <div class="card-footer">
+            <a href="about.html" class="btn-secondary" style="padding:10px 20px;font-size:0.85rem;">Подробнее →</a>
+          </div>
+        </div>
+
+        <!-- 6. Speaking -->
+        <div class="feature-card">
+          <div class="card-num">06 / СПИКЕРСТВО</div>
+          <h3 class="card-title">Выступления на&nbsp;мероприятиях</h3>
+          <p class="card-desc">
+            Ищу площадки, конференции, форумы и&nbsp;подкасты, чтобы показать живую практику Vibe Coding и&nbsp;архитектуру ИИ-агентов на&nbsp;широкую аудиторию.
+          </p>
+          <div class="card-footer">
+            <a href="about.html#speaking" class="btn-secondary" style="padding:10px 20px;font-size:0.85rem;">Пригласить →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: CLIENTS & PARTNERS LOGOS -->
+    <section class="section section-border section-pad" style="background:var(--bg-gray);">
+      <div class="hero-tag">ДОВЕРИЕ & ПАРТНЕРСТВО</div>
+      <h2 class="section-title">Компании и&nbsp;фаундеры, которые уже получают результат</h2>
+      <p class="section-sub">
+        Корпорации, университеты, венчурные ассоциации, стартап-акселераторы и&nbsp;инвестиционные клубы.
+      </p>
+
+      <div class="logos-grid">
+        <div class="logo-card" title="Корпоративная академия РОСАТОМ"><img src="img/logos/logo_01_Корпоративная_академия_РОСАТОМ.png" alt="Корпоративная академия РОСАТОМ" loading="lazy"></div>
+        <div class="logo-card" title="СБЕР"><img src="img/logos/logo_02_СБЕР.png" alt="СБЕР" loading="lazy"></div>
+        <div class="logo-card" title="АПУВИР Большая Медведица"><img src="img/logos/logo_03_Ассоциация_профессиональных_уч.png" alt="Ассоциация Большая Медведица" loading="lazy"></div>
+        <div class="logo-card" title="ВШЭ Бизнес инкубатор (HSE Inc)"><img src="img/logos/logo_04_ВШЭ_Бизнес_инкубарор_HSE_inc.png" alt="ВШЭ Бизнес инкубатор" loading="lazy"></div>
+        <div class="logo-card" title="Архипелаг 2022"><img src="img/logos/logo_05_Архипелаг_2022.png" alt="Архипелаг 2022" loading="lazy"></div>
+        <div class="logo-card" title="Школа стартапов Сколково"><img src="img/logos/logo_06_Школа_стартапов_Сколково.png" alt="Сколково Школа стартапов" loading="lazy"></div>
+        <div class="logo-card" title="Компания NETI"><img src="img/logos/logo_07_Компания_NETI.png" alt="Компания NETI" loading="lazy"></div>
+        <div class="logo-card" title="Startup Heart"><img src="img/logos/logo_08_Startup_Heart.png" alt="Startup Heart" loading="lazy"></div>
+        <div class="logo-card" title="РУДН"><img src="img/logos/logo_09_РУДН.png" alt="РУДН" loading="lazy"></div>
+        <div class="logo-card" title="Мой бизнес"><img src="img/logos/logo_10_Мой_бизнес.png" alt="Мой бизнес" loading="lazy"></div>
+        <div class="logo-card" title="Университет сервиса"><img src="img/logos/logo_11_Университет_сервиса.png" alt="Университет сервиса" loading="lazy"></div>
+        <div class="logo-card" title="Creative Tech Акселератор"><img src="img/logos/logo_12_Акселератор_creative_tech.png" alt="Creative Tech Акселератор" loading="lazy"></div>
+        <div class="logo-card" title="БГУ Минск"><img src="img/logos/logo_13_БГУ.png" alt="БГУ Минск" loading="lazy"></div>
+        <div class="logo-card" title="Нетология"><img src="img/logos/logo_14_Нетология.png" alt="Нетология" loading="lazy"></div>
+        <div class="logo-card" title="GeekBrains"><img src="img/logos/logo_15_GeekBrains.png" alt="GeekBrains" loading="lazy"></div>
+        <div class="logo-card" title="Синергия"><img src="img/logos/logo_18_Синергия.png" alt="Синергия" loading="lazy"></div>
+        <div class="logo-card" title="Инвестиционный клуб КАПИТАЛ"><img src="img/logos/logo_19_Инвестиционный_клуб_Капитал.png" alt="Инвестиционный клуб Капитал" loading="lazy"></div>
+        <div class="logo-card" title="Союз бизнес-ангелов СОБА"><img src="img/logos/logo_20_Союз_организаций_бизнес_ангело.png" alt="СОБА" loading="lazy"></div>
+      </div>
+    </section>
+
+    <!-- FLAGSHIP CASE STUDIES: AIPSY.PRESS & PODCAST -->
+    <section class="section section-border section-pad">
+      <div class="section-tag">ФЛАГМАНСКИЕ КЕЙСЫ & МЕДИА</div>
+      <h2 class="section-title">AI-Медиа и&nbsp;автономные контентные фабрики</h2>
+      <p class="section-sub">
+        Полноценные медиа-продукты и&nbsp;подкасты на&nbsp;нейросетевых пайплайнах: от&nbsp;автономных СМИ до&nbsp;подкастов с&nbsp;десятками тысяч органических слушателей в&nbsp;7&nbsp;странах.
+      </p>
+
+      <!-- Case 1: aipsy.press -->
+      <div class="project-card" style="border:1px solid var(--border);margin-bottom:24px;">
+        <div>
+          <span class="project-tag">AUTONOMOUS AI MEDIA</span>
+          <h3 class="project-title">aipsy.press — Автономная Фабрика Контента</h3>
+          <p class="project-desc">
+            Система непрерывно сканирует мировые научные публикации (PubMed, arXiv, bioRxiv), фильтрует инфоповоды, генерирует экспертные лонгриды, проводит фактчекинг и&nbsp;автоматически публикует материалы с&nbsp;разметкой Schema.org и&nbsp;турбо-страницами.
+          </p>
+
+          <div class="project-stats">
+            <div>
+              <div class="p-stat-val">55+</div>
+              <div class="p-stat-lab">статей / день</div>
+            </div>
+            <div>
+              <div class="p-stat-val">0&nbsp;чел.</div>
+              <div class="p-stat-lab">штат редакции</div>
+            </div>
+            <div>
+              <div class="p-stat-val">100%</div>
+              <div class="p-stat-lab">автономия</div>
+            </div>
+          </div>
+
+          <a href="https://aipsy.press/?utm_source=michaelpuzyrev.ru&utm_medium=referral&utm_campaign=portfolio_cases" target="_blank" class="btn-primary">Перейти на&nbsp;aipsy.press ↗</a>
+        </div>
+
+        <div class="project-preview-box" style="background:#18181b;color:#e4e4e7;border:1px solid #27272a;padding:24px;border-radius:6px;display:flex;flex-direction:column;gap:12px;">
+          <div style="font-family:var(--mono);font-size:0.75rem;color:#34d399;font-weight:700;letter-spacing:0.04em;">
+            // АВТОНОМНЫЙ ПАЙПЛАЙН БЕЗ ЛЮДЕЙ
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;font-size:0.88rem;line-height:1.55;color:#d4d4d8;">
+            <div style="display:flex;gap:10px;align-items:flex-start;">
+              <span style="color:#34d399;font-family:var(--mono);font-weight:700;">01</span>
+              <div><strong>Сбор данных:</strong> Круглосуточный мониторинг научных баз PubMed и&nbsp;arXiv по&nbsp;20+&nbsp;тематикам</div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;">
+              <span style="color:#34d399;font-family:var(--mono);font-weight:700;">02</span>
+              <div><strong>AI-Редакция:</strong> Нейросети пишут экспертные лонгриды с&nbsp;цитатами первоисточников</div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;">
+              <span style="color:#34d399;font-family:var(--mono);font-weight:700;">03</span>
+              <div><strong>Фактчекинг:</strong> Автоматическая проверка научных данных и&nbsp;формул перед выпуском</div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;">
+              <span style="color:#34d399;font-family:var(--mono);font-weight:700;">04</span>
+              <div><strong>Дистрибуция:</strong> Автоматическая публикация на&nbsp;сайт и&nbsp;в&nbsp;Telegram от&nbsp;55&nbsp;статей в&nbsp;сутки</div>
+            </div>
+          </div>
+          <div style="margin-top:4px;padding-top:10px;border-top:1px solid #27272a;display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:0.75rem;color:#a1a1aa;">
+            <span style="color:#34d399;">● Непрерывная работа 24/7</span>
+            <span>0&nbsp;человек в&nbsp;штате</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Case 2: Podcast Анатомия СДВГ -->
+      <div class="project-card" style="border:1px solid var(--border);">
+        <div>
+          <span class="project-tag">AI PODCAST & SCIENCE MEDIA</span>
+          <h3 class="project-title">Подкаст «Анатомия СДВГ» — 38&nbsp;000+ прослушиваний</h3>
+          <p class="project-desc">
+            Научно-популярный подкаст о&nbsp;нейробиологии, внимании и&nbsp;работе мозга (<em>«Глубокое погружение: Анатомия СДВГ»</em>). Полный цикл продакшена: от&nbsp;нейросетевого анализа академических статей до&nbsp;дистрибуции в&nbsp;Apple Podcasts и&nbsp;Яндекс Музыку с&nbsp;рекордным удержанием аудитории.
+          </p>
+
+          <div class="project-stats">
+            <div>
+              <div class="p-stat-val">38&nbsp;000+</div>
+              <div class="p-stat-lab">прослушиваний</div>
+            </div>
+            <div>
+              <div class="p-stat-val">82.8%</div>
+              <div class="p-stat-lab">дослушиваемость</div>
+            </div>
+            <div>
+              <div class="p-stat-val">7+ стран</div>
+              <div class="p-stat-lab">география аудитории</div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <a href="https://adhdpodcast.mave.digital/?utm_source=michaelpuzyrev.ru&utm_medium=referral&utm_campaign=portfolio_cases" target="_blank" class="btn-primary">Сайт подкаста ↗</a>
+            <a href="https://t.me/adhdpodcast" target="_blank" class="btn-secondary">Telegram @adhdpodcast ↗</a>
+          </div>
+        </div>
+
+        <div style="background:#18181b;border:1px solid #27272a;border-radius:4px;overflow:hidden;display:flex;flex-direction:column;">
+          <div style="position:relative;height:210px;overflow:hidden;">
+            <img src="img/mikhail_podcast.jpg" alt="Михаил Пузырёв в студии записи подкаста" style="width:100%;height:100%;object-fit:cover;object-position:center 25%;">
+            <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent, rgba(24,24,27,0.92));padding:12px 16px;">
+              <div style="font-family:var(--mono);font-size:0.68rem;color:#34d399;font-weight:700;">// СТУДИЙНЫЙ AI-ПРОДАКШЕН</div>
+              <div style="color:#fff;font-weight:700;font-size:0.92rem;">Глубокое погружение: Анатомия СДВГ</div>
+            </div>
+          </div>
+          <div style="padding:16px 18px;color:#d4d4d8;font-size:0.84rem;line-height:1.55;display:flex;flex-direction:column;gap:8px;">
+            <div><strong style="color:#fff;">1.&nbsp;Научная база:</strong> Анализ сотен исследований в&nbsp;PubMed и&nbsp;bioRxiv по&nbsp;психологии внимания.</div>
+            <div><strong style="color:#fff;">2.&nbsp;AI-сценарии:</strong> Синтез сложных научных данных в&nbsp;увлекательный сторителлинг через LLM.</div>
+            <div><strong style="color:#fff;">3.&nbsp;Аудитория:</strong> Слушатели в&nbsp;7+ странах (Россия 33%, Германия 12%, США 10%, Нидерланды, UK).</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DIRECT MESSENGER CONTACT & BOOKING SECTION -->
+    <section id="contact" class="form-section">
+      <div class="form-inner" style="align-items:center;">
+        <div class="form-left" style="max-width:540px;">
+          <div class="section-tag" style="color:#a1a1aa;">СВЯЗЬ & БРОНИРОВАНИЕ</div>
+          <h2 class="form-title">Получите персональный план и&nbsp;оценку задачи за&nbsp;1 день</h2>
+          <p class="form-sub">
+            Напишите, какую задачу нужно решить: запустить сервис, внедрить AI-агентов в&nbsp;отдел, прокачать команду или&nbsp;снять ограничения роста. Отвечу лично и&nbsp;предложу пошаговый план.
+          </p>
+          <div style="margin-top:28px;font-family:var(--mono);font-size:0.88rem;color:#a1a1aa;line-height:1.8;">
+            <div>• Канал в&nbsp;Telegram: <a href="https://t.me/uncrn_sage" target="_blank" style="color:#fff;text-decoration:underline;">@uncrn_sage</a></div>
+          </div>
+        </div>
+
+        <div class="direct-contact-card">
+          <div style="font-family:var(--mono);font-size:0.75rem;color:#34d399;font-weight:600;margin-bottom:4px;letter-spacing:0.04em;">
+            // ПРЯМАЯ СВЯЗЬ БЕЗ ПОСРЕДНИКОВ
+          </div>
+
+          <a href="https://t.me/Michael_Sage" target="_blank" class="btn-primary" style="display:flex;align-items:center;justify-content:center;gap:12px;padding:16px;font-size:0.95rem;background:#ffffff;border-color:#ffffff;color:#09090b;text-decoration:none;font-weight:700;border-radius:4px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-2.02 1.28-5.7 3.77-.54.37-1.03.55-1.47.54-.48-.01-1.4-.27-2.09-.49-.84-.27-1.51-.42-1.45-.89.03-.25.38-.51 1.07-.78 4.19-1.82 6.98-3.03 8.37-3.61 3.98-1.66 4.81-1.95 5.35-1.96.12 0 .39.03.56.17.14.12.18.28.2.4.01.07.01.21 0 .36z"/></svg>
+            <span>Написать в&nbsp;Telegram ↗</span>
+          </a>
+
+          <a href="https://max.ru/u/f9LHodD0cOJxk9sLajkZ5u_-WbQydR8lkTH6y34KqdU-QKoLzrW7FH8yJG0" target="_blank" class="btn-secondary" style="display:flex;align-items:center;justify-content:center;gap:12px;padding:16px;font-size:0.95rem;background:#27272a;border-color:#3f3f46;color:#fff;text-decoration:none;font-weight:600;border-radius:4px;">
+            <span>Написать в&nbsp;MAX ↗</span>
+          </a>
+
+          <a href="booking.html" class="btn-primary" style="display:flex;align-items:center;justify-content:center;gap:12px;padding:16px;font-size:0.95rem;background:#10b981;border-color:#10b981;color:#ffffff;text-decoration:none;font-weight:700;border-radius:4px;">
+            <span>Забронировать слот в&nbsp;Календаре ↗</span>
+          </a>
+
+          <div style="margin-top:6px;padding-top:14px;border-top:1px solid #27272a;display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:0.78rem;color:#a1a1aa;">
+            <span>Связь: 24/7</span>
+            <span style="color:#34d399;">● Online</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <strong>ИП Пузырёв Михаил Михайлович</strong> · ИНН 500177901407 · ОГРНИП 318505300123140
+      </div>
+      <ul class="footer-links">
+        <li><a href="privacy.html">Политика конфиденциальности</a></li>
+        <li><a href="terms.html">Пользовательское соглашение</a></li>
+        <li><a href="https://t.me/uncrn_sage" target="_blank">Telegram</a></li>
+        <li><a href="https://max.ru/u/f9LHodD0cOJxk9sLajkZ5u_-WbQydR8lkTH6y34KqdU-QKoLzrW7FH8yJG0" target="_blank">MAX</a></li>
+        <li><a href="booking.html">Забронировать слот</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
