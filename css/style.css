@@ -304,16 +304,16 @@ button {
 }
 
 .mobile-menu .m-cta {
-  margin-top: 16px;
   background: var(--black);
   color: #fff !important;
   text-align: center;
   justify-content: center;
-  padding: 16px;
-  font-size: 1rem;
+  margin-top: 14px;
+  padding: 15px 20px;
+  font-size: 0.95rem;
   font-weight: 700;
-  border: none;
-  border-radius: 4px;
+  border-radius: 0 !important;
+  border: 1px solid var(--black);
   width: 100%;
 }
 
@@ -2167,7 +2167,7 @@ main > .section:first-child {
     padding: 12px 22px;
     font-size: 0.88rem;
     min-height: 44px;
-    border-radius: 4px;
+    border-radius: 0 !important;
     box-sizing: border-box;
   }
 
@@ -2305,7 +2305,7 @@ main > .section:first-child {
     padding: 9px 20px !important;
     font-size: 0.84rem !important;
     min-height: 38px !important;
-    border-radius: 4px;
+    border-radius: 0 !important;
     box-sizing: border-box;
   }
 
@@ -2760,4 +2760,34 @@ main > .section:first-child {
     animation: none !important;
     transition: none !important;
   }
+}
+
+/* ══════════════════════════════════════════
+   STRICT 0PX BORDER RADIUS FOR ALL BUTTONS
+   (Swiss Stark Pure Modernist Architecture)
+══════════════════════════════════════════ */
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+.btn,
+.btn-primary,
+.btn-secondary,
+.btn-price,
+.nav-cta,
+.m-cta,
+.faq-q,
+.faq-icon,
+.sim-tab,
+.hero-actions a,
+.card-footer a,
+.card-footer .btn-secondary,
+.project-card a,
+.project-card .btn-primary,
+.project-card .btn-secondary,
+.direct-contact-card a,
+.direct-contact-card button,
+.lightbox-close,
+.lightbox-nav-btn {
+  border-radius: 0 !important;
 }
