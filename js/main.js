@@ -550,18 +550,19 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ══════════════════════════════════════════════════════════════════
-  // SMOOTH SCROLL REVEAL & HERO ENTRANCE ENGINE
+  // SMOOTH SCROLL REVEAL & HERO ENTRANCE ENGINE (DESKTOP ONLY)
   // ══════════════════════════════════════════════════════════════════
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isMobile = window.innerWidth <= 768;
 
-  // 1. Hero Entrance Animation on Load
+  // 1. Hero Entrance Animation on Load (Desktop only)
   const heroSection = document.querySelector('.hero');
-  if (heroSection && !prefersReduced) {
+  if (heroSection && !prefersReduced && !isMobile) {
     heroSection.classList.add('hero-animated');
   }
 
-  // 2. Scroll Reveal Observer for Blocks, Text & Grids
-  if (!prefersReduced && 'IntersectionObserver' in window) {
+  // 2. Scroll Reveal Observer for Blocks, Text & Grids (Desktop only)
+  if (!prefersReduced && !isMobile && 'IntersectionObserver' in window) {
     const revealObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {

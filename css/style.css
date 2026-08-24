@@ -2175,9 +2175,34 @@ main > .section:first-child {
     box-sizing: border-box;
   }
 
+  /* Disable heavy scroll animations on mobile for native 60fps responsiveness */
+  .reveal-init,
+  .stagger-group > *,
+  .hero-tag,
+  .hero-author-box,
+  .hero-title,
+  .hero-divider,
+  .hero-sub,
+  .hero-actions,
+  .hero-right {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* Reset sticky hover effects on touch screens */
+  .feature-card:hover,
+  .price-card:hover,
+  .project-card:hover,
+  .logo-card:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
   .hero-stats,
   .hero-stats.hero-stats-4 {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr) !important;
     width: 100%;
     border: 1px solid var(--border);
     margin-top: 16px;
@@ -2185,35 +2210,40 @@ main > .section:first-child {
   }
 
   .h-stat {
-    padding: 14px 16px;
-    border-right: none !important;
+    padding: 12px 14px;
+    border-right: 1px solid var(--border) !important;
     border-bottom: 1px solid var(--border);
     box-sizing: border-box;
   }
 
-  .h-stat:last-child {
-    border-bottom: none;
+  .h-stat:nth-child(2n) {
+    border-right: none !important;
+  }
+
+  .h-stat:nth-last-child(-n+2) {
+    border-bottom: none !important;
   }
 
   .h-stat-num {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
+    margin-bottom: 4px;
   }
 
-  .h-stat-label {
-    font-size: 0.72rem;
+  .h-stat-lab {
+    font-size: 0.68rem;
   }
 
   /* Simulator component on mobile */
   .simulator-card {
     width: 100%;
     max-width: 100%;
-    border-radius: 6px;
+    border-radius: 0;
     overflow: hidden;
     box-sizing: border-box;
   }
 
   .sim-bar {
-    padding: 10px 12px;
+    padding: 8px 12px;
     gap: 6px;
     box-sizing: border-box;
   }
@@ -2248,12 +2278,12 @@ main > .section:first-child {
     flex-shrink: 0;
     white-space: nowrap;
     font-size: 0.72rem;
-    padding: 10px 12px;
+    padding: 8px 12px;
   }
 
   .sim-body {
-    padding: 16px 14px;
-    gap: 12px;
+    padding: 14px 12px;
+    gap: 10px;
     box-sizing: border-box;
   }
 
@@ -2262,13 +2292,13 @@ main > .section:first-child {
   }
 
   .sim-step-title {
-    font-size: 0.88rem;
+    font-size: 0.85rem;
     line-height: 1.35;
   }
 
   .sim-step-desc {
-    font-size: 0.8rem;
-    line-height: 1.5;
+    font-size: 0.78rem;
+    line-height: 1.45;
   }
 
   .sim-tags {
@@ -2283,18 +2313,18 @@ main > .section:first-child {
 
   /* Feature cards on mobile */
   .feature-card {
-    padding: 24px 20px;
-    border-radius: 4px;
+    padding: 24px 18px;
+    border-radius: 0;
     box-sizing: border-box;
   }
 
   .card-title {
-    font-size: 1.05rem;
+    font-size: 1.08rem;
   }
 
   .card-desc {
-    font-size: 0.85rem;
-    line-height: 1.55;
+    font-size: 0.88rem;
+    line-height: 1.6;
   }
 
   .card-footer {
@@ -2305,10 +2335,11 @@ main > .section:first-child {
   .card-footer .btn-secondary,
   .card-footer a {
     display: inline-flex;
-    width: auto !important;
-    padding: 9px 20px !important;
-    font-size: 0.84rem !important;
-    min-height: 38px !important;
+    width: 100% !important;
+    justify-content: center;
+    padding: 11px 20px !important;
+    font-size: 0.88rem !important;
+    min-height: 42px !important;
     border-radius: 0 !important;
     box-sizing: border-box;
   }
@@ -2325,24 +2356,25 @@ main > .section:first-child {
   }
 
   .price-name {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
   }
 
   .price-amount {
-    font-size: 1.9rem;
+    font-size: 2rem;
   }
 
   .price-period {
-    font-size: 0.76rem;
+    font-size: 0.78rem;
   }
 
   .price-feats {
-    gap: 8px;
+    gap: 10px;
+    margin-bottom: 24px;
   }
 
   .price-feat {
-    font-size: 0.82rem;
-    line-height: 1.45;
+    font-size: 0.85rem;
+    line-height: 1.5;
   }
 
   .btn-price {
@@ -2350,61 +2382,62 @@ main > .section:first-child {
     min-height: 46px;
   }
 
-  /* Project cards on mobile */
+  /* Project Case cards on mobile - CLEAN, STREAMLINED */
   .project-card {
-    padding: 20px 14px;
+    padding: 24px 16px;
     gap: 16px;
     box-sizing: border-box;
   }
 
+  .project-tag {
+    font-size: 0.68rem;
+    padding: 2px 6px;
+    margin-bottom: 8px;
+  }
+
   .project-title {
-    font-size: 1.22rem;
-    line-height: 1.2;
+    font-size: 1.25rem;
+    line-height: 1.22;
     margin-bottom: 8px;
   }
 
   .project-desc {
-    font-size: 0.85rem;
-    line-height: 1.58;
-    margin-bottom: 12px;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    margin-bottom: 14px;
   }
 
   .project-stats {
     grid-template-columns: repeat(3, 1fr);
     gap: 6px;
-  }
-
-  .project-card .btn-primary,
-  .project-card .btn-secondary {
-    width: auto !important;
-    display: inline-flex;
-    padding: 10px 20px;
-    font-size: 0.85rem;
-    min-height: 40px;
+    padding: 12px 10px;
+    margin-bottom: 16px;
+    background: #ffffff;
+    border: 1px solid var(--border);
   }
 
   .p-stat-val {
-    font-size: 1.05rem;
+    font-size: 1.1rem;
   }
 
   .p-stat-lab {
-    font-size: 0.64rem;
+    font-size: 0.65rem;
   }
 
+  /* HIDE HEAVY REDUNDANT TERMINAL BOX ON MOBILE */
   .project-preview-box {
-    padding: 12px 10px;
-    font-size: 0.7rem;
-    line-height: 1.5;
-    overflow-x: auto;
-    white-space: pre-wrap;
-    word-break: break-word;
-    box-sizing: border-box;
+    display: none !important;
   }
 
   .project-card .btn-primary,
   .project-card .btn-secondary {
-    width: 100%;
+    width: 100% !important;
+    display: inline-flex;
     justify-content: center;
+    padding: 12px 20px;
+    font-size: 0.88rem;
+    min-height: 44px;
+    box-sizing: border-box;
   }
 
   /* Logos Grid on mobile */
@@ -2418,7 +2451,7 @@ main > .section:first-child {
   .logo-card {
     min-height: 52px;
     padding: 6px 8px;
-    border-radius: 4px;
+    border-radius: 0;
     box-sizing: border-box;
   }
 
