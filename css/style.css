@@ -156,10 +156,10 @@ button {
 
 .nav-links a {
   position: relative;
-  color: var(--gray);
+  color: #71717a;
   font-size: 0.88rem;
-  font-weight: 500;
-  transition: color 0.2s;
+  font-weight: 600;
+  transition: color 0.2s ease;
   padding: 6px 0;
   white-space: nowrap;
   text-decoration: none;
@@ -171,7 +171,6 @@ button {
 
 .nav-links a.active {
   color: var(--black);
-  font-weight: 600;
   text-decoration: underline;
   text-decoration-thickness: 2px;
   text-underline-offset: 8px;
