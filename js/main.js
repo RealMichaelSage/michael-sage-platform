@@ -597,4 +597,97 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  // ══════════════════════════════════════════════════════════════════
+  // DYNAMIC DESKTOP SECTION SCROLLSPY (RIGHT RAIL NAVIGATOR)
+  // ══════════════════════════════════════════════════════════════════
+  function initPageScrollspy() {
+    const rawSections = Array.from(document.querySelectorAll('section[id], header[id]')).filter(sec => {
+      return sec.id && !sec.classList.contains('mobile-menu') && sec.offsetHeight > 100;
+    });
+
+    if (rawSections.length < 2) return;
+
+    let nav = document.querySelector('.page-scrollspy');
+    if (!nav) {
+      nav = document.createElement('nav');
+      nav.className = 'page-scrollspy';
+      nav.setAttribute('aria-label', 'Навигация по разделам');
+      document.body.appendChild(nav);
+    }
+
+    const ul = document.createElement('ul');
+    ul.className = 'scrollspy-list';
+
+    const items = rawSections.map((sec, idx) => {
+      const id = sec.id;
+      const num = String(idx + 1).padStart(2, '0');
+      let title = sec.dataset.navTitle;
+      if (!title) {
+        const tag = sec.querySelector('.section-tag, .hero-tag');
+        const h = sec.querySelector('h1, h2, .form-title, .hero-title');
+        title = tag ? tag.textContent.replace('//', '').trim() : (h ? h.textContent.trim().split(' ')[0] : `Раздел ${num}`);
+      }
+      if (title.length > 22) title = title.substring(0, 20) + '...';
+
+      const li = document.createElement('li');
+      li.className = `scrollspy-item ${idx === 0 ? 'active' : ''}`;
+      li.innerHTML = `
+        <a href="#${id}" class="scrollspy-link" data-id="${id}" title="${title}">
+          <span class="scrollspy-label">${title}</span>
+          <span class="scrollspy-num">${num}</span>
+          <span class="scrollspy-dot"></span>
+        </a>
+      `;
+      ul.appendChild(li);
+      return { el: sec, id, li };
+    });
+
+    nav.innerHTML = '';
+    nav.appendChild(ul);
+
+    // Smooth scroll on click
+    ul.addEventListener('click', (e) => {
+      const link = e.target.closest('.scrollspy-link');
+      if (link) {
+        e.preventDefault();
+        const targetId = link.dataset.id;
+        const targetSec = document.getElementById(targetId);
+        if (targetSec) {
+          const headerOffset = 72;
+          const elementPosition = targetSec.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }
+    });
+
+    // Real-time Scrollspy with IntersectionObserver
+    if ('IntersectionObserver' in window) {
+      const spyObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const currentId = entry.target.id;
+            items.forEach(item => {
+              if (item.id === currentId) {
+                item.li.classList.add('active');
+              } else {
+                item.li.classList.remove('active');
+              }
+            });
+          }
+        });
+      }, {
+        rootMargin: '-20% 0px -55% 0px',
+        threshold: 0
+      });
+
+      rawSections.forEach(sec => spyObserver.observe(sec));
+    }
+  }
+
+  initPageScrollspy();
 });
