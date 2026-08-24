@@ -599,7 +599,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ══════════════════════════════════════════════════════════════════
-  // DYNAMIC DESKTOP SECTION SCROLLSPY (RIGHT RAIL NAVIGATOR)
+  // DYNAMIC DESKTOP SECTION SCROLLSPY & DYNAMIC LOGO BADGE
   // ══════════════════════════════════════════════════════════════════
   function initPageScrollspy() {
     const rawSections = Array.from(document.querySelectorAll('section[id], header[id]')).filter(sec => {
@@ -615,6 +615,9 @@ document.addEventListener('DOMContentLoaded', () => {
       nav.setAttribute('aria-label', 'Навигация по разделам');
       document.body.appendChild(nav);
     }
+
+    const logoBadge = document.querySelector('.nav-logo-badge');
+    const defaultBadgeText = logoBadge ? logoBadge.textContent.trim() : '';
 
     const ul = document.createElement('ul');
     ul.className = 'scrollspy-list';
@@ -640,7 +643,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </a>
       `;
       ul.appendChild(li);
-      return { el: sec, id, li };
+      return { el: sec, id, li, title };
     });
 
     nav.innerHTML = '';
@@ -665,39 +668,79 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Real-time Scrollspy with IntersectionObserver
-    if ('IntersectionObserver' in window) {
-      const spyObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const currentId = entry.target.id;
-            items.forEach(item => {
-              if (item.id === currentId) {
-                item.li.classList.add('active');
-                
-                // Detect dark background section
-                const isDark = entry.target.classList.contains('form-section') || 
-                               entry.target.id === 'contact' ||
-                               entry.target.classList.contains('dark-section') ||
-                               entry.target.getAttribute('data-theme') === 'dark';
-                if (isDark) {
-                  nav.classList.add('on-dark');
-                } else {
-                  nav.classList.remove('on-dark');
-                }
-              } else {
-                item.li.classList.remove('active');
-              }
-            });
+    // Rock-solid Scrollspy Position Calculator (60 FPS)
+    let isTicking = false;
+
+    function updateActiveSection() {
+      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+      const viewportHeight = window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight;
+      
+      let activeIndex = 0;
+
+      // If scrolled to the very bottom (within 80px), activate last section
+      if (scrollY + viewportHeight >= docHeight - 80) {
+        activeIndex = items.length - 1;
+      } else {
+        // Find the section closest to the top of viewport (offset by header height)
+        const triggerPoint = scrollY + 120;
+        for (let i = 0; i < items.length; i++) {
+          const sec = items[i].el;
+          const top = sec.offsetTop;
+          const height = sec.offsetHeight;
+          if (triggerPoint >= top && triggerPoint < top + height) {
+            activeIndex = i;
+            break;
+          } else if (triggerPoint >= top) {
+            activeIndex = i;
+          }
+        }
+      }
+
+      const activeItem = items[activeIndex];
+      if (activeItem) {
+        items.forEach((item, idx) => {
+          if (idx === activeIndex) {
+            item.li.classList.add('active');
+          } else {
+            item.li.classList.remove('active');
           }
         });
-      }, {
-        rootMargin: '-20% 0px -55% 0px',
-        threshold: 0
-      });
 
-      rawSections.forEach(sec => spyObserver.observe(sec));
+        // Theme adaptation (on-dark when over dark section/footer)
+        const activeSec = activeItem.el;
+        const isDark = activeSec.classList.contains('form-section') || 
+                       activeSec.id === 'contact' ||
+                       activeSec.classList.contains('dark-section') ||
+                       activeSec.getAttribute('data-theme') === 'dark';
+        if (isDark) {
+          nav.classList.add('on-dark');
+        } else {
+          nav.classList.remove('on-dark');
+        }
+
+        // Dynamic logo badge update
+        if (logoBadge) {
+          if (activeIndex === 0) {
+            logoBadge.textContent = defaultBadgeText;
+          } else {
+            logoBadge.textContent = activeItem.title.toUpperCase();
+          }
+        }
+      }
+
+      isTicking = false;
     }
+
+    window.addEventListener('scroll', () => {
+      if (!isTicking) {
+        window.requestAnimationFrame(updateActiveSection);
+        isTicking = true;
+      }
+    }, { passive: true });
+
+    // Initial check on load
+    updateActiveSection();
   }
 
   initPageScrollspy();
