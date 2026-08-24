@@ -130,7 +130,7 @@ button {
 }
 
 .nav-logo strong span.accent-yo {
-  color: #ef4444;
+  color: var(--green);
 }
 
 .nav-logo-badge {
