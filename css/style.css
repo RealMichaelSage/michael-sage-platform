@@ -120,8 +120,9 @@ button {
   align-items: center;
   gap: 8px;
   white-space: nowrap;
-  flex: 0 1 auto;
-  min-width: 0;
+  flex: 0 0 340px;
+  width: 340px;
+  min-width: 340px;
 }
 
 .nav-logo strong {
@@ -156,10 +157,10 @@ button {
 
 .nav-links a {
   position: relative;
-  color: #71717a;
+  color: var(--gray);
   font-size: 0.88rem;
   font-weight: 600;
-  transition: color 0.2s ease;
+  transition: color 0.2s;
   padding: 6px 0;
   white-space: nowrap;
   text-decoration: none;
@@ -182,8 +183,8 @@ button {
   align-items: center;
   justify-content: flex-end;
   gap: 14px;
-  flex: 0 0 auto;
-  min-width: 0;
+  flex: 0 0 190px;
+  min-width: 190px;
 }
 
 .nav-cta {
@@ -1981,9 +1982,9 @@ main > .section:first-child {
    RESPONSIVE BREAKPOINTS (SWISS STARK CANON)
 ══════════════════════════════════════════ */
 @media (max-width: 1200px) and (min-width: 769px) {
-  .nav-logo { flex: 0 0 auto; min-width: auto; }
-  .nav-links { gap: 12px; font-size: 0.8rem; }
-  .nav-right { flex: 0 0 auto; min-width: auto; }
+  .nav-logo { flex: 0 0 300px; width: 300px; min-width: 300px; }
+  .nav-links { gap: 10px; font-size: 0.82rem; }
+  .nav-right { flex: 0 0 170px; min-width: 170px; }
 }
 
 @media (max-width: 1024px) {
