@@ -98,16 +98,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = simData[mode];
         if (data) {
           if (windowTitle) windowTitle.textContent = data.title;
-          simBody.innerHTML = data.steps.map((step, idx) => `
-            <div class="sim-step ${idx === 0 ? 'active' : ''}">
-              <div class="sim-step-label">${step.label}</div>
-              <div class="sim-step-title">${step.title}</div>
-              <div class="sim-step-desc">${step.desc}</div>
-              <div class="sim-tags">
-                ${step.tags.map(tag => `<span class="sim-tag">${tag}</span>`).join('')}
+          simBody.style.opacity = '0';
+          simBody.style.transform = 'translateY(4px)';
+          simBody.style.transition = 'opacity 0.18s ease, transform 0.18s ease';
+
+          setTimeout(() => {
+            simBody.innerHTML = data.steps.map((step, idx) => `
+              <div class="sim-step ${idx === 0 ? 'active' : ''}">
+                <div class="sim-step-label">${step.label}</div>
+                <div class="sim-step-title">${step.title}</div>
+                <div class="sim-step-desc">${step.desc}</div>
+                <div class="sim-tags">
+                  ${step.tags.map(tag => `<span class="sim-tag">${tag}</span>`).join('')}
+                </div>
               </div>
-            </div>
-          `).join('');
+            `).join('');
+            simBody.style.opacity = '1';
+            simBody.style.transform = 'translateY(0)';
+          }, 120);
         }
       });
     });
@@ -563,8 +571,8 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }, {
       root: null,
-      rootMargin: '0px 0px -40px 0px',
-      threshold: 0.06
+      rootMargin: '0px 0px -20px 0px',
+      threshold: 0.02
     });
 
     // Elements to reveal smoothly

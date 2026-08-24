@@ -1195,14 +1195,21 @@ main > .section:first-child {
 .faq-list {
   border: 1px solid var(--border);
   margin-top: 32px;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
 .faq-item {
   border-bottom: 1px solid var(--border);
+  transition: background-color 0.25s ease;
 }
 
 .faq-item:last-child {
   border-bottom: none;
+}
+
+.faq-item.open {
+  background-color: #fafafa;
 }
 
 .faq-q {
@@ -1216,7 +1223,11 @@ main > .section:first-child {
   font-size: 1.05rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  color: var(--black);
+  transition: background-color 0.2s ease;
 }
 
 .faq-q:hover {
@@ -1224,15 +1235,20 @@ main > .section:first-child {
 }
 
 .faq-icon {
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid var(--border);
   font-family: var(--mono);
-  font-size: 0.9rem;
-  transition: all 0.3s;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 3px;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.25s ease,
+              border-color 0.25s ease,
+              color 0.25s ease;
   flex-shrink: 0;
 }
 
@@ -1244,15 +1260,33 @@ main > .section:first-child {
 }
 
 .faq-a {
-  display: none;
-  padding: 0 32px 24px;
-  font-size: 0.94rem;
-  color: var(--gray);
-  line-height: 1.75;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
 }
 
 .faq-item.open .faq-a {
-  display: block;
+  grid-template-rows: 1fr;
+}
+
+.faq-a-inner {
+  min-height: 0;
+  padding: 0 32px 0;
+  font-size: 0.94rem;
+  color: var(--gray);
+  line-height: 1.75;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              padding 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-item.open .faq-a-inner {
+  opacity: 1;
+  transform: translateY(0);
+  padding: 0 32px 24px;
 }
 
 /* ══════════════════════════════════════════
@@ -2392,6 +2426,21 @@ main > .section:first-child {
   /* Author Photo Cards on mobile */
   .author-photo-card {
     height: 240px !important;
+  }
+
+  /* FAQ Accordion on mobile */
+  .faq-q {
+    padding: 18px 16px;
+    font-size: 0.95rem;
+  }
+
+  .faq-a-inner {
+    padding: 0 16px 0;
+    font-size: 0.88rem;
+  }
+
+  .faq-item.open .faq-a-inner {
+    padding: 0 16px 20px;
   }
 
   /* Forms & Direct Contacts */
