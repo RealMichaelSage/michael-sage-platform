@@ -4,11 +4,11 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Active Nav Link Highlighter
-  const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+  // Active Nav Link Highlighter (Clean URLs & .html compatible)
+  const currentPath = window.location.pathname.replace(/^\//, '').replace(/\.html$/, '') || 'index';
   document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(link => {
-    const href = link.getAttribute('href');
-    if (href && (href === currentPath || (currentPath === '' && href === 'index.html'))) {
+    const rawHref = (link.getAttribute('href') || '').split('#')[0].replace(/^\//, '').replace(/\.html$/, '') || 'index';
+    if (rawHref === currentPath) {
       link.classList.add('active');
     }
   });
