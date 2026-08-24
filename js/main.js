@@ -674,6 +674,17 @@ document.addEventListener('DOMContentLoaded', () => {
             items.forEach(item => {
               if (item.id === currentId) {
                 item.li.classList.add('active');
+                
+                // Detect dark background section
+                const isDark = entry.target.classList.contains('form-section') || 
+                               entry.target.id === 'contact' ||
+                               entry.target.classList.contains('dark-section') ||
+                               entry.target.getAttribute('data-theme') === 'dark';
+                if (isDark) {
+                  nav.classList.add('on-dark');
+                } else {
+                  nav.classList.remove('on-dark');
+                }
               } else {
                 item.li.classList.remove('active');
               }

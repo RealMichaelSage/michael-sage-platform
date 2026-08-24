@@ -2918,3 +2918,52 @@ input[type="reset"],
   box-shadow: 0 0 8px rgba(52, 211, 153, 0.65);
   transform: scale(1.25);
 }
+
+/* ══════════════════════════════════════════
+   DARK SECTION ADAPTATION (When scrolling over dark footer)
+══════════════════════════════════════════ */
+.page-scrollspy.on-dark .scrollspy-label {
+  color: #a1a1aa;
+  opacity: 0.65;
+}
+
+.page-scrollspy.on-dark .scrollspy-num {
+  color: #71717a;
+}
+
+.page-scrollspy.on-dark .scrollspy-dot {
+  background: #18181b;
+  border-color: #52525b;
+}
+
+.page-scrollspy.on-dark .scrollspy-link:hover .scrollspy-label {
+  color: #ffffff;
+  opacity: 1;
+}
+
+.page-scrollspy.on-dark .scrollspy-link:hover .scrollspy-num {
+  color: #ffffff;
+}
+
+.page-scrollspy.on-dark .scrollspy-link:hover .scrollspy-dot {
+  background: #ffffff;
+  border-color: #ffffff;
+}
+
+.page-scrollspy.on-dark .scrollspy-item.active .scrollspy-label {
+  color: #ffffff;
+  opacity: 1;
+  font-weight: 700;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
+}
+
+.page-scrollspy.on-dark .scrollspy-item.active .scrollspy-num {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.page-scrollspy.on-dark .scrollspy-item.active .scrollspy-dot {
+  background: #34d399;
+  border-color: #10b981;
+  box-shadow: 0 0 12px rgba(52, 211, 153, 0.9);
+}
