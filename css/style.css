@@ -943,6 +943,11 @@ main > .section:first-child {
   margin-top: 36px;
 }
 
+.price-grid.grid-2,
+.price-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
 .price-card {
   padding: 48px 36px;
   display: flex;
