@@ -4,11 +4,20 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Active Nav Link Highlighter (Clean URLs & .html compatible)
-  const currentPath = window.location.pathname.replace(/^\//, '').replace(/\.html$/, '') || 'index';
+  // Active Nav Link Highlighter (Strict clean URL matching)
+  const lastSegment = window.location.pathname.split('/').filter(Boolean).pop() || '';
+  const cleanPath = lastSegment.replace(/\.html$/, '');
+  const currentPath = (cleanPath === '' || cleanPath === 'index') ? 'home' : cleanPath;
+
   document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(link => {
-    const rawHref = (link.getAttribute('href') || '').split('#')[0].replace(/^\//, '').replace(/\.html$/, '') || 'index';
-    if (rawHref === currentPath && rawHref !== '#') {
+    const rawAttr = link.getAttribute('href');
+    if (!rawAttr || rawAttr === '#' || rawAttr.startsWith('#') || rawAttr.startsWith('javascript:')) {
+      return;
+    }
+
+    const cleanHref = rawAttr.split('#')[0].replace(/^\/+|\/+$/g, '').replace(/\.html$/, '') || 'home';
+
+    if (cleanHref === currentPath) {
       link.classList.add('active');
       const parentDropdown = link.closest('.nav-dropdown');
       if (parentDropdown) {
