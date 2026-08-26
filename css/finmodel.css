@@ -1413,16 +1413,44 @@ input:checked + .slider.round:before {
 
 .passport-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   background: var(--border);
   gap: 1px;
   border-bottom: 1px solid var(--border);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
+  .passport-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 580px) {
   .passport-grid {
     grid-template-columns: 1fr;
   }
+}
+
+@media (max-width: 900px) {
+  .passport-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: var(--border);
+  gap: 1px;
+  border-bottom: 1px solid var(--border);
+}
+
+@media (max-width: 1024px) {
+  .passport-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 580px) {
+  .passport-grid {
+    grid-template-columns: 1fr;
+  }
+}
 }
 
 .passport-box {

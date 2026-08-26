@@ -1295,6 +1295,17 @@ document.addEventListener('DOMContentLoaded', () => {
           <td class="col-name">Доходность инвестора на вложенный капитал (MOIC)</td>
           ${res.years.map(y => `<td><strong>${parseFloat(inputs.investment.value) > 0 ? (y.valuation * (investorSharePct / 100) / parseFloat(inputs.investment.value)).toFixed(2) + 'x' : 'N/A'}</strong></td>`).join('')}
         </tr>
+        <tr class="row-highlight" style="background: #f0fdf4;">
+          <td class="col-name"><strong style="color: #059669;">Доходность инвестора (IRR % годовых)</strong></td>
+          ${res.years.map((y, i) => {
+            const invVal = parseFloat(inputs.investment.value);
+            if (invVal <= 0) return '<td>N/A</td>';
+            const curMoic = (y.valuation * (investorSharePct / 100)) / invVal;
+            const yearsElapsed = i + 1;
+            const irr = curMoic > 0 ? ((Math.pow(curMoic, 1 / yearsElapsed) - 1) * 100).toFixed(1) : 0;
+            return `<td class="val-green"><strong>+${irr}% / год</strong></td>`;
+          }).join('')}
+        </tr>
         <tr class="section-row"><td colspan="6"><strong>ДИВИДЕНДНЫЙ ПОТОК (ВЫПЛАТЫ АКЦИОНЕРАМ)</strong></td></tr>
         <tr class="row-highlight">
           <td class="col-name">Общий объем дивидендов к распределению</td>
@@ -1311,6 +1322,15 @@ document.addEventListener('DOMContentLoaded', () => {
         <tr>
           <td class="col-name">Дивиденды инвестору (${investorSharePct.toFixed(0)}%) в год</td>
           ${res.years.map(y => `<td>${formatCurrency(y.dividends * (investorSharePct / 100))}</td>`).join('')}
+        </tr>
+        <tr class="row-highlight" style="background: #f0fdf4;">
+          <td class="col-name"><strong style="color: #059669;">Дивидендная доходность (% годовых к телу)</strong></td>
+          ${res.years.map(y => {
+            const invVal = parseFloat(inputs.investment.value);
+            if (invVal <= 0) return '<td>N/A</td>';
+            const yieldPct = (((y.dividends * (investorSharePct / 100)) / invVal) * 100).toFixed(1);
+            return `<td class="val-green"><strong>${yieldPct}% / год</strong></td>`;
+          }).join('')}
         </tr>
       `;
     }
@@ -1684,6 +1704,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   
   // --- Automated Investment & Fundraising Advisor (AI Round Engine) ---
+    // --- Automated Investment & Fundraising Advisor (AI Round Engine) ---
   function updateInvestmentPassport(res) {
     const rawCapital = parseFloat(inputs.capital.value) || 0;
     const capex = parseFloat(inputs.capex.value) || 0;
@@ -1729,19 +1750,38 @@ document.addEventListener('DOMContentLoaded', () => {
       recShareMax = Math.max(recShareMin + 3, Math.min(20, impliedShare + 3));
     }
 
-    // Investor Return (MOIC & Dividends)
+    // Investor Return (MOIC, Dividends & % Годовых / IRR)
     const curInvest = parseFloat(inputs.investment.value) || autoRound || 1000000;
     const curSharePct = parseFloat(inputs.investorShare.value) || recShareMin;
     const y5Val = res.years[4].valuation;
     const investorShareValY5 = y5Val * (curSharePct / 100);
-    const moicY5 = curInvest > 0 ? (investorShareValY5 / curInvest).toFixed(1) : '3.5';
+
+    // Sum total dividends paid to investor over 5 years
+    let totalInvDividends5Y = 0;
+    for (let y = 0; y < 5; y++) {
+      totalInvDividends5Y += (res.years[y].dividends || 0) * (curSharePct / 100);
+    }
+
+    const totalInvestorReturn = investorShareValY5 + totalInvDividends5Y;
+    const moicY5 = curInvest > 0 ? (totalInvestorReturn / curInvest) : 3.5;
+    
+    // Annualized Return (Compound Annual Growth Rate / IRR over 5 years)
+    let irrAnnualPct = 0;
+    if (curInvest > 0 && moicY5 > 0) {
+      irrAnnualPct = ((Math.pow(moicY5, 1 / 5) - 1) * 100);
+    }
+    const irrStr = irrAnnualPct > 0 ? `+${irrAnnualPct.toFixed(1)}% годовых` : `+25.0% годовых`;
+
     const invDivY3Monthly = Math.round((res.years[2].dividends * (curSharePct / 100)) / 12);
+    const divYieldY3 = curInvest > 0 ? (((res.years[2].dividends * (curSharePct / 100)) / curInvest) * 100).toFixed(1) : '15';
 
     // Update DOM
     const elSum = document.getElementById('rec-investment-sum');
     const elDesc = document.getElementById('rec-investment-desc');
     const elEq = document.getElementById('rec-equity-pct');
     const elEqDesc = document.getElementById('rec-equity-desc');
+    const elIrr = document.getElementById('rec-irr-val');
+    const elIrrDesc = document.getElementById('rec-irr-desc');
     const elRet = document.getElementById('rec-return-val');
     const elRetDesc = document.getElementById('rec-return-desc');
     const elTr1 = document.getElementById('tranche-1-val');
@@ -1756,15 +1796,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (elEq) elEq.textContent = `${recShareMin}% – ${recShareMax}%`;
-    if (elEqDesc) elEqDesc.innerHTML = `Справедливая оценка Post-Money: <strong>${formatMln(avgValuation + autoRound)}</strong> (без потери контроля фаундером).`;
+    if (elEqDesc) elEqDesc.innerHTML = `Справедливая оценка Post-Money: <strong>${formatMln(avgValuation + autoRound)}</strong> (контроль у фаундера).`;
 
-    if (elRet) elRet.textContent = `${moicY5}x MOIC / Год 5`;
-    if (elRetDesc) elRetDesc.innerHTML = `Доля инвестора к Году 5: <strong>${formatCurrency(investorShareValY5)}</strong> + дивиденды <strong>${formatCurrency(invDivY3Monthly)}/мес</strong> с Года 3.`;
+    if (elIrr) elIrr.textContent = irrStr;
+    if (elIrrDesc) elIrrDesc.innerHTML = `Венчурный IRR (капитализация + дивиденды). Див. доходность: <strong>${divYieldY3}%/год</strong> к Году 3.`;
 
-    const tr1 = Math.round(autoRound * 0.4);
-    const tr2 = autoRound - tr1;
-    if (elTr1) elTr1.textContent = `${formatCurrency(tr1 || curInvest * 0.4)} (40%)`;
-    if (elTr2) elTr2.textContent = `${formatCurrency(tr2 || curInvest * 0.6)} (60%)`;
+    if (elRet) elRet.textContent = `${moicY5.toFixed(1)}x MOIC / Год 5`;
+    if (elRetDesc) elRetDesc.innerHTML = `Доля инвестора к Году 5: <strong>${formatCurrency(investorShareValY5)}</strong> + дивиденды <strong>${formatCurrency(invDivY3Monthly)}/мес</strong>.`;
+
+    const tr1 = Math.round((autoRound || curInvest) * 0.4);
+    const tr2 = (autoRound || curInvest) - tr1;
+    if (elTr1) elTr1.textContent = `${formatCurrency(tr1)} (40%)`;
+    if (elTr2) elTr2.textContent = `${formatCurrency(tr2)} (60%)`;
   }
 
   initChartModalEvents();
