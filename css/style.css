@@ -171,17 +171,24 @@ button {
   color: var(--black);
 }
 
+.nav-link-text {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 2px;
+}
+
 .nav-links > li > a.active,
 .nav-dropdown-toggle.active {
   color: var(--black) !important;
   font-weight: 700 !important;
 }
 
-.nav-links > li > a.active::after,
-.nav-dropdown-toggle.active::after {
+/* Tight, close underline strictly under the text words, excluding the arrow */
+.nav-links > li > a.active .nav-link-text::after,
+.nav-dropdown-toggle.active .nav-link-text::after {
   content: '';
   position: absolute;
-  bottom: 0px;
+  bottom: -2px;
   left: 0;
   right: 0;
   height: 2px;
@@ -2030,17 +2037,24 @@ main > .section:first-child {
   color: var(--black);
 }
 
+.nav-link-text {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 2px;
+}
+
 .nav-links > li > a.active,
 .nav-dropdown-toggle.active {
   color: var(--black) !important;
   font-weight: 700 !important;
 }
 
-.nav-links > li > a.active::after,
-.nav-dropdown-toggle.active::after {
+/* Tight, close underline strictly under the text words, excluding the arrow */
+.nav-links > li > a.active .nav-link-text::after,
+.nav-dropdown-toggle.active .nav-link-text::after {
   content: '';
   position: absolute;
-  bottom: 0px;
+  bottom: -2px;
   left: 0;
   right: 0;
   height: 2px;
