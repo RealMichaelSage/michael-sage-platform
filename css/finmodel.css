@@ -1545,3 +1545,34 @@ input:checked + .slider.round:before {
   color: #71717a;
   line-height: 1.35;
 }
+
+
+.input-sync-hint {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+  padding: 4px 8px;
+  background: #f4fdf8;
+  border: 1px solid #bbf7d0;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: #166534;
+}
+
+.btn-link-action {
+  background: #16a34a;
+  color: #ffffff;
+  border: none;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background 0.15s ease;
+}
+
+.btn-link-action:hover {
+  background: #15803d;
+}

@@ -191,7 +191,12 @@ document.addEventListener('DOMContentLoaded', () => {
     currentPreset = presetKey;
 
     inputs.capital.value = p.capital;
-    inputs.investment.value = p.investment;
+    if (isAutoRoundEnabled) {
+      // Will be auto-calculated in recalculate()
+      inputs.investment.value = p.investment;
+    } else {
+      inputs.investment.value = p.investment;
+    }
     inputs.investorShare.value = p.investorShare;
     inputs.taxRegime.value = p.taxRegime;
     inputs.adBudget.value = p.adBudget;
@@ -505,6 +510,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- 5. Update UI ---
   function recalculate() {
+    if (isAutoRoundEnabled) {
+      // Pre-pass to compute required cash pit and synchronize input
+      const preRes = calculateModel();
+      const req = calculateRequiredRound(preRes);
+      if (req.autoRound > 0) {
+        inputs.investment.value = req.autoRound;
+      }
+    }
+
     calculatedResults = calculateModel();
     const res = calculatedResults;
 
@@ -1630,15 +1644,18 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.querySelectorAll('.accordion-header').forEach(hdr => {
-    hdr.addEventListener('click', () => {
-      hdr.classList.toggle('active');
-      const targetId = hdr.dataset.target;
-      const content = document.getElementById(targetId);
-      if (content) content.classList.toggle('open');
-    });
-    hdr.classList.add('active');
+    const parentGroup = hdr.closest('.wizard-group');
     const targetId = hdr.dataset.target;
     const content = document.getElementById(targetId);
+
+    hdr.addEventListener('click', () => {
+      hdr.classList.toggle('active');
+      if (parentGroup) parentGroup.classList.toggle('open');
+      if (content) content.classList.toggle('open');
+    });
+
+    hdr.classList.add('active');
+    if (parentGroup) parentGroup.classList.add('open');
     if (content) content.classList.add('open');
   });
 
@@ -1705,14 +1722,17 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // --- Automated Investment & Fundraising Advisor (AI Round Engine) ---
     // --- Automated Investment & Fundraising Advisor (AI Round Engine) ---
-  function updateInvestmentPassport(res) {
+  
+  let isAutoRoundEnabled = true;
+
+  // Function to calculate exact needed round from baseline burn
+  function calculateRequiredRound(res) {
     const rawCapital = parseFloat(inputs.capital.value) || 0;
     const capex = parseFloat(inputs.capex.value) || 0;
     const baseOpex = parseFloat(inputs.opexFixed.value) || 0;
     const basePayroll = (parseFloat(inputs.founderSalary.value) || 0) + (parseFloat(inputs.teamBase.value) || 0);
     const avgMonthlyBurn = baseOpex + basePayroll + (parseFloat(inputs.adBudget.value) || 0);
 
-    // 1. Simulate baseline cash WITHOUT new investment to find exact cash deficit (pit)
     let simCash = rawCapital - capex;
     let maxDeficit = 0;
     let deficitMonth = 1;
@@ -1733,8 +1753,23 @@ document.addEventListener('DOMContentLoaded', () => {
     if (maxDeficit < 0) {
       autoRound = Math.ceil((cashDeficitAbs + safetyBuffer) / 250000) * 250000;
     } else {
-      autoRound = 0; // Self-sufficient (Bootstrap)
+      autoRound = 0;
     }
+
+    return {
+      autoRound,
+      maxDeficit: cashDeficitAbs,
+      deficitMonth
+    };
+  }
+
+  // Updated updateInvestmentPassport
+  function updateInvestmentPassport(res) {
+    const req = calculateRequiredRound(res);
+    const autoRound = req.autoRound;
+    const cashDeficitAbs = req.maxDeficit;
+    const deficitMonth = req.deficitMonth;
+    const rawCapital = parseFloat(inputs.capital.value) || 0;
 
     // Recommended Equity based on Round size and Year 1-2 Valuation
     const y1Valuation = res.years[0].valuation || (res.years[0].revenue * 1.5);
@@ -1750,8 +1785,7 @@ document.addEventListener('DOMContentLoaded', () => {
       recShareMax = Math.max(recShareMin + 3, Math.min(20, impliedShare + 3));
     }
 
-    // Investor Return (MOIC, Dividends & % Годовых / IRR)
-    const curInvest = parseFloat(inputs.investment.value) || autoRound || 1000000;
+    const curInvest = parseFloat(inputs.investment.value) || 0;
     const curSharePct = parseFloat(inputs.investorShare.value) || recShareMin;
     const y5Val = res.years[4].valuation;
     const investorShareValY5 = y5Val * (curSharePct / 100);
@@ -1765,7 +1799,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalInvestorReturn = investorShareValY5 + totalInvDividends5Y;
     const moicY5 = curInvest > 0 ? (totalInvestorReturn / curInvest) : 3.5;
     
-    // Annualized Return (Compound Annual Growth Rate / IRR over 5 years)
+    // Annualized Return (IRR over 5 years)
     let irrAnnualPct = 0;
     if (curInvest > 0 && moicY5 > 0) {
       irrAnnualPct = ((Math.pow(moicY5, 1 / 5) - 1) * 100);
@@ -1775,7 +1809,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const invDivY3Monthly = Math.round((res.years[2].dividends * (curSharePct / 100)) / 12);
     const divYieldY3 = curInvest > 0 ? (((res.years[2].dividends * (curSharePct / 100)) / curInvest) * 100).toFixed(1) : '15';
 
-    // Update DOM
+    // Update DOM elements
     const elSum = document.getElementById('rec-investment-sum');
     const elDesc = document.getElementById('rec-investment-desc');
     const elEq = document.getElementById('rec-equity-pct');
@@ -1786,29 +1820,55 @@ document.addEventListener('DOMContentLoaded', () => {
     const elRetDesc = document.getElementById('rec-return-desc');
     const elTr1 = document.getElementById('tranche-1-val');
     const elTr2 = document.getElementById('tranche-2-val');
+    const statusPill = document.getElementById('passport-fit-status');
 
+    const syncHint = document.getElementById('investment-sync-hint');
+    const hintRecVal = document.getElementById('hint-rec-val');
+
+    // Display Sum
+    if (elSum) elSum.textContent = formatCurrency(curInvest);
+    
     if (autoRound > 0) {
-      if (elSum) elSum.textContent = formatCurrency(autoRound);
-      if (elDesc) elDesc.innerHTML = `Покрывает кассовую яму <strong>${formatCurrency(cashDeficitAbs)}</strong> на ${deficitMonth}-м месяце + резерв OPEX.`;
+      if (Math.abs(curInvest - autoRound) < 100000) {
+        if (elDesc) elDesc.innerHTML = `Оптимизирован под кассовую яму <strong>${formatCurrency(cashDeficitAbs)}</strong> на ${deficitMonth}-м мес. + 2.5 мес. резерва.`;
+        if (statusPill) statusPill.innerHTML = '<span class="dot green"></span><span>Раунд оптимизирован</span>';
+        if (syncHint) syncHint.style.display = 'none';
+      } else if (curInvest < autoRound) {
+        if (elDesc) elDesc.innerHTML = `<span style="color:#dc2626;">⚠️ Внимание:</span> введено меньше необходимого. Кассовая яма: <strong>${formatCurrency(cashDeficitAbs)}</strong>. Рекомендуем: <strong>${formatCurrency(autoRound)}</strong>.`;
+        if (statusPill) statusPill.innerHTML = '<span class="dot" style="background:#dc2626;"></span><span style="color:#dc2626;">Дефицит капитала</span>';
+        if (syncHint) {
+          syncHint.style.display = 'flex';
+          if (hintRecVal) hintRecVal.textContent = formatCurrency(autoRound);
+        }
+      } else {
+        if (elDesc) elDesc.innerHTML = `Заложено с запасом (расчетная яма <strong>${formatCurrency(cashDeficitAbs)}</strong>, рекомендация <strong>${formatCurrency(autoRound)}</strong>).`;
+        if (statusPill) statusPill.innerHTML = '<span class="dot green"></span><span>Капитал с запасом</span>';
+        if (syncHint) {
+          syncHint.style.display = 'flex';
+          if (hintRecVal) hintRecVal.textContent = formatCurrency(autoRound);
+        }
+      }
     } else {
-      if (elSum) elSum.textContent = '0 ₽ (Bootstrap)';
-      if (elDesc) elDesc.innerHTML = `Проект самоокупаем со старта за счет кэша фаундера <strong>${formatCurrency(rawCapital)}</strong>.`;
+      if (elDesc) elDesc.innerHTML = `Проект самоокупаем со старта на кэше фаундера <strong>${formatCurrency(rawCapital)}</strong>.`;
+      if (statusPill) statusPill.innerHTML = '<span class="dot green"></span><span>Самоокупаем (Bootstrap)</span>';
+      if (syncHint) syncHint.style.display = 'none';
     }
 
-    if (elEq) elEq.textContent = `${recShareMin}% – ${recShareMax}%`;
-    if (elEqDesc) elEqDesc.innerHTML = `Справедливая оценка Post-Money: <strong>${formatMln(avgValuation + autoRound)}</strong> (контроль у фаундера).`;
+    if (elEq) elEq.textContent = `${curSharePct}% (Рекомендация: ${recShareMin}–${recShareMax}%)`;
+    if (elEqDesc) elEqDesc.innerHTML = `Post-Money оценка: <strong>${formatMln(avgValuation + curInvest)}</strong> (доля фаундера ${(100 - curSharePct).toFixed(0)}%).`;
 
     if (elIrr) elIrr.textContent = irrStr;
-    if (elIrrDesc) elIrrDesc.innerHTML = `Венчурный IRR (капитализация + дивиденды). Див. доходность: <strong>${divYieldY3}%/год</strong> к Году 3.`;
+    if (elIrrDesc) elIrrDesc.innerHTML = `Венчурный IRR на вложенные <strong>${formatCurrency(curInvest)}</strong>. Див. доходность: <strong>${divYieldY3}%/год</strong> к Году 3.`;
 
     if (elRet) elRet.textContent = `${moicY5.toFixed(1)}x MOIC / Год 5`;
-    if (elRetDesc) elRetDesc.innerHTML = `Доля инвестора к Году 5: <strong>${formatCurrency(investorShareValY5)}</strong> + дивиденды <strong>${formatCurrency(invDivY3Monthly)}/мес</strong>.`;
+    if (elRetDesc) elRetDesc.innerHTML = `Возврат инвестору: <strong>${formatCurrency(totalInvestorReturn)}</strong> (доля ${formatCurrency(investorShareValY5)} + див. ${formatCurrency(totalInvDividends5Y)}).`;
 
-    const tr1 = Math.round((autoRound || curInvest) * 0.4);
-    const tr2 = (autoRound || curInvest) - tr1;
+    const tr1 = Math.round(curInvest * 0.4);
+    const tr2 = curInvest - tr1;
     if (elTr1) elTr1.textContent = `${formatCurrency(tr1)} (40%)`;
     if (elTr2) elTr2.textContent = `${formatCurrency(tr2)} (60%)`;
   }
+
 
   initChartModalEvents();
   
@@ -1856,6 +1916,40 @@ document.addEventListener('DOMContentLoaded', () => {
     inputs.investment.value = autoRound;
     inputs.investorShare.value = 15;
     recalculate();
+  });
+
+  
+  // Auto-Round Toggle & Apply Handlers
+  const toggleAutoRound = document.getElementById('toggle-auto-round');
+  const btnApplyRec = document.getElementById('btn-apply-rec');
+
+  if (toggleAutoRound) {
+    toggleAutoRound.addEventListener('change', (e) => {
+      isAutoRoundEnabled = e.target.checked;
+      if (isAutoRoundEnabled && activeCalculationResult) {
+        const req = calculateRequiredRound(activeCalculationResult);
+        inputs.investment.value = req.autoRound || 1000000;
+        recalculate();
+      }
+    });
+  }
+
+  if (btnApplyRec) {
+    btnApplyRec.addEventListener('click', () => {
+      if (activeCalculationResult) {
+        const req = calculateRequiredRound(activeCalculationResult);
+        inputs.investment.value = req.autoRound || 1000000;
+        if (toggleAutoRound) toggleAutoRound.checked = true;
+        isAutoRoundEnabled = true;
+        recalculate();
+      }
+    });
+  }
+
+  // If user manually changes investment input, turn off auto toggle
+  inputs.investment.addEventListener('input', () => {
+    if (toggleAutoRound) toggleAutoRound.checked = false;
+    isAutoRoundEnabled = false;
   });
 
   loadPreset('saas');
