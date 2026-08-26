@@ -702,22 +702,23 @@ input:checked + .slider.round:before {
 }
 
 /* ══════════════════════════════════════════
-   STATEMENTS PANEL & TABLES
+   STATEMENTS PANEL & INSTITUTIONAL TABLES
    ══════════════════════════════════════════ */
 .statements-panel {
   background: #ffffff;
   border: 1px solid var(--border);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 }
 
 .tab-buttons-row {
   display: flex;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 2px solid var(--border);
   background: var(--bg-alt);
   overflow-x: auto;
 }
 
 .tab-btn {
-  padding: 12px 18px;
+  padding: 14px 22px;
   font-family: var(--font);
   font-size: 0.82rem;
   font-weight: 600;
@@ -730,7 +731,7 @@ input:checked + .slider.round:before {
   white-space: nowrap;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .tab-btn:hover {
@@ -742,6 +743,10 @@ input:checked + .slider.round:before {
   background: var(--black);
   color: #ffffff;
   font-weight: 700;
+}
+
+.tab-btn.active i {
+  color: var(--green);
 }
 
 .tab-content {
@@ -759,72 +764,139 @@ input:checked + .slider.round:before {
   -webkit-overflow-scrolling: touch;
 }
 
+/* Institutional Clean Table Styling */
 .fin-table {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
+  line-height: 1.4;
 }
 
-.fin-table th {
-  background: var(--bg-alt);
-  padding: 10px 14px;
+/* Table Header */
+.fin-table thead th {
+  background: #f4f4f5;
+  padding: 13px 16px;
   font-family: var(--mono);
   font-size: 0.72rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--gray);
-  border-bottom: 1px solid var(--border);
+  letter-spacing: 0.05em;
+  color: var(--black);
+  border-bottom: 2px solid #27272a;
+  border-right: 1px solid #e4e4e7;
   white-space: nowrap;
 }
 
+.fin-table thead th:last-child {
+  border-right: none;
+}
+
+/* Base Cells */
 .fin-table td {
-  padding: 9px 14px;
-  border-bottom: 1px solid var(--border);
+  padding: 12px 16px;
+  border-bottom: 1px solid #e4e4e7;
+  border-right: 1px solid #f4f4f5;
   font-family: var(--mono);
   white-space: nowrap;
-  color: #27272a;
+  color: #18181b;
+  font-variant-numeric: tabular-nums;
+  transition: background 0.1s ease;
 }
 
-.fin-table tr:hover td {
-  background: #fafafa;
+.fin-table td:last-child {
+  border-right: none;
 }
 
+/* Zebra Striping on Data Rows */
+.fin-table tbody tr:nth-child(even) td {
+  background-color: #fafafc;
+}
+
+/* Hover Row Effect */
+.fin-table tbody tr:hover td {
+  background-color: #f1f5f9 !important;
+}
+
+/* Section Header Rows (Categories) */
 .fin-table tr.section-row td {
-  background: #f4f4f5;
-  font-family: var(--font);
-  font-size: 0.78rem;
+  background: #27272a !important;
+  color: #ffffff !important;
+  font-family: var(--mono);
+  font-size: 0.74rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--black);
-  padding: 10px 14px;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+  letter-spacing: 0.06em;
+  padding: 11px 16px;
+  border-top: 2px solid #18181b;
+  border-bottom: 1px solid #3f3f46;
+  border-right: none;
 }
 
-.fin-table td.col-name {
+.fin-table tr.section-row td::before {
+  content: "■ ";
+  color: var(--green);
+  margin-right: 6px;
+  font-size: 0.7rem;
+}
+
+/* First Column: Metric Name */
+.fin-table td.col-name,
+.fin-table tbody tr:not(.section-row) td:first-child {
   font-family: var(--font);
+  font-weight: 600;
+  color: #09090b;
+  min-width: 260px;
+  padding-left: 20px;
+}
+
+/* Unit Column (Col 2 in Unit economics) */
+.fin-table tbody tr:not(.section-row) td:nth-child(2) {
+  color: #71717a;
+  font-size: 0.75rem;
+}
+
+/* Values Alignment & Weight */
+.fin-table tbody tr:not(.section-row) td:nth-child(n+3) {
+  font-family: var(--mono);
   font-weight: 500;
-  color: #27272a;
-  min-width: 220px;
 }
 
+/* Highlight / Total Rows (EBITDA, Net Profit, LTV/CAC, Cash End) */
 .fin-table tr.row-highlight td {
-  font-weight: 700;
-  background: #fafafa;
-  border-top: 1.5px solid var(--black);
-  border-bottom: 1.5px solid var(--black);
+  font-weight: 700 !important;
+  background: #f8fafc !important;
+  border-top: 1.5px solid #09090b;
+  border-bottom: 1.5px solid #09090b;
+  color: #09090b;
 }
 
+.fin-table tr.row-highlight td.col-name,
+.fin-table tr.row-highlight td:first-child {
+  font-weight: 700 !important;
+  color: #09090b;
+}
+
+/* Financial Semantic Colors */
 .fin-table td.val-green,
 .fin-table .val-green {
-  color: #059669;
+  color: #059669 !important;
+  font-weight: 700;
 }
 
 .fin-table td.val-red,
 .fin-table .val-red {
-  color: #dc2626;
+  color: #dc2626 !important;
+  font-weight: 700;
+}
+
+/* Benchmark / Explanations Column (Last Column) */
+.fin-table tbody tr:not(.section-row) td:last-child {
+  font-family: var(--font);
+  color: #71717a;
+  font-size: 0.76rem;
+  font-weight: 400;
+  padding-right: 20px;
 }
 
 /* ══════════════════════════════════════════
