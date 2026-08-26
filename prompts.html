@@ -2892,30 +2892,15 @@ You are an enterprise systems auditor applying Eliyahu Goldratt&#x27;s Theory of
     let activeFilter = 'all';
     let currentGlobalLang = 'ru';
 
-    // Global Language Toggle
+    // Global Language Toggle (Switches ONLY the prompt code texts, keeping all site UI in Russian)
     function setGlobalLang(lang) {
       currentGlobalLang = lang;
       
       document.getElementById('btnLangRu').classList.toggle('active', lang === 'ru');
       document.getElementById('btnLangEn').classList.toggle('active', lang === 'en');
 
-      // Update Search Placeholder & Titles if needed
-      const searchInput = document.getElementById('promptSearch');
-      if (lang === 'en') {
-        searchInput.placeholder = "Search role, prompt objective, or keywords (e.g. legal, Reels, SPIN, taxes, Nginx)...";
-        document.getElementById('heroTitle').innerText = "System Prompts Library";
-        document.getElementById('heroSubtitle').innerHTML = "37 deep, production-grade system prompts for <strong>ChatGPT</strong>, <strong>Claude</strong>, <strong>Gemini</strong>, and <strong>DeepSeek</strong> in Russian and English. Engineered via the <strong>GRACEF</strong> cognitive framework with built-in hallucination safeguards.";
-        document.getElementById('langSwitchLabel').innerText = "Prompts Language:";
-      } else {
-        searchInput.placeholder = "Поиск роли, задачи или ключевого слова (напр. юрист, Reels, SPIN, налоги, Nginx)...";
-        document.getElementById('heroTitle').innerText = "Библиотека Системных Промптов";
-        document.getElementById('heroSubtitle').innerHTML = "37 глубоких системных инструкций для <strong>ChatGPT</strong>, <strong>Claude</strong>, <strong>Gemini</strong> и <strong>DeepSeek</strong> на русском и английском языках. Спроектированы по когнитивному фреймворку <strong>GRACEF</strong> со встроенными защитами от галлюцинаций.";
-        document.getElementById('langSwitchLabel').innerText = "Язык промптов:";
-      }
-
-      // Switch every card to the chosen language
+      // Switch every card's prompt code content to chosen language
       document.querySelectorAll('.prompt-card').forEach(card => {
-        const num = card.id.split('-')[0] || '';
         const numPadded = card.querySelector('.prompt-num').innerText.replace('#', '');
         const cardBtn = card.querySelector(`.card-lang-btn[data-lang="${lang}"]`);
         if (cardBtn) {
@@ -2926,7 +2911,7 @@ You are an enterprise systems auditor applying Eliyahu Goldratt&#x27;s Theory of
       filterPrompts();
     }
 
-    // Local Card-level Language Switch
+    // Local Card-level Language Switch (Switches ONLY the code prompt content)
     function toggleCardLang(num, lang, btn) {
       const card = btn.closest('.prompt-card');
       if (!card) return;
@@ -2935,25 +2920,12 @@ You are an enterprise systems auditor applying Eliyahu Goldratt&#x27;s Theory of
       card.querySelectorAll('.card-lang-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
-      // Update Card Title & Category Tag
-      const titleElem = card.querySelector('.prompt-title');
-      const catElem = card.querySelector('.prompt-category-tag');
+      // Update ONLY the prompt code text inside the dark code block
       const codeElem = card.querySelector('.prompt-code-content');
-      const copyLabel = card.querySelector('.copy-label');
-      const expandBtn = card.querySelector('.btn-expand-prompt');
-
       if (lang === 'en') {
-        titleElem.innerText = titleElem.getAttribute('data-title-en');
-        catElem.innerText = catElem.getAttribute('data-cat-en');
         codeElem.innerText = codeElem.getAttribute('data-prompt-en');
-        if (copyLabel) copyLabel.innerText = copyLabel.getAttribute('data-label-en');
-        if (expandBtn) expandBtn.innerText = (codeElem.style.maxHeight === 'none') ? expandBtn.getAttribute('data-collapse-en') : expandBtn.getAttribute('data-expand-en');
       } else {
-        titleElem.innerText = titleElem.getAttribute('data-title-ru');
-        catElem.innerText = catElem.getAttribute('data-cat-ru');
         codeElem.innerText = codeElem.getAttribute('data-prompt-ru');
-        if (copyLabel) copyLabel.innerText = copyLabel.getAttribute('data-label-ru');
-        if (expandBtn) expandBtn.innerText = (codeElem.style.maxHeight === 'none') ? expandBtn.getAttribute('data-collapse-ru') : expandBtn.getAttribute('data-expand-ru');
       }
     }
 
@@ -2971,12 +2943,13 @@ You are an enterprise systems auditor applying Eliyahu Goldratt&#x27;s Theory of
 
       cards.forEach(card => {
         const cat = card.getAttribute('data-category');
-        const keywords = card.getAttribute('data-keywords') || '';
-        const titleText = card.querySelector('.prompt-title').innerText.toLowerCase();
+        const keywords = (card.getAttribute('data-keywords') || '').toLowerCase();
+        const titleRu = (card.querySelector('.prompt-title').getAttribute('data-title-ru') || '').toLowerCase();
+        const titleEn = (card.querySelector('.prompt-title').getAttribute('data-title-en') || '').toLowerCase();
         const codeText = card.querySelector('.prompt-code-content').innerText.toLowerCase();
         
         const matchesCat = (activeFilter === 'all' || cat === activeFilter);
-        const matchesQuery = (!query || keywords.includes(query) || titleText.includes(query) || codeText.includes(query));
+        const matchesQuery = (!query || keywords.includes(query) || titleRu.includes(query) || titleEn.includes(query) || codeText.includes(query));
 
         if (matchesCat && matchesQuery) {
           card.style.display = 'flex';
@@ -2997,10 +2970,9 @@ You are an enterprise systems auditor applying Eliyahu Goldratt&#x27;s Theory of
         btn.classList.add('copied');
         const label = btn.querySelector('.copy-label');
         const oldText = label.innerText;
-        label.innerText = (currentGlobalLang === 'en') ? 'Copied!' : 'Скопировано!';
+        label.innerText = 'Скопировано!';
         
-        const toastMsg = (currentGlobalLang === 'en') ? '✓ Prompt #' + num + ' copied to clipboard!' : '✓ Промпт #' + num + ' скопирован в буфер обмена!';
-        showToast(toastMsg);
+        showToast('✓ Промпт #' + num + ' скопирован в буфер обмена!');
 
         setTimeout(() => {
           btn.classList.remove('copied');
@@ -3013,15 +2985,12 @@ You are an enterprise systems auditor applying Eliyahu Goldratt&#x27;s Theory of
 
     function toggleExpand(num, btn) {
       const box = document.getElementById('prompt-text-' + num);
-      const card = btn.closest('.prompt-card');
-      const isEn = card.querySelector('.card-lang-btn[data-lang="en"]').classList.contains('active');
-
       if (box.style.maxHeight === 'none') {
         box.style.maxHeight = '220px';
-        btn.innerText = isEn ? btn.getAttribute('data-expand-en') : btn.getAttribute('data-expand-ru');
+        btn.innerText = 'Развернуть полный промпт ↓';
       } else {
         box.style.maxHeight = 'none';
-        btn.innerText = isEn ? btn.getAttribute('data-collapse-en') : btn.getAttribute('data-collapse-ru');
+        btn.innerText = 'Свернуть ↑';
       }
     }
 
@@ -3032,6 +3001,7 @@ You are an enterprise systems auditor applying Eliyahu Goldratt&#x27;s Theory of
       setTimeout(() => {
         toast.classList.remove('show');
       }, 2600);
+    }, 2600);
     }
   </script>
 </body>
