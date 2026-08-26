@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Венчурная Финмодель 5.0 Pro & Unit-экономика — Михаил Пузырёв</title>
+  <meta name="description" content="Интерактивная 5-летняя венчурная финансовая модель для бизнеса и стартапов: 28 метрик Unit-экономики, 3 сценария (Консервативный/Базовый/Оптимистичный), P&L, Cash Flow, DCF оценка и экспорт в Excel.">
+  <meta name="robots" content="index, follow">
+  <!-- Favicon Suite -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-title" content="Михаил Пузырёв">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="canonical" href="https://a-sage.ru/calculator-finmodel">
+
+  <!-- OpenGraph / Social Media -->
+  <meta property="og:title" content="Венчурная Финмодель 5.0 Pro & Unit-экономика — Михаил Пузырёв">
+  <meta property="og:description" content="Институциональный расчет бизнеса на 5 лет: Unit-экономика, 3 сценария, P&L, Cash Flow, DCF капитализация и экспорт в Excel.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://a-sage.ru/calculator-finmodel">
+  <meta property="og:image" content="https://a-sage.ru/img/mikhail_about.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Венчурная Финмодель 5.0 Pro — Михаил Пузырёв">
+  <meta name="twitter:description" content="5-летняя интерактивная финмодель бизнеса и стартапа с выгрузкой в Excel.">
+  <meta name="twitter:image" content="https://a-sage.ru/img/mikhail_about.jpg">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/finmodel.css">
+
+  <!-- Chart.js & SheetJS for Excel generation -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Венчурная Финмодель 5.0 Pro",
+    "url": "https://a-sage.ru/calculator-finmodel",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires JavaScript",
+    "description": "5-летняя финансовая модель с расчетом Unit-экономики, P&L, Cash Flow, оценки DCF и экспортом в Excel.",
+    "author": {
+      "@type": "Person",
+      "name": "Михаил Пузырёв",
+      "url": "https://a-sage.ru/"
+    }
+  }
+  </script>
+
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();
+    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(101414837, "init", {
+         clickmap:true,
+         trackLinks:true,
+         accurateTrackBounce:true,
+         webvisor:true
+    });
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/101414837" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+</head>
+<body class="dark-theme">
+
+  <!-- HEADER NAVIGATION -->
+  <header class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <strong>Михаил Пузыр<span class="accent-yo">ё</span>в</strong>
+        <span class="nav-logo-badge">БАЗА ЗНАНИЙ</span>
+      </a>
+
+      <ul class="nav-links">
+        <li class="nav-dropdown">
+          <a href="#" class="nav-dropdown-toggle"><span class="nav-link-text">Услуги</span> <svg class="nav-arrow" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <ul class="dropdown-menu">
+            <li><a href="tracking"><span class="nav-link-text">Трекинг & Эдвайзинг</span></a></li>
+            <li><a href="mentoring"><span class="nav-link-text">Наставничество 1-на-1</span></a></li>
+            <li><a href="club"><span class="nav-link-text">Клуб & База Знаний</span></a></li>
+            <li><a href="corporate"><span class="nav-link-text">Корпорациям</span></a></li>
+            <li><a href="automation"><span class="nav-link-text">Внедрение руками</span></a></li>
+          </ul>
+        </li>
+        <li class="nav-dropdown">
+          <a href="#" class="nav-dropdown-toggle active"><span class="nav-link-text">База Знаний</span> <svg class="nav-arrow" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <ul class="dropdown-menu">
+            <li><a href="prompts"><span class="nav-link-text">Системные промпты</span> <span class="badge-count green">37</span></a></li>
+            <li><a href="calculators" class="active"><span class="nav-link-text">Калькуляторы бизнеса</span> <span class="badge-count green">2</span></a></li>
+            <li><a href="club"><span class="nav-link-text">Закрытая база Клуба 🔒</span></a></li>
+          </ul>
+        </li>
+        <li><a href="about"><span class="nav-link-text">Обо&nbsp;мне & Кейсы</span></a></li>
+      </ul>
+
+      <div class="nav-right">
+        <a href="booking" class="nav-cta">Забронировать слот ↗</a>
+        <button class="nav-burger" aria-label="Открыть меню">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu">
+    <a href="/">Главная</a>
+    <div class="mobile-menu-section">
+      <span class="mobile-menu-title">Услуги</span>
+      <a href="tracking">Трекинг & Эдвайзинг</a>
+      <a href="mentoring">Наставничество 1-на-1</a>
+      <a href="club">Клуб & База Знаний</a>
+      <a href="corporate">Корпорациям</a>
+      <a href="automation">Внедрение руками</a>
+    </div>
+    <div class="mobile-menu-section">
+      <span class="mobile-menu-title">База Знаний</span>
+      <a href="prompts">Системные промпты (37 ролей)</a>
+      <a href="calculators">Калькуляторы бизнеса (2)</a>
+      <a href="club">Закрытая база Клуба 🔒</a>
+    </div>
+    <a href="about">Обо&nbsp;мне & Кейсы</a>
+    <a href="booking" class="m-cta">Забронировать слот ↗</a>
+  </div>
+
+  <main style="padding-top: 68px;">
+    <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-bg-glow"></div>
+    <div class="container hero-content">
+      <div class="badge-pill">
+        <span class="badge-dot"></span>
+        <span>РАЗДЕЛ: ФИНАНСОВЫЙ ИНЖИНИРИНГ И ИНСТРУМЕНТЫ СТАРТАПА</span>
+      </div>
+      <h1 class="hero-title">
+        Интерактивная Финмодель <span class="gradient-text">5.0 Pro</span>
+      </h1>
+      <p class="hero-subtitle">
+        Институциональный расчет бизнеса на <strong>5 лет (60 месяцев)</strong>: 28 метрик Unit-экономики, 
+        3 сценария, P&L, Cash Flow, Баланс, оценка капитализации DCF, дивиденды фаундера и экспорт в Excel.
+      </p>
+
+      <div class="hero-stats-row">
+        <div class="stat-item">
+          <span class="stat-num">28+</span>
+          <span class="stat-label">Метрик Unit-экономики</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">3</span>
+          <span class="stat-label">Сценария в реальном времени</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">60</span>
+          <span class="stat-label">Месяцев помесячного прогноза</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">0</span>
+          <span class="stat-label">Ошибок и формул «с потолка»</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Calculator Workspace -->
+  <main class="main-container">
+    <div class="workspace-layout">
+
+      <!-- LEFT COLUMN: Smart Wizard Inputs -->
+      <aside class="sidebar-inputs">
+        <div class="panel-card glass-panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fa-solid fa-sliders"></i>
+              <h2>Панель параметров</h2>
+            </div>
+            <button id="btn-reset-defaults" class="btn-link" title="Сбросить на значения по умолчанию">
+              <i class="fa-solid fa-rotate-left"></i> Сброс
+            </button>
+          </div>
+
+          <!-- Step 1: Niche Presets -->
+          <div class="wizard-group">
+            <label class="group-label">
+              <span>1. Выберите нишу бизнеса</span>
+              <span class="tooltip-icon" data-tooltip="Автоматически загрузит реальные отраслевые конверсии, средние чеки и ставки рекламы"><i class="fa-solid fa-circle-question"></i></span>
+            </label>
+            <div class="preset-grid">
+              <button type="button" class="preset-btn active" data-preset="saas">
+                <i class="fa-solid fa-cloud"></i>
+                <span>SaaS / IT-сервис</span>
+              </button>
+              <button type="button" class="preset-btn" data-preset="edtech">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <span>EdTech / Курсы</span>
+              </button>
+              <button type="button" class="preset-btn" data-preset="horeca">
+                <i class="fa-solid fa-mug-saucer"></i>
+                <span>Коворкинг / Кафе</span>
+              </button>
+              <button type="button" class="preset-btn" data-preset="ecom">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span>E-commerce</span>
+              </button>
+              <button type="button" class="preset-btn" data-preset="b2b">
+                <i class="fa-solid fa-briefcase"></i>
+                <span>B2B Услуги</span>
+              </button>
+              <button type="button" class="preset-btn" data-preset="mfg">
+                <i class="fa-solid fa-industry"></i>
+                <span>Производство</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 2: Project Capital & Start -->
+          <div class="wizard-group">
+            <div class="accordion-header" data-target="group-capital">
+              <span class="acc-title"><i class="fa-solid fa-vault"></i> 2. Стартовый капитал & Налоги</span>
+              <i class="fa-solid fa-chevron-down acc-arrow"></i>
+            </div>
+            <div class="accordion-content" id="group-capital">
+              <div class="input-grid">
+                <div class="input-field">
+                  <label for="inp-capital">
+                    Собственный кэш (₽)
+                    <span class="tooltip-icon" data-tooltip="Деньги основателей на расчетном счете на старте"><i class="fa-solid fa-circle-question"></i></span>
+                  </label>
+                  <input type="number" id="inp-capital" value="500000" step="50000">
+                </div>
+                <div class="input-field">
+                  <label for="inp-investment">
+                    Инвестиции (₽)
+                    <span class="tooltip-icon" data-tooltip="Сумма привлекаемого раунда инвестиций"><i class="fa-solid fa-circle-question"></i></span>
+                  </label>
+                  <input type="number" id="inp-investment" value="3000000" step="500000">
+                </div>
+                <div class="input-field">
+                  <label for="inp-investor-share">
+                    Доля инвестора (%)
+                    <span class="tooltip-icon" data-tooltip="Размер доли, отдаваемой инвестору за раунд"><i class="fa-solid fa-circle-question"></i></span>
+                  </label>
+                  <input type="number" id="inp-investor-share" value="15" min="0" max="49" step="1">
+                </div>
+                <div class="input-field">
+                  <label for="inp-tax-regime">
+                    Налоговый режим
+                    <span class="tooltip-icon" data-tooltip="Ставки налогов РФ 2025/2026 гг."><i class="fa-solid fa-circle-question"></i></span>
+                  </label>
+                  <select id="inp-tax-regime">
+                    <option value="usn6">УСН «Доходы» 6%</option>
+                    <option value="usn15">УСН «Доходы - Расходы» 15%</option>
+                    <option value="it_usn6" selected>IT-льготы (УСН 6% + 7.6% ФОТ)</option>
+                    <option value="osno">ОСНО (Прибыль 25% + НДС 20%)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3: Marketing & Unit Economics -->
+          <div class="wizard-group">
+            <div class="accordion-header" data-target="group-unit">
+              <span class="acc-title"><i class="fa-solid fa-bullseye"></i> 3. Маркетинг и Воронка (Unit)</span>
+              <i class="fa-solid fa-chevron-down acc-arrow"></i>
+            </div>
+            <div class="accordion-content" id="group-unit">
+              
+              <!-- Zero-CAC / Organic toggle -->
+              <div class="toggle-row">
+                <label class="switch">
+                  <input type="checkbox" id="toggle-organic-mode">
+                  <span class="slider round"></span>
+                </label>
+                <span class="toggle-label">Старт без платной рекламы (на личных продажах / нетворкинге)</span>
+              </div>
+
+              <div class="input-grid">
+                <div class="input-field" id="wrap-ad-budget">
+                  <label for="inp-ad-budget">
+                    Бюджет на рекламу (₽/мес)
+                    <span class="tooltip-icon" data-tooltip="Стартовый бюджет маркетинга в первый месяц"><i class="fa-solid fa-circle-question"></i></span>
+                  </label>
+                  <input type="number" id="inp-ad-budget" value="150000" step="10000">
+                </div>
+
+                <div class="input-field">
+                  <label for="inp-budget-growth">
+                    Рост бюджета (% в мес)
+                    <span class="tooltip-icon" data-tooltip="Ежемесячное увеличение бюджета рекламы за счет реинвестирования"><i class="fa-solid fa-circle-question"></i></span>
+                  </label>
+                  <input type="number" id="inp-budget-growth" value="8" min="0" max="50" step="1">
+                </div>
+
+                <div class="input-field" id="wrap-cpc">
+                  <label for="inp-cpc">
+                    Стоимость клика CPC (₽)
+                    <span class="tooltip-icon" data-tooltip="Средняя стоимость 1 перехода/посетителя"><i class="fa-solid fa-circle-question"></i></span>
+                  </label>
+                  <input type="number" id="inp-cpc" value="35" step="5">
+                </div>
+
+                <div class="input-field">
+                  <label for="inp-cr1">
+                    Конверсия в Лид CR1 (%)
+                    <span class="tooltip-icon" data-tooltip="Процент посетителей сайта, оставивших заявку"><i class="fa-solid fa-circle-question"></i></span>
+                  </label>
+                  <input type="number" id="inp-cr1" value="4.0" step="0.5">
+                </div>
+
+                <div class="input-field">
+                  <label for="inp-cr2">
+                    Конверсия в Оплату CR2 (%)
+                    <span class="tooltip-icon" data-tooltip="Процент лидов, совершивших первую оплату"><i class="fa-solid fa-circle-question"></i></span>
+                  </label>
+                  <input type="number" id="inp-cr2" value="25.0" step="1.0">
+                </div>
+
+                <div class="input-field">
+                  <label for="inp-aov">
+                    Средний чек / Подписка (₽)
+                    <span class="tooltip-icon" data-tooltip="Сумма одной покупки или стоимость месячной подписки"><i class="fa-solid fa-circle-question"></i></span>
+                  </label>
+                  <input type="number" id="inp-aov" value="12500" step="500">
+                </div>
+
+                <div class="input-field">
+                  <label for="inp-churn">
+                    Ежемесячный отток Churn (%)
+                    <span class="tooltip-icon" data-tooltip="Процент уходящих подписчиков каждый месяц. Для разовых продаж оставьте 100%"><i class="fa-solid fa-circle-question"></i></span>
+                  </label>
+                  <input type="number" id="inp-churn" value="5.0" min="0" max="100" step="0.5">
+                </div>
+
+                <div class="input-field">
+                  <label for="inp-cogs-pct">
+                    Себестоимость COGS (% от чека)
+                    <span class="tooltip-icon" data-tooltip="Прямые затраты на производство/лицензии/выполнение заказа"><i class="fa-solid fa-circle-question"></i></span>
+                  </label>
+                  <input type="number" id="inp-cogs-pct" value="15" min="0" max="90" step="5">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 4: Staff & Payroll (ФОТ) -->
+          <div class="wizard-group">
+            <div class="accordion-header" data-target="group-staff">
+              <span class="acc-title"><i class="fa-solid fa-users"></i> 4. Команда & ФОТ</span>
+              <i class="fa-solid fa-chevron-down acc-arrow"></i>
+            </div>
+            <div class="accordion-content" id="group-staff">
+              <div class="input-grid">
+                <div class="input-field">
+                  <label for="inp-founder-salary">
+                    Оклад фаундера (₽/мес)
+                    <span class="tooltip-icon" data-tooltip="Зарплата основателя с 1-го месяца"><i class="fa-solid fa-circle-question"></i></span>
+                  </label>
+                  <input type="number" id="inp-founder-salary" value="150000" step="25000">
+                </div>
+
+                <div class="input-field">
+                  <label for="inp-team-base">
+                    ФОТ стартовой команды (₽/мес)
+                    <span class="tooltip-icon" data-tooltip="Суммарная зарплата разработчиков/менеджеров на старте"><i class="fa-solid fa-circle-question"></i></span>
+                  </label>
+                  <input type="number" id="inp-team-base" value="250000" step="25000">
+                </div>
+
+                <div class="input-field">
+                  <label for="inp-payroll-growth">
+                    Рост штата (% в год)
+                    <span class="tooltip-icon" data-tooltip="Средний ежегодный рост расходов на персонал"><i class="fa-solid fa-circle-question"></i></span>
+                  </label>
+                  <input type="number" id="inp-payroll-growth" value="25" min="0" max="100" step="5">
+                </div>
+
+                <div class="input-field">
+                  <label for="inp-sales-bonus">
+                    Бонус сейлзов (% от выручки)
+                    <span class="tooltip-icon" data-tooltip="Процент менеджеров по продажам за закрытие"><i class="fa-solid fa-circle-question"></i></span>
+                  </label>
+                  <input type="number" id="inp-sales-bonus" value="5" min="0" max="25" step="1">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 5: CAPEX & OPEX -->
+          <div class="wizard-group">
+            <div class="accordion-header" data-target="group-opex">
+              <span class="acc-title"><i class="fa-solid fa-building"></i> 5. CAPEX & Постоянный OPEX</span>
+              <i class="fa-solid fa-chevron-down acc-arrow"></i>
+            </div>
+            <div class="accordion-content" id="group-opex">
+              <div class="input-grid">
+                <div class="input-field">
+                  <label for="inp-capex">
+                    Инвестиции на запуск CAPEX (₽)
+                    <span class="tooltip-icon" data-tooltip="Затраты на разработку MVP, оборудование, ремонт, паушальный взнос"><i class="fa-solid fa-circle-question"></i></span>
+                  </label>
+                  <input type="number" id="inp-capex" value="1200000" step="100000">
+                </div>
+
+                <div class="input-field">
+                  <label for="inp-opex-fixed">
+                    Постоянный OPEX (₽/мес)
+                    <span class="tooltip-icon" data-tooltip="Аренда офиса, сервера, софт, бухгалтерия, связь"><i class="fa-solid fa-circle-question"></i></span>
+                  </label>
+                  <input type="number" id="inp-opex-fixed" value="95000" step="5000">
+                </div>
+
+                <div class="input-field">
+                  <label for="inp-acquiring">
+                    Эквайринг (% от платежа)
+                    <span class="tooltip-icon" data-tooltip="Комиссия банка за прием онлайн-платежей"><i class="fa-solid fa-circle-question"></i></span>
+                  </label>
+                  <input type="number" id="inp-acquiring" value="2.8" step="0.1">
+                </div>
+
+                <div class="input-field">
+                  <label for="inp-exit-multiple">
+                    Мультипликатор Exit (x EBITDA)
+                    <span class="tooltip-icon" data-tooltip="Оценка стоимости компании при продаже стратегическому покупателю"><i class="fa-solid fa-circle-question"></i></span>
+                  </label>
+                  <input type="number" id="inp-exit-multiple" value="7.5" step="0.5">
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </aside>
+
+      <!-- RIGHT COLUMN: Interactive Executive Dashboard -->
+      <section class="main-dashboard">
+        
+        <!-- Top Action Bar: Scenarios & Excel Export -->
+        <div class="dashboard-topbar glass-panel">
+          <div class="scenario-selector">
+            <span class="bar-label">СЦЕНАРИЙ:</span>
+            <div class="scenario-btn-group">
+              <button type="button" class="btn-scenario" data-scenario="pessimistic">
+                <i class="fa-solid fa-cloud-rain"></i> Пессимистичный (25%)
+              </button>
+              <button type="button" class="btn-scenario active" data-scenario="realistic">
+                <i class="fa-solid fa-sun"></i> Реалистичный (50%)
+              </button>
+              <button type="button" class="btn-scenario" data-scenario="optimistic">
+                <i class="fa-solid fa-rocket"></i> Оптимистичный (25%)
+              </button>
+            </div>
+          </div>
+
+          <button id="btn-export-excel" class="btn-export-excel">
+            <i class="fa-solid fa-file-excel"></i>
+            <span>Скачать модель в Excel (.XLSX)</span>
+          </button>
+        </div>
+
+        <!-- KPI Executive Grid -->
+        <div class="kpi-grid">
+          
+          <div class="kpi-card" id="kpi-breakeven">
+            <div class="kpi-icon"><i class="fa-solid fa-flag-checkered"></i></div>
+            <div class="kpi-data">
+              <span class="kpi-label">Точка безубыточности</span>
+              <span class="kpi-value" id="val-breakeven">5-й месяц</span>
+              <span class="kpi-sub" id="sub-breakeven">Выход в чистый операционный плюс</span>
+            </div>
+          </div>
+
+          <div class="kpi-card" id="kpi-runway">
+            <div class="kpi-icon"><i class="fa-solid fa-gas-pump"></i></div>
+            <div class="kpi-data">
+              <span class="kpi-label">Cash Runway (Запас хода)</span>
+              <span class="kpi-value text-success" id="val-runway">18+ мес.</span>
+              <span class="kpi-sub" id="sub-runway">Безрисковый запас ликвидности</span>
+            </div>
+          </div>
+
+          <div class="kpi-card" id="kpi-ltvcac">
+            <div class="kpi-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+            <div class="kpi-data">
+              <span class="kpi-label">Здоровье Unit: LTV / CAC</span>
+              <span class="kpi-value text-success" id="val-ltvcac">4.8x</span>
+              <span class="kpi-sub badge-good" id="sub-ltvcac">🟢 Отличный венчурный баланс</span>
+            </div>
+          </div>
+
+          <div class="kpi-card" id="kpi-valuation">
+            <div class="kpi-icon"><i class="fa-solid fa-gem"></i></div>
+            <div class="kpi-data">
+              <span class="kpi-label">Капитализация (Год 5)</span>
+              <span class="kpi-value gradient-text" id="val-valuation">184.5 млн ₽</span>
+              <span class="kpi-sub" id="sub-valuation">Оценка компании при продаже (Exit)</span>
+            </div>
+          </div>
+
+          <div class="kpi-card" id="kpi-dividends">
+            <div class="kpi-icon"><i class="fa-solid fa-money-bill-wave"></i></div>
+            <div class="kpi-data">
+              <span class="kpi-label">Дивиденды фаундера / мес</span>
+              <span class="kpi-value text-success" id="val-dividends">840 000 ₽</span>
+              <span class="kpi-sub" id="sub-dividends">Чистый кэш на руки к Году 3 (после налогов)</span>
+            </div>
+          </div>
+
+          <div class="kpi-card" id="kpi-payback">
+            <div class="kpi-icon"><i class="fa-solid fa-stopwatch"></i></div>
+            <div class="kpi-data">
+              <span class="kpi-label">Окупаемость рекламы (CAC)</span>
+              <span class="kpi-value" id="val-payback">1.8 мес.</span>
+              <span class="kpi-sub" id="sub-payback">Срок возврата затрат на маркетинг</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Interactive Sliders (What-If Analysis) -->
+        <div class="sliders-panel glass-panel">
+          <div class="sliders-header">
+            <h3><i class="fa-solid fa-wand-magic-sparkles"></i> Экспресс-моделирование «Что, если?»</h3>
+            <span class="sliders-hint">Двигайте ползунки для мгновенного пересчета 5-летнего прогноза</span>
+          </div>
+
+          <div class="slider-controls-grid">
+            
+            <div class="slider-item">
+              <div class="slider-label-row">
+                <span>Рекламный бюджет:</span>
+                <strong id="slider-budget-val">150 000 ₽/мес</strong>
+              </div>
+              <input type="range" id="slider-budget" min="50000" max="1500000" step="25000" value="150000">
+            </div>
+
+            <div class="slider-item">
+              <div class="slider-label-row">
+                <span>Конверсия воронки ($C_1 \times C_2$):</span>
+                <strong id="slider-cr-val">1.00%</strong>
+              </div>
+              <input type="range" id="slider-cr" min="0.2" max="5.0" step="0.1" value="1.0">
+            </div>
+
+            <div class="slider-item">
+              <div class="slider-label-row">
+                <span>Средний чек (AOV):</span>
+                <strong id="slider-aov-val">12 500 ₽</strong>
+              </div>
+              <input type="range" id="slider-aov" min="1000" max="150000" step="1000" value="12500">
+            </div>
+
+            <div class="slider-item">
+              <div class="slider-label-row">
+                <span>Отток клиентов (Monthly Churn):</span>
+                <strong id="slider-churn-val">5.0%</strong>
+              </div>
+              <input type="range" id="slider-churn" min="1.0" max="25.0" step="0.5" value="5.0">
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-grid">
+          
+          <div class="chart-box glass-panel">
+            <div class="chart-header">
+              <h4>Динамика Выручки, EBITDA и Чистой Прибыли (₽)</h4>
+              <span class="badge-tag">Горизонт 60 мес.</span>
+            </div>
+            <div class="chart-canvas-wrapper">
+              <canvas id="chart-revenue-ebitda"></canvas>
+            </div>
+          </div>
+
+          <div class="chart-box glass-panel">
+            <div class="chart-header">
+              <h4>Движение Денег (Cash Flow) и Остаток на счете (₽)</h4>
+              <span class="badge-tag">Контроль кассовых разрывов</span>
+            </div>
+            <div class="chart-canvas-wrapper">
+              <canvas id="chart-cashflow"></canvas>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Tabbed Financial Statements (5-Year Table) -->
+        <div class="statements-panel glass-panel">
+          
+          <div class="tab-buttons-row">
+            <button type="button" class="tab-btn active" data-tab="tab-unit">
+              <i class="fa-solid fa-calculator"></i> Полная Unit-экономика (28 метрик)
+            </button>
+            <button type="button" class="tab-btn" data-tab="tab-pnl">
+              <i class="fa-solid fa-chart-line"></i> Отчет P&L (Прибыли и Убытки)
+            </button>
+            <button type="button" class="tab-btn" data-tab="tab-cf">
+              <i class="fa-solid fa-money-bill-transfer"></i> Отчет Cash Flow (ДДС)
+            </button>
+            <button type="button" class="tab-btn" data-tab="tab-valuation">
+              <i class="fa-solid fa-trophy"></i> Капитализация vs Дивиденды
+            </button>
+          </div>
+
+          <!-- TAB 1: Complete Unit Economics -->
+          <div class="tab-content active" id="tab-unit">
+            <div class="table-responsive">
+              <table class="fin-table" id="table-unit-economics">
+                <thead>
+                  <tr>
+                    <th>Группа / Метрика</th>
+                    <th>Ед. изм.</th>
+                    <th>Старт (Месяц 1)</th>
+                    <th>Год 1</th>
+                    <th>Год 2</th>
+                    <th>Год 3</th>
+                    <th>Год 5</th>
+                    <th>Бенчмарк / Пояснение</th>
+                  </tr>
+                </thead>
+                <tbody id="tbody-unit-economics">
+                  <!-- Dynamically populated via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- TAB 2: P&L Statement -->
+          <div class="tab-content" id="tab-pnl">
+            <div class="table-responsive">
+              <table class="fin-table" id="table-pnl">
+                <thead>
+                  <tr>
+                    <th>Статья P&L</th>
+                    <th>Год 1</th>
+                    <th>Год 2</th>
+                    <th>Год 3</th>
+                    <th>Год 4</th>
+                    <th>Год 5</th>
+                    <th>Структура (%)</th>
+                  </tr>
+                </thead>
+                <tbody id="tbody-pnl">
+                  <!-- Dynamically populated via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- TAB 3: Cash Flow Statement -->
+          <div class="tab-content" id="tab-cf">
+            <div class="table-responsive">
+              <table class="fin-table" id="table-cf">
+                <thead>
+                  <tr>
+                    <th>Движение ДС</th>
+                    <th>Год 1</th>
+                    <th>Год 2</th>
+                    <th>Год 3</th>
+                    <th>Год 4</th>
+                    <th>Год 5</th>
+                    <th>Итого за 5 лет</th>
+                  </tr>
+                </thead>
+                <tbody id="tbody-cf">
+                  <!-- Dynamically populated via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- TAB 4: Valuation & Dividends -->
+          <div class="tab-content" id="tab-valuation">
+            <div class="table-responsive">
+              <table class="fin-table" id="table-valuation">
+                <thead>
+                  <tr>
+                    <th>Инвестиционный параметр</th>
+                    <th>Год 1</th>
+                    <th>Год 2</th>
+                    <th>Год 3</th>
+                    <th>Год 4</th>
+                    <th>Год 5</th>
+                  </tr>
+                </thead>
+                <tbody id="tbody-valuation">
+                  <!-- Dynamically populated via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+    </div>
+  </main>
+
+  <!-- Knowledge Base Educational Hub -->
+  <section class="knowledge-section" id="knowledge-base">
+    <div class="container">
+      
+      <div class="section-title-wrap">
+        <span class="badge-pill">МЕТОДОЛОГИЯ ФИНАНСОВОГО МОДЕЛИРОВАНИЯ SAGE</span>
+        <h2>База Знаний: Как управлять финансами стартапа</h2>
+        <p>Полное руководство для основателей, финансистов и инвесторов по чтению и защите финансовой модели</p>
+      </div>
+
+      <div class="knowledge-cards-grid">
+        
+        <article class="k-card glass-panel">
+          <div class="k-icon"><i class="fa-solid fa-user-tie"></i></div>
+          <h3>1. Как читать модель Основателю (CEO)</h3>
+          <p>
+            Главный фокус фаундера — <strong>Cash Runway</strong> (запас жизни до нуля на счете) и <strong>Точка безубыточности</strong>. 
+            Если модель показывает, что баланс уходит в минус на 4-м месяце, ваша задача — либо урезать OPEX, 
+            либо закрыть раунд инвестиций за 60 дней до наступления кассового разрыва.
+          </p>
+          <ul class="k-list">
+            <li>Никогда не путайте поступление предоплат в ДДС с признанием выручки в P&L.</li>
+            <li>Закладывайте зарплату фаундера с 1-го дня — бизнес не должен субсидироваться бесплатным трудом.</li>
+          </ul>
+        </article>
+
+        <article class="k-card glass-panel">
+          <div class="k-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+          <h3>2. На что смотрит Венчурный Инвестор</h3>
+          <p>
+            Инвестора интересует <strong>LTV/CAC > 3.0</strong>, окупаемость рекламы до 12 месяцев и оценка стоимости на выходе (Exit Valuation). 
+            Если у вас подписочная модель, фонд первым делом проверит <strong>Net Retention Rate (NRR)</strong> и отток Churn.
+          </p>
+          <ul class="k-list">
+            <li><strong>MoIC (Multiple on Invested Capital):</strong> сколько $ вернет каждый вложенный рубль.</li>
+            <li><strong>IRR:</strong> внутренняя норма доходности сделки с учетом горизонта выхода на 3-й или 5-й год.</li>
+          </ul>
+        </article>
+
+        <article class="k-card glass-panel">
+          <div class="k-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+          <h3>3. Налоги и Бухгалтерия (РФ 2025/2026)</h3>
+          <p>
+            Модель автоматически рассчитывает пороги налоговой реформы: лимиты УСН до 450 млн ₽, 
+            включение НДС 5% и 7% при выручке свыше 60 млн ₽, и льготные страховые взносы IT-компаний (7.6% вместо 30%).
+          </p>
+          <ul class="k-list">
+            <li>УСН «Доходы» 6% идеальна для высокомаржинального IT и консалтинга с долей расходов < 60%.</li>
+            <li>УСН «Доходы-Расходы» 15% выбирается для e-commerce и производства с тяжелым COGS.</li>
+          </ul>
+        </article>
+
+      </div>
+
+      <!-- FAQ Section -->
+      <div class="faq-container glass-panel">
+        <h3 class="faq-title"><i class="fa-solid fa-circle-question"></i> Частые вопросы начинающих предпринимателей</h3>
+        
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Что делать, если реклама в моей нише стала дороже в 2 раза?</span>
+            <i class="fa-solid fa-plus"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Переключите ползунок CPC в калькуляторе. Система покажет, выдержит ли Unit-экономика. Если LTV/CAC падает ниже 2.5x, необходимо либо увеличивать конверсию посадочной страницы ($C_1$), либо поднимать средний чек за счет пакетирования услуг и внедрения апсейлов.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Чем капитализационная модель отличается от дивидендной?</span>
+            <i class="fa-solid fa-plus"></i>
+          </button>
+          <div class="faq-answer">
+            <p>В <strong>капитализационной модели</strong> вся прибыль реинвестируется в гипер-рост для максимизации стоимости компании при продаже стратегу (Яндекс, Сбер, VK). В <strong>дивидендной модели</strong> компания формирует подушку безопасности (3 месяца OPEX) и регулярно выплачивает свободный денежный поток (FCFE) основателям на личную карту.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Как правильно презентовать этот Excel инвестору?</span>
+            <i class="fa-solid fa-plus"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Скачанный по кнопке файл Excel (.XLSX) уже оформлен по международному стандарту FAST Standard. Откройте лист «Панель управления», покажите инвестору Базовый сценарий и продемонстрируйте стресс-тест в Пессимистичном сценарии. Инвесторы ценят, когда основатель честно показывает риски.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  
+  </main>
+
+  <!-- CTA BANNER SECTION -->
+  <section class="section-cta" style="background: #09090b; color: #ffffff; padding: 80px 0; border-top: 1px solid var(--border-dark);">
+    <div class="container" style="text-align: center; max-width: 780px;">
+      <span class="hero-badge" style="background: rgba(16, 185, 129, 0.15); color: var(--green); border-color: rgba(16, 185, 129, 0.3);">
+        ЭКСПЕРТНЫЙ АУДИТ ФИНМОДЕЛИ
+      </span>
+      <h2 style="font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; letter-spacing: -0.03em; margin: 24px 0 16px; color: #ffffff;">
+        Нужна помощь с подготовкой инвестиционного меморандума?
+      </h2>
+      <p style="color: #a1a1aa; font-size: 1.05rem; line-height: 1.6; margin-bottom: 32px;">
+        На 40-минутном созвоне проверим сходимость вашей Unit-экономики, стресс-тестируем гипотезы и упакуем метрики для венчурных инвесторов.
+      </p>
+      <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+        <a href="booking" class="btn-primary" style="background: var(--green); color: #09090b; font-weight: 700; border: none; padding: 14px 28px; text-decoration: none; display: inline-block;">
+          Забронировать 40-мин разбор ↗
+        </a>
+        <a href="https://web.tribute.tg/s/O6I" target="_blank" rel="noopener" class="btn-secondary" style="background: transparent; color: #ffffff; border: 1px solid #3f3f46; padding: 14px 28px; text-decoration: none; display: inline-block;">
+          Вступить в закрытый Клуб
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-copy">
+        © 2026 Михаил Пузырёв. Официальная платформа Vibe Coding & ИИ.
+      </div>
+      <div class="footer-links">
+        <a href="privacy">Конфиденциальность</a>
+        <a href="terms">Оферта</a>
+        <a href="https://t.me/Michael_Sage" target="_blank" rel="noopener">Telegram</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/finmodel-engine.js"></script>
+</body>
+</html>
