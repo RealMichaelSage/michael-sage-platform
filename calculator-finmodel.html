@@ -40,22 +40,63 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
-  <!-- Schema.org JSON-LD -->
+  <!-- Schema.org JSON-LD (WebApplication & FAQPage) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Венчурная Финмодель 5.0 Pro",
-    "url": "https://a-sage.ru/calculator-finmodel",
-    "applicationCategory": "BusinessApplication",
-    "operatingSystem": "All",
-    "browserRequirements": "Requires JavaScript",
-    "description": "5-летняя финансовая модель с расчетом Unit-экономики, P&L, Cash Flow, оценки DCF и экспортом в Excel.",
-    "author": {
-      "@type": "Person",
-      "name": "Михаил Пузырёв",
-      "url": "https://a-sage.ru/"
-    }
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://a-sage.ru/#person",
+        "name": "Михаил Пузырёв",
+        "alternateName": ["Michael Sage", "Михаил Саж"],
+        "url": "https://a-sage.ru/",
+        "jobTitle": "ИИ-Архитектор, Hands-on Разработчик и Бизнес-Трекер"
+      },
+      {
+        "@type": "WebApplication",
+        "@id": "https://a-sage.ru/calculator-finmodel#app",
+        "name": "Венчурная Финмодель 5.0 Pro",
+        "url": "https://a-sage.ru/calculator-finmodel",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript",
+        "description": "5-летняя финансовая модель с расчетом Unit-экономики, P&L, Cash Flow, оценки DCF и экспортом в Excel.",
+        "author": {
+          "@id": "https://a-sage.ru/#person"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://a-sage.ru/calculator-finmodel#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Что делать, если реклама в моей нише стала дороже в 2 раза?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Переключите ползунок CPC в калькуляторе. Система покажет, выдержит ли Unit-экономика. Если LTV/CAC падает ниже 2.5x, необходимо либо увеличивать конверсию посадочной страницы (C1), либо поднимать средний чек за счет пакетирования услуг и внедрения апсейлов."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Чем капитализационная модель отличается от дивидендной?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "В капитализационной модели вся прибыль реинвестируется в гипер-рост для максимизации стоимости компании при продаже стратегу (Яндекс, Сбер, VK). В дивидендной модели компания формирует подушку безопасности (3 месяца OPEX) и регулярно выплачивает свободный денежный поток (FCFE) основателям на личную карту."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Как правильно презентовать этот Excel инвестору?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Скачанный по кнопке файл Excel (.xlsx) уже оформлен по международному стандарту FAST Standard. Откройте лист «Панель управления», покажите инвестору Базовый сценарий и продемонстрируйте стресс-тест в Пессимистичном сценарии. Инвесторы ценят, когда основатель честно показывает риски."
+            }
+          }
+        ]
+      }
+    ]
   }
   </script>
 
