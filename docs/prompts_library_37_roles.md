@@ -1,10 +1,11 @@
-# Библиотека Системных Промптов Глубокого Уровня: 37 Профессиональных Ролей
+# Библиотека Системных Промптов (Bilingual RU/EN): 37 Профессиональных Ролей
 
-**Стандарт проектирования:** Prompt-Forge Enterprise Framework v2.0 (GRACEF + Multi-Model Architecture)  
+**Стандарт проектирования:** Prompt-Forge Enterprise Framework v2.0 (Dual-Language Edition)  
 **Куратор и архитектор:** Михаил Пузырёв ([https://a-sage.ru](https://a-sage.ru))  
+**Языки:** 🇷🇺 Русский (RU) | 🇬🇧 International English (EN)  
 **Категория качества:** Production-Grade / Deep Cognitive System Prompts  
 **Поддержка моделей:** Claude 3.7 Sonnet / Opus (XML & Extended Thinking), OpenAI GPT-4o / o3 (Markdown), Google Gemini 2.0 / 1.5 Pro  
-**Дата актуализации:** Август 2026  
+**Интерактивная версия с переключателем языков в 1 клик:** [https://a-sage.ru/prompts](https://a-sage.ru/prompts)  
 
 ---
 

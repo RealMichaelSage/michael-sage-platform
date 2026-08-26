@@ -3501,3 +3501,80 @@ input[type="reset"],
   transform: translateY(0);
   opacity: 1;
 }
+
+
+/* Global Language Switcher */
+.global-lang-switcher {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  padding: 4px 6px;
+  border: 1px solid var(--border);
+}
+
+.lang-switch-label {
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--gray);
+  padding-left: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.lang-switch-pills {
+  display: flex;
+  gap: 4px;
+}
+
+.lang-pill {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  font-family: var(--font);
+  border: 1px solid transparent;
+  background: transparent;
+  color: #71717a;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.lang-pill:hover {
+  color: var(--black);
+}
+
+.lang-pill.active {
+  background: var(--black);
+  color: #ffffff;
+}
+
+/* Card-level Language Switcher */
+.card-lang-switch {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  background: #ffffff;
+  padding: 2px;
+  gap: 2px;
+}
+
+.card-lang-btn {
+  border: none;
+  background: transparent;
+  padding: 2px 6px;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #71717a;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.card-lang-btn:hover {
+  color: var(--black);
+}
+
+.card-lang-btn.active {
+  background: var(--black);
+  color: #ffffff;
+}
