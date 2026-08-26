@@ -97,7 +97,7 @@ button {
   height: 68px;
   display: flex;
   align-items: center;
-  padding: 0 48px;
+  padding: 0;
 }
 
 .nav-inner {
@@ -109,6 +109,11 @@ button {
   justify-content: space-between;
   gap: 32px;
   min-width: 0;
+  height: 68px;
+  padding: 0 clamp(24px, 4vw, 64px);
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  box-sizing: border-box;
 }
 
 .nav-logo {
@@ -3220,8 +3225,10 @@ input[type="reset"],
 .calc-main-section .container,
 .sheet-matrix-section .container,
 .calc-edu-section .container,
+.calc-hub-section .container,
+.knowledge-section .container,
 .section-cta .container {
-  max-width: 1440px;
+  max-width: 1440px !important;
   margin: 0 auto;
   width: 100%;
   padding-left: clamp(24px, 4vw, 64px);
@@ -3229,6 +3236,29 @@ input[type="reset"],
   border-left: 1px solid var(--border);
   border-right: 1px solid var(--border);
   box-sizing: border-box;
+}
+
+.section-cta {
+  padding: 0 !important;
+  border-top: 1px solid var(--border);
+  width: 100%;
+}
+
+.section-cta[style*="#09090b"],
+.section-cta.dark {
+  background: #09090b !important;
+  border-top: 1px solid var(--border-dark) !important;
+}
+
+.section-cta .container {
+  padding-top: clamp(64px, 7vw, 96px);
+  padding-bottom: clamp(64px, 7vw, 96px);
+}
+
+.section-cta[style*="#09090b"] .container,
+.section-cta.dark .container {
+  border-left: 1px solid var(--border-dark) !important;
+  border-right: 1px solid var(--border-dark) !important;
 }
 
 .prompts-hero {
