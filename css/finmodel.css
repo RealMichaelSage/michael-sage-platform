@@ -1319,3 +1319,34 @@ input:checked + .slider.round:before {
 .faq-acc-item.open .faq-acc-body {
   display: block;
 }
+
+/* Financial Statements Clean Formatting */
+.fin-table tr.section-row td {
+  background: #f4f4f5;
+  font-family: var(--font);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--black);
+  padding: 10px 12px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.fin-table td.col-name {
+  font-family: var(--font);
+  font-weight: 500;
+  color: #27272a;
+  min-width: 220px;
+}
+
+.fin-table td.val-green,
+.fin-table .val-green {
+  color: #059669;
+}
+
+.fin-table td.val-red,
+.fin-table .val-red {
+  color: #dc2626;
+}

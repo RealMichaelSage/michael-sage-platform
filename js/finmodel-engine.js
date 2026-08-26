@@ -422,21 +422,50 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const years = [];
+    let prevCashEnd = rawCapital + rawInvestment;
+
     for (let y = 1; y <= 5; y++) {
       const yearMonths = months.filter(m => m.year === y);
       const yRevenue = yearMonths.reduce((acc, m) => acc + m.revenue, 0);
+      const yCogs = yearMonths.reduce((acc, m) => acc + m.cogs, 0);
+      const yAcquiring = yearMonths.reduce((acc, m) => acc + m.acquiring, 0);
+      const ySalesBonus = yearMonths.reduce((acc, m) => acc + m.salesBonus, 0);
+      const yGrossProfit = yearMonths.reduce((acc, m) => acc + m.grossProfit, 0);
+      const yAdBudget = yearMonths.reduce((acc, m) => acc + m.adBudget, 0);
+      const yStaffCost = yearMonths.reduce((acc, m) => acc + m.totalStaffCost, 0);
+      const yFounderSalary = yearMonths.reduce((acc, m) => acc + (founderSal * Math.pow(1 + payrollGrowth, y - 1)), 0);
+      const yOpexFixed = yearMonths.reduce((acc, m) => acc + m.currentOpex, 0);
+      const yTotalOpex = yearMonths.reduce((acc, m) => acc + m.totalOpex, 0);
       const yEbitda = yearMonths.reduce((acc, m) => acc + m.ebitda, 0);
+      const yTax = yearMonths.reduce((acc, m) => acc + m.tax, 0);
       const yNetIncome = yearMonths.reduce((acc, m) => acc + m.netIncome, 0);
+      const yOcf = yearMonths.reduce((acc, m) => acc + m.ocf, 0);
       const yDividends = yearMonths.reduce((acc, m) => acc + m.monthlyDividends, 0);
+      const yCashStart = prevCashEnd;
       const yCashEnd = yearMonths[yearMonths.length - 1].cumulativeCash;
+      const yNetCashChange = yCashEnd - yCashStart;
+      prevCashEnd = yCashEnd;
 
       years.push({
         year: y,
         revenue: yRevenue,
+        cogs: yCogs,
+        acquiring: yAcquiring,
+        salesBonus: ySalesBonus,
+        grossProfit: yGrossProfit,
+        adBudget: yAdBudget,
+        staffCost: yStaffCost,
+        founderSalary: yFounderSalary,
+        opexFixed: yOpexFixed,
+        totalOpex: yTotalOpex,
         ebitda: yEbitda,
+        tax: yTax,
         netIncome: yNetIncome,
+        ocf: yOcf,
         dividends: yDividends,
+        cashStart: yCashStart,
         cashEnd: yCashEnd,
+        netCashChange: yNetCashChange,
         valuation: Math.max(0, yEbitda * exitMultiple)
       });
     }
@@ -986,7 +1015,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('ins-m1-val').className = `ins-val ${m.cumulativeCash >= 0 ? 'green' : 'red'}`;
     }
   }
-// --- 7. Tables ---
+  // --- 7. Comprehensive Institutional Financial Tables ---
   function renderTables(res) {
     const m1 = res.months[0];
     const m12 = res.months[11];
@@ -994,74 +1023,298 @@ document.addEventListener('DOMContentLoaded', () => {
     const m36 = res.months[35];
     const m60 = res.months[59];
 
+    // Helper: sum array
+    const sum = (arr) => arr.reduce((a, b) => a + b, 0);
+
+    // ─────────────────────────────────────────────────────────────
+    // 1. TAB 1: UNIT ECONOMICS TABLE (28 METRICS)
+    // ─────────────────────────────────────────────────────────────
     const tbodyUnit = document.getElementById('tbody-unit-economics');
-    tbodyUnit.innerHTML = `
-      <tr class="section-row"><td colspan="8">1. Воронка трафика и конверсий</td></tr>
-      <tr><td>Трафик посетителей (UA)</td><td>чел</td><td>${m1.ua}</td><td>${m12.ua}</td><td>${m24.ua}</td><td>${m36.ua}</td><td>${m60.ua}</td><td>Объем привлеченной аудитории</td></tr>
-      <tr><td>Лиды и заявки (Leads)</td><td>шт</td><td>${m1.leads}</td><td>${m12.leads}</td><td>${m24.leads}</td><td>${m36.leads}</td><td>${m60.leads}</td><td>Конверсия CR1 = ${(parseFloat(inputs.cr1.value)).toFixed(1)}%</td></tr>
-      <tr><td>Новые покупатели (B / New Buyers)</td><td>чел</td><td>${m1.newBuyers}</td><td>${m12.newBuyers}</td><td>${m24.newBuyers}</td><td>${m36.newBuyers}</td><td>${m60.newBuyers}</td><td>Конверсия CR2 = ${(parseFloat(inputs.cr2.value)).toFixed(1)}%</td></tr>
-      <tr><td>Активная база клиентов</td><td>чел</td><td>${m1.activeSubscribers}</td><td>${m12.activeSubscribers}</td><td>${m24.activeSubscribers}</td><td>${m36.activeSubscribers}</td><td>${m60.activeSubscribers}</td><td>С учетом оттока Churn</td></tr>
+    if (tbodyUnit) {
+      tbodyUnit.innerHTML = `
+        <tr class="section-row"><td colspan="8"><strong>1. Воронка трафика и конверсий</strong></td></tr>
+        <tr><td class="col-name">Трафик посетителей (UA)</td><td>чел</td><td>${m1.ua}</td><td>${m12.ua}</td><td>${m24.ua}</td><td>${m36.ua}</td><td>${m60.ua}</td><td>Привлеченная аудитория</td></tr>
+        <tr><td class="col-name">Лиды и заявки (Leads)</td><td>шт</td><td>${m1.leads}</td><td>${m12.leads}</td><td>${m24.leads}</td><td>${m36.leads}</td><td>${m60.leads}</td><td>CR1 = ${(parseFloat(inputs.cr1.value)).toFixed(1)}%</td></tr>
+        <tr><td class="col-name">Новые покупатели (New Buyers)</td><td>чел</td><td>${m1.newBuyers}</td><td>${m12.newBuyers}</td><td>${m24.newBuyers}</td><td>${m36.newBuyers}</td><td>${m60.newBuyers}</td><td>CR2 = ${(parseFloat(inputs.cr2.value)).toFixed(1)}%</td></tr>
+        <tr class="row-highlight"><td class="col-name">Активная база клиентов</td><td>чел</td><td>${m1.activeSubscribers}</td><td>${m12.activeSubscribers}</td><td>${m24.activeSubscribers}</td><td>${m36.activeSubscribers}</td><td>${m60.activeSubscribers}</td><td>С учетом Churn ${parseFloat(inputs.churn.value).toFixed(1)}%</td></tr>
 
-      <tr class="section-row"><td colspan="8">2. Затраты на привлечение (CAC Engine)</td></tr>
-      <tr><td>Бюджет на рекламу (Ad Spend)</td><td>₽</td><td>${formatCurrency(m1.adBudget)}</td><td>${formatCurrency(m12.adBudget)}</td><td>${formatCurrency(m24.adBudget)}</td><td>${formatCurrency(m36.adBudget)}</td><td>${formatCurrency(m60.adBudget)}</td><td>Ежемесячный маркетинг</td></tr>
-      <tr><td>Стоимость клика (CPC)</td><td>₽</td><td>${formatCurrency(parseFloat(inputs.cpc.value))}</td><td>${formatCurrency(parseFloat(inputs.cpc.value))}</td><td>${formatCurrency(parseFloat(inputs.cpc.value))}</td><td>${formatCurrency(parseFloat(inputs.cpc.value))}</td><td>${formatCurrency(parseFloat(inputs.cpc.value))}</td><td>Средняя ставка аукциона</td></tr>
-      <tr><td>Стоимость лида (CPL)</td><td>₽</td><td>${formatCurrency(m1.leads > 0 ? m1.adBudget / m1.leads : 0)}</td><td>${formatCurrency(m12.leads > 0 ? m12.adBudget / m12.leads : 0)}</td><td>${formatCurrency(m24.leads > 0 ? m24.adBudget / m24.leads : 0)}</td><td>${formatCurrency(m36.leads > 0 ? m36.adBudget / m36.leads : 0)}</td><td>${formatCurrency(m60.leads > 0 ? m60.adBudget / m60.leads : 0)}</td><td>Цена 1 целевой заявки</td></tr>
-      <tr class="highlight-row"><td>Стоимость привлечения клиента (CAC)</td><td>₽</td><td>${formatCurrency(m1.cac)}</td><td>${formatCurrency(m12.cac)}</td><td>${formatCurrency(m24.cac)}</td><td>${formatCurrency(m36.cac)}</td><td>${formatCurrency(m60.cac)}</td><td>Затраты на 1 платящего</td></tr>
+        <tr class="section-row"><td colspan="8"><strong>2. Затраты на привлечение (CAC Engine)</strong></td></tr>
+        <tr><td class="col-name">Бюджет на рекламу (Ad Spend)</td><td>₽</td><td>${formatCurrency(m1.adBudget)}</td><td>${formatCurrency(m12.adBudget)}</td><td>${formatCurrency(m24.adBudget)}</td><td>${formatCurrency(m36.adBudget)}</td><td>${formatCurrency(m60.adBudget)}</td><td>Маркетинг в месяц</td></tr>
+        <tr><td class="col-name">Стоимость клика (CPC)</td><td>₽</td><td>${formatCurrency(parseFloat(inputs.cpc.value))}</td><td>${formatCurrency(parseFloat(inputs.cpc.value))}</td><td>${formatCurrency(parseFloat(inputs.cpc.value))}</td><td>${formatCurrency(parseFloat(inputs.cpc.value))}</td><td>${formatCurrency(parseFloat(inputs.cpc.value))}</td><td>Ставка в аукционе</td></tr>
+        <tr><td class="col-name">Стоимость лида (CPL)</td><td>₽</td><td>${formatCurrency(m1.cpl)}</td><td>${formatCurrency(m12.cpl)}</td><td>${formatCurrency(m24.cpl)}</td><td>${formatCurrency(m36.cpl)}</td><td>${formatCurrency(m60.cpl)}</td><td>CPC / CR1</td></tr>
+        <tr class="row-highlight"><td class="col-name">Стоимость клиента (CAC)</td><td>₽</td><td>${formatCurrency(m1.cac)}</td><td>${formatCurrency(m12.cac)}</td><td>${formatCurrency(m24.cac)}</td><td>${formatCurrency(m36.cac)}</td><td>${formatCurrency(m60.cac)}</td><td>Ad Spend / New Buyers</td></tr>
 
-      <tr class="section-row"><td colspan="8">3. Монетизация и Жизненный цикл (LTV)</td></tr>
-      <tr><td>Средний чек (AOV / Price)</td><td>₽</td><td>${formatCurrency(parseFloat(inputs.aov.value))}</td><td>${formatCurrency(parseFloat(inputs.aov.value))}</td><td>${formatCurrency(parseFloat(inputs.aov.value))}</td><td>${formatCurrency(parseFloat(inputs.aov.value))}</td><td>${formatCurrency(parseFloat(inputs.aov.value))}</td><td>Тариф / разовая покупка</td></tr>
-      <tr><td>Ежемесячный отток (Churn)</td><td>%</td><td>${formatPct(parseFloat(inputs.churn.value))}</td><td>${formatPct(parseFloat(inputs.churn.value))}</td><td>${formatPct(parseFloat(inputs.churn.value))}</td><td>${formatPct(parseFloat(inputs.churn.value))}</td><td>${formatPct(parseFloat(inputs.churn.value))}</td><td>Норма для SaaS: <5%</td></tr>
-      <tr><td>Срок жизни клиента (Lifetime LT)</td><td>мес</td><td>${(1 / (parseFloat(inputs.churn.value)/100)).toFixed(1)}</td><td>${(1 / (parseFloat(inputs.churn.value)/100)).toFixed(1)}</td><td>${(1 / (parseFloat(inputs.churn.value)/100)).toFixed(1)}</td><td>${(1 / (parseFloat(inputs.churn.value)/100)).toFixed(1)}</td><td>${(1 / (parseFloat(inputs.churn.value)/100)).toFixed(1)}</td><td>LT = 1 / Churn</td></tr>
-      <tr><td>Пожизненная выручка (LTV)</td><td>₽</td><td>${formatCurrency(res.ltv)}</td><td>${formatCurrency(res.ltv)}</td><td>${formatCurrency(res.ltv)}</td><td>${formatCurrency(res.ltv)}</td><td>${formatCurrency(res.ltv)}</td><td>LTV = AOV × Lifetime</td></tr>
-      <tr class="highlight-row"><td>Маржинальный LTV (Gross LTV / CLTV)</td><td>₽</td><td>${formatCurrency(res.cltv)}</td><td>${formatCurrency(res.cltv)}</td><td>${formatCurrency(res.cltv)}</td><td>${formatCurrency(res.cltv)}</td><td>${formatCurrency(res.cltv)}</td><td>CLTV = LTV × Gross Margin %</td></tr>
+        <tr class="section-row"><td colspan="8"><strong>3. Монетизация, Чурн и LTV</strong></td></tr>
+        <tr><td class="col-name">Средний чек / Подписка (AOV)</td><td>₽</td><td>${formatCurrency(parseFloat(inputs.aov.value))}</td><td>${formatCurrency(parseFloat(inputs.aov.value))}</td><td>${formatCurrency(parseFloat(inputs.aov.value))}</td><td>${formatCurrency(parseFloat(inputs.aov.value))}</td><td>${formatCurrency(parseFloat(inputs.aov.value))}</td><td>Тариф / чек покупки</td></tr>
+        <tr><td class="col-name">Ежемесячный отток (Churn)</td><td>%</td><td>${formatPct(parseFloat(inputs.churn.value))}</td><td>${formatPct(parseFloat(inputs.churn.value))}</td><td>${formatPct(parseFloat(inputs.churn.value))}</td><td>${formatPct(parseFloat(inputs.churn.value))}</td><td>${formatPct(parseFloat(inputs.churn.value))}</td><td>Доля уходящих клиентов</td></tr>
+        <tr><td class="col-name">Срок жизни клиента (Lifetime)</td><td>мес</td><td>${(100 / Math.max(0.5, parseFloat(inputs.churn.value))).toFixed(1)}</td><td>${(100 / Math.max(0.5, parseFloat(inputs.churn.value))).toFixed(1)}</td><td>${(100 / Math.max(0.5, parseFloat(inputs.churn.value))).toFixed(1)}</td><td>${(100 / Math.max(0.5, parseFloat(inputs.churn.value))).toFixed(1)}</td><td>${(100 / Math.max(0.5, parseFloat(inputs.churn.value))).toFixed(1)}</td><td>1 / Churn</td></tr>
+        <tr class="row-highlight"><td class="col-name">Пожизненная ценность (LTV)</td><td>₽</td><td>${formatCurrency(res.ltv)}</td><td>${formatCurrency(res.ltv)}</td><td>${formatCurrency(res.ltv)}</td><td>${formatCurrency(res.ltv)}</td><td>${formatCurrency(res.ltv)}</td><td>AOV × Lifetime × Margin</td></tr>
 
-      <tr class="section-row"><td colspan="8">4. Маржинальная прибыль (Contribution Margin)</td></tr>
-      <tr><td>CM1 на единицу продукта</td><td>₽</td><td>${formatCurrency(m1.revenue > 0 ? (m1.grossProfit / m1.activeSubscribers) : 0)}</td><td>${formatCurrency(m12.revenue > 0 ? (m12.grossProfit / m12.activeSubscribers) : 0)}</td><td>${formatCurrency(m24.revenue > 0 ? (m24.grossProfit / m24.activeSubscribers) : 0)}</td><td>${formatCurrency(m36.revenue > 0 ? (m36.grossProfit / m36.activeSubscribers) : 0)}</td><td>${formatCurrency(m60.revenue > 0 ? (m60.grossProfit / m60.activeSubscribers) : 0)}</td><td>Чек - COGS - Эквайринг</td></tr>
-      <tr><td>CM2 на клиента (с учетом CAC)</td><td>₽</td><td>${formatCurrency(res.cltv - m1.cac)}</td><td>${formatCurrency(res.cltv - m12.cac)}</td><td>${formatCurrency(res.cltv - m24.cac)}</td><td>${formatCurrency(res.cltv - m36.cac)}</td><td>${formatCurrency(res.cltv - m60.cac)}</td><td>Чистый доход после окупаемости рекламы</td></tr>
-      <tr class="highlight-row"><td>Суммарная маржа компании (Total CM)</td><td>₽</td><td>${formatCurrency(m1.contributionMargin)}</td><td>${formatCurrency(m12.contributionMargin)}</td><td>${formatCurrency(m24.contributionMargin)}</td><td>${formatCurrency(m36.contributionMargin)}</td><td>${formatCurrency(m60.contributionMargin)}</td><td>Валовая прибыль - Маркетинг</td></tr>
+        <tr class="section-row"><td colspan="8"><strong>4. Маржинальность и Венчурные коэффициенты</strong></td></tr>
+        <tr><td class="col-name">Валовая маржинальность</td><td>%</td><td>${(100 - parseFloat(inputs.cogsPct.value) - parseFloat(inputs.acquiring.value)).toFixed(1)}%</td><td>${(100 - parseFloat(inputs.cogsPct.value) - parseFloat(inputs.acquiring.value)).toFixed(1)}%</td><td>${(100 - parseFloat(inputs.cogsPct.value) - parseFloat(inputs.acquiring.value)).toFixed(1)}%</td><td>${(100 - parseFloat(inputs.cogsPct.value) - parseFloat(inputs.acquiring.value)).toFixed(1)}%</td><td>${(100 - parseFloat(inputs.cogsPct.value) - parseFloat(inputs.acquiring.value)).toFixed(1)}%</td><td>100% - COGS - Эквайринг</td></tr>
+        <tr class="row-highlight"><td class="col-name">Коэффициент LTV / CAC</td><td>ratio</td><td class="val-green"><strong>${res.ltvcac.toFixed(2)}x</strong></td><td class="val-green"><strong>${res.ltvcac.toFixed(2)}x</strong></td><td class="val-green"><strong>${res.ltvcac.toFixed(2)}x</strong></td><td class="val-green"><strong>${res.ltvcac.toFixed(2)}x</strong></td><td class="val-green"><strong>${res.ltvcac.toFixed(2)}x</strong></td><td>Норма: ≥ 3.0x</td></tr>
+        <tr><td class="col-name">Срок окупаемости рекламы</td><td>мес</td><td>${res.paybackMonths.toFixed(1)}</td><td>${res.paybackMonths.toFixed(1)}</td><td>${res.paybackMonths.toFixed(1)}</td><td>${res.paybackMonths.toFixed(1)}</td><td>${res.paybackMonths.toFixed(1)}</td><td>CAC / Маржа с чека</td></tr>
+      `;
+    }
 
-      <tr class="section-row"><td colspan="8">5. Венчурные коэффициенты эффективности</td></tr>
-      <tr class="highlight-row"><td>Коэффициент LTV / CAC</td><td>x</td><td>${res.ltvcac.toFixed(1)}x</td><td>${res.ltvcac.toFixed(1)}x</td><td>${res.ltvcac.toFixed(1)}x</td><td>${res.ltvcac.toFixed(1)}x</td><td>${res.ltvcac.toFixed(1)}x</td><td>Норма: ≥ 3.0x</td></tr>
-      <tr><td>Окупаемость привлечения (CAC Payback)</td><td>мес</td><td>${res.paybackMonths.toFixed(1)}</td><td>${res.paybackMonths.toFixed(1)}</td><td>${res.paybackMonths.toFixed(1)}</td><td>${res.paybackMonths.toFixed(1)}</td><td>${res.paybackMonths.toFixed(1)}</td><td>Норма: < 12 месяцев</td></tr>
-    `;
-
+    // ─────────────────────────────────────────────────────────────
+    // 2. TAB 2: P&L STATEMENT (ГОД 1 .. ГОД 5 + ИТОГО 5 ЛЕТ)
+    // ─────────────────────────────────────────────────────────────
     const tbodyPnl = document.getElementById('tbody-pnl');
-    tbodyPnl.innerHTML = res.years.map(y => `
-      <tr>
-        <td><strong>Год ${y.year}</strong></td>
-        <td><strong>${formatCurrency(y.revenue)}</strong></td>
-        <td>${formatCurrency(y.revenue * (parseFloat(inputs.cogsPct.value)/100))}</td>
-        <td>${formatCurrency(y.ebitda)}</td>
-        <td>${(y.revenue > 0 ? (y.ebitda / y.revenue * 100) : 0).toFixed(1)}%</td>
-        <td><strong>${formatCurrency(y.netIncome)}</strong></td>
-      </tr>
-    `).join('');
+    if (tbodyPnl) {
+      const yRev = res.years.map(y => y.revenue);
+      const yCogs = res.years.map(y => y.cogs);
+      const yAcq = res.years.map(y => y.acquiring);
+      const yBonus = res.years.map(y => y.salesBonus);
+      const yGross = res.years.map(y => y.grossProfit);
+      const yAd = res.years.map(y => y.adBudget);
+      const yStaff = res.years.map(y => y.staffCost);
+      const yFounder = res.years.map(y => y.founderSalary);
+      const yOpex = res.years.map(y => y.opexFixed);
+      const yTotOpex = res.years.map(y => y.totalOpex);
+      const yEbitda = res.years.map(y => y.ebitda);
+      const yDa = res.years.map(() => parseFloat(inputs.capex.value) / 5);
+      const yTax = res.years.map(y => y.tax);
+      const yNet = res.years.map(y => y.netIncome);
 
+      tbodyPnl.innerHTML = `
+        <tr class="row-highlight">
+          <td class="col-name"><strong>ВЫРУЧКА (GROSS REVENUE)</strong></td>
+          ${yRev.map(v => `<td><strong>${formatCurrency(v)}</strong></td>`).join('')}
+          <td><strong>${formatCurrency(sum(yRev))}</strong></td>
+        </tr>
+        <tr>
+          <td class="col-name">Прямая себестоимость (COGS)</td>
+          ${yCogs.map(v => `<td>${formatCurrency(v)}</td>`).join('')}
+          <td>${formatCurrency(sum(yCogs))}</td>
+        </tr>
+        <tr>
+          <td class="col-name">Эквайринг и комиссии банков</td>
+          ${yAcq.map(v => `<td>${formatCurrency(v)}</td>`).join('')}
+          <td>${formatCurrency(sum(yAcq))}</td>
+        </tr>
+        <tr>
+          <td class="col-name">Бонусы отдела продаж</td>
+          ${yBonus.map(v => `<td>${formatCurrency(v)}</td>`).join('')}
+          <td>${formatCurrency(sum(yBonus))}</td>
+        </tr>
+        <tr class="row-highlight">
+          <td class="col-name"><strong>ВАЛОВАЯ ПРИБЫЛЬ (GROSS PROFIT)</strong></td>
+          ${yGross.map(v => `<td><strong>${formatCurrency(v)}</strong></td>`).join('')}
+          <td><strong>${formatCurrency(sum(yGross))}</strong></td>
+        </tr>
+        <tr>
+          <td class="col-name">Валовая рентабельность (%)</td>
+          ${res.years.map(y => `<td>${(y.revenue > 0 ? (y.grossProfit / y.revenue * 100).toFixed(1) : '0')}%</td>`).join('')}
+          <td>${(sum(yRev) > 0 ? (sum(yGross) / sum(yRev) * 100).toFixed(1) : '0')}%</td>
+        </tr>
+
+        <tr class="section-row"><td colspan="7"><strong>ОПЕРАЦИОННЫЕ РАСХОДЫ (OPEX):</strong></td></tr>
+        <tr>
+          <td class="col-name">  Маркетинг и реклама (CAC)</td>
+          ${yAd.map(v => `<td>${formatCurrency(v)}</td>`).join('')}
+          <td>${formatCurrency(sum(yAd))}</td>
+        </tr>
+        <tr>
+          <td class="col-name">  ФОТ команды (с взносами)</td>
+          ${yStaff.map(v => `<td>${formatCurrency(v)}</td>`).join('')}
+          <td>${formatCurrency(sum(yStaff))}</td>
+        </tr>
+        <tr>
+          <td class="col-name">  Зарплата фаундера</td>
+          ${yFounder.map(v => `<td>${formatCurrency(v)}</td>`).join('')}
+          <td>${formatCurrency(sum(yFounder))}</td>
+        </tr>
+        <tr>
+          <td class="col-name">  Постоянный OPEX (офис, сервера, софт)</td>
+          ${yOpex.map(v => `<td>${formatCurrency(v)}</td>`).join('')}
+          <td>${formatCurrency(sum(yOpex))}</td>
+        </tr>
+        <tr class="row-highlight">
+          <td class="col-name"><strong>ИТОГО ОПЕРАЦИОННЫЕ РАСХОДЫ (OPEX)</strong></td>
+          ${yTotOpex.map(v => `<td><strong>${formatCurrency(v)}</strong></td>`).join('')}
+          <td><strong>${formatCurrency(sum(yTotOpex))}</strong></td>
+        </tr>
+
+        <tr class="row-highlight">
+          <td class="col-name"><strong>EBITDA (ОПЕРАЦИОННАЯ ПРИБЫЛЬ)</strong></td>
+          ${yEbitda.map(v => `<td class="${v >= 0 ? 'val-green' : 'val-red'}"><strong>${formatCurrency(v)}</strong></td>`).join('')}
+          <td class="${sum(yEbitda) >= 0 ? 'val-green' : 'val-red'}"><strong>${formatCurrency(sum(yEbitda))}</strong></td>
+        </tr>
+        <tr>
+          <td class="col-name">EBITDA Margin (%)</td>
+          ${res.years.map(y => `<td>${(y.revenue > 0 ? (y.ebitda / y.revenue * 100).toFixed(1) : '0')}%</td>`).join('')}
+          <td>${(sum(yRev) > 0 ? (sum(yEbitda) / sum(yRev) * 100).toFixed(1) : '0')}%</td>
+        </tr>
+        <tr>
+          <td class="col-name">Амортизация CAPEX (D&A)</td>
+          ${yDa.map(v => `<td>${formatCurrency(v)}</td>`).join('')}
+          <td>${formatCurrency(sum(yDa))}</td>
+        </tr>
+        <tr>
+          <td class="col-name">Налог на прибыль / УСН</td>
+          ${yTax.map(v => `<td>${formatCurrency(v)}</td>`).join('')}
+          <td>${formatCurrency(sum(yTax))}</td>
+        </tr>
+        <tr class="row-highlight" style="border-bottom: 2px solid var(--black); background: #fafafa;">
+          <td class="col-name"><strong>ЧИСТАЯ ПРИБЫЛЬ (NET PROFIT)</strong></td>
+          ${yNet.map(v => `<td class="${v >= 0 ? 'val-green' : 'val-red'}"><strong>${formatCurrency(v)}</strong></td>`).join('')}
+          <td class="${sum(yNet) >= 0 ? 'val-green' : 'val-red'}"><strong>${formatCurrency(sum(yNet))}</strong></td>
+        </tr>
+        <tr>
+          <td class="col-name">Чистая рентабельность (Net Margin %)</td>
+          ${res.years.map(y => `<td><strong>${(y.revenue > 0 ? (y.netIncome / y.revenue * 100).toFixed(1) : '0')}%</strong></td>`).join('')}
+          <td><strong>${(sum(yRev) > 0 ? (sum(yNet) / sum(yRev) * 100).toFixed(1) : '0')}%</strong></td>
+        </tr>
+      `;
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    // 3. TAB 3: CASH FLOW STATEMENT (ДДС)
+    // ─────────────────────────────────────────────────────────────
     const tbodyCf = document.getElementById('tbody-cf');
-    tbodyCf.innerHTML = res.years.map(y => `
-      <tr>
-        <td><strong>Год ${y.year}</strong></td>
-        <td>${formatCurrency(y.ebitda)}</td>
-        <td>${formatCurrency(y.year === 1 ? -parseFloat(inputs.capex.value) : 0)}</td>
-        <td>${formatCurrency(-y.dividends)}</td>
-        <td><strong>${formatCurrency(y.cashEnd)}</strong></td>
-      </tr>
-    `).join('');
+    if (tbodyCf) {
+      const yRev = res.years.map(y => y.revenue);
+      const yCogs = res.years.map(y => y.cogs);
+      const yAd = res.years.map(y => y.adBudget);
+      const yPayroll = res.years.map(y => y.staffCost + y.founderSalary);
+      const yOpex = res.years.map(y => y.opexFixed + y.acquiring + y.salesBonus);
+      const yTax = res.years.map(y => y.tax);
+      const yOcf = res.years.map(y => y.ocf);
+      const yCfi = res.years.map((y, i) => (i === 0 ? -parseFloat(inputs.capex.value) : 0));
+      const yCff = res.years.map((y, i) => (i === 0 ? parseFloat(inputs.capital.value) + parseFloat(inputs.investment.value) : 0) - y.dividends);
+      const yNetChange = res.years.map(y => y.netCashChange);
+      const yCashEnd = res.years.map(y => y.cashEnd);
 
+      tbodyCf.innerHTML = `
+        <tr class="row-highlight">
+          <td class="col-name"><strong>Остаток кэша на начало года</strong></td>
+          ${res.years.map(y => `<td>${formatCurrency(y.cashStart)}</td>`).join('')}
+          <td>${formatCurrency(res.years[0].cashStart)}</td>
+        </tr>
+
+        <tr class="section-row"><td colspan="7"><strong>1. ОПЕРАЦИОННЫЙ ПОТОК (CFO):</strong></td></tr>
+        <tr>
+          <td class="col-name">  Поступления от клиентов</td>
+          ${yRev.map(v => `<td>${formatCurrency(v)}</td>`).join('')}
+          <td>${formatCurrency(sum(yRev))}</td>
+        </tr>
+        <tr>
+          <td class="col-name">  Выплаты COGS и комиссий</td>
+          ${yCogs.map((v, i) => `<td>${formatCurrency(-(v + res.years[i].acquiring + res.years[i].salesBonus))}</td>`).join('')}
+          <td>${formatCurrency(-sum(yCogs))}</td>
+        </tr>
+        <tr>
+          <td class="col-name">  Выплаты на маркетинг</td>
+          ${yAd.map(v => `<td>${formatCurrency(-v)}</td>`).join('')}
+          <td>${formatCurrency(-sum(yAd))}</td>
+        </tr>
+        <tr>
+          <td class="col-name">  Выплаты ФОТ и основателю</td>
+          ${yPayroll.map(v => `<td>${formatCurrency(-v)}</td>`).join('')}
+          <td>${formatCurrency(-sum(yPayroll))}</td>
+        </tr>
+        <tr>
+          <td class="col-name">  Выплаты OPEX (офис, сервера)</td>
+          ${yOpex.map(v => `<td>${formatCurrency(-v)}</td>`).join('')}
+          <td>${formatCurrency(-sum(yOpex))}</td>
+        </tr>
+        <tr>
+          <td class="col-name">  Оплата налогов в бюджет</td>
+          ${yTax.map(v => `<td>${formatCurrency(-v)}</td>`).join('')}
+          <td>${formatCurrency(-sum(yTax))}</td>
+        </tr>
+        <tr class="row-highlight">
+          <td class="col-name"><strong>ЧИСТЫЙ ОПЕРАЦИОННЫЙ ПОТОК (CFO)</strong></td>
+          ${yOcf.map(v => `<td class="${v >= 0 ? 'val-green' : 'val-red'}"><strong>${formatCurrency(v)}</strong></td>`).join('')}
+          <td class="${sum(yOcf) >= 0 ? 'val-green' : 'val-red'}"><strong>${formatCurrency(sum(yOcf))}</strong></td>
+        </tr>
+
+        <tr class="section-row"><td colspan="7"><strong>2. ИНВЕСТИЦИОННЫЙ ПОТОК (CFI):</strong></td></tr>
+        <tr>
+          <td class="col-name">  Затраты на запуск (CAPEX)</td>
+          ${yCfi.map(v => `<td>${formatCurrency(v)}</td>`).join('')}
+          <td>${formatCurrency(sum(yCfi))}</td>
+        </tr>
+
+        <tr class="section-row"><td colspan="7"><strong>3. ФИНАНСОВЫЙ ПОТОК (CFF):</strong></td></tr>
+        <tr>
+          <td class="col-name">  Взнос капитала и инвестиции</td>
+          ${res.years.map((y, i) => `<td>${formatCurrency(i === 0 ? parseFloat(inputs.capital.value) + parseFloat(inputs.investment.value) : 0)}</td>`).join('')}
+          <td>${formatCurrency(parseFloat(inputs.capital.value) + parseFloat(inputs.investment.value))}</td>
+        </tr>
+        <tr>
+          <td class="col-name">  Выплата дивидендов</td>
+          ${res.years.map(y => `<td>${formatCurrency(-y.dividends)}</td>`).join('')}
+          <td>${formatCurrency(-sum(res.years.map(y => y.dividends)))}</td>
+        </tr>
+        <tr class="row-highlight">
+          <td class="col-name"><strong>ЧИСТОЕ ИЗМЕНЕНИЕ ДЕНЕГ (NET CF)</strong></td>
+          ${yNetChange.map(v => `<td class="${v >= 0 ? 'val-green' : 'val-red'}"><strong>${formatCurrency(v)}</strong></td>`).join('')}
+          <td class="${sum(yNetChange) >= 0 ? 'val-green' : 'val-red'}"><strong>${formatCurrency(sum(yNetChange))}</strong></td>
+        </tr>
+        <tr class="row-highlight" style="border-bottom: 2px solid var(--black); background: #fafafa;">
+          <td class="col-name"><strong>ОСТАТОК КЭША НА КОНЕЦ ГОДА</strong></td>
+          ${yCashEnd.map(v => `<td class="val-green"><strong>${formatCurrency(v)}</strong></td>`).join('')}
+          <td class="val-green"><strong>${formatCurrency(yCashEnd[4])}</strong></td>
+        </tr>
+      `;
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    // 4. TAB 4: VALUATION & DIVIDENDS TABLE
+    // ─────────────────────────────────────────────────────────────
     const tbodyVal = document.getElementById('tbody-valuation');
-    tbodyVal.innerHTML = res.years.map(y => `
-      <tr>
-        <td><strong>Год ${y.year}</strong></td>
-        <td>${formatCurrency(y.ebitda)}</td>
-        <td><strong>${formatMln(y.valuation)}</strong></td>
-        <td>${formatMln(y.valuation * res.founderShare)}</td>
-        <td>${formatMln(y.valuation * res.investorShare)}</td>
-        <td><strong>${formatCurrency(y.dividends)}</strong></td>
-      </tr>
-    `).join('');
-  }
+    if (tbodyVal) {
+      const investorSharePct = parseFloat(inputs.investorShare.value);
+      const founderSharePct = 100 - investorSharePct;
 
-    // --- 8. Professional Institutional Excel Export Generator (SheetJS) ---
+      tbodyVal.innerHTML = `
+        <tr>
+          <td class="col-name">Годовая EBITDA бизнеса</td>
+          ${res.years.map(y => `<td>${formatCurrency(y.ebitda)}</td>`).join('')}
+        </tr>
+        <tr>
+          <td class="col-name">Отраслевой мультипликатор Exit Multiple</td>
+          ${res.years.map(() => `<td>x${parseFloat(inputs.exitMultiple.value).toFixed(1)} EBITDA</td>`).join('')}
+        </tr>
+        <tr class="row-highlight">
+          <td class="col-name"><strong>ОЦЕНКА КАПИТАЛИЗАЦИИ БИЗНЕСА (VALUATION)</strong></td>
+          ${res.years.map(y => `<td class="val-green"><strong>${formatCurrency(y.valuation)}</strong></td>`).join('')}
+        </tr>
+        <tr>
+          <td class="col-name">Стоимость доли основателя (${founderSharePct.toFixed(0)}%)</td>
+          ${res.years.map(y => `<td><strong>${formatCurrency(y.valuation * (founderSharePct / 100))}</strong></td>`).join('')}
+        </tr>
+        <tr>
+          <td class="col-name">Стоимость доли инвестора (${investorSharePct.toFixed(0)}%)</td>
+          ${res.years.map(y => `<td>${formatCurrency(y.valuation * (investorSharePct / 100))}</td>`).join('')}
+        </tr>
+        <tr>
+          <td class="col-name">Доходность инвестора на вложенный капитал (MOIC)</td>
+          ${res.years.map(y => `<td><strong>${parseFloat(inputs.investment.value) > 0 ? (y.valuation * (investorSharePct / 100) / parseFloat(inputs.investment.value)).toFixed(2) + 'x' : 'N/A'}</strong></td>`).join('')}
+        </tr>
+        <tr class="section-row"><td colspan="6"><strong>ДИВИДЕНДНЫЙ ПОТОК (ВЫПЛАТЫ АКЦИОНЕРАМ)</strong></td></tr>
+        <tr class="row-highlight">
+          <td class="col-name">Общий объем дивидендов к распределению</td>
+          ${res.years.map(y => `<td><strong>${formatCurrency(y.dividends)}</strong></td>`).join('')}
+        </tr>
+        <tr>
+          <td class="col-name">Дивиденды основателю (${founderSharePct.toFixed(0)}%) в год</td>
+          ${res.years.map(y => `<td><strong>${formatCurrency(y.dividends * (founderSharePct / 100))}</strong></td>`).join('')}
+        </tr>
+        <tr class="row-highlight" style="background: #fafafa;">
+          <td class="col-name"><strong>Дивиденды основателю в месяц (чистыми)</strong></td>
+          ${res.years.map(y => `<td class="val-green"><strong>${formatCurrency(y.dividends * (founderSharePct / 100) / 12)}</strong></td>`).join('')}
+        </tr>
+        <tr>
+          <td class="col-name">Дивиденды инвестору (${investorSharePct.toFixed(0)}%) в год</td>
+          ${res.years.map(y => `<td>${formatCurrency(y.dividends * (investorSharePct / 100))}</td>`).join('')}
+        </tr>
+      `;
+    }
+  }
+// --- 8. Professional Institutional Excel Export Generator (SheetJS) ---
   function exportToExcel() {
     if (!activeCalculationResult) return;
     const res = activeCalculationResult;
