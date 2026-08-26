@@ -1682,6 +1682,22 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-export-excel')?.addEventListener('click', exportToExcel);
 
   initChartModalEvents();
+  
+  // Tooltip helper: native fallback title + mobile click support
+  document.querySelectorAll('.tooltip-icon[data-tooltip]').forEach(icon => {
+    icon.setAttribute('title', icon.getAttribute('data-tooltip'));
+    icon.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isActive = icon.classList.contains('active');
+      document.querySelectorAll('.tooltip-icon.active').forEach(i => i.classList.remove('active'));
+      if (!isActive) icon.classList.add('active');
+    });
+  });
+
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.tooltip-icon.active').forEach(i => i.classList.remove('active'));
+  });
+
   loadPreset('saas');
 
 });

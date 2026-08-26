@@ -167,7 +167,8 @@
   transition: transform 0.2s ease;
 }
 
-.wizard-group.open .acc-arrow {
+.wizard-group.open .acc-arrow,
+.accordion-header.active .acc-arrow {
   transform: rotate(180deg);
 }
 
@@ -176,7 +177,8 @@
   padding-top: 14px;
 }
 
-.wizard-group.open .accordion-content {
+.wizard-group.open .accordion-content,
+.accordion-content.open {
   display: block;
 }
 
@@ -202,11 +204,76 @@
   align-items: center;
 }
 
+/* Tooltip Icon & Dynamic Popup (Swiss Stark) */
 .tooltip-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   color: #a1a1aa;
   cursor: help;
-  font-size: 0.75rem;
+  font-size: 0.76rem;
+  transition: color 0.15s ease, transform 0.15s ease;
+  user-select: none;
+  padding: 2px;
 }
+
+.tooltip-icon:hover {
+  color: var(--black);
+  transform: scale(1.15);
+}
+
+.tooltip-icon::before {
+  content: '';
+  position: absolute;
+  bottom: calc(100% + 2px);
+  right: 4px;
+  border-width: 5px 5px 0 5px;
+  border-style: solid;
+  border-color: #09090b transparent transparent transparent;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translateY(4px);
+}
+
+.tooltip-icon::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 7px);
+  right: -8px;
+  background: #09090b;
+  color: #ffffff;
+  border: 1px solid #27272a;
+  padding: 6px 10px;
+  font-family: var(--font);
+  font-size: 0.72rem;
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: normal;
+  width: max-content;
+  max-width: 220px;
+  text-align: left;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  pointer-events: none;
+  z-index: 99999;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  transform: translateY(4px);
+}
+
+.tooltip-icon:hover::before,
+.tooltip-icon:hover::after,
+.tooltip-icon.active::before,
+.tooltip-icon.active::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
 
 .input-field input,
 .input-field select {
