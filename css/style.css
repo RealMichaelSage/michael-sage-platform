@@ -3576,7 +3576,7 @@ input[type="reset"],
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
   gap: 32px;
-  align-items: start;
+  align-items: stretch;
 }
 
 @media (max-width: 960px) {
@@ -3589,6 +3589,10 @@ input[type="reset"],
   background: #ffffff;
   border: 1px solid var(--border);
   padding: clamp(24px, 4vw, 36px);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .calc-group {
@@ -3825,9 +3829,11 @@ input[type="reset"],
   background: #09090b;
   color: #ffffff;
   padding: clamp(24px, 4vw, 36px);
-  position: sticky;
-  top: 90px;
   border: 1px solid #27272a;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .result-header {
