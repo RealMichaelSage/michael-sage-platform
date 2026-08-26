@@ -512,124 +512,481 @@ document.addEventListener('DOMContentLoaded', () => {
     renderTables(res);
   }
 
-  // --- 6. Charts ---
-  function renderCharts(res) {
-    const ctx1 = document.getElementById('chart-revenue-ebitda').getContext('2d');
-    if (chartRevenueInstance) chartRevenueInstance.destroy();
+  
+  let activeCalculationResult = null;
+  let chartModalInstance = null;
+  let currentModalType = 'revenue';
+  let currentModalRange = 'all';
 
-    chartRevenueInstance = new Chart(ctx1, {
-      type: 'line',
-      data: {
-        labels: res.months.map(m => `М${m.month}`),
-        datasets: [
-          {
-            label: 'Выручка (₽)',
-            data: res.months.map(m => m.revenue),
-            borderColor: '#3b82f6',
-            backgroundColor: 'rgba(59, 130, 246, 0.1)',
-            fill: true,
-            tension: 0.3,
-            borderWidth: 2
+  // --- 6. Beautiful Smooth Charts (No dots, sleek gradients) ---
+  function renderCharts(res) {
+    activeCalculationResult = res;
+
+    // Chart 1: Revenue vs EBITDA vs Net Profit
+    const ctx1 = document.getElementById('chart-revenue-ebitda');
+    if (ctx1) {
+      if (chartRevenueInstance) chartRevenueInstance.destroy();
+
+      const gradBlue = ctx1.getContext('2d').createLinearGradient(0, 0, 0, 220);
+      gradBlue.addColorStop(0, 'rgba(37, 99, 235, 0.16)');
+      gradBlue.addColorStop(1, 'rgba(37, 99, 235, 0.0)');
+
+      chartRevenueInstance = new Chart(ctx1, {
+        type: 'line',
+        data: {
+          labels: res.months.map(m => `М${m.month}`),
+          datasets: [
+            {
+              label: 'Выручка (₽)',
+              data: res.months.map(m => m.revenue),
+              borderColor: '#2563eb',
+              backgroundColor: gradBlue,
+              fill: true,
+              tension: 0.35,
+              borderWidth: 2.5,
+              pointRadius: 0,
+              pointHoverRadius: 6,
+              pointHoverBackgroundColor: '#2563eb',
+              pointHoverBorderColor: '#ffffff',
+              pointHoverBorderWidth: 2
+            },
+            {
+              label: 'EBITDA (₽)',
+              data: res.months.map(m => m.ebitda),
+              borderColor: '#059669',
+              backgroundColor: 'transparent',
+              borderWidth: 2.5,
+              tension: 0.35,
+              pointRadius: 0,
+              pointHoverRadius: 6,
+              pointHoverBackgroundColor: '#059669',
+              pointHoverBorderColor: '#ffffff',
+              pointHoverBorderWidth: 2
+            },
+            {
+              label: 'Чистая прибыль (₽)',
+              data: res.months.map(m => m.netIncome),
+              borderColor: '#dc2626',
+              backgroundColor: 'transparent',
+              borderWidth: 2,
+              borderDash: [5, 4],
+              tension: 0.35,
+              pointRadius: 0,
+              pointHoverRadius: 6,
+              pointHoverBackgroundColor: '#dc2626',
+              pointHoverBorderColor: '#ffffff',
+              pointHoverBorderWidth: 2
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: {
+              labels: {
+                color: '#09090b',
+                font: { family: 'Space Grotesk', size: 12, weight: '600' },
+                usePointStyle: true,
+                boxWidth: 8,
+                boxHeight: 8
+              }
+            },
+            tooltip: {
+              backgroundColor: '#09090b',
+              titleColor: '#ffffff',
+              bodyColor: '#e4e4e7',
+              borderColor: '#27272a',
+              borderWidth: 1,
+              padding: 12,
+              titleFont: { family: 'Space Grotesk', weight: '700', size: 13 },
+              bodyFont: { family: 'JetBrains Mono', size: 12 },
+              callbacks: {
+                title: (items) => `Месяц ${items[0].label.replace('М','')}`,
+                label: (ctx) => `  ${ctx.dataset.label}: ${formatCurrency(ctx.parsed.y)}`
+              }
+            }
           },
-          {
-            label: 'EBITDA (₽)',
-            data: res.months.map(m => m.ebitda),
-            borderColor: '#10b981',
-            backgroundColor: 'transparent',
-            borderWidth: 2,
-            tension: 0.3
-          },
-          {
-            label: 'Чистая прибыль (₽)',
-            data: res.months.map(m => m.netIncome),
-            borderColor: '#dc4d47',
-            backgroundColor: 'transparent',
-            borderWidth: 2,
-            borderDash: [5, 5],
-            tension: 0.3
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        interaction: { mode: 'index', intersect: false },
-        plugins: {
-          legend: { labels: { color: '#9ca3af', font: { family: 'Inter', size: 11 } } },
-          tooltip: {
-            callbacks: {
-              label: (ctx) => `${ctx.dataset.label}: ${formatCurrency(ctx.parsed.y)}`
+          scales: {
+            x: {
+              ticks: { color: '#71717a', font: { family: 'JetBrains Mono', size: 11 }, maxTicksLimit: 12 },
+              grid: { color: 'rgba(0,0,0,0.05)', strokeDash: [3, 3] }
+            },
+            y: {
+              ticks: {
+                color: '#71717a',
+                font: { family: 'JetBrains Mono', size: 11 },
+                callback: (val) => formatMln(val)
+              },
+              grid: { color: 'rgba(0,0,0,0.05)', strokeDash: [3, 3] }
             }
           }
-        },
-        scales: {
-          x: { ticks: { color: '#6b7280', maxTicksLimit: 10 }, grid: { color: 'rgba(255,255,255,0.05)' } },
-          y: {
-            ticks: {
-              color: '#6b7280',
-              callback: (val) => formatMln(val)
+        }
+      });
+    }
+
+    // Chart 2: Cash Flow & Cash Balance
+    const ctx2 = document.getElementById('chart-cashflow');
+    if (ctx2) {
+      if (chartCashflowInstance) chartCashflowInstance.destroy();
+
+      const gradGreen = ctx2.getContext('2d').createLinearGradient(0, 0, 0, 220);
+      gradGreen.addColorStop(0, 'rgba(16, 185, 129, 0.18)');
+      gradGreen.addColorStop(1, 'rgba(16, 185, 129, 0.0)');
+
+      chartCashflowInstance = new Chart(ctx2, {
+        type: 'line',
+        data: {
+          labels: res.months.map(m => `М${m.month}`),
+          datasets: [
+            {
+              label: 'Остаток на счете (₽)',
+              data: res.months.map(m => m.cumulativeCash),
+              borderColor: '#10b981',
+              backgroundColor: gradGreen,
+              fill: true,
+              borderWidth: 2.5,
+              tension: 0.35,
+              pointRadius: 0,
+              pointHoverRadius: 6,
+              pointHoverBackgroundColor: '#10b981',
+              pointHoverBorderColor: '#ffffff',
+              pointHoverBorderWidth: 2
             },
-            grid: { color: 'rgba(255,255,255,0.05)' }
+            {
+              label: 'Операционный поток CFO (₽)',
+              data: res.months.map(m => m.ocf),
+              borderColor: '#f59e0b',
+              backgroundColor: 'transparent',
+              borderWidth: 2,
+              borderDash: [5, 4],
+              tension: 0.35,
+              pointRadius: 0,
+              pointHoverRadius: 6,
+              pointHoverBackgroundColor: '#f59e0b',
+              pointHoverBorderColor: '#ffffff',
+              pointHoverBorderWidth: 2
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: {
+              labels: {
+                color: '#09090b',
+                font: { family: 'Space Grotesk', size: 12, weight: '600' },
+                usePointStyle: true,
+                boxWidth: 8,
+                boxHeight: 8
+              }
+            },
+            tooltip: {
+              backgroundColor: '#09090b',
+              titleColor: '#ffffff',
+              bodyColor: '#e4e4e7',
+              borderColor: '#27272a',
+              borderWidth: 1,
+              padding: 12,
+              titleFont: { family: 'Space Grotesk', weight: '700', size: 13 },
+              bodyFont: { family: 'JetBrains Mono', size: 12 },
+              callbacks: {
+                title: (items) => `Месяц ${items[0].label.replace('М','')}`,
+                label: (ctx) => `  ${ctx.dataset.label}: ${formatCurrency(ctx.parsed.y)}`
+              }
+            }
+          },
+          scales: {
+            x: {
+              ticks: { color: '#71717a', font: { family: 'JetBrains Mono', size: 11 }, maxTicksLimit: 12 },
+              grid: { color: 'rgba(0,0,0,0.05)', strokeDash: [3, 3] }
+            },
+            y: {
+              ticks: {
+                color: '#71717a',
+                font: { family: 'JetBrains Mono', size: 11 },
+                callback: (val) => formatMln(val)
+              },
+              grid: { color: 'rgba(0,0,0,0.05)', strokeDash: [3, 3] }
+            }
           }
         }
+      });
+    }
+
+    // Update modal if open
+    if (document.getElementById('modal-chart-zoom')?.classList.contains('open')) {
+      renderModalChart();
+    }
+  }
+
+  // --- 6.1 Modal Zoom & Pan Engine ---
+  function initChartModalEvents() {
+    const modal = document.getElementById('modal-chart-zoom');
+    if (!modal) return;
+
+    document.querySelectorAll('.btn-chart-expand').forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentModalType = btn.getAttribute('data-chart-type') || 'revenue';
+        currentModalRange = 'all';
+        document.querySelectorAll('.btn-range').forEach(rb => {
+          rb.classList.toggle('active', rb.getAttribute('data-range') === 'all');
+        });
+        openChartModal();
+      });
+    });
+
+    document.getElementById('btn-close-chart-modal')?.addEventListener('click', closeChartModal);
+    document.getElementById('modal-backdrop')?.addEventListener('click', closeChartModal);
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('open')) {
+        closeChartModal();
       }
     });
 
-    const ctx2 = document.getElementById('chart-cashflow').getContext('2d');
-    if (chartCashflowInstance) chartCashflowInstance.destroy();
+    document.querySelectorAll('.btn-range').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.btn-range').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentModalRange = btn.getAttribute('data-range') || 'all';
+        renderModalChart();
+      });
+    });
 
-    chartCashflowInstance = new Chart(ctx2, {
+    document.getElementById('btn-download-chart-png')?.addEventListener('click', () => {
+      const canvas = document.getElementById('chart-modal-canvas');
+      if (!canvas) return;
+      const link = document.createElement('a');
+      link.download = `finmodel_chart_${currentModalType}_${currentModalRange}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
+  }
+
+  function openChartModal() {
+    const modal = document.getElementById('modal-chart-zoom');
+    if (!modal) return;
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    renderModalChart();
+  }
+
+  function closeChartModal() {
+    const modal = document.getElementById('modal-chart-zoom');
+    if (!modal) return;
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  function renderModalChart() {
+    if (!activeCalculationResult) return;
+    const canvas = document.getElementById('chart-modal-canvas');
+    if (!canvas) return;
+
+    if (chartModalInstance) {
+      chartModalInstance.destroy();
+    }
+
+    const titleElem = document.getElementById('modal-chart-title');
+    const isRev = currentModalType === 'revenue';
+
+    if (titleElem) {
+      titleElem.textContent = isRev 
+        ? '📊 Детальный анализ: Динамика Выручки, EBITDA и Чистой Прибыли'
+        : '💵 Детальный анализ: Движение Денег (Cash Flow) и Остаток на счете';
+    }
+
+    // Filter months based on currentModalRange
+    let monthsSlice = [...activeCalculationResult.months];
+    if (currentModalRange === 'y1') {
+      monthsSlice = monthsSlice.slice(0, 12);
+    } else if (currentModalRange === 'y2-3') {
+      monthsSlice = monthsSlice.slice(12, 36);
+    } else if (currentModalRange === 'y4-5') {
+      monthsSlice = monthsSlice.slice(36, 60);
+    }
+
+    // Update inspector labels
+    document.getElementById('ins-m1-lbl').textContent = isRev ? 'Выручка:' : 'Остаток на счете:';
+    document.getElementById('ins-m2-lbl').textContent = isRev ? 'EBITDA:' : 'Операционный поток (CFO):';
+    document.getElementById('ins-m3-lbl').textContent = isRev ? 'Чистая прибыль:' : 'Инвестиционный кэш:';
+
+    // Set initial inspector to first month in slice
+    updateInspectorData(monthsSlice[0], isRev);
+
+    let datasets = [];
+    if (isRev) {
+      const gradBlue = canvas.getContext('2d').createLinearGradient(0, 0, 0, 380);
+      gradBlue.addColorStop(0, 'rgba(37, 99, 235, 0.2)');
+      gradBlue.addColorStop(1, 'rgba(37, 99, 235, 0.0)');
+
+      datasets = [
+        {
+          label: 'Выручка (₽)',
+          data: monthsSlice.map(m => m.revenue),
+          borderColor: '#2563eb',
+          backgroundColor: gradBlue,
+          fill: true,
+          tension: 0.35,
+          borderWidth: 3,
+          pointRadius: monthsSlice.length <= 12 ? 4 : 0,
+          pointHoverRadius: 7,
+          pointHoverBackgroundColor: '#2563eb',
+          pointHoverBorderColor: '#ffffff',
+          pointHoverBorderWidth: 2
+        },
+        {
+          label: 'EBITDA (₽)',
+          data: monthsSlice.map(m => m.ebitda),
+          borderColor: '#059669',
+          backgroundColor: 'transparent',
+          borderWidth: 3,
+          tension: 0.35,
+          pointRadius: monthsSlice.length <= 12 ? 4 : 0,
+          pointHoverRadius: 7,
+          pointHoverBackgroundColor: '#059669',
+          pointHoverBorderColor: '#ffffff',
+          pointHoverBorderWidth: 2
+        },
+        {
+          label: 'Чистая прибыль (₽)',
+          data: monthsSlice.map(m => m.netIncome),
+          borderColor: '#dc2626',
+          backgroundColor: 'transparent',
+          borderWidth: 2.5,
+          borderDash: [5, 5],
+          tension: 0.35,
+          pointRadius: monthsSlice.length <= 12 ? 4 : 0,
+          pointHoverRadius: 7,
+          pointHoverBackgroundColor: '#dc2626',
+          pointHoverBorderColor: '#ffffff',
+          pointHoverBorderWidth: 2
+        }
+      ];
+    } else {
+      const gradGreen = canvas.getContext('2d').createLinearGradient(0, 0, 0, 380);
+      gradGreen.addColorStop(0, 'rgba(16, 185, 129, 0.22)');
+      gradGreen.addColorStop(1, 'rgba(16, 185, 129, 0.0)');
+
+      datasets = [
+        {
+          label: 'Остаток на счете (₽)',
+          data: monthsSlice.map(m => m.cumulativeCash),
+          borderColor: '#10b981',
+          backgroundColor: gradGreen,
+          fill: true,
+          borderWidth: 3,
+          tension: 0.35,
+          pointRadius: monthsSlice.length <= 12 ? 4 : 0,
+          pointHoverRadius: 7,
+          pointHoverBackgroundColor: '#10b981',
+          pointHoverBorderColor: '#ffffff',
+          pointHoverBorderWidth: 2
+        },
+        {
+          label: 'Операционный поток CFO (₽)',
+          data: monthsSlice.map(m => m.ocf),
+          borderColor: '#f59e0b',
+          backgroundColor: 'transparent',
+          borderWidth: 2.5,
+          borderDash: [5, 4],
+          tension: 0.35,
+          pointRadius: monthsSlice.length <= 12 ? 4 : 0,
+          pointHoverRadius: 7,
+          pointHoverBackgroundColor: '#f59e0b',
+          pointHoverBorderColor: '#ffffff',
+          pointHoverBorderWidth: 2
+        }
+      ];
+    }
+
+    chartModalInstance = new Chart(canvas, {
       type: 'line',
       data: {
-        labels: res.months.map(m => `М${m.month}`),
-        datasets: [
-          {
-            label: 'Остаток на счете (₽)',
-            data: res.months.map(m => m.cumulativeCash),
-            borderColor: '#10b981',
-            backgroundColor: 'rgba(16, 185, 129, 0.1)',
-            fill: true,
-            borderWidth: 2,
-            tension: 0.3
-          },
-          {
-            label: 'Операционный поток CFO (₽)',
-            data: res.months.map(m => m.ocf),
-            borderColor: '#f59e0b',
-            backgroundColor: 'transparent',
-            borderWidth: 1.5,
-            borderDash: [4, 4],
-            tension: 0.3
-          }
-        ]
+        labels: monthsSlice.map(m => `Месяц ${m.month}`),
+        datasets: datasets
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
         interaction: { mode: 'index', intersect: false },
+        onHover: (event, activeElements) => {
+          if (activeElements && activeElements.length > 0) {
+            const idx = activeElements[0].index;
+            if (monthsSlice[idx]) {
+              updateInspectorData(monthsSlice[idx], isRev);
+            }
+          }
+        },
         plugins: {
-          legend: { labels: { color: '#9ca3af', font: { family: 'Inter', size: 11 } } },
+          legend: {
+            position: 'top',
+            labels: {
+              color: '#09090b',
+              font: { family: 'Space Grotesk', size: 13, weight: '700' },
+              usePointStyle: true,
+              boxWidth: 10,
+              boxHeight: 10,
+              padding: 16
+            }
+          },
           tooltip: {
+            backgroundColor: '#09090b',
+            titleColor: '#ffffff',
+            bodyColor: '#e4e4e7',
+            borderColor: '#27272a',
+            borderWidth: 1,
+            padding: 14,
+            titleFont: { family: 'Space Grotesk', weight: '700', size: 14 },
+            bodyFont: { family: 'JetBrains Mono', size: 13 },
             callbacks: {
-              label: (ctx) => `${ctx.dataset.label}: ${formatCurrency(ctx.parsed.y)}`
+              label: (ctx) => `  ${ctx.dataset.label}: ${formatCurrency(ctx.parsed.y)}`
             }
           }
         },
         scales: {
-          x: { ticks: { color: '#6b7280', maxTicksLimit: 10 }, grid: { color: 'rgba(255,255,255,0.05)' } },
+          x: {
+            ticks: { color: '#71717a', font: { family: 'JetBrains Mono', size: 12 }, maxTicksLimit: 15 },
+            grid: { color: 'rgba(0,0,0,0.06)', strokeDash: [3, 3] }
+          },
           y: {
             ticks: {
-              color: '#6b7280',
-              callback: (val) => formatMln(val)
+              color: '#71717a',
+              font: { family: 'JetBrains Mono', size: 12 },
+              callback: (val) => formatCurrency(val)
             },
-            grid: { color: 'rgba(255,255,255,0.05)' }
+            grid: { color: 'rgba(0,0,0,0.06)', strokeDash: [3, 3] }
           }
         }
       }
     });
   }
 
-  // --- 7. Tables ---
+  function updateInspectorData(m, isRev) {
+    if (!m) return;
+    const yr = Math.ceil(m.month / 12);
+    const mInYr = ((m.month - 1) % 12) + 1;
+    document.getElementById('ins-period').textContent = `Месяц ${m.month} (Год ${yr}, Мес ${mInYr})`;
+
+    if (isRev) {
+      document.getElementById('ins-m1-val').textContent = formatCurrency(m.revenue);
+      document.getElementById('ins-m2-val').textContent = formatCurrency(m.ebitda);
+      document.getElementById('ins-m3-val').textContent = formatCurrency(m.netIncome);
+      document.getElementById('ins-m3-val').className = `ins-val ${m.netIncome >= 0 ? 'green' : 'red'}`;
+    } else {
+      document.getElementById('ins-m1-val').textContent = formatCurrency(m.cumulativeCash);
+      document.getElementById('ins-m2-val').textContent = formatCurrency(m.ocf);
+      document.getElementById('ins-m3-val').textContent = formatCurrency(m.cfEnd);
+      document.getElementById('ins-m1-val').className = `ins-val ${m.cumulativeCash >= 0 ? 'green' : 'red'}`;
+    }
+  }
+// --- 7. Tables ---
   function renderTables(res) {
     const m1 = res.months[0];
     const m12 = res.months[11];
@@ -849,8 +1206,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  document.getElementById('btn-export-excel').addEventListener('click', exportToExcel);
+  document.getElementById('btn-export-excel')?.addEventListener('click', exportToExcel);
 
+  initChartModalEvents();
   loadPreset('saas');
 
 });

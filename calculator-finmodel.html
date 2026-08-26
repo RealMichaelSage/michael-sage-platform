@@ -560,8 +560,13 @@
           
           <div class="chart-box glass-panel">
             <div class="chart-header">
-              <h4>Динамика Выручки, EBITDA и Чистой Прибыли (₽)</h4>
-              <span class="badge-tag">Горизонт 60 мес.</span>
+              <div class="chart-title-wrap">
+                <h4>Динамика Выручки, EBITDA и Чистой Прибыли (₽)</h4>
+                <span class="badge-tag">60 мес.</span>
+              </div>
+              <button type="button" class="btn-chart-expand" data-chart-type="revenue" title="Развернуть график на весь экран и приблизить">
+                <i class="fa-solid fa-expand"></i> Приблизить
+              </button>
             </div>
             <div class="chart-canvas-wrapper">
               <canvas id="chart-revenue-ebitda"></canvas>
@@ -570,8 +575,13 @@
 
           <div class="chart-box glass-panel">
             <div class="chart-header">
-              <h4>Движение Денег (Cash Flow) и Остаток на счете (₽)</h4>
-              <span class="badge-tag">Контроль кассовых разрывов</span>
+              <div class="chart-title-wrap">
+                <h4>Движение Денег (Cash Flow) и Остаток на счете (₽)</h4>
+                <span class="badge-tag">Кассовые разрывы</span>
+              </div>
+              <button type="button" class="btn-chart-expand" data-chart-type="cashflow" title="Развернуть график на весь экран и приблизить">
+                <i class="fa-solid fa-expand"></i> Приблизить
+              </button>
             </div>
             <div class="chart-canvas-wrapper">
               <canvas id="chart-cashflow"></canvas>
@@ -810,6 +820,69 @@
       </div>
     </div>
   </section>
+
+  
+  <!-- MODAL: Fullscreen Interactive Chart Zoom & Range Inspector -->
+  <div id="modal-chart-zoom" class="chart-modal" aria-hidden="true">
+    <div class="chart-modal-backdrop" id="modal-backdrop"></div>
+    <div class="chart-modal-dialog">
+      
+      <div class="chart-modal-header">
+        <div class="modal-title-group">
+          <span class="modal-badge">ИНТЕРАКТИВНЫЙ АНАЛИЗ</span>
+          <h3 id="modal-chart-title">Детальный анализ графика</h3>
+        </div>
+        <div class="modal-header-actions">
+          <button type="button" id="btn-download-chart-png" class="btn-modal-action">
+            <i class="fa-solid fa-camera"></i> Скачать PNG
+          </button>
+          <button type="button" id="btn-close-chart-modal" class="btn-modal-close" aria-label="Закрыть">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Range Zoom Controls -->
+      <div class="modal-controls-bar">
+        <div class="range-filters-group">
+          <span class="range-label">МАСШТАБ И ГОРИЗОНТ:</span>
+          <button type="button" class="btn-range active" data-range="all">Все 60 мес.</button>
+          <button type="button" class="btn-range" data-range="y1">Год 1 (М1–М12)</button>
+          <button type="button" class="btn-range" data-range="y2-3">Год 2–3 (М13–М36)</button>
+          <button type="button" class="btn-range" data-range="y4-5">Год 4–5 (М37–М60)</button>
+        </div>
+        <div class="zoom-hint">
+          <i class="fa-solid fa-arrow-pointer"></i> Наведите на точку графика для инспекции месяца
+        </div>
+      </div>
+
+      <!-- Large Modal Canvas -->
+      <div class="modal-canvas-wrapper">
+        <canvas id="chart-modal-canvas"></canvas>
+      </div>
+
+      <!-- Live Month Details Inspector Bar -->
+      <div class="modal-inspector-bar" id="modal-inspector-bar">
+        <div class="inspector-item">
+          <span class="ins-label">ВЫБРАННЫЙ ПЕРИОД:</span>
+          <strong class="ins-val" id="ins-period">Месяц 1 (Год 1)</strong>
+        </div>
+        <div class="inspector-item">
+          <span class="ins-label" id="ins-m1-lbl">Выручка:</span>
+          <strong class="ins-val green" id="ins-m1-val">0 ₽</strong>
+        </div>
+        <div class="inspector-item">
+          <span class="ins-label" id="ins-m2-lbl">EBITDA:</span>
+          <strong class="ins-val" id="ins-m2-val">0 ₽</strong>
+        </div>
+        <div class="inspector-item">
+          <span class="ins-label" id="ins-m3-lbl">Остаток на счете:</span>
+          <strong class="ins-val" id="ins-m3-val">0 ₽</strong>
+        </div>
+      </div>
+
+    </div>
+  </div>
 
   <!-- FOOTER -->
   <footer class="footer">
