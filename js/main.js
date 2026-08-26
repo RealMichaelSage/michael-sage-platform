@@ -8,8 +8,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const currentPath = window.location.pathname.replace(/^\//, '').replace(/\.html$/, '') || 'index';
   document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(link => {
     const rawHref = (link.getAttribute('href') || '').split('#')[0].replace(/^\//, '').replace(/\.html$/, '') || 'index';
-    if (rawHref === currentPath) {
+    if (rawHref === currentPath && rawHref !== '#') {
       link.classList.add('active');
+      const parentDropdown = link.closest('.nav-dropdown');
+      if (parentDropdown) {
+        const toggle = parentDropdown.querySelector('.nav-dropdown-toggle');
+        if (toggle) toggle.classList.add('active');
+      }
     }
   });
 

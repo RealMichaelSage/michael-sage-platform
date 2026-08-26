@@ -3024,3 +3024,407 @@ input[type="reset"],
   border-color: #10b981;
   box-shadow: 0 0 12px rgba(52, 211, 153, 0.9);
 }
+
+/* ==========================================================================
+   DROPDOWN NAVIGATION & KNOWLEDGE BASE STYLES
+   ========================================================================== */
+
+.nav-dropdown {
+  position: relative;
+  list-style: none;
+}
+
+.nav-dropdown-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.nav-arrow {
+  font-size: 0.65rem;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-block;
+  opacity: 0.6;
+}
+
+.nav-dropdown:hover .nav-arrow {
+  transform: rotate(180deg);
+  opacity: 1;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 260px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04);
+  padding: 8px 0;
+  list-style: none;
+  display: none;
+  z-index: 1100;
+  border-radius: 2px;
+  animation: dropdownFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hover bridge to prevent menu from closing when moving mouse */
+.nav-dropdown::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 10px;
+}
+
+.nav-dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dropdown-menu a {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 18px !important;
+  font-size: 0.88rem !important;
+  color: var(--black) !important;
+  font-weight: 500 !important;
+  text-decoration: none !important;
+  transition: all 0.15s ease !important;
+  border-left: 2px solid transparent;
+  white-space: nowrap;
+}
+
+.dropdown-menu a:hover {
+  background: var(--bg-alt) !important;
+  color: var(--black) !important;
+  border-left-color: var(--green) !important;
+  padding-left: 22px !important;
+}
+
+.badge-count {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  background: var(--black);
+  color: #fff;
+  padding: 2px 6px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin-left: 8px;
+  display: inline-block;
+}
+
+.badge-count.green {
+  background: var(--green);
+  color: #09090b;
+}
+
+/* Mobile menu grouped sections */
+.mobile-menu-section {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+  margin-top: 8px;
+}
+
+.mobile-menu-title {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  color: var(--gray);
+  letter-spacing: 0.08em;
+  padding: 6px 16px;
+  font-weight: 700;
+}
+
+.mobile-menu-section a {
+  padding-left: 24px !important;
+  font-size: 0.95rem !important;
+}
+
+/* ==========================================================================
+   PROMPTS LIBRARY PAGE STYLES
+   ========================================================================== */
+
+.prompts-hero {
+  padding: 120px 0 40px;
+  border-bottom: 1px solid var(--border);
+  background: #ffffff;
+}
+
+.prompts-controls {
+  padding: 28px 0;
+  background: var(--bg-alt);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 64px;
+  z-index: 90;
+  backdrop-filter: blur(12px);
+}
+
+.search-box-wrapper {
+  margin-bottom: 18px;
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  padding: 14px 20px 14px 44px;
+  font-size: 1rem;
+  font-family: var(--font);
+  border: 1px solid var(--border);
+  background: #ffffff;
+  color: var(--black);
+  transition: all 0.2s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--black);
+  box-shadow: 0 0 0 2px rgba(9, 9, 11, 0.08);
+}
+
+.search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.1rem;
+  color: var(--gray);
+}
+
+.filter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-tab {
+  padding: 8px 14px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  font-family: var(--mono);
+  background: #ffffff;
+  border: 1px solid var(--border);
+  color: var(--gray);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.filter-tab:hover {
+  color: var(--black);
+  border-color: var(--black);
+}
+
+.filter-tab.active {
+  background: var(--black);
+  color: #ffffff;
+  border-color: var(--black);
+}
+
+.prompts-container {
+  padding: 48px 0 80px;
+}
+
+.prompts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 900px) {
+  .prompts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.prompt-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.prompt-card:hover {
+  border-color: var(--black);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+.prompt-card-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+  background: #fafafa;
+}
+
+.prompt-meta-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.prompt-category-tag {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 3px 8px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  color: var(--black);
+}
+
+.prompt-num {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--gray);
+}
+
+.prompt-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+  color: var(--black);
+}
+
+.prompt-badges {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.model-badge {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  background: #ffffff;
+  border: 1px solid #e4e4e7;
+  padding: 2px 6px;
+  color: #71717a;
+}
+
+.prompt-card-body {
+  padding: 20px 24px;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.prompt-code-box {
+  background: #09090b;
+  color: #f4f4f5;
+  border-radius: 2px;
+  position: relative;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.prompt-code-content {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  line-height: 1.6;
+  padding: 16px;
+  max-height: 220px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: #e4e4e7;
+}
+
+.prompt-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.btn-copy-prompt {
+  flex: 1 1 auto;
+  background: var(--black);
+  color: #ffffff;
+  border: 1px solid var(--black);
+  padding: 10px 16px;
+  font-family: var(--font);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.btn-copy-prompt:hover {
+  background: #27272a;
+}
+
+.btn-copy-prompt.copied {
+  background: var(--green) !important;
+  color: #09090b !important;
+  border-color: var(--green) !important;
+}
+
+.btn-expand-prompt {
+  background: #ffffff;
+  color: var(--black);
+  border: 1px solid var(--border);
+  padding: 10px 14px;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-expand-prompt:hover {
+  background: var(--bg-alt);
+  border-color: var(--black);
+}
+
+/* Toast notification */
+.toast-notice {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #09090b;
+  color: #ffffff;
+  padding: 12px 20px;
+  font-family: var(--font);
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-left: 3px solid var(--green);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.toast-notice.show {
+  transform: translateY(0);
+  opacity: 1;
+}

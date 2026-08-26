@@ -96,21 +96,33 @@
 </head>
 <body>
 
-  <!-- HEADER -->
+    <!-- HEADER NAVIGATION -->
   <header class="nav">
     <div class="nav-inner">
       <a href="/" class="nav-logo">
         <strong>Михаил Пузыр<span class="accent-yo">ё</span>в</strong>
-        <span class="nav-logo-badge">ВНЕДРЕНИЕ & MVP</span>
+        <span class="nav-logo-badge">ВНЕДРЕНИЕ & АВТОМАТИЗАЦИЯ</span>
       </a>
 
       <ul class="nav-links">
-        <li><a href="tracking">Трекинг & Эдвайзинг</a></li>
-        <li><a href="mentoring">Наставничество</a></li>
-        <li><a href="club">Клуб & База Знаний</a></li>
-        <li><a href="corporate">Корпорациям</a></li>
-        <li><a href="automation">Внедрение руками</a></li>
-        <li><a href="about">Обо&nbsp;мне & Проекты</a></li>
+        <li class="nav-dropdown">
+          <a href="#" class="nav-dropdown-toggle">Услуги <span class="nav-arrow">▾</span></a>
+          <ul class="dropdown-menu">
+            <li><a href="tracking">Трекинг & Эдвайзинг</a></li>
+            <li><a href="mentoring">Наставничество 1-на-1</a></li>
+            <li><a href="club">Клуб & База Знаний</a></li>
+            <li><a href="corporate">Корпорациям</a></li>
+            <li><a href="automation">Внедрение руками</a></li>
+          </ul>
+        </li>
+        <li class="nav-dropdown">
+          <a href="#" class="nav-dropdown-toggle">База Знаний <span class="nav-arrow">▾</span></a>
+          <ul class="dropdown-menu">
+            <li><a href="prompts">Системные промпты <span class="badge-count green">37</span></a></li>
+            <li><a href="club">Закрытая база Клуба 🔒</a></li>
+          </ul>
+        </li>
+        <li><a href="about">Обо&nbsp;мне & Кейсы</a></li>
       </ul>
 
       <div class="nav-right">
@@ -127,12 +139,19 @@
   <!-- MOBILE MENU -->
   <div class="mobile-menu">
     <a href="/">Главная</a>
-    <a href="tracking">Трекинг & Эдвайзинг</a>
-    <a href="mentoring">Индивидуальное наставничество</a>
-    <a href="club">Клуб & База Знаний</a>
-    <a href="corporate">Корпоративные тренинги</a>
-    <a href="automation">Внедрение и Автоматизация</a>
-    <a href="about">Обо&nbsp;мне & Проекты</a>
+    <div class="mobile-menu-section">
+      <span class="mobile-menu-title">Услуги</span>
+      <a href="tracking">Трекинг & Эдвайзинг</a>
+      <a href="mentoring">Наставничество 1-на-1</a>
+      <a href="club">Клуб & База Знаний</a>
+      <a href="corporate">Корпорациям</a>
+      <a href="automation">Внедрение руками</a>
+    </div>
+    <div class="mobile-menu-section">
+      <span class="mobile-menu-title">База Знаний</span>
+      <a href="prompts">Системные промпты (37 ролей)</a>
+    </div>
+    <a href="about">Обо&nbsp;мне & Кейсы</a>
     <a href="booking" class="m-cta">Забронировать слот ↗</a>
   </div>
 
