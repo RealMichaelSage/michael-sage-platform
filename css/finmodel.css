@@ -1350,3 +1350,29 @@ input:checked + .slider.round:before {
 .fin-table .val-red {
   color: #dc2626;
 }
+
+
+/* Standalone FAQ Section Header */
+.fin-faq-section-wrapper {
+  margin-top: 72px;
+}
+
+.faq-header-standalone {
+  margin-bottom: 28px;
+}
+
+.faq-main-title {
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--black);
+  margin: 14px 0 10px;
+  line-height: 1.25;
+}
+
+.faq-main-sub {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--gray);
+  max-width: 760px;
+}
