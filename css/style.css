@@ -111,8 +111,6 @@ button {
   min-width: 0;
   height: 68px;
   padding: 0 clamp(24px, 4vw, 64px);
-  border-left: 1px solid var(--border);
-  border-right: 1px solid var(--border);
   box-sizing: border-box;
 }
 
@@ -1468,8 +1466,6 @@ main > .section:first-child {
   max-width: 1440px;
   margin: 0 auto;
   padding: 48px clamp(24px, 4vw, 64px);
-  border-left: 1px solid #18181b;
-  border-right: 1px solid #18181b;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
