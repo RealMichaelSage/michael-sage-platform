@@ -3207,9 +3207,13 @@ input[type="reset"],
   width: 100%;
 }
 
+.container,
 .prompts-hero .container,
 .prompts-controls .container,
 .prompts-container .container,
+.calc-main-section .container,
+.sheet-matrix-section .container,
+.calc-edu-section .container,
 .section-cta .container {
   max-width: 1440px;
   margin: 0 auto;
@@ -4111,4 +4115,12 @@ input[type="reset"],
   background: rgba(0, 0, 0, 0.05);
   padding: 2px 6px;
   font-weight: 600;
+}
+
+
+.calc-main-section,
+.sheet-matrix-section,
+.calc-edu-section {
+  width: 100%;
+  box-sizing: border-box;
 }
