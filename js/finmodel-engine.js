@@ -1061,63 +1061,283 @@ document.addEventListener('DOMContentLoaded', () => {
     `).join('');
   }
 
-  // --- 8. Excel Export Generator (SheetJS) ---
+    // --- 8. Professional Institutional Excel Export Generator (SheetJS) ---
   function exportToExcel() {
-    if (!calculatedResults) return;
-    const res = calculatedResults;
+    if (!activeCalculationResult) return;
+    const res = activeCalculationResult;
+
+    // Helper: generate unicode sparkline
+    function makeSparkline(arr) {
+      if (!arr || arr.length === 0) return '';
+      const chars = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
+      const nums = arr.map(v => typeof v === 'number' ? v : 0);
+      const minV = Math.min(...nums);
+      const maxV = Math.max(...nums);
+      if (maxV === minV) return '■■■■■';
+      return nums.map(v => {
+        const idx = Math.floor(((v - minV) / (maxV - minV + 0.000001)) * (chars.length - 1));
+        return chars[Math.max(0, Math.min(idx, chars.length - 1))];
+      }).join('');
+    }
 
     const wb = XLSX.utils.book_new();
 
-    const summaryData = [
-      ['ВЕНЧУРНАЯ ФИНАНСОВАЯ МОДЕЛЬ 5.0 (SAGE a-sage.ru)'],
-      ['Автор / Архитектор:', 'Михаил Пузырёв'],
-      ['Дата расчета:', new Date().toLocaleDateString('ru-RU')],
-      ['Сценарий:', currentScenario.toUpperCase()],
-      [''],
-      ['КЛЮЧЕВЫЕ ПОКАЗАТЕЛИ ЭФФЕКТИВНОСТИ (KPI)', 'ЗНАЧЕНИЕ', 'НОРМА / ОПИСАНИЕ'],
-      ['Точка безубыточности (Break-even):', res.breakEvenMonth, 'Месяц выхода в операционный плюс'],
-      ['Cash Runway (Запас хода):', res.runwayMonths, 'Запас ликвидности до нуля'],
-      ['LTV / CAC Ratio:', `${res.ltvcac.toFixed(2)}x`, 'Норма >= 3.0x'],
-      ['Срок окупаемости рекламы (Payback):', `${res.paybackMonths.toFixed(1)} мес.`, 'Норма < 12 мес.'],
-      ['Оценка компании на Год 5 (Exit Valuation):', res.valuationY5, 'Мультипликатор x' + res.exitMultiple],
-      ['Дивиденды фаундера в мес (к Году 3):', res.founderDividendsY3Monthly, 'Чистый кэш на руки после налогов'],
-      [''],
-      ['ГОДОВОЙ СВОД P&L', 'ГОД 1', 'ГОД 2', 'ГОД 3', 'ГОД 4', 'ГОД 5'],
-      ['Выручка (Revenue)', ...res.years.map(y => y.revenue)],
-      ['EBITDA', ...res.years.map(y => y.ebitda)],
-      ['Чистая прибыль (Net Income)', ...res.years.map(y => y.netIncome)],
-      ['Дивиденды к выплате', ...res.years.map(y => y.dividends)],
-      ['Остаток кэша на счете', ...res.years.map(y => y.cashEnd)],
-      ['Капитализация (Valuation)', ...res.years.map(y => y.valuation)]
-    ];
-    const wsSummary = XLSX.utils.aoa_to_sheet(summaryData);
-    XLSX.utils.book_append_sheet(wb, wsSummary, 'Дашборд_KPI');
+    // ─────────────────────────────────────────────────────────────
+    // SHEET 1: EXECUTIVE SUMMARY & DASHBOARD (Сводка и KPI)
+    // ─────────────────────────────────────────────────────────────
+    const presetNames = {
+      saas: 'SaaS / IT-сервис (Подписка)',
+      edtech: 'EdTech / Онлайн-школы',
+      horeca: 'HoReCa / Коворкинги / Кафе',
+      ecom: 'E-commerce / D2C Торговля',
+      b2b: 'B2B Услуги & Агентства',
+      mfg: 'Хардвер & Производство'
+    };
 
-    const monthlyHeaders = [
-      'Месяц', 'Год', 'Трафик UA', 'Лиды', 'Новые клиенты', 'База подписчиков', 
-      'Выручка', 'COGS', 'Эквайринг', 'Бонусы', 'Валовая прибыль', 
-      'Маркетинг', 'CAC', 'Маржинальная прибыль CM', 'ФОТ', 'OPEX', 
-      'EBITDA', 'Амортизация', 'EBIT', 'Налог', 'Чистая прибыль', 
-      'Денежный поток CFO', 'Дивиденды', 'Остаток на счете'
-    ];
-    const monthlyData = [
-      monthlyHeaders,
-      ...res.months.map(m => [
-        m.month, m.year, m.ua, m.leads, m.newBuyers, m.activeSubscribers,
-        m.revenue, m.cogs, m.acquiring, m.salesBonus, m.grossProfit,
-        m.adBudget, m.cac, m.contributionMargin, m.totalStaffCost, m.currentOpex,
-        m.ebitda, parseFloat(inputs.capex.value)/60, m.ebit, m.tax, m.netIncome,
-        m.ocf, m.monthlyDividends, m.cumulativeCash
-      ])
-    ];
-    const wsMonthly = XLSX.utils.aoa_to_sheet(monthlyData);
-    XLSX.utils.book_append_sheet(wb, wsMonthly, 'Помесячный_P&L_CF');
+    const scenarioNames = {
+      pessimistic: 'Пессимистичный (-20% выручка, +15% CAC)',
+      realistic: 'Реалистичный (Базовый план 100%)',
+      optimistic: 'Оптимистичный (+35% выручка, -15% CAC)'
+    };
 
-    const fileName = `FinModel_5.0_${currentPreset.toUpperCase()}_${currentScenario}_${Date.now()}.xlsx`;
+    const revSpark = makeSparkline(res.years.map(y => y.revenue));
+    const ebitdaSpark = makeSparkline(res.years.map(y => y.ebitda));
+    const netSpark = makeSparkline(res.years.map(y => y.netIncome));
+    const cashSpark = makeSparkline(res.years.map(y => y.cashEnd));
+
+    const sheet1Data = [
+      ['═════════════════════════════════════════════════════════════════════════════════════════════════════════════════'],
+      ['ВЕНЧУРНАЯ ФИНАНСОВАЯ МОДЕЛЬ 5.0 PRO — ИНСТИТУЦИОНАЛЬНЫЙ РАСЧЕТ БИЗНЕСА'],
+      ['Официальная платформа: a-sage.ru | Автор: Михаил Пузырёв'],
+      ['═════════════════════════════════════════════════════════════════════════════════════════════════════════════════'],
+      [''],
+      ['ПАРАМЕТРЫ МОДЕЛИ', 'ЗНАЧЕНИЕ'],
+      ['Отраслевая ниша:', presetNames[currentPreset] || currentPreset],
+      ['Выбранный сценарий:', scenarioNames[currentScenario] || currentScenario],
+      ['Горизонт планирования:', '5 лет (60 месяцев)'],
+      ['Дата формирования отчета:', new Date().toLocaleDateString('ru-RU') + ' ' + new Date().toLocaleTimeString('ru-RU')],
+      [''],
+      ['─────────────────────────────────────────────────────────────────────────────────────────────────────────────────'],
+      ['ГЛАВНЫЕ KPI И ИНВЕСТИЦИОННЫЕ МЕТРИКИ', 'ЗНАЧЕНИЕ', 'НОРМАТИВНЫЙ БЕНЧМАРК / СТАТУС'],
+      ['─────────────────────────────────────────────────────────────────────────────────────────────────────────────────'],
+      ['Точка безубыточности (Break-even Month):', res.breakEvenMonth, 'Месяц выхода операционного денежного потока в плюс'],
+      ['Cash Runway (Запас ликвидности):', res.runwayMonths, 'Количество месяцев работы без доп. инвестиций'],
+      ['Здоровье Unit-экономики (LTV / CAC):', `${res.ltvcac.toFixed(2)}x`, res.ltvcac >= 3 ? '🟢 Отличный венчурный баланс (>= 3.0x)' : '🔴 Требует оптимизации (< 3.0x)'],
+      ['Срок окупаемости маркетинга (CAC Payback):', `${res.paybackMonths.toFixed(1)} мес.`, res.paybackMonths <= 12 ? '🟢 Быстрая окупаемость (<= 12 мес.)' : '🟡 Длинный цикл (> 12 мес.)'],
+      ['Капитализация бизнеса на Год 5 (Exit Valuation):', res.valuationY5, `Оценка по мультипликатору x${res.exitMultiple} EBITDA`],
+      ['Дивиденды фаундера в месяц (к Году 3):', res.founderDividendsY3Monthly, 'Чистый кэш на руки после налогообложения дивидендов'],
+      [''],
+      ['─────────────────────────────────────────────────────────────────────────────────────────────────────────────────'],
+      ['СВОДНЫЙ СРАВНИТЕЛЬНЫЙ ДАШБОРД ПО ГОДАМ (1–5 ГОДЫ)', 'ГОД 1', 'ГОД 2', 'ГОД 3', 'ГОД 4', 'ГОД 5', 'ГРАФИК РОСТА (ТРЕНД)'],
+      ['─────────────────────────────────────────────────────────────────────────────────────────────────────────────────'],
+      ['Выручка бизнеса (Gross Revenue)', ...res.years.map(y => formatCurrency(y.revenue)), `[${revSpark}] РОСТ`],
+      ['EBITDA (Прибыль до налогов и %)', ...res.years.map(y => formatCurrency(y.ebitda)), `[${ebitdaSpark}] РОСТ`],
+      ['Рентабельность по EBITDA (%)', ...res.years.map(y => (y.revenue > 0 ? (y.ebitda/y.revenue*100).toFixed(1)+'%' : '0%')), ''],
+      ['Чистая прибыль (Net Profit)', ...res.years.map(y => formatCurrency(y.netIncome)), `[${netSpark}] ТРЕНД`],
+      ['Чистая рентабельность (%)', ...res.years.map(y => (y.revenue > 0 ? (y.netIncome/y.revenue*100).toFixed(1)+'%' : '0%')), ''],
+      ['Дивиденды к распределению', ...res.years.map(y => formatCurrency(y.dividends)), ''],
+      ['Остаток денежных средств на счете', ...res.years.map(y => formatCurrency(y.cashEnd)), `[${cashSpark}] КЭШ`],
+      ['Оценка капитализации компании', ...res.years.map(y => formatCurrency(y.valuation)), '']
+    ];
+
+    const ws1 = XLSX.utils.aoa_to_sheet(sheet1Data);
+    ws1['!cols'] = [
+      { wch: 48 }, // A
+      { wch: 22 }, // B
+      { wch: 22 }, // C
+      { wch: 22 }, // D
+      { wch: 22 }, // E
+      { wch: 22 }, // F
+      { wch: 28 }  // G
+    ];
+    XLSX.utils.book_append_sheet(wb, ws1, '1_Дашборд_и_KPI');
+
+    // ─────────────────────────────────────────────────────────────
+    // SHEET 2: UNIT ECONOMICS (28 Метрик)
+    // ─────────────────────────────────────────────────────────────
+    const m1 = res.months[0];
+    const m12 = res.months[11];
+    const m24 = res.months[23];
+    const m36 = res.months[35];
+    const m60 = res.months[59];
+
+    const sheet2Data = [
+      ['UNIT-ЭКОНОМИКА БИЗНЕСА: 28 МЕТРИК С ВОРОНКОЙ, CAC, LTV И ОКУПАЕМОСТЬЮ'],
+      [''],
+      ['ГРУППА / МЕТРИКА', 'ЕД. ИЗМ.', 'МЕСЯЦ 1 (СТАРТ)', 'ГОД 1 (М12)', 'ГОД 2 (М24)', 'ГОД 3 (М36)', 'ГОД 5 (М60)', 'МЕТОДОЛОГИЯ И БЕНЧМАРК'],
+      ['1. ВОРОНКА ТРАФИКА И КОНВЕРСИЙ'],
+      ['Трафик посетителей (User Acquisition / UA)', 'чел', m1.ua, m12.ua, m24.ua, m36.ua, m60.ua, 'Объем привлеченного трафика'],
+      ['Лиды и обращения (Leads)', 'шт', m1.leads, m12.leads, m24.leads, m36.leads, m60.leads, `Конверсия сайта CR1 = ${parseFloat(inputs.cr1.value).toFixed(1)}%`],
+      ['Новые платящие клиенты (New Buyers)', 'чел', m1.newBuyers, m12.newBuyers, m24.newBuyers, m36.newBuyers, m60.newBuyers, `Конверсия в оплату CR2 = ${parseFloat(inputs.cr2.value).toFixed(1)}%`],
+      ['Активная база подписчиков / клиентов', 'чел', m1.activeSubscribers, m12.activeSubscribers, m24.activeSubscribers, m36.activeSubscribers, m60.activeSubscribers, 'С учетом ежемесячного оттока Churn'],
+      [''],
+      ['2. ЗАТРАТЫ НА ПРИВЛЕЧЕНИЕ (CAC ENGINE)'],
+      ['Бюджет на платную рекламу (Ad Spend)', '₽', formatCurrency(m1.adBudget), formatCurrency(m12.adBudget), formatCurrency(m24.adBudget), formatCurrency(m36.adBudget), formatCurrency(m60.adBudget), 'Маркетинговые расходы в месяц'],
+      ['Стоимость клика (CPC)', '₽', formatCurrency(parseFloat(inputs.cpc.value)), formatCurrency(parseFloat(inputs.cpc.value)), formatCurrency(parseFloat(inputs.cpc.value)), formatCurrency(parseFloat(inputs.cpc.value)), formatCurrency(parseFloat(inputs.cpc.value)), 'Средняя цена клика в аукционе'],
+      ['Стоимость привлечения лида (CPL)', '₽', formatCurrency(m1.cpl), formatCurrency(m12.cpl), formatCurrency(m24.cpl), formatCurrency(m36.cpl), formatCurrency(m60.cpl), 'CPC / CR1'],
+      ['Стоимость привлечения клиента (CAC)', '₽', formatCurrency(m1.cac), formatCurrency(m12.cac), formatCurrency(m24.cac), formatCurrency(m36.cac), formatCurrency(m60.cac), 'Ad Spend / New Buyers'],
+      [''],
+      ['3. МОНЕТИЗАЦИЯ, ЧУРН И LTV'],
+      ['Средний чек / Стоимость подписки (AOV)', '₽', formatCurrency(parseFloat(inputs.aov.value)), formatCurrency(parseFloat(inputs.aov.value)), formatCurrency(parseFloat(inputs.aov.value)), formatCurrency(parseFloat(inputs.aov.value)), formatCurrency(parseFloat(inputs.aov.value)), 'Плата за 1 заказ / месяц сервиса'],
+      ['Ежемесячный отток клиентов (Monthly Churn)', '%', `${parseFloat(inputs.churn.value).toFixed(1)}%`, `${parseFloat(inputs.churn.value).toFixed(1)}%`, `${parseFloat(inputs.churn.value).toFixed(1)}%`, `${parseFloat(inputs.churn.value).toFixed(1)}%`, `${parseFloat(inputs.churn.value).toFixed(1)}%`, 'Доля уходящих подписчиков'],
+      ['Среднее время жизни клиента (LifeTime)', 'мес', `${(100 / Math.max(0.5, parseFloat(inputs.churn.value))).toFixed(1)}`, `${(100 / Math.max(0.5, parseFloat(inputs.churn.value))).toFixed(1)}`, `${(100 / Math.max(0.5, parseFloat(inputs.churn.value))).toFixed(1)}`, `${(100 / Math.max(0.5, parseFloat(inputs.churn.value))).toFixed(1)}`, `${(100 / Math.max(0.5, parseFloat(inputs.churn.value))).toFixed(1)}`, '1 / Churn Rate'],
+      ['Пожизненная ценность клиента (LTV)', '₽', formatCurrency(res.ltv), formatCurrency(res.ltv), formatCurrency(res.ltv), formatCurrency(res.ltv), formatCurrency(res.ltv), 'AOV * LifeTime * Gross Margin'],
+      [''],
+      ['4. МАРЖИНАЛЬНОСТЬ НА ЮНИТЕ (UNIT MARGINS)'],
+      ['Прямая себестоимость (COGS на юнит)', '%', `${parseFloat(inputs.cogsPct.value).toFixed(1)}%`, `${parseFloat(inputs.cogsPct.value).toFixed(1)}%`, `${parseFloat(inputs.cogsPct.value).toFixed(1)}%`, `${parseFloat(inputs.cogsPct.value).toFixed(1)}%`, `${parseFloat(inputs.cogsPct.value).toFixed(1)}%`, 'Себестоимость выполнения заказа'],
+      ['Валовая маржинальность (Gross Margin)', '%', `${(100 - parseFloat(inputs.cogsPct.value) - parseFloat(inputs.acquiring.value)).toFixed(1)}%`, `${(100 - parseFloat(inputs.cogsPct.value) - parseFloat(inputs.acquiring.value)).toFixed(1)}%`, `${(100 - parseFloat(inputs.cogsPct.value) - parseFloat(inputs.acquiring.value)).toFixed(1)}%`, `${(100 - parseFloat(inputs.cogsPct.value) - parseFloat(inputs.acquiring.value)).toFixed(1)}%`, `${(100 - parseFloat(inputs.cogsPct.value) - parseFloat(inputs.acquiring.value)).toFixed(1)}%`, '100% - COGS% - Эквайринг%'],
+      ['Соотношение LTV / CAC', 'ratio', `${res.ltvcac.toFixed(2)}x`, `${res.ltvcac.toFixed(2)}x`, `${res.ltvcac.toFixed(2)}x`, `${res.ltvcac.toFixed(2)}x`, `${res.ltvcac.toFixed(2)}x`, 'Венчурная норма: от 3.0x до 8.0x'],
+      ['Срок окупаемости CAC (Payback Period)', 'мес', `${res.paybackMonths.toFixed(1)}`, `${res.paybackMonths.toFixed(1)}`, `${res.paybackMonths.toFixed(1)}`, `${res.paybackMonths.toFixed(1)}`, `${res.paybackMonths.toFixed(1)}`, 'CAC / (AOV * Gross Margin)']
+    ];
+
+    const ws2 = XLSX.utils.aoa_to_sheet(sheet2Data);
+    ws2['!cols'] = [
+      { wch: 46 }, // A
+      { wch: 12 }, // B
+      { wch: 20 }, // C
+      { wch: 20 }, // D
+      { wch: 20 }, // E
+      { wch: 20 }, // F
+      { wch: 20 }, // G
+      { wch: 38 }  // H
+    ];
+    XLSX.utils.book_append_sheet(wb, ws2, '2_Unit_Экономика');
+
+    // ─────────────────────────────────────────────────────────────
+    // SHEET 3: P&L STATEMENT (Прибыли и Убытки за 60 месяцев + Года)
+    // ─────────────────────────────────────────────────────────────
+    const monthCols = res.months.map(m => `М${m.month}`);
+    const yearCols = ['ИТОГО ГОД 1', 'ИТОГО ГОД 2', 'ИТОГО ГОД 3', 'ИТОГО ГОД 4', 'ИТОГО ГОД 5'];
+
+    const pnlHeader = ['СТАТЬЯ P&L (ОТЧЕТ О ПРИБЫЛЯХ И УБЫТКАХ)', ...monthCols, ...yearCols];
+
+    const pnlRows = [
+      pnlHeader,
+      ['ВЫРУЧКА (GROSS REVENUE)', ...res.months.map(m => m.revenue), ...res.years.map(y => y.revenue)],
+      ['Себестоимость продаж (COGS)', ...res.months.map(m => m.cogs), ...res.years.map(y => y.cogs)],
+      ['Эквайринг и комиссии банков', ...res.months.map(m => m.acquiring), ...res.years.map(y => y.acquiring)],
+      ['Бонусы отдела продаж', ...res.months.map(m => m.salesBonus), ...res.years.map(y => y.salesBonus)],
+      ['══════════════════════════════════════════════════════════════════'],
+      ['ВАЛОВАЯ ПРИБЫЛЬ (GROSS PROFIT)', ...res.months.map(m => m.grossProfit), ...res.years.map(y => y.grossProfit)],
+      ['Валовая рентабельность (%)', ...res.months.map(m => (m.revenue > 0 ? (m.grossProfit/m.revenue*100).toFixed(1)+'%' : '0%')), ...res.years.map(y => (y.revenue > 0 ? (y.grossProfit/y.revenue*100).toFixed(1)+'%' : '0%'))],
+      ['──────────────────────────────────────────────────────────────────'],
+      ['ОПЕРАЦИОННЫЕ РАСХОДЫ (OPEX):'],
+      ['  Маркетинг и реклама (CAC)', ...res.months.map(m => m.adBudget), ...res.years.map(y => y.adBudget)],
+      ['  ФОТ команды (с учетом взносов)', ...res.months.map(m => m.totalStaffCost), ...res.years.map(y => y.staffCost)],
+      ['  Зарплата фаундера', ...res.months.map(m => m.founderSalary), ...res.years.map(y => y.founderSalary)],
+      ['  Постоянный OPEX (сервера, офис, софт)', ...res.months.map(m => m.currentOpex), ...res.years.map(y => y.opexFixed)],
+      ['ИТОГО ОПЕРАЦИОННЫЕ РАСХОДЫ (TOTAL OPEX)', ...res.months.map(m => m.totalOpex), ...res.years.map(y => y.totalOpex)],
+      ['══════════════════════════════════════════════════════════════════'],
+      ['EBITDA (ОПЕРАЦИОННАЯ ПРИБЫЛЬ)', ...res.months.map(m => m.ebitda), ...res.years.map(y => y.ebitda)],
+      ['EBITDA Margin (%)', ...res.months.map(m => (m.revenue > 0 ? (m.ebitda/m.revenue*100).toFixed(1)+'%' : '0%')), ...res.years.map(y => (y.revenue > 0 ? (y.ebitda/y.revenue*100).toFixed(1)+'%' : '0%'))],
+      ['Амортизация CAPEX (D&A)', ...res.months.map(m => parseFloat(inputs.capex.value)/60), ...res.years.map(y => parseFloat(inputs.capex.value)/5)],
+      ['EBIT (Операционная прибыль после D&A)', ...res.months.map(m => m.ebit), ...res.years.map(y => y.ebit)],
+      ['Налог на прибыль / УСН', ...res.months.map(m => m.tax), ...res.years.map(y => y.tax)],
+      ['══════════════════════════════════════════════════════════════════'],
+      ['ЧИСТАЯ ПРИБЫЛЬ (NET PROFIT)', ...res.months.map(m => m.netIncome), ...res.years.map(y => y.netIncome)],
+      ['Чистая рентабельность (Net Margin %)', ...res.months.map(m => (m.revenue > 0 ? (m.netIncome/m.revenue*100).toFixed(1)+'%' : '0%')), ...res.years.map(y => (y.revenue > 0 ? (y.netIncome/y.revenue*100).toFixed(1)+'%' : '0%'))]
+    ];
+
+    const ws3 = XLSX.utils.aoa_to_sheet(pnlRows);
+    ws3['!cols'] = [
+      { wch: 44 }, // A: Article
+      ...res.months.map(() => ({ wch: 16 })), // 60 months
+      ...res.years.map(() => ({ wch: 20 }))   // 5 years
+    ];
+    XLSX.utils.book_append_sheet(wb, ws3, '3_Отчет_PnL_5_Лет');
+
+    // ─────────────────────────────────────────────────────────────
+    // SHEET 4: CASH FLOW (Движение денежных средств ДДС)
+    // ─────────────────────────────────────────────────────────────
+    const cfHeader = ['СТАТЬЯ ДДС (CASH FLOW STATEMENT)', ...monthCols, ...yearCols];
+
+    const cfRows = [
+      cfHeader,
+      ['ОСТАТОК КЭША НА НАЧАЛО ПЕРИОДА', ...res.months.map(m => m.cfStart), ...res.years.map(y => y.cashStart)],
+      ['──────────────────────────────────────────────────────────────────'],
+      ['1. ОПЕРАЦИОННЫЙ ДЕНЕЖНЫЙ ПОТОК (CFO):'],
+      ['  Поступления от покупателей (Cash In)', ...res.months.map(m => m.revenue), ...res.years.map(y => y.revenue)],
+      ['  Оплата поставщикам и COGS', ...res.months.map(m => -m.cogs), ...res.years.map(y => -y.cogs)],
+      ['  Выплаты на маркетинг и рекламу', ...res.months.map(m => -m.adBudget), ...res.years.map(y => -y.adBudget)],
+      ['  Выплаты ФОТ и взносов', ...res.months.map(m => -(m.totalStaffCost + m.founderSalary)), ...res.years.map(y => -(y.staffCost + y.founderSalary))],
+      ['  Выплаты по OPEX и сервисам', ...res.months.map(m => -(m.currentOpex + m.acquiring + m.salesBonus)), ...res.years.map(y => -(y.opexFixed + y.acquiring + y.salesBonus))],
+      ['  Оплата налогов в бюджет', ...res.months.map(m => -m.tax), ...res.years.map(y => -y.tax)],
+      ['ЧИСТЫЙ ОПЕРАЦИОННЫЙ ПОТОК (CFO)', ...res.months.map(m => m.ocf), ...res.years.map(y => y.ocf)],
+      ['──────────────────────────────────────────────────────────────────'],
+      ['2. ИНВЕСТИЦИОННЫЙ ПОТОК (CFI):'],
+      ['  Инвестиции в запуск и MVP (CAPEX)', ...res.months.map((m, i) => (i === 0 ? -parseFloat(inputs.capex.value) : 0)), ...res.years.map((y, i) => (i === 0 ? -parseFloat(inputs.capex.value) : 0))],
+      ['ЧИСТЫЙ ИНВЕСТИЦИОННЫЙ ПОТОК (CFI)', ...res.months.map((m, i) => (i === 0 ? -parseFloat(inputs.capex.value) : 0)), ...res.years.map((y, i) => (i === 0 ? -parseFloat(inputs.capex.value) : 0))],
+      ['──────────────────────────────────────────────────────────────────'],
+      ['3. ФИНАНСОВЫЙ ПОТОК (CFF):'],
+      ['  Взнос собственного капитала фаундера', ...res.months.map((m, i) => (i === 0 ? parseFloat(inputs.capital.value) : 0)), ...res.years.map((y, i) => (i === 0 ? parseFloat(inputs.capital.value) : 0))],
+      ['  Привлечение инвестиционного раунда', ...res.months.map((m, i) => (i === 0 ? parseFloat(inputs.investment.value) : 0)), ...res.years.map((y, i) => (i === 0 ? parseFloat(inputs.investment.value) : 0))],
+      ['  Выплата дивидендов акционерам', ...res.months.map(m => -m.monthlyDividends), ...res.years.map(y => -y.dividends)],
+      ['ЧИСТЫЙ ФИНАНСОВЫЙ ПОТОК (CFF)', ...res.months.map((m, i) => ((i === 0 ? parseFloat(inputs.capital.value) + parseFloat(inputs.investment.value) : 0) - m.monthlyDividends)), ...res.years.map((y, i) => ((i === 0 ? parseFloat(inputs.capital.value) + parseFloat(inputs.investment.value) : 0) - y.dividends))],
+      ['══════════════════════════════════════════════════════════════════'],
+      ['ЧИСТОЕ ИЗМЕНЕНИЕ ДЕНЕГ (NET CASH FLOW)', ...res.months.map(m => m.netCashChange), ...res.years.map(y => y.netCashChange)],
+      ['ОСТАТОК КЭША НА КОНЕЦ ПЕРИОДА', ...res.months.map(m => m.cumulativeCash), ...res.years.map(y => y.cashEnd)]
+    ];
+
+    const ws4 = XLSX.utils.aoa_to_sheet(cfRows);
+    ws4['!cols'] = [
+      { wch: 46 }, // A: Article
+      ...res.months.map(() => ({ wch: 16 })),
+      ...res.years.map(() => ({ wch: 20 }))
+    ];
+    XLSX.utils.book_append_sheet(wb, ws4, '4_Cash_Flow_ДДС');
+
+    // ─────────────────────────────────────────────────────────────
+    // SHEET 5: VALUATION & DIVIDENDS (Оценка и Дивиденды)
+    // ─────────────────────────────────────────────────────────────
+    const investorSharePct = parseFloat(inputs.investorShare.value);
+    const founderSharePct = 100 - investorSharePct;
+
+    const sheet5Data = [
+      ['══════════════════════════════════════════════════════════════════════════════════════════════'],
+      ['ОЦЕНКА СТОИМОСТИ БИЗНЕСА (DCF / EXIT MULTIPLE) И РАСПРЕДЕЛЕНИЕ ДИВИДЕНДОВ'],
+      ['══════════════════════════════════════════════════════════════════════════════════════════════'],
+      [''],
+      ['ПАРАМЕТРЫ РАУНДА И СТРУКТУРА ВЛАДЕНИЯ', 'ЗНАЧЕНИЕ'],
+      ['Собственные средства основателя:', formatCurrency(parseFloat(inputs.capital.value))],
+      ['Сумма привлеченных инвестиций:', formatCurrency(parseFloat(inputs.investment.value))],
+      ['Доля инвестора в капитале:', `${investorSharePct.toFixed(1)}%`],
+      ['Доля фаундера (основателя):', `${founderSharePct.toFixed(1)}%`],
+      ['Отраслевой мультипликатор продажи (Exit Multiple):', `x${parseFloat(inputs.exitMultiple.value).toFixed(1)} EBITDA`],
+      [''],
+      ['──────────────────────────────────────────────────────────────────────────────────────────────'],
+      ['ОЦЕНКА КАПИТАЛИЗАЦИИ БИЗНЕСА ПО ГОДАМ', 'ГОД 1', 'ГОД 2', 'ГОД 3', 'ГОД 4', 'ГОД 5'],
+      ['──────────────────────────────────────────────────────────────────────────────────────────────'],
+      ['Годовая EBITDA бизнеса', ...res.years.map(y => formatCurrency(y.ebitda))],
+      ['Оценка стоимости компании (Valuation)', ...res.years.map(y => formatCurrency(y.valuation))],
+      ['Стоимость доли фаундера (' + founderSharePct.toFixed(0) + '%)', ...res.years.map(y => formatCurrency(y.valuation * (founderSharePct / 100)))],
+      ['Стоимость доли инвестора (' + investorSharePct.toFixed(0) + '%)', ...res.years.map(y => formatCurrency(y.valuation * (investorSharePct / 100)))],
+      ['Доходность инвестора на вложенный капитал (MOIC)', ...res.years.map(y => (parseFloat(inputs.investment.value) > 0 ? (y.valuation * (investorSharePct / 100) / parseFloat(inputs.investment.value)).toFixed(2) + 'x' : 'N/A'))],
+      [''],
+      ['──────────────────────────────────────────────────────────────────────────────────────────────'],
+      ['ДИВИДЕНДНЫЙ ПОТОК (ВЫПЛАТЫ АКЦИОНЕРАМ)', 'ГОД 1', 'ГОД 2', 'ГОД 3', 'ГОД 4', 'ГОД 5'],
+      ['──────────────────────────────────────────────────────────────────────────────────────────────'],
+      ['Общий объем дивидендов к распределению', ...res.years.map(y => formatCurrency(y.dividends))],
+      ['Дивиденды основателю (' + founderSharePct.toFixed(0) + '%) в год', ...res.years.map(y => formatCurrency(y.dividends * (founderSharePct / 100)))],
+      ['Дивиденды основателю в месяц (чистыми)', ...res.years.map(y => formatCurrency(y.dividends * (founderSharePct / 100) / 12))],
+      ['Дивиденды инвестору (' + investorSharePct.toFixed(0) + '%) в год', ...res.years.map(y => formatCurrency(y.dividends * (investorSharePct / 100)))]
+    ];
+
+    const ws5 = XLSX.utils.aoa_to_sheet(sheet5Data);
+    ws5['!cols'] = [
+      { wch: 54 },
+      { wch: 22 },
+      { wch: 22 },
+      { wch: 22 },
+      { wch: 22 },
+      { wch: 22 }
+    ];
+    XLSX.utils.book_append_sheet(wb, ws5, '5_DCF_Оценка_Дивиденды');
+
+    const cleanPreset = currentPreset.replace(/[^a-zA-Z0-9]/g, '_');
+    const fileName = `FinModel_5.0_Pro_${cleanPreset.toUpperCase()}_${currentScenario}_${Date.now()}.xlsx`;
     XLSX.writeFile(wb, fileName);
   }
-
-  // --- 9. Event Listeners ---
+// --- 9. Event Listeners ---
   document.querySelectorAll('.preset-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
