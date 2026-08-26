@@ -1419,10 +1419,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  document.querySelectorAll('.faq-question').forEach(btn => {
+  document.querySelectorAll('.faq-acc-trigger').forEach(btn => {
     btn.addEventListener('click', () => {
-      const item = btn.closest('.faq-item');
-      item.classList.toggle('open');
+      const item = btn.closest('.faq-acc-item');
+      item?.classList.toggle('open');
     });
   });
 

@@ -702,94 +702,137 @@
     </div>
   </main>
 
-  <!-- Knowledge Base Educational Hub -->
+    <!-- Knowledge Base Educational Hub (Swiss Stark AI) -->
   <section class="knowledge-section" id="knowledge-base">
     <div class="container">
       
-      <div class="section-title-wrap">
-        <span class="badge-pill">МЕТОДОЛОГИЯ ФИНАНСОВОГО МОДЕЛИРОВАНИЯ SAGE</span>
-        <h2>База Знаний: Как управлять финансами стартапа</h2>
-        <p>Полное руководство для основателей, финансистов и инвесторов по чтению и защите финансовой модели</p>
+      <div class="knowledge-header-wrap">
+        <div class="hero-badge">
+          <span class="dot"></span>
+          МЕТОДОЛОГИЯ ФИНАНСОВОГО МОДЕЛИРОВАНИЯ // SAGE
+        </div>
+        <h2 class="knowledge-main-title">
+          База Знаний: Как управлять финансами и защищать модель
+        </h2>
+        <p class="knowledge-main-sub">
+          Практическое руководство для основателей бизнеса, финансовых директоров и венчурных инвесторов по чтению, стресс-тестированию и защите финмодели.
+        </p>
       </div>
 
+      <!-- 3-Column Methodology Cards Grid -->
       <div class="knowledge-cards-grid">
         
-        <article class="k-card glass-panel">
-          <div class="k-icon"><i class="fa-solid fa-user-tie"></i></div>
-          <h3>1. Как читать модель Основателю (CEO)</h3>
-          <p>
-            Главный фокус фаундера — <strong>Cash Runway</strong> (запас жизни до нуля на счете) и <strong>Точка безубыточности</strong>. 
-            Если модель показывает, что баланс уходит в минус на 4-м месяце, ваша задача — либо урезать OPEX, 
-            либо закрыть раунд инвестиций за 60 дней до наступления кассового разрыва.
+        <!-- CARD 1: CEO / FOUNDER -->
+        <article class="knowledge-card">
+          <div class="k-card-top">
+            <span class="k-card-badge">#01 / ДЛЯ ОСНОВАТЕЛЯ (CEO)</span>
+            <div class="k-card-icon"><i class="fa-solid fa-user-tie"></i></div>
+          </div>
+          <h3 class="k-card-title">Как читать и контролировать модель</h3>
+          <p class="k-card-text">
+            Главный фокус фаундера — <strong>Cash Runway</strong> (запас жизни на расчетном счете) и <strong>Точка безубыточности</strong>. Если баланс уходит в минус на 4-м месяце, задача — срезать OPEX или закрыть инвестиционный раунд за 60 дней до наступления кассового разрыва.
           </p>
-          <ul class="k-list">
-            <li>Никогда не путайте поступление предоплат в ДДС с признанием выручки в P&L.</li>
-            <li>Закладывайте зарплату фаундера с 1-го дня — бизнес не должен субсидироваться бесплатным трудом.</li>
-          </ul>
+          <div class="k-rules-box">
+            <div class="k-rule-item">
+              <span class="k-rule-check">✓</span>
+              <span>Не путайте предоплаты в ДДС (Cash Flow) с признанием выручки в P&L.</span>
+            </div>
+            <div class="k-rule-item">
+              <span class="k-rule-check">✓</span>
+              <span>Закладывайте зарплату фаундера с 1-го дня — бизнес не должен жить на бесплатном труде.</span>
+            </div>
+          </div>
         </article>
 
-        <article class="k-card glass-panel">
-          <div class="k-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
-          <h3>2. На что смотрит Венчурный Инвестор</h3>
-          <p>
-            Инвестора интересует <strong>LTV/CAC > 3.0</strong>, окупаемость рекламы до 12 месяцев и оценка стоимости на выходе (Exit Valuation). 
-            Если у вас подписочная модель, фонд первым делом проверит <strong>Net Retention Rate (NRR)</strong> и отток Churn.
+        <!-- CARD 2: INVESTOR -->
+        <article class="knowledge-card">
+          <div class="k-card-top">
+            <span class="k-card-badge">#02 / ДЛЯ ИНВЕСТОРА (VC & ANGEL)</span>
+            <div class="k-card-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+          </div>
+          <h3 class="k-card-title">На что смотрит венчурный инвестор</h3>
+          <p class="k-card-text">
+            Инвестора интересует <strong>LTV / CAC > 3.0x</strong>, окупаемость затрат на рекламу до 12 месяцев и капитализация на выходе (Exit Valuation). При подписочной модели фонд детально проверит <strong>Net Retention Rate (NRR)</strong> и отток Churn.
           </p>
-          <ul class="k-list">
-            <li><strong>MoIC (Multiple on Invested Capital):</strong> сколько $ вернет каждый вложенный рубль.</li>
-            <li><strong>IRR:</strong> внутренняя норма доходности сделки с учетом горизонта выхода на 3-й или 5-й год.</li>
-          </ul>
+          <div class="k-rules-box">
+            <div class="k-rule-item">
+              <span class="k-rule-check">✓</span>
+              <span><strong>MoIC:</strong> сколько рублей вернет каждый вложенный рубль инвестора.</span>
+            </div>
+            <div class="k-rule-item">
+              <span class="k-rule-check">✓</span>
+              <span><strong>IRR:</strong> внутренняя доходность сделки с учетом горизонта выхода на 3-й или 5-й год.</span>
+            </div>
+          </div>
         </article>
 
-        <article class="k-card glass-panel">
-          <div class="k-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
-          <h3>3. Налоги и Бухгалтерия (РФ 2025/2026)</h3>
-          <p>
-            Модель автоматически рассчитывает пороги налоговой реформы: лимиты УСН до 450 млн ₽, 
-            включение НДС 5% и 7% при выручке свыше 60 млн ₽, и льготные страховые взносы IT-компаний (7.6% вместо 30%).
+        <!-- CARD 3: TAX & LAW -->
+        <article class="knowledge-card">
+          <div class="k-card-top">
+            <span class="k-card-badge">#03 / НАЛОГИ И РЕФОРМА РФ</span>
+            <div class="k-card-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+          </div>
+          <h3 class="k-card-title">Налоговые режимы РФ 2025/2026</h3>
+          <p class="k-card-text">
+            Модель автоматически рассчитывает пороги налоговой реформы: лимиты УСН до 450 млн ₽, включение НДС 5% и 7% при выручке свыше 60 млн ₽, и льготные страховые взносы IT-аккредитации (7.6% вместо 30%).
           </p>
-          <ul class="k-list">
-            <li>УСН «Доходы» 6% идеальна для высокомаржинального IT и консалтинга с долей расходов < 60%.</li>
-            <li>УСН «Доходы-Расходы» 15% выбирается для e-commerce и производства с тяжелым COGS.</li>
-          </ul>
+          <div class="k-rules-box">
+            <div class="k-rule-item">
+              <span class="k-rule-check">✓</span>
+              <span><strong>УСН 6%:</strong> идеальна для высокомаржинального IT и консалтинга с расходами < 60%.</span>
+            </div>
+            <div class="k-rule-item">
+              <span class="k-rule-check">✓</span>
+              <span><strong>УСН 15%:</strong> выбирается для e-commerce и производства с тяжелым COGS.</span>
+            </div>
+          </div>
         </article>
 
       </div>
 
-      <!-- FAQ Section -->
-      <div class="faq-container glass-panel">
-        <h3 class="faq-title"><i class="fa-solid fa-circle-question"></i> Частые вопросы начинающих предпринимателей</h3>
+      <!-- FAQ Section (Swiss Stark Accordions) -->
+      <div class="fin-faq-box">
+        <div class="faq-header-bar">
+          <div class="faq-header-title">
+            <i class="fa-solid fa-circle-question"></i>
+            <h3>Частые вопросы начинающих предпринимателей (FAQ)</h3>
+          </div>
+          <span class="faq-header-count">3 ответа</span>
+        </div>
         
-        <div class="faq-item">
-          <button class="faq-question">
-            <span>Что делать, если реклама в моей нише стала дороже в 2 раза?</span>
-            <i class="fa-solid fa-plus"></i>
-          </button>
-          <div class="faq-answer">
-            <p>Переключите ползунок CPC в калькуляторе. Система покажет, выдержит ли Unit-экономика. Если LTV/CAC падает ниже 2.5x, необходимо либо увеличивать конверсию посадочной страницы ($C_1$), либо поднимать средний чек за счет пакетирования услуг и внедрения апсейлов.</p>
+        <div class="faq-accordion-list">
+          
+          <div class="faq-acc-item">
+            <button type="button" class="faq-acc-trigger">
+              <span class="faq-q-text">Что делать, если реклама в моей нише стала дороже в 2 раза?</span>
+              <span class="faq-icon-plus">+</span>
+            </button>
+            <div class="faq-acc-body">
+              <p>Переключите ползунок CPC в калькуляторе. Система покажет, выдержит ли Unit-экономика. Если LTV/CAC падает ниже 2.5x, необходимо либо увеличивать конверсию посадочной страницы ($C_1$), либо поднимать средний чек за счет пакетирования услуг и внедрения апсейлов.</p>
+            </div>
           </div>
-        </div>
 
-        <div class="faq-item">
-          <button class="faq-question">
-            <span>Чем капитализационная модель отличается от дивидендной?</span>
-            <i class="fa-solid fa-plus"></i>
-          </button>
-          <div class="faq-answer">
-            <p>В <strong>капитализационной модели</strong> вся прибыль реинвестируется в гипер-рост для максимизации стоимости компании при продаже стратегу (Яндекс, Сбер, VK). В <strong>дивидендной модели</strong> компания формирует подушку безопасности (3 месяца OPEX) и регулярно выплачивает свободный денежный поток (FCFE) основателям на личную карту.</p>
+          <div class="faq-acc-item">
+            <button type="button" class="faq-acc-trigger">
+              <span class="faq-q-text">Чем капитализационная модель отличается от дивидендной?</span>
+              <span class="faq-icon-plus">+</span>
+            </button>
+            <div class="faq-acc-body">
+              <p>В <strong>капитализационной модели</strong> вся прибыль реинвестируется в гипер-рост для максимизации стоимости компании при продаже стратегу (Яндекс, Сбер, VK). В <strong>дивидендной модели</strong> компания формирует подушку безопасности (3 месяца OPEX) и регулярно выплачивает свободный денежный поток (FCFE) основателям на личную карту.</p>
+            </div>
           </div>
-        </div>
 
-        <div class="faq-item">
-          <button class="faq-question">
-            <span>Как правильно презентовать этот Excel инвестору?</span>
-            <i class="fa-solid fa-plus"></i>
-          </button>
-          <div class="faq-answer">
-            <p>Скачанный по кнопке файл Excel (.XLSX) уже оформлен по международному стандарту FAST Standard. Откройте лист «Панель управления», покажите инвестору Базовый сценарий и продемонстрируйте стресс-тест в Пессимистичном сценарии. Инвесторы ценят, когда основатель честно показывает риски.</p>
+          <div class="faq-acc-item">
+            <button type="button" class="faq-acc-trigger">
+              <span class="faq-q-text">Как правильно презентовать этот Excel инвестору?</span>
+              <span class="faq-icon-plus">+</span>
+            </button>
+            <div class="faq-acc-body">
+              <p>Скачанный по кнопке файл Excel (.xlsx) уже оформлен по международному стандарту FAST Standard. Откройте лист «Панель управления», покажите инвестору Базовый сценарий и продемонстрируйте стресс-тест в Пессимистичном сценарии. Инвесторы ценят, когда основатель честно показывает риски.</p>
+            </div>
           </div>
-        </div>
 
+        </div>
       </div>
 
     </div>
