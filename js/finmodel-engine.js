@@ -551,6 +551,15 @@ document.addEventListener('DOMContentLoaded', () => {
     valDividends.textContent = formatCurrency(res.founderDividendsY3Monthly);
     valPayback.textContent = `${res.paybackMonths.toFixed(1)} мес.`;
 
+    const badgeCf = document.getElementById('badge-cf-status');
+    if (badgeCf) {
+      if (res.minCashBalance < 0) {
+        badgeCf.innerHTML = '🔴 <span style="color:#dc2626; font-weight:700;">Кассовый разрыв</span>';
+      } else {
+        badgeCf.innerHTML = '🟢 Ликвидность в норме';
+      }
+    }
+
     renderCharts(res);
     renderTables(res);
     updateInvestmentPassport(res);
