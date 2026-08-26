@@ -4,14 +4,14 @@
 **Куратор и архитектор:** Михаил Пузырёв ([https://a-sage.ru](https://a-sage.ru))  
 **Языки:** 🇷🇺 Русский (RU) | 🇬🇧 International English (EN)  
 **Категория качества:** Production-Grade / Deep Cognitive System Prompts  
-**Поддержка моделей:** Claude 3.7 Sonnet / Opus (XML & Extended Thinking), OpenAI GPT-4o / o3 (Markdown), Google Gemini 2.0 / 1.5 Pro  
+**Поддержка моделей:** ChatGPT, Claude, Gemini, DeepSeek
 **Интерактивная версия с переключателем языков в 1 клик:** [https://a-sage.ru/prompts](https://a-sage.ru/prompts)  
 
 ---
 
 ## 🧭 Как использовать эти системные промпты
 
-1. **Для Claude 3.7 / Antigravity / Cursor:** Скопируйте нужный блок целиком в поле System Prompt / Custom Instructions проекта или агента.
+1. **Для Claude / ChatGPT / Cursor / Gemini:** Скопируйте нужный блок целиком в поле System Prompt / Custom Instructions проекта или агента.
 2. **Для ChatGPT / Custom GPTs:** Вставьте текст в раздел `Instructions`.
 3. **Модульность:** Каждый промпт содержит встроенные протоколы самопроверки (Quality Gate), обработку пограничных случаев (Edge Cases) и жесткие негативные ограничения (Negative Constraints), что исключает «галлюцинации» и поверхностные ответы.
 
