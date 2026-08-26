@@ -1321,14 +1321,17 @@ main > .section:first-child {
 .form-section {
   background: var(--black);
   color: #fff;
-  padding: clamp(64px, 7vw, 100px) 0;
+  padding: 0;
   border-top: 1px solid var(--border-dark);
 }
 
 .form-inner {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 0 clamp(20px, 4.5vw, 64px);
+  padding: clamp(64px, 7vw, 100px) clamp(24px, 4vw, 64px);
+  border-left: 1px solid var(--border-dark);
+  border-right: 1px solid var(--border-dark);
+  box-sizing: border-box;
   display: grid;
   grid-template-columns: 1.2fr 1fr;
   gap: clamp(36px, 4.5vw, 64px);
@@ -1451,7 +1454,7 @@ main > .section:first-child {
 .footer {
   background: #000;
   color: #a1a1aa;
-  padding: 48px 0;
+  padding: 0;
   border-top: 1px solid #18181b;
   font-size: 0.85rem;
 }
@@ -1459,7 +1462,10 @@ main > .section:first-child {
 .footer-inner {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 0 clamp(20px, 4.5vw, 64px);
+  padding: 48px clamp(24px, 4vw, 64px);
+  border-left: 1px solid #18181b;
+  border-right: 1px solid #18181b;
+  box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -3226,19 +3232,29 @@ input[type="reset"],
 }
 
 .prompts-hero {
-  padding: 100px 0 36px;
+  padding: 0;
   border-bottom: 1px solid var(--border);
   background: #ffffff;
 }
 
+.prompts-hero .container {
+  padding-top: 100px;
+  padding-bottom: 36px;
+}
+
 .prompts-controls {
-  padding: 24px 0;
+  padding: 0;
   background: var(--bg-alt);
   border-bottom: 1px solid var(--border);
   position: sticky;
   top: 68px;
   z-index: 90;
   backdrop-filter: blur(14px);
+}
+
+.prompts-controls .container {
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .search-box-wrapper {
@@ -3304,8 +3320,13 @@ input[type="reset"],
 }
 
 .prompts-container {
-  padding: 48px 0 80px;
+  padding: 0;
   background: #ffffff;
+}
+
+.prompts-container .container {
+  padding-top: 48px;
+  padding-bottom: 80px;
 }
 
 .prompts-grid {
