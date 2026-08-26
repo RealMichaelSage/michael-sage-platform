@@ -222,11 +222,16 @@
                   </label>
                   <input type="number" id="inp-capital" value="500000" step="50000">
                 </div>
-                <div class="input-field">
-                  <label for="inp-investment">
-                    Инвестиции (₽)
-                    <span class="tooltip-icon" data-tooltip="Сумма привлекаемого раунда инвестиций"><i class="fa-solid fa-circle-question"></i></span>
-                  </label>
+                                <div class="input-field">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                    <label for="inp-investment" style="margin:0;">
+                      Инвестиции (₽)
+                      <span class="tooltip-icon" data-tooltip="Сумма привлекаемого раунда инвестиций"><i class="fa-solid fa-circle-question"></i></span>
+                    </label>
+                    <button type="button" id="btn-auto-round" class="btn-auto-calc" title="Калькулятор автоматически рассчитает минимально необходимый раунд на основе кассовой ямы">
+                      ⚡ Авто-расчет
+                    </button>
+                  </div>
                   <input type="number" id="inp-investment" value="3000000" step="500000">
                 </div>
                 <div class="input-field">
@@ -452,7 +457,7 @@
           </button>
         </div>
 
-        <!-- KPI Executive Grid -->
+                <!-- KPI Executive Grid -->
         <div class="kpi-grid">
           
           <div class="kpi-card" id="kpi-breakeven">
@@ -510,6 +515,73 @@
           </div>
 
         </div>
+
+        <!-- INVESTMENT PASSPORT: AUTOMATED AI FUNDRAISING ADVISOR -->
+        <div class="investor-passport-card">
+          <div class="passport-header">
+            <div class="passport-title-wrap">
+              <div class="passport-badge">ИНВЕСТИЦИОННЫЙ ПАСПОРТ // AI ROUND ADVISOR</div>
+              <h3>Автоматический расчет раунда, траншей и доли инвестора</h3>
+            </div>
+            <div class="passport-status-pill" id="passport-fit-status">
+              <span class="dot green"></span>
+              <span>Модель рассчитана</span>
+            </div>
+          </div>
+
+          <div class="passport-grid">
+            
+            <!-- Box 1: Required Investment -->
+            <div class="passport-box">
+              <div class="p-box-lbl">1. СКОЛЬКО ИНВЕСТИЦИЙ НУЖНО</div>
+              <div class="p-box-val green" id="rec-investment-sum">3 000 000 ₽</div>
+              <div class="p-box-desc" id="rec-investment-desc">
+                Покрывает пиковый кассовый разрыв <strong>2.1 млн ₽</strong> на 5-м месяце + 3 месяца резерва OPEX.
+              </div>
+            </div>
+
+            <!-- Box 2: Recommended Equity -->
+            <div class="passport-box">
+              <div class="p-box-lbl">2. КАКУЮ ДОЛЮ ПРЕДЛОЖИТЬ</div>
+              <div class="p-box-val" id="rec-equity-pct">12% – 15%</div>
+              <div class="p-box-desc" id="rec-equity-desc">
+                Post-Money оценка: <strong>20.0–25.0 млн ₽</strong>. Безопасный коридор без потери контроля фаундером.
+              </div>
+            </div>
+
+            <!-- Box 3: Investor Return & Timeline -->
+            <div class="passport-box">
+              <div class="p-box-lbl">3. КОГДА И СКОЛЬКО ЗАРАБОТАЕТ ИНВЕСТОР</div>
+              <div class="p-box-val green" id="rec-return-val">3.6x MOIC / Год 3</div>
+              <div class="p-box-desc" id="rec-return-desc">
+                Стоимость доли к Году 5: <strong>9.9 млн ₽</strong> + дивиденды <strong>~120 000 ₽/мес</strong> с Года 3.
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Staging / Tranches Plan -->
+          <div class="passport-tranches-bar">
+            <div class="tranches-title">
+              <i class="fa-solid fa-timeline"></i>
+              <strong>График привлечения траншами (Staging Plan):</strong>
+            </div>
+            <div class="tranches-list">
+              <div class="tranche-item">
+                <span class="tranche-tag">ТРАНШ 1 / СТАРТ (М1)</span>
+                <strong id="tranche-1-val">1 200 000 ₽ (40%)</strong>
+                <span class="tranche-kpi">На разработку MVP, запуск и тест воронки (LTV/CAC >= 3.0x).</span>
+              </div>
+              <div class="tranche-item">
+                <span class="tranche-tag">ТРАНШ 2 / МАСШТАБ (М6)</span>
+                <strong id="tranche-2-val">1 800 000 ₽ (60%)</strong>
+                <span class="tranche-kpi">На расширение рекламного бюджета и выход в точку безубыточности.</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
 
         <!-- Interactive Sliders (What-If Analysis) -->
         <div class="sliders-panel glass-panel">

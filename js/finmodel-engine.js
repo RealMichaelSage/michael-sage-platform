@@ -539,6 +539,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     renderCharts(res);
     renderTables(res);
+    updateInvestmentPassport(res);
   }
 
   
@@ -1681,6 +1682,91 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('btn-export-excel')?.addEventListener('click', exportToExcel);
 
+  
+  // --- Automated Investment & Fundraising Advisor (AI Round Engine) ---
+  function updateInvestmentPassport(res) {
+    const rawCapital = parseFloat(inputs.capital.value) || 0;
+    const capex = parseFloat(inputs.capex.value) || 0;
+    const baseOpex = parseFloat(inputs.opexFixed.value) || 0;
+    const basePayroll = (parseFloat(inputs.founderSalary.value) || 0) + (parseFloat(inputs.teamBase.value) || 0);
+    const avgMonthlyBurn = baseOpex + basePayroll + (parseFloat(inputs.adBudget.value) || 0);
+
+    // 1. Simulate baseline cash WITHOUT new investment to find exact cash deficit (pit)
+    let simCash = rawCapital - capex;
+    let maxDeficit = 0;
+    let deficitMonth = 1;
+
+    for (let m = 1; m <= 60; m++) {
+      const monthData = res.months[m - 1];
+      simCash += monthData.ocf;
+      if (simCash < maxDeficit) {
+        maxDeficit = simCash;
+        deficitMonth = m;
+      }
+    }
+
+    const cashDeficitAbs = Math.abs(maxDeficit);
+    const safetyBuffer = avgMonthlyBurn * 2.5;
+    let autoRound = 0;
+
+    if (maxDeficit < 0) {
+      autoRound = Math.ceil((cashDeficitAbs + safetyBuffer) / 250000) * 250000;
+    } else {
+      autoRound = 0; // Self-sufficient (Bootstrap)
+    }
+
+    // Recommended Equity based on Round size and Year 1-2 Valuation
+    const y1Valuation = res.years[0].valuation || (res.years[0].revenue * 1.5);
+    const y2Valuation = res.years[1].valuation || (res.years[1].revenue * 2.0);
+    const avgValuation = Math.max(10000000, (y1Valuation + y2Valuation) / 2);
+
+    let recShareMin = 10;
+    let recShareMax = 15;
+
+    if (autoRound > 0) {
+      const impliedShare = Math.round((autoRound / (avgValuation + autoRound)) * 100);
+      recShareMin = Math.max(7, Math.min(15, impliedShare - 2));
+      recShareMax = Math.max(recShareMin + 3, Math.min(20, impliedShare + 3));
+    }
+
+    // Investor Return (MOIC & Dividends)
+    const curInvest = parseFloat(inputs.investment.value) || autoRound || 1000000;
+    const curSharePct = parseFloat(inputs.investorShare.value) || recShareMin;
+    const y5Val = res.years[4].valuation;
+    const investorShareValY5 = y5Val * (curSharePct / 100);
+    const moicY5 = curInvest > 0 ? (investorShareValY5 / curInvest).toFixed(1) : '3.5';
+    const invDivY3Monthly = Math.round((res.years[2].dividends * (curSharePct / 100)) / 12);
+
+    // Update DOM
+    const elSum = document.getElementById('rec-investment-sum');
+    const elDesc = document.getElementById('rec-investment-desc');
+    const elEq = document.getElementById('rec-equity-pct');
+    const elEqDesc = document.getElementById('rec-equity-desc');
+    const elRet = document.getElementById('rec-return-val');
+    const elRetDesc = document.getElementById('rec-return-desc');
+    const elTr1 = document.getElementById('tranche-1-val');
+    const elTr2 = document.getElementById('tranche-2-val');
+
+    if (autoRound > 0) {
+      if (elSum) elSum.textContent = formatCurrency(autoRound);
+      if (elDesc) elDesc.innerHTML = `Покрывает кассовую яму <strong>${formatCurrency(cashDeficitAbs)}</strong> на ${deficitMonth}-м месяце + резерв OPEX.`;
+    } else {
+      if (elSum) elSum.textContent = '0 ₽ (Bootstrap)';
+      if (elDesc) elDesc.innerHTML = `Проект самоокупаем со старта за счет кэша фаундера <strong>${formatCurrency(rawCapital)}</strong>.`;
+    }
+
+    if (elEq) elEq.textContent = `${recShareMin}% – ${recShareMax}%`;
+    if (elEqDesc) elEqDesc.innerHTML = `Справедливая оценка Post-Money: <strong>${formatMln(avgValuation + autoRound)}</strong> (без потери контроля фаундером).`;
+
+    if (elRet) elRet.textContent = `${moicY5}x MOIC / Год 5`;
+    if (elRetDesc) elRetDesc.innerHTML = `Доля инвестора к Году 5: <strong>${formatCurrency(investorShareValY5)}</strong> + дивиденды <strong>${formatCurrency(invDivY3Monthly)}/мес</strong> с Года 3.`;
+
+    const tr1 = Math.round(autoRound * 0.4);
+    const tr2 = autoRound - tr1;
+    if (elTr1) elTr1.textContent = `${formatCurrency(tr1 || curInvest * 0.4)} (40%)`;
+    if (elTr2) elTr2.textContent = `${formatCurrency(tr2 || curInvest * 0.6)} (60%)`;
+  }
+
   initChartModalEvents();
   
   // Tooltip helper: native fallback title + mobile click support
@@ -1696,6 +1782,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.addEventListener('click', () => {
     document.querySelectorAll('.tooltip-icon.active').forEach(i => i.classList.remove('active'));
+  });
+
+  
+  document.getElementById('btn-auto-round')?.addEventListener('click', () => {
+    const rawCapital = parseFloat(inputs.capital.value) || 0;
+    const capex = parseFloat(inputs.capex.value) || 0;
+    const baseOpex = parseFloat(inputs.opexFixed.value) || 0;
+    const basePayroll = (parseFloat(inputs.founderSalary.value) || 0) + (parseFloat(inputs.teamBase.value) || 0);
+    const avgMonthlyBurn = baseOpex + basePayroll + (parseFloat(inputs.adBudget.value) || 0);
+
+    let simCash = rawCapital - capex;
+    let maxDeficit = 0;
+
+    for (let m = 1; m <= 60; m++) {
+      const monthData = calculatedResults.months[m - 1];
+      simCash += monthData.ocf;
+      if (simCash < maxDeficit) maxDeficit = simCash;
+    }
+
+    const cashDeficitAbs = Math.abs(maxDeficit);
+    const safetyBuffer = avgMonthlyBurn * 2.5;
+    let autoRound = 0;
+    if (maxDeficit < 0) {
+      autoRound = Math.ceil((cashDeficitAbs + safetyBuffer) / 250000) * 250000;
+    } else {
+      autoRound = 1000000;
+    }
+
+    inputs.investment.value = autoRound;
+    inputs.investorShare.value = 15;
+    recalculate();
   });
 
   loadPreset('saas');
