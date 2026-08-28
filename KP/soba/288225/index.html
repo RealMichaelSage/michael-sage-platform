@@ -115,9 +115,13 @@
 
     /* KP Specific Hero */
     .kp-hero {
-      padding: clamp(48px, 6vw, 72px) 0 clamp(32px, 4vw, 48px);
+      padding: 0;
       background: #ffffff;
       border-bottom: 1px solid var(--border);
+    }
+    .kp-hero .container {
+      padding-top: clamp(48px, 6vw, 72px);
+      padding-bottom: clamp(32px, 4vw, 48px);
     }
     .kp-tag {
       display: inline-flex;
@@ -186,9 +190,13 @@
 
     /* Section Structure */
     .kp-section {
-      padding: clamp(56px, 7vw, 92px) 0;
+      padding: 0;
       border-bottom: 1px solid var(--border);
       background: #ffffff;
+    }
+    .kp-section .container {
+      padding-top: clamp(56px, 7vw, 92px);
+      padding-bottom: clamp(56px, 7vw, 92px);
     }
     .kp-section.alt-bg {
       background: #f8fafc;
