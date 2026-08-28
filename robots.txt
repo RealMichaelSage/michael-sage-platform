@@ -6,6 +6,8 @@ Allow: /
 Disallow: /cdn-cgi/
 Disallow: /admin/
 Disallow: /api/
+Disallow: /KP/
+Disallow: /kp/
 
 # AI Search & LLM Engine Optimization (GEO)
 User-agent: GPTBot

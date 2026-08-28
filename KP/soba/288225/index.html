@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>КП: Цифровая инвестиционная платформа клуба «СОБА» | Михаил Пузырёв</title>
+  
+  <!-- STRICT PRIVACY & NOINDEX: Hidden from search engines and AI crawlers -->
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
+  <meta name="yandex" content="noindex, nofollow">
+  
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <style>
+    :root {
+      --font-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      
+      --accent: #10b981;
+      --accent-dim: rgba(16, 185, 129, 0.1);
+      --accent-border: rgba(16, 185, 129, 0.3);
+      --blue: #0284c7;
+      --purple: #8b5cf6;
+      --gold: #d97706;
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: #09090b;
+      background: #ffffff;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, .kp-title, .kp-card-title, .tranche-price, .timeline-badge {
+      font-family: var(--font-heading);
+      letter-spacing: -0.03em;
+    }
+
+    /* Top Confidential Bar */
+    .confidential-bar {
+      background: #09090b;
+      color: #a1a1aa;
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      padding: 8px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #27272a;
+      position: sticky;
+      top: 0;
+      z-index: 1001;
+    }
+    .confidential-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #fbbf24;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .confidential-meta {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    /* Sub-nav for KP */
+    .kp-nav-bar {
+      position: sticky;
+      top: 35px;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 0;
+    }
+    .kp-nav-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 clamp(24px, 4vw, 64px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .kp-client-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .kp-logo-tag {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      background: var(--accent-dim);
+      color: var(--green-dark);
+      border: 1px solid var(--accent-border);
+      padding: 3px 8px;
+      font-weight: 700;
+    }
+
+    /* KP Specific Hero */
+    .kp-hero {
+      padding: clamp(48px, 6vw, 72px) 0 clamp(32px, 4vw, 48px);
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+    }
+    .kp-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid var(--accent-border);
+      padding: 4px 10px;
+      font-weight: 600;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .kp-title {
+      font-size: clamp(2rem, 4.2vw, 3.1rem);
+      font-weight: 700;
+      color: #09090b;
+      line-height: 1.15;
+    }
+    .kp-desc {
+      font-size: 1.1rem;
+      color: #52525b;
+      max-width: 920px;
+      line-height: 1.6;
+      margin-top: 14px;
+    }
+
+    .kp-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 36px;
+    }
+    .kp-meta-card {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      padding: 22px;
+      transition: all 0.2s ease;
+    }
+    .kp-meta-card:hover {
+      border-color: #cbd5e1;
+      transform: translateY(-2px);
+    }
+    .kp-meta-card .label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+    .kp-meta-card .value {
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: #09090b;
+      letter-spacing: -0.03em;
+    }
+    .kp-meta-card .sub {
+      font-size: 0.84rem;
+      color: #64748b;
+      margin-top: 4px;
+    }
+
+    /* Section Structure */
+    .kp-section {
+      padding: clamp(56px, 7vw, 92px) 0;
+      border-bottom: 1px solid var(--border);
+      background: #ffffff;
+    }
+    .kp-section.alt-bg {
+      background: #f8fafc;
+    }
+    .kp-section-head {
+      margin-bottom: 36px;
+    }
+
+    /* Cards & Grids */
+    .kp-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 24px;
+    }
+    .kp-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .kp-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 28px;
+      position: relative;
+    }
+    .kp-card.featured {
+      border-color: #09090b;
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+    }
+    .kp-card-num {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .kp-card-title {
+      font-size: 1.22rem;
+      font-weight: 700;
+      color: #09090b;
+      margin-bottom: 10px;
+    }
+    .kp-card-desc {
+      font-size: 0.92rem;
+      color: #52525b;
+      line-height: 1.6;
+    }
+    .kp-card-list {
+      list-style: none;
+      margin-top: 14px;
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+    }
+    .kp-card-list li {
+      position: relative;
+      padding-left: 22px;
+      font-size: 0.92rem;
+      color: #334155;
+      margin-bottom: 10px;
+      line-height: 1.55;
+    }
+    .kp-card-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--green-dark);
+      font-weight: 800;
+    }
+
+    /* Roles Table */
+    .kp-table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      background: #ffffff;
+    }
+    .kp-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.92rem;
+    }
+    .kp-table th {
+      background: #f8fafc;
+      padding: 14px 20px;
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #64748b;
+      border-bottom: 1px solid var(--border);
+    }
+    .kp-table td {
+      padding: 16px 20px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #334155;
+      vertical-align: top;
+      line-height: 1.55;
+    }
+    .kp-table tr:last-child td {
+      border-bottom: none;
+    }
+    .kp-role-tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 4px 8px;
+      white-space: nowrap;
+    }
+    .kp-role-tag.admin { background: #fee2e2; color: #991b1b; }
+    .kp-role-tag.manager { background: #fef3c7; color: #92400e; }
+    .kp-role-tag.investor { background: #dbeafe; color: #1e40af; }
+    .kp-role-tag.startup { background: #dcfce7; color: #166534; }
+    .kp-role-tag.expert { background: #f3e8ff; color: #6b21a8; }
+    .kp-role-tag.partner { background: #e2e8f0; color: #334155; }
+
+    /* Timeline Stepper */
+    .timeline-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 28px;
+    }
+    .timeline-step {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 80px 1fr 240px;
+      gap: 20px;
+      align-items: center;
+      transition: all 0.2s ease;
+    }
+    .timeline-step:hover {
+      border-color: #09090b;
+    }
+    .timeline-step.qa {
+      background: #faf5ff;
+      border: 2px solid #c084fc;
+    }
+    .timeline-badge {
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: 1.35rem;
+      color: #09090b;
+      text-align: center;
+    }
+    .timeline-badge small {
+      display: block;
+      font-size: 0.68rem;
+      color: #64748b;
+      font-weight: 600;
+    }
+    .timeline-content h4 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #09090b;
+    }
+    .timeline-content p {
+      font-size: 0.9rem;
+      color: #52525b;
+      line-height: 1.5;
+    }
+    .timeline-meta {
+      text-align: right;
+      font-family: var(--font-mono);
+    }
+    .timeline-meta .duration {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #09090b;
+    }
+    .timeline-meta .deliverable {
+      font-size: 0.78rem;
+      color: #059669;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    /* Financial Tranches Box */
+    .tranches-box {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-top: 28px;
+    }
+    .tranche-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 24px;
+      position: relative;
+    }
+    .tranche-card.active {
+      border: 2px solid var(--black);
+    }
+    .tranche-num {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      color: #64748b;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .tranche-price {
+      font-size: 1.95rem;
+      font-weight: 800;
+      color: #09090b;
+      margin: 8px 0;
+      letter-spacing: -0.03em;
+    }
+    .tranche-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #09090b;
+      margin-bottom: 8px;
+    }
+    .tranche-desc {
+      font-size: 0.88rem;
+      color: #64748b;
+      line-height: 1.5;
+    }
+
+    /* Acceptance Box */
+    .accept-box {
+      background: #09090b;
+      color: #ffffff;
+      padding: clamp(32px, 5vw, 64px);
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 48px;
+    }
+    .accept-box h3 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+      color: #ffffff;
+    }
+    .accept-box p {
+      color: #a1a1aa;
+      font-size: 1.02rem;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .req-list {
+      list-style: none;
+      font-family: var(--font-mono);
+      font-size: 0.86rem;
+      color: #d4d4d8;
+      line-height: 1.85;
+      border-left: 2px solid #27272a;
+      padding-left: 18px;
+    }
+    .req-list strong {
+      color: #ffffff;
+    }
+
+    /* Print styling */
+    @media print {
+      .confidential-bar, .kp-nav-bar, .site-header, .site-footer, .kp-actions, .no-print {
+        display: none !important;
+      }
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-size: 9.5pt !important;
+      }
+      .container {
+        max-width: 100% !important;
+        padding: 0 !important;
+        border: none !important;
+      }
+      .kp-section {
+        padding: 16px 0 !important;
+        border-bottom: 1px solid #ddd !important;
+        page-break-inside: avoid;
+      }
+      .accept-box {
+        background: #f8fafc !important;
+        color: #000000 !important;
+        border: 1px solid #000000 !important;
+      }
+      .accept-box h3, .accept-box p, .req-list {
+        color: #000000 !important;
+      }
+      .req-list strong {
+        color: #000000 !important;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .timeline-step {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .timeline-meta {
+        text-align: left;
+      }
+      .accept-box {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+    }
+  </style>
+</head>
+<body class="page-kp">
+
+  <!-- CONFIDENTIAL STATUS BAR -->
+  <div class="confidential-bar">
+    <div class="confidential-badge">
+      <span>🔒</span> КОНФИДЕНЦИАЛЬНО · ДОСТУП ПО ПРЯМОЙ ССЫЛКЕ
+    </div>
+    <div class="confidential-meta">
+      <span><strong>ID:</strong> KP-SOBA-288225-V3</span>
+      <span><strong>Дата:</strong> 28.08.2026</span>
+      <span><strong>Версия:</strong> 3.0 (Полная)</span>
+    </div>
+  </div>
+
+  <!-- STICKY HEADER ACTIONS -->
+  <header class="kp-nav-bar">
+    <div class="kp-nav-inner">
+      <div class="kp-client-info">
+        <a href="/" style="text-decoration:none; font-weight:700; color:var(--black); font-size:1.05rem; font-family:var(--font-heading);">
+          Михаил Пузырёв
+        </a>
+        <span class="kp-logo-tag">AI-АРХИТЕКТОР</span>
+        <span style="color:#cbd5e1;">/</span>
+        <span style="font-size:0.9rem; font-weight:600; color:#334155;">
+          Заказчик: Клуб «СОБА» (Луиза Александрова)
+        </span>
+      </div>
+
+      <div class="kp-actions no-print">
+        <button onclick="window.print()" class="btn-secondary" style="padding:8px 16px; font-size:0.85rem; cursor:pointer; background:#ffffff; border:1px solid var(--border); font-family:var(--font-heading); font-weight:600;">
+          🖨 Печать / PDF
+        </button>
+        <a href="https://t.me/Michael_Sage" target="_blank" class="btn-primary" style="padding:8px 16px; font-size:0.85rem; background:#09090b; color:#ffffff; text-decoration:none; font-family:var(--font-heading); font-weight:600;">
+          💬 Обсудить в Telegram ↗
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="kp-hero">
+      <div class="container">
+        <span class="kp-tag">ВЕНЧУРНАЯ ЭКОСИСТЕМА · ТЗ & КОММЕРЧЕСКОЕ ПРЕДЛОЖЕНИЕ</span>
+        <h1 class="kp-title">
+          Цифровая инвестиционная платформа<br>
+          закрытого венчурного клуба «СОБА»
+        </h1>
+        <p class="kp-desc">
+          Комплексная веб-платформа для полной автоматизации жизненного цикла мероприятий (Pre → Live → Post), интерактивного «Паспорта мероприятия» модератора, онлайн-голосования инвесторов, витрины отобранных проектов с защитой 4% Success Fee и сквозной аналитики клуба.
+        </p>
+
+        <!-- KPI SUMMARY CARDS -->
+        <div class="kp-meta-grid">
+          <div class="kp-meta-card">
+            <div class="label">Стоимость под ключ</div>
+            <div class="value" style="color:var(--green-dark);">175 000 ₽</div>
+            <div class="sub">Фиксированная цена договора</div>
+          </div>
+          <div class="kp-meta-card">
+            <div class="label">Срок реализации</div>
+            <div class="value">4–5 недель</div>
+            <div class="sub">Включая выделенный этап QA</div>
+          </div>
+          <div class="kp-meta-card">
+            <div class="label">График оплаты</div>
+            <div class="value">3 транша</div>
+            <div class="sub">100k / 50k / 25k по этапам</div>
+          </div>
+          <div class="kp-meta-card">
+            <div class="label">Гарантия & Поддержка</div>
+            <div class="value">14 дней</div>
+            <div class="sub">Бесплатная адаптация после релиза</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: CONTEXT & PROBLEMS -->
+    <section class="kp-section">
+      <div class="container">
+        <div class="kp-section-head">
+          <span class="kp-tag">01 / ВВЕДЕНИЕ И ЦЕЛИ</span>
+          <h2 class="kp-title">Контекст и ключевые задачи платформы</h2>
+          <p class="kp-desc">
+            Клуб бизнес-ангелов «СОБА» — старейшее и наиболее авторитетное венчурное сообщество в России. Мероприятия (питч-сессии, экспертные советы, закрытые клубы) являются <strong>главным операционным и финансовым ядром клуба</strong>.
+          </p>
+        </div>
+
+        <div class="kp-grid-2">
+          <div class="kp-card" style="background:#fff7f7; border-color:#fed7d7;">
+            <div class="kp-card-num" style="color:#e53e3e;">ТЕКУЩИЕ БОЛИ И ПОТЕРИ</div>
+            <h3 class="kp-card-title" style="color:#9b2c2c;">Что тормозит процессы сейчас:</h3>
+            <ul class="kp-card-list">
+              <li><strong>Ручной хаос в подготовке:</strong> модерация ведется по файлам Word («Паспорт мероприятия»), презентации разбросаны по Dropbox, списки — в Excel.</li>
+              <li><strong>Потеря лидов после ивента:</strong> презентации и записи отправляются вручную менеджером через 2–3 дня, когда интерес инвесторов уже остывает.</li>
+              <li><strong>Сложности в сегментации:</strong> невозможно быстро отобрать проекты определенной отрасли (например, «Строительные проекты 2 июля») и сделать адресную рассылку.</li>
+              <li><strong>Отсутствие единого окна:</strong> нет витрины мероприятий с мгновенной регистрацией и фиксацией истории посещений за все годы.</li>
+            </ul>
+          </div>
+
+          <div class="kp-card" style="background:#f0fdf4; border-color:#bbf7d0;">
+            <div class="kp-card-num" style="color:#16a34a;">РЕЗУЛЬТАТ ВНЕДРЕНИЯ ПЛАТФОРМЫ</div>
+            <h3 class="kp-card-title" style="color:#14532d;">Что получает клуб «СОБА»:</h3>
+            <ul class="kp-card-list">
+              <li><strong>Автоматизация полного цикла:</strong> Pre-Event (сбор) ➔ Live-Event (ведение) ➔ Post-Event (мгновенный фоллоуап за 5 секунд).</li>
+              <li><strong>Интерактивный «Паспорт мероприятия»:</strong> единый рабочий экран Луизы со списком стартапов и PDF-деками в 1 клик.</li>
+              <li><strong>Онлайн-голосование инвесторов:</strong> мобильная форма с авто-отправкой One-pager и бронирования встреч.</li>
+              <li><strong>Защита дохода (4% Success Fee):</strong> автоматический акцепт публичной оферты всеми инвесторами платформы.</li>
+              <li><strong>Сквозная аналитика руководителя:</strong> единый дашборд воронки, посещаемости, выручки и работы менеджеров.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: ROLE MODEL & ACCESS -->
+    <section class="kp-section alt-bg">
+      <div class="container">
+        <div class="kp-section-head">
+          <span class="kp-tag">02 / РОЛЕВАЯ МОДЕЛЬ</span>
+          <h2 class="kp-title">Разграничение прав и уровни доступа</h2>
+          <p class="kp-desc">
+            Система строго изолирует конфиденциальные данные и предоставляет каждому типу пользователей специализированный функционал.
+          </p>
+        </div>
+
+        <div class="kp-table-wrap">
+          <table class="kp-table">
+            <thead>
+              <tr>
+                <th style="width:200px;">Роль</th>
+                <th style="width:220px;">Пользователи</th>
+                <th>Права и ключевой функционал</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="kp-role-tag admin">1. Администратор</span></td>
+                <td><strong>Луиза Александрова</strong><br><small style="color:#64748b;">Руководитель клуба</small></td>
+                <td>Полный доступ ко всей платформе. Эксклюзивный доступ к Главному дашборду. Создание и ведение мероприятий, интерактивный «Паспорт модератора», утверждение проектов в Закрытый клуб, контроль договоров, выставление счетов и актов.</td>
+              </tr>
+              <tr>
+                <td><span class="kp-role-tag manager">2. Инвест-менеджер</span></td>
+                <td><strong>Менеджеры СОБА</strong><br><small style="color:#64748b;">Команда проектов</small></td>
+                <td>Ведение воронки стартапов, назначение встреч, фиксация отправки материалов инвесторам, сопровождение стадий сделок (Due Diligence, соглашение, нотариус).</td>
+              </tr>
+              <tr>
+                <td><span class="kp-role-tag investor">3. Инвестор</span></td>
+                <td><strong>Члены СОБА & Внешние</strong><br><small style="color:#64748b;">Бизнес-ангелы, фонды</small></td>
+                <td>Личный кабинет. Просмотр <strong>одобренного пайплайна</strong> (только проекты, прошедшие «Бизнес-трамплин» и Закрытый клуб). Регистрация на ивенты в 1 клик, онлайн-голосование со смартфона, бронь встреч. <strong>Обязательный акцепт оферты 4% комиссии</strong>.</td>
+              </tr>
+              <tr>
+                <td><span class="kp-role-tag startup">4. Стартап</span></td>
+                <td><strong>Фаундеры проектов</strong><br><small style="color:#64748b;">Соискатели инвестиций</small></td>
+                <td>Личный кабинет. Пошаговая анкета (рынок, выручка, патенты), защищенный Data Room (Pitch Deck, FinModel, видео), подача заявок на мероприятия («Бизнес-трамплин», питчи), заказ консалтинга по доупаковке. Прямые контакты инвесторов скрыты.</td>
+              </tr>
+              <tr>
+                <td><span class="kp-role-tag expert">5. Эксперт / Ментор</span></td>
+                <td><strong>Отраслевой пул СОБА</strong><br><small style="color:#64748b;">Трекеры, менторы</small></td>
+                <td>Доступ к проектам ранней стадии («Бизнес-трамплин») для оценки, заполнение электронных скоринг-карт, фиксация экспертных заключений и рекомендаций к допуску.</td>
+              </tr>
+              <tr>
+                <td><span class="kp-role-tag partner">6. Партнер</span></td>
+                <td><strong>Технопарки, Сколково, ТПП</strong><br><small style="color:#64748b;">Венчурные партнеры</small></td>
+                <td>Внешняя категория контрагентов в базе для таргетированных рассылок, совместных отраслевых сессий и обмена сделками.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="margin-top:20px; background:#eff6ff; border:1px solid #bfdbfe; padding:16px 20px; font-size:0.92rem; color:#1e40af; line-height:1.6;">
+          💡 <strong>Пояснение термина «Прошедшие Закрытый клуб» (Curated Deal Flow):</strong> Это стартапы, которые успешно прошли экспертный отбор («Бизнес-трамплин»), подписали официальный договор с клубом, презентовали проект инвесторам и допущены к привлечению капитала. В витрину инвесторов попадают только эти проверенные проекты, а не сырой входящий поток.
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: EVENT ECOSYSTEM (CORE) -->
+    <section class="kp-section">
+      <div class="container">
+        <div class="kp-section-head">
+          <span class="kp-tag">03 / МОДУЛЬ МЕРОПРИЯТИЙ (ЯДРО ПЛАТФОРМЫ)</span>
+          <h2 class="kp-title">Автоматизация 5 типов ивентов на всех 3 этапах</h2>
+          <p class="kp-desc">
+            Мероприятия — центральный нерв клуба СОБА. Платформа берет на себя всю рутину до, во время и после проведения встреч.
+          </p>
+        </div>
+
+        <!-- 5 EVENT TYPES -->
+        <h3 style="font-size:1.3rem; margin-bottom:16px; font-weight:700;">Классификатор мероприятий клуба:</h3>
+        <div class="kp-grid-3" style="margin-bottom:40px;">
+          <div class="kp-card">
+            <span class="kp-role-tag" style="background:#f1f5f9; color:#475569; margin-bottom:8px;">ТИП 01</span>
+            <h4 style="font-size:1.05rem; font-weight:700; margin-bottom:6px;">Очное знакомство (Intro)</h4>
+            <p style="font-size:0.88rem; color:#64748b;">2–3 раза в месяц по 5–6 проектов. 5 минут на питч перед Луизой. Первичный скоринг (рынок >10 млрд ₽, выручка/патенты), отсев и предложение консалтинга.</p>
+          </div>
+
+          <div class="kp-card">
+            <span class="kp-role-tag" style="background:#fef3c7; color:#92400e; margin-bottom:8px;">ТИП 02</span>
+            <h4 style="font-size:1.05rem; font-weight:700; margin-bottom:6px;">Экспертный совет («Бизнес-трамплин»)</h4>
+            <p style="font-size:0.88rem; color:#64748b;">6–8 проектов перед пулом менторов. <strong>Блокирующее правило:</strong> допуск только при подписанном договоре на привлечение капитала. Заполнение скоринг-карт.</p>
+          </div>
+
+          <div class="kp-card featured">
+            <span class="kp-role-tag" style="background:#dcfce7; color:#166534; margin-bottom:8px;">ТИП 03 · ФЛАГМАН</span>
+            <h4 style="font-size:1.05rem; font-weight:700; margin-bottom:6px;">«Закрытый клуб инвесторов»</h4>
+            <p style="font-size:0.88rem; color:#64748b;">Главный питч-день для резидентов и проверенных инвесторов СОБА. Выступление лучших 5–6 стартапов, сбор инвестиционного интереса и синдикация.</p>
+          </div>
+
+          <div class="kp-card">
+            <span class="kp-role-tag" style="background:#e0f2fe; color:#0369a1; margin-bottom:8px;">ТИП 04</span>
+            <h4 style="font-size:1.05rem; font-weight:700; margin-bottom:6px;">Тематические питч-сессии</h4>
+            <p style="font-size:0.88rem; color:#64748b;">Профильные события («Строительные проекты 2 июля», «AI Day», «Агротех»). Быстрая выборка стартапов и профильных инвесторов по тегам.</p>
+          </div>
+
+          <div class="kp-card">
+            <span class="kp-role-tag" style="background:#f3e8ff; color:#6b21a8; margin-bottom:8px;">ТИП 05</span>
+            <h4 style="font-size:1.05rem; font-weight:700; margin-bottom:6px;">Образовательные митапы</h4>
+            <p style="font-size:0.88rem; color:#64748b;">Открытые встречи, лекции и гостевые демо-дни для расширения воронки и привлечения новых бизнес-ангелов в клуб.</p>
+          </div>
+        </div>
+
+        <!-- 3 PHASES BREAKDOWN -->
+        <h3 style="font-size:1.3rem; margin-bottom:20px; font-weight:700;">Жизненный цикл мероприятия в платформе:</h3>
+        
+        <div class="kp-grid-3">
+          <!-- PHASE 1 -->
+          <div class="kp-card" style="border-top:4px solid var(--blue);">
+            <div class="kp-card-num" style="color:var(--blue);">ФАЗА 1 · PRE-EVENT</div>
+            <h4 class="kp-card-title">Подготовка и сбор</h4>
+            <ul class="kp-card-list">
+              <li><strong>Конструктор ивента:</strong> название, дата, время, локация или Zoom.</li>
+              <li><strong>Авто-генерация лендинга:</strong> красивая страница мероприятия с формой регистрации создается мгновенно.</li>
+              <li><strong>Привязка проектов:</strong> отбор стартапов галочками из базы с авто-проверкой наличия договора.</li>
+              <li><strong>Умная TG-рассылка инвесторам:</strong> выбор формата присутствия (Офлайн / Онлайн / Прислать запись).</li>
+            </ul>
+          </div>
+
+          <!-- PHASE 2 -->
+          <div class="kp-card featured" style="border-top:4px solid var(--green);">
+            <div class="kp-card-num" style="color:var(--green-dark);">ФАЗА 2 · LIVE EVENT</div>
+            <h4 class="kp-card-title">Проведение и модерация</h4>
+            <ul class="kp-card-list">
+              <li><strong>Интерактивный «Паспорт мероприятия»:</strong> единый экран модератора (Луизы) со списком стартапов по таймингу.</li>
+              <li><strong>Презентации в 1 клик:</strong> открытие PDF Pitch Deck и One-pager прямо из карточки проекта.</li>
+              <li><strong>Мобильное онлайн-голосование:</strong> инвесторы в зале голосуют со смартфонов:
+                <br>• «Интересен проект (Хочу дек)»
+                <br>• «Готов инвестировать (Сумма чека)»
+                <br>• «Проект не подходит»
+              </li>
+            </ul>
+          </div>
+
+          <!-- PHASE 3 -->
+          <div class="kp-card" style="border-top:4px solid var(--purple);">
+            <div class="kp-card-num" style="color:var(--purple);">ФАЗА 3 · POST-EVENT</div>
+            <h4 class="kp-card-title">Авто-фоллоуап & Биллинг</h4>
+            <ul class="kp-card-list">
+              <li><strong>Мгновенный авто-фоллоуап (за 5 сек):</strong> бот сразу отправляет инвестору материалы по выбранному проекту и ссылку на созвон.</li>
+              <li><strong>Авто-отправка записи:</strong> рассылка ссылки на видео всем, кто запросил запись.</li>
+              <li><strong>Сквозная история:</strong> оценки и голоса навсегда фиксируются в карточке стартапа и инвестора.</li>
+              <li><strong>Реестры для закрывающих актов:</strong> выгрузка фактических участников для бухгалтерии клуба.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: DASHBOARD & CRM INTEGRATION -->
+    <section class="kp-section alt-bg">
+      <div class="container">
+        <div class="kp-section-head">
+          <span class="kp-tag">04 / АНАЛИТИКА И CRM</span>
+          <h2 class="kp-title">Дашборд руководителя и структура воронок</h2>
+          <p class="kp-desc">
+            Полный контроль ключевых показателей венчурного клуба в реальном времени с поддержкой проверенной CRM-логики Битрикс24 СОБА.
+          </p>
+        </div>
+
+        <div class="kp-grid-2">
+          <!-- DASHBOARD MODULES -->
+          <div class="kp-card">
+            <h3 class="kp-card-title">📊 Аналитический центр руководителя (Executive Dashboard):</h3>
+            <ul class="kp-card-list">
+              <li><strong>Сквозная воронка в динамике:</strong> Заявка ➔ Скрининг ➔ Intro ➔ Трамплин ➔ Закрытый клуб ➔ Сделка.</li>
+              <li><strong>Финансовый контроль 4% Success Fee:</strong> объем закрытых инвестиций, сумма начисленной и полученной комиссии СОБА, доходы от консалтинга и взносов.</li>
+              <li><strong>Светофор годовых договоров:</strong> мониторинг сроков контрактов со стартапами с авто-алертом за 30 дней до завершения для своевременной пролонгации.</li>
+              <li><strong>Аналитика ивентов:</strong> статистика посещаемости, рейтинг активности инвесторов, конверсия голосования в реальные синдикаты.</li>
+              <li><strong>KPI инвест-менеджеров:</strong> количество стартапов в работе, скорость назначения встреч и закрытия этапов.</li>
+            </ul>
+          </div>
+
+          <!-- CRM FUNNELS -->
+          <div class="kp-card">
+            <h3 class="kp-card-title">🗂 4 CRM-воронки (по стандарту СОБА):</h3>
+            <ul class="kp-card-list">
+              <li><strong>Воронка 0 («Членские взносы»):</strong> Активный ➔ Счёт выставлен ➔ Оплата ➔ Задолженность ➔ Риск потери ➔ Продлён.</li>
+              <li><strong>Воронка 2 («Новые инвесторы»):</strong> Заявка ➔ В работе ➔ Встреча проведена ➔ Анкета получена ➔ Договор/Оферта 4% ➔ Оплата ➔ Добавлен в клуб.</li>
+              <li><strong>Воронка 4 («Действующие инвесторы»):</strong> В базе ➔ Доступ выдан ➔ Профиль заполнен ➔ Активен на платформе.</li>
+              <li><strong>Воронка 6 («Стартапы»):</strong> Заявка ➔ Скрининг ➔ Intro ➔ Анкета & Data Room ➔ Due Diligence ➔ Одобрен на Трамплине ➔ <strong>Договор подписан</strong> ➔ Закрытый клуб / Сделка.</li>
+              <li><strong>Инвестиционные фильтры:</strong> вилки чеков (<3M ₽ до >30M ₽), 10+ отраслей интересов, стадии, готовность к со-инвестированию.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: ROADMAP & QA PLAN -->
+    <section class="kp-section">
+      <div class="container">
+        <div class="kp-section-head">
+          <span class="kp-tag">05 / ДОРОЖНАЯ КАРТА И ТЕСТИРОВАНИЕ</span>
+          <h2 class="kp-title">Поэтапный план разработки (4–5 недель)</h2>
+          <p class="kp-desc">
+            Прозрачный график реализации с контрольными точками и <strong>выделенным этапом комплексного тестирования и QA</strong> перед сдачей.
+          </p>
+        </div>
+
+        <div class="timeline-steps">
+          <!-- STEP 1 -->
+          <div class="timeline-step">
+            <div class="timeline-badge">01<small>СПРИНТ</small></div>
+            <div class="timeline-content">
+              <h4>Проектирование БД и Базовый бэкенд</h4>
+              <p>Схема БД (PostgreSQL), авторизация (OTP/Telegram), базовый интерфейс Администратора для управления проектами и инвесторами, модуль авто-генерации страниц мероприятий.</p>
+            </div>
+            <div class="timeline-meta">
+              <div class="duration">1 неделя</div>
+              <div class="deliverable">✓ Работающая админка и авто-лендинги</div>
+            </div>
+          </div>
+
+          <!-- STEP 2 -->
+          <div class="timeline-step">
+            <div class="timeline-badge">02<small>СПРИНТ</small></div>
+            <div class="timeline-content">
+              <h4>Кабинеты Стартапа, Инвестора и Аналитика</h4>
+              <p>Личный кабинет стартапа (визард анкеты, Data Room), кабинет инвестора (каталог проектов, акцепт оферты 4%, One-pager), Главный дашборд руководителя со сквозной воронкой.</p>
+            </div>
+            <div class="timeline-meta">
+              <div class="duration">1.5 недели</div>
+              <div class="deliverable">✓ Личные кабинеты и дашборд</div>
+            </div>
+          </div>
+
+          <!-- STEP 3 -->
+          <div class="timeline-step">
+            <div class="timeline-badge">03<small>СПРИНТ</small></div>
+            <div class="timeline-content">
+              <h4>Модуль Мероприятий, Живой Паспорт и Telegram-бот</h4>
+              <p>Интерактивный «Паспорт мероприятия» для модератора (Луизы), модуль онлайн-голосования инвесторов со смартфонов, Telegram-бот для адресных рассылок и авто-фоллоуапа за 5 секунд.</p>
+            </div>
+            <div class="timeline-meta">
+              <div class="duration">1.5 недели</div>
+              <div class="deliverable">✓ Цифровые ивенты и авто-фоллоуап</div>
+            </div>
+          </div>
+
+          <!-- STEP 4 (QA) -->
+          <div class="timeline-step qa">
+            <div class="timeline-badge" style="color:#7e22ce;">04<small>QA & ТЕСТЫ</small></div>
+            <div class="timeline-content">
+              <h4 style="color:#6b21a8;">Выделенный этап: Комплексное тестирование и QA</h4>
+              <p>• Функциональное тестирование воронок, прав доступа и защищенного Data Room.<br>
+                 • Нагрузочное тестирование скорости работы и отказоустойчивости базы.<br>
+                 • Тестирование мобильной адаптивности голосования и Telegram WebApp.<br>
+                 • Приемо-сдаточное тестирование (UAT) совместно с Луизой и командой СОБА.</p>
+            </div>
+            <div class="timeline-meta">
+              <div class="duration" style="color:#7e22ce;">1 неделя</div>
+              <div class="deliverable" style="color:#9333ea;">✓ 0 критических багов, готовность к запуску</div>
+            </div>
+          </div>
+
+          <!-- STEP 5 -->
+          <div class="timeline-step">
+            <div class="timeline-badge">05<small>РЕЛИЗ</small></div>
+            <div class="timeline-content">
+              <h4>Биллинг, Договоры, Миграция данных и Production Релиз</h4>
+              <p>Модуль контроля сроков договоров, расчет 4% Success Fee, генерация актов, перенос существующей базы контактов и проектов, финальный запуск на боевом сервере.</p>
+            </div>
+            <div class="timeline-meta">
+              <div class="duration">0.5 недели</div>
+              <div class="deliverable">✓ Production запуск платформы</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: COMMERCIAL TERMS -->
+    <section class="kp-section alt-bg">
+      <div class="container">
+        <div class="kp-section-head">
+          <span class="kp-tag">06 / КОММЕРЧЕСКИЕ УСЛОВИЯ</span>
+          <h2 class="kp-title">Стоимость, график оплат и гарантия</h2>
+          <p class="kp-desc">
+            Прозрачная модель поэтапного финансирования без скрытых доплат. Оплата каждого транша привязана к демонстрации готового функционала.
+          </p>
+        </div>
+
+        <div style="background:#ffffff; border:2px solid var(--black); padding:32px; margin-bottom:32px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+            <div>
+              <span style="font-family:var(--font-mono); font-size:0.85rem; color:#64748b; text-transform:uppercase;">Итоговая стоимость платформы под ключ:</span>
+              <div style="font-size:clamp(2.4rem, 5vw, 3.4rem); font-weight:800; color:var(--black); letter-spacing:-0.03em;">
+                175 000 ₽
+              </div>
+            </div>
+            <div style="text-align:right;">
+              <span class="kp-role-tag" style="background:#ecfdf5; color:#065f46; font-size:0.9rem; padding:6px 12px;">
+                Срок запуска: 4–5 недель
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 TRANCHES -->
+        <h3 style="font-size:1.2rem; font-weight:700; margin-bottom:16px;">Поэтапный график платежей (БДДС-модель):</h3>
+        <div class="tranches-box">
+          <div class="tranche-card active">
+            <div class="tranche-num">1-Й ТРАНШ · СТАРТ (АВАНС)</div>
+            <div class="tranche-price">100 000 ₽</div>
+            <div class="tranche-title">Архитектура, БД и Базовый функционал</div>
+            <div class="tranche-desc">Развертывание архитектуры БД, системы авторизации, базовой админ-панели управления проектами и генератора лендингов мероприятий.</div>
+          </div>
+
+          <div class="tranche-card">
+            <div class="tranche-num">2-Й ТРАНШ · ЭКВАТОР</div>
+            <div class="tranche-price">50 000 ₽</div>
+            <div class="tranche-title">Кабинеты, Data Room и Дашборд</div>
+            <div class="tranche-desc">Личный кабинет стартапа с анкетой и Data Room, витрина инвестора с акцептом оферты 4%, Главный дашборд руководителя клуба.</div>
+          </div>
+
+          <div class="tranche-card">
+            <div class="tranche-num">3-Й ТРАНШ · РЕЛИЗ</div>
+            <div class="tranche-price">25 000 ₽</div>
+            <div class="tranche-title">Ивент-модуль, Бот, Тестирование и Сдача</div>
+            <div class="tranche-desc">Интерактивный «Паспорт модератора», Telegram-бот, комплексный этап тестирования (QA), миграция базы и финальный релиз.</div>
+          </div>
+        </div>
+
+        <!-- SUPPORT POLICY -->
+        <div style="margin-top:40px; background:#ffffff; border:1px solid var(--border); padding:28px;">
+          <h3 style="font-size:1.2rem; font-weight:700; margin-bottom:12px; color:var(--black);">🛡 Регламент гарантии и технической поддержки:</h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:20px; margin-top:16px;">
+            <div style="background:#f0fdf4; border:1px solid #bbf7d0; padding:20px;">
+              <strong style="color:#15803d; font-size:1.05rem; display:block; margin-bottom:6px;">14 дней гарантии — БЕСПЛАТНО</strong>
+              <p style="font-size:0.9rem; color:#166534; line-height:1.5;">
+                Оперативное устранение любых выявленных замечаний и адаптация интерфейсов под первые отзывы инвесторов и стартапов сразу после запуска.
+              </p>
+            </div>
+            <div style="background:#f8fafc; border:1px solid var(--border); padding:20px;">
+              <strong style="color:#09090b; font-size:1.05rem; display:block; margin-bottom:6px;">Сопровождение со 2-го месяца — 27 500 ₽/мес</strong>
+              <p style="font-size:0.9rem; color:#64748b; line-height:1.5;">
+                Мониторинг серверов 24/7, ежедневные бэкапы, консультации команды, мелкие доработки логики и обеспечение бесперебойной работы ивентов.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: ACCEPTANCE & REQUISITES -->
+    <section class="kp-section" style="border-bottom:none;">
+      <div class="container">
+        <div class="accept-box">
+          <div>
+            <span class="kp-tag" style="background:rgba(255,255,255,0.1); color:#ffffff; border-color:rgba(255,255,255,0.2);">СОГЛАСОВАНИЕ ПРОЕКТА</span>
+            <h3>Готовы приступать к разработке</h3>
+            <p>
+              Для старта работ и фиксации сроков свяжитесь со мной в Telegram или по телефону. Договор и счет на 1-й транш (100 000 ₽) будут подготовлены в течение 1 рабочего дня.
+            </p>
+            <div style="display:flex; gap:12px; flex-wrap:wrap;">
+              <a href="https://t.me/Michael_Sage" target="_blank" class="btn-primary" style="background:#10b981; color:#09090b; font-weight:700; border:none; padding:14px 28px; text-decoration:none; display:inline-block; font-family:var(--font-heading);">
+                Согласовать в Telegram ↗
+              </a>
+              <button onclick="window.print()" class="btn-secondary" style="background:transparent; color:#ffffff; border:1px solid #3f3f46; padding:14px 24px; font-weight:600; cursor:pointer; font-family:var(--font-heading);">
+                🖨 Сохранить в PDF
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <h4 style="font-size:1.1rem; color:#ffffff; font-weight:700; margin-bottom:14px;">Реквизиты разработчика:</h4>
+            <ul class="req-list">
+              <li><strong>Исполнитель:</strong> ИП Пузырёв Михаил Михайлович</li>
+              <li><strong>ИНН:</strong> 500177901407</li>
+              <li><strong>ОГРНИП:</strong> 318505300123140</li>
+              <li><strong>Телефон:</strong> +7 (966) 114-68-88</li>
+              <li><strong>Email:</strong> i@michaelpuzyrev.ru</li>
+              <li><strong>Telegram:</strong> @Michael_Sage</li>
+              <li><strong>Платформа:</strong> https://a-sage.ru / https://aisage.ru</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" style="margin-top:0; border-top:1px solid #18181b; background:#09090b; padding:32px 0;">
+    <div class="footer-inner" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; color:#71717a; font-size:0.85rem;">
+      <div>
+        <strong>ИП Пузырёв Михаил Михайлович</strong> · ИНН 500177901407 · Клуб бизнес-ангелов «СОБА»
+      </div>
+      <div>
+        Конфиденциальный документ · Исключительно для внутреннего использования
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
