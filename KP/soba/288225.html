@@ -554,8 +554,8 @@
           </div>
           <div class="kp-meta-card">
             <div class="label">Срок реализации</div>
-            <div class="value">4–5 недель</div>
-            <div class="sub">Включая выделенный этап QA</div>
+            <div class="value">6 недель</div>
+            <div class="sub">6 модулей по 1 неделе</div>
           </div>
           <div class="kp-meta-card">
             <div class="label">График оплаты</div>
@@ -805,78 +805,90 @@
       <div class="container">
         <div class="kp-section-head">
           <span class="kp-tag">05 / ДОРОЖНАЯ КАРТА И ТЕСТИРОВАНИЕ</span>
-          <h2 class="kp-title">Поэтапный план разработки (4–5 недель)</h2>
+          <h2 class="kp-title">Поэтапный план разработки (6 недель)</h2>
           <p class="kp-desc">
             Прозрачный график реализации с контрольными точками и <strong>выделенным этапом комплексного тестирования и QA</strong> перед сдачей.
           </p>
         </div>
 
-        <div class="timeline-steps">
+                        <div class="timeline-steps">
           <!-- STEP 1 -->
           <div class="timeline-step">
-            <div class="timeline-badge">01<small>СПРИНТ</small></div>
+            <div class="timeline-badge">01<small>МОДУЛЬ</small></div>
             <div class="timeline-content">
-              <h4>Проектирование БД и Базовый бэкенд</h4>
-              <p>Схема БД (PostgreSQL), авторизация (OTP/Telegram), базовый интерфейс Администратора для управления проектами и инвесторами, модуль авто-генерации страниц мероприятий.</p>
+              <h4>Архитектура, Проектирование БД и Базовый бэкенд</h4>
+              <p>Разработка реляционной схемы данных (PostgreSQL), система авторизации (Telegram / OTP), базовая панель администратора для управления проектами и генератор посадочных страниц мероприятий.</p>
             </div>
             <div class="timeline-meta">
               <div class="duration">1 неделя</div>
-              <div class="deliverable">✓ Работающая админка и авто-лендинги</div>
+              <div class="deliverable">✓ Архитектура БД и авто-лендинги</div>
             </div>
           </div>
 
           <!-- STEP 2 -->
           <div class="timeline-step">
-            <div class="timeline-badge">02<small>СПРИНТ</small></div>
+            <div class="timeline-badge">02<small>МОДУЛЬ</small></div>
             <div class="timeline-content">
-              <h4>Кабинеты Стартапа, Инвестора и Аналитика</h4>
-              <p>Личный кабинет стартапа (визард анкеты, Data Room), кабинет инвестора (каталог проектов, акцепт оферты 4%, One-pager), Главный дашборд руководителя со сквозной воронкой.</p>
+              <h4>Личный кабинет Стартапа и Data Room</h4>
+              <p>Пошаговый мастер заполнения анкеты фаундера (рынок TAM/SAM/SOM, выручка, патенты), защищенное файловое хранилище (Data Room для Pitch Deck и FinModel), закрытие прямых контактов инвесторов.</p>
             </div>
             <div class="timeline-meta">
-              <div class="duration">1.5 недели</div>
-              <div class="deliverable">✓ Личные кабинеты и дашборд</div>
+              <div class="duration">1 неделя</div>
+              <div class="deliverable">✓ Кабинет стартапа и Data Room</div>
             </div>
           </div>
 
           <!-- STEP 3 -->
           <div class="timeline-step">
-            <div class="timeline-badge">03<small>СПРИНТ</small></div>
+            <div class="timeline-badge">03<small>МОДУЛЬ</small></div>
             <div class="timeline-content">
-              <h4>Модуль Мероприятий, Живой Паспорт и Telegram-бот</h4>
-              <p>Интерактивный «Паспорт мероприятия» для модератора (Луизы), модуль онлайн-голосования инвесторов со смартфонов, Telegram-бот для адресных рассылок и авто-фоллоуапа за 5 секунд.</p>
+              <h4>Кабинет Инвестора и Главный Дашборд Руководителя</h4>
+              <p>Витрина одобренного пайплайна (проекты после Закрытого клуба), автоматический акцепт публичной оферты на 4% комиссии, Executive Dashboard со сквозной воронкой и финансовым учетом.</p>
             </div>
             <div class="timeline-meta">
-              <div class="duration">1.5 недели</div>
-              <div class="deliverable">✓ Цифровые ивенты и авто-фоллоуап</div>
+              <div class="duration">1 неделя</div>
+              <div class="deliverable">✓ Витрина инвестора и дашборд</div>
             </div>
           </div>
 
-          <!-- STEP 4 (QA) -->
-          <div class="timeline-step qa">
-            <div class="timeline-badge" style="color:#7e22ce;">04<small>QA & ТЕСТЫ</small></div>
+          <!-- STEP 4 -->
+          <div class="timeline-step">
+            <div class="timeline-badge">04<small>МОДУЛЬ</small></div>
             <div class="timeline-content">
-              <h4 style="color:#6b21a8;">Выделенный этап: Комплексное тестирование и QA</h4>
-              <p>• Функциональное тестирование воронок, прав доступа и защищенного Data Room.<br>
-                 • Нагрузочное тестирование скорости работы и отказоустойчивости базы.<br>
-                 • Тестирование мобильной адаптивности голосования и Telegram WebApp.<br>
-                 • Приемо-сдаточное тестирование (UAT) совместно с Луизой и командой СОБА.</p>
+              <h4>Модуль Мероприятий, «Паспорт модератора» и Онлайн-голосование</h4>
+              <p>Интерактивное рабочее место Луизы с показом презентаций проектов в 1 клик, система проведения питчей и мобильное онлайн-голосование для инвесторов со смартфонов.</p>
             </div>
             <div class="timeline-meta">
-              <div class="duration" style="color:#7e22ce;">1 неделя</div>
-              <div class="deliverable" style="color:#9333ea;">✓ 0 критических багов, готовность к запуску</div>
+              <div class="duration">1 неделя</div>
+              <div class="deliverable">✓ Паспорт модератора и голосование</div>
             </div>
           </div>
 
           <!-- STEP 5 -->
           <div class="timeline-step">
-            <div class="timeline-badge">05<small>РЕЛИЗ</small></div>
+            <div class="timeline-badge">05<small>МОДУЛЬ</small></div>
             <div class="timeline-content">
-              <h4>Биллинг, Договоры, Миграция данных и Production Релиз</h4>
-              <p>Модуль контроля сроков договоров, расчет 4% Success Fee, генерация актов, перенос существующей базы контактов и проектов, финальный запуск на боевом сервере.</p>
+              <h4>Telegram-бот, Авто-фоллоуап (5 сек) и Светофор договоров</h4>
+              <p>Официальный бот СОБА для таргетированных рассылок, моментальная авто-отправка Pitch Deck инвесторам по итогам голосования, модуль контроля и пролонгации годовых договоров стартапов.</p>
             </div>
             <div class="timeline-meta">
               <div class="duration">1 неделя</div>
-              <div class="deliverable">✓ Production запуск платформы</div>
+              <div class="deliverable">✓ Бот, авто-фоллоуап и биллинг</div>
+            </div>
+          </div>
+
+          <!-- STEP 6 (QA & RELOAD) -->
+          <div class="timeline-step qa">
+            <div class="timeline-badge" style="color:#7e22ce;">06<small>QA & РЕЛИЗ</small></div>
+            <div class="timeline-content">
+              <h4 style="color:#6b21a8;">Комплексный QA, Тестирование (UAT), Миграция базы и Релиз</h4>
+              <p>• Нагрузочное тестирование, проверка изоляции прав и безопасности данных (RLS).<br>
+                 • Приемочное тестирование (UAT) совместно с Луизой и инвест-менеджерами СОБА.<br>
+                 • Перенос накопленной базы проектов и контактов, развертывание и боевой запуск платформы.</p>
+            </div>
+            <div class="timeline-meta">
+              <div class="duration" style="color:#7e22ce;">1 неделя</div>
+              <div class="deliverable" style="color:#9333ea;">✓ 0 критических багов, Production запуск</div>
             </div>
           </div>
         </div>
@@ -904,7 +916,7 @@
             </div>
             <div style="text-align:right;">
               <span class="kp-role-tag" style="background:#ecfdf5; color:#065f46; font-size:0.9rem; padding:6px 12px;">
-                Срок запуска: 4–5 недель
+                Срок запуска: 6 недель (6 модулей) (6 модулей)
               </span>
             </div>
           </div>
