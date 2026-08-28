@@ -491,6 +491,88 @@
         gap: 32px;
       }
     }
+  
+    /* Mobile Table to Card Transformation */
+    @media (max-width: 768px) {
+      .kp-table-wrap {
+        border: none !important;
+        background: transparent !important;
+        overflow: visible !important;
+      }
+      .kp-table {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 16px !important;
+        width: 100% !important;
+      }
+      .kp-table thead {
+        display: none !important;
+      }
+      .kp-table tbody {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 16px !important;
+        width: 100% !important;
+      }
+      .kp-table tr {
+        display: flex !important;
+        flex-direction: column !important;
+        background: #ffffff !important;
+        border: 1px solid var(--border) !important;
+        padding: 20px !important;
+        gap: 10px !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02) !important;
+      }
+      .kp-table td {
+        display: block !important;
+        padding: 0 !important;
+        border: none !important;
+        width: 100% !important;
+      }
+      .kp-table td:nth-child(1) {
+        margin-bottom: 2px !important;
+      }
+      .kp-table td:nth-child(2) {
+        font-size: 1.05rem !important;
+        margin-bottom: 4px !important;
+      }
+      .kp-table td:nth-child(3) {
+        padding-top: 12px !important;
+        border-top: 1px solid #f1f5f9 !important;
+        font-size: 0.95rem !important;
+        line-height: 1.6 !important;
+        color: #334155 !important;
+      }
+    }
+    /* Mobile Header & Confidential Bar Fix */
+    @media (max-width: 768px) {
+      .confidential-bar {
+        position: relative !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 4px !important;
+        padding: 8px 16px !important;
+        font-size: 0.7rem !important;
+      }
+      .confidential-meta {
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+        font-size: 0.68rem !important;
+      }
+      .kp-nav-bar {
+        top: 0 !important;
+        padding: 8px 0 !important;
+      }
+      .kp-nav-inner {
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+      }
+      .kp-client-info {
+        font-size: 0.85rem !important;
+      }
+    }
+
   </style>
 </head>
 <body class="page-kp">
@@ -543,26 +625,28 @@
         </p>
 
         <!-- KPI SUMMARY CARDS -->
+                <!-- KPI SUMMARY CARDS (NO PRICES IN HERO, VALUE METRICS ONLY) -->
+                <!-- KPI SUMMARY CARDS (NO PRICES IN HERO, VALUE METRICS ONLY) -->
         <div class="kp-meta-grid">
-          <div class="kp-meta-card">
-            <div class="label">Стоимость под ключ</div>
-            <div class="value" style="color:var(--green-dark);">175 000 ₽</div>
-            <div class="sub">Фиксированная цена договора</div>
-          </div>
           <div class="kp-meta-card">
             <div class="label">Срок реализации</div>
             <div class="value">6 недель</div>
             <div class="sub">6 модулей по 1 неделе</div>
           </div>
           <div class="kp-meta-card">
-            <div class="label">График оплаты</div>
-            <div class="value">3 транша</div>
-            <div class="sub">100k / 50k / 25k по этапам</div>
+            <div class="label">Автоматизация ивентов</div>
+            <div class="value" style="color:var(--blue);">3 фазы · 5 типов</div>
+            <div class="sub">Pre-Event ➔ Live ➔ Post-Event</div>
           </div>
           <div class="kp-meta-card">
-            <div class="label">Гарантия & Поддержка</div>
-            <div class="value">30 дней</div>
-            <div class="sub">Бесплатная адаптация после релиза</div>
+            <div class="label">Скорость Follow-up</div>
+            <div class="value" style="color:var(--green-dark);">5 секунд</div>
+            <div class="sub">Мгновенная отправка деков инвесторам</div>
+          </div>
+          <div class="kp-meta-card">
+            <div class="label">Защита дохода клуба</div>
+            <div class="value" style="color:var(--purple);">4% Success Fee</div>
+            <div class="sub">Автоматический акцепт оферты</div>
           </div>
         </div>
       </div>
