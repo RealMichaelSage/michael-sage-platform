@@ -4367,3 +4367,16 @@ input[type="reset"],
   border-color: var(--black);
   color: var(--black);
 }
+
+/* Clickable Card Hover State */
+.clickable-card {
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.clickable-card:hover {
+  background-color: #fafafa !important;
+}
+.clickable-card:hover .btn-secondary {
+  background: var(--black);
+  color: #ffffff;
+}
