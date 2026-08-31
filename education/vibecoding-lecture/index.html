@@ -1,0 +1,1911 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Нейросети для бизнеса — Михаил Пузырёв</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="image" href="pop_art_vibecoding.webp" type="image/webp">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        :root {
+            --bg-dark: #07080b;
+            --pop-yellow: #FFDF00;
+            --pop-pink: #FF007F;
+            --pop-cyan: #00F0FF;
+            --pop-green: #39FF14;
+            --pop-purple: #B026FF;
+            --pop-white: #FFFFFF;
+            --thick-border: 4px solid #000000;
+            --thin-border: 2px solid #000000;
+            --hard-shadow: 8px 8px 0px #000000;
+            --hard-shadow-lg: 12px 12px 0px #000000;
+            --hard-shadow-sm: 4px 4px 0px #000000;
+            
+            /* Solid Opaque Card Backgrounds */
+            --card-opaque-dark: #15161E;
+            --card-opaque-light: #1E1F29;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: #FFFFFF;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        /* ---------------------------------- */
+        /* Animated Pop Art Background System */
+        /* ---------------------------------- */
+        .bg-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .neural-base {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('neural_bg.webp');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+            z-index: 1;
+            mix-blend-mode: screen;
+        }
+
+        .pop-sunburst {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-conic-gradient(
+                from 0deg,
+                rgba(255, 0, 127, 0.02) 0deg 8deg,
+                rgba(0, 240, 255, 0.02) 8deg 16deg,
+                transparent 16deg 24deg
+            );
+            z-index: 2;
+            animation: rotate-sunburst 90s linear infinite;
+            transform-origin: center center;
+            will-change: transform;
+        }
+
+        @keyframes rotate-sunburst {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .pop-halftone {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(rgba(255, 0, 127, 0.09) 14%, transparent 15%),
+                              radial-gradient(rgba(0, 240, 255, 0.09) 14%, transparent 15%);
+            background-size: 28px 28px;
+            background-position: 0 0, 14px 14px;
+            z-index: 3;
+            animation: drift-halftone 20s linear infinite;
+            will-change: background-position;
+        }
+
+        @keyframes drift-halftone {
+            0% { background-position: 0 0, 14px 14px; }
+            100% { background-position: 56px 56px, 70px 70px; }
+        }
+
+        .color-pulse {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 75% 25%, rgba(255, 0, 127, 0.06) 0%, transparent 60%),
+                        radial-gradient(circle at 25% 75%, rgba(0, 240, 255, 0.06) 0%, transparent 60%);
+            z-index: 4;
+            animation: pulse-glow 8s ease-in-out infinite alternate;
+            will-change: opacity;
+        }
+
+        @keyframes pulse-glow {
+            0% { opacity: 0.7; }
+            100% { opacity: 1.2; }
+        }
+
+        /* ---------------------------------- */
+
+        .presentation-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            height: 84vh;
+        }
+
+        /* Main Slide Structure */
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            padding: 3vw 6vw;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 4vw;
+            align-items: center;
+            opacity: 0;
+            transform: scale(0.9) rotate(-3deg);
+            pointer-events: none;
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+            pointer-events: auto;
+        }
+
+        /* Pop Art Typography */
+        h1, h2, h3 {
+            font-family: 'Outfit', sans-serif;
+            text-transform: uppercase;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            color: #FFFFFF;
+        }
+
+        .pop-title-main {
+            font-size: clamp(4.5rem, 9.5vw, 8.5rem);
+            line-height: 0.95;
+            -webkit-text-stroke: 3px #000000;
+            text-shadow: 8px 8px 0px var(--pop-pink);
+            margin-bottom: 2rem;
+            transform: rotate(-2deg);
+        }
+
+        .pop-title-section {
+            font-size: clamp(2.6rem, 5.5vw, 5rem);
+            line-height: 1;
+            -webkit-text-stroke: 2.5px #000000;
+            text-shadow: 6px 6px 0px var(--pop-cyan);
+            margin-bottom: 1.8rem;
+        }
+
+        .pop-subtitle {
+            font-size: clamp(1.35rem, 2.5vw, 2rem);
+            font-weight: 700;
+            background: var(--pop-yellow);
+            color: #000000;
+            padding: 10px 20px;
+            display: inline-block;
+            border: var(--thin-border);
+            box-shadow: var(--hard-shadow-sm);
+            transform: rotate(1deg);
+            margin-bottom: 1.8rem;
+        }
+
+        .pop-text-bubble {
+            background: var(--card-opaque-dark);
+            border: var(--thick-border);
+            border-radius: 16px;
+            padding: 24px;
+            color: #FFFFFF;
+            font-size: clamp(1.2rem, 1.7vw, 1.55rem);
+            line-height: 1.65;
+            box-shadow: var(--hard-shadow);
+            margin-bottom: 1.5rem;
+        }
+
+        .pop-text-bubble strong {
+            color: var(--pop-yellow);
+            font-weight: 800;
+        }
+
+        /* Slide 1. Title */
+        .slide-title-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        /* Slide 2. Agenda Panel style */
+        .agenda-panels {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            width: 100%;
+        }
+
+        .agenda-panel {
+            background: var(--card-opaque-dark);
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow);
+            padding: 15px 25px;
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            align-items: center;
+            gap: 1.5rem;
+            transform: rotate(calc(-0.8deg + (0.4deg * var(--i, 1))));
+            transition: all 0.3s;
+        }
+
+        .agenda-panel:hover {
+            transform: scale(1.02) rotate(0deg);
+            box-shadow: 12px 12px 0px #000000;
+        }
+
+        .agenda-num {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: #000000;
+            background: var(--c, var(--pop-pink));
+            border: var(--thin-border);
+            border-radius: 8px;
+            text-align: center;
+            padding: 5px;
+            box-shadow: var(--hard-shadow-sm);
+        }
+
+        .agenda-panel h3 {
+            font-size: 1.2rem;
+            color: #FFFFFF;
+            margin-bottom: 2px;
+        }
+
+        .agenda-panel p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Slide 3. About Me */
+        .about-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .about-cards-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .about-sticker {
+            background: var(--card-opaque-dark);
+            border: var(--thin-border);
+            border-radius: 12px;
+            padding: 14px 18px;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            box-shadow: var(--hard-shadow-sm);
+        }
+
+        .sticker-icon {
+            font-size: 1.75rem;
+            background: var(--pop-cyan);
+            border: var(--thin-border);
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            flex-shrink: 0;
+        }
+
+        .about-sticker span {
+            font-size: 1.15rem;
+            line-height: 1.55;
+        }
+
+        .qrs-block {
+            display: flex;
+            gap: 1.2rem;
+            margin-top: 1.2rem;
+        }
+
+        .qr-card-pop {
+            background: var(--pop-yellow);
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow);
+            padding: 10px 12px;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            transform: rotate(-1.5deg);
+        }
+
+        .qr-card-pop:nth-child(2) {
+            background: var(--pop-pink);
+            transform: rotate(1.5deg);
+        }
+
+        .qr-card-pop:nth-child(3) {
+            background: var(--pop-cyan);
+            transform: rotate(-1deg);
+        }
+
+        .qr-container-pop {
+            background: white;
+            padding: 6px;
+            border: var(--thin-border);
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .qr-card-pop span {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            color: #000000;
+            font-size: 0.8rem;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .pop-qr-btn {
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            background: #000000;
+            color: #FFFFFF;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 0.82rem;
+            padding: 6px 8px;
+            border: 2px solid #000000;
+            border-radius: 8px;
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.3);
+            text-decoration: none;
+            text-transform: uppercase;
+            margin-top: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .pop-qr-btn:hover {
+            background: #FFFFFF;
+            color: #000000;
+        }
+
+        /* Slide 4. Bento Comic Grid */
+        .bento-pop-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.2rem;
+        }
+
+        .bento-pop-card {
+            background: var(--card-opaque-dark);
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow);
+            border-radius: 16px;
+            padding: 1.4rem;
+            transform: rotate(calc(-1deg + (0.5deg * var(--idx, 1))));
+            transition: all 0.3s;
+        }
+
+        .bento-pop-card:hover {
+            transform: scale(1.03) rotate(0deg);
+            box-shadow: 12px 12px 0px #000000;
+        }
+
+        .bento-pop-card h3 {
+            font-size: 1.45rem;
+            color: #000000;
+            background: var(--c, var(--pop-yellow));
+            display: inline-block;
+            padding: 6px 14px;
+            border: var(--thin-border);
+            margin-bottom: 10px;
+        }
+
+        .bento-pop-card p {
+            font-size: 1.1rem;
+            color: #FFFFFF;
+            line-height: 1.55;
+        }
+
+        /* Slide Layout Flipping for variety */
+        .layout-flipped {
+            grid-template-columns: 1fr 1.2fr;
+        }
+
+        /* Image Display pop art styling */
+        .pop-image-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            max-height: 480px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pop-frame {
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow-lg);
+            border-radius: 20px;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            transform: rotate(2deg);
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: #000;
+        }
+
+        .slide.active .pop-frame {
+            transform: rotate(-1deg) scale(1.02);
+        }
+
+        .pop-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Badge design */
+        .pop-badges {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .pop-badge {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            background: #FFFFFF;
+            color: #000000;
+            border: var(--thin-border);
+            border-radius: 8px;
+            padding: 7px 16px;
+            font-size: 1.05rem;
+            box-shadow: var(--hard-shadow-sm);
+            text-transform: uppercase;
+        }
+
+        /* Pop Art Link Button */
+        .pop-link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--pop-yellow);
+            color: #000000;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 0.9rem;
+            padding: 6px 14px;
+            border: 2px solid #000000;
+            border-radius: 8px;
+            box-shadow: 3px 3px 0px #000000;
+            text-decoration: none;
+            text-transform: uppercase;
+            margin-top: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .pop-link-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0px #000000;
+        }
+
+        .pop-link-btn:active {
+            transform: translate(1px, 1px);
+            box-shadow: 1px 1px 0px #000000;
+        }
+
+        /* Pop Art Action CTA Group & Interactive Buttons */
+        .pop-cta-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 14px;
+        }
+
+        .pop-action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: var(--pop-yellow);
+            color: #000000 !important;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 0.92rem;
+            padding: 10px 18px;
+            border: 3px solid #000000;
+            border-radius: 12px;
+            box-shadow: 4px 4px 0px #000000;
+            text-decoration: none !important;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .pop-action-btn:hover {
+            transform: translate(-3px, -3px) scale(1.02);
+            box-shadow: 7px 7px 0px #000000;
+        }
+
+        .pop-action-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px #000000;
+        }
+
+        .pop-action-btn.btn-cyan {
+            background: var(--pop-cyan);
+            color: #000000 !important;
+        }
+
+        .pop-action-btn.btn-pink {
+            background: var(--pop-pink);
+            color: #FFFFFF !important;
+        }
+
+        .pop-action-btn.btn-green {
+            background: var(--pop-green);
+            color: #000000 !important;
+        }
+
+        /* Navigation Slide Buttons (Bottom Panel) */
+        .footer-controls-names {
+            position: relative;
+            z-index: 100;
+            width: 100%;
+            padding: 1vw 4vw 2vw 4vw;
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-slide-name {
+            background: var(--card-opaque-dark);
+            color: #FFFFFF;
+            border: var(--thin-border);
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+            box-shadow: var(--hard-shadow-sm);
+        }
+
+        .btn-slide-name:hover {
+            background: var(--card-opaque-light);
+            transform: translateY(-2px);
+        }
+
+        .btn-slide-name.active {
+            background: var(--pop-yellow);
+            color: #000000;
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow-sm);
+            transform: scale(1.05) translateY(-2px);
+        }
+
+        /* Mobile Pop Art Sandwich Navigation */
+        .mobile-nav-trigger-wrapper {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            cursor: pointer;
+        }
+
+        .mobile-nav-plate {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            width: 60px;
+            height: 60px;
+            background: var(--pop-pink);
+            border: 3.5px solid #000000;
+            border-radius: 16px;
+            z-index: 1;
+            transform: rotate(5deg);
+        }
+
+        .mobile-nav-trigger {
+            position: relative;
+            z-index: 2;
+            width: 60px;
+            height: 60px;
+            background: var(--pop-yellow);
+            border: 3.5px solid #000000;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            box-shadow: 4px 4px 0px #000000;
+            transform: rotate(-2deg);
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .mobile-nav-trigger-wrapper:active .mobile-nav-trigger {
+            transform: rotate(0deg) translate(3px, 3px);
+            box-shadow: 1px 1px 0px #000000;
+        }
+
+        .burger-line {
+            width: 28px;
+            height: 4.5px;
+            background: #000000;
+            border-radius: 4px;
+        }
+
+        .burger-counter-badge {
+            position: absolute;
+            top: -10px;
+            right: -14px;
+            background: var(--pop-cyan);
+            color: #000000;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 900;
+            padding: 3px 7px;
+            border: 2.5px solid #000000;
+            border-radius: 8px;
+            box-shadow: 3px 3px 0px #000000;
+            transform: rotate(6deg);
+            white-space: nowrap;
+        }
+
+        .pop-fullscreen-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            background: var(--pop-cyan);
+            color: #000000;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 0.85rem;
+            padding: 10px 16px;
+            border: 3.5px solid #000000;
+            border-radius: 12px;
+            box-shadow: 4px 4px 0px #000000;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+            transform: rotate(1.5deg);
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .pop-fullscreen-btn:hover {
+            background: var(--pop-yellow);
+            transform: rotate(0deg) scale(1.05);
+            box-shadow: 6px 6px 0px #000000;
+        }
+
+        .pop-fullscreen-btn:active {
+            transform: rotate(0deg) translate(2px, 2px);
+            box-shadow: 2px 2px 0px #000000;
+        }
+
+        .pop-fullscreen-btn .fs-icon {
+            font-size: 1.15rem;
+            line-height: 1;
+        }
+
+        @media (max-width: 900px) {
+            .pop-fullscreen-btn {
+                top: 14px;
+                right: 14px;
+                padding: 8px 12px;
+                font-size: 0.75rem;
+                border-width: 2.5px;
+                box-shadow: 3px 3px 0px #000000;
+            }
+            .pop-fullscreen-btn .fs-text {
+                display: none;
+            }
+        }
+
+        /* Floating Slide Navigation Arrows (Desktop) */
+        .pop-nav-arrow {
+            position: fixed;
+            z-index: 9998;
+            background: var(--pop-yellow);
+            color: #000000;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 1.5rem;
+            width: 50px;
+            height: 60px;
+            border: 3.5px solid #000000;
+            border-radius: 14px;
+            box-shadow: 4px 4px 0px #000000;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            user-select: none;
+        }
+
+        .pop-nav-arrow.arrow-prev {
+            left: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .pop-nav-arrow.arrow-next {
+            right: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .pop-nav-arrow:hover {
+            background: var(--pop-pink);
+            color: #ffffff;
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 6px 6px 0px #000000;
+        }
+
+        .pop-nav-arrow:active {
+            transform: translateY(-50%) translate(2px, 2px);
+            box-shadow: 2px 2px 0px #000000;
+        }
+
+        @media (max-width: 900px) {
+            .pop-nav-arrow {
+                display: none !important;
+            }
+        }
+
+        /* Blackout Screen Mode for Presenter Clicker 'B' / '.' button */
+        body.blackout-mode::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000000;
+            z-index: 999999;
+        }
+
+        /* Guaranteed Fullscreen Fallback */
+        body.is-fullscreen-mode {
+            overflow: hidden !important;
+        }
+
+        body.is-fullscreen-mode .presentation-container {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            z-index: 9998 !important;
+            padding: 2vw !important;
+            background: var(--dark-bg) !important;
+            box-sizing: border-box !important;
+        }
+
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(7, 8, 11, 0.88);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 10000;
+            display: none;
+            align-items: flex-end;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .mobile-menu-overlay.open {
+            display: flex;
+            opacity: 1;
+        }
+
+        .mobile-menu-drawer {
+            background: var(--card-opaque-dark);
+            border: 4px solid #000000;
+            border-bottom: none;
+            border-radius: 28px 28px 0 0;
+            padding: 24px 20px 36px 20px;
+            width: 100%;
+            max-width: 640px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0px -12px 35px rgba(0, 0, 0, 0.95);
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .mobile-menu-overlay.open .mobile-menu-drawer {
+            transform: translateY(0);
+        }
+
+        .mobile-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 16px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .mobile-menu-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 1.4rem;
+            color: #FFFFFF;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mobile-menu-close {
+            background: var(--pop-pink);
+            color: #FFFFFF;
+            border: 2.5px solid #000000;
+            box-shadow: 3px 3px 0px #000000;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            font-weight: 900;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mobile-menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .btn-mobile-slide {
+            background: var(--card-opaque-light);
+            color: #FFFFFF;
+            border: 2px solid #000000;
+            box-shadow: 3px 3px 0px #000000;
+            padding: 12px 10px;
+            border-radius: 12px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-mobile-slide.active {
+            background: var(--pop-yellow);
+            color: #000000;
+            border: 3px solid #000000;
+            box-shadow: 5px 5px 0px #000000;
+            font-weight: 900;
+        }
+
+        /* ---------------------------------- */
+        /* Responsive & Fluid Mobile System   */
+        /* ---------------------------------- */
+        html, body {
+            max-width: 100vw;
+            overflow-x: hidden !important;
+        }
+
+        * {
+            max-width: 100%;
+        }
+
+        @media (max-width: 900px) {
+            .slide {
+                grid-template-columns: 1fr;
+                padding: 24px 16px 110px 16px;
+                gap: 20px;
+                overflow-y: auto;
+                height: auto;
+                min-height: 100vh;
+                box-sizing: border-box;
+            }
+            .pop-image-wrapper {
+                height: auto;
+                max-height: 320px;
+                width: 100%;
+            }
+            .pop-frame {
+                max-height: 320px;
+            }
+            .pop-title-main {
+                font-size: clamp(2.8rem, 8vw, 4.2rem);
+                margin-bottom: 1.2rem;
+                word-wrap: break-word;
+            }
+            .pop-title-section {
+                font-size: clamp(2rem, 6vw, 3rem);
+                margin-bottom: 1.2rem;
+                word-wrap: break-word;
+            }
+            .pop-subtitle {
+                font-size: 1.15rem;
+                padding: 6px 12px;
+                margin-bottom: 1.2rem;
+            }
+            .pop-text-bubble {
+                font-size: 1.05rem;
+                padding: 16px;
+                margin-bottom: 1rem;
+                word-wrap: break-word;
+            }
+            .about-sticker {
+                padding: 12px 14px;
+            }
+            .about-sticker span {
+                font-size: 1rem;
+            }
+            .bento-pop-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .qrs-block {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                width: 100%;
+                margin-top: 1rem;
+            }
+            .qr-card-pop {
+                width: 100%;
+                padding: 10px 6px;
+            }
+            .qr-container-pop img, .qr-container-pop canvas {
+                max-width: 90px !important;
+                height: auto !important;
+            }
+
+            /* Speaker Slide (Slide 3) Mobile Custom Rules */
+            #slide-2 .pop-image-wrapper {
+                max-height: 180px !important;
+                height: 180px !important;
+                width: 180px !important;
+                margin: 10px auto 0 auto !important;
+                display: flex !important;
+                justify-content: center !important;
+            }
+            #slide-2 .pop-frame {
+                max-height: 180px !important;
+                height: 180px !important;
+                width: 180px !important;
+                aspect-ratio: 1/1 !important;
+                border-radius: 16px !important;
+            }
+            #slide-2 .about-cards-list {
+                gap: 0.4rem !important;
+            }
+            #slide-2 .about-sticker {
+                padding: 8px 10px !important;
+                gap: 8px !important;
+            }
+            #slide-2 .about-sticker span {
+                font-size: 0.85rem !important;
+                line-height: 1.3 !important;
+            }
+            #slide-2 .sticker-icon {
+                width: 28px !important;
+                height: 28px !important;
+                font-size: 1.05rem !important;
+            }
+            #slide-2 .qrs-block {
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 6px !important;
+                margin-top: 10px !important;
+            }
+            #slide-2 .qr-card-pop {
+                width: 100% !important;
+                padding: 6px 3px !important;
+                transform: none !important;
+            }
+            #slide-2 .qr-container-pop img, #slide-2 .qr-container-pop canvas {
+                width: 70px !important;
+                height: 70px !important;
+            }
+            #slide-2 .qr-card-pop span {
+                font-size: 0.7rem !important;
+                margin-top: 2px !important;
+            }
+            #slide-2 .pop-qr-btn {
+                font-size: 0.72rem !important;
+                padding: 4px 6px !important;
+                margin-top: 2px !important;
+            }
+
+            body {
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+            .footer-controls-names {
+                display: none !important;
+            }
+            .mobile-nav-trigger-wrapper {
+                display: block !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Fullscreen Toggle Button -->
+    <button class="pop-fullscreen-btn" id="fullscreen-toggle-btn" title="Развернуть на весь экран (Клавиша F / F5)">
+        <span class="fs-icon" id="fs-icon">⛶</span>
+        <span class="fs-text" id="fs-text">НА ВЕСЬ ЭКРАН</span>
+    </button>
+
+    <!-- Desktop Floating Prev / Next Slide Arrows -->
+    <button class="pop-nav-arrow arrow-prev" id="btn-prev-arrow" title="Предыдущий слайд (PageUp / ←)">❮</button>
+    <button class="pop-nav-arrow arrow-next" id="btn-next-arrow" title="Следующий слайд (PageDown / →)">❯</button>
+
+    <!-- Animated Background Layers -->
+    <div class="bg-container">
+        <div class="neural-base"></div>
+        <div class="pop-sunburst"></div>
+        <div class="pop-halftone"></div>
+        <div class="color-pulse"></div>
+    </div>
+
+    <!-- Presentation viewport -->
+    <div class="presentation-container">
+
+        <!-- Slide 1: Title -->
+        <div class="slide active title-slide" id="slide-0">
+            <div class="slide-title-wrapper">
+                <span class="pop-subtitle">ПРАКТИЧЕСКИЙ ЛЕКТОРИЙ: ОЦИФРОВКА БИЗНЕСА</span>
+                <h1 class="pop-title-main" style="font-size: clamp(3.2rem, 6.8vw, 6.2rem);">ИИ-АВТОМАТИЗАЦИЯ</h1>
+                <div class="pop-text-bubble">
+                    Как превратить вашу экспертность в работающие сайты, ботов и автоматизации на русском языке без программистов за 2 часа.
+                </div>
+                <div style="font-family: 'Outfit', sans-serif; font-size: 1.15rem; font-weight: 700; color: var(--pop-yellow); text-transform: uppercase;">
+                    Спикер: Михаил Пузырёв, эксперт по внедрению нейросетей
+                </div>
+            </div>
+            <div class="pop-image-wrapper">
+                <div class="pop-frame">
+                    <img src="pop_art_vibecoding.webp" alt="ИИ-Автоматизация Pop Art" class="pop-img" loading="eager" fetchpriority="high" decoding="async">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Route / Agenda -->
+        <div class="slide" id="slide-1">
+            <div>
+                <h2 class="pop-title-section" style="text-shadow: 6px 6px 0px var(--pop-pink);">Маршрут лекции</h2>
+                <div class="agenda-panels">
+                    <div class="agenda-panel" style="--i: 0.5; --c: var(--pop-yellow);">
+                        <div class="agenda-num" style="--c: var(--pop-yellow);">15м</div>
+                        <div>
+                            <h3>Философия Вайбкодинга</h3>
+                            <p>Почему человеческий язык — это новый код в 2026 году.</p>
+                        </div>
+                    </div>
+                    <div class="agenda-panel" style="--i: -0.8; --c: var(--pop-pink);">
+                        <div class="agenda-num" style="--c: var(--pop-pink);">25м</div>
+                        <div>
+                            <h3>Методология «Из головы в ИИ»</h3>
+                            <p>5 простых шагов оцифровки вашего опыта для нейросети.</p>
+                        </div>
+                    </div>
+                    <div class="agenda-panel" style="--i: 0.3; --c: var(--pop-cyan);">
+                        <div class="agenda-num" style="--c: var(--pop-cyan);">20м</div>
+                        <div>
+                            <h3>Анатомия ИИ-инструментов</h3>
+                            <p>Три кубика, из которых строится любая автоматизация.</p>
+                        </div>
+                    </div>
+                    <div class="agenda-panel" style="--i: -0.5; --c: var(--pop-green);">
+                        <div class="agenda-num" style="--c: var(--pop-green);">55м</div>
+                        <div>
+                            <h3>Разбор 5 реальных кейсов</h3>
+                            <p>Демонстрация и разбор архитектуры работающих ИИ-продуктов.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pop-image-wrapper">
+                <div class="pop-frame" style="transform: rotate(-1.5deg);">
+                    <img src="pop_art_route.webp" alt="Vibecoding Agenda" class="pop-img" loading="lazy" decoding="async">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: About Me -->
+        <div class="slide" id="slide-2">
+            <div class="about-grid">
+                <div>
+                    <h2 class="pop-title-section" style="text-shadow: 6px 6px 0px var(--pop-yellow); margin-bottom: 1rem;">Михаил<span style="display: inline-block; width: 2rem;"></span>Пузырёв</h2>
+                    <div class="about-cards-list">
+                        <div class="about-sticker">
+                            <div class="sticker-icon">🚀</div>
+                            <span>Реализовал за 2 месяца <strong>более 38 продуктов и автоматизаций</strong> для себя и клиентов.</span>
+                        </div>
+                        <div class="about-sticker">
+                            <div class="sticker-icon" style="background: var(--pop-pink);">🐻</div>
+                            <span>Член правления Ассоциации венчурных инвесторов <strong>«Большая медведица»</strong>.</span>
+                        </div>
+                        <div class="about-sticker">
+                            <div class="sticker-icon" style="background: var(--pop-green);">🛠️</div>
+                            <span>Разработчик и интегратор ИИ-решений, автоматизирующих рутину в B2B и EdTech.</span>
+                        </div>
+                        <div class="about-sticker">
+                            <div class="sticker-icon" style="background: var(--pop-yellow);">💡</div>
+                            <span><strong>Насмотренность: более 3000 стартапов и бизнесов</strong> с их проблемами и решениями.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="qrs-block">
+                    <div class="qr-card-pop">
+                        <div class="qr-container-pop" id="qr-personal"></div>
+                        <span>Telegram<br>(@michael_sage)</span>
+                        <a href="https://t.me/michael_sage" target="_blank" class="pop-qr-btn">Написать 💬</a>
+                    </div>
+                    <div class="qr-card-pop">
+                        <div class="qr-container-pop" id="qr-channel"></div>
+                        <span>Канал<br>(@uncrn_sage)</span>
+                        <a href="https://t.me/uncrn_sage" target="_blank" class="pop-qr-btn">Читать 📢</a>
+                    </div>
+                    <div class="qr-card-pop">
+                        <div class="qr-container-pop" id="qr-site"></div>
+                        <span>Сайт<br>(a-sage.ru)</span>
+                        <a href="https://a-sage.ru" target="_blank" class="pop-qr-btn">Перейти 🌐</a>
+                    </div>
+                </div>
+            </div>
+            <div class="pop-image-wrapper">
+                <div class="pop-frame" style="width: 100%; aspect-ratio: 1/1; transform: rotate(-2deg);">
+                    <img src="mikhail_pop_art.webp" alt="Mikhail Pop Art Portrait" class="pop-img" loading="lazy" decoding="async">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Topic 1 - Philosophy -->
+        <div class="slide" id="slide-mod-1">
+            <div>
+                <span class="pop-subtitle" style="background: var(--pop-yellow);">ЧАСТЬ 1. ВАЙБКОДИНГ</span>
+                <h2 class="pop-title-section" style="margin-top: 0.8rem; text-shadow: 5px 5px 0px var(--pop-pink);">Философия Вайбкодинга</h2>
+                <div class="about-cards-list" style="margin-top: 1rem;">
+                    <div class="about-sticker">
+                        <div class="sticker-icon" style="background: var(--pop-cyan);">⚡</div>
+                        <span><strong>1. Сдвиг парадигмы:</strong> Естественный язык стал новым кодом. Переход от написания синтаксиса вручную к дирижированию ИИ-агентами.</span>
+                    </div>
+                    <div class="about-sticker">
+                        <div class="sticker-icon" style="background: var(--pop-pink);">🧠</div>
+                        <span><strong>2. Кто такой Вайбкодер:</strong> Эксперт или предприниматель, трансформирующий опыт напрямую в работающий софт за 2 часа.</span>
+                    </div>
+                    <div class="about-sticker">
+                        <div class="sticker-icon" style="background: var(--pop-green);">🚀</div>
+                        <span><strong>3. Переход от потребителя к создателю:</strong> Отказ от жестких коробочных SaaS-решений в пользу создания собственных ИИ-инструментов.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="pop-image-wrapper">
+                <div class="pop-frame" style="transform: rotate(1.5deg);">
+                    <img src="pop_art_philosophy.webp" alt="Философия Вайбкодинга" class="pop-img" loading="lazy" decoding="async">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Topic 2 - Methodology -->
+        <div class="slide layout-flipped" id="slide-mod-2">
+            <div class="pop-image-wrapper">
+                <div class="pop-frame" style="transform: rotate(-1.5deg);">
+                    <img src="pop_art_methodology.webp" alt="Методология Из головы в ИИ" class="pop-img" loading="lazy" decoding="async">
+                </div>
+            </div>
+            <div>
+                <span class="pop-subtitle" style="background: var(--pop-pink);">ЧАСТЬ 2. МЕТОДОЛОГИЯ</span>
+                <h2 class="pop-title-section" style="margin-top: 0.8rem; text-shadow: 5px 5px 0px var(--pop-cyan);">«Из головы в ИИ»</h2>
+                <div class="about-cards-list" style="margin-top: 0.8rem; gap: 0.6rem;">
+                    <div class="about-sticker" style="padding: 10px 14px;">
+                        <div class="sticker-icon" style="background: var(--pop-yellow); width: 30px; height: 30px; font-weight: 900;">1</div>
+                        <span style="font-size: 0.9rem;"><strong>Формулирование задачи:</strong> Четкое определение бизнес-цели и ожидаемого результата.</span>
+                    </div>
+                    <div class="about-sticker" style="padding: 10px 14px;">
+                        <div class="sticker-icon" style="background: var(--pop-cyan); width: 30px; height: 30px; font-weight: 900;">2</div>
+                        <span style="font-size: 0.9rem;"><strong>Выгрузка опыта:</strong> Передача нейросети регламентов, данных и контекста компании.</span>
+                    </div>
+                    <div class="about-sticker" style="padding: 10px 14px;">
+                        <div class="sticker-icon" style="background: var(--pop-pink); width: 30px; height: 30px; font-weight: 900;">3</div>
+                        <span style="font-size: 0.9rem;"><strong>Архитектурный сбор:</strong> Выбор оптимальной ИИ-модели, баз данных и логики интерфейса.</span>
+                    </div>
+                    <div class="about-sticker" style="padding: 10px 14px;">
+                        <div class="sticker-icon" style="background: var(--pop-green); width: 30px; height: 30px; font-weight: 900;">4</div>
+                        <span style="font-size: 0.9rem;"><strong>Промпт-Инжиниринг:</strong> Устранение двусмысленностей и жесткие инструкции для агента.</span>
+                    </div>
+                    <div class="about-sticker" style="padding: 10px 14px;">
+                        <div class="sticker-icon" style="background: var(--pop-purple); width: 30px; height: 30px; font-weight: 900; color: #fff;">5</div>
+                        <span style="font-size: 0.9rem;"><strong>Self-Healing QA:</strong> Авто-тестирование, исправление ошибок и моментальный деплой.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Topic 3 - Anatomy -->
+        <div class="slide" id="slide-mod-3">
+            <div>
+                <span class="pop-subtitle" style="background: var(--pop-cyan);">ЧАСТЬ 3. АНАТОМИЯ ПО</span>
+                <h2 class="pop-title-section" style="margin-top: 0.8rem; text-shadow: 5px 5px 0px var(--pop-yellow);">Анатомия ИИ-ПО</h2>
+                <div class="about-cards-list" style="margin-top: 1rem;">
+                    <div class="about-sticker">
+                        <div class="sticker-icon" style="background: var(--pop-cyan);">🎨</div>
+                        <span><strong>1. Front-end (Интерфейс):</strong> Telegram Mini App, веб-сайт, бот или консоль, через которую пользователь передает запрос и видит результат.</span>
+                    </div>
+                    <div class="about-sticker">
+                        <div class="sticker-icon" style="background: var(--pop-pink);">⚙️</div>
+                        <span><strong>2. Back-end / ИИ-Логика:</strong> Серверный код, Python-скрипты и LLM (Gemini/DeepSeek). Иногда это просто легкий исполняемый скрипт без сложного бэкенда.</span>
+                    </div>
+                    <div class="about-sticker">
+                        <div class="sticker-icon" style="background: var(--pop-yellow);">💾</div>
+                        <span><strong>3. Database / Хранилище:</strong> База данных (Postgres, Supabase, Redis) для хранения профилей пользователей, состояния проекта, истории чатов и векторного поиска. В простых утилитах БД не нужна — скрипт отрабатывает «на лету».</span>
+                    </div>
+                </div>
+            </div>
+            <div class="pop-image-wrapper">
+                <div class="pop-frame" style="transform: rotate(2deg);">
+                    <img src="pop_art_anatomy.webp" alt="Анатомия ИИ-Инструментов" class="pop-img" loading="lazy" decoding="async">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Topic 4 - AI Agents & Skills -->
+        <div class="slide layout-flipped" id="slide-mod-4">
+            <div class="pop-image-wrapper">
+                <div class="pop-frame" style="transform: rotate(-1.5deg);">
+                    <img src="pop_art_agents.webp" alt="ИИ-Агенты и Навыки" class="pop-img" loading="lazy" decoding="async">
+                </div>
+            </div>
+            <div>
+                <span class="pop-subtitle" style="background: var(--pop-green);">ЧАСТЬ 4. АГЕНТНЫЙ КОДИНГ</span>
+                <h2 class="pop-title-section" style="margin-top: 0.6rem; text-shadow: 5px 5px 0px var(--pop-cyan);">Агенты, Скиллы & Циклы</h2>
+                <div class="about-cards-list" style="margin-top: 0.6rem; gap: 0.5rem;">
+                    <div class="about-sticker" style="padding: 10px 14px;">
+                        <div class="sticker-icon" style="background: var(--pop-yellow);">🤖</div>
+                        <span style="font-size: 0.9rem;"><strong>1. ИИ-Агенты (Agents):</strong> Автономные узкие роли (Researcher, Coder, QA), решающие задачи параллельно под ключ.</span>
+                    </div>
+                    <div class="about-sticker" style="padding: 10px 14px;">
+                        <div class="sticker-icon" style="background: var(--pop-pink);">⚡</div>
+                        <span style="font-size: 0.9rem;"><strong>2. Навыки (Skills & MCP):</strong> Базы знаний, регламенты и API-подключения (Figma, Supabase, FTP Deploy, CRM).</span>
+                    </div>
+                    <div class="about-sticker" style="padding: 10px 14px;">
+                        <div class="sticker-icon" style="background: var(--pop-cyan);">📄</div>
+                        <span style="font-size: 0.9rem;"><strong>3. Артефакты (Artifacts):</strong> Документы, диаграммы Mermaid, чистый код и живые HTML-прототипы в ходе работы.</span>
+                    </div>
+                    <div class="about-sticker" style="padding: 10px 14px;">
+                        <div class="sticker-icon" style="background: var(--pop-purple); color: #fff;">🔄</div>
+                        <span style="font-size: 0.9rem;"><strong>4. Self-Healing QA:</strong> Агент сам тестирует интерфейс в браузерах, находит баги и правит код до показа человеку.</span>
+                    </div>
+                    <div class="about-sticker" style="padding: 10px 14px;">
+                        <div class="sticker-icon" style="background: var(--pop-green);">🔁</div>
+                        <span style="font-size: 0.9rem;"><strong>5. ИИ-Циклы (Loops & Cron):</strong> Зацикливание сценариев — регулярные вызовы по расписанию, авто-повтор до победного результата или авто-пайплайн.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Topic 5 - AI Harness -->
+        <div class="slide" id="slide-mod-5">
+            <div>
+                <span class="pop-subtitle" style="background: var(--pop-yellow);">ЧАСТЬ 5. НАДЁЖНОСТЬ И КОНТРОЛЬ</span>
+                <h2 class="pop-title-section" style="margin-top: 0.6rem; text-shadow: 5px 5px 0px var(--pop-pink);">ИИ-Харнесс (Harness)</h2>
+                <div class="about-cards-list" style="margin-top: 0.8rem; gap: 0.6rem;">
+                    <div class="about-sticker" style="padding: 10px 14px;">
+                        <div class="sticker-icon" style="background: var(--pop-cyan);">🛡️</div>
+                        <span style="font-size: 0.9rem;"><strong>1. Защитный каркас (Guardrails):</strong> Изоляция агента, валидация схем данных (JSON/Pydantic) и устранение галлюцинаций.</span>
+                    </div>
+                    <div class="about-sticker" style="padding: 10px 14px;">
+                        <div class="sticker-icon" style="background: var(--pop-pink);">🧪</div>
+                        <span style="font-size: 0.9rem;"><strong>2. Эвалы и Авто-тесты (Evals):</strong> Автоматическая проверка кода и решений в виртуальном браузере по 10+ сценариям.</span>
+                    </div>
+                    <div class="about-sticker" style="padding: 10px 14px;">
+                        <div class="sticker-icon" style="background: var(--pop-purple); color: #fff;">🔄</div>
+                        <span style="font-size: 0.9rem;"><strong>3. Self-Healing Контур:</strong> Исправление багов в изолированном цикле до демонстрации человеку.</span>
+                    </div>
+                    <div class="about-sticker" style="padding: 10px 14px;">
+                        <div class="sticker-icon" style="background: var(--pop-green);">🏛️</div>
+                        <span style="font-size: 0.9rem;"><strong>4. Связка с Онтологией:</strong> Сверка действий агента с единым графом онтологии данных и бизнес-правилами компании.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="pop-image-wrapper">
+                <div class="pop-frame" style="transform: rotate(1.5deg);">
+                    <img src="pop_art_harness.webp" alt="ИИ-Харнесс" class="pop-img" loading="lazy" decoding="async">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Tools & Infrastructure -->
+        <div class="slide layout-flipped" id="slide-tools">
+            <div class="pop-image-wrapper">
+                <div class="pop-frame" style="transform: rotate(-1.5deg);">
+                    <img src="pop_art_tools.webp" alt="Инструменты Вайбкодинга" class="pop-img" loading="lazy" decoding="async">
+                </div>
+            </div>
+            <div>
+                <span class="pop-subtitle" style="background: var(--pop-yellow);">ИНФРАСТРУКТУРА & API</span>
+                <h2 class="pop-title-section" style="margin-top: 0.8rem; text-shadow: 5px 5px 0px var(--pop-pink);">Инструменты</h2>
+                <div class="about-cards-list" style="margin-top: 1rem; gap: 0.9rem;">
+                    <div class="about-sticker" style="padding: 14px 18px;">
+                        <div class="sticker-icon" style="background: var(--pop-green);">🤖</div>
+                        <div style="flex-grow: 1;">
+                            <strong style="font-size: 1.2rem; color: #fff;">Google Antigravity</strong>
+                            <p style="margin-top: 2px; font-size: 1rem; color: var(--text-muted);">Автономная ИИ-платформа разработки и агентная среда от Google DeepMind.</p>
+                            <a href="https://antigravity.google/" target="_blank" class="pop-link-btn" style="background: var(--pop-green);">Открыть Google Antigravity ↗</a>
+                        </div>
+                    </div>
+                    <div class="about-sticker" style="padding: 14px 18px;">
+                        <div class="sticker-icon" style="background: #ffffff; color: #000000;">🐙</div>
+                        <div style="flex-grow: 1;">
+                            <strong style="font-size: 1.2rem; color: #fff;">GitHub</strong>
+                            <p style="margin-top: 2px; font-size: 1rem; color: var(--text-muted);">Хранилище кода, контроль версий, совместная разработка и CI/CD деплой.</p>
+                            <a href="https://github.com/" target="_blank" class="pop-link-btn" style="background: #ffffff; color: #000000;">Открыть GitHub ↗</a>
+                        </div>
+                    </div>
+                    <div class="about-sticker" style="padding: 14px 18px;">
+                        <div class="sticker-icon" style="background: var(--pop-cyan);">⚡</div>
+                        <div style="flex-grow: 1;">
+                            <strong style="font-size: 1.2rem; color: #fff;">RouterAI</strong>
+                            <p style="margin-top: 2px; font-size: 1rem; color: var(--text-muted);">Единый шлюз и API-роутер к Gemini, DeepSeek, Claude и OpenAI без блокировок.</p>
+                            <a href="https://routerai.ru/" target="_blank" class="pop-link-btn" style="background: var(--pop-cyan);">Открыть RouterAI ↗</a>
+                        </div>
+                    </div>
+                    <div class="about-sticker" style="padding: 14px 18px;">
+                        <div class="sticker-icon" style="background: var(--pop-pink);">🚀</div>
+                        <div style="flex-grow: 1;">
+                            <strong style="font-size: 1.2rem; color: #fff;">Beget</strong>
+                            <p style="margin-top: 2px; font-size: 1rem; color: var(--text-muted);">Надежный виртуальный хостинг и VDS для деплоя сайтов, ботов и веб-сервисов.</p>
+                            <a href="https://beget.com/p2589141" target="_blank" class="pop-link-btn" style="background: var(--pop-pink); color: #fff;">Открыть Beget ↗</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Bento Cases -->
+        <div class="slide" id="slide-3">
+            <div>
+                <h2 class="pop-title-section" style="text-shadow: 6px 6px 0px var(--pop-green);">5 Реальных Кейсов</h2>
+                <div class="bento-pop-grid">
+                    <div class="bento-pop-card" style="--idx: -1.2; --c: var(--pop-cyan);">
+                        <h3>1. Sagemeet</h3>
+                        <p>Организация и прямое согласование встреч в групповых чатах для 3+ человек.</p>
+                    </div>
+                    <div class="bento-pop-card" style="--idx: 0.8; --c: var(--pop-pink);">
+                        <h3>2. Landing-генератор</h3>
+                        <p>Быстрое создание и моментальный автоматический деплой готовых лендингов.</p>
+                    </div>
+                    <div class="bento-pop-card" style="--idx: -0.5; --c: var(--pop-green);">
+                        <h3>3. VPNi Bot</h3>
+                        <p>Автономный микро-бизнес: приём платежей, генерация WireGuard-ключей и продление подписок.</p>
+                    </div>
+                    <div class="bento-pop-card" style="--idx: 1.1; --c: var(--pop-yellow);">
+                        <h3>4. SAGE Calculators</h3>
+                        <p>Интерактивные калькуляторы: Налоги и наценка (УСН/НДС) и 5-летняя Венчурная Финмодель с экспортом в Excel.</p>
+                    </div>
+                    <div class="bento-pop-card" style="grid-column: span 2; --idx: -0.2; --c: var(--pop-white);">
+                        <h3 style="background: var(--pop-white);">5. Aipsy.press</h3>
+                        <p>Автономное ИИ-издание: самостоятельный мониторинг, генерация и публикация 55+ SEO-статей и тестов в день.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="pop-image-wrapper">
+                <div class="pop-frame" style="transform: rotate(2deg);">
+                    <img src="pop_art_cases.webp" alt="Cases Pop Art" class="pop-img" loading="lazy" decoding="async">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Case 1 - Sagemeet -->
+        <div class="slide layout-flipped" id="slide-4">
+            <div class="pop-image-wrapper">
+                <div class="pop-frame" style="transform: rotate(-2deg);">
+                    <img src="pop_art_meet.webp" alt="Sagemeet Detail" class="pop-img" loading="lazy" decoding="async">
+                </div>
+            </div>
+            <div>
+                <span class="pop-subtitle" style="background: var(--pop-cyan);">КЕЙС 1. ПЛАНИРОВАНИЕ ВСТРЕЧ</span>
+                <h2 class="pop-title-section" style="margin-top: 1rem;">Sagemeet</h2>
+                <div class="pop-text-bubble">
+                    Групповой планировщик встреч. Участники чата авторизуются через Google OAuth 2.0 в <strong>Telegram Mini App</strong>. 
+                    <br><br>
+                    Бот опрашивает <strong>Google Calendar FreeBusy API</strong>, находит свободные окна на 5+ человек за секунды и ставит встречу без бесконечной переписки.
+                    
+                    <div class="pop-cta-group">
+                        <a href="https://t.me/SageMeetBot" target="_blank" class="pop-action-btn btn-cyan">
+                            <span>🤖</span> Telegram-бот @SageMeetBot ↗
+                        </a>
+                        <a href="https://meet.aisage.ru" target="_blank" class="pop-action-btn">
+                            <span>🌐</span> Сайт meet.aisage.ru ↗
+                        </a>
+                    </div>
+                </div>
+                <div class="pop-badges">
+                    <div class="pop-badge">React / Vite</div>
+                    <div class="pop-badge">FastAPI</div>
+                    <div class="pop-badge">FreeBusy API</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Case 2 - Landing -->
+        <div class="slide" id="slide-5">
+            <div>
+                <span class="pop-subtitle" style="background: var(--pop-pink);">КЕЙС 2. ВЕРСТКА И ПУБЛИКАЦИЯ</span>
+                <h2 class="pop-title-section" style="margin-top: 1rem;">Landing-генератор</h2>
+                <div class="pop-text-bubble">
+                    Быстрая сборка продающих страниц. Дизайн проектируется в <strong>Google Stitch</strong>. На основе сгенерированных дизайн-токенов пишется чистый HTML/CSS код.
+                    <br><br>
+                    Локальный Python-скрипт <code>deploy.py</code> автоматически выгружает файлы по FTP/SSH на Beget под адресом <code>works/lp/&lt;project_slug&gt;</code>.
+                </div>
+                <div class="pop-badges">
+                    <div class="pop-badge">Google Stitch</div>
+                    <div class="pop-badge">Python FTP</div>
+                    <div class="pop-badge">Beget Deploy</div>
+                </div>
+            </div>
+            <div class="pop-image-wrapper">
+                <div class="pop-frame" style="transform: rotate(1.5deg);">
+                    <img src="pop_art_landing.webp" alt="Landing Detail" class="pop-img" loading="lazy" decoding="async">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Case 3 - VPNi Bot -->
+        <div class="slide layout-flipped" id="slide-6">
+            <div class="pop-image-wrapper">
+                <div class="pop-frame" style="transform: rotate(-1.5deg);">
+                    <img src="pop_art_vpni.webp" alt="VPNi Bot Detail" class="pop-img" loading="lazy" decoding="async">
+                </div>
+            </div>
+            <div>
+                <span class="pop-subtitle" style="background: var(--pop-green);">КЕЙС 3. АВТОНОМНЫЙ МИКРО-СЕРВИС</span>
+                <h2 class="pop-title-section" style="margin-top: 1rem;">VPNi Bot</h2>
+                <div class="pop-text-bubble">
+                    Полностью автономный цифровой сервис в Telegram: бот принимает онлайн-оплаты, по API на лету генерирует персональные конфигурации WireGuard/VLESS на зарубежных серверах и отправляет инструкции клиенту.
+                    <br><br>
+                    Система автоматически управляет жизненным циклом подписок, проверяет биллинг и отключает/продлевает доступ с <strong>0% ручного участия</strong>.
+                </div>
+                <div class="pop-badges">
+                    <div class="pop-badge">Telegram Bot API</div>
+                    <div class="pop-badge">WireGuard API</div>
+                    <div class="pop-badge">FastAPI / Python</div>
+                    <div class="pop-badge">Payment Gateway</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Case 4 - Calculators -->
+        <div class="slide" id="slide-7">
+            <div>
+                <span class="pop-subtitle" style="background: var(--pop-yellow);">КЕЙС 4. ИНТЕРАКТИВНЫЕ ВИДЖЕТЫ</span>
+                <h2 class="pop-title-section" style="margin-top: 1rem;">JS-Калькуляторы</h2>
+                <div class="pop-text-bubble">
+                    Интерактивные виджеты и инструменты для оцифровки бизнеса, расчёта юнит-экономики и налогов, встраиваемые в сайты как мощные лид-магниты.
+                    <br><br>
+                    Позволяют клиентам и инвесторам самостоятельно рассчитывать маржинальность, финансовые сценарии и выгружать готовые отчеты в Excel и PDF.
+                    
+                    <div class="pop-cta-group">
+                        <a href="https://a-sage.ru/calculator-tax" target="_blank" class="pop-action-btn">
+                            <span>📊</span> Калькулятор налогов ↗
+                        </a>
+                        <a href="https://a-sage.ru/calculator-finmodel" target="_blank" class="pop-action-btn btn-pink">
+                            <span>🚀</span> Финмодель 5.0 Pro ↗
+                        </a>
+                    </div>
+                </div>
+                <div class="pop-badges">
+                    <div class="pop-badge">Vanilla JS</div>
+                    <div class="pop-badge">Chart.js / SheetJS</div>
+                    <div class="pop-badge">Unit Economics</div>
+                    <div class="pop-badge">Excel Export</div>
+                </div>
+            </div>
+            <div class="pop-image-wrapper">
+                <div class="pop-frame" style="transform: rotate(2deg);">
+                    <img src="pop_art_calc.webp" alt="Calculators Detail" class="pop-img" loading="lazy" decoding="async">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Case 5 - Aipsy.press -->
+        <div class="slide layout-flipped" id="slide-8">
+            <div class="pop-image-wrapper">
+                <div class="pop-frame" style="transform: rotate(-2deg);">
+                    <img src="pop_art_aipsy.webp" alt="Aipsy.press Detail" class="pop-img" loading="lazy" decoding="async">
+                </div>
+            </div>
+            <div>
+                <span class="pop-subtitle" style="background: var(--pop-purple);">КЕЙС 5. АВТОМАТИЗАЦИЯ КОНТЕНТ-МАРКЕТИНГА</span>
+                <h2 class="pop-title-section" style="margin-top: 1rem;">Aipsy.press</h2>
+                <div class="pop-text-bubble">
+                    Полностью автономное ИИ-издание. Парсеры собирают зарубежные инфоповоды, после чего ИИ-агенты переводят, пишут экспертные статьи, создают тесты и публикуют их.
+                    <br><br>
+                    Система генерирует и размещает от 55 уникальных SEO-оптимизированных материалов в день, привлекая органический трафик без редакторов и копирайтеров.
+                    
+                    <div class="pop-cta-group">
+                        <a href="https://aipsy.press" target="_blank" class="pop-action-btn btn-cyan">
+                            <span>📰</span> Перейти на aipsy.press ↗
+                        </a>
+                    </div>
+                </div>
+                <div class="pop-badges">
+                    <div class="pop-badge">Python / FastAPI</div>
+                    <div class="pop-badge">Gemini API</div>
+                    <div class="pop-badge">WordPress API</div>
+                    <div class="pop-badge">SEO Automation</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Conclusion -->
+        <div class="slide title-slide" id="slide-9">
+            <div>
+                <h1 class="pop-title-main" style="text-shadow: 8px 8px 0px var(--pop-cyan);">За выходные!</h1>
+                <h2 class="pop-subtitle" style="background: var(--pop-yellow);">Ваш первый ИИ-ассистент за 2 дня</h2>
+                <div class="pop-text-bubble" style="max-width: 650px; padding: 24px;">
+                    <strong>ПРАКТИЧЕСКОЕ ЗАДАНИЕ:</strong>
+                    <br><br>
+                    1. Выберите <strong>ОДИН ручной процесс</strong>, занимающий от 15 минут в день.
+                    <br>2. Опишите его логику и шаг за шагом <strong>составьте ТЗ на русском языке</strong>.
+                    <br>3. Отправьте ТЗ в нейросеть (Antigravity / Codex / Cursor) и создайте первую версию!
+                </div>
+            </div>
+            <div class="pop-image-wrapper" style="flex-direction: column; gap: 2rem;">
+                <div class="pop-frame" style="max-height: 380px; transform: rotate(-1deg);">
+                    <img src="pop_art_final.webp" alt="Final Boom Pop Art" class="pop-img" loading="lazy" decoding="async">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Navigation Slide Buttons (Desktop Bottom Panel) -->
+    <div class="footer-controls-names" id="controls-container"></div>
+
+    <!-- Mobile Pop Art Sandwich Button (Bottom Center) -->
+    <div class="mobile-nav-trigger-wrapper" id="mobile-menu-trigger">
+        <div class="mobile-nav-plate"></div>
+        <div class="mobile-nav-trigger">
+            <div class="burger-line"></div>
+            <div class="burger-line"></div>
+            <div class="burger-line"></div>
+            <div class="burger-counter-badge" id="mobile-counter-badge">1/14</div>
+        </div>
+    </div>
+
+    <!-- Mobile Pop Art Drawer Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay">
+        <div class="mobile-menu-drawer">
+            <div class="mobile-menu-header">
+                <div class="mobile-menu-title">
+                    <span style="background: var(--pop-yellow); color: #000; padding: 4px 10px; border: 2px solid #000; border-radius: 6px;">☰</span>
+                    Навигация по слайдам
+                </div>
+                <button class="mobile-menu-close" id="mobile-menu-close">✕</button>
+            </div>
+            <div class="mobile-menu-grid" id="mobile-menu-grid"></div>
+        </div>
+    </div>
+
+    <script>
+        const totalSlides = 16;
+        let currentSlide = 0;
+
+        const slideNames = [
+            "Старт",
+            "Маршрут",
+            "Спикер",
+            "1. Философия",
+            "2. Методология",
+            "3. Анатомия",
+            "4. Агенты и Скиллы",
+            "5. Харнесс",
+            "Инструменты",
+            "Кейсы",
+            "1. Sagemeet",
+            "2. Landing",
+            "3. VPNi Bot",
+            "4. Калькуляторы",
+            "5. Aipsy.press",
+            "Финал"
+        ];
+
+        function showSlide(index) {
+            document.querySelectorAll('.slide').forEach((slide, idx) => {
+                if (idx === index) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            // Update Desktop buttons
+            document.querySelectorAll('.btn-slide-name').forEach((btn, idx) => {
+                if (idx === index) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Update Mobile buttons
+            document.querySelectorAll('.btn-mobile-slide').forEach((btn, idx) => {
+                if (idx === index) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Update Mobile Trigger Counter Badge
+            const counterBadge = document.getElementById('mobile-counter-badge');
+            if (counterBadge) {
+                counterBadge.innerText = `${index + 1}/${totalSlides}`;
+            }
+
+            currentSlide = index;
+        }
+
+        // Generate Slide Name Buttons (Desktop & Mobile)
+        const controlsContainer = document.getElementById('controls-container');
+        const mobileMenuGrid = document.getElementById('mobile-menu-grid');
+
+        slideNames.forEach((name, idx) => {
+            // Desktop button
+            const btn = document.createElement('button');
+            btn.classList.add('btn-slide-name');
+            if (idx === 0) btn.classList.add('active');
+            btn.innerText = name;
+            btn.addEventListener('click', () => showSlide(idx));
+            controlsContainer.appendChild(btn);
+
+            // Mobile button
+            const mobBtn = document.createElement('button');
+            mobBtn.classList.add('btn-mobile-slide');
+            if (idx === 0) mobBtn.classList.add('active');
+            mobBtn.innerText = `${idx + 1}. ${name}`;
+            mobBtn.addEventListener('click', () => {
+                showSlide(idx);
+                closeMobileMenu();
+            });
+            mobileMenuGrid.appendChild(mobBtn);
+        });
+
+        // Mobile Menu Overlay Toggle Logic
+        const mobileOverlay = document.getElementById('mobile-menu-overlay');
+        const mobileTrigger = document.getElementById('mobile-menu-trigger');
+        const mobileClose = document.getElementById('mobile-menu-close');
+
+        function openMobileMenu() {
+            mobileOverlay.classList.add('open');
+        }
+
+        function closeMobileMenu() {
+            mobileOverlay.classList.remove('open');
+        }
+
+        mobileTrigger.addEventListener('click', openMobileMenu);
+        mobileClose.addEventListener('click', closeMobileMenu);
+
+        mobileOverlay.addEventListener('click', (e) => {
+            if (e.target === mobileOverlay) {
+                closeMobileMenu();
+            }
+        });
+
+        // Fullscreen Toggle Logic (Native API + Guaranteed CSS Fallback)
+        const fsBtn = document.getElementById('fullscreen-toggle-btn');
+        const fsText = document.getElementById('fs-text');
+        const fsIcon = document.getElementById('fs-icon');
+
+        function toggleFullscreen() {
+            const isFS = document.body.classList.contains('is-fullscreen-mode') || 
+                         !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement);
+
+            if (!isFS) {
+                // 1. Try Native Fullscreen API
+                const docEl = document.documentElement;
+                try {
+                    if (docEl.requestFullscreen) {
+                        docEl.requestFullscreen().catch(() => {});
+                    } else if (docEl.webkitRequestFullscreen) {
+                        docEl.webkitRequestFullscreen();
+                    } else if (docEl.msRequestFullscreen) {
+                        docEl.msRequestFullscreen();
+                    }
+                } catch(e) {}
+
+                // 2. Always toggle Virtual Fullscreen CSS
+                document.body.classList.add('is-fullscreen-mode');
+                if (fsText) fsText.innerText = 'ВЫЙТИ ИЗ ЭКРАНА';
+                if (fsIcon) fsIcon.innerText = '🗗';
+            } else {
+                // Exit Native Fullscreen
+                try {
+                    if (document.exitFullscreen && document.fullscreenElement) {
+                        document.exitFullscreen().catch(() => {});
+                    } else if (document.webkitExitFullscreen && document.webkitFullscreenElement) {
+                        document.webkitExitFullscreen();
+                    } else if (document.msExitFullscreen && document.msFullscreenElement) {
+                        document.msExitFullscreen();
+                    }
+                } catch(e) {}
+
+                // Exit Virtual Fullscreen CSS
+                document.body.classList.remove('is-fullscreen-mode');
+                if (fsText) fsText.innerText = 'НА ВЕСЬ ЭКРАН';
+                if (fsIcon) fsIcon.innerText = '⛶';
+            }
+        }
+
+        if (fsBtn) {
+            fsBtn.addEventListener('click', toggleFullscreen);
+        }
+
+        // Floating Prev/Next Arrow Button Click Listeners
+        const prevArrowBtn = document.getElementById('btn-prev-arrow');
+        const nextArrowBtn = document.getElementById('btn-next-arrow');
+
+        if (prevArrowBtn) {
+            prevArrowBtn.addEventListener('click', () => {
+                let prev = currentSlide - 1;
+                if (prev < 0) prev = totalSlides - 1;
+                showSlide(prev);
+            });
+        }
+
+        if (nextArrowBtn) {
+            nextArrowBtn.addEventListener('click', () => {
+                let next = currentSlide + 1;
+                if (next >= totalSlides) next = 0;
+                showSlide(next);
+            });
+        }
+
+        // Comprehensive Presenter Clicker & Keyboard Listener
+        window.addEventListener('keydown', (e) => {
+            // Ignore if typing in text input/textarea
+            if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
+
+            const key = e.key;
+
+            // Presenter Clickers & Keyboards Next Slide (PageDown, ArrowRight, ArrowDown, Space, Enter)
+            if (key === 'PageDown' || key === 'ArrowRight' || key === 'ArrowDown' || key === ' ' || key === 'Enter') {
+                e.preventDefault();
+                let next = currentSlide + 1;
+                if (next >= totalSlides) next = 0;
+                showSlide(next);
+            }
+            // Presenter Clickers & Keyboards Prev Slide (PageUp, ArrowLeft, ArrowUp, Backspace)
+            else if (key === 'PageUp' || key === 'ArrowLeft' || key === 'ArrowUp' || key === 'Backspace') {
+                e.preventDefault();
+                let prev = currentSlide - 1;
+                if (prev < 0) prev = totalSlides - 1;
+                showSlide(prev);
+            }
+            // Presenter Clickers Fullscreen Toggle (F5 or F key)
+            else if (key === 'F5' || key === 'f' || key === 'F' || key === 'а' || key === 'А') {
+                e.preventDefault();
+                toggleFullscreen();
+            }
+            // Presenter Clickers Blackout Screen Toggle ('b' or '.')
+            else if (key === 'b' || key === 'B' || key === '.' || key === 'и' || key === 'И') {
+                e.preventDefault();
+                document.body.classList.toggle('blackout-mode');
+            }
+            else if (key === 'Escape') {
+                closeMobileMenu();
+                document.body.classList.remove('blackout-mode');
+                if (document.body.classList.contains('is-fullscreen-mode')) {
+                    toggleFullscreen();
+                }
+            }
+        });
+
+        // Touch Swipe Navigation Support for Mobile & Tablets
+        let touchStartX = 0;
+        let touchEndX = 0;
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const diff = touchEndX - touchStartX;
+            if (Math.abs(diff) > 50) {
+                if (diff < 0) { // Swipe Left -> Next Slide
+                    let next = currentSlide + 1;
+                    if (next >= totalSlides) next = 0;
+                    showSlide(next);
+                } else { // Swipe Right -> Prev Slide
+                    let prev = currentSlide - 1;
+                    if (prev < 0) prev = totalSlides - 1;
+                    showSlide(prev);
+                }
+            }
+        }
+
+        // Dynamic QR Codes Generation
+        window.addEventListener('DOMContentLoaded', () => {
+            new QRCode(document.getElementById("qr-personal"), {
+                text: "https://t.me/michael_sage",
+                width: 130,
+                height: 130,
+                colorDark : "#0B0C10",
+                colorLight : "#FFFFFF",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+
+            new QRCode(document.getElementById("qr-channel"), {
+                text: "https://t.me/uncrn_sage",
+                width: 130,
+                height: 130,
+                colorDark : "#0B0C10",
+                colorLight : "#FFFFFF",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+
+            new QRCode(document.getElementById("qr-site"), {
+                text: "https://a-sage.ru",
+                width: 130,
+                height: 130,
+                colorDark : "#0B0C10",
+                colorLight : "#FFFFFF",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+    </script>
+</body>
+</html>
