@@ -807,21 +807,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 2. Smooth FAQ Accordion
-  const faqItems = document.querySelectorAll('.faq-item');
-  faqItems.forEach(item => {
-    const toggleBtn = item.querySelector('.faq-toggle');
+  // 2. Smooth FAQ Accordion (Global Delegation)
+  document.addEventListener('click', (e) => {
+    const toggleBtn = e.target.closest('.faq-toggle');
     if (!toggleBtn) return;
-    toggleBtn.addEventListener('click', () => {
-      const isActive = item.classList.contains('active');
-      faqItems.forEach(other => {
-        if (other !== item) other.classList.remove('active');
-      });
-      if (!isActive) {
-        item.classList.add('active');
-      } else {
-        item.classList.remove('active');
-      }
-    });
+    const item = toggleBtn.closest('.faq-item');
+    if (item) {
+      item.classList.toggle('active');
+    }
   });
 });

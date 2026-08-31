@@ -4636,3 +4636,91 @@ input[type="reset"],
   border-top: 1px solid #f4f4f5;
   padding-top: 14px;
 }
+
+/* ==========================================================================
+   2-COLUMN ACCORDION & FAQ COMPONENT
+   ========================================================================== */
+.faq-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
+  gap: 20px;
+  max-width: 1440px;
+  margin: 36px auto 0;
+  align-items: start;
+}
+@media (max-width: 768px) {
+  .faq-grid-2 {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+.faq-item {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  transition: all 0.25s ease;
+  position: relative;
+}
+.faq-item:hover {
+  border-color: #a1a1aa;
+}
+.faq-item.active {
+  border-color: var(--black);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+}
+.faq-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 26px;
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  user-select: none;
+}
+.faq-q-text {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--black);
+  line-height: 1.4;
+  flex: 1;
+}
+.faq-toggle-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #f4f4f5;
+  color: var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease, color 0.2s ease;
+}
+.faq-item.active .faq-toggle-icon {
+  transform: rotate(45deg);
+  background: var(--black);
+  color: #ffffff;
+}
+.faq-collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.faq-item.active .faq-collapse {
+  grid-template-rows: 1fr;
+}
+.faq-collapse-inner {
+  overflow: hidden;
+}
+.faq-answer {
+  padding: 0 26px 22px 26px;
+  font-size: 0.92rem;
+  color: var(--gray);
+  line-height: 1.65;
+  border-top: 1px solid #f4f4f5;
+  padding-top: 14px;
+}
