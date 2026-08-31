@@ -801,27 +801,27 @@ main > .section:first-child {
 .grid-3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  border: 1px solid var(--border);
-  background: var(--border);
-  gap: 1px;
+  border: none;
+  background: transparent;
+  gap: 20px;
   margin-top: 36px;
 }
 
 .grid-2 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  border: 1px solid var(--border);
-  background: var(--border);
-  gap: 1px;
+  border: none;
+  background: transparent;
+  gap: 20px;
   margin-top: 36px;
 }
 
 .grid-4 {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  border: 1px solid var(--border);
-  background: var(--border);
-  gap: 1px;
+  border: none;
+  background: transparent;
+  gap: 20px;
   margin-top: 36px;
 }
 
@@ -958,9 +958,9 @@ main > .section:first-child {
 .price-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  border: 1px solid var(--border);
-  background: var(--border);
-  gap: 1px;
+  border: none;
+  background: transparent;
+  gap: 20px;
   margin-top: 36px;
 }
 
@@ -970,12 +970,14 @@ main > .section:first-child {
 }
 
 .price-card {
-  padding: 48px 36px;
+  padding: 40px 32px;
   display: flex;
   flex-direction: column;
-  background: var(--bg);
+  background: #ffffff;
+  border: 1px solid var(--border);
   position: relative;
   height: 100%;
+  transition: all 0.2s ease;
 }
 
 .price-card.featured {
