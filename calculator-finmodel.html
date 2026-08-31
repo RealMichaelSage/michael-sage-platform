@@ -40,63 +40,22 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
-  <!-- Schema.org JSON-LD (WebApplication & FAQPage) -->
+  <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Person",
-        "@id": "https://a-sage.ru/#person",
-        "name": "Михаил Пузырёв",
-        "alternateName": ["Michael Sage", "Михаил Саж"],
-        "url": "https://a-sage.ru/",
-        "jobTitle": "ИИ-Архитектор, Hands-on Разработчик и Бизнес-Трекер"
-      },
-      {
-        "@type": "WebApplication",
-        "@id": "https://a-sage.ru/calculator-finmodel#app",
-        "name": "Венчурная Финмодель 5.0 Pro",
-        "url": "https://a-sage.ru/calculator-finmodel",
-        "applicationCategory": "BusinessApplication",
-        "operatingSystem": "All",
-        "browserRequirements": "Requires JavaScript",
-        "description": "5-летняя финансовая модель с расчетом Unit-экономики, P&L, Cash Flow, оценки DCF и экспортом в Excel.",
-        "author": {
-          "@id": "https://a-sage.ru/#person"
-        }
-      },
-      {
-        "@type": "FAQPage",
-        "@id": "https://a-sage.ru/calculator-finmodel#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "Что делать, если реклама в моей нише стала дороже в 2 раза?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Переключите ползунок CPC в калькуляторе. Система покажет, выдержит ли Unit-экономика. Если LTV/CAC падает ниже 2.5x, необходимо либо увеличивать конверсию посадочной страницы (C1), либо поднимать средний чек за счет пакетирования услуг и внедрения апсейлов."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Чем капитализационная модель отличается от дивидендной?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "В капитализационной модели вся прибыль реинвестируется в гипер-рост для максимизации стоимости компании при продаже стратегу (Яндекс, Сбер, VK). В дивидендной модели компания формирует подушку безопасности (3 месяца OPEX) и регулярно выплачивает свободный денежный поток (FCFE) основателям на личную карту."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Как правильно презентовать этот Excel инвестору?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Скачанный по кнопке файл Excel (.xlsx) уже оформлен по международному стандарту FAST Standard. Откройте лист «Панель управления», покажите инвестору Базовый сценарий и продемонстрируйте стресс-тест в Пессимистичном сценарии. Инвесторы ценят, когда основатель честно показывает риски."
-            }
-          }
-        ]
-      }
-    ]
+    "@type": "WebApplication",
+    "name": "Венчурная Финмодель 5.0 Pro",
+    "url": "https://a-sage.ru/calculator-finmodel",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires JavaScript",
+    "description": "5-летняя финансовая модель с расчетом Unit-экономики, P&L, Cash Flow, оценки DCF и экспортом в Excel.",
+    "author": {
+      "@type": "Person",
+      "name": "Михаил Пузырёв",
+      "url": "https://a-sage.ru/"
+    }
   }
   </script>
 
@@ -119,23 +78,24 @@
 </head>
 <body>
 
-  <!-- HEADER NAVIGATION (FLAT SINGLE LEVEL) -->
+    <!-- HEADER NAVIGATION (FLAT SINGLE LEVEL) -->
   <header class="nav">
     <div class="nav-inner">
       <a href="/" class="nav-logo">
         <strong>Михаил Пузыр<span class="accent-yo">ё</span>в</strong>
-        <span class="nav-logo-badge">AI-АРХИТЕКТОР</span>
+        <span class="nav-logo-badge">ФИНАНСОВАЯ МОДЕЛЬ</span>
       </a>
 
       <ul class="nav-links">
-        <li><a href="mentoring"><span class="nav-link-text">Наставничество 1-на-1</span></a></li>
-        <li><a href="automation"><span class="nav-link-text">Внедрение & Разработка</span></a></li>
-        <li><a href="corporate"><span class="nav-link-text">Корпорациям</span></a></li>
-        <li><a href="about"><span class="nav-link-text">Обо&nbsp;мне & Кейсы</span></a></li>
+        <li><a href="/mentoring"><span class="nav-link-text">Наставничество 1-на-1</span></a></li>
+        <li><a href="/automation"><span class="nav-link-text">Внедрение & Разработка</span></a></li>
+        <li><a href="/corporate"><span class="nav-link-text">Корпорациям</span></a></li>
+        <li><a href="/club"><span class="nav-link-text">Клуб</span></a></li>
+        <li><a href="/about"><span class="nav-link-text">Обо&nbsp;мне & Кейсы</span></a></li>
       </ul>
 
       <div class="nav-right">
-        <a href="booking" class="nav-cta">Забронировать слот ↗</a>
+        <a href="/booking" class="nav-cta">Забронировать слот ↗</a>
         <button class="nav-burger" aria-label="Открыть меню">
           <span></span>
           <span></span>
@@ -148,17 +108,48 @@
   <!-- MOBILE MENU -->
   <div class="mobile-menu">
     <a href="/">Главная</a>
-    <a href="mentoring">Наставничество 1-на-1</a>
-    <a href="automation">Внедрение & Разработка</a>
-    <a href="corporate">Корпорациям</a>
-    <a href="about"><span class="nav-link-text">Обо&nbsp;мне & Кейсы</span></a>
-    <a href="booking" class="m-cta">Забронировать слот ↗</a>
-  </div>
-    <a href="about"><span class="nav-link-text">Обо&nbsp;мне & Кейсы</span></a>
-    <a href="booking" class="m-cta">Забронировать слот ↗</a>
+    <a href="/mentoring">Наставничество 1-на-1</a>
+    <a href="/automation">Внедрение & Разработка</a>
+    <a href="/corporate">Корпорациям</a>
+    <a href="/club">Клуб</a>
+    <a href="/about"><span class="nav-link-text">Обо&nbsp;мне & Кейсы</span></a>
+    <a href="/booking" class="m-cta">Забронировать слот ↗</a>
   </div>
 
-  <!-- Step 1: Niche Presets -->
+  <main>
+    <!-- HERO SECTION -->
+    <section class="prompts-hero">
+      <div class="container">
+        <div class="hero-badge">
+          <span class="dot"></span>
+          БАЗА ЗНАНИЙ // ВЕНЧУРНЫЙ ИНЖИНИРИНГ 5.0
+        </div>
+        <h1 class="hero-title" style="margin-top: 16px; margin-bottom: 16px;">
+          Венчурная Финмодель 5.0 Pro
+        </h1>
+        <p class="hero-sub" style="max-width: 860px; font-size: 1.15rem; line-height: 1.6;">
+          Институциональный расчет бизнеса на <strong>5 лет (60 месяцев)</strong>: 28 метрик Unit-экономики, 3 сценария в реальном времени, P&L, Cash Flow, Баланс, оценка капитализации DCF, дивиденды фаундера и экспорт в Excel.
+        </p>
+      </div>
+    </section>
+
+    <div class="main-container">
+    <div class="workspace-layout">
+
+      <!-- LEFT COLUMN: Smart Wizard Inputs -->
+      <aside class="sidebar-inputs">
+        <div class="panel-card glass-panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fa-solid fa-sliders"></i>
+              <h2>Панель параметров</h2>
+            </div>
+            <button id="btn-reset-defaults" class="btn-link" title="Сбросить на значения по умолчанию">
+              <i class="fa-solid fa-rotate-left"></i> Сброс
+            </button>
+          </div>
+
+          <!-- Step 1: Niche Presets -->
           <div class="wizard-group">
             <label class="group-label">
               <span>1. Выберите нишу бизнеса</span>
@@ -207,37 +198,20 @@
                   </label>
                   <input type="number" id="inp-capital" value="500000" step="50000">
                 </div>
-                                                <!-- Auto-Round Sync Toggle -->
-                <div class="toggle-row" style="margin-bottom: 8px; padding-bottom: 8px;">
-                  <label class="switch">
-                    <input type="checkbox" id="toggle-auto-round" checked>
-                    <span class="slider round"></span>
-                  </label>
-                  <span class="toggle-label" style="font-weight: 600; color: var(--black);">
-                    ⚡ Авто-расчет раунда (по кассовой яме)
-                  </span>
-                </div>
-
-                <div class="input-field" id="wrap-inp-investment">
+                <div class="input-field">
                   <label for="inp-investment">
-                    <span>Инвестиции (раунд в модель, ₽)</span>
-                    <span class="tooltip-icon" data-tooltip="Сумма привлекаемого раунда. В режиме авто-расчета вычисляется по максимальной кассовой яме + резерв OPEX"><i class="fa-solid fa-circle-question"></i></span>
+                    Инвестиции (₽)
+                    <span class="tooltip-icon" data-tooltip="Сумма привлекаемого раунда инвестиций"><i class="fa-solid fa-circle-question"></i></span>
                   </label>
-                  <input type="number" id="inp-investment" value="3000000" step="250000">
-                  <div class="input-sync-hint" id="investment-sync-hint" style="display:none;">
-                    <span>💡 Рекомендация: <strong id="hint-rec-val">3 000 000 ₽</strong></span>
-                    <button type="button" id="btn-apply-rec" class="btn-link-action">Применить</button>
-                  </div>
+                  <input type="number" id="inp-investment" value="3000000" step="500000">
                 </div>
-
                 <div class="input-field">
                   <label for="inp-investor-share">
-                    <span>Доля инвестора (%)</span>
-                    <span class="tooltip-icon" data-tooltip="Размер доли за инвестиционный раунд"><i class="fa-solid fa-circle-question"></i></span>
+                    Доля инвестора (%)
+                    <span class="tooltip-icon" data-tooltip="Размер доли, отдаваемой инвестору за раунд"><i class="fa-solid fa-circle-question"></i></span>
                   </label>
-                  <input type="number" id="inp-investor-share" value="15" min="1" max="49" step="1">
+                  <input type="number" id="inp-investor-share" value="15" min="0" max="49" step="1">
                 </div>
-
                 <div class="input-field">
                   <label for="inp-tax-regime">
                     Налоговый режим
@@ -454,7 +428,7 @@
           </button>
         </div>
 
-                <!-- KPI Executive Grid -->
+        <!-- KPI Executive Grid -->
         <div class="kpi-grid">
           
           <div class="kpi-card" id="kpi-breakeven">
@@ -512,82 +486,6 @@
           </div>
 
         </div>
-
-        <!-- INVESTMENT PASSPORT: AUTOMATED AI FUNDRAISING ADVISOR -->
-        <div class="investor-passport-card">
-          <div class="passport-header">
-            <div class="passport-title-wrap">
-              <div class="passport-badge">ИНВЕСТИЦИОННЫЙ ПАСПОРТ // AI ROUND ADVISOR</div>
-              <h3>Автоматический расчет раунда, траншей и доли инвестора</h3>
-            </div>
-            <div class="passport-status-pill" id="passport-fit-status">
-              <span class="dot green"></span>
-              <span>Модель рассчитана</span>
-            </div>
-          </div>
-
-                    <div class="passport-grid">
-            
-            <!-- Box 1: Required Investment -->
-            <div class="passport-box">
-              <div class="p-box-lbl">1. СКОЛЬКО ИНВЕСТИЦИЙ НУЖНО</div>
-              <div class="p-box-val green" id="rec-investment-sum">6 000 000 ₽</div>
-              <div class="p-box-desc" id="rec-investment-desc">
-                Покрывает пиковый кассовый разрыв <strong>4.2 млн ₽</strong> на 11-м месяце + резерв OPEX.
-              </div>
-            </div>
-
-            <!-- Box 2: Recommended Equity -->
-            <div class="passport-box">
-              <div class="p-box-lbl">2. КАКУЮ ДОЛЮ ПРЕДЛОЖИТЬ</div>
-              <div class="p-box-val" id="rec-equity-pct">15% – 20%</div>
-              <div class="p-box-desc" id="rec-equity-desc">
-                Post-Money оценка: <strong>27.0 млн ₽</strong> (без потери контроля фаундером).
-              </div>
-            </div>
-
-            <!-- Box 3: Annual Yield (% годовых / IRR) -->
-            <div class="passport-box">
-              <div class="p-box-lbl">3. ДОХОДНОСТЬ (% ГОДОВЫХ / IRR)</div>
-              <div class="p-box-val green" id="rec-irr-val">+42.5% годовых</div>
-              <div class="p-box-desc" id="rec-irr-desc">
-                Венчурный IRR с учетом капитализации и дивидендов (в 2.5 раза выше депозитов).
-              </div>
-            </div>
-
-            <!-- Box 4: Total Return & Dividends -->
-            <div class="passport-box">
-              <div class="p-box-lbl">4. ВОЗВРАТ И ВЫХОД (MOIC)</div>
-              <div class="p-box-val" id="rec-return-val">3.3x MOIC / Год 5</div>
-              <div class="p-box-desc" id="rec-return-desc">
-                Стоимость доли к Году 5: <strong>9.9 млн ₽</strong> + дивиденды <strong>~19 000 ₽/мес</strong> с Года 3.
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Staging / Tranches Plan -->
-          <div class="passport-tranches-bar">
-            <div class="tranches-title">
-              <i class="fa-solid fa-timeline"></i>
-              <strong>График привлечения траншами (Staging Plan):</strong>
-            </div>
-            <div class="tranches-list">
-              <div class="tranche-item">
-                <span class="tranche-tag">ТРАНШ 1 / СТАРТ (М1)</span>
-                <strong id="tranche-1-val">1 200 000 ₽ (40%)</strong>
-                <span class="tranche-kpi">На разработку MVP, запуск и тест воронки (LTV/CAC >= 3.0x).</span>
-              </div>
-              <div class="tranche-item">
-                <span class="tranche-tag">ТРАНШ 2 / МАСШТАБ (М6)</span>
-                <strong id="tranche-2-val">1 800 000 ₽ (60%)</strong>
-                <span class="tranche-kpi">На расширение рекламного бюджета и выход в точку безубыточности.</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
 
         <!-- Interactive Sliders (What-If Analysis) -->
         <div class="sliders-panel glass-panel">
@@ -655,7 +553,7 @@
             <div class="chart-header">
               <div class="chart-title-wrap">
                 <h4>Движение Денег (Cash Flow) и Остаток на счете (₽)</h4>
-                <span class="badge-tag" id="badge-cf-status">🟢 Ликвидность в норме</span>
+                <span class="badge-tag">Кассовые разрывы</span>
               </div>
               <button type="button" class="btn-chart-expand" data-chart-type="cashflow" title="Развернуть график на весь экран и приблизить">
                 <i class="fa-solid fa-expand"></i> Приблизить
@@ -715,13 +613,13 @@
               <table class="fin-table" id="table-pnl">
                 <thead>
                   <tr>
-                    <th>Статья P&L (Прибыли и Убытки)</th>
+                    <th>Статья P&L</th>
                     <th>Год 1</th>
                     <th>Год 2</th>
                     <th>Год 3</th>
                     <th>Год 4</th>
                     <th>Год 5</th>
-                    <th>Итого за 5 лет</th>
+                    <th>Структура (%)</th>
                   </tr>
                 </thead>
                 <tbody id="tbody-pnl">
@@ -737,7 +635,7 @@
               <table class="fin-table" id="table-cf">
                 <thead>
                   <tr>
-                    <th>Движение ДС (Cash Flow)</th>
+                    <th>Движение ДС</th>
                     <th>Год 1</th>
                     <th>Год 2</th>
                     <th>Год 3</th>
@@ -868,63 +766,75 @@
 
       </div>
 
-            <!-- FAQ Section (Standalone Section Title + Accordions) -->
-      <div class="fin-faq-section-wrapper">
-        <div class="faq-header-standalone">
-          <div class="hero-badge">
-            <span class="dot"></span>
-            FAQ // ВОПРОСЫ И ОТВЕТЫ
+      <!-- FAQ Section (Swiss Stark Accordions) -->
+      <div class="fin-faq-box">
+        <div class="faq-header-bar">
+          <div class="faq-header-title">
+            <i class="fa-solid fa-circle-question"></i>
+            <h3>Частые вопросы начинающих предпринимателей (FAQ)</h3>
           </div>
-          <h2 class="faq-main-title">
-            Частые вопросы начинающих предпринимателей
-          </h2>
-          <p class="faq-main-sub">
-            Разбор типовых ситуаций: стресс-тестирование Unit-экономики, выбор дивидендной или венчурной модели и защита расчетов перед инвестором.
-          </p>
+          <span class="faq-header-count">3 ответа</span>
         </div>
         
-        <div class="fin-faq-box">
-          <div class="faq-accordion-list">
-            
-            <div class="faq-acc-item">
-              <button type="button" class="faq-acc-trigger">
-                <span class="faq-q-text">Что делать, если реклама в моей нише стала дороже в 2 раза?</span>
-                <span class="faq-icon-plus">+</span>
-              </button>
-              <div class="faq-acc-body">
-                <p>Переключите ползунок CPC в калькуляторе. Система покажет, выдержит ли Unit-экономика. Если LTV/CAC падает ниже 2.5x, необходимо либо увеличивать конверсию посадочной страницы ($C_1$), либо поднимать средний чек за счет пакетирования услуг и внедрения апсейлов.</p>
-              </div>
+        <div class="faq-accordion-list">
+          
+          <div class="faq-acc-item">
+            <button type="button" class="faq-acc-trigger">
+              <span class="faq-q-text">Что делать, если реклама в моей нише стала дороже в 2 раза?</span>
+              <span class="faq-icon-plus">+</span>
+            </button>
+            <div class="faq-acc-body">
+              <p>Переключите ползунок CPC в калькуляторе. Система покажет, выдержит ли Unit-экономика. Если LTV/CAC падает ниже 2.5x, необходимо либо увеличивать конверсию посадочной страницы ($C_1$), либо поднимать средний чек за счет пакетирования услуг и внедрения апсейлов.</p>
             </div>
-
-            <div class="faq-acc-item">
-              <button type="button" class="faq-acc-trigger">
-                <span class="faq-q-text">Чем капитализационная модель отличается от дивидендной?</span>
-                <span class="faq-icon-plus">+</span>
-              </button>
-              <div class="faq-acc-body">
-                <p>В <strong>капитализационной модели</strong> вся прибыль реинвестируется в гипер-рост для максимизации стоимости компании при продаже стратегу (Яндекс, Сбер, VK). В <strong>дивидендной модели</strong> компания формирует подушку безопасности (3 месяца OPEX) и регулярно выплачивает свободный денежный поток (FCFE) основателям на личную карту.</p>
-              </div>
-            </div>
-
-            <div class="faq-acc-item">
-              <button type="button" class="faq-acc-trigger">
-                <span class="faq-q-text">Как правильно презентовать этот Excel инвестору?</span>
-                <span class="faq-icon-plus">+</span>
-              </button>
-              <div class="faq-acc-body">
-                <p>Скачанный по кнопке файл Excel (.xlsx) уже оформлен по международному стандарту FAST Standard. Откройте лист «Панель управления», покажите инвестору Базовый сценарий и продемонстрируйте стресс-тест в Пессимистичном сценарии. Инвесторы ценят, когда основатель честно показывает риски.</p>
-              </div>
-            </div>
-
           </div>
+
+          <div class="faq-acc-item">
+            <button type="button" class="faq-acc-trigger">
+              <span class="faq-q-text">Чем капитализационная модель отличается от дивидендной?</span>
+              <span class="faq-icon-plus">+</span>
+            </button>
+            <div class="faq-acc-body">
+              <p>В <strong>капитализационной модели</strong> вся прибыль реинвестируется в гипер-рост для максимизации стоимости компании при продаже стратегу (Яндекс, Сбер, VK). В <strong>дивидендной модели</strong> компания формирует подушку безопасности (3 месяца OPEX) и регулярно выплачивает свободный денежный поток (FCFE) основателям на личную карту.</p>
+            </div>
+          </div>
+
+          <div class="faq-acc-item">
+            <button type="button" class="faq-acc-trigger">
+              <span class="faq-q-text">Как правильно презентовать этот Excel инвестору?</span>
+              <span class="faq-icon-plus">+</span>
+            </button>
+            <div class="faq-acc-body">
+              <p>Скачанный по кнопке файл Excel (.xlsx) уже оформлен по международному стандарту FAST Standard. Откройте лист «Панель управления», покажите инвестору Базовый сценарий и продемонстрируйте стресс-тест в Пессимистичном сценарии. Инвесторы ценят, когда основатель честно показывает риски.</p>
+            </div>
+          </div>
+
         </div>
-      </div>
-    </div>
       </div>
 
     </div>
   </section>
 
+  
+  <!-- CTA BANNER SECTION -->
+  <section class="section-cta" style="background: #09090b; color: #ffffff; padding: 80px 0; border-top: 1px solid var(--border-dark);">
+    <div class="container" style="text-align: center; max-width: 780px;">
+      <span class="hero-badge" style="background: rgba(16, 185, 129, 0.15); color: var(--green); border-color: rgba(16, 185, 129, 0.3);">
+        ЭКСПЕРТНЫЙ АУДИТ ФИНМОДЕЛИ
+      </span>
+      <h2 style="font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; letter-spacing: -0.03em; margin: 24px 0 16px; color: #ffffff;">
+        Нужна помощь с подготовкой инвестиционного меморандума?
+      </h2>
+      <p style="color: #a1a1aa; font-size: 1.05rem; line-height: 1.6; margin-bottom: 32px;">
+        На 40-минутном созвоне проверим сходимость вашей Unit-экономики, стресс-тестируем гипотезы и упакуем метрики для венчурных инвесторов.
+      </p>
+      <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+        <a href="booking" class="btn-primary" style="background: var(--green); color: #09090b; font-weight: 700; border: none; padding: 14px 28px; text-decoration: none; display: inline-block;">
+          Забронировать 40-мин разбор ↗
+        </a>
+        
+      </div>
+    </div>
+  </section>
   </main>
 
   <!-- MODAL: Fullscreen Interactive Chart Zoom & Range Inspector -->
@@ -988,47 +898,6 @@
 
     </div>
   </div>
-
-        <!-- DIRECT MESSENGER CONTACT & BOOKING SECTION -->
-    <section id="contact" class="form-section" data-nav-title="Связь">
-      <div class="form-inner" style="align-items:center;">
-        <div class="form-left" style="max-width:540px;">
-          <div class="section-tag" style="color:#a1a1aa;">СВЯЗЬ & БРОНИРОВАНИЕ</div>
-          <h2 class="form-title">Получите персональный план и&nbsp;оценку задачи<br>за&nbsp;1&nbsp;день</h2>
-          <p class="form-sub">
-            Напишите, какую задачу нужно решить: запустить сервис, внедрить AI-агентов в&nbsp;отдел, прокачать команду или&nbsp;снять ограничения роста. Отвечу лично и&nbsp;предложу пошаговый план.
-          </p>
-          <div style="margin-top:24px;font-family:var(--mono);font-size:0.88rem;color:#a1a1aa;line-height:1.8;">
-            <div>• Канал в&nbsp;Telegram: <a href="https://t.me/uncrn_sage" target="_blank" style="color:#fff;text-decoration:underline;">@uncrn_sage</a></div>
-          </div>
-        </div>
-
-        <div class="direct-contact-card">
-          <div style="font-family:var(--mono);font-size:0.75rem;color:#34d399;font-weight:600;margin-bottom:4px;letter-spacing:0.04em;">
-            // ПРЯМАЯ СВЯЗЬ БЕЗ ПОСРЕДНИКОВ
-          </div>
-
-          <a href="https://t.me/Michael_Sage" target="_blank" class="btn-primary" style="display:flex;align-items:center;justify-content:center;gap:12px;padding:16px;font-size:0.95rem;background:#ffffff;border-color:#ffffff;color:#09090b;text-decoration:none;font-weight:700;border-radius:0;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-2.02 1.28-5.7 3.77-.54.37-1.03.55-1.47.54-.48-.01-1.4-.27-2.09-.49-.84-.27-1.51-.42-1.45-.89.03-.25.38-.51 1.07-.78 4.19-1.82 6.98-3.03 8.37-3.61 3.98-1.66 4.81-1.95 5.35-1.96.12 0 .39.03.56.17.14.12.18.28.2.4.01.07.01.21 0 .36z"/></svg>
-            <span>Написать в&nbsp;Telegram ↗</span>
-          </a>
-
-          <a href="booking" class="btn-secondary" style="display:flex;align-items:center;justify-content:center;gap:12px;padding:16px;font-size:0.95rem;background:#27272a;border-color:#3f3f46;color:#fff;text-decoration:none;font-weight:600;border-radius:0;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><rect x="3" y="4" width="18" height="18"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-            <span>Забронировать слот в&nbsp;Календаре ↗</span>
-          </a>
-
-          <a href="https://max.ru/u/f9LHodD0cOJxk9sLajkZ5u_-WbQydR8lkTH6y34KqdU-QKoLzrW7FH8yJG0" target="_blank" class="btn-secondary" style="display:flex;align-items:center;justify-content:center;gap:12px;padding:16px;font-size:0.95rem;background:#18181b;border-color:#27272a;color:#d4d4d8;text-decoration:none;font-weight:600;border-radius:0;">
-            <span>Написать в&nbsp;MAX ↗</span>
-          </a>
-
-          <div style="margin-top:6px;padding-top:14px;border-top:1px solid #27272a;display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:0.78rem;color:#a1a1aa;">
-            <span>Прямой контакт</span>
-            <span style="color:#34d399;">● Online</span>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!-- FOOTER -->
   <footer class="footer">
