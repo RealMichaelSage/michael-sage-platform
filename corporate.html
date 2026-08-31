@@ -320,62 +320,157 @@
     </section>
 
     <!-- SECTION: 4 STAGES WITH EXIT POINTS -->
-    <section id="stages" class="section section-border section-pad" data-nav-title="Этапы" style="background:#ffffff;">
-      <div class="section-tag">КАК УСТРОЕНА РАБОТА</div>
-      <h2 class="section-title">Четыре этапа с прозрачными точками выхода</h2>
-      <p class="section-sub">После каждого этапа у вас остается твердый артефакт. Вы не покупаете «кота в мешке» и контролируете отдачу на каждом шаге.</p>
+    <section id="stages" class="section section-border section-pad" data-nav-title="Этапы" style="background:#ffffff; position:relative;">
+      <div class="section-tag">ДОРОЖНАЯ КАРТА ВНЕДРЕНИЯ</div>
+      <h2 class="section-title">Как устроен путь: от первого созвона до работающего решения</h2>
+      <p class="section-sub">Интерактивная пошаговая дорожная карта с прозрачными точками выхода. На каждом этапе вы получаете твердый артефакт и полностью контролируете результат.</p>
 
-      <div class="grid-4" style="background:transparent;border:none;gap:20px;margin-top:32px;">
-        <div class="feature-card" style="padding:28px; display:flex; flex-direction:column; justify-content:space-between; border:1px solid var(--border); background:#ffffff;">
-          <div>
-            <div style="font-family:var(--mono); font-size:1.6rem; font-weight:800; color:var(--black); margin-bottom:12px;">01</div>
-            <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:8px; color:var(--black);">Экспресс-диагностика</h3>
-            <p style="font-size:0.86rem; color:var(--gray); line-height:1.6; margin-bottom:14px;">
-              Смотрим как задачи проходят через отделы: где узкие места, рутина и переделки. Ищем точки с максимальным ROI.
-            </p>
+      <!-- INTERACTIVE ROADMAP FLOW CONTAINER -->
+      <div class="roadmap-flow-wrapper" style="margin-top:36px;">
+        
+        <!-- STEP NAV BAR / ARROW PIPELINE -->
+        <div class="roadmap-pipeline-bar">
+          <div class="pipeline-item active" data-step-target="1">
+            <div class="pipeline-num">01</div>
+            <div class="pipeline-text">
+              <div class="pipeline-title">Диагностика</div>
+              <div class="pipeline-time">45 мин · Бесплатно</div>
+            </div>
           </div>
-          <div style="padding-top:12px; border-top:1px solid var(--border); font-family:var(--mono); font-size:0.75rem; color:var(--green-dark); font-weight:700;">
-            Выход: Карта процессов (Бесплатно, 45 мин)
+          <div class="pipeline-arrow">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+
+          <div class="pipeline-item" data-step-target="2">
+            <div class="pipeline-num">02</div>
+            <div class="pipeline-text">
+              <div class="pipeline-title">Проектирование</div>
+              <div class="pipeline-time">1–2 дня · Спецификация</div>
+            </div>
+          </div>
+          <div class="pipeline-arrow">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+
+          <div class="pipeline-item" data-step-target="3">
+            <div class="pipeline-num">03</div>
+            <div class="pipeline-text">
+              <div class="pipeline-title">Сборка & Тест</div>
+              <div class="pipeline-time">3–7 дней · Боевой тест</div>
+            </div>
+          </div>
+          <div class="pipeline-arrow">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+
+          <div class="pipeline-item" data-step-target="4">
+            <div class="pipeline-num">04</div>
+            <div class="pipeline-text">
+              <div class="pipeline-title">Передача в штат</div>
+              <div class="pipeline-time">1–2 дня · Обучение</div>
+            </div>
           </div>
         </div>
 
-        <div class="feature-card" style="padding:28px; display:flex; flex-direction:column; justify-content:space-between; border:1px solid var(--border); background:#ffffff;">
-          <div>
-            <div style="font-family:var(--mono); font-size:1.6rem; font-weight:800; color:var(--black); margin-bottom:12px;">02</div>
-            <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:8px; color:var(--black);">Проектирование</h3>
-            <p style="font-size:0.86rem; color:var(--gray); line-height:1.6; margin-bottom:14px;">
-              Фиксируем логику: входные данные, шаги агента, критерии качества и моменты обязательного подтверждения человеком.
+        <!-- 4 INTERACTIVE ROADMAP CARDS -->
+        <div class="roadmap-cards-grid">
+          
+          <!-- Card 1 -->
+          <div class="roadmap-card active" data-step-id="1">
+            <div class="roadmap-card-top">
+              <div class="roadmap-step-pill">ЭТАП 01</div>
+              <div class="roadmap-time-badge" style="background:#ecfdf5; color:#065f46; font-weight:700;"><span class="pulse-dot"></span> 45 МИН · БЕСПЛАТНО</div>
+            </div>
+            <h3 class="roadmap-card-heading">Экспресс-диагностика</h3>
+            <p class="roadmap-card-text">
+              Разбираем реальные цепочки задач: где застревают лиды, где сотрудники делают ручной копипаст, где собираются отчеты до ночи.
             </p>
+            <div class="roadmap-bullets">
+              <div class="roadmap-bullet"><span>•</span> Аудит узких мест и потерь времени отделов</div>
+              <div class="roadmap-bullet"><span>•</span> Карта процессов: что выгодно оцифровать, а что нет</div>
+              <div class="roadmap-bullet"><span>•</span> Расчет сроков и окупаемости внедрения (ROI)</div>
+            </div>
+            <div class="roadmap-exit-box">
+              <div class="roadmap-exit-tag">// ТОЧКА ВЫХОДА & АРТЕФАКТ</div>
+              <div class="roadmap-exit-content">
+                <strong>📋 Карта процессов и план автоматизации</strong>
+                <span>Вы точно знаете точки потерь и сроки окупаемости.</span>
+              </div>
+            </div>
           </div>
-          <div style="padding-top:12px; border-top:1px solid var(--border); font-family:var(--mono); font-size:0.75rem; color:var(--green-dark); font-weight:700;">
-            Выход: Архитектурная спецификация
-          </div>
-        </div>
 
-        <div class="feature-card" style="padding:28px; display:flex; flex-direction:column; justify-content:space-between; border:1px solid var(--border); background:#ffffff;">
-          <div>
-            <div style="font-family:var(--mono); font-size:1.6rem; font-weight:800; color:var(--black); margin-bottom:12px;">03</div>
-            <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:8px; color:var(--black);">Сборка & Боевой тест</h3>
-            <p style="font-size:0.86rem; color:var(--gray); line-height:1.6; margin-bottom:14px;">
-              Подключаем CRM, базы и API. Запускаем сценарий на реальных боевых данных компании, тестируем краевые случаи и точность.
+          <!-- Card 2 -->
+          <div class="roadmap-card" data-step-id="2">
+            <div class="roadmap-card-top">
+              <div class="roadmap-step-pill">ЭТАП 02</div>
+              <div class="roadmap-time-badge">1–2 ДНЯ · АРХИТЕКТУРА</div>
+            </div>
+            <h3 class="roadmap-card-heading">Проектирование связок</h3>
+            <p class="roadmap-card-text">
+              Определяем стек: где достаточно прямого API/вебхука, где нужен бот, а где подключаются нейросети. Фиксируем контуры безопасности.
             </p>
+            <div class="roadmap-bullets">
+              <div class="roadmap-bullet"><span>•</span> Спецификация логики, баз и полей данных</div>
+              <div class="roadmap-bullet"><span>•</span> Границы контура безопасности & подписание NDA</div>
+              <div class="roadmap-bullet"><span>•</span> Сценарии контроля человеком (Human-in-the-loop)</div>
+            </div>
+            <div class="roadmap-exit-box">
+              <div class="roadmap-exit-tag">// ТОЧКА ВЫХОДА & АРТЕФАКТ</div>
+              <div class="roadmap-exit-content">
+                <strong>📐 Архитектурная спецификация связок</strong>
+                <span>Пошаговое ТЗ без технических абстракций.</span>
+              </div>
+            </div>
           </div>
-          <div style="padding-top:12px; border-top:1px solid var(--border); font-family:var(--mono); font-size:0.75rem; color:var(--green-dark); font-weight:700;">
-            Выход: Боевой работающий процесс
-          </div>
-        </div>
 
-        <div class="feature-card" style="padding:28px; display:flex; flex-direction:column; justify-content:space-between; border:1px solid var(--border); background:#ffffff;">
-          <div>
-            <div style="font-family:var(--mono); font-size:1.6rem; font-weight:800; color:var(--black); margin-bottom:12px;">04</div>
-            <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:8px; color:var(--black);">Передача в штат</h3>
-            <p style="font-size:0.86rem; color:var(--gray); line-height:1.6; margin-bottom:14px;">
-              Обучаем сотрудника-владельца процесса внутри компании: как контролировать, развивать и адаптировать сценарии.
+          <!-- Card 3 -->
+          <div class="roadmap-card" data-step-id="3">
+            <div class="roadmap-card-top">
+              <div class="roadmap-step-pill">ЭТАП 03</div>
+              <div class="roadmap-time-badge">3–7 ДНЕЙ · РАЗРАБОТКА</div>
+            </div>
+            <h3 class="roadmap-card-heading">Сборка & Боевой тест</h3>
+            <p class="roadmap-card-text">
+              Собираем и подключаем связки к вашим базам, 1С, CRM и мессенджерам на технологиях Vibe Coding. Прогоняем боевые данные.
             </p>
+            <div class="roadmap-bullets">
+              <div class="roadmap-bullet"><span>•</span> Скоростная сборка на современных AI-инструментах</div>
+              <div class="roadmap-bullet"><span>•</span> Прямая интеграция CRM (amo/Bitrix), 1C, Telegram</div>
+              <div class="roadmap-bullet"><span>•</span> Тестирование краевых случаев и точности данных</div>
+            </div>
+            <div class="roadmap-exit-box">
+              <div class="roadmap-exit-tag">// ТОЧКА ВЫХОДА & АРТЕФАКТ</div>
+              <div class="roadmap-exit-content">
+                <strong>⚡️ Работающий боевой инструмент</strong>
+                <span>Интеграция развернута и протестирована на реальных заявках.</span>
+              </div>
+            </div>
           </div>
-          <div style="padding-top:12px; border-top:1px solid var(--border); font-family:var(--mono); font-size:0.75rem; color:var(--green-dark); font-weight:700;">
-            Выход: Независимая обученная команда
+
+          <!-- Card 4 -->
+          <div class="roadmap-card" data-step-id="4">
+            <div class="roadmap-card-top">
+              <div class="roadmap-step-pill">ЭТАП 04</div>
+              <div class="roadmap-time-badge">1–2 ДНЯ · ВНЕДРЕНИЕ</div>
+            </div>
+            <h3 class="roadmap-card-heading">Передача в штат & Регламенты</h3>
+            <p class="roadmap-card-text">
+              Обучаем владельца процесса внутри вашей компании. Передаем исходники, видеоинструкции и регламенты для полной независимости.
+            </p>
+            <div class="roadmap-bullets">
+              <div class="roadmap-bullet"><span>•</span> Обучение ключевого сотрудника управлению процессом</div>
+              <div class="roadmap-bullet"><span>•</span> Пошаговые регламенты и видеогиды для штата</div>
+              <div class="roadmap-bullet"><span>•</span> Замер сокращения трудозатрат команды и фиксация ROI</div>
+            </div>
+            <div class="roadmap-exit-box">
+              <div class="roadmap-exit-tag">// ТОЧКА ВЫХОДА & АРТЕФАКТ</div>
+              <div class="roadmap-exit-content">
+                <strong>🏆 Обученная команда + регламенты</strong>
+                <span>Система работает внутри вашей компании без внешних подрядчиков.</span>
+              </div>
+            </div>
           </div>
+
         </div>
       </div>
     </section>
@@ -527,5 +622,230 @@
   </footer>
 
   <script src="js/main.js"></script>
+
+  <style>
+    /* ROADMAP STYLING */
+    .roadmap-pipeline-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 20px;
+      background: var(--bg-gray);
+      border: 1px solid var(--border);
+      margin-bottom: 24px;
+      overflow-x: auto;
+    }
+    .pipeline-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 16px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+      background: transparent;
+      white-space: nowrap;
+    }
+    .pipeline-item:hover, .pipeline-item.active {
+      background: #ffffff;
+      border-color: var(--border);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .pipeline-item.active .pipeline-num {
+      background: var(--black);
+      color: #ffffff;
+    }
+    .pipeline-num {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      font-weight: 800;
+      background: #e4e4e7;
+      color: var(--black);
+      transition: all 0.2s ease;
+    }
+    .pipeline-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--black);
+    }
+    .pipeline-time {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--gray);
+    }
+    .pipeline-arrow {
+      color: #a1a1aa;
+      display: flex;
+      align-items: center;
+      opacity: 0.6;
+    }
+    @keyframes arrowFlow {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(4px); }
+    }
+    .pipeline-arrow svg {
+      animation: arrowFlow 2s ease-in-out infinite;
+    }
+    .roadmap-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .roadmap-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      position: relative;
+    }
+    .roadmap-card:hover, .roadmap-card.active {
+      border-color: var(--black);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+      transform: translateY(-2px);
+    }
+    .roadmap-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .roadmap-step-pill {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 800;
+      background: var(--black);
+      color: #ffffff;
+      padding: 2px 8px;
+    }
+    .roadmap-time-badge {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--gray);
+      background: #f4f4f5;
+      padding: 2px 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .roadmap-card-heading {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--black);
+      margin-bottom: 10px;
+    }
+    .roadmap-card-text {
+      font-size: 0.86rem;
+      color: var(--gray);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .roadmap-bullets {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .roadmap-bullet {
+      font-size: 0.82rem;
+      color: #3f3f46;
+      line-height: 1.45;
+      display: flex;
+      gap: 6px;
+    }
+    .roadmap-bullet span {
+      color: var(--green-dark);
+      font-weight: 800;
+    }
+    .roadmap-exit-box {
+      background: var(--bg-gray);
+      border: 1px solid var(--border);
+      padding: 14px 16px;
+      margin-top: auto;
+      transition: background 0.2s ease;
+    }
+    .roadmap-card.active .roadmap-exit-box,
+    .roadmap-card:hover .roadmap-exit-box {
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+    }
+    .roadmap-exit-tag {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--gray);
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+    .roadmap-exit-content strong {
+      display: block;
+      font-size: 0.84rem;
+      color: var(--black);
+      margin-bottom: 2px;
+    }
+    .roadmap-exit-content span {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--gray);
+      line-height: 1.35;
+    }
+    @media (max-width: 900px) {
+      .pipeline-arrow { display: none; }
+      .roadmap-pipeline-bar { flex-wrap: wrap; }
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const pipelineItems = document.querySelectorAll('.pipeline-item');
+      const roadmapCards = document.querySelectorAll('.roadmap-card');
+
+      function setActiveStep(stepNum) {
+        pipelineItems.forEach(item => {
+          if (item.getAttribute('data-step-target') === stepNum) {
+            item.classList.add('active');
+          } else {
+            item.classList.remove('active');
+          }
+        });
+        roadmapCards.forEach(card => {
+          if (card.getAttribute('data-step-id') === stepNum) {
+            card.classList.add('active');
+          } else {
+            card.classList.remove('active');
+          }
+        });
+      }
+
+      pipelineItems.forEach(item => {
+        item.addEventListener('click', () => {
+          const step = item.getAttribute('data-step-target');
+          setActiveStep(step);
+        });
+      });
+
+      roadmapCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+          const step = card.getAttribute('data-step-id');
+          setActiveStep(step);
+        });
+        card.addEventListener('click', () => {
+          const step = card.getAttribute('data-step-id');
+          setActiveStep(step);
+        });
+      });
+    });
+  </script>
+
 </body>
 </html>
