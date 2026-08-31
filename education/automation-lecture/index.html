@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ИИ-Автоматизация Бизнеса — Михаил Пузырёв</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="image" href="pop_art_auto_hero.webp" type="image/webp">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        :root {
+            --bg-dark: #07080b;
+            --pop-yellow: #FFDF00;
+            --pop-pink: #FF007F;
+            --pop-cyan: #00F0FF;
+            --pop-green: #39FF14;
+            --pop-purple: #B026FF;
+            --pop-white: #FFFFFF;
+            --thick-border: 4px solid #000000;
+            --thin-border: 2px solid #000000;
+            --hard-shadow: 8px 8px 0px #000000;
+            --hard-shadow-lg: 12px 12px 0px #000000;
+            --hard-shadow-sm: 4px 4px 0px #000000;
+            --card-opaque-dark: #15161E;
+            --card-opaque-light: #1E1F29;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: #FFFFFF;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .neural-base {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, #161824 0%, #08090C 100%);
+            opacity: 0.95;
+        }
+
+        .pop-sunburst {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 250vmax;
+            height: 250vmax;
+            transform: translate(-50%, -50%);
+            background: repeating-conic-gradient(
+                from 0deg,
+                rgba(255, 223, 0, 0.025) 0deg 10deg,
+                transparent 10deg 20deg,
+                rgba(0, 240, 255, 0.025) 20deg 30deg,
+                transparent 30deg 40deg,
+                rgba(255, 0, 127, 0.025) 40deg 50deg,
+                transparent 50deg 60deg
+            );
+            animation: spinSunburst 180s linear infinite;
+        }
+
+        @keyframes spinSunburst {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .pop-halftone {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1.5px, transparent 1.5px);
+            background-size: 20px 20px;
+        }
+
+        .presentation-container {
+            position: relative;
+            z-index: 10;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3vh 4vw 1vh 4vw;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+            height: calc(100vh - 85px);
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 3.5rem;
+            align-items: center;
+            opacity: 0;
+            transform: scale(0.96) rotate(-0.5deg);
+            pointer-events: none;
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .slide.layout-flipped {
+            grid-template-columns: 1fr 1.2fr;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+            pointer-events: auto;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Outfit', sans-serif;
+            text-transform: uppercase;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            color: #FFFFFF;
+        }
+
+        .pop-title-main {
+            font-size: clamp(3.2rem, 6.8vw, 6.2rem);
+            line-height: 0.95;
+            -webkit-text-stroke: 3px #000000;
+            text-shadow: 8px 8px 0px var(--pop-pink);
+            margin-bottom: 2rem;
+            transform: rotate(-2deg);
+        }
+
+        .pop-title-section {
+            font-size: clamp(2.4rem, 4.8vw, 4.2rem);
+            line-height: 1;
+            -webkit-text-stroke: 2.5px #000000;
+            text-shadow: 6px 6px 0px var(--pop-cyan);
+            margin-bottom: 1.4rem;
+        }
+
+        .pop-subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.6rem);
+            font-weight: 700;
+            background: var(--pop-yellow);
+            color: #000000;
+            padding: 8px 18px;
+            display: inline-block;
+            border: var(--thin-border);
+            box-shadow: var(--hard-shadow-sm);
+            transform: rotate(1deg);
+            margin-bottom: 1.4rem;
+        }
+
+        .pop-text-bubble {
+            background: var(--card-opaque-dark);
+            border: var(--thick-border);
+            border-radius: 16px;
+            padding: 22px 26px;
+            color: #FFFFFF;
+            font-size: clamp(1.1rem, 1.5vw, 1.4rem);
+            line-height: 1.6;
+            box-shadow: var(--hard-shadow);
+            margin-bottom: 1.2rem;
+        }
+
+        .pop-text-bubble strong {
+            color: var(--pop-yellow);
+            font-weight: 800;
+        }
+
+        .about-cards-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+            margin-top: 0.6rem;
+        }
+
+        .about-sticker {
+            background: var(--card-opaque-dark);
+            border: var(--thin-border);
+            box-shadow: var(--hard-shadow-sm);
+            padding: 10px 16px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            transition: transform 0.2s ease;
+        }
+
+        .about-sticker:hover {
+            transform: translateX(4px);
+        }
+
+        .sticker-icon {
+            background: var(--pop-yellow);
+            color: #000000;
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            border: 2px solid #000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .pop-image-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            max-height: 520px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pop-frame {
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow-lg);
+            border-radius: 20px;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            transform: rotate(2deg);
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: #000;
+        }
+
+        .slide.active .pop-frame {
+            transform: rotate(-1deg) scale(1.02);
+        }
+
+        .pop-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .pop-badges {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-top: 1.2rem;
+        }
+
+        .pop-badge {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            background: #FFFFFF;
+            color: #000000;
+            border: var(--thin-border);
+            border-radius: 8px;
+            padding: 6px 14px;
+            font-size: 0.95rem;
+            box-shadow: var(--hard-shadow-sm);
+            text-transform: uppercase;
+        }
+
+        .pop-cta-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 14px;
+        }
+
+        .pop-action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: var(--pop-yellow);
+            color: #000000 !important;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 0.92rem;
+            padding: 10px 18px;
+            border: 3px solid #000000;
+            border-radius: 12px;
+            box-shadow: 4px 4px 0px #000000;
+            text-decoration: none !important;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .pop-action-btn:hover {
+            transform: translate(-3px, -3px) scale(1.02);
+            box-shadow: 7px 7px 0px #000000;
+        }
+
+        .pop-action-btn.btn-cyan {
+            background: var(--pop-cyan);
+            color: #000000 !important;
+        }
+
+        .pop-action-btn.btn-pink {
+            background: var(--pop-pink);
+            color: #FFFFFF !important;
+        }
+
+        .pop-action-btn.btn-green {
+            background: var(--pop-green);
+            color: #000000 !important;
+        }
+
+        .qrs-block {
+            display: flex;
+            gap: 1.2rem;
+            margin-top: 1.2rem;
+        }
+
+        .qr-card-pop {
+            background: var(--pop-yellow);
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow);
+            padding: 10px 12px;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            transform: rotate(-1.5deg);
+        }
+
+        .qr-card-pop:nth-child(2) {
+            background: var(--pop-pink);
+            transform: rotate(1.5deg);
+        }
+
+        .qr-card-pop:nth-child(3) {
+            background: var(--pop-cyan);
+            transform: rotate(-1deg);
+        }
+
+        .qr-container-pop {
+            background: white;
+            padding: 6px;
+            border: var(--thin-border);
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .qr-card-pop span {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            color: #000000;
+            font-size: 0.78rem;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .pop-qr-btn {
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            background: #000000;
+            color: #FFFFFF;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 0.8rem;
+            padding: 6px 8px;
+            border: 2px solid #000000;
+            border-radius: 8px;
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.3);
+            text-decoration: none;
+            text-transform: uppercase;
+            margin-top: 2px;
+            transition: all 0.2s ease;
+        }
+
+        .pop-qr-btn:hover {
+            background: #FFFFFF;
+            color: #000000;
+        }
+
+        .footer-controls-names {
+            position: relative;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 16px;
+            background: rgba(7, 8, 11, 0.95);
+            border-top: var(--thin-border);
+            flex-wrap: wrap;
+            height: auto;
+            min-height: 60px;
+        }
+
+        .btn-slide-name {
+            background: #1A1B26;
+            color: #FFFFFF;
+            border: 2px solid #3A3D52;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.82rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.15s ease;
+            box-shadow: 2px 2px 0px #000000;
+        }
+
+        .btn-slide-name:hover {
+            background: #2E3145;
+            border-color: var(--pop-cyan);
+            color: var(--pop-cyan);
+            transform: translateY(-2px);
+        }
+
+        .btn-slide-name.active {
+            background: var(--pop-yellow);
+            color: #000000;
+            border-color: #000000;
+            font-weight: 900;
+            box-shadow: 3px 3px 0px #000000;
+            transform: translateY(-2px);
+        }
+
+        .pop-fullscreen-btn {
+            position: fixed;
+            top: 20px;
+            right: 25px;
+            z-index: 9999;
+            background: var(--pop-cyan);
+            color: #000000;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 0.85rem;
+            padding: 8px 16px;
+            border: 3px solid #000000;
+            border-radius: 10px;
+            box-shadow: 4px 4px 0px #000000;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .pop-fullscreen-btn:hover {
+            transform: translate(-2px, -2px) scale(1.05);
+            box-shadow: 6px 6px 0px #000000;
+        }
+
+        .pop-nav-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 50;
+            background: var(--pop-yellow);
+            color: #000000;
+            border: 3px solid #000000;
+            box-shadow: 4px 4px 0px #000000;
+            border-radius: 12px;
+            width: 46px;
+            height: 46px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .pop-nav-arrow:hover {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 6px 6px 0px #000000;
+        }
+
+        .pop-nav-prev { left: 20px; }
+        .pop-nav-next { right: 20px; }
+
+        @media (max-width: 900px) {
+            body { overflow-y: auto; height: auto; min-height: 100vh; }
+            .presentation-container { height: auto; padding: 70px 16px 90px 16px; }
+            .slide { position: relative; display: none; grid-template-columns: 1fr !important; gap: 1.5rem; opacity: 1; transform: none; }
+            .slide.active { display: flex; flex-direction: column; }
+            .pop-nav-arrow { display: none !important; }
+            .footer-controls-names { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="pop-fullscreen-btn" id="fs-btn" onclick="toggleCustomFullscreen()">[ ⛶ НА ВЕСЬ ЭКРАН ]</button>
+
+    <div class="pop-nav-arrow pop-nav-prev" onclick="prevSlide()">❮</div>
+    <div class="pop-nav-arrow pop-nav-next" onclick="nextSlide()">❯</div>
+
+    <div class="bg-container">
+        <div class="neural-base"></div>
+        <div class="pop-sunburst"></div>
+        <div class="pop-halftone"></div>
+    </div>
+
+    <div class="presentation-container">
+
+        <!-- Slide 0: Hero -->
+        <div class="slide active title-slide" id="slide-0">
+            <div class="slide-title-wrapper">
+                <span class="pop-subtitle">ПРАКТИЧЕСКИЙ ЛЕКТОРИЙ: ОЦИФРОВКА БИЗНЕСА</span>
+                <h1 class="pop-title-main">ИИ-АВТОМАТИЗАЦИЯ</h1>
+                <div class="pop-text-bubble">
+                    Что внедрять, что автоматизировать <strong>категорически нельзя</strong>, и как оцифровать бизнес-процессы силами нейросетей за дни вместо месяцев.
+                </div>
+                <div style="font-family: 'Outfit', sans-serif; font-size: 1.15rem; font-weight: 700; color: var(--pop-yellow); text-transform: uppercase;">
+                    Спикер: Михаил Пузырёв, эксперт по внедрению нейросетей
+                </div>
+            </div>
+            <div class="pop-image-wrapper">
+                <div class="pop-frame">
+                    <img src="pop_art_auto_hero.webp" alt="ИИ-Автоматизация Бизнеса" class="pop-img" loading="eager" fetchpriority="high">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 1: Route / Agenda -->
+        <div class="slide" id="slide-1">
+            <div>
+                <h2 class="pop-title-section" style="text-shadow: 6px 6px 0px var(--pop-pink);">Маршрут лекции</h2>
+                <div class="about-cards-list" style="gap: 0.6rem;">
+                    <div class="about-sticker">
+                        <div class="sticker-icon" style="background: var(--pop-yellow);">15м</div>
+                        <span><strong>1. Главный закон:</strong> Почему «хаос оцифровать нельзя» и ROI-фильтр для собственника.</span>
+                    </div>
+                    <div class="about-sticker">
+                        <div class="sticker-icon" style="background: var(--pop-cyan);">25м</div>
+                        <span><strong>2. Продажи & CRM:</strong> Мониторинг Telegram, DaData по фото и авто-сметы из голосовых.</span>
+                    </div>
+                    <div class="about-sticker">
+                        <div class="sticker-icon" style="background: var(--pop-pink);">20м</div>
+                        <span><strong>3. Бэк-офис & HR:</strong> DocFlow OCR счетов, аудит договоров и скоринг 300+ резюме.</span>
+                    </div>
+                    <div class="about-sticker">
+                        <div class="sticker-icon" style="background: var(--pop-green);">25м</div>
+                        <span><strong>4. Маркетинг & Контент-Заводы:</strong> Ресайклинг 1 ➔ 30, карусели, AI Reels и Aipsy.press.</span>
+                    </div>
+                    <div class="about-sticker">
+                        <div class="sticker-icon" style="background: var(--pop-purple); color:#fff;">15м</div>
+                        <span><strong>5. Красная зона:</strong> 5 табу, где ИИ внедрять запрещено или смертельно опасно.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="pop-image-wrapper">
+                <div class="pop-frame" style="transform: rotate(-1.5deg);">
+                    <img src="pop_art_route.webp" alt="Agenda" class="pop-img" loading="lazy">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Speaker -->
+        <div class="slide" id="slide-2">
+            <div>
+                <h2 class="pop-title-section" style="text-shadow: 6px 6px 0px var(--pop-yellow); margin-bottom: 0.8rem;">Михаил Пузырёв</h2>
+                <div class="about-cards-list">
+                    <div class="about-sticker">
+                        <div class="sticker-icon">🚀</div>
+                        <span>Реализовал за 2 месяца <strong>более 38 продуктов и автоматизаций</strong> для себя и клиентов.</span>
+                    </div>
+                    <div class="about-sticker">
+                        <div class="sticker-icon" style="background: var(--pop-pink);">🐻</div>
+                        <span>Член правления Ассоциации венчурных инвесторов <strong>«Большая медведица»</strong>.</span>
+                    </div>
+                    <div class="about-sticker">
+                        <div class="sticker-icon" style="background: var(--pop-green);">🛠️</div>
+                        <span>Разработчик и интегратор ИИ-решений, автоматизирующих рутину в B2B и EdTech.</span>
+                    </div>
+                    <div class="about-sticker">
+                        <div class="sticker-icon" style="background: var(--pop-yellow);">💡</div>
+                        <span><strong>Насмотренность: более 3000 стартапов и бизнесов</strong> с их проблемами и решениями.</span>
+                    </div>
+                </div>
+                <div class="qrs-block">
+                    <div class="qr-card-pop">
+                        <div class="qr-container-pop" id="qr-personal"></div>
+                        <span>Telegram<br>(@michael_sage)</span>
+                        <a href="https://t.me/michael_sage" target="_blank" class="pop-qr-btn">Написать 💬</a>
+                    </div>
+                    <div class="qr-card-pop">
+                        <div class="qr-container-pop" id="qr-channel"></div>
+                        <span>Канал<br>(@uncrn_sage)</span>
+                        <a href="https://t.me/uncrn_sage" target="_blank" class="pop-qr-btn">Читать 📢</a>
+                    </div>
+                    <div class="qr-card-pop">
+                        <div class="qr-container-pop" id="qr-site"></div>
+                        <span>Сайт<br>(a-sage.ru)</span>
+                        <a href="https://a-sage.ru" target="_blank" class="pop-qr-btn">Перейти 🌐</a>
+                    </div>
+                </div>
+            </div>
+            <div class="pop-image-wrapper">
+                <div class="pop-frame" style="transform: rotate(-2deg);">
+                    <img src="mikhail_pop_art.webp" alt="Mikhail Puzyrev" class="pop-img" loading="lazy">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Chaos Law -->
+        <div class="slide" id="slide-3">
+            <div>
+                <span class="pop-subtitle" style="background: var(--pop-pink);">ЧАСТЬ 1. ГЛАВНЫЙ ЗАКОН</span>
+                <h2 class="pop-title-section" style="margin-top: 0.6rem;">Хаос оцифровать нельзя</h2>
+                <div class="pop-text-bubble">
+                    Если процесс не описан текстом на бумаге и не работает руками — <strong>ИИ только ускорит производство хаоса</strong>.
+                    <br><br>
+                    <strong>3 критерия окупаемости ИИ (ROI-фильтр):</strong>
+                    <br>
+                    1. <strong>Повторяемость:</strong> процесс происходит от 5 раз в день.
+                    <br>
+                    2. <strong>Цифровой след:</strong> вход и выход оцифрованы (чат, почта, CRM, PDF).
+                    <br>
+                    3. <strong>Низкая цена разовой ошибки</strong> или наличие Харнесса/человека в контуре.
+                </div>
+                <div class="pop-badges">
+                    <div class="pop-badge">ROI-фильтр</div>
+                    <div class="pop-badge">Ground Truth</div>
+                    <div class="pop-badge">Human-in-the-loop</div>
+                </div>
+            </div>
+            <div class="pop-image-wrapper">
+                <div class="pop-frame" style="transform: rotate(2deg);">
+                    <img src="pop_art_chaos_law.webp" alt="Хаос против Системы" class="pop-img" loading="lazy">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Sales Automation -->
+        <div class="slide layout-flipped" id="slide-4">
+            <div class="pop-image-wrapper">
+                <div class="pop-frame" style="transform: rotate(-1.5deg);">
+                    <img src="pop_art_sales_auto.webp" alt="Отдел Продаж" class="pop-img" loading="lazy">
+                </div>
+            </div>
+            <div>
+                <span class="pop-subtitle" style="background: var(--pop-cyan);">ЧАСТЬ 2. ОТДЕЛ ПРОДАЖ & CRM</span>
+                <h2 class="pop-title-section" style="margin-top: 0.6rem;">Автоматизация Продаж</h2>
+                <div class="about-cards-list" style="gap: 0.5rem;">
+                    <div class="about-sticker" style="padding: 8px 12px;">
+                        <div class="sticker-icon" style="background: var(--pop-yellow);">📡</div>
+                        <span style="font-size: 0.88rem;"><strong>Мониторинг Telegram:</strong> перехват заявок из 50+ чатов, фильтрация спама и пуш сейлзу за 3 сек.</span>
+                    </div>
+                    <div class="about-sticker" style="padding: 8px 12px;">
+                        <div class="sticker-icon" style="background: var(--pop-cyan);">⚡</div>
+                        <span style="font-size: 0.88rem;"><strong>DaData по фото:</strong> распознавание карточки предприятия и авто-заполнение 15 полей в CRM без опечаток.</span>
+                    </div>
+                    <div class="about-sticker" style="padding: 8px 12px;">
+                        <div class="sticker-icon" style="background: var(--pop-pink);">🎙️</div>
+                        <span style="font-size: 0.88rem;"><strong>КП из голосовых:</strong> наговорили итоги зума в бот ➔ готовая смета и брендированный PDF со ссылкой на оплату.</span>
+                    </div>
+                    <div class="about-sticker" style="padding: 8px 12px;">
+                        <div class="sticker-icon" style="background: var(--pop-green);">📊</div>
+                        <span style="font-size: 0.88rem;"><strong>QA Звонков (100%):</strong> транскрибация телефонии, скоринг скрипта 1–100 и отчет РОПу.</span>
+                    </div>
+                </div>
+                <div class="pop-badges">
+                    <div class="pop-badge">Telethon API</div>
+                    <div class="pop-badge">DaData API</div>
+                    <div class="pop-badge">Whisper</div>
+                    <div class="pop-badge">Bitrix24 / amoCRM</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Back-Office & HR -->
+        <div class="slide" id="slide-5">
+            <div>
+                <span class="pop-subtitle" style="background: var(--pop-green);">ЧАСТЬ 3. ДОКУМЕНТЫ & HR</span>
+                <h2 class="pop-title-section" style="margin-top: 0.6rem;">Бэк-офис & Найм</h2>
+                <div class="about-cards-list" style="gap: 0.5rem;">
+                    <div class="about-sticker" style="padding: 8px 12px;">
+                        <div class="sticker-icon" style="background: var(--pop-cyan);">📁</div>
+                        <span style="font-size: 0.88rem;"><strong>Счета и Акты в Облако:</strong> авто-генерация PDF с факсимиле и раскладка по структурированным папкам Диска.</span>
+                    </div>
+                    <div class="about-sticker" style="padding: 8px 12px;">
+                        <div class="sticker-icon" style="background: var(--pop-yellow);">🧾</div>
+                        <span style="font-size: 0.88rem;"><strong>DocFlow OCR:</strong> фото накладной или чека ➔ извлечение позиций и построчное занесение в 1С / таблицы.</span>
+                    </div>
+                    <div class="about-sticker" style="padding: 8px 12px;">
+                        <div class="sticker-icon" style="background: var(--pop-pink);">⚖️</div>
+                        <span style="font-size: 0.88rem;"><strong>Аудит договоров:</strong> ИИ за 10 сек сканирует договор подрядчика и подсвечивает опасные скрытые риски и штрафы.</span>
+                    </div>
+                    <div class="about-sticker" style="padding: 8px 12px;">
+                        <div class="sticker-icon" style="background: var(--pop-purple); color:#fff;">🎯</div>
+                        <span style="font-size: 0.88rem;"><strong>Скоринг резюме с HH:</strong> авто-проверка 300+ откликов по жесткому профилю должности и ранжирование ТОП-10.</span>
+                    </div>
+                </div>
+                <div class="pop-badges">
+                    <div class="pop-badge">Gemini Vision</div>
+                    <div class="pop-badge">Google Drive API</div>
+                    <div class="pop-badge">1C:OData</div>
+                    <div class="pop-badge">hh.ru API</div>
+                </div>
+            </div>
+            <div class="pop-image-wrapper">
+                <div class="pop-frame" style="transform: rotate(1.5deg);">
+                    <img src="pop_art_docflow_hr.webp" alt="DocFlow и HR" class="pop-img" loading="lazy">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Marketing & MVP -->
+        <div class="slide layout-flipped" id="slide-6">
+            <div class="pop-image-wrapper">
+                <div class="pop-frame" style="transform: rotate(-1.5deg);">
+                    <img src="pop_art_auto_hero.webp" alt="Маркетинг и Гипотезы" class="pop-img" loading="lazy">
+                </div>
+            </div>
+            <div>
+                <span class="pop-subtitle" style="background: var(--pop-yellow);">ЧАСТЬ 4. МАРКЕТИНГ & ГИПОТЕЗЫ</span>
+                <h2 class="pop-title-section" style="margin-top: 0.6rem;">Быстрый Тест Спроса</h2>
+                <div class="pop-text-bubble">
+                    Тестирование новых продуктов и офферов за 2 часа без веб-студий:
+                    <br><br>
+                    • <strong>Лендинги под ключ:</strong> Google Stitch ➔ чистый HTML ➔ авто-деплой на Beget.
+                    <br>
+                    • <strong>Калькуляторы-магниты:</strong> клиент сам считает юнит-экономику/налоги и скачивает PDF.
+                    <br>
+                    • <strong>Автономные медиа:</strong> генерация 55+ SEO-статей в день под поиск (Aipsy.press).
+                    
+                    <div class="pop-cta-group">
+                        <a href="https://a-sage.ru/calculator-tax" target="_blank" class="pop-action-btn">
+                            <span>📊</span> Калькулятор налогов ↗
+                        </a>
+                        <a href="https://a-sage.ru/calculator-finmodel" target="_blank" class="pop-action-btn btn-pink">
+                            <span>🚀</span> Финмодель 5.0 Pro ↗
+                        </a>
+                        <a href="https://aipsy.press" target="_blank" class="pop-action-btn btn-cyan">
+                            <span>📰</span> Aipsy.press ↗
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Content Factories -->
+        <div class="slide" id="slide-7">
+            <div>
+                <span class="pop-subtitle" style="background: var(--pop-purple); color:#fff;">ЧАСТЬ 5. КОНТЕНТ-ЗАВОДЫ</span>
+                <h2 class="pop-title-section" style="margin-top: 0.6rem;">Фабрики Контента</h2>
+                <div class="about-cards-list" style="gap: 0.5rem;">
+                    <div class="about-sticker" style="padding: 8px 12px;">
+                        <div class="sticker-icon" style="background: var(--pop-yellow);">♻️</div>
+                        <span style="font-size: 0.88rem;"><strong>Ресайклинг 1 ➔ 30:</strong> 1 часовой созвон ➔ 10 сценариев Reels, 3 лонгрида (VC/Хабр), 5 каруселей и рассылка.</span>
+                    </div>
+                    <div class="about-sticker" style="padding: 8px 12px;">
+                        <div class="sticker-icon" style="background: var(--pop-pink);">🎨</div>
+                        <span style="font-size: 0.88rem;"><strong>Завод каруселей:</strong> авто-генерация слайдов (Flux) + нанесение типографики (Pillow) + автопостинг.</span>
+                    </div>
+                    <div class="about-sticker" style="padding: 8px 12px;">
+                        <div class="sticker-icon" style="background: var(--pop-cyan);">🎬</div>
+                        <span style="font-size: 0.88rem;"><strong>AI Reels Engine:</strong> синтез голоса (ElevenLabs) + авто-нарезка анимированных караоке-субтитров (FFmpeg).</span>
+                    </div>
+                    <div class="about-sticker" style="padding: 8px 12px;">
+                        <div class="sticker-icon" style="background: var(--pop-green);">🎯</div>
+                        <span style="font-size: 0.88rem;"><strong>Viral Hunter:</strong> парсинг виральных роликов конкурентов с охватом 2x+ и сборка тем на неделю.</span>
+                    </div>
+                </div>
+                <div class="pop-badges">
+                    <div class="pop-badge">ElevenLabs</div>
+                    <div class="pop-badge">Flux API</div>
+                    <div class="pop-badge">FFmpeg</div>
+                    <div class="pop-badge">ChatPlace.io</div>
+                </div>
+            </div>
+            <div class="pop-image-wrapper">
+                <div class="pop-frame" style="transform: rotate(2deg);">
+                    <img src="pop_art_content_factory.webp" alt="Контент-Заводы" class="pop-img" loading="lazy">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Red Zone -->
+        <div class="slide layout-flipped" id="slide-8">
+            <div class="pop-image-wrapper">
+                <div class="pop-frame" style="transform: rotate(-2deg);">
+                    <img src="pop_art_red_zone.webp" alt="Красная зона" class="pop-img" loading="lazy">
+                </div>
+            </div>
+            <div>
+                <span class="pop-subtitle" style="background: var(--pop-pink);">ЧАСТЬ 6. КРАСНАЯ ЗОНА</span>
+                <h2 class="pop-title-section" style="margin-top: 0.6rem; text-shadow: 6px 6px 0px var(--pop-yellow);">Где ИИ ЗАПРЕЩЁН</h2>
+                <div class="pop-text-bubble">
+                    <strong>5 зон критического риска, где нельзя доверять ИИ:</strong>
+                    <br><br>
+                    ⛔ <strong>1. Финансовая и юридическая подпись:</strong> акцепт денег и финал договора — строго человек.
+                    <br>
+                    ⛔ <strong>2. Сложные эмоциональные переговоры:</strong> удержание недовольного VIP-клиента.
+                    <br>
+                    ⛔ <strong>3. Неструктурированный хаос:</strong> если нет регламента, бот начнет врать цены.
+                    <br>
+                    ⛔ <strong>4. Прямой доступ к удалению БД:</strong> доступ только на чтение и создание черновиков.
+                    <br>
+                    ⛔ <strong>5. Обещания наличия товара:</strong> без прямого API-запроса к складской 1С.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Gold Mine Matrix -->
+        <div class="slide" id="slide-9">
+            <div>
+                <span class="pop-subtitle" style="background: var(--pop-yellow);">ЧАСТЬ 7. МАТРИЦА РЕШЕНИЙ</span>
+                <h2 class="pop-title-section" style="margin-top: 0.6rem;">Матрица «Золотая Жила»</h2>
+                <div class="pop-text-bubble">
+                    <strong>Как собственнику выбрать первый процесс для автоматизации:</strong>
+                    <br><br>
+                    🎯 <strong>Золотая жила:</strong> высокая частота рутины + низкая цена ошибки (мониторинг заявок, DaData, КП, калькуляторы, черновики постов).
+                    <br><br>
+                    🛡️ <strong>Зона Харнесса:</strong> высокая частота + высокая цена ошибки (счета, проверка договоров, скоринг резюме) — <em>внедрять строго с валидаторами и контролем человека</em>.
+                </div>
+                <div class="pop-badges">
+                    <div class="pop-badge">Частота x Цена ошибки</div>
+                    <div class="pop-badge">Окупаемость 7 дней</div>
+                </div>
+            </div>
+            <div class="pop-image-wrapper">
+                <div class="pop-frame" style="transform: rotate(1.5deg);">
+                    <img src="pop_art_gold_mine.webp" alt="Золотая Жила" class="pop-img" loading="lazy">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Conclusion & Roadmap -->
+        <div class="slide title-slide" id="slide-10">
+            <div>
+                <h1 class="pop-title-main" style="text-shadow: 8px 8px 0px var(--pop-cyan);">За 7 Дней!</h1>
+                <h2 class="pop-subtitle" style="background: var(--pop-yellow);">Дорожная карта внедрения в бизнес</h2>
+                <div class="pop-text-bubble" style="max-width: 650px; padding: 22px;">
+                    <strong>ПЛАН ДЕЙСТВИЙ НА НЕДЕЛЮ:</strong>
+                    <br><br>
+                    1. <strong>День 1–2:</strong> Хронометраж рутины (выбрать 1 процесс, съедающий от 1 часа в день).
+                    <br>
+                    2. <strong>День 3–4:</strong> Сборка MVP на Вайбкодинге + обвязка Харнессом.
+                    <br>
+                    3. <strong>День 5–7:</strong> Тест в боевом режиме с контролем человека.
+                    <br><br>
+                    👉 <strong>Задание для зала:</strong> выберите 1 ручной процесс сегодня и оцифруйте его за выходные!
+                </div>
+            </div>
+            <div class="pop-image-wrapper">
+                <div class="pop-frame" style="transform: rotate(-1.5deg);">
+                    <img src="pop_art_gold_mine.webp" alt="Roadmap" class="pop-img" loading="lazy">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="footer-controls-names" id="footer-nav">
+        <!-- Buttons generated dynamically via JS -->
+    </div>
+
+    <script>
+        const totalSlides = 11;
+        let currentSlide = 0;
+
+        const slideNames = [
+            "Старт",
+            "Маршрут",
+            "Спикер",
+            "1. Закон",
+            "2. Продажи",
+            "3. Бэк-офис & HR",
+            "4. Маркетинг",
+            "5. Контент-Завод",
+            "6. Красная зона",
+            "7. Матрица",
+            "8. Финал"
+        ];
+
+        function showSlide(index) {
+            document.querySelectorAll('.slide').forEach((slide, idx) => {
+                if (idx === index) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            document.querySelectorAll('.btn-slide-name').forEach((btn, idx) => {
+                if (idx === index) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            currentSlide = index;
+        }
+
+        function nextSlide() {
+            let next = currentSlide + 1;
+            if (next >= totalSlides) next = 0;
+            showSlide(next);
+        }
+
+        function prevSlide() {
+            let prev = currentSlide - 1;
+            if (prev < 0) prev = totalSlides - 1;
+            showSlide(prev);
+        }
+
+        // Generate Bottom Buttons
+        const footerNav = document.getElementById('footer-nav');
+        slideNames.forEach((name, idx) => {
+            const btn = document.createElement('button');
+            btn.className = `btn-slide-name ${idx === 0 ? 'active' : ''}`;
+            btn.innerText = name;
+            btn.onclick = () => showSlide(idx);
+            footerNav.appendChild(btn);
+        });
+
+        // Presenter clicker support
+        document.addEventListener('keydown', (e) => {
+            if (['PageDown', 'ArrowRight', 'ArrowDown', 'Space', 'Enter'].includes(e.code) || e.key === 'PageDown' || e.key === 'ArrowRight') {
+                e.preventDefault();
+                nextSlide();
+            } else if (['PageUp', 'ArrowLeft', 'ArrowUp', 'Backspace'].includes(e.code) || e.key === 'PageUp' || e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            } else if (e.code === 'KeyF' || e.key === 'f' || e.key === 'а' || e.key === 'А') {
+                toggleCustomFullscreen();
+            } else if (e.code === 'KeyB' || e.key === 'b' || e.key === 'и' || e.key === 'Period' || e.key === '.') {
+                document.body.classList.toggle('blackout-mode');
+            }
+        });
+
+        function toggleCustomFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(() => {});
+            } else {
+                document.exitFullscreen().catch(() => {});
+            }
+        }
+
+        // Dynamic QR Codes
+        window.addEventListener('DOMContentLoaded', () => {
+            new QRCode(document.getElementById("qr-personal"), {
+                text: "https://t.me/michael_sage",
+                width: 120,
+                height: 120,
+                colorDark: "#0B0C10",
+                colorLight: "#FFFFFF",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            new QRCode(document.getElementById("qr-channel"), {
+                text: "https://t.me/uncrn_sage",
+                width: 120,
+                height: 120,
+                colorDark: "#0B0C10",
+                colorLight: "#FFFFFF",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            new QRCode(document.getElementById("qr-site"), {
+                text: "https://a-sage.ru",
+                width: 120,
+                height: 120,
+                colorDark: "#0B0C10",
+                colorLight: "#FFFFFF",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        });
+    </script>
+</body>
+</html>
