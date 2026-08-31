@@ -760,3 +760,68 @@ document.addEventListener('DOMContentLoaded', () => {
 
   initPageScrollspy();
 });
+
+// ══════════════════════════════════════════════════════════════════
+// UNIVERSAL INTERACTIVE ROADMAP & ACCORDION ENGINES
+// ══════════════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  // 1. Roadmap Interactive Pipeline
+  const roadmapContainers = document.querySelectorAll('.roadmap-flow-wrapper');
+  roadmapContainers.forEach(container => {
+    const pipelineItems = container.querySelectorAll('.pipeline-item');
+    const roadmapCards = container.querySelectorAll('.roadmap-card');
+
+    function setActiveStep(stepNum) {
+      pipelineItems.forEach(item => {
+        if (item.getAttribute('data-step-target') === stepNum) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
+      roadmapCards.forEach(card => {
+        if (card.getAttribute('data-step-id') === stepNum) {
+          card.classList.add('active');
+        } else {
+          card.classList.remove('active');
+        }
+      });
+    }
+
+    pipelineItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const step = item.getAttribute('data-step-target');
+        setActiveStep(step);
+      });
+    });
+
+    roadmapCards.forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        const step = card.getAttribute('data-step-id');
+        setActiveStep(step);
+      });
+      card.addEventListener('click', () => {
+        const step = card.getAttribute('data-step-id');
+        setActiveStep(step);
+      });
+    });
+  });
+
+  // 2. Smooth FAQ Accordion
+  const faqItems = document.querySelectorAll('.faq-item');
+  faqItems.forEach(item => {
+    const toggleBtn = item.querySelector('.faq-toggle');
+    if (!toggleBtn) return;
+    toggleBtn.addEventListener('click', () => {
+      const isActive = item.classList.contains('active');
+      faqItems.forEach(other => {
+        if (other !== item) other.classList.remove('active');
+      });
+      if (!isActive) {
+        item.classList.add('active');
+      } else {
+        item.classList.remove('active');
+      }
+    });
+  });
+});
