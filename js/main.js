@@ -764,7 +764,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // ══════════════════════════════════════════════════════════════════
 // UNIVERSAL INTERACTIVE ROADMAP & ACCORDION ENGINES
 // ══════════════════════════════════════════════════════════════════
-document.addEventListener('DOMContentLoaded', () => {
+function initUniversalEngines() {
   // 1. Roadmap Interactive Pipeline
   const roadmapContainers = document.querySelectorAll('.roadmap-flow-wrapper');
   roadmapContainers.forEach(container => {
@@ -816,4 +816,10 @@ document.addEventListener('DOMContentLoaded', () => {
       item.classList.toggle('active');
     }
   });
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initUniversalEngines);
+} else {
+  initUniversalEngines();
+}
