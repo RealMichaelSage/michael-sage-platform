@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>База Знаний & Инструменты — Михаил Пузырёв</title>
+  <meta name="description" content="Единая база знаний Михаила Пузырёва: Интерактивный AI-Глоссарий (250+ терминов), Библиотека Системных Промптов (37 ролей), Финансовые Калькуляторы и Исследования.">
+  <meta name="robots" content="index, follow">
+  <!-- Favicon Suite -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-title" content="Михаил Пузырёв">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="canonical" href="https://a-sage.ru/base">
+
+  <!-- OpenGraph -->
+  <meta property="og:title" content="База Знаний & Инструменты — Михаил Пузырёв">
+  <meta property="og:description" content="AI-Глоссарий (250+ терминов), 37 системных промптов, налоговые калькуляторы и венчурные финмодели.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://a-sage.ru/base">
+  <meta property="og:image" content="https://a-sage.ru/img/mikhail_about.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="База Знаний — Михаил Пузырёв">
+  <meta name="twitter:description" content="AI-Глоссарий, Промпты, Калькуляторы и Блог.">
+  <meta name="twitter:image" content="https://a-sage.ru/img/mikhail_about.jpg">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css?v=2.3">
+
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();
+    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(101414837, "init", {
+         clickmap:true,
+         trackLinks:true,
+         accurateTrackBounce:true,
+         webvisor:true
+    });
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/101414837" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  <style>
+    .base-hero {
+      padding: 110px 0 36px;
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+    }
+    .base-blocks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 28px;
+      margin-top: 36px;
+    }
+    @media (max-width: 640px) {
+      .base-blocks-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin-top: 20px;
+      }
+      .base-hero {
+        padding: 32px 0 24px;
+      }
+    }
+    .base-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 32px 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .base-card:hover {
+      border-color: var(--black);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
+    }
+    .base-card.featured {
+      background: #09090b;
+      color: #ffffff;
+      border-color: #27272a;
+    }
+    .base-card.featured .base-card-title {
+      color: #ffffff;
+    }
+    .base-card.featured .base-card-desc {
+      color: #a1a1aa;
+    }
+    .base-card-tag {
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: inline-block;
+    }
+    .base-card-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--black);
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+    .base-card-desc {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #52525b;
+      margin-bottom: 24px;
+    }
+    .base-items-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .base-item-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.88rem;
+      font-family: var(--mono);
+    }
+    .base-item-bullet {
+      width: 6px;
+      height: 6px;
+      background: var(--emerald);
+      border-radius: 50%;
+    }
+    .btn-base-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 22px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+    .btn-base-primary {
+      background: var(--black);
+      color: #ffffff;
+    }
+    .btn-base-primary:hover {
+      background: #27272a;
+    }
+    .btn-base-emerald {
+      background: #34d399;
+      color: #000000;
+    }
+    .btn-base-emerald:hover {
+      background: #10b981;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER NAVIGATION -->
+  <header class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <strong>Михаил Пузыр<span class="accent-yo">ё</span>в</strong>
+        <span class="nav-logo-badge">БАЗА ЗНАНИЙ</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="/base" class="active"><span class="nav-link-text">База Знаний</span></a></li>
+        <li><a href="/mentoring"><span class="nav-link-text">Наставничество</span></a></li>
+        <li><a href="/automation"><span class="nav-link-text">Внедрение & Разработка</span></a></li>
+        <li><a href="/corporate"><span class="nav-link-text">Компаниям</span></a></li>
+        <li><a href="/club/"><span class="nav-link-text">Клуб</span></a></li>
+        <li><a href="/about"><span class="nav-link-text">Обо&nbsp;мне</span></a></li>
+      </ul>
+
+      <div class="nav-right">
+        <a href="/booking" class="nav-cta">Забронировать слот ↗</a>
+        <button class="nav-burger" aria-label="Открыть меню">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu">
+    <a href="/">Главная</a>
+    <a href="/base" class="active">База Знаний</a>
+    <a href="/glossary">→ AI-Глоссарий</a>
+    <a href="/prompts">→ Промпты</a>
+    <a href="/calculators">→ Калькуляторы</a>
+    <a href="/mentoring">Наставничество</a>
+    <a href="/automation">Внедрение & Разработка</a>
+    <a href="/corporate">Компаниям</a>
+    <a href="/club/">Клуб</a>
+    <a href="/about">Обо мне</a>
+    <a href="/booking" class="m-cta">Забронировать слот ↗</a>
+  </div>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="base-hero">
+      <div class="container">
+        <div class="hero-badge">
+          <span class="dot"></span>
+          ЕДИНЫЙ ЦЕНТР ЗНАНИЙ & ИНСТРУМЕНТАРИЯ
+        </div>
+        <h1 class="hero-title" style="margin-top: 16px; margin-bottom: 14px;">
+          База Знаний Михаила Пузырёва
+        </h1>
+        <p class="hero-sub" style="max-width: 860px; font-size: 1.15rem; line-height: 1.6; color: #52525b;">
+          Открытая практическая лаборатория: интерактивный глоссарий терминов ИИ, готовые системные промпты, финансовые калькуляторы, финмодели и блог об AI-инжиниринге.
+        </p>
+      </div>
+    </section>
+
+    <!-- 4 CORE SECTIONS GRID -->
+    <section style="padding: 48px 0 80px; background: var(--bg-alt);">
+      <div class="container">
+        
+        <div class="base-blocks-grid">
+          
+          <!-- BLOCK 1: AI GLOSSARY (FEATURED) -->
+          <div class="base-card featured">
+            <div>
+              <span class="base-card-tag" style="color:#34d399;">// БЛОК 01 · ЭНЦИКЛОПЕДИЯ</span>
+              <h2 class="base-card-title">Глоссарий & Энциклопедия по AI</h2>
+              <p class="base-card-desc">
+                250+ фундаментальных и прикладных терминов: Токены, Харнессы, Трансформеры, MCP, RAG, Vibe Coding, DPO, GRPO, рассуждающие модели и продвижение в ответах нейросетей (GEO).
+              </p>
+              <div class="base-items-list" style="color:#d4d4d8;">
+                <div class="base-item-row"><span class="base-item-bullet"></span> 12 тематических модулей с примерами</div>
+                <div class="base-item-row"><span class="base-item-bullet"></span> Мгновенный живой поиск по RU & EN</div>
+                <div class="base-item-row"><span class="base-item-bullet"></span> Техническая суть + применение в бизнесе</div>
+              </div>
+            </div>
+            <div>
+              <a href="/glossary" class="btn-base-link btn-base-emerald" style="width:100%; box-sizing:border-box;">
+                Открыть AI-Глоссарий (250+ терминов) ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- BLOCK 2: SYSTEM PROMPTS -->
+          <div class="base-card">
+            <div>
+              <span class="base-card-tag" style="color:#6366f1;">// БЛОК 02 · ПРОМПТ-ИНЖИНИРИНГ</span>
+              <h2 class="base-card-title">Библиотека Системных Промптов</h2>
+              <p class="base-card-desc">
+                37 глубоких ролевых инструкций по стандарту Prompt-Forge v2.0 для ChatGPT, Claude, Gemini и DeepSeek. Маркетинг, B2B-продажи, юриспруденция, финансы и Vibe Coding.
+              </p>
+              <div class="base-items-list">
+                <div class="base-item-row"><span class="base-item-bullet" style="background:#6366f1;"></span> 37 готовых ролей с TOV-калибровкой</div>
+                <div class="base-item-row"><span class="base-item-bullet" style="background:#6366f1;"></span> Двуязычный переключатель RU / EN</div>
+                <div class="base-item-row"><span class="base-item-bullet" style="background:#6366f1;"></span> Копирование в 1 клик + теги категорий</div>
+              </div>
+            </div>
+            <div>
+              <a href="/prompts" class="btn-base-link btn-base-primary" style="width:100%; box-sizing:border-box;">
+                Перейти к 37 промптам ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- BLOCK 3: CALCULATORS & FINMODELS -->
+          <div class="base-card">
+            <div>
+              <span class="base-card-tag" style="color:#ec4899;">// БЛОК 03 · ФИНАНСОВЫЙ ИНЖИНИРИНГ</span>
+              <h2 class="base-card-title">Калькуляторы & Финмодели</h2>
+              <p class="base-card-desc">
+                Интерактивные инструменты для предпринимателей и фрилансеров: расчет налогов УСН/НДС (налог сверху/внутри) и 5-летняя венчурная финмодель 5.0 Pro.
+              </p>
+              <div class="base-items-list">
+                <div class="base-item-row"><span class="base-item-bullet" style="background:#ec4899;"></span> Калькулятор налогов (УСН 6%, 7%, 9%, НДС)</div>
+                <div class="base-item-row"><span class="base-item-bullet" style="background:#ec4899;"></span> Финмодель 5.0 Pro (28 Unit-метрик, P&L)</div>
+                <div class="base-item-row"><span class="base-item-bullet" style="background:#ec4899;"></span> Моментальный экспорт расчетов</div>
+              </div>
+            </div>
+            <div>
+              <a href="/calculators" class="btn-base-link btn-base-primary" style="width:100%; box-sizing:border-box;">
+                Открыть хаб калькуляторов ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- BLOCK 4: BLOG & RESEARCH -->
+          <div class="base-card">
+            <div>
+              <span class="base-card-tag" style="color:#eab308;">// БЛОК 04 · БЛОГ & ИССЛЕДОВАНИЯ</span>
+              <h2 class="base-card-title">Блог & Инженерные Кейсы</h2>
+              <p class="base-card-desc">
+                Авторские лонгриды и разборы реальных внедрений: почему умирают чат-боты, как проектировать агентные харнессы, юнит-экономика токенов и Vibe Coding на практике.
+              </p>
+              <div class="base-items-list">
+                <div class="base-item-row"><span class="base-item-bullet" style="background:#eab308;"></span> Архитектура AI-агентов в проде</div>
+                <div class="base-item-row"><span class="base-item-bullet" style="background:#eab308;"></span> GEO-продвижение в ответах нейросетей</div>
+                <div class="base-item-row"><span class="base-item-bullet" style="background:#eab308;"></span> 5 табу автоматизации (Красная зона)</div>
+              </div>
+            </div>
+            <div>
+              <a href="/about#speaking" class="btn-base-link btn-base-primary" style="width:100%; box-sizing:border-box;">
+                Читать кейсы & опыт ↗
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer style="background:#09090b; color:#a1a1aa; padding: 48px 0 32px; border-top: 1px solid #27272a;">
+    <div class="container">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;">
+        <div>
+          <strong style="color:#ffffff; font-size:1.1rem;">Михаил Пузырёв</strong>
+          <div style="font-size:0.85rem; margin-top:4px;">ИИ-Архитектор, Инженер-Разработчик и Бизнес-Трекер</div>
+        </div>
+        <div style="display:flex; gap:16px; font-family:var(--mono); font-size:0.85rem;">
+          <a href="/glossary" style="color:#34d399; text-decoration:none;">Глоссарий</a>
+          <a href="/prompts" style="color:#a1a1aa; text-decoration:none;">Промпты</a>
+          <a href="/calculator-tax" style="color:#a1a1aa; text-decoration:none;">Калькуляторы</a>
+          <a href="https://t.me/Michael_Sage" target="_blank" style="color:#a1a1aa; text-decoration:none;">Telegram ↗</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
