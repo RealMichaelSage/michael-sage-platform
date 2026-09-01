@@ -4843,3 +4843,58 @@ input[type="reset"],
 .filter-tab {
   flex-shrink: 0 !important;
 }
+
+
+/* ══════════════════════════════════════════
+   STRICT NO-BORDER FOR MENU & FOOTER
+══════════════════════════════════════════ */
+.nav,
+.nav-wrap,
+.nav-inner,
+.form-section,
+.form-inner,
+.footer,
+.footer-inner,
+#contact {
+  border-left: none !important;
+  border-right: none !important;
+}
+
+.footer {
+  background: #09090b !important;
+  color: #a1a1aa !important;
+  border-top: 1px solid #27272a !important;
+  width: 100% !important;
+}
+
+.footer-inner {
+  max-width: 1440px !important;
+  margin: 0 auto !important;
+  padding: 40px clamp(24px, 4vw, 64px) !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 24px !important;
+  box-sizing: border-box !important;
+}
+
+.footer-links {
+  display: flex !important;
+  gap: 20px !important;
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-family: var(--mono) !important;
+  font-size: 0.85rem !important;
+}
+
+.footer-links a {
+  color: #a1a1aa !important;
+  text-decoration: none !important;
+  transition: color 0.2s !important;
+}
+
+.footer-links a:hover {
+  color: #ffffff !important;
+}
