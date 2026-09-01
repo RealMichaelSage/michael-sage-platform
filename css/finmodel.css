@@ -327,7 +327,7 @@
   bottom: 0;
   background-color: #d4d4d8;
   transition: .2s;
-  border-radius: 20px;
+  border-radius: 0;
 }
 
 .slider.round:before {
@@ -339,7 +339,7 @@
   bottom: 3px;
   background-color: white;
   transition: .2s;
-  border-radius: 50%;
+  border-radius: 0;
 }
 
 input:checked + .slider.round {
@@ -1569,7 +1569,7 @@ input:checked + .slider.round:before {
   font-weight: 700;
   padding: 2px 6px;
   cursor: pointer;
-  border-radius: 2px;
+  border-radius: 0;
   transition: background 0.15s ease;
 }
 

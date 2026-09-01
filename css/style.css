@@ -333,7 +333,7 @@ button {
   padding: 15px 20px;
   font-size: 0.95rem;
   font-weight: 700;
-  border-radius: 0 !important;
+  border-radius: 0;
   border: 1px solid var(--black);
   width: 100%;
 }
@@ -405,7 +405,7 @@ body.menu-open {
 .pulse-dot {
   width: 6px;
   height: 6px;
-  border-radius: 50%;
+  border-radius: 0;
   background: var(--green);
   animation: pulse 2s infinite;
   flex-shrink: 0;
@@ -547,7 +547,7 @@ body.menu-open {
 .dot {
   width: 10px;
   height: 10px;
-  border-radius: 50%;
+  border-radius: 0;
 }
 
 .dot-r { background: #ff5f57; }
@@ -622,7 +622,7 @@ body.menu-open {
   top: 4px;
   width: 8px;
   height: 8px;
-  border-radius: 50%;
+  border-radius: 0;
   background: #52525b;
 }
 
@@ -664,7 +664,7 @@ body.menu-open {
   padding: 2px 8px;
   background: #27272a;
   color: #e4e4e7;
-  border-radius: 2px;
+  border-radius: 0;
 }
 
 .hero-stats {
@@ -948,7 +948,7 @@ main > .section:first-child {
   font-family: var(--mono);
   font-size: 0.82rem;
   line-height: 1.6;
-  border-radius: 4px;
+  border-radius: 0;
   overflow-x: auto;
 }
 
@@ -1226,7 +1226,7 @@ main > .section:first-child {
 .faq-list {
   border: 1px solid var(--border);
   margin-top: 36px;
-  border-radius: 4px;
+  border-radius: 0;
   overflow: hidden;
 }
 
@@ -1275,7 +1275,7 @@ main > .section:first-child {
   font-family: var(--mono);
   font-size: 1rem;
   font-weight: 600;
-  border-radius: 3px;
+  border-radius: 0;
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
               background-color 0.25s ease,
               border-color 0.25s ease,
@@ -1440,7 +1440,7 @@ main > .section:first-child {
   background: #18181b;
   border: 1px solid #27272a;
   padding: 36px;
-  border-radius: 6px;
+  border-radius: 0;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -1504,7 +1504,7 @@ main > .section:first-child {
   margin-top: 36px;
   border: 1px solid var(--border);
   background: #ffffff;
-  border-radius: 4px;
+  border-radius: 0;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
 }
@@ -1558,7 +1558,7 @@ main > .section:first-child {
   width: 175px;
   height: 275px;
   flex-shrink: 0;
-  border-radius: 12px;
+  border-radius: 0;
   overflow: hidden;
   background: #ffffff;
   border: 1px solid var(--border);
@@ -1584,7 +1584,7 @@ main > .section:first-child {
   .review-slide-card {
     width: 145px;
     height: 230px;
-    border-radius: 10px;
+    border-radius: 0;
   }
 }
 
@@ -1616,7 +1616,7 @@ main > .section:first-child {
 .cert-slide-card {
   width: 290px;
   flex-shrink: 0;
-  border-radius: 10px;
+  border-radius: 0;
   overflow: hidden;
   background: #ffffff;
   border: 1px solid var(--border);
@@ -1689,7 +1689,7 @@ main > .section:first-child {
 .speaking-slide-card {
   width: 320px;
   flex-shrink: 0;
-  border-radius: 10px;
+  border-radius: 0;
   overflow: hidden;
   background: #ffffff;
   border: 1px solid var(--border);
@@ -1779,7 +1779,7 @@ main > .section:first-child {
 .logo-card {
   background: #ffffff;
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 0;
   padding: 14px 18px;
   display: flex;
   align-items: center;
@@ -1870,7 +1870,7 @@ main > .section:first-child {
   max-width: 90vw;
   max-height: 76vh;
   object-fit: contain;
-  border-radius: 8px;
+  border-radius: 0;
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
   background: #09090b;
@@ -1905,7 +1905,7 @@ main > .section:first-child {
   letter-spacing: 0.05em;
   background: rgba(255, 255, 255, 0.08);
   padding: 4px 10px;
-  border-radius: 4px;
+  border-radius: 0;
   border: 1px solid rgba(255, 255, 255, 0.15);
   white-space: nowrap;
 }
@@ -1927,7 +1927,7 @@ main > .section:first-child {
   color: #ffffff;
   width: 36px;
   height: 36px;
-  border-radius: 50%;
+  border-radius: 0;
   font-size: 1.3rem;
   display: flex;
   align-items: center;
@@ -1952,7 +1952,7 @@ main > .section:first-child {
   color: #ffffff;
   width: 48px;
   height: 48px;
-  border-radius: 50%;
+  border-radius: 0;
   font-size: 1.4rem;
   display: flex;
   align-items: center;
@@ -2151,7 +2151,7 @@ main > .section:first-child {
     width: 100% !important;
     max-width: 100% !important;
     height: 320px !important;
-    border-radius: 0 !important;
+    border-radius: 0;
     box-sizing: border-box !important;
   }
 
@@ -2179,7 +2179,7 @@ main > .section:first-child {
     padding: 12px 22px;
     font-size: 0.88rem;
     min-height: 44px;
-    border-radius: 0 !important;
+    border-radius: 0;
     box-sizing: border-box;
   }
 
@@ -2348,7 +2348,7 @@ main > .section:first-child {
     padding: 11px 20px !important;
     font-size: 0.88rem !important;
     min-height: 42px !important;
-    border-radius: 0 !important;
+    border-radius: 0;
     box-sizing: border-box;
   }
 
@@ -2522,7 +2522,7 @@ main > .section:first-child {
   .form-textarea {
     font-size: 16px !important;
     padding: 14px 14px;
-    border-radius: 4px;
+    border-radius: 0;
   }
 
   .form-check {
@@ -2834,7 +2834,7 @@ input[type="reset"],
 .direct-contact-card button,
 .lightbox-close,
 .lightbox-nav-btn {
-  border-radius: 0 !important;
+  border-radius: 0;
 }
 
 /* ══════════════════════════════════════════
@@ -2921,7 +2921,7 @@ input[type="reset"],
   height: 7px;
   background: #ffffff;
   border: 1.5px solid #a1a1aa;
-  border-radius: 0 !important;
+  border-radius: 0;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   flex-shrink: 0;
 }
@@ -3058,7 +3058,7 @@ input[type="reset"],
   list-style: none;
   display: none;
   z-index: 1100;
-  border-radius: 2px;
+  border-radius: 0;
   animation: dropdownFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -3413,7 +3413,7 @@ input[type="reset"],
 .prompt-code-box {
   background: #09090b;
   color: #f4f4f5;
-  border-radius: 2px;
+  border-radius: 0;
   position: relative;
   margin-bottom: 16px;
   overflow: hidden;
@@ -3672,7 +3672,7 @@ input[type="reset"],
   background: #ffffff;
   transition: all 0.2s ease;
   box-sizing: border-box;
-  border-radius: 4px;
+  border-radius: 0;
 }
 
 .calc-big-input:focus {
@@ -3710,7 +3710,7 @@ input[type="reset"],
   color: #52525b;
   cursor: pointer;
   transition: all 0.15s ease;
-  border-radius: 3px;
+  border-radius: 0;
 }
 
 .calc-chip:hover {
@@ -3740,7 +3740,7 @@ input[type="reset"],
   background: #ffffff;
   cursor: pointer;
   transition: all 0.2s ease;
-  border-radius: 4px;
+  border-radius: 0;
 }
 
 .mode-btn:hover {
@@ -3784,7 +3784,7 @@ input[type="reset"],
   cursor: pointer;
   text-align: left;
   transition: all 0.15s ease;
-  border-radius: 4px;
+  border-radius: 0;
 }
 
 .tax-preset-btn:hover {
@@ -3820,7 +3820,7 @@ input[type="reset"],
   color: var(--green);
   background: rgba(16, 185, 129, 0.1);
   padding: 3px 8px;
-  border-radius: 2px;
+  border-radius: 0;
   white-space: nowrap;
 }
 
@@ -3829,7 +3829,7 @@ input[type="reset"],
   background: var(--bg-alt);
   border: 1px solid var(--border);
   padding: 12px 14px;
-  border-radius: 4px;
+  border-radius: 0;
 }
 
 .custom-rate-header {
@@ -3865,7 +3865,7 @@ input[type="reset"],
   font-weight: 700;
   border: 1px solid var(--border);
   text-align: right;
-  border-radius: 2px;
+  border-radius: 0;
 }
 
 .custom-rate-input:focus {
@@ -3905,12 +3905,12 @@ input[type="reset"],
 
   .calc-controls-card {
     padding: 16px 12px !important;
-    border-radius: 6px;
+    border-radius: 0;
   }
 
   .calc-result-panel {
     padding: 20px 14px !important;
-    border-radius: 6px;
+    border-radius: 0;
   }
 
   .calc-big-input {
@@ -4040,7 +4040,7 @@ input[type="reset"],
   background: #27272a;
   display: flex;
   overflow: hidden;
-  border-radius: 1px;
+  border-radius: 0;
 }
 
 .bar-clean {
@@ -4193,7 +4193,7 @@ input[type="reset"],
 
 .edu-card {
   padding: 20px 24px;
-  border-radius: 2px;
+  border-radius: 0;
 }
 
 .edu-card.wrong {
@@ -4665,7 +4665,7 @@ input[type="reset"],
 .faq-toggle-icon {
   width: 32px;
   height: 32px;
-  border-radius: 50%;
+  border-radius: 0;
   background: #f4f4f5;
   color: var(--black);
   display: flex;
@@ -4753,7 +4753,7 @@ input[type="reset"],
 .faq-toggle-icon {
   width: 32px;
   height: 32px;
-  border-radius: 50%;
+  border-radius: 0;
   background: #f4f4f5;
   color: var(--black);
   display: flex;
