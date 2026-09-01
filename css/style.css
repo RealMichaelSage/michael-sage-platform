@@ -2051,6 +2051,10 @@ main > .section:first-child {
   }
 }
 
+/* ══════════════════════════════════════════
+   MOBILE & TABLET RESPONSIVE RULES (< 900px)
+══════════════════════════════════════════ */
+@media (max-width: 900px) {
   .section {
     padding: 44px 0;
     border-left: none !important;
