@@ -50,8 +50,7 @@
     });
   </script>
   <noscript><div><img src="https://mc.yandex.ru/watch/101414837" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-  <style>
-    
+    <style>
     .base-page-frame {
       max-width: 1440px;
       margin: 0 auto;
@@ -62,7 +61,7 @@
     }
     .base-hero-section {
       padding-top: 116px;
-      padding-bottom: 32px;
+      padding-bottom: 36px;
       padding-left: clamp(20px, 4.5vw, 64px);
       padding-right: clamp(20px, 4.5vw, 64px);
       border-bottom: 1px solid var(--border);
@@ -72,53 +71,31 @@
       background: var(--bg-alt);
     }
 
-    
     .base-blocks-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 28px;
-      margin-top: 36px;
+      align-items: stretch;
     }
     @media (max-width: 1080px) {
       .base-blocks-grid {
         grid-template-columns: 1fr;
         gap: 20px;
-        margin-top: 24px;
       }
     }
-      
-    .base-page-frame {
-      max-width: 1440px;
-      margin: 0 auto;
-      border-left: 1px solid var(--border);
-      border-right: 1px solid var(--border);
-      box-sizing: border-box;
-      background: #ffffff;
-    }
-    .base-hero-section {
-      padding-top: 116px;
-      padding-bottom: 32px;
-      padding-left: clamp(20px, 4.5vw, 64px);
-      padding-right: clamp(20px, 4.5vw, 64px);
-      border-bottom: 1px solid var(--border);
-    }
-    .base-blocks-section {
-      padding: 48px clamp(20px, 4.5vw, 64px) 80px;
-      background: var(--bg-alt);
-    }
 
-    }
     .base-card {
       background: #ffffff;
       border: 1px solid var(--border);
       border-radius: 0;
-      padding: 32px 30px;
+      padding: 34px 30px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      height: 100%;
+      box-sizing: border-box;
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       position: relative;
-      overflow: hidden;
     }
     .base-card:hover {
       border-color: var(--black);
@@ -129,6 +106,10 @@
       background: #09090b;
       color: #ffffff;
       border-color: #27272a;
+    }
+    .base-card.featured:hover {
+      border-color: #52525b;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
     }
     .base-card.featured .base-card-title {
       color: #ffffff;
@@ -142,19 +123,19 @@
       font-weight: 700;
       letter-spacing: 0.05em;
       text-transform: uppercase;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       display: inline-block;
     }
     .base-card-title {
-      font-size: 1.5rem;
+      font-size: 1.42rem;
       font-weight: 700;
       color: var(--black);
       letter-spacing: -0.02em;
       line-height: 1.25;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
     .base-card-desc {
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       line-height: 1.6;
       color: #52525b;
       margin-bottom: 24px;
@@ -169,40 +150,50 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       font-family: var(--mono);
     }
     .base-item-bullet {
       width: 6px;
       height: 6px;
-      background: var(--emerald);
       border-radius: 0;
+      flex-shrink: 0;
+    }
+    .base-card-actions {
+      margin-top: auto;
+      padding-top: 10px;
     }
     .btn-base-link {
-      display: inline-flex;
+      display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      padding: 13px 22px;
+      width: 100%;
+      padding: 14px 18px;
       font-size: 0.92rem;
       font-weight: 700;
       text-decoration: none;
       border-radius: 0;
+      box-sizing: border-box;
       transition: all 0.2s ease;
     }
     .btn-base-primary {
       background: var(--black);
       color: #ffffff;
+      border: 1px solid var(--black);
     }
     .btn-base-primary:hover {
       background: #27272a;
+      border-color: #27272a;
     }
     .btn-base-emerald {
       background: #34d399;
       color: #000000;
+      border: 1px solid #34d399;
     }
     .btn-base-emerald:hover {
       background: #10b981;
+      border-color: #10b981;
     }
   </style>
 </head>
@@ -266,75 +257,74 @@
       </p>
     </section>
 
-    <!-- 4 CORE SECTIONS GRID -->
+            <!-- 3 CORE SECTIONS GRID -->
     <section class="base-page-frame base-blocks-section">
+      <div class="base-blocks-grid">
         
-        <div class="base-blocks-grid">
-          
-          <!-- BLOCK 1: AI GLOSSARY (FEATURED) -->
-          <div class="base-card featured">
-            <div>
-              <span class="base-card-tag" style="color:#34d399;">// БЛОК 01 · ЭНЦИКЛОПЕДИЯ</span>
-              <h2 class="base-card-title">Глоссарий & Энциклопедия по AI</h2>
-              <p class="base-card-desc">
-                250+ фундаментальных и прикладных терминов: Токены, Харнессы, Трансформеры, MCP, RAG, Vibe Coding, DPO, GRPO, рассуждающие модели и продвижение в ответах нейросетей (GEO).
-              </p>
-              <div class="base-items-list" style="color:#d4d4d8;">
-                <div class="base-item-row"><span class="base-item-bullet"></span> 12 тематических модулей с примерами</div>
-                <div class="base-item-row"><span class="base-item-bullet"></span> Мгновенный живой поиск по RU & EN</div>
-                <div class="base-item-row"><span class="base-item-bullet"></span> Техническая суть + применение в бизнесе</div>
-              </div>
-            </div>
-            <div>
-              <a href="/glossary" class="btn-base-link btn-base-emerald" style="width:100%; box-sizing:border-box;">
-                Открыть AI-Глоссарий (250+ терминов) ↗
-              </a>
+        <!-- BLOCK 1: AI GLOSSARY (FEATURED) -->
+        <div class="base-card featured">
+          <div class="base-card-body">
+            <span class="base-card-tag" style="color:#34d399;">// БЛОК 01 · ЭНЦИКЛОПЕДИЯ</span>
+            <h2 class="base-card-title">Глоссарий & Энциклопедия по AI</h2>
+            <p class="base-card-desc">
+              250+ фундаментальных и прикладных терминов: Токены, Харнессы, Трансформеры, MCP, RAG, Vibe Coding, DPO, GRPO, рассуждающие модели и GEO.
+            </p>
+            <div class="base-items-list" style="color:#d4d4d8;">
+              <div class="base-item-row"><span class="base-item-bullet" style="background:#34d399;"></span> 12 тематических модулей с примерами</div>
+              <div class="base-item-row"><span class="base-item-bullet" style="background:#34d399;"></span> Мгновенный живой поиск по RU & EN</div>
+              <div class="base-item-row"><span class="base-item-bullet" style="background:#34d399;"></span> Техническая суть + применение в бизнесе</div>
             </div>
           </div>
+          <div class="base-card-actions">
+            <a href="/glossary" class="btn-base-link btn-base-emerald">
+              Открыть AI-Глоссарий (250+ терминов) ↗
+            </a>
+          </div>
+        </div>
 
-          <!-- BLOCK 2: SYSTEM PROMPTS -->
-          <div class="base-card">
-            <div>
-              <span class="base-card-tag" style="color:#6366f1;">// БЛОК 02 · ПРОМПТ-ИНЖИНИРИНГ</span>
-              <h2 class="base-card-title">Библиотека Системных Промптов</h2>
-              <p class="base-card-desc">
-                37 глубоких ролевых инструкций по стандарту Prompt-Forge v2.0 для ChatGPT, Claude, Gemini и DeepSeek. Маркетинг, B2B-продажи, юриспруденция, финансы и Vibe Coding.
-              </p>
-              <div class="base-items-list">
-                <div class="base-item-row"><span class="base-item-bullet" style="background:#6366f1;"></span> 37 готовых ролей с TOV-калибровкой</div>
-                <div class="base-item-row"><span class="base-item-bullet" style="background:#6366f1;"></span> Двуязычный переключатель RU / EN</div>
-                <div class="base-item-row"><span class="base-item-bullet" style="background:#6366f1;"></span> Копирование в 1 клик + теги категорий</div>
-              </div>
-            </div>
-            <div>
-              <a href="/prompts" class="btn-base-link btn-base-primary" style="width:100%; box-sizing:border-box;">
-                Перейти к 37 промптам ↗
-              </a>
+        <!-- BLOCK 2: SYSTEM PROMPTS -->
+        <div class="base-card">
+          <div class="base-card-body">
+            <span class="base-card-tag" style="color:#6366f1;">// БЛОК 02 · ПРОМПТ-ИНЖИНИРИНГ</span>
+            <h2 class="base-card-title">Библиотека Системных Промптов</h2>
+            <p class="base-card-desc">
+              37 глубоких ролевых инструкций по стандарту Prompt-Forge v2.0 для ChatGPT, Claude, Gemini и DeepSeek. Маркетинг, B2B-продажи, финансы и код.
+            </p>
+            <div class="base-items-list">
+              <div class="base-item-row"><span class="base-item-bullet" style="background:#6366f1;"></span> 37 готовых ролей с TOV-калибровкой</div>
+              <div class="base-item-row"><span class="base-item-bullet" style="background:#6366f1;"></span> Двуязычный переключатель RU / EN</div>
+              <div class="base-item-row"><span class="base-item-bullet" style="background:#6366f1;"></span> Копирование в 1 клик + теги категорий</div>
             </div>
           </div>
+          <div class="base-card-actions">
+            <a href="/prompts" class="btn-base-link btn-base-primary">
+              Перейти к 37 промптам ↗
+            </a>
+          </div>
+        </div>
 
-          <!-- BLOCK 3: CALCULATORS & FINMODELS -->
-          <div class="base-card">
-            <div>
-              <span class="base-card-tag" style="color:#ec4899;">// БЛОК 03 · ФИНАНСОВЫЙ ИНЖИНИРИНГ</span>
-              <h2 class="base-card-title">Калькуляторы & Финмодели</h2>
-              <p class="base-card-desc">
-                Интерактивные инструменты для предпринимателей и фрилансеров: расчет налогов УСН/НДС (налог сверху/внутри) и 5-летняя венчурная финмодель 5.0 Pro.
-              </p>
-              <div class="base-items-list">
-                <div class="base-item-row"><span class="base-item-bullet" style="background:#ec4899;"></span> Калькулятор налогов (УСН 6%, 7%, 9%, НДС)</div>
-                <div class="base-item-row"><span class="base-item-bullet" style="background:#ec4899;"></span> Финмодель 5.0 Pro (28 Unit-метрик, P&L)</div>
-                <div class="base-item-row"><span class="base-item-bullet" style="background:#ec4899;"></span> Моментальный экспорт расчетов</div>
-              </div>
-            </div>
-            <div>
-              <a href="/calculators" class="btn-base-link btn-base-primary" style="width:100%; box-sizing:border-box;">
-                Открыть хаб калькуляторов ↗
-              </a>
+        <!-- BLOCK 3: CALCULATORS & FINMODELS -->
+        <div class="base-card">
+          <div class="base-card-body">
+            <span class="base-card-tag" style="color:#ec4899;">// БЛОК 03 · ФИНАНСОВЫЙ ИНЖИНИРИНГ</span>
+            <h2 class="base-card-title">Калькуляторы & Финмодели</h2>
+            <p class="base-card-desc">
+              Интерактивные инструменты для бизнеса и фрилансеров: расчет налогов УСН/НДС (налог сверху/внутри) и 5-летняя венчурная финмодель 5.0 Pro.
+            </p>
+            <div class="base-items-list">
+              <div class="base-item-row"><span class="base-item-bullet" style="background:#ec4899;"></span> Калькулятор налогов (УСН 6%, 7%, 9%, НДС)</div>
+              <div class="base-item-row"><span class="base-item-bullet" style="background:#ec4899;"></span> Финмодель 5.0 Pro (28 Unit-метрик, P&L)</div>
+              <div class="base-item-row"><span class="base-item-bullet" style="background:#ec4899;"></span> Моментальный экспорт расчетов</div>
             </div>
           </div>
+          <div class="base-card-actions">
+            <a href="/calculators" class="btn-base-link btn-base-primary">
+              Открыть хаб калькуляторов ↗
+            </a>
+          </div>
+        </div>
 
-                  </div>
+      </div>
     </section>
       
   </main>
