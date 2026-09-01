@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ИИ-Автоматизация Бизнеса — Михаил Пузырёв</title>
+    <title>Нейросети для Бизнеса: Как освободить 20 часов в неделю — Михаил Пузырёв</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="image" href="pop_art_auto_hero.webp" type="image/webp">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="preload" as="image" href="pop_art_auto_hero_ru916.webp" type="image/webp">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Inter:wght@400;600;800&family=Bangers&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         :root {
@@ -17,10 +17,11 @@
             --pop-cyan: #00F0FF;
             --pop-green: #39FF14;
             --pop-purple: #B026FF;
+            --pop-red: #FF3333;
             --pop-white: #FFFFFF;
             --thick-border: 4px solid #000000;
-            --thin-border: 2px solid #000000;
-            --hard-shadow: 8px 8px 0px #000000;
+            --thin-border: 2.5px solid #000000;
+            --hard-shadow: 7px 7px 0px #000000;
             --hard-shadow-lg: 12px 12px 0px #000000;
             --hard-shadow-sm: 4px 4px 0px #000000;
             --card-opaque-dark: #15161E;
@@ -31,6 +32,7 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            cursor: default;
         }
 
         body {
@@ -43,6 +45,302 @@
             flex-direction: column;
             justify-content: space-between;
             position: relative;
+        }
+
+        /* Comic Pop-Art Custom Cursor */
+        .custom-cursor-dot {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 24px;
+            height: 24px;
+            background: var(--pop-yellow);
+            border: 3px solid #000000;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+            box-shadow: 3px 3px 0px #000000;
+            transition: width 0.15s ease, height 0.15s ease, background-color 0.15s ease;
+        }
+
+        .custom-cursor-dot::after {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: 6px;
+            height: 6px;
+            background: #FFFFFF;
+            border-radius: 50%;
+        }
+
+        .custom-cursor-dot.hovered {
+            width: 34px;
+            height: 34px;
+            background: var(--pop-pink);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        /* Comic Speech Bubble Tooltip with Smart Flipping */
+        .comic-speech-bubble {
+            position: fixed;
+            z-index: 99999;
+            pointer-events: none;
+            background: #FFFFFF;
+            color: #000000;
+            border: 3.5px solid #000000;
+            border-radius: 24px;
+            padding: 10px 18px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 1.05rem;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            box-shadow: 6px 6px 0px #000000;
+            opacity: 0;
+            transform: scale(0.7) rotate(-3deg);
+            transition: opacity 0.18s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.18s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-width: 280px;
+            text-align: center;
+            line-height: 1.25;
+            white-space: normal;
+        }
+
+        .comic-speech-bubble::before {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 22px;
+            border-width: 15px 15px 0 0;
+            border-style: solid;
+            border-color: #000000 transparent transparent transparent;
+            display: block;
+            width: 0;
+        }
+
+        .comic-speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 25px;
+            border-width: 11px 11px 0 0;
+            border-style: solid;
+            border-color: #FFFFFF transparent transparent transparent;
+            display: block;
+            width: 0;
+        }
+
+        .comic-speech-bubble.flip-x::before {
+            left: auto;
+            right: 22px;
+            border-width: 15px 0 0 15px;
+            border-color: #000000 transparent transparent transparent;
+        }
+
+        .comic-speech-bubble.flip-x::after {
+            left: auto;
+            right: 25px;
+            border-width: 11px 0 0 11px;
+            border-color: #FFFFFF transparent transparent transparent;
+        }
+
+        .comic-speech-bubble.flip-y::before {
+            bottom: auto;
+            top: -15px;
+            border-width: 0 15px 15px 0;
+            border-color: transparent transparent #000000 transparent;
+        }
+
+        .comic-speech-bubble.flip-y::after {
+            bottom: auto;
+            top: -10px;
+            border-width: 0 11px 11px 0;
+            border-color: transparent transparent #FFFFFF transparent;
+        }
+
+        .comic-speech-bubble.flip-x.flip-y::before {
+            left: auto;
+            right: 22px;
+            border-width: 0 0 15px 15px;
+            border-color: transparent transparent #000000 transparent;
+        }
+
+        .comic-speech-bubble.flip-x.flip-y::after {
+            left: auto;
+            right: 25px;
+            border-width: 0 0 11px 11px;
+            border-color: transparent transparent #FFFFFF transparent;
+        }
+
+        .comic-speech-bubble.visible {
+            opacity: 1;
+            transform: scale(1) rotate(-1.5deg);
+        }
+
+        /* --- Pop-Art Modal Popup System --- */
+        .pop-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(7, 8, 11, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 100000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 20px;
+        }
+
+        .pop-modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .pop-modal-card {
+            background: #181924;
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow-lg);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 680px;
+            padding: 32px 36px;
+            position: relative;
+            transform: scale(0.9) rotate(-1deg);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            color: #FFFFFF;
+        }
+
+        .pop-modal-overlay.active .pop-modal-card {
+            transform: scale(1) rotate(0deg);
+        }
+
+        .pop-modal-close-btn {
+            position: absolute;
+            top: 18px;
+            right: 20px;
+            background: var(--pop-pink);
+            color: #FFFFFF;
+            border: 3px solid #000000;
+            border-radius: 12px;
+            box-shadow: 3px 3px 0px #000000;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: transform 0.15s ease, background-color 0.15s ease;
+        }
+
+        .pop-modal-close-btn:hover {
+            transform: scale(1.1) rotate(5deg);
+            background: var(--pop-red);
+        }
+
+        .pop-modal-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .pop-modal-icon {
+            min-width: 58px;
+            width: 58px;
+            height: 58px;
+            border-radius: 14px;
+            border: 3px solid #000000;
+            box-shadow: 3px 3px 0px #000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            background: var(--pop-yellow);
+            flex-shrink: 0;
+        }
+
+        .pop-modal-badge {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 0.85rem;
+            background: var(--pop-cyan);
+            color: #000000;
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 2px solid #000000;
+            box-shadow: 2px 2px 0px #000000;
+            display: inline-block;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .pop-modal-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.85rem;
+            font-weight: 900;
+            color: #FFFFFF;
+            line-height: 1.2;
+            text-transform: uppercase;
+        }
+
+        .pop-modal-body {
+            font-size: 1.22rem;
+            line-height: 1.7;
+            color: #E2E8F0;
+            border-top: 2px dashed rgba(255,255,255,0.15);
+            padding-top: 18px;
+            margin-bottom: 24px;
+        }
+
+        .pop-modal-body strong {
+            color: var(--pop-yellow);
+        }
+
+        .pop-modal-body ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .pop-modal-body li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .pop-modal-footer {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .pop-modal-btn {
+            background: var(--pop-yellow);
+            color: #000000;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 1rem;
+            padding: 12px 24px;
+            border: 3px solid #000000;
+            border-radius: 12px;
+            box-shadow: 4px 4px 0px #000000;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .pop-modal-btn:hover {
+            transform: translate(-2px, -2px) scale(1.03);
+            box-shadow: 6px 6px 0px #000000;
         }
 
         .bg-container {
@@ -98,6 +396,7 @@
             background-size: 20px 20px;
         }
 
+        /* Presentation Canvas */
         .presentation-container {
             position: relative;
             z-index: 10;
@@ -105,11 +404,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2vh 80px 1vh 80px;
-            max-width: 1440px;
+            padding: 2vh 3vw;
+            max-width: 1620px;
+            width: 95vw;
             margin: 0 auto;
-            width: 100%;
-            height: calc(100vh - 85px);
+            height: calc(100vh - 72px);
         }
 
         .slide {
@@ -117,17 +416,26 @@
             width: 100%;
             height: 100%;
             display: grid;
-            grid-template-columns: 1.2fr 1fr;
+            grid-template-columns: 1.35fr 1fr;
             gap: 3.5rem;
             align-items: center;
             opacity: 0;
-            transform: scale(0.96) rotate(-0.5deg);
+            transform: scale(0.97) rotate(-0.5deg);
             pointer-events: none;
-            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .slide.layout-flipped {
-            grid-template-columns: 1fr 1.2fr;
+            grid-template-columns: 1fr 1.35fr;
+        }
+
+        .slide.layout-fullwidth {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 1.2rem;
+            width: 100%;
         }
 
         .slide.active {
@@ -140,101 +448,284 @@
             font-family: 'Outfit', sans-serif;
             text-transform: uppercase;
             font-weight: 900;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.01em;
             color: #FFFFFF;
         }
 
+        /* Spacious Titles */
         .pop-title-main {
-            font-size: clamp(3.2rem, 6.8vw, 6.2rem);
-            line-height: 0.95;
-            -webkit-text-stroke: 3px #000000;
-            text-shadow: 8px 8px 0px var(--pop-pink);
-            margin-bottom: 2rem;
-            transform: rotate(-2deg);
+            font-size: clamp(3rem, 4.8vw, 4.8rem);
+            line-height: 1.15;
+            -webkit-text-stroke: 2.5px #000000;
+            text-shadow: 7px 7px 0px var(--pop-pink);
+            margin-top: 0.4rem;
+            margin-bottom: 1.6rem;
+            transform: rotate(-1.5deg);
         }
 
         .pop-title-section {
-            font-size: clamp(2.4rem, 4.8vw, 4.2rem);
-            line-height: 1;
-            -webkit-text-stroke: 2.5px #000000;
+            font-size: clamp(2.4rem, 3.8vw, 3.8rem);
+            line-height: 1.2;
+            -webkit-text-stroke: 2px #000000;
             text-shadow: 6px 6px 0px var(--pop-cyan);
+            margin-top: 0.3rem;
             margin-bottom: 1.4rem;
         }
 
         .pop-subtitle {
-            font-size: clamp(1.1rem, 2vw, 1.6rem);
-            font-weight: 700;
+            font-size: clamp(1.05rem, 1.4vw, 1.35rem);
+            font-weight: 900;
             background: var(--pop-yellow);
             color: #000000;
             padding: 8px 18px;
             display: inline-block;
-            border: var(--thin-border);
+            border: var(--thick-border);
             box-shadow: var(--hard-shadow-sm);
             transform: rotate(1deg);
-            margin-bottom: 1.4rem;
+            margin-bottom: 1.1rem;
+            letter-spacing: 0.03em;
         }
 
         .pop-text-bubble {
             background: var(--card-opaque-dark);
             border: var(--thick-border);
-            border-radius: 16px;
-            padding: 22px 26px;
+            border-radius: 18px;
+            padding: 26px 30px;
             color: #FFFFFF;
-            font-size: clamp(1.1rem, 1.5vw, 1.4rem);
-            line-height: 1.6;
+            font-size: clamp(1.2rem, 1.55vw, 1.55rem);
+            line-height: 1.75;
             box-shadow: var(--hard-shadow);
-            margin-bottom: 1.2rem;
+            margin-bottom: 1.4rem;
         }
 
         .pop-text-bubble strong {
             color: var(--pop-yellow);
-            font-weight: 800;
+            font-weight: 900;
         }
 
         .about-cards-list {
             display: flex;
             flex-direction: column;
-            gap: 0.7rem;
+            gap: 1.1rem;
             margin-top: 0.6rem;
         }
 
         .about-sticker {
             background: var(--card-opaque-dark);
-            border: var(--thin-border);
+            border: var(--thick-border);
             box-shadow: var(--hard-shadow-sm);
-            padding: 10px 16px;
-            border-radius: 12px;
+            padding: 16px 22px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 0.95rem;
-            line-height: 1.4;
-            transition: transform 0.2s ease;
+            gap: 18px;
+            font-size: clamp(1.15rem, 1.45vw, 1.45rem);
+            line-height: 1.6;
+            color: #FFFFFF;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+            cursor: pointer;
+        }
+
+        .about-sticker strong {
+            color: var(--pop-yellow);
+            font-weight: 900;
         }
 
         .about-sticker:hover {
-            transform: translateX(4px);
+            transform: translateX(6px);
+            border-color: var(--pop-cyan);
         }
 
         .sticker-icon {
             background: var(--pop-yellow);
             color: #000000;
-            width: 34px;
-            height: 34px;
-            border-radius: 8px;
-            border: 2px solid #000000;
+            min-width: 52px;
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            border: 2.5px solid #000000;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1.45rem;
+            font-weight: 900;
+            flex-shrink: 0;
+            box-shadow: 2px 2px 0px #000000;
+        }
+
+        /* 3 Thieves / 3 Steps Visual Cards */
+        .thieves-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.1rem;
+            margin-top: 0.6rem;
+        }
+
+        .thief-card {
+            background: #191B24;
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow-sm);
+            border-radius: 16px;
+            padding: 16px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .thief-card:hover {
+            transform: translateX(6px);
+            border-color: var(--pop-yellow);
+        }
+
+        .thief-left {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .thief-icon {
+            min-width: 52px;
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            border: 2.5px solid #000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.45rem;
+            box-shadow: 2px 2px 0px #000000;
             flex-shrink: 0;
         }
 
+        .thief-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .thief-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 1.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            line-height: 1.3;
+        }
+
+        .thief-desc {
+            font-size: 1.08rem;
+            color: #E2E8F0;
+            line-height: 1.5;
+        }
+
+        .thief-badge {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 0.92rem;
+            padding: 8px 14px;
+            border-radius: 10px;
+            border: 2px solid #000000;
+            box-shadow: 2px 2px 0px #000000;
+            white-space: nowrap;
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }
+
+        /* 5 Red Zone Columns Grid */
+        .redzone-5col-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1.2rem;
+            width: 100%;
+            margin-top: 0.8rem;
+        }
+
+        .redzone-card {
+            background: #161722;
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow);
+            border-radius: 18px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .redzone-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--hard-shadow-lg);
+            border-color: var(--pop-yellow);
+        }
+
+        .redzone-img-box {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            border-bottom: var(--thick-border);
+            background: #000;
+            position: relative;
+        }
+
+        .redzone-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .redzone-card:hover .redzone-img {
+            transform: scale(1.06);
+        }
+
+        .redzone-content {
+            padding: 18px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .redzone-badge {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 0.82rem;
+            background: var(--pop-red);
+            color: #FFFFFF;
+            padding: 4px 8px;
+            border-radius: 6px;
+            border: 2px solid #000000;
+            box-shadow: 2px 2px 0px #000000;
+            display: inline-block;
+            align-self: flex-start;
+            text-transform: uppercase;
+        }
+
+        .redzone-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 1.18rem;
+            color: var(--pop-yellow);
+            line-height: 1.25;
+            text-transform: uppercase;
+        }
+
+        .redzone-desc {
+            font-size: 0.98rem;
+            color: #E2E8F0;
+            line-height: 1.45;
+        }
+
+        /* Large 9:16 Vertical Poster Frame */
         .pop-image-wrapper {
             position: relative;
             width: 100%;
             height: 100%;
-            max-height: 520px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -245,15 +736,19 @@
             box-shadow: var(--hard-shadow-lg);
             border-radius: 20px;
             overflow: hidden;
-            width: 100%;
-            height: 100%;
-            transform: rotate(2deg);
+            aspect-ratio: 9 / 16;
+            height: calc(100vh - 130px);
+            max-height: 760px;
+            width: auto;
+            max-width: 440px;
+            margin: auto;
+            transform: rotate(1.2deg);
             transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             background: #000;
         }
 
         .slide.active .pop-frame {
-            transform: rotate(-1deg) scale(1.02);
+            transform: rotate(-0.8deg) scale(1.02);
         }
 
         .pop-img {
@@ -265,29 +760,29 @@
 
         .pop-badges {
             display: flex;
-            gap: 0.8rem;
+            gap: 1rem;
             flex-wrap: wrap;
             margin-top: 1.2rem;
         }
 
         .pop-badge {
             font-family: 'Outfit', sans-serif;
-            font-weight: 700;
+            font-weight: 900;
             background: #FFFFFF;
             color: #000000;
-            border: var(--thin-border);
-            border-radius: 8px;
-            padding: 6px 14px;
-            font-size: 0.95rem;
+            border: var(--thick-border);
+            border-radius: 12px;
+            padding: 8px 16px;
+            font-size: 1.05rem;
             box-shadow: var(--hard-shadow-sm);
             text-transform: uppercase;
         }
 
         .pop-cta-group {
             display: flex;
-            gap: 12px;
+            gap: 14px;
             flex-wrap: wrap;
-            margin-top: 14px;
+            margin-top: 18px;
         }
 
         .pop-action-btn {
@@ -299,8 +794,8 @@
             color: #000000 !important;
             font-family: 'Outfit', sans-serif;
             font-weight: 900;
-            font-size: 0.92rem;
-            padding: 10px 18px;
+            font-size: 1rem;
+            padding: 12px 20px;
             border: 3px solid #000000;
             border-radius: 12px;
             box-shadow: 4px 4px 0px #000000;
@@ -312,8 +807,8 @@
         }
 
         .pop-action-btn:hover {
-            transform: translate(-3px, -3px) scale(1.02);
-            box-shadow: 7px 7px 0px #000000;
+            transform: translate(-2px, -2px) scale(1.03);
+            box-shadow: 6px 6px 0px #000000;
         }
 
         .pop-action-btn.btn-cyan {
@@ -326,28 +821,30 @@
             color: #FFFFFF !important;
         }
 
-        .pop-action-btn.btn-green {
-            background: var(--pop-green);
-            color: #000000 !important;
-        }
-
+        /* Spacious QR Block */
         .qrs-block {
             display: flex;
-            gap: 1.2rem;
-            margin-top: 1.2rem;
+            gap: 2.2rem;
+            margin-top: 1.4rem;
         }
 
         .qr-card-pop {
             background: var(--pop-yellow);
             border: var(--thick-border);
             box-shadow: var(--hard-shadow);
-            padding: 10px 12px;
-            border-radius: 16px;
+            padding: 12px 16px;
+            border-radius: 18px;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 6px;
             transform: rotate(-1.5deg);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .qr-card-pop:hover {
+            transform: translateY(-4px) rotate(0deg) scale(1.04);
+            box-shadow: 10px 10px 0px #000000;
         }
 
         .qr-card-pop:nth-child(2) {
@@ -355,16 +852,26 @@
             transform: rotate(1.5deg);
         }
 
+        .qr-card-pop:nth-child(2):hover {
+            transform: translateY(-4px) rotate(0deg) scale(1.04);
+            box-shadow: 10px 10px 0px #000000;
+        }
+
         .qr-card-pop:nth-child(3) {
             background: var(--pop-cyan);
             transform: rotate(-1deg);
+        }
+
+        .qr-card-pop:nth-child(3):hover {
+            transform: translateY(-4px) rotate(0deg) scale(1.04);
+            box-shadow: 10px 10px 0px #000000;
         }
 
         .qr-container-pop {
             background: white;
             padding: 6px;
             border: var(--thin-border);
-            border-radius: 8px;
+            border-radius: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -372,9 +879,9 @@
 
         .qr-card-pop span {
             font-family: 'Outfit', sans-serif;
-            font-weight: 700;
+            font-weight: 900;
             color: #000000;
-            font-size: 0.78rem;
+            font-size: 0.88rem;
             text-align: center;
             text-transform: uppercase;
         }
@@ -387,8 +894,8 @@
             color: #FFFFFF;
             font-family: 'Outfit', sans-serif;
             font-weight: 900;
-            font-size: 0.8rem;
-            padding: 6px 8px;
+            font-size: 0.88rem;
+            padding: 6px 12px;
             border: 2px solid #000000;
             border-radius: 8px;
             box-shadow: 2px 2px 0px rgba(0,0,0,0.3);
@@ -422,7 +929,7 @@
             background: #1A1B26;
             color: #FFFFFF;
             border: 2px solid #3A3D52;
-            padding: 6px 12px;
+            padding: 7px 12px;
             border-radius: 8px;
             font-family: 'Outfit', sans-serif;
             font-weight: 700;
@@ -451,14 +958,14 @@
 
         .pop-fullscreen-btn {
             position: fixed;
-            top: 20px;
+            top: 18px;
             right: 25px;
             z-index: 9999;
             background: var(--pop-cyan);
             color: #000000;
             font-family: 'Outfit', sans-serif;
             font-weight: 900;
-            font-size: 0.85rem;
+            font-size: 0.88rem;
             padding: 8px 16px;
             border: 3px solid #000000;
             border-radius: 10px;
@@ -483,8 +990,8 @@
             border: 3px solid #000000;
             box-shadow: 4px 4px 0px #000000;
             border-radius: 12px;
-            width: 46px;
-            height: 46px;
+            width: 44px;
+            height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -498,22 +1005,48 @@
             box-shadow: 6px 6px 0px #000000;
         }
 
-        .pop-nav-prev { left: 20px; }
-        .pop-nav-next { right: 20px; }
+        .pop-nav-prev { left: 24px; }
+        .pop-nav-next { right: 24px; }
 
         @media (max-width: 900px) {
             body { overflow-y: auto; height: auto; min-height: 100vh; }
-            .presentation-container { height: auto; padding: 70px 16px 90px 16px; }
+            .presentation-container { height: auto; padding: 70px 16px 90px 16px; width: 100%; }
             .slide { position: relative; display: none; grid-template-columns: 1fr !important; gap: 1.5rem; opacity: 1; transform: none; }
             .slide.active { display: flex; flex-direction: column; }
+            .redzone-5col-grid { grid-template-columns: 1fr; }
             .pop-nav-arrow { display: none !important; }
             .footer-controls-names { display: none !important; }
+            .custom-cursor-dot, .comic-speech-bubble { display: none !important; }
         }
     </style>
 </head>
 <body>
 
-    <button class="pop-fullscreen-btn" id="fs-btn" onclick="toggleCustomFullscreen()">[ ⛶ НА ВЕСЬ ЭКРАН ]</button>
+    <!-- Custom Comic Pop-Art Cursor & Speech Bubble -->
+    <div class="custom-cursor-dot" id="cursor-dot"></div>
+    <div class="comic-speech-bubble" id="speech-bubble"></div>
+
+    <!-- Pop-up Modal Window -->
+    <div class="pop-modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+        <div class="pop-modal-card" id="modal-card">
+            <button class="pop-modal-close-btn" onclick="closeModalDirect()">✕</button>
+            <div class="pop-modal-header">
+                <div class="pop-modal-icon" id="modal-icon">💡</div>
+                <div>
+                    <span class="pop-modal-badge" id="modal-badge">ПОДРОБНОСТИ</span>
+                    <h3 class="pop-modal-title" id="modal-title">Заголовок</h3>
+                </div>
+            </div>
+            <div class="pop-modal-body" id="modal-body">
+                Текст описания
+            </div>
+            <div class="pop-modal-footer">
+                <button class="pop-modal-btn" onclick="closeModalDirect()">Понятно, закрыть ✓</button>
+            </div>
+        </div>
+    </div>
+
+    <button class="pop-fullscreen-btn" id="fs-btn" onclick="toggleCustomFullscreen()">⛶ НА ВЕСЬ ЭКРАН</button>
 
     <div class="pop-nav-arrow pop-nav-prev" onclick="prevSlide()">❮</div>
     <div class="pop-nav-arrow pop-nav-next" onclick="nextSlide()">❯</div>
@@ -529,52 +1062,52 @@
         <!-- Slide 0: Hero -->
         <div class="slide active title-slide" id="slide-0">
             <div class="slide-title-wrapper">
-                <span class="pop-subtitle">ПРАКТИЧЕСКИЙ ЛЕКТОРИЙ: ОЦИФРОВКА БИЗНЕСА</span>
-                <h1 class="pop-title-main">ИИ-АВТОМАТИЗАЦИЯ</h1>
-                <div class="pop-text-bubble">
-                    Что внедрять, что автоматизировать <strong>категорически нельзя</strong>, и как оцифровать бизнес-процессы силами нейросетей за дни вместо месяцев.
+                <span class="pop-subtitle" data-tip="Практика без воды!">ПРАКТИЧЕСКИЙ ЛЕКТОРИЙ: ОЦИФРОВКА БИЗНЕСА</span>
+                <h1 class="pop-title-main" data-tip="Главная тема лекции!">НЕЙРОСЕТИ<br>ДЛЯ БИЗНЕСА</h1>
+                <div class="pop-text-bubble" data-tip="20 часов чистой свободы!">
+                    Как освободить <strong>20 часов в неделю</strong> от рутины, ускорить продажи и запускать новые идеи без найма программистов и заумных терминов.
                 </div>
-                <div style="font-family: 'Outfit', sans-serif; font-size: 1.15rem; font-weight: 700; color: var(--pop-yellow); text-transform: uppercase;">
+                <div style="font-family: 'Outfit', sans-serif; font-size: 1.45rem; font-weight: 800; color: var(--pop-yellow); text-transform: uppercase; margin-top: 1rem;" data-tip="Автор и спикер">
                     Спикер: Михаил Пузырёв, эксперт по внедрению нейросетей
                 </div>
             </div>
             <div class="pop-image-wrapper">
                 <div class="pop-frame">
-                    <img src="pop_art_auto_hero.webp" alt="ИИ-Автоматизация Бизнеса" class="pop-img" loading="eager" fetchpriority="high">
+                    <img src="pop_art_auto_hero_ru916.webp" alt="Нейросети для бизнеса" class="pop-img" loading="eager" fetchpriority="high">
                 </div>
             </div>
         </div>
 
-        <!-- Slide 1: Route / Agenda -->
+        <!-- Slide 1: Route 60 min -->
         <div class="slide" id="slide-1">
             <div>
-                <h2 class="pop-title-section" style="text-shadow: 6px 6px 0px var(--pop-pink);">Маршрут лекции</h2>
-                <div class="about-cards-list" style="gap: 0.6rem;">
-                    <div class="about-sticker">
-                        <div class="sticker-icon" style="background: var(--pop-yellow);">15м</div>
-                        <span><strong>1. Главный закон:</strong> Почему «хаос оцифровать нельзя» и ROI-фильтр для собственника.</span>
+                <h2 class="pop-title-section" style="text-shadow: 6px 6px 0px var(--pop-pink);">План на 60 минут</h2>
+                <div class="about-cards-list">
+                    <div class="about-sticker" style="cursor: default;">
+                        <div class="sticker-icon" style="background: var(--pop-yellow);">10м</div>
+                        <span><strong>1. Кто такой ИИ:</strong> «Стажёр-отличник» и 3 главных вора времени в бизнесе.</span>
                     </div>
-                    <div class="about-sticker">
-                        <div class="sticker-icon" style="background: var(--pop-cyan);">25м</div>
-                        <span><strong>2. Продажи & CRM:</strong> Мониторинг Telegram, DaData по фото и авто-сметы из голосовых.</span>
+                    <div class="about-sticker" style="cursor: default;">
+                        <div class="sticker-icon" style="background: var(--pop-cyan);">15м</div>
+                        <span><strong>2. Продажи:</strong> Радар клиентов в Telegram, реквизиты по фото и КП за 1 минуту.</span>
                     </div>
-                    <div class="about-sticker">
-                        <div class="sticker-icon" style="background: var(--pop-pink);">20м</div>
-                        <span><strong>3. Бэк-офис & HR:</strong> DocFlow OCR счетов, аудит договоров и скоринг 300+ резюме.</span>
+                    <div class="about-sticker" style="cursor: default;">
+                        <div class="sticker-icon" style="background: var(--pop-green);">10м</div>
+                        <span><strong>3. Документы & HR:</strong> Чек сразу в учет, аудит чужих договоров и отбор резюме.</span>
                     </div>
-                    <div class="about-sticker">
-                        <div class="sticker-icon" style="background: var(--pop-green);">25м</div>
-                        <span><strong>4. Маркетинг & Контент-Заводы:</strong> Ресайклинг 1 ➔ 30, карусели, AI Reels и Aipsy.press.</span>
+                    <div class="about-sticker" style="cursor: default;">
+                        <div class="sticker-icon" style="background: var(--pop-pink);">15м</div>
+                        <span><strong>4. Маркетинг & Запуск:</strong> Сайты за 2 часа, калькуляторы и контент без агентств.</span>
                     </div>
-                    <div class="about-sticker">
-                        <div class="sticker-icon" style="background: var(--pop-purple); color:#fff;">15м</div>
-                        <span><strong>5. Красная зона:</strong> 5 табу, где ИИ внедрять запрещено или смертельно опасно.</span>
+                    <div class="about-sticker" style="cursor: default;">
+                        <div class="sticker-icon" style="background: var(--pop-purple); color:#fff;">10м</div>
+                        <span><strong>5. Опасности & Старт:</strong> Где ИИ опасен и с чего начать уже в понедельник.</span>
                     </div>
                 </div>
             </div>
             <div class="pop-image-wrapper">
                 <div class="pop-frame" style="transform: rotate(-1.5deg);">
-                    <img src="pop_art_route.webp" alt="Agenda" class="pop-img" loading="lazy">
+                    <img src="pop_art_route_ru916.webp" alt="План" class="pop-img" loading="lazy">
                 </div>
             </div>
         </div>
@@ -582,37 +1115,37 @@
         <!-- Slide 2: Speaker -->
         <div class="slide" id="slide-2">
             <div>
-                <h2 class="pop-title-section" style="text-shadow: 6px 6px 0px var(--pop-yellow); margin-bottom: 0.8rem;">Михаил Пузырёв</h2>
+                <h2 class="pop-title-section" style="text-shadow: 6px 6px 0px var(--pop-yellow); margin-bottom: 0.6rem;" data-tip="О спикере">Михаил Пузырёв</h2>
                 <div class="about-cards-list">
-                    <div class="about-sticker">
+                    <div class="about-sticker" data-tip="Рекордная скорость!" onclick="openPopup('speaker_1', '38+ СЕРВИСОВ ЗА 2 МЕСЯЦА', 'РЕЗУЛЬТАТЫ', '🚀', '• Запустил десятки работающих систем: Telegram-боты, интерактивные калькуляторы, корпоративные базы знаний и медиа-ресурсы.<br><br>• Полный цикл: от формулировки гипотезы до боевого деплоя и первых платежей клиентов без привлечения сторонних разработчиков.')">
                         <div class="sticker-icon">🚀</div>
-                        <span>Реализовал за 2 месяца <strong>более 38 продуктов и автоматизаций</strong> для себя и клиентов.</span>
+                        <span>Запустил за 2 месяца <strong>более 38 работающих сервисов</strong> и систем для бизнеса.</span>
                     </div>
-                    <div class="about-sticker">
+                    <div class="about-sticker" data-tip="Инвестиции и стартапы" onclick="openPopup('speaker_2', 'БОЛЬШАЯ МЕДВЕДИЦА', 'ВЕНЧУР', '🐻', '• Член правления Ассоциации венчурных инвесторов «Большая медведица».<br><br>• Экспертиза в оценке технологических и бизнес-моделей, отборе масштабируемых проектов и структурировании сделок.')">
                         <div class="sticker-icon" style="background: var(--pop-pink);">🐻</div>
                         <span>Член правления Ассоциации венчурных инвесторов <strong>«Большая медведица»</strong>.</span>
                     </div>
-                    <div class="about-sticker">
+                    <div class="about-sticker" data-tip="Реальная практика!" onclick="openPopup('speaker_3', 'ОЦИФРОВКА БИЗНЕС-ПРОЦЕССОВ', 'ПРАКТИКА', '🛠️', '• Внедрение практического ИИ: от обработки лидов в CRM до автоматического разбора актов и выписок.<br><br>• Фокус на измеримом результате: сокращение фонда оплаты труда, устранение ошибок человеческого фактора и рост выручки.')">
                         <div class="sticker-icon" style="background: var(--pop-green);">🛠️</div>
-                        <span>Разработчик и интегратор ИИ-решений, автоматизирующих рутину в B2B и EdTech.</span>
+                        <span>Автоматизирую рутину в реальном бизнесе: от отделов продаж до документооборота.</span>
                     </div>
-                    <div class="about-sticker">
+                    <div class="about-sticker" data-tip="Глубокая насмотренность!" onclick="openPopup('speaker_4', 'АУДИТ 3000+ КОМПАНИЙ', 'ОПЫТ', '💡', '• За годы трекинга и инвестиционного анализа разобрал более 3000 бизнесов и стартапов.<br><br>• Точно знаю ключевые узкие горлышки компаний: где утекают лиды, где сотрудники перегружены механической работой и как это устранить за дни.')">
                         <div class="sticker-icon" style="background: var(--pop-yellow);">💡</div>
-                        <span><strong>Насмотренность: более 3000 стартапов и бизнесов</strong> с их проблемами и решениями.</span>
+                        <span><strong>Разобрал 3000+ стартапов и компаний:</strong> знаю, где теряются деньги и время.</span>
                     </div>
                 </div>
                 <div class="qrs-block">
-                    <div class="qr-card-pop">
+                    <div class="qr-card-pop" data-tip="Личный чат!">
                         <div class="qr-container-pop" id="qr-personal"></div>
                         <span>Telegram<br>(@michael_sage)</span>
                         <a href="https://t.me/michael_sage" target="_blank" class="pop-qr-btn">Написать 💬</a>
                     </div>
-                    <div class="qr-card-pop">
+                    <div class="qr-card-pop" data-tip="Канал про бизнес и ИИ!">
                         <div class="qr-container-pop" id="qr-channel"></div>
                         <span>Канал<br>(@uncrn_sage)</span>
                         <a href="https://t.me/uncrn_sage" target="_blank" class="pop-qr-btn">Читать 📢</a>
                     </div>
-                    <div class="qr-card-pop">
+                    <div class="qr-card-pop" data-tip="Портфолио проектов!">
                         <div class="qr-container-pop" id="qr-site"></div>
                         <span>Сайт<br>(a-sage.ru)</span>
                         <a href="https://a-sage.ru" target="_blank" class="pop-qr-btn">Перейти 🌐</a>
@@ -621,144 +1154,185 @@
             </div>
             <div class="pop-image-wrapper">
                 <div class="pop-frame" style="transform: rotate(-2deg);">
-                    <img src="mikhail_pop_art.webp" alt="Mikhail Puzyrev" class="pop-img" loading="lazy">
+                    <img src="mikhail_pop_art.webp" alt="Михаил Пузырёв" class="pop-img" loading="lazy">
                 </div>
             </div>
         </div>
 
-        <!-- Slide 3: Chaos Law -->
+        <!-- Slide 3: 3 Time Thieves Visual Blocks -->
         <div class="slide" id="slide-3">
             <div>
-                <span class="pop-subtitle" style="background: var(--pop-pink);">ЧАСТЬ 1. ГЛАВНЫЙ ЗАКОН</span>
-                <h2 class="pop-title-section" style="margin-top: 0.6rem;">Хаос оцифровать нельзя</h2>
-                <div class="pop-text-bubble">
-                    Если процесс не описан текстом на бумаге и не работает руками — <strong>ИИ только ускорит производство хаоса</strong>.
-                    <br><br>
-                    <strong>3 критерия окупаемости ИИ (ROI-фильтр):</strong>
-                    <br>
-                    1. <strong>Повторяемость:</strong> процесс происходит от 5 раз в день.
-                    <br>
-                    2. <strong>Цифровой след:</strong> вход и выход оцифрованы (чат, почта, CRM, PDF).
-                    <br>
-                    3. <strong>Низкая цена разовой ошибки</strong> или наличие Харнесса/человека в контуре.
+                <span class="pop-subtitle" style="background: var(--pop-pink);" data-tip="Где теряются деньги?">ЧАСТЬ 1. ГЛАВНЫЕ ПОТЕРИ</span>
+                <h2 class="pop-title-section" style="margin-top: 0.3rem;" data-tip="Рутина убивает рост!">3 Вора Времени в Бизнесе</h2>
+                
+                <div class="thieves-grid">
+                    <!-- Thief 1 -->
+                    <div class="thief-card" data-tip="Перенос вручную!" onclick="openPopup('thief_1', '1. РУЧНОЙ ПЕРЕНОС ДАННЫХ', 'ПОТЕРИ: 5 ЧАСОВ В ДЕНЬ', '✍️', '• <strong>В чем боль:</strong> менеджеры копируют контакты из Telegram/WhatsApp в CRM, бухгалтеры перебивают реквизиты из PDF-счетов в 1С.<br><br>• <strong>Последствия:</strong> опечатки в ИНН, потерянные заявки, раздражение сотрудников.<br><br>• <strong>Решение ИИ:</strong> фото или текст сообщения мгновенно преобразуются в готовую карточку сделки за 2 секунды.')">
+                        <div class="thief-left">
+                            <div class="thief-icon" style="background: var(--pop-red); color: #fff;">✍️</div>
+                            <div class="thief-info">
+                                <div class="thief-title" style="color: var(--pop-yellow);">1. Ручной перенос данных</div>
+                                <div class="thief-desc">Перебивание из чатов в CRM, из счетов в Excel. Теряются данные и фокус.</div>
+                            </div>
+                        </div>
+                        <div class="thief-badge" style="background: var(--pop-red); color: #fff;">-5 ч / день</div>
+                    </div>
+
+                    <!-- Thief 2 -->
+                    <div class="thief-card" data-tip="Одно и то же!" onclick="openPopup('thief_2', '2. ОДНОТИПНЫЕ ОТВЕТЫ', 'ВЫГОРАНИЕ КОМАНДЫ', '💬', '• <strong>В чем боль:</strong> 80% входящих запросов — это базовые вопросы: «сколько стоит?», «где посмотреть прайс?», «какие сроки поставки?».<br><br>• <strong>Последствия:</strong> квалифицированные продавцы превращаются в автоответчики и выгорают.<br><br>• <strong>Решение ИИ:</strong> умный ИИ-консультант в чате знает всю базу знаний компании и мгновенно отвечает на типовые вопросы в режиме 24/7.')">
+                        <div class="thief-left">
+                            <div class="thief-icon" style="background: var(--pop-yellow); color: #000;">💬</div>
+                            <div class="thief-info">
+                                <div class="thief-title" style="color: var(--pop-cyan);">2. Однотипные ответы</div>
+                                <div class="thief-desc">50 раз в день отвечать клиентам и стажерам на базовые типовые вопросы.</div>
+                            </div>
+                        </div>
+                        <div class="thief-badge" style="background: var(--pop-yellow); color: #000;">Выгорание</div>
+                    </div>
+
+                    <!-- Thief 3 -->
+                    <div class="thief-card" data-tip="Долгое ожидание!" onclick="openPopup('thief_3', '3. НЕДЕЛИ ОЖИДАНИЯ', 'СЛИВ ГОРЯЧИХ ЛИДОВ', '⏳', '• <strong>В чем боль:</strong> клиент просит коммерческое предложение или расчет сметы — менеджер готовит его 2 дня. Запуск сайта занимает месяц.<br><br>• <strong>Последствия:</strong> пока компания считает смету, клиент покупает у конкурента с мгновенным сервисом.<br><br>• <strong>Решение ИИ:</strong> генерация КП за 60 секунд из голосового сообщения и запуск тестовых лендингов за 2 часа.')">
+                        <div class="thief-left">
+                            <div class="thief-icon" style="background: var(--pop-cyan); color: #000;">⏳</div>
+                            <div class="thief-info">
+                                <div class="thief-title" style="color: var(--pop-pink);">3. Недели ожидания</div>
+                                <div class="thief-desc">Ждать сайт месяц, расчет сметы 2 дня, правки неделями от подрядчиков.</div>
+                            </div>
+                        </div>
+                        <div class="thief-badge" style="background: var(--pop-cyan); color: #000;">Слив лидов</div>
+                    </div>
                 </div>
-                <div class="pop-badges">
-                    <div class="pop-badge">ROI-фильтр</div>
-                    <div class="pop-badge">Ground Truth</div>
-                    <div class="pop-badge">Контроль человеком</div>
+
+                <div class="pop-badges" style="margin-top: 1.2rem;">
+                    <div class="pop-badge" data-tip="Без зарплаты и отпуска">Стажёр-отличник 24/7</div>
+                    <div class="pop-badge" data-tip="Простые команды">Понимает русский язык</div>
+                    <div class="pop-badge" data-tip="Без программистов">Без кода</div>
                 </div>
             </div>
             <div class="pop-image-wrapper">
                 <div class="pop-frame" style="transform: rotate(2deg);">
-                    <img src="pop_art_chaos_law.webp" alt="Хаос против Системы" class="pop-img" loading="lazy">
+                    <img src="pop_art_chaos_law_ru916.webp" alt="Воры времени" class="pop-img" loading="lazy">
                 </div>
             </div>
         </div>
 
-        <!-- Slide 4: Sales Automation -->
+        <!-- Slide 4: Sales -->
         <div class="slide layout-flipped" id="slide-4">
             <div class="pop-image-wrapper">
                 <div class="pop-frame" style="transform: rotate(-1.5deg);">
-                    <img src="pop_art_sales_auto.webp" alt="Отдел Продаж" class="pop-img" loading="lazy">
+                    <img src="pop_art_sales_auto_ru916.webp" alt="Продажи" class="pop-img" loading="lazy">
                 </div>
             </div>
             <div>
-                <span class="pop-subtitle" style="background: var(--pop-cyan);">ЧАСТЬ 2. ОТДЕЛ ПРОДАЖ & CRM</span>
-                <h2 class="pop-title-section" style="margin-top: 0.6rem;">Автоматизация Продаж</h2>
-                <div class="about-cards-list" style="gap: 0.5rem;">
-                    <div class="about-sticker" style="padding: 8px 12px;">
+                <span class="pop-subtitle" style="background: var(--pop-cyan);" data-tip="Продажи 24/7">ЧАСТЬ 2. ПРОДАЖИ БЕЗ ТОРМОЗОВ</span>
+                <h2 class="pop-title-section" style="margin-top: 0.3rem;" data-tip="Быстрые сделки">Продажи и Клиенты</h2>
+                <div class="about-cards-list">
+                    <div class="about-sticker" data-tip="Лиды за 3 секунды!" onclick="openPopup('sales_1', 'РАДАР В TELEGRAM', 'ПОИСК КЛИЕНТОВ', '📡', '• Бот круглосуточно сканирует 50+ целевых чатов и групп в Telegram.<br><br>• Как только появляется сообщение «ищу юриста / куплю станки / посоветуйте дизайнера», ИИ определяет намерение и отправляет лид продавцу с прямой ссылкой на автора.')">
                         <div class="sticker-icon" style="background: var(--pop-yellow);">📡</div>
-                        <span style="font-size: 0.88rem;"><strong>Мониторинг Telegram:</strong> перехват заявок из 50+ чатов, фильтрация спама и пуш сейлзу за 3 сек.</span>
+                        <span><strong>Радар в Telegram:</strong> система ловит в 50 чатах фразы <em>«ищу подрядчика / куплю»</em> и за 3 секунды передает лид продавцу.</span>
                     </div>
-                    <div class="about-sticker" style="padding: 8px 12px;">
-                        <div class="sticker-icon" style="background: var(--pop-cyan);">⚡</div>
-                        <span style="font-size: 0.88rem;"><strong>DaData по фото:</strong> распознавание карточки предприятия и авто-заполнение 15 полей в CRM без опечаток.</span>
+                    <div class="about-sticker" data-tip="Без ошибок в ИНН" onclick="openPopup('sales_2', 'РЕКВИЗИТЫ ПО ФОТО', 'АВТОМАТИЗАЦИЯ СДЕЛОК', '📸', '• Клиент прислал фото карточки предприятия или PDF-скан в WhatsApp/Telegram.<br><br>• ИИ извлекает ИНН, автоматически делает запрос к ФНС/DaData, заполняет расчетный счет, юр. адрес и создает готовую сделку в CRM.')">
+                        <div class="sticker-icon" style="background: var(--pop-cyan);">📸</div>
+                        <span><strong>Реквизиты по фото:</strong> клиент прислал скан или фото ➔ система находит компанию по ИНН и заполняет сделку без ошибок.</span>
                     </div>
-                    <div class="about-sticker" style="padding: 8px 12px;">
+                    <div class="about-sticker" data-tip="Мгновенный PDF!" onclick="openPopup('sales_3', 'КП ИЗ ГОЛОСОВОГО', 'СКОРОСТЬ ЗАКРЫТИЯ', '🎙️', '• Вы провели встречу и надиктовали в чат: «Клиенту нужно 50 лицензий, скидка 10%, оплата в 2 этапа».<br><br>• ИИ берет фирменный шаблон компании и через 60 секунд формирует официальный PDF с печатью и расчетом, готовый к отправке.')">
                         <div class="sticker-icon" style="background: var(--pop-pink);">🎙️</div>
-                        <span style="font-size: 0.88rem;"><strong>КП из голосовых:</strong> наговорили итоги зума в бот ➔ готовая смета и брендированный PDF со ссылкой на оплату.</span>
+                        <span><strong>КП из голосового:</strong> наговорили итоги встречи в чат ➔ клиент сразу получает красивый PDF с ценами и оплатой.</span>
                     </div>
-                    <div class="about-sticker" style="padding: 8px 12px;">
-                        <div class="sticker-icon" style="background: var(--pop-green);">📊</div>
-                        <span style="font-size: 0.88rem;"><strong>QA Звонков (100%):</strong> транскрибация телефонии, скоринг скрипта 1–100 и отчет РОПу.</span>
+                    <div class="about-sticker" data-tip="Контроль качества" onclick="openPopup('sales_4', 'КОНТРОЛЬ 100% ЗВОНКОВ', 'РЕЧЕВАЯ АНАЛИТИКА', '🎧', '• РОП физически может послушать 3–5% звонков. ИИ слушает 100% звонков каждый вечер.<br><br>• Система проверяет чек-лист: назвали ли акцию, отработали ли возражение, была ли вежливость, и ставит оценку каждому менеджеру.')">
+                        <div class="sticker-icon" style="background: var(--pop-green);">🎧</div>
+                        <span><strong>Контроль 100% звонков:</strong> ИИ слушает всех менеджеров и подсвечивает, где забыли назвать цену или отработать возражение.</span>
                     </div>
                 </div>
                 <div class="pop-badges">
-                    <div class="pop-badge">Telethon API</div>
-                    <div class="pop-badge">DaData API</div>
-                    <div class="pop-badge">Whisper</div>
-                    <div class="pop-badge">Bitrix24 / amoCRM</div>
+                    <div class="pop-badge" data-tip="Увеличение конверсии">+30% к скорости сделок</div>
+                    <div class="pop-badge" data-tip="Вся база под контролем">0 потерянных лидов</div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 5: Back-Office & HR -->
+        <!-- Slide 5: Docs & HR -->
         <div class="slide" id="slide-5">
             <div>
-                <span class="pop-subtitle" style="background: var(--pop-green);">ЧАСТЬ 3. ДОКУМЕНТЫ & HR</span>
-                <h2 class="pop-title-section" style="margin-top: 0.6rem;">Бэк-офис & Найм</h2>
-                <div class="about-cards-list" style="gap: 0.5rem;">
-                    <div class="about-sticker" style="padding: 8px 12px;">
+                <span class="pop-subtitle" style="background: var(--pop-green);" data-tip="Без бухгалтера и юриста">ЧАСТЬ 3. ДОКУМЕНТЫ И НАЙМ</span>
+                <h2 class="pop-title-section" style="margin-top: 0.3rem;" data-tip="Идеальный архив">Порядок в Делах</h2>
+                <div class="about-cards-list">
+                    <div class="about-sticker" data-tip="Автосортировка" onclick="openPopup('doc_1', 'СЧЕТА САМИ ЛЕТЯТ В ПАПКИ', 'АВТОМАТИЧЕСКИЙ АРХИВ', '📁', '• Как только бухгалтер или менеджер создает счет, документ автоматически переименовывается по стандарту «Дата_Счет_Компания.pdf» и раскладывается на Google Drive / Яндекс Диск по папкам.')">
                         <div class="sticker-icon" style="background: var(--pop-cyan);">📁</div>
-                        <span style="font-size: 0.88rem;"><strong>Счета и Акты в Облако:</strong> авто-генерация PDF с факсимиле и раскладка по структурированным папкам Диска.</span>
+                        <span><strong>Счета сами летят в папки:</strong> документ создан ➔ сам разложился по папкам <em>«Клиенты / 2026 / Компания»</em> без человека.</span>
                     </div>
-                    <div class="about-sticker" style="padding: 8px 12px;">
+                    <div class="about-sticker" data-tip="5 секунд на чек!" onclick="openPopup('doc_2', 'ФОТО ЧЕКА ➔ В ТАБЛИЦУ', 'УЧЕТ РАСХОДОВ', '🧾', '• Подотчетные лица фотографируют чеки с заправок, гостиниц или кафе в Telegram-бот.<br><br>• ИИ считывает дату, сумму, НДС, наименования позиций и сразу заносит строчку в таблицу финучета с прикреплением фото оригинала.')">
                         <div class="sticker-icon" style="background: var(--pop-yellow);">🧾</div>
-                        <span style="font-size: 0.88rem;"><strong>DocFlow OCR:</strong> фото накладной или чека ➔ извлечение позиций и построчное занесение в 1С / таблицы.</span>
+                        <span><strong>Фото чека ➔ В таблицу:</strong> сфотографировали расход на телефон ➔ все позиции и суммы сами попали в учет за 5 секунд.</span>
                     </div>
-                    <div class="about-sticker" style="padding: 8px 12px;">
+                    <div class="about-sticker" data-tip="Поиск скрытых штрафов" onclick="openPopup('doc_3', 'ЮРИСТ ЗА 15 СЕКУНД', 'ПРОВЕРКА РИСКОВ', '⚖️', '• Загружаете 30-страничный договор от поставщика.<br><br>• ИИ анализирует текст по базе прецедентов и подсвечивает опасные пункты: одностороннее расторжение, завышенные пени 1% в день, невыгодную подсудность.')">
                         <div class="sticker-icon" style="background: var(--pop-pink);">⚖️</div>
-                        <span style="font-size: 0.88rem;"><strong>Аудит договоров:</strong> ИИ за 10 сек сканирует договор подрядчика и подсвечивает опасные скрытые риски и штрафы.</span>
+                        <span><strong>Юрист за 15 секунд:</strong> загрузили договор поставщика ➔ ИИ выделил скрытые штрафы, односторонние пени и риски.</span>
                     </div>
-                    <div class="about-sticker" style="padding: 8px 12px;">
+                    <div class="about-sticker" data-tip="Фильтр от спама" onclick="openPopup('doc_4', 'ОТБОР 300 РЕЗЮМЕ ЗА 5 МИНУТ', 'HR-АВТОМАТИЗАЦИЯ', '🎯', '• При открытии популярной вакансии на HeadHunter падает 300+ откликов.<br><br>• ИИ сверяет опыт кандидатов с профилем должности, отсекает нерелевантные резюме и формирует ТОП-10 специалистов с краткими саммари для собеседования.')">
                         <div class="sticker-icon" style="background: var(--pop-purple); color:#fff;">🎯</div>
-                        <span style="font-size: 0.88rem;"><strong>Скоринг резюме с HH:</strong> авто-проверка 300+ откликов по жесткому профилю должности и ранжирование ТОП-10.</span>
+                        <span><strong>Отбор 300 резюме за 5 минут:</strong> ИИ отсекает спам и оставляет ТОП-10 кандидатов с реальным твердым опытом.</span>
                     </div>
                 </div>
                 <div class="pop-badges">
-                    <div class="pop-badge">Gemini Vision</div>
-                    <div class="pop-badge">Google Drive API</div>
-                    <div class="pop-badge">1C:OData</div>
-                    <div class="pop-badge">hh.ru API</div>
+                    <div class="pop-badge" data-tip="Меньше рутины юриста">Экономия 10 часов юриста</div>
+                    <div class="pop-badge" data-tip="Только лучшие люди">Найм без рутины</div>
                 </div>
             </div>
             <div class="pop-image-wrapper">
                 <div class="pop-frame" style="transform: rotate(1.5deg);">
-                    <img src="pop_art_docflow_hr.webp" alt="DocFlow и HR" class="pop-img" loading="lazy">
+                    <img src="pop_art_docflow_hr_ru916.webp" alt="Документы и HR" class="pop-img" loading="lazy">
                 </div>
             </div>
         </div>
 
-        <!-- Slide 6: Marketing & MVP -->
+        <!-- Slide 6: Marketing & Hypotheses (5 Solutions) -->
         <div class="slide layout-flipped" id="slide-6">
             <div class="pop-image-wrapper">
                 <div class="pop-frame" style="transform: rotate(-1.5deg);">
-                    <img src="pop_art_auto_hero.webp" alt="Маркетинг и Гипотезы" class="pop-img" loading="lazy">
+                    <img src="pop_art_marketing_launch_ru916.webp" alt="Маркетинг" class="pop-img" loading="lazy">
                 </div>
             </div>
             <div>
-                <span class="pop-subtitle" style="background: var(--pop-yellow);">ЧАСТЬ 4. МАРКЕТИНГ & ГИПОТЕЗЫ</span>
-                <h2 class="pop-title-section" style="margin-top: 0.6rem;">Быстрый Тест Спроса</h2>
-                <div class="pop-text-bubble">
-                    Тестирование новых продуктов и офферов за 2 часа без веб-студий:
-                    <br><br>
-                    • <strong>Лендинги под ключ:</strong> Google Stitch ➔ чистый HTML ➔ авто-деплой на Beget.
-                    <br>
-                    • <strong>Калькуляторы-магниты:</strong> клиент сам считает юнит-экономику/налоги и скачивает PDF.
-                    <br>
-                    • <strong>Автономные медиа:</strong> генерация 55+ SEO-статей в день под поиск (Aipsy.press).
-                    
-                    <div class="pop-cta-group">
-                        <a href="https://a-sage.ru/calculator-tax" target="_blank" class="pop-action-btn">
-                            <span>📊</span> Калькулятор налогов ↗
-                        </a>
-                        <a href="https://a-sage.ru/calculator-finmodel" target="_blank" class="pop-action-btn btn-pink">
-                            <span>🚀</span> Финмодель 5.0 Pro ↗
-                        </a>
-                        <a href="https://aipsy.press" target="_blank" class="pop-action-btn btn-cyan">
-                            <span>📰</span> Aipsy.press ↗
-                        </a>
+                <span class="pop-subtitle" style="background: var(--pop-yellow);" data-tip="Быстрая проверка гипотез">ЧАСТЬ 4. МАРКЕТИНГ & ЗАПУСК ИДЕЙ</span>
+                <h2 class="pop-title-section" style="margin-top: 0.3rem;" data-tip="Без веб-студий!">Запуск Идей за 2 Часа</h2>
+                <div class="about-cards-list">
+                    <div class="about-sticker" data-tip="Сайт за вечер!" onclick="openPopup('mkt_1', '1. САЙТ ПОД НОВУЮ УСЛУГУ ЗА 2 ЧАСА', 'ТЕСТ ГИПОТЕЗ', '🚀', '• <strong>В чем суть:</strong> больше не нужно платить 100 000 ₽ веб-студии и ждать месяц, чтобы проверить новую нишу.<br><br>• <strong>Как работает:</strong> вы описываете суть услуги голосом ➔ ИИ генерирует адаптивный дизайн, продающий текст, формы захвата и запускает сайт за 2 часа.<br><br>• К вечеру вы уже запускаете рекламу и принимаете первые заявки.')">
+                        <div class="sticker-icon" style="background: var(--pop-yellow);">🚀</div>
+                        <span><strong>1. Сайт под идею за 2 часа:</strong> описали суть услуги ➔ к вечеру лендинг уже принимает заявки клиентов.</span>
                     </div>
+
+                    <div class="about-sticker" data-tip="Конверсия +40%!" onclick="openPopup('mkt_2', '2. ИНТЕРАКТИВНЫЕ КАЛЬКУЛЯТОРЫ', 'ЛИД-МАГНИТ', '📊', '• <strong>В чем суть:</strong> клиенты неохотно заполняют скучные формы «Оставьте имя и телефон».<br><br>• <strong>Как работает:</strong> клиент вводит свои параметры (доход, площадь, налоги) ➔ видит точную выгоду в рублях и сам оставляет контакты, чтобы получить расчет на почту.<br><br>• Конверсия такого инструмента в 2–3 раза выше стандартного сайта.')">
+                        <div class="sticker-icon" style="background: var(--pop-pink);">📊</div>
+                        <span><strong>2. Умные калькуляторы:</strong> клиент сам рассчитывает выгоду и оставляет контакты (налоги, сметы).</span>
+                    </div>
+
+                    <div class="about-sticker" data-tip="Трафик из Яндекса и Google!" onclick="openPopup('mkt_3', '3. АВТОНОМНОЕ МЕДИА (СМИ)', 'SEO & ТРАФИК', '📰', '• <strong>В чем суть:</strong> автономный новостной портал или корпоративный блог привлекает тысячи клиентов из поиска.<br><br>• <strong>Как работает:</strong> ИИ мониторит инфоповоды ниши, пишет по 50+ экспертных статей в день с авто-перелинковкой и привлекает органический трафик (кейс Aipsy.press).')">
+                        <div class="sticker-icon" style="background: var(--pop-cyan);">📰</div>
+                        <span><strong>3. Автономное СМИ:</strong> ИИ пишет 50+ статей в день по вашей нише и привлекает трафик из поиска (Aipsy.press).</span>
+                    </div>
+
+                    <div class="about-sticker" data-tip="Реклама за 5 минут!" onclick="openPopup('mkt_4', '4. АВТО-ГЕНЕРАЦИЯ БАННЕРОВ И ОБЪЯВЛЕНИЙ', 'РЕКЛАМА', '🎨', '• <strong>В чем суть:</strong> для теста рекламы нужно 20–30 вариантов баннеров и заголовков под разные сегменты аудитории.<br><br>• <strong>Как работает:</strong> ИИ генерирует 30 креативов в едином фирменном стиле за 5 минут, пишет цепляющие офферы и форматирует под любые рекламные кабинеты.')">
+                        <div class="sticker-icon" style="background: var(--pop-green);">🎨</div>
+                        <span><strong>4. 30 рекламных креативов за 5 минут:</strong> генерация баннеров и продающих офферов под разные сегменты.</span>
+                    </div>
+
+                    <div class="about-sticker" data-tip="Индивидуальный расчет!" onclick="openPopup('mkt_5', '5. ЖИВАЯ ФИНМОДЕЛЬ ДЛЯ ИНВЕСТОРОВ', 'ФИНАНСЫ', '💼', '• <strong>В чем суть:</strong> расчет юнит-экономики, окупаемости проекта и сценариев масштабирования.<br><br>• <strong>Как работает:</strong> динамический веб-инструмент с пересчетом выручки, маржи и налогов в реальном времени (кейс Финмодель 5.0 Pro).')">
+                        <div class="sticker-icon" style="background: var(--pop-purple); color:#fff;">💼</div>
+                        <span><strong>5. Интерактивная Финмодель 5.0:</strong> мгновенный расчет окупаемости и юнит-экономики для партнеров.</span>
+                    </div>
+                </div>
+
+                <div class="pop-cta-group" style="margin-top: 14px;">
+                    <a href="https://a-sage.ru/calculator-tax" target="_blank" class="pop-action-btn" data-tip="Кликните для теста!">
+                        <span>📊</span> Калькулятор налогов ↗
+                    </a>
+                    <a href="https://a-sage.ru/calculator-finmodel" target="_blank" class="pop-action-btn btn-pink" data-tip="Живой расчет финмодели!">
+                        <span>🚀</span> Финмодель 5.0 Pro ↗
+                    </a>
+                    <a href="https://aipsy.press" target="_blank" class="pop-action-btn btn-cyan" data-tip="Пример автономного СМИ!">
+                        <span>📰</span> Aipsy.press ↗
+                    </a>
                 </div>
             </div>
         </div>
@@ -766,110 +1340,196 @@
         <!-- Slide 7: Content Factories -->
         <div class="slide" id="slide-7">
             <div>
-                <span class="pop-subtitle" style="background: var(--pop-purple); color:#fff;">ЧАСТЬ 5. КОНТЕНТ-ЗАВОДЫ</span>
-                <h2 class="pop-title-section" style="margin-top: 0.6rem;">Фабрики Контента</h2>
-                <div class="about-cards-list" style="gap: 0.5rem;">
-                    <div class="about-sticker" style="padding: 8px 12px;">
+                <span class="pop-subtitle" style="background: var(--pop-purple); color:#fff;" data-tip="Контент без агентств">ЧАСТЬ 5. КОНТЕНТ-ЗАВОД</span>
+                <h2 class="pop-title-section" style="margin-top: 0.3rem;" data-tip="Охваты на автомате">Контент Без Агентств</h2>
+                <div class="about-cards-list">
+                    <div class="about-sticker" data-tip="1 час = 30 постов!" onclick="openPopup('content_1', '1 СОЗВОН ➔ 30 ПОСТОВ', 'РЕПАКИНГ КОНТЕНТА', '♻️', '• Вы проводите 1 созвон с клиентом или внутреннюю лекцию на 45 минут.<br><br>• ИИ транскрибирует аудио, вытаскивает главные инсайты и нарезает материал на: 10 постов в Telegram, 3 статьи на VC/Habr и сценарии для коротких видео.')">
                         <div class="sticker-icon" style="background: var(--pop-yellow);">♻️</div>
-                        <span style="font-size: 0.88rem;"><strong>Ресайклинг 1 ➔ 30:</strong> 1 часовой созвон ➔ 10 сценариев Reels, 3 лонгрида (VC/Хабр), 5 каруселей и рассылка.</span>
+                        <span><strong>1 созвон ➔ 30 постов:</strong> часовая лекция превращается в 10 коротких видео, 3 статьи и рассылку.</span>
                     </div>
-                    <div class="about-sticker" style="padding: 8px 12px;">
+                    <div class="about-sticker" data-tip="Без дизайнера!" onclick="openPopup('content_2', 'КАРТИНКИ И КАРУСЕЛИ', 'ГЕНЕРАЦИЯ ГРАФИКИ', '🎨', '• ИИ создает визуальный контент в фирменном стиле компании за считанные секунды.<br><br>• Слайды для соцсетей, обложки для статей и промо-баннеры без ожидания дизайнеров и правок.')">
                         <div class="sticker-icon" style="background: var(--pop-pink);">🎨</div>
-                        <span style="font-size: 0.88rem;"><strong>Завод каруселей:</strong> авто-генерация слайдов (Flux) + нанесение типографики (Pillow) + автопостинг.</span>
+                        <span><strong>Картинки и Карусели:</strong> ИИ сам создает яркие слайды и текст без дизайнера за 5 000 ₽.</span>
                     </div>
-                    <div class="about-sticker" style="padding: 8px 12px;">
+                    <div class="about-sticker" data-tip="Озвучка + Титры!" onclick="openPopup('content_3', 'REELS & SHORTS НА АВТОМАТЕ', 'ВИДЕО-ПРОДАКШН', '🎬', '• Автоматический монтаж вертикальных видео: генерация реалистичного голоса, наложение фоновой музыки и анимированных ярких титров слово-в-слово.')">
                         <div class="sticker-icon" style="background: var(--pop-cyan);">🎬</div>
-                        <span style="font-size: 0.88rem;"><strong>AI Reels Engine:</strong> синтез голоса (ElevenLabs) + авто-нарезка анимированных караоке-субтитров (FFmpeg).</span>
+                        <span><strong>Короткие видео (Reels / Shorts):</strong> реалистичная озвучка голосом и анимированные титры на автомате.</span>
                     </div>
-                    <div class="about-sticker" style="padding: 8px 12px;">
+                    <div class="about-sticker" data-tip="Тренды конкурентов" onclick="openPopup('content_4', 'РАДАР ТРЕНДОВ', 'АНАЛИТИКА ТЕМ', '🎯', '• Система мониторит ТОП-100 лидеров вашей ниши в YouTube и Telegram.<br><br>• Выявляет посты и видео с аномальным количеством репостов (2x+ от среднего) и выдает готовые темы для вашего контент-плана.')">
                         <div class="sticker-icon" style="background: var(--pop-green);">🎯</div>
-                        <span style="font-size: 0.88rem;"><strong>Viral Hunter:</strong> парсинг виральных роликов конкурентов с охватом 2x+ и сборка тем на неделю.</span>
+                        <span><strong>Радар трендов:</strong> система находит самые вирусные темы конкурентов и подсказывает план на неделю.</span>
                     </div>
                 </div>
                 <div class="pop-badges">
-                    <div class="pop-badge">ElevenLabs</div>
-                    <div class="pop-badge">Flux API</div>
-                    <div class="pop-badge">FFmpeg</div>
-                    <div class="pop-badge">ChatPlace.io</div>
+                    <div class="pop-badge" data-tip="Экономия бюджета">Экономия 150 000 ₽/мес</div>
+                    <div class="pop-badge" data-tip="Постоянный трафик">Регулярные охваты</div>
                 </div>
             </div>
             <div class="pop-image-wrapper">
                 <div class="pop-frame" style="transform: rotate(2deg);">
-                    <img src="pop_art_content_factory.webp" alt="Контент-Заводы" class="pop-img" loading="lazy">
+                    <img src="pop_art_content_factory_ru916.webp" alt="Контент-Завод" class="pop-img" loading="lazy">
                 </div>
             </div>
         </div>
 
-        <!-- Slide 8: Red Zone -->
-        <div class="slide layout-flipped" id="slide-8">
-            <div class="pop-image-wrapper">
-                <div class="pop-frame" style="transform: rotate(-2deg);">
-                    <img src="pop_art_red_zone.webp" alt="Красная зона" class="pop-img" loading="lazy">
-                </div>
+        <!-- Slide 8: Red Zone (5 Vertical Cards Layout) -->
+        <div class="slide layout-fullwidth" id="slide-8">
+            <div style="text-align: center; width: 100%;">
+                <span class="pop-subtitle" style="background: var(--pop-pink); margin-bottom: 0.6rem;" data-tip="Зона максимального риска!">ЧАСТЬ 6. КРАСНАЯ ЗОНА: СТОП ИИ</span>
+                <h2 class="pop-title-section" style="margin-top: 0.1rem; margin-bottom: 0.4rem; text-shadow: 6px 6px 0px var(--pop-yellow);" data-tip="5 ситуаций для человека!">Где ИИ ЗАПРЕЩЁН</h2>
             </div>
-            <div>
-                <span class="pop-subtitle" style="background: var(--pop-pink);">ЧАСТЬ 6. КРАСНАЯ ЗОНА</span>
-                <h2 class="pop-title-section" style="margin-top: 0.6rem; text-shadow: 6px 6px 0px var(--pop-yellow);">Где ИИ ЗАПРЕЩЁН</h2>
-                <div class="pop-text-bubble">
-                    <strong>5 зон критического риска, где нельзя доверять ИИ:</strong>
-                    <br><br>
-                    ⛔ <strong>1. Финансовая и юридическая подпись:</strong> акцепт денег и финал договора — строго человек.
-                    <br>
-                    ⛔ <strong>2. Сложные эмоциональные переговоры:</strong> удержание недовольного VIP-клиента.
-                    <br>
-                    ⛔ <strong>3. Неструктурированный хаос:</strong> если нет регламента, бот начнет врать цены.
-                    <br>
-                    ⛔ <strong>4. Прямой доступ к удалению БД:</strong> доступ только на чтение и создание черновиков.
-                    <br>
-                    ⛔ <strong>5. Обещания наличия товара:</strong> без прямого API-запроса к складской 1С.
+
+            <div class="redzone-5col-grid">
+                <!-- Card 1 -->
+                <div class="redzone-card" data-tip="Только человек!" onclick="openPopup('red_1', 'БАНКИ И ОПЛАТЫ: ТОЛЬКО ЧЕЛОВЕК', 'КАТЕГОРИЧЕСКИЙ ЗАПРЕТ', '⛔', '• <strong>Правило безопасности:</strong> у ИИ-систем и ботов ни при каких обстоятельствах не должно быть доступа к банковским счетам, ключам ЭЦП и подтверждению платежей.<br><br>• ИИ может сформировать платежку или выставить счет, но кнопку «Оплатить» в интернет-банке нажимает исключительно генеральный директор или главбух.')">
+                    <div class="redzone-img-box">
+                        <img src="redzone_bank.webp" alt="Деньги и банк" class="redzone-img" loading="lazy">
+                    </div>
+                    <div class="redzone-content">
+                        <span class="redzone-badge">⛔ СТОП 1</span>
+                        <div class="redzone-title">Банки & Оплаты</div>
+                        <div class="redzone-desc">Переводить деньги компании и ставить банковскую подпись бот не должен никогда.</div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="redzone-card" data-tip="Эмпатия и такт!" onclick="openPopup('red_2', 'КОНФЛИКТЫ И VIP-КЛИЕНТЫ', 'ЧЕЛОВЕЧЕСКАЯ ЭМПАТИЯ', '⛔', '• <strong>Правило безопасности:</strong> если клиент недоволен, агрессивен или требует возврата денег, автоматический бот только усугубит скандал шаблонами.<br><br>• В таких диалогах ИИ обязан моментально переключить чат на живого руководителя с пометкой «Срочно! Конфликтный клиент».')">
+                    <div class="redzone-img-box">
+                        <img src="redzone_vip.webp" alt="VIP клиенты" class="redzone-img" loading="lazy">
+                    </div>
+                    <div class="redzone-content">
+                        <span class="redzone-badge">⛔ СТОП 2</span>
+                        <div class="redzone-title">Конфликты & VIP</div>
+                        <div class="redzone-desc">Претензии, горячие конфликты и эмоции ключевых клиентов решает только человек.</div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="redzone-card" data-tip="Сначала порядок!" onclick="openPopup('red_3', 'ХАОС БЕЗ РЕГЛАМЕНТОВ', 'ОШИБКА ВНЕДРЕНИЯ', '⛔', '• <strong>Правило безопасности:</strong> если в процессах компании нет четких правил и царит бардак, внедрение нейросетей только умножит скорость генерации ошибок.<br><br>• Сначала описываются регламенты и твердая логика, и только затем рутина передается ассистенту.')">
+                    <div class="redzone-img-box">
+                        <img src="redzone_chaos.webp" alt="Хаос без правил" class="redzone-img" loading="lazy">
+                    </div>
+                    <div class="redzone-content">
+                        <span class="redzone-badge">⛔ СТОП 3</span>
+                        <div class="redzone-title">Хаос без регламентов</div>
+                        <div class="redzone-desc">Если в отделе бардак, ИИ только ускорит хаос и начнет галлюцинировать.</div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="redzone-card" data-tip="Только чтение!" onclick="openPopup('red_4', 'УДАЛЕНИЕ БАЗ ДАННЫХ', 'ЗАЩИТА ИНФОРМАЦИИ', '⛔', '• <strong>Правило безопасности:</strong> ИИ-интеграциям выдаются права строго на чтение (`read-only`) и создание новых черновиков.<br><br>• Полный запрет на операцию удаления (`delete`) в CRM, 1С и облачных хранилищах, чтобы избежать случайной потери клиентской базы.')">
+                    <div class="redzone-img-box">
+                        <img src="redzone_db.webp" alt="Базы данных" class="redzone-img" loading="lazy">
+                    </div>
+                    <div class="redzone-content">
+                        <span class="redzone-badge">⛔ СТОП 4</span>
+                        <div class="redzone-title">Удаление баз</div>
+                        <div class="redzone-desc">Боту дают права только на чтение и черновики. Никакого удаления боевых данных.</div>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="redzone-card" data-tip="Жесткий контроль!" onclick="openPopup('red_5', 'ОБЕЩАНИЕ СКИДОК И СРОКОВ', 'КОНТРОЛЬ МАРЖИ', '⛔', '• <strong>Правило безопасности:</strong> ИИ не должен обещать клиенту индивидуальные скидки 50% или доставку «к вечеру», если склад пуст.<br><br>• Все финансовые и временные границы должны быть жестко зашиты в правила работы бота без права отклонения.')">
+                    <div class="redzone-img-box">
+                        <img src="redzone_discount.webp" alt="Скидки и сроки" class="redzone-img" loading="lazy">
+                    </div>
+                    <div class="redzone-content">
+                        <span class="redzone-badge">⛔ СТОП 5</span>
+                        <div class="redzone-title">Скидки & Сроки</div>
+                        <div class="redzone-desc">Обещание нестандартных условий без жесткой сверки реальных остатков на складе.</div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 9: Gold Mine Matrix -->
+        <!-- Slide 9: Plan for Monday -->
         <div class="slide" id="slide-9">
             <div>
-                <span class="pop-subtitle" style="background: var(--pop-yellow);">ЧАСТЬ 7. МАТРИЦА РЕШЕНИЙ</span>
-                <h2 class="pop-title-section" style="margin-top: 0.6rem;">Матрица «Золотая Жила»</h2>
-                <div class="pop-text-bubble">
-                    <strong>Как собственнику выбрать первый процесс для автоматизации:</strong>
-                    <br><br>
-                    🎯 <strong>Золотая жила:</strong> высокая частота рутины + низкая цена ошибки (мониторинг заявок, DaData, КП, калькуляторы, черновики постов).
-                    <br><br>
-                    🛡️ <strong>Зона Харнесса:</strong> высокая частота + высокая цена ошибки (счета, проверка договоров, скоринг резюме) — <em>внедрять строго с валидаторами и контролем человека</em>.
+                <span class="pop-subtitle" style="background: var(--pop-yellow);" data-tip="План действий">ЧАСТЬ 7. ПЛАН ДЕЙСТВИЙ</span>
+                <h2 class="pop-title-section" style="margin-top: 0.3rem;" data-tip="Первые шаги">С чего начать в понедельник?</h2>
+                
+                <div class="thieves-grid">
+                    <!-- Step 1 -->
+                    <div class="thief-card" data-tip="Шаг 1: фокус" onclick="openPopup('step_1', 'ШАГ 1. ВЫПИШИТЕ 3 САМЫЕ НЕНАВИСТНЫЕ ЗАДАЧИ', 'ФОКУС', '📝', '• Спросите себя и ключевых сотрудников: «Какая механическая рутина забирает у вас 2 часа в день и раздражает больше всего?».<br><br>• Обычно это: перенос реквизитов из почты в CRM, ответы на базовые вопросы клиентов или сбор отчетов в Excel.<br><br>• Выберите ровно одну задачу для первого внедрения.')">
+                        <div class="thief-left">
+                            <div class="thief-icon" style="background: var(--pop-yellow); color: #000;">📝</div>
+                            <div class="thief-info">
+                                <div class="thief-title" style="color: var(--pop-yellow);">Шаг 1. Выпишите 3 задачи</div>
+                                <div class="thief-desc">Те, которые отнимают больше всего времени (перенос счетов, поиск лидов).</div>
+                            </div>
+                        </div>
+                        <div class="thief-badge" style="background: var(--pop-yellow); color: #000;">10 минут</div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="thief-card" data-tip="Шаг 2: без кода" onclick="openPopup('step_2', 'ШАГ 2. ОПИШИТЕ ПРОЦЕСС НА РУССКОМ ЯЗЫКЕ', 'ИНСТРУКЦИЯ', '🗣️', '• Запишите по шагам, как вы объяснили бы эту задачу новому стажеру-человеку:<br>1. Возьми фото документа.<br>2. Найди поле ИНН и сумму.<br>3. Вставь в таблицу в колонку А и Б.<br><br>• Никаких сложных терминов — нейросеть отлично понимает живой человеческий язык.')">
+                        <div class="thief-left">
+                            <div class="thief-icon" style="background: var(--pop-cyan); color: #000;">🗣️</div>
+                            <div class="thief-info">
+                                <div class="thief-title" style="color: var(--pop-cyan);">Шаг 2. Опишите на русском языке</div>
+                                <div class="thief-desc">Как если бы вы ставили задачу новому стажеру без сложных IT-терминов.</div>
+                            </div>
+                        </div>
+                        <div class="thief-badge" style="background: var(--pop-cyan); color: #000;">Без кода</div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="thief-card" data-tip="Шаг 3: запуск!" onclick="openPopup('step_3', 'ШАГ 3. ПОДКЛЮЧИТЕ ИИ-АССИСТЕНТА', 'РЕЗУЛЬТАТ', '🚀', '• Запустите первого простого бота в Telegram или подключите готовый сервис автоматизации.<br><br>• Протестируйте на 10 реальных сделках или документах.<br><br>• Уже через 7 дней вы освободите первые 5–10 часов свободного времени в неделю!')">
+                        <div class="thief-left">
+                            <div class="thief-icon" style="background: var(--pop-green); color: #000;">🚀</div>
+                            <div class="thief-info">
+                                <div class="thief-title" style="color: var(--pop-green);">Шаг 3. Подключите помощника</div>
+                                <div class="thief-desc">Запустите тестового ИИ-ассистента и освободите первые 5 часов в неделю.</div>
+                            </div>
+                        </div>
+                        <div class="thief-badge" style="background: var(--pop-green); color: #000;">Результат</div>
+                    </div>
                 </div>
-                <div class="pop-badges">
-                    <div class="pop-badge">Частота x Цена ошибки</div>
-                    <div class="pop-badge">Окупаемость 7 дней</div>
+
+                <div class="pop-badges" style="margin-top: 1.2rem;">
+                    <div class="pop-badge" data-tip="Постепенное внедрение">Начните с одной рутины</div>
+                    <div class="pop-badge" data-tip="Быстрая окупаемость">Окупаемость 7 дней</div>
                 </div>
             </div>
             <div class="pop-image-wrapper">
                 <div class="pop-frame" style="transform: rotate(1.5deg);">
-                    <img src="pop_art_gold_mine.webp" alt="Золотая Жила" class="pop-img" loading="lazy">
+                    <img src="pop_art_gold_mine_ru916.webp" alt="План действий" class="pop-img" loading="lazy">
                 </div>
             </div>
         </div>
 
-        <!-- Slide 10: Conclusion & Roadmap -->
+        <!-- Slide 10: Final Contacts -->
         <div class="slide title-slide" id="slide-10">
             <div>
-                <h1 class="pop-title-main" style="text-shadow: 8px 8px 0px var(--pop-cyan);">За 7 Дней!</h1>
-                <h2 class="pop-subtitle" style="background: var(--pop-yellow);">Дорожная карта внедрения в бизнес</h2>
-                <div class="pop-text-bubble" style="max-width: 650px; padding: 22px;">
-                    <strong>ПЛАН ДЕЙСТВИЙ НА НЕДЕЛЮ:</strong>
+                <span class="pop-subtitle" style="background: var(--pop-green);" data-tip="Открытый диалог">ВОПРОСЫ И ОТВЕТЫ</span>
+                <h1 class="pop-title-main" style="text-shadow: 6px 6px 0px var(--pop-pink); font-size: clamp(2.6rem, 4.4vw, 4.2rem);" data-tip="Пора действовать!">Время внедрять!</h1>
+                <div class="pop-text-bubble" data-tip="Контакты спикера">
+                    <strong>Михаил Пузырёв</strong><br>
+                    Помогаю собственникам бизнеса внедрять работающие нейросети и освобождать время от рутины.
                     <br><br>
-                    1. <strong>День 1–2:</strong> Хронометраж рутины (выбрать 1 процесс, съедающий от 1 часа в день).
-                    <br>
-                    2. <strong>День 3–4:</strong> Сборка MVP на Вайбкодинге + обвязка Харнессом.
-                    <br>
-                    3. <strong>День 5–7:</strong> Тест в боевом режиме с контролем человека.
-                    <br><br>
-                    👉 <strong>Задание для зала:</strong> выберите 1 ручной процесс сегодня и оцифруйте его за выходные!
+                    💬 Задавайте любые вопросы по вашим процессам прямо сейчас!
+                </div>
+                <div class="qrs-block" style="margin-top: 1.4rem;">
+                    <div class="qr-card-pop" data-tip="Напишите в Telegram!">
+                        <div class="qr-container-pop" id="qr-personal-final"></div>
+                        <span>Telegram<br>(@michael_sage)</span>
+                        <a href="https://t.me/michael_sage" target="_blank" class="pop-qr-btn">Написать 💬</a>
+                    </div>
+                    <div class="qr-card-pop" data-tip="Канал про бизнес и ИИ!">
+                        <div class="qr-container-pop" id="qr-channel-final"></div>
+                        <span>Канал<br>(@uncrn_sage)</span>
+                        <a href="https://t.me/uncrn_sage" target="_blank" class="pop-qr-btn">Читать 📢</a>
+                    </div>
+                    <div class="qr-card-pop" data-tip="Перейти на сайт!">
+                        <div class="qr-container-pop" id="qr-site-final"></div>
+                        <span>Сайт<br>(a-sage.ru)</span>
+                        <a href="https://a-sage.ru" target="_blank" class="pop-qr-btn">Перейти 🌐</a>
+                    </div>
                 </div>
             </div>
             <div class="pop-image-wrapper">
                 <div class="pop-frame" style="transform: rotate(-1.5deg);">
-                    <img src="pop_art_gold_mine.webp" alt="Roadmap" class="pop-img" loading="lazy">
+                    <img src="mikhail_pop_art.webp" alt="Михаил Пузырёв" class="pop-img" loading="lazy">
                 </div>
             </div>
         </div>
@@ -887,16 +1547,16 @@
 
         const slideNames = [
             "Старт",
-            "Маршрут",
+            "План (60м)",
             "Спикер",
-            "1. Закон",
+            "1. Суть ИИ",
             "2. Продажи",
-            "3. Бэк-офис & HR",
+            "3. Документы",
             "4. Маркетинг",
-            "5. Контент-Завод",
-            "6. Красная зона",
-            "7. Матрица",
-            "8. Финал"
+            "5. Контент",
+            "6. Опасности",
+            "7. С чего начать",
+            "Финал"
         ];
 
         function showSlide(index) {
@@ -943,6 +1603,14 @@
 
         // Presenter clicker support
         document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModalDirect();
+                return;
+            }
+            if (document.getElementById('modal-overlay').classList.contains('active')) {
+                return; // don't switch slides while modal is open
+            }
+
             if (['PageDown', 'ArrowRight', 'ArrowDown', 'Space', 'Enter'].includes(e.code) || e.key === 'PageDown' || e.key === 'ArrowRight') {
                 e.preventDefault();
                 nextSlide();
@@ -966,32 +1634,124 @@
 
         // Dynamic QR Codes
         window.addEventListener('DOMContentLoaded', () => {
-            new QRCode(document.getElementById("qr-personal"), {
-                text: "https://t.me/michael_sage",
-                width: 120,
-                height: 120,
-                colorDark: "#0B0C10",
-                colorLight: "#FFFFFF",
-                correctLevel: QRCode.CorrectLevel.H
-            });
+            const createQR = (id, text) => {
+                const el = document.getElementById(id);
+                if (el) {
+                    new QRCode(el, {
+                        text: text,
+                        width: 110,
+                        height: 110,
+                        colorDark: "#0B0C10",
+                        colorLight: "#FFFFFF",
+                        correctLevel: QRCode.CorrectLevel.H
+                    });
+                }
+            };
 
-            new QRCode(document.getElementById("qr-channel"), {
-                text: "https://t.me/uncrn_sage",
-                width: 120,
-                height: 120,
-                colorDark: "#0B0C10",
-                colorLight: "#FFFFFF",
-                correctLevel: QRCode.CorrectLevel.H
-            });
+            createQR("qr-personal", "https://t.me/michael_sage");
+            createQR("qr-channel", "https://t.me/uncrn_sage");
+            createQR("qr-site", "https://a-sage.ru");
 
-            new QRCode(document.getElementById("qr-site"), {
-                text: "https://a-sage.ru",
-                width: 120,
-                height: 120,
-                colorDark: "#0B0C10",
-                colorLight: "#FFFFFF",
-                correctLevel: QRCode.CorrectLevel.H
-            });
+            createQR("qr-personal-final", "https://t.me/michael_sage");
+            createQR("qr-channel-final", "https://t.me/uncrn_sage");
+            createQR("qr-site-final", "https://a-sage.ru");
+        });
+
+        // --- Pop-up Modal Window Logic ---
+        function openPopup(id, title, badge, icon, bodyHtml) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-badge').innerText = badge;
+            document.getElementById('modal-icon').innerText = icon;
+            document.getElementById('modal-body').innerHTML = bodyHtml;
+            document.getElementById('modal-overlay').classList.add('active');
+        }
+
+        function closeModal(event) {
+            if (event.target.id === 'modal-overlay') {
+                closeModalDirect();
+            }
+        }
+
+        function closeModalDirect() {
+            document.getElementById('modal-overlay').classList.remove('active');
+        }
+
+        // --- Smart Boundary-Aware Custom Cursor & Comic Speech Bubble Tooltip Engine ---
+        const cursorDot = document.getElementById('cursor-dot');
+        const speechBubble = document.getElementById('speech-bubble');
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        let bubbleVisible = false;
+
+        function updateBubblePosition() {
+            if (!bubbleVisible) return;
+
+            const bubbleRect = speechBubble.getBoundingClientRect();
+            const bubbleWidth = bubbleRect.width || 180;
+            const bubbleHeight = bubbleRect.height || 50;
+
+            const padding = 15;
+            let leftPos = mouseX + 22;
+            let topPos = mouseY - bubbleHeight - 16;
+            let flipX = false;
+            let flipY = false;
+
+            if (leftPos + bubbleWidth > window.innerWidth - padding) {
+                leftPos = mouseX - bubbleWidth - 22;
+                flipX = true;
+            }
+
+            if (topPos < padding) {
+                topPos = mouseY + 24;
+                flipY = true;
+            }
+
+            if (leftPos < padding) {
+                leftPos = padding;
+            }
+
+            if (flipX) speechBubble.classList.add('flip-x');
+            else speechBubble.classList.remove('flip-x');
+
+            if (flipY) speechBubble.classList.add('flip-y');
+            else speechBubble.classList.remove('flip-y');
+
+            speechBubble.style.left = `${leftPos}px`;
+            speechBubble.style.top = `${topPos}px`;
+        }
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            cursorDot.style.left = `${mouseX}px`;
+            cursorDot.style.top = `${mouseY}px`;
+
+            updateBubblePosition();
+        });
+
+        // Delegate hover on interactive elements with data-tip
+        document.addEventListener('mouseover', (e) => {
+            const target = e.target.closest('[data-tip]');
+            if (target) {
+                const tip = target.getAttribute('data-tip');
+                if (tip) {
+                    speechBubble.innerHTML = tip;
+                    speechBubble.classList.add('visible');
+                    cursorDot.classList.add('hovered');
+                    bubbleVisible = true;
+                    updateBubblePosition();
+                }
+            }
+        });
+
+        document.addEventListener('mouseout', (e) => {
+            const target = e.target.closest('[data-tip]');
+            if (target) {
+                speechBubble.classList.remove('visible');
+                cursorDot.classList.remove('hovered');
+                bubbleVisible = false;
+            }
         });
     </script>
 </body>
