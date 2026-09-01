@@ -3206,16 +3206,83 @@ input[type="reset"],
   box-sizing: border-box;
 }
 
+.prompts-hero {
+  padding: 0 !important;
+  border-bottom: 1px solid var(--border);
+  background: #ffffff;
+}
+
+.prompts-hero .container {
+  padding-top: 100px;
+  padding-bottom: 36px;
+}
+
+.calc-hub-section {
+  padding: 0 !important;
+  background: #ffffff;
+  border-bottom: 1px solid var(--border);
+}
+
+.calc-hub-section .container {
+  padding-top: 48px;
+  padding-bottom: 80px;
+}
+
+.calc-main-section {
+  padding: 0 !important;
+  background: #ffffff;
+  border-bottom: 1px solid var(--border);
+}
+
+.calc-main-section .container {
+  padding-top: 44px;
+  padding-bottom: 72px;
+}
+
+.sheet-matrix-section {
+  padding: 0 !important;
+  background: var(--bg-alt);
+  border-bottom: 1px solid var(--border);
+}
+
+.sheet-matrix-section .container {
+  padding-top: 64px;
+  padding-bottom: 80px;
+}
+
+.calc-edu-section {
+  padding: 0 !important;
+  background: #ffffff;
+  border-bottom: 1px solid var(--border);
+}
+
+.calc-edu-section .container {
+  padding-top: 72px;
+  padding-bottom: 80px;
+}
+
+.knowledge-section {
+  padding: 0 !important;
+  background: #ffffff;
+  border-bottom: 1px solid var(--border);
+}
+
+.knowledge-section .container {
+  padding-top: 64px;
+  padding-bottom: 80px;
+}
+
 .section-cta {
   padding: 0 !important;
-  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: #ffffff;
   width: 100%;
 }
 
 .section-cta[style*="#09090b"],
 .section-cta.dark {
   background: #09090b !important;
-  border-top: 1px solid var(--border-dark) !important;
+  border-bottom: 1px solid var(--border-dark) !important;
 }
 
 .section-cta .container {
@@ -3227,17 +3294,6 @@ input[type="reset"],
 .section-cta.dark .container {
   border-left: 1px solid var(--border-dark) !important;
   border-right: 1px solid var(--border-dark) !important;
-}
-
-.prompts-hero {
-  padding: 0;
-  border-bottom: 1px solid var(--border);
-  background: #ffffff;
-}
-
-.prompts-hero .container {
-  padding-top: 100px;
-  padding-bottom: 36px;
 }
 
 .prompts-controls {
