@@ -738,8 +738,8 @@
                     </div>
 
                     <div class="term-actions-bar">
-                      <button type="button" class="btn-action-term" onclick="copyTermLink('${t.id}')">🔗 Ссылка</button>
-                      <button type="button" class="btn-action-term" onclick="copyTermText('${t.id}')">📋 Копировать</button>
+                      <button type="button" class="btn-action-term" onclick="copyTermLink('${t.id}', this)">🔗 Ссылка</button>
+                      <button type="button" class="btn-action-term" onclick="copyTermText('${t.id}', this)">📋 Копировать</button>
                     </div>
                   </div>
                 </div>
@@ -816,16 +816,33 @@
       renderTerms();
     }
 
-    function copyTermLink(termId) {
-      const url = `${window.location.origin}/glossary#${termId}`;
-      navigator.clipboard.writeText(url).then(() => showToast('Прямая ссылка на термин скопирована!'));
+    
+    function copyTermLink(termId, btn) {
+      const url = `https://a-sage.ru/glossary#${termId}`;
+      navigator.clipboard.writeText(url).then(() => {
+        if (btn) {
+          const oldText = btn.innerHTML;
+          btn.innerHTML = '✓ Ссылка скопирована';
+          setTimeout(() => { btn.innerHTML = oldText; }, 2000);
+        }
+        showToast('✓ Прямая ссылка на термин скопирована!');
+      });
     }
 
-    function copyTermText(termId) {
+    function copyTermText(termId, btn) {
       const term = allTerms.find(t => t.id === termId);
       if (!term) return;
-      const text = `${term.name_ru} (${term.name_en})\n\n${term.short_def}\n\n• Техническая суть: ${term.tech_details}\n• В бизнесе: ${term.business_case}`;
-      navigator.clipboard.writeText(text).then(() => showToast('Определение скопировано в буфер!'));
+      const subtitle = term.name_en ? ` (${term.name_en})` : '';
+      const text = `${term.name_ru}${subtitle}\n\n${term.short_def}\n\n• Техническая суть: ${term.tech_details}\n• В бизнесе: ${term.business_case}\n\n—\n📖 Источник: Энциклопедия & Глоссарий по AI — Михаил Пузырёв\n🔗 https://a-sage.ru/glossary#${term.id}`;
+      
+      navigator.clipboard.writeText(text).then(() => {
+        if (btn) {
+          const oldText = btn.innerHTML;
+          btn.innerHTML = '✓ Скопировано';
+          setTimeout(() => { btn.innerHTML = oldText; }, 2000);
+        }
+        showToast('✓ Определение с ссылкой на источник скопировано!');
+      });
     }
 
     function showToast(msg) {
