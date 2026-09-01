@@ -51,11 +51,27 @@
   </script>
   <noscript><div><img src="https://mc.yandex.ru/watch/101414837" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
   <style>
-    .base-hero {
-      padding: 110px 0 36px;
+    
+    .base-page-frame {
+      max-width: 1440px;
+      margin: 0 auto;
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      box-sizing: border-box;
       background: #ffffff;
+    }
+    .base-hero-section {
+      padding-top: 116px;
+      padding-bottom: 32px;
+      padding-left: clamp(20px, 4.5vw, 64px);
+      padding-right: clamp(20px, 4.5vw, 64px);
       border-bottom: 1px solid var(--border);
     }
+    .base-blocks-section {
+      padding: 48px clamp(20px, 4.5vw, 64px) 80px;
+      background: var(--bg-alt);
+    }
+
     .base-blocks-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
@@ -68,9 +84,27 @@
         gap: 16px;
         margin-top: 20px;
       }
-      .base-hero {
-        padding: 32px 0 24px;
-      }
+      
+    .base-page-frame {
+      max-width: 1440px;
+      margin: 0 auto;
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      box-sizing: border-box;
+      background: #ffffff;
+    }
+    .base-hero-section {
+      padding-top: 116px;
+      padding-bottom: 32px;
+      padding-left: clamp(20px, 4.5vw, 64px);
+      padding-right: clamp(20px, 4.5vw, 64px);
+      border-bottom: 1px solid var(--border);
+    }
+    .base-blocks-section {
+      padding: 48px clamp(20px, 4.5vw, 64px) 80px;
+      background: var(--bg-alt);
+    }
+
     }
     .base-card {
       background: #ffffff;
@@ -217,8 +251,7 @@
 
   <main>
     <!-- HERO SECTION -->
-    <section class="base-hero">
-      <div class="container">
+    <section class="base-page-frame base-hero-section">
         <div class="hero-badge">
           <span class="dot"></span>
           ЕДИНЫЙ ЦЕНТР ЗНАНИЙ & ИНСТРУМЕНТАРИЯ
@@ -233,8 +266,7 @@
     </section>
 
     <!-- 4 CORE SECTIONS GRID -->
-    <section style="padding: 48px 0 80px; background: var(--bg-alt);">
-      <div class="container">
+    <section class="base-page-frame base-blocks-section">
         
         <div class="base-blocks-grid">
           

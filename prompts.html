@@ -26,15 +26,15 @@
   <meta name="twitter:description" content="37 готовых системных инструкций для AI-агентов по стандарту Prompt-Forge v2.0.">
   <meta name="twitter:image" content="https://a-sage.ru/img/mikhail_about.jpg">
 
-  <!-- Fonts (Optimized Async Preconnect) -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=2.4">
 
-  <!-- Schema.org JSON-LD Structured Data (GEO & Semantic Graph) -->
+  <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -47,28 +47,16 @@
         "url": "https://a-sage.ru/",
         "image": "https://a-sage.ru/img/mikhail_about.jpg",
         "jobTitle": "ИИ-Архитектор, Инженер-Разработчик и Бизнес-Трекер"
-      },
-      {
-        "@type": "TechArticle",
-        "headline": "Библиотека 37 Профессиональных Системных Промптов для AI-Агентов",
-        "description": "Сборник глубоких системных инструкций для Claude, GPT и Gemini по стандарту Prompt-Forge v2.0 на русском и английском языках.",
-        "author": {
-          "@id": "https://a-sage.ru/#person"
-        },
-        "publisher": {
-          "@id": "https://a-sage.ru/#person"
-        },
-        "url": "https://a-sage.ru/prompts"
       }
     ]
   }
   </script>
 
-  <!-- Yandex.Metrika counter (Zero-Lag Async Loader) -->
+  <!-- Yandex.Metrika -->
   <script type="text/javascript">
     (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
     m[i].l=1*new Date();
-    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }
     k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
     (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
@@ -80,15 +68,49 @@
     });
   </script>
   <noscript><div><img src="https://mc.yandex.ru/watch/101414837" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+
+  <style>
+    /* Continuous Frame Styles */
+    .prompts-page-frame {
+      max-width: 1440px;
+      margin: 0 auto;
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      box-sizing: border-box;
+      background: #ffffff;
+    }
+    .prompts-hero-fixed {
+      padding-top: 116px;
+      padding-bottom: 28px;
+      padding-left: clamp(20px, 4.5vw, 64px);
+      padding-right: clamp(20px, 4.5vw, 64px);
+      border-bottom: 1px solid var(--border);
+    }
+    .prompts-sticky-toolbar {
+      position: sticky;
+      top: 68px;
+      z-index: 95;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px clamp(20px, 4.5vw, 64px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    }
+    .prompts-grid-section {
+      padding: 32px clamp(20px, 4.5vw, 64px) 80px;
+      background: #ffffff;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- HEADER NAVIGATION (FLAT SINGLE LEVEL) -->
+  <!-- HEADER NAVIGATION -->
   <header class="nav">
     <div class="nav-inner">
       <a href="/" class="nav-logo">
         <strong>Михаил Пузыр<span class="accent-yo">ё</span>в</strong>
-        <span class="nav-logo-badge">AI-АРХИТЕКТОР</span>
+        <span class="nav-logo-badge">PROMPT-FORGE V2.0</span>
       </a>
 
       <ul class="nav-links">
@@ -101,7 +123,7 @@
       </ul>
 
       <div class="nav-right">
-        <a href="booking" class="nav-cta">Забронировать слот ↗</a>
+        <a href="/booking" class="nav-cta">Забронировать слот ↗</a>
         <button class="nav-burger" aria-label="Открыть меню">
           <span></span>
           <span></span>
@@ -125,38 +147,55 @@
     <a href="/calculators">→ Калькуляторы</a>
     <a href="/booking" class="m-cta">Забронировать слот ↗</a>
   </div>
-    <a href="about"><span class="nav-link-text">Обо&nbsp;мне & Кейсы</span></a>
-    <a href="booking" class="m-cta">Забронировать слот ↗</a>
-  </div>
 
-  <!-- GLOBAL LANGUAGE SWITCHER -->
-          <div class="global-lang-switcher">
-            <span class="lang-switch-label" id="langSwitchLabel">Язык промптов:</span>
-            <div class="lang-switch-pills">
-              <button class="lang-pill active" id="btnLangRu" onclick="setGlobalLang('ru')">🇷🇺 Русский (RU)</button>
-              <button class="lang-pill" id="btnLangEn" onclick="setGlobalLang('en')">🇬🇧 English (EN)</button>
-            </div>
+  <main>
+    <!-- HERO SECTION -->
+    <section class="prompts-page-frame prompts-hero-fixed">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        БАЗА ЗНАНИЙ // PROMPT-FORGE V2.0
+      </div>
+      <h1 class="hero-title" style="margin-top: 16px; margin-bottom: 12px;">
+        Библиотека Системных Промптов
+      </h1>
+      <p class="hero-sub" style="max-width: 860px; font-size: 1.15rem; line-height: 1.6; color: #52525b;">
+        37 глубоких системных инструкций для <strong>ChatGPT</strong>, <strong>Claude</strong>, <strong>Gemini</strong> и <strong>DeepSeek</strong> на русском и английском языках. Спроектированы по когнитивному фреймворку <strong>GRACEF</strong> со встроенными защитами от галлюцинаций.
+      </p>
+    </section>
+
+    <!-- STICKY SEARCH & CATEGORIES TOOLBAR -->
+    <section class="prompts-page-frame prompts-sticky-toolbar">
+      <div style="display: flex; gap: 14px; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap;">
+        <div class="search-box-wrapper" style="flex: 1 1 420px; margin-bottom: 0;">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="promptSearch" class="search-input" placeholder="Поиск роли, задачи или ключевого слова (напр. юрист, Reels, SPIN, налоги, Nginx)..." oninput="filterPrompts()">
+        </div>
+
+        <div class="global-lang-switcher" style="margin-bottom: 0;">
+          <span class="lang-switch-label" id="langSwitchLabel">Язык промптов:</span>
+          <div class="lang-switch-pills">
+            <button class="lang-pill active" id="btnLangRu" onclick="setGlobalLang('ru')">🇷🇺 Русский (RU)</button>
+            <button class="lang-pill" id="btnLangEn" onclick="setGlobalLang('en')">🇬🇧 English (EN)</button>
           </div>
         </div>
+      </div>
 
-        <div class="filter-tabs">
-          <button class="filter-tab active" data-filter="all" onclick="setFilter('all', this)">Все роли (37)</button>
-          <button class="filter-tab" data-filter="marketing" onclick="setFilter('marketing', this)">🎯 Маркетинг & Трафик (7)</button>
-          <button class="filter-tab" data-filter="sales" onclick="setFilter('sales', this)">💼 Продажи & Аутрич (6)</button>
-          <button class="filter-tab" data-filter="legal" onclick="setFilter('legal', this)">⚖️ Юриспруденция (5)</button>
-          <button class="filter-tab" data-filter="finance" onclick="setFilter('finance', this)">📈 Финансы & VC (5)</button>
-          <button class="filter-tab" data-filter="dev" onclick="setFilter('dev', this)">💻 Vibe Coding & IT (6)</button>
-          <button class="filter-tab" data-filter="psychology" onclick="setFilter('psychology', this)">🧠 Психология & Коучинг (4)</button>
-          <button class="filter-tab" data-filter="ops" onclick="setFilter('ops', this)">⚡️ Операционка & TOC (4)</button>
-        </div>
+      <div class="category-scroll-strip" id="filterTabs">
+        <button class="filter-tab active" data-filter="all" onclick="setFilter('all', this)">Все роли (37)</button>
+        <button class="filter-tab" data-filter="marketing" onclick="setFilter('marketing', this)">🎯 Маркетинг & Трафик (7)</button>
+        <button class="filter-tab" data-filter="sales" onclick="setFilter('sales', this)">💼 Продажи & Аутрич (6)</button>
+        <button class="filter-tab" data-filter="legal" onclick="setFilter('legal', this)">⚖️ Юриспруденция (5)</button>
+        <button class="filter-tab" data-filter="finance" onclick="setFilter('finance', this)">📈 Финансы & VC (5)</button>
+        <button class="filter-tab" data-filter="dev" onclick="setFilter('dev', this)">💻 Vibe Coding & IT (6)</button>
+        <button class="filter-tab" data-filter="psychology" onclick="setFilter('psychology', this)">🧠 Психология & Коучинг (4)</button>
+        <button class="filter-tab" data-filter="ops" onclick="setFilter('ops', this)">⚡️ Операционка & TOC (4)</button>
       </div>
     </section>
 
     <!-- PROMPTS GRID -->
-    <section class="prompts-container">
-      <div class="container">
-        <div class="prompts-grid" id="promptsGrid">
-        <!-- PROMPT #01 -->
+    <section class="prompts-page-frame prompts-grid-section">
+      <div class="prompts-grid" id="promptsGrid">
+<!-- PROMPT #01 -->
         <article class="prompt-card" data-category="marketing" data-keywords="сценарист вирусных коротких видео (reels / shorts / tiktok) viral short-form video producer & scriptwriter (reels / shorts / tiktok) 🎯 маркетинг & трафик 🎯 marketing & growth" id="card-01">
           <div class="prompt-card-header">
             <div class="prompt-meta-top">
@@ -1695,9 +1734,9 @@ You are a fractional Chief Financial Officer for growth-stage businesses ($200k�
 Ты — эксперт по юнит-экономике цифровых продуктов, SaaS и сервисных компаний. Твоя задача — посчитать экономику одного юнита (пользователя, сделки, лида) и определить предел масштабирования платного трафика.
 
 ## 2. Mathematical Framework
-- $CAC = \frac{\text{All Sales \&amp; Marketing Expenses}}{\text{New Paying Customers}}$
+- $CAC = \frac{\text{All Sales \&amp; Marketing Expenses}{\text{New Paying Customers}$
 - $LTV = \text{AOV} \times \text{Margin \%} \times \text{Purchase Frequency} \times \text{Lifetime}$
-- $Payback Period = \frac{CAC}{\text{Monthly Gross Profit per Unit}}$
+- $Payback Period = \frac{CAC}{\text{Monthly Gross Profit per Unit}$
 - $LTV / CAC \ge 3.0$ (Здоровая модель), $5.0+$ (Сверхэффективная модель).
 
 ## 3. Output Deliverable
@@ -1716,9 +1755,9 @@ You are a unit economics modeler for digital platforms and SaaS. Your mission is
 Ты — эксперт по юнит-экономике цифровых продуктов, SaaS и сервисных компаний. Твоя задача — посчитать экономику одного юнита (пользователя, сделки, лида) и определить предел масштабирования платного трафика.
 
 ## 2. Mathematical Framework
-- $CAC = \frac{\text{All Sales \&amp; Marketing Expenses}}{\text{New Paying Customers}}$
+- $CAC = \frac{\text{All Sales \&amp; Marketing Expenses}{\text{New Paying Customers}$
 - $LTV = \text{AOV} \times \text{Margin \%} \times \text{Purchase Frequency} \times \text{Lifetime}$
-- $Payback Period = \frac{CAC}{\text{Monthly Gross Profit per Unit}}$
+- $Payback Period = \frac{CAC}{\text{Monthly Gross Profit per Unit}$
 - $LTV / CAC \ge 3.0$ (Здоровая модель), $5.0+$ (Сверхэффективная модель).
 
 ## 3. Output Deliverable
