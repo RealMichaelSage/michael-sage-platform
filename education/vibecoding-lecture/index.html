@@ -931,146 +931,317 @@
         /* ---------------------------------- */
         /* Responsive & Fluid Mobile System   */
         /* ---------------------------------- */
-        html, body {
-            max-width: 100vw;
-            overflow-x: hidden !important;
-        }
-
-        * {
-            max-width: 100%;
-        }
-
         @media (max-width: 900px) {
-            .slide {
-                grid-template-columns: 1fr;
-                padding: 24px 16px 110px 16px;
-                gap: 20px;
-                overflow-y: auto;
-                height: auto;
-                min-height: 100vh;
+            html, body {
+                width: 100%;
+                max-width: 100vw;
+                overflow-x: hidden !important;
+                overflow-y: auto !important;
+                height: auto !important;
+                min-height: 100vh !important;
+            }
+            * {
+                max-width: 100%;
                 box-sizing: border-box;
             }
-            .pop-image-wrapper {
-                height: auto;
-                max-height: 320px;
-                width: 100%;
+            .bg-container {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                overflow: hidden;
+                pointer-events: none;
             }
-            .pop-frame {
-                max-height: 320px;
+            .pop-fullscreen-btn {
+                top: 10px;
+                right: 10px;
+                padding: 6px 12px;
+                font-size: 0.78rem;
+                border-width: 2.5px;
+                box-shadow: 3px 3px 0px #000000;
+                z-index: 100;
+            }
+            .presentation-container {
+                position: relative;
+                width: 100% !important;
+                max-width: 100vw !important;
+                height: auto !important;
+                min-height: calc(100vh - 76px) !important;
+                padding: 50px 14px 90px 14px !important;
+                margin: 0 !important;
+                display: block !important;
+                overflow-x: hidden !important;
+            }
+            .slide {
+                position: relative !important;
+                display: none !important;
+                grid-template-columns: 1fr !important;
+                gap: 16px !important;
+                opacity: 1 !important;
+                transform: none !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                height: auto !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                pointer-events: auto !important;
+            }
+            .slide.active {
+                display: flex !important;
+                flex-direction: column !important;
+            }
+            .slide.layout-flipped {
+                grid-template-columns: 1fr !important;
+                display: none !important;
+            }
+            .slide.layout-flipped.active {
+                display: flex !important;
+                flex-direction: column-reverse !important;
+            }
+            .slide.layout-fullwidth {
+                display: none !important;
+            }
+            .slide.layout-fullwidth.active {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 14px !important;
+            }
+            .slide-title-wrapper {
+                width: 100% !important;
             }
             .pop-title-main {
-                font-size: clamp(2.8rem, 8vw, 4.2rem);
-                margin-bottom: 1.2rem;
-                word-wrap: break-word;
+                font-size: clamp(2rem, 7.5vw, 2.7rem) !important;
+                line-height: 1.15 !important;
+                -webkit-text-stroke: 1.5px #000000 !important;
+                text-shadow: 4px 4px 0px var(--pop-pink) !important;
+                transform: none !important;
+                margin-top: 0.2rem !important;
+                margin-bottom: 1rem !important;
+                word-wrap: break-word !important;
+                overflow-wrap: break-word !important;
             }
             .pop-title-section {
-                font-size: clamp(2rem, 6vw, 3rem);
-                margin-bottom: 1.2rem;
-                word-wrap: break-word;
+                font-size: clamp(1.6rem, 5.8vw, 2.2rem) !important;
+                line-height: 1.2 !important;
+                -webkit-text-stroke: 1.5px #000000 !important;
+                text-shadow: 4px 4px 0px var(--pop-cyan) !important;
+                transform: none !important;
+                margin-top: 0.2rem !important;
+                margin-bottom: 1rem !important;
+                word-wrap: break-word !important;
+                overflow-wrap: break-word !important;
             }
             .pop-subtitle {
-                font-size: 1.15rem;
-                padding: 6px 12px;
-                margin-bottom: 1.2rem;
+                font-size: 0.82rem !important;
+                padding: 5px 10px !important;
+                transform: none !important;
+                margin-bottom: 0.8rem !important;
+                display: inline-block !important;
+                width: auto !important;
+                max-width: 100% !important;
             }
             .pop-text-bubble {
-                font-size: 1.05rem;
-                padding: 16px;
-                margin-bottom: 1rem;
-                word-wrap: break-word;
+                font-size: 0.98rem !important;
+                line-height: 1.6 !important;
+                padding: 14px 16px !important;
+                box-shadow: 4px 4px 0px #000000 !important;
+                margin-bottom: 1rem !important;
+            }
+            .about-cards-list {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 8px !important;
+                width: 100% !important;
             }
             .about-sticker {
-                padding: 12px 14px;
+                padding: 10px 12px !important;
+                font-size: 0.88rem !important;
+                line-height: 1.4 !important;
+                gap: 10px !important;
+                box-shadow: 3px 3px 0px #000000 !important;
             }
-            .about-sticker span {
-                font-size: 1rem;
+            .sticker-icon {
+                min-width: 36px !important;
+                width: 36px !important;
+                height: 36px !important;
+                font-size: 1.1rem !important;
             }
-            .bento-pop-grid {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-            .qrs-block {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-                width: 100%;
-                margin-top: 1rem;
-            }
-            .qr-card-pop {
-                width: 100%;
-                padding: 10px 6px;
-            }
-            .qr-container-pop img, .qr-container-pop canvas {
-                max-width: 90px !important;
+            .pop-image-wrapper {
+                width: 100% !important;
+                max-width: 100% !important;
                 height: auto !important;
-            }
-
-            /* Speaker Slide (Slide 3) Mobile Custom Rules */
-            #slide-2 .pop-image-wrapper {
-                max-height: 180px !important;
-                height: 180px !important;
-                width: 180px !important;
-                margin: 10px auto 0 auto !important;
+                margin: 0 auto !important;
                 display: flex !important;
                 justify-content: center !important;
             }
-            #slide-2 .pop-frame {
-                max-height: 180px !important;
-                height: 180px !important;
-                width: 180px !important;
-                aspect-ratio: 1/1 !important;
-                border-radius: 0;
+            .pop-frame {
+                width: 100% !important;
+                max-width: 320px !important;
+                height: auto !important;
+                max-height: 240px !important;
+                transform: none !important;
+                box-shadow: 5px 5px 0px #000000 !important;
             }
-            #slide-2 .about-cards-list {
-                gap: 0.4rem !important;
+            .pop-img {
+                width: 100% !important;
+                height: 100% !important;
+                max-height: 240px !important;
+                object-fit: cover !important;
             }
-            #slide-2 .about-sticker {
-                padding: 8px 10px !important;
+            .agenda-panels {
+                display: flex !important;
+                flex-direction: column !important;
                 gap: 8px !important;
+                width: 100% !important;
             }
-            #slide-2 .about-sticker span {
-                font-size: 0.85rem !important;
-                line-height: 1.3 !important;
+            .agenda-panel {
+                padding: 10px 12px !important;
+                transform: none !important;
+                box-shadow: 3px 3px 0px #000000 !important;
             }
-            #slide-2 .sticker-icon {
-                width: 28px !important;
-                height: 28px !important;
-                font-size: 1.05rem !important;
-            }
-            #slide-2 .qrs-block {
+            .bento-pop-grid, .tools-3col-grid, .cases-bento-grid, .agent-cards-grid {
                 display: grid !important;
-                grid-template-columns: repeat(3, 1fr) !important;
+                grid-template-columns: 1fr !important;
+                gap: 10px !important;
+                width: 100% !important;
+            }
+            .bento-pop-card, .tool-pop-card, .agent-card {
+                padding: 12px !important;
+                transform: none !important;
+                box-shadow: 4px 4px 0px #000000 !important;
+            }
+            .pop-badges {
+                display: flex !important;
+                flex-wrap: wrap !important;
                 gap: 6px !important;
                 margin-top: 10px !important;
             }
-            #slide-2 .qr-card-pop {
+            .pop-badge {
+                font-size: 0.75rem !important;
+                padding: 4px 8px !important;
+                box-shadow: 2px 2px 0px #000000 !important;
+            }
+            .pop-cta-group {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 8px !important;
+                width: 100% !important;
+                margin-top: 10px !important;
+            }
+            .pop-action-btn {
+                width: 100% !important;
+                text-align: center !important;
+                padding: 10px 14px !important;
+                font-size: 0.88rem !important;
+                justify-content: center !important;
+                box-shadow: 3px 3px 0px #000000 !important;
+            }
+            .qrs-block {
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 6px !important;
+                width: 100% !important;
+                margin-top: 10px !important;
+            }
+            .qr-card-pop {
                 width: 100% !important;
                 padding: 6px 3px !important;
                 transform: none !important;
+                box-shadow: 3px 3px 0px #000000 !important;
             }
-            #slide-2 .qr-container-pop img, #slide-2 .qr-container-pop canvas {
-                width: 70px !important;
-                height: 70px !important;
+            .qr-container-pop img, .qr-container-pop canvas {
+                width: 56px !important;
+                height: 56px !important;
+                max-width: 56px !important;
+                margin: 0 auto !important;
             }
-            #slide-2 .qr-card-pop span {
-                font-size: 0.7rem !important;
-                margin-top: 2px !important;
+            .qr-card-pop span {
+                font-size: 0.68rem !important;
+                line-height: 1.15 !important;
+                margin-top: 3px !important;
             }
-            #slide-2 .pop-qr-btn {
-                font-size: 0.72rem !important;
-                padding: 4px 6px !important;
-                margin-top: 2px !important;
+            .pop-qr-btn {
+                font-size: 0.68rem !important;
+                padding: 3px 2px !important;
+                margin-top: 3px !important;
             }
+            .pop-nav-arrow { display: none !important; }
+            .footer-controls-names { display: none !important; }
+            .custom-cursor-dot, .comic-speech-bubble { display: none !important; }
+            .mobile-nav-trigger-wrapper { display: none !important; }
 
-            body {
-                overflow-x: hidden;
-                overflow-y: auto;
+            /* Mobile Bottom Navigation Toolbar */
+            .mobile-nav-bar {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                z-index: 9999;
+                background: #11121c;
+                border-top: 3px solid #000000;
+                padding: 8px 12px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 10px;
+                box-shadow: 0 -4px 16px rgba(0,0,0,0.6);
             }
-            .footer-controls-names {
-                display: none !important;
+            .btn-mob-nav {
+                background: var(--pop-cyan);
+                color: #000000;
+                font-family: 'Outfit', sans-serif;
+                font-weight: 900;
+                font-size: 0.88rem;
+                padding: 10px 14px;
+                border: 2.5px solid #000000;
+                border-radius: 0;
+                box-shadow: 3px 3px 0px #000000;
+                text-transform: uppercase;
+                cursor: pointer;
+                flex: 1;
+                text-align: center;
             }
-            .mobile-nav-trigger-wrapper {
-                display: block !important;
+            .btn-mob-nav:active {
+                transform: translate(2px, 2px);
+                box-shadow: 1px 1px 0px #000000;
+            }
+            .btn-mob-nav.next {
+                background: var(--pop-yellow);
+            }
+            .btn-mob-nav-center {
+                background: #1e1f2b;
+                color: #FFFFFF;
+                border: 2.5px solid #000000;
+                border-radius: 0;
+                padding: 8px 12px;
+                box-shadow: 3px 3px 0px #000000;
+                font-family: 'Outfit', sans-serif;
+                font-weight: 800;
+                font-size: 0.85rem;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
+            .mob-menu-icon {
+                color: var(--pop-yellow);
+                font-size: 1rem;
+            }
+        }
+    
+        
+        /* Desktop vs Mobile display rules */
+        .mobile-nav-bar, .mobile-menu-overlay, .mobile-nav-trigger-wrapper {
+            display: none !important;
+        }
+
+        @media (max-width: 900px) {
+            .mobile-nav-bar {
+                display: flex !important;
+            }
+            .mobile-menu-overlay.open {
+                display: flex !important;
             }
         }
     </style>
@@ -1609,6 +1780,17 @@
     </div>
 
     <!-- Navigation Slide Buttons (Desktop Bottom Panel) -->
+    
+    <!-- Mobile Bottom Navigation Bar -->
+    <div class="mobile-nav-bar" id="mobile-nav-bar">
+        <button class="btn-mob-nav" id="btn-mob-prev" onclick="prevSlide()">❮ Назад</button>
+        <button class="btn-mob-nav-center" id="btn-mob-menu" onclick="openMobileMenu()">
+            <span id="mob-counter-badge">1 / 16</span>
+            <span class="mob-menu-icon">☰</span>
+        </button>
+        <button class="btn-mob-nav next" id="btn-mob-next" onclick="nextSlide()">Вперёд ❯</button>
+    </div>
+
     <div class="footer-controls-names" id="controls-container"></div>
 
     <!-- Mobile Pop Art Sandwich Button (Bottom Center) -->
