@@ -128,7 +128,7 @@
     </section>
 
     <!-- INTERACTIVE CALCULATOR SECTION -->
-    <section class="calc-main-section" style="padding: 48px 0 80px; background: #ffffff;">
+    <section class="calc-main-section">
       <div class="container">
         
         <div class="calc-grid-layout">
@@ -138,10 +138,10 @@
             
             <!-- 1. Input Amount -->
             <div class="calc-group">
-              <label class="calc-label" for="amountInput">
-                <span>1. Введите базовую сумму (₽)</span>
-                <span class="calc-hint" id="amountTypeHint">Сумма, которую хотите получить чистыми на руки</span>
-              </label>
+              <div class="calc-label-block">
+                <label class="calc-label-title" for="amountInput">1. Введите базовую сумму (₽)</label>
+                <div class="calc-hint" id="amountTypeHint">Сумма, которую хотите получить чистыми на руки</div>
+              </div>
               
               <div class="calc-input-wrapper">
                 <input type="text" id="amountInput" class="calc-big-input" value="43 050" oninput="handleAmountInput(this)">
@@ -177,8 +177,8 @@
 
             <!-- 3. Tax Rate Preset Selector -->
             <div class="calc-group">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                <label class="calc-label" style="margin-bottom: 0;">3. Выберите ставку налога / наценки</label>
+              <div class="calc-rate-header">
+                <label class="calc-label-title">3. Выберите ставку налога / наценки</label>
                 <span class="calc-current-rate" id="currentRateLabel">6% УСН Доходы</span>
               </div>
 
@@ -219,11 +219,11 @@
 
               <!-- Custom Rate Slider -->
               <div class="custom-rate-box">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                  <span style="font-size: 0.88rem; font-weight: 600; color: var(--black);">Или введите свой произвольный процент:</span>
-                  <div style="display: flex; align-items: center; gap: 4px;">
+                <div class="custom-rate-header">
+                  <span class="custom-rate-title">Или введите свой произвольный процент:</span>
+                  <div class="custom-rate-input-wrap">
                     <input type="number" id="customRateInput" min="0.1" max="99" step="0.5" value="6" class="custom-rate-input" oninput="handleCustomRateInput(this.value)">
-                    <span style="font-weight: 700; font-family: var(--mono);">%</span>
+                    <span class="custom-rate-percent">%</span>
                   </div>
                 </div>
                 <input type="range" id="customRateSlider" min="1" max="60" step="0.5" value="6" class="calc-slider" oninput="handleSliderInput(this.value)">
