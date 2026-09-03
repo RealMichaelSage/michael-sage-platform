@@ -109,6 +109,12 @@
     <priority>0.80</priority>
   </url>
   <url>
+    <loc>https://a-sage.ru/google-one-guide</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
     <loc>https://a-sage.ru/privacy</loc>
     <lastmod>2026-09-03</lastmod>
     <changefreq>yearly</changefreq>
