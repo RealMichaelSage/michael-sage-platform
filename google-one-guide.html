@@ -744,41 +744,56 @@
             <li>Заполните биллинг-данные (кликните, чтобы скопировать):</li>
           </ol>
 
+          <div class="callout-box callout-info" style="margin: 20px 0 16px 0;">
+            <div class="callout-title">🎲 Зачем нужен уникальный адрес?</div>
+            <p style="font-size:0.92rem; margin-bottom:10px;">
+              Google Payments отслеживает частоту использования одинаковых строк адреса. Чтобы регистрация прошла гладко, сгенерируйте <strong>уникальный реальный адрес</strong> в безналоговом штате:
+            </p>
+            <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
+              <a href="https://usaddressgenerator.com/" target="_blank" class="btn-guide btn-guide-primary" style="padding:8px 16px; font-size:0.85rem; background:#2563eb; border-color:#2563eb;">
+                🌐 Открыть USAddressGenerator.com ↗
+              </a>
+              <button id="btn-random-address" class="copy-chip" style="padding:8px 14px; font-size:0.85rem; font-weight:700; background:#f8fafc;" onclick="generateRandomDelawareAddress()">
+                🔄 Сгенерировать адрес прямо здесь
+              </button>
+            </div>
+          </div>
+
           <div class="data-table-box">
             <table class="data-table">
               <thead>
                 <tr>
-                  <th>Поле</th>
-                  <th>Значение для Делавэра</th>
+                  <th>Поле в Google Payments</th>
+                  <th>Сгенерированное значение (0% Tax)</th>
                   <th>Действие</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>Улица (Street)</strong></td>
-                  <td><code>1201 N Orange St</code></td>
-                  <td><button class="copy-chip" onclick="navigator.clipboard.writeText('1201 N Orange St'); this.innerText='Скопировано ✓';">Скопировать 📋</button></td>
+                  <td><strong>Улица (Street address)</strong></td>
+                  <td><code id="addr-street">1201 N Orange St</code></td>
+                  <td><button class="copy-chip" onclick="copyAddrField('addr-street', this)">Скопировать 📋</button></td>
                 </tr>
                 <tr>
                   <td><strong>Город (City)</strong></td>
-                  <td><code>Wilmington</code></td>
-                  <td><button class="copy-chip" onclick="navigator.clipboard.writeText('Wilmington'); this.innerText='Скопировано ✓';">Скопировать 📋</button></td>
+                  <td><code id="addr-city">Wilmington</code></td>
+                  <td><button class="copy-chip" onclick="copyAddrField('addr-city', this)">Скопировать 📋</button></td>
                 </tr>
                 <tr>
                   <td><strong>Штат (State)</strong></td>
-                  <td><code>Delaware (DE)</code></td>
-                  <td><button class="copy-chip" onclick="navigator.clipboard.writeText('Delaware'); this.innerText='Скопировано ✓';">Скопировать 📋</button></td>
+                  <td><code id="addr-state">Delaware (DE)</code></td>
+                  <td><button class="copy-chip" onclick="copyAddrField('addr-state', this, 'Delaware')">Скопировать 📋</button></td>
                 </tr>
                 <tr>
-                  <td><strong>Почтовый индекс (ZIP)</strong></td>
-                  <td><code>19801</code></td>
-                  <td><button class="copy-chip" onclick="navigator.clipboard.writeText('19801'); this.innerText='Скопировано ✓';">Скопировать 📋</button></td>
+                  <td><strong>Почтовый индекс (ZIP Code)</strong></td>
+                  <td><code id="addr-zip">19801</code></td>
+                  <td><button class="copy-chip" onclick="copyAddrField('addr-zip', this)">Скопировать 📋</button></td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <p style="font-size:0.88rem; color:var(--gray); margin-bottom:0;">
-            <em>* Сохраните профиль. Теперь ваш биллинг официально закреплен за юрисдикцией США без региональных сборов.</em>
+          <p style="font-size:0.85rem; color:var(--gray); margin-bottom:0;">
+            <em>* Вы можете нажать кнопку «🔄 Сгенерировать адрес прямо здесь», чтобы получить новый уникальный адрес в Delaware или Oregon, либо взять любой адрес из <a href="https://usaddressgenerator.com/" target="_blank" style="text-decoration:underline;">US Address Generator</a>.</em>
           </p>
         </div>
 
@@ -1063,5 +1078,44 @@
   </footer>
 
   <script src="js/main.js"></script>
+
+  <script>
+    const sampleAddresses = [
+      { street: "1201 N Orange St", city: "Wilmington", state: "Delaware (DE)", rawState: "Delaware", zip: "19801" },
+      { street: "824 N Market St Ste 400", city: "Wilmington", state: "Delaware (DE)", rawState: "Delaware", zip: "19801" },
+      { street: "300 Delaware Ave Ste 210", city: "Wilmington", state: "Delaware (DE)", rawState: "Delaware", zip: "19801" },
+      { street: "1000 N West St Ste 1200", city: "Wilmington", state: "Delaware (DE)", rawState: "Delaware", zip: "19801" },
+      { street: "100 S Main St", city: "Newark", state: "Delaware (DE)", rawState: "Delaware", zip: "19711" },
+      { street: "250 E Main St", city: "Newark", state: "Delaware (DE)", rawState: "Delaware", zip: "19711" },
+      { street: "500 S State St", city: "Dover", state: "Delaware (DE)", rawState: "Delaware", zip: "19901" },
+      { street: "111 W 10th St", city: "Wilmington", state: "Delaware (DE)", rawState: "Delaware", zip: "19801" },
+      { street: "700 SW 5th Ave", city: "Portland", state: "Oregon (OR)", rawState: "Oregon", zip: "97204" },
+      { street: "1120 NW Couch St", city: "Portland", state: "Oregon (OR)", rawState: "Oregon", zip: "97209" },
+      { street: "99 E Broadway", city: "Eugene", state: "Oregon (OR)", rawState: "Oregon", zip: "97401" }
+    ];
+
+    let currentIdx = 0;
+    function generateRandomDelawareAddress() {
+      currentIdx = (currentIdx + 1) % sampleAddresses.length;
+      const a = sampleAddresses[currentIdx];
+      document.getElementById('addr-street').innerText = a.street;
+      document.getElementById('addr-city').innerText = a.city;
+      document.getElementById('addr-state').innerText = a.state;
+      document.getElementById('addr-zip').innerText = a.zip;
+      
+      const btn = document.getElementById('btn-random-address');
+      btn.innerText = '✓ Адрес обновлен!';
+      setTimeout(() => { btn.innerText = '🔄 Сгенерировать адрес прямо здесь'; }, 1500);
+    }
+
+    function copyAddrField(elemId, btnElem, explicitVal) {
+      const textToCopy = explicitVal || document.getElementById(elemId).innerText.replace(/ \(.*\)/, '');
+      navigator.clipboard.writeText(textToCopy);
+      const originalText = btnElem.innerText;
+      btnElem.innerText = 'Скопировано ✓';
+      setTimeout(() => { btnElem.innerText = originalText; }, 1800);
+    }
+  </script>
+
 </body>
 </html>
