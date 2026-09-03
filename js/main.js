@@ -818,8 +818,149 @@ function initUniversalEngines() {
   });
 }
 
+// ══════════════════════════════════════════════════════════════════
+// YANDEX METRIKA ENTERPRISE EVENT & GOAL TRACKER (Counter: 101414837)
+// ══════════════════════════════════════════════════════════════════
+const METRIKA_COUNTER_ID = 101414837;
+
+/**
+ * Universal Event Tracker for Yandex Metrika
+ * @param {string} goalName - JavaScript Goal Identifier
+ * @param {object} customParams - Detailed metadata about the action
+ */
+function trackMetrikaEvent(goalName, customParams = {}) {
+  try {
+    const pagePath = window.location.pathname || '/';
+    const pageTitle = document.title || '';
+    const payload = {
+      page: pagePath,
+      page_title: pageTitle,
+      timestamp: new Date().toISOString(),
+      ...customParams
+    };
+
+    if (typeof window.ym === 'function') {
+      // 1. Trigger JavaScript Goal in Yandex Metrika
+      window.ym(METRIKA_COUNTER_ID, 'reachGoal', goalName, payload);
+
+      // 2. Transmit hierarchical visit parameters for analytics drilldown
+      window.ym(METRIKA_COUNTER_ID, 'params', {
+        clicks_by_page: {
+          [pagePath]: {
+            [goalName]: payload.button_text || payload.action || 'click'
+          }
+        },
+        actions_log: {
+          [goalName]: {
+            page: pagePath,
+            section: payload.section || 'global',
+            text: payload.button_text || 'no_text',
+            href: payload.href || 'no_href'
+          }
+        }
+      });
+    }
+
+    if (window.location.hostname === 'localhost' || window.location.protocol === 'file:') {
+      console.log(`[YM Metrika ${METRIKA_COUNTER_ID}] Goal: ${goalName}`, payload);
+    }
+  } catch (err) {
+    console.warn('[YM Metrika Error]', err);
+  }
+}
+
+// Global click delegation for all buttons, links, and interactive triggers
+function initUniversalAnalytics() {
+  document.addEventListener('click', (e) => {
+    const clickable = e.target.closest('a, button, .copy-chip, .btn-primary, .btn-secondary, .btn-guide, .nav-cta, .m-cta, .prompt-code-btn, .prompt-card-expand, .filter-chip, .prompts-tag-chip, .scrollspy-link, .faq-q, .faq-toggle');
+    if (!clickable) return;
+
+    const href = clickable.getAttribute('href') || '';
+    const btnText = (clickable.innerText || clickable.textContent || '').replace(/\s+/g, ' ').trim().substring(0, 60);
+    const btnId = clickable.id || '';
+    const btnClass = clickable.className || '';
+    const parentSection = clickable.closest('section[id], section[data-nav-title], header, footer');
+    const sectionTitle = parentSection ? (parentSection.getAttribute('data-nav-title') || parentSection.id || parentSection.tagName.toLowerCase()) : 'global';
+
+    let goal = 'btn_click';
+    let actionCategory = 'general';
+
+    // 1. Messenger / Telegram Goals
+    if (href.includes('t.me/') || href.includes('telegram.me')) {
+      goal = 'telegram_click';
+      actionCategory = 'messenger';
+    } else if (href.includes('max.ru/')) {
+      goal = 'max_messenger_click';
+      actionCategory = 'messenger';
+    }
+    // 2. Booking / Calendar CTA
+    else if (href.includes('/booking') || btnText.includes('Забронировать') || btnClass.includes('nav-cta') || btnClass.includes('m-cta')) {
+      goal = 'booking_slot_click';
+      actionCategory = 'conversion_cta';
+    }
+    // 3. Copy action (prompts, addresses, links)
+    else if (btnClass.includes('copy-chip') || btnClass.includes('prompt-code-btn') || btnText.includes('Скопировать') || btnText.includes('Копировать')) {
+      goal = 'copy_action';
+      actionCategory = 'user_utility';
+    }
+    // 4. Interactive address generator
+    else if (btnId === 'btn-random-address' || btnText.includes('Сгенерировать адрес')) {
+      goal = 'address_generator_click';
+      actionCategory = 'interactive_tool';
+    }
+    // 5. Prompt expand / collapse
+    else if (btnClass.includes('prompt-card-expand') || btnText.includes('Развернуть') || btnText.includes('Свернуть')) {
+      goal = 'prompt_expand_click';
+      actionCategory = 'content_interaction';
+    }
+    // 6. Category filters (glossary, prompts)
+    else if (btnClass.includes('filter-chip') || btnClass.includes('prompts-tag-chip')) {
+      goal = 'category_filter_click';
+      actionCategory = 'navigation_filter';
+    }
+    // 7. Right Scrollspy navigation
+    else if (btnClass.includes('scrollspy-link') || clickable.closest('.scrollspy-link')) {
+      goal = 'scrollspy_nav_click';
+      actionCategory = 'scrollspy';
+    }
+    // 8. FAQ Accordion toggle
+    else if (btnClass.includes('faq-q') || btnClass.includes('faq-toggle') || clickable.closest('.faq-item')) {
+      goal = 'faq_accordion_click';
+      actionCategory = 'faq';
+    }
+    // 9. External link outbound
+    else if (href.startsWith('http') && !href.includes('a-sage.ru') && !href.includes('localhost')) {
+      goal = 'external_link_click';
+      actionCategory = 'outbound';
+    }
+    // 10. General Primary / Secondary Action Button
+    else if (btnClass.includes('btn-primary') || btnClass.includes('btn-guide-primary')) {
+      goal = 'primary_cta_click';
+      actionCategory = 'conversion_cta';
+    } else if (btnClass.includes('btn-secondary') || btnClass.includes('btn-guide-outline')) {
+      goal = 'secondary_action_click';
+      actionCategory = 'navigation_cta';
+    }
+
+    trackMetrikaEvent(goal, {
+      action_category: actionCategory,
+      button_text: btnText,
+      button_id: btnId,
+      href: href || undefined,
+      section: sectionTitle
+    });
+  }, { passive: true });
+}
+
+// Export to window for explicit programmatic triggers
+window.trackMetrikaEvent = trackMetrikaEvent;
+
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initUniversalEngines);
+  document.addEventListener('DOMContentLoaded', () => {
+    initUniversalEngines();
+    initUniversalAnalytics();
+  });
 } else {
   initUniversalEngines();
+  initUniversalAnalytics();
 }
