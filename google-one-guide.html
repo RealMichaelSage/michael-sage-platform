@@ -420,16 +420,19 @@
         </p>
 
         <div class="callout-box callout-warning">
-          <div class="callout-title">🚨 4 критические ошибки, которые нельзя совершать:</div>
+          <div class="callout-title">🚨 5 критических ошибок, которые нельзя совершать:</div>
           <ol style="margin-bottom:0;">
             <li>
-              <strong>Смена только «домашнего адреса» в профиле:</strong> Изменение адреса в разделе <em>«Личная информация»</em> <u>не меняет страну биллинга</u>. Нужно заходить напрямую в <strong>Google Payments Center (<a href="https://pay.google.com" target="_blank">pay.google.com</a>)</strong>, закрывать старый РФ-профиль и создавать новый платежный профиль США.
+              <strong>Смена адреса только в одном месте:</strong> Изменение адреса в разделе <em>«Личная информация»</em> <u>не меняет страну биллинга</u>, а смена только биллинга без смены домашнего адреса в Google-аккаунте вызывает несоответствие данных (Mismatch). Менять адрес нужно <strong>и в Google Payments (<a href="https://pay.google.com" target="_blank">pay.google.com</a>), и в основном профиле Google (<a href="https://myaccount.google.com/profile" target="_blank">myaccount.google.com</a>)</strong>.
+            </li>
+            <li>
+              <strong>Сохранение языка «Русский» и номеров «+7» в аккаунте:</strong> Если в настройках языка стоит русский, а в безопасности привязан телефон РФ — антифрод-система Google Risk Management сразу помечает профиль как подозрительный. Язык должен быть строго <strong>English (US)</strong>, а номера +7 удалены (2FA через Authenticator).
             </li>
             <li>
               <strong>Выбор штатов с налогом (Калифорния, Флорида, Нью-Йорк):</strong> В этих штатах действует налог с продаж (Sales Tax 6–10%). Из-за этого списывается не $19.99, а $21.50+. При нехватке $0.50 платеж падает в ошибку. <strong>Решение:</strong> выбирать безналоговые штаты (Delaware, Oregon, Montana).
             </li>
             <li>
-              <strong>Грязный IP и утечки DNS:</strong> Бесплатные публичные VPN мгновенно детектируются фрод-фильтрами Google Risk Management. Оплату нужно делать строго в чистом профиле браузера с качественным IP США.
+              <strong>Грязный IP и утечки DNS:</strong> Бесплатные публичные VPN мгновенно детектируются фрод-фильтрами. Оплату нужно делать строго в чистом профиле браузера с качественным IP США.
             </li>
             <li>
               <strong>Несоответствие ZIP-кода карты и биллинга:</strong> ZIP-код в способе оплаты должен строго совпадать с ZIP-кодом платежного профиля.
@@ -443,17 +446,42 @@
     <section id="step-0" class="guide-page-frame guide-section-block" data-nav-title="02. Окружение (US)">
       <div class="guide-content-wrap">
         <div class="section-tag">ПОДГОТОВКА СРЕДЫ</div>
-        <h2>📋 Этап 0. Настройка чистого окружения</h2>
+        <h2>📋 Этап 0. Настройка окружения и полная «американизация» Google-аккаунта</h2>
+        
+        <p>
+          Google сканирует аккаунт комплексно. Чтобы платежный шлюз пропустил транзакцию без ручных проверок и ошибок <code>OR_CCCHS_01</code>, необходимо полностью очистить аккаунт от любых российских маркеров:
+        </p>
+
         <div class="step-block">
           <span class="step-badge">ЭТАП 0</span>
-          <h3>Подготовка рабочего профиля (Критически важно!)</h3>
-          <p>Перед тем как открывать платежный шлюз Google, настройте рабочую среду:</p>
-          <ul>
-            <li>Включите качественный VPN с геолокацией <strong>США (United States)</strong>.</li>
-            <li>Откройте браузер в <strong>режиме Инкогнито</strong> или создайте отдельный чистый профиль в Google Chrome / Brave.</li>
-            <li>Проверьте на сайте <code>whoer.net</code>, что ваша страна определяется как <strong>US</strong>, а DNS не утекает в Россию.</li>
-            <li>Войдите в свой Google-аккаунт.</li>
-          </ul>
+          <h3>Чек-лист полной подготовки аккаунта (Критически важно!)</h3>
+
+          <ol>
+            <li>
+              <strong>1. Переключение языка интерфейса на английский (English US):</strong>
+              <p style="font-size:0.95rem; margin:6px 0 10px 0; color:#374151;">
+                Перейдите в <strong><a href="https://myaccount.google.com/language" target="_blank" style="color:var(--black); text-decoration:underline;">myaccount.google.com/language</a></strong>. Установите основной язык — <code>English (United States)</code>. Удалите русский язык из списка дополнительных языков. Все сервисы (Google One, Gmail, Drive, Payments) должны открываться на английском языке.
+              </p>
+            </li>
+            <li>
+              <strong>2. Смена «Домашнего адреса» в основном профиле Google:</strong>
+              <p style="font-size:0.95rem; margin:6px 0 10px 0; color:#374151;">
+                Перейдите в <strong><a href="https://myaccount.google.com/profile" target="_blank" style="color:var(--black); text-decoration:underline;">myaccount.google.com/profile</a></strong> ➔ раздел <strong>«Адреса» (Addresses)</strong> ➔ <strong>«Домашний адрес» (Home address)</strong>. Укажите американский адрес (штат Delaware), сгенерированный в Этапе 1. В профиле не должно оставаться ни одного адреса в РФ.
+              </p>
+            </li>
+            <li>
+              <strong>3. Удаление российских номеров телефонов (+7) из безопасности:</strong>
+              <p style="font-size:0.95rem; margin:6px 0 10px 0; color:#374151;">
+                Перейдите в <strong><a href="https://myaccount.google.com/signinoptions/two-step-verification" target="_blank" style="color:var(--black); text-decoration:underline;">Безопасность (Security) ➔ 2-Step Verification</a></strong>. Удалите номера телефонов <code>+7...</code> из способов восстановления и двухфакторной аутентификации. Вместо SMS включите <strong>Google Authenticator App</strong> или Passkeys.
+              </p>
+            </li>
+            <li>
+              <strong>4. Чистая рабочая среда и проверка IP / DNS:</strong>
+              <p style="font-size:0.95rem; margin:6px 0 0 0; color:#374151;">
+                Включите качественный VPN с локацией <strong>США (United States)</strong>. Откройте чистый профиль в браузере (или режим Инкогнито). Проверьте на <code>whoer.net</code>, что ваша страна — <strong>US</strong>, а DNS не указывает на Россию.
+              </p>
+            </li>
+          </ol>
         </div>
       </div>
     </section>
