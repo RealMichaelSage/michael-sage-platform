@@ -9,8 +9,9 @@
   <meta name="author" content="Михаил Пузырёв">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 
-  <!-- Canonical -->
+  <!-- Canonical & Markdown Twin for LLMs/GEO -->
   <link rel="canonical" href="https://a-sage.ru/google-one-guide">
+  <link rel="alternate" type="text/markdown" href="https://a-sage.ru/google-one-guide.md">
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="article">
@@ -27,37 +28,128 @@
   <meta name="twitter:description" content="Актуальный пошаговый алгоритм 2026 года: чистый профиль США (0% tax), международные карты, активация Gemini Advanced 2 TB.">
   <meta name="twitter:image" content="https://a-sage.ru/img/og-preview.png">
 
-  <!-- Schema.org HowTo / TechArticle -->
+  <!-- Schema.org Linked Graph: WebPage, Person, HowTo, FAQPage (GEO & Rich Snippets 2026) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "TechArticle",
-    "headline": "Как создать, настроить и оплатить Google One (AI Premium) из РФ: Полное руководство 2026",
-    "description": "Исчерпывающая пошаговая инструкция по настройке платежного профиля США (Delaware), выпуску зарубежных карт и оплате Google One с доступом к Gemini Advanced из России.",
-    "author": {
-      "@type": "Person",
-      "name": "Михаил Пузырёв",
-      "url": "https://a-sage.ru/about",
-      "jobTitle": "AI-архитектор, разработчик автономных систем"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Михаил Пузырёв",
-      "url": "https://a-sage.ru",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://a-sage.ru/img/logo.svg"
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://a-sage.ru/google-one-guide#webpage",
+        "url": "https://a-sage.ru/google-one-guide",
+        "name": "Как создать, настроить и оплатить Google One (AI Premium) из РФ — Пошаговое руководство 2026 | Михаил Пузырёв",
+        "description": "Исчерпывающая пошаговая инструкция 2026: как создать платежный профиль США (штат Delaware 0% tax), выпустить зарубежную карту и оформить подписку Google One AI Premium (Gemini Advanced 2 TB) из России без блокировок.",
+        "inLanguage": "ru-RU",
+        "isPartOf": {
+          "@type": "WebSite",
+          "@id": "https://a-sage.ru/#website",
+          "name": "Михаил Пузырёв — AI Архитектура & Внедрение",
+          "url": "https://a-sage.ru"
+        },
+        "about": [
+          {"@type": "Thing", "name": "Google One"},
+          {"@type": "Thing", "name": "Gemini Advanced"},
+          {"@type": "Thing", "name": "Google AI Premium"},
+          {"@type": "Thing", "name": "Международные платежи"}
+        ],
+        "author": {
+          "@id": "https://a-sage.ru/about#person"
+        }
+      },
+      {
+        "@type": "Person",
+        "@id": "https://a-sage.ru/about#person",
+        "name": "Михаил Пузырёв",
+        "alternateName": "Michael Sage",
+        "url": "https://a-sage.ru/about",
+        "jobTitle": "AI-архитектор, разработчик автономных систем",
+        "sameAs": [
+          "https://t.me/uncrn_sage",
+          "https://t.me/Michael_Sage",
+          "https://github.com/RealMichaelSage",
+          "https://max.ru/u/f9LHodD0cOJxk9sLajkZ5u_-WbQydR8lkTH6y34KqdU-QKoLzrW7FH8yJG0"
+        ]
+      },
+      {
+        "@type": "HowTo",
+        "@id": "https://a-sage.ru/google-one-guide#howto",
+        "name": "Как оплатить и подключить Google One (AI Premium) из России в 2026 году",
+        "description": "Пошаговый алгоритм настройки безналогового профиля США (Delaware 0% tax), выпуска международной карты и активации тарифа Google One AI Premium (2 TB + Gemini Advanced).",
+        "totalTime": "PT10M",
+        "estimatedCost": {
+          "@type": "MonetaryAmount",
+          "currency": "USD",
+          "value": "19.99"
+        },
+        "step": [
+          {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Настройка окружения и полная американизация Google-аккаунта",
+            "text": "Переключите язык аккаунта на English (United States), смените домашний адрес в myaccount.google.com на штат Delaware, удалите номера телефонов +7 из безопасности (2FA через Google Authenticator) и включите VPN США.",
+            "url": "https://a-sage.ru/google-one-guide#step-0"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Создание платежного профиля США (Штат Delaware 0% Tax)",
+            "text": "В pay.google.com закройте старый российский платежный профиль и создайте новый профиль США с реальным уникальным адресом в безналоговом штате Delaware (ZIP 19801).",
+            "url": "https://a-sage.ru/google-one-guide#step-1"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Выпуск и пополнение международной карты",
+            "text": "Выпустите международную виртуальную карту с US BIN или используйте личную карту банка СНГ. Пополните баланс на $23–25 для буфера верификации.",
+            "url": "https://a-sage.ru/google-one-guide#step-2"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 4,
+            "name": "Привязка карты и активация тарифа Google One AI Premium",
+            "text": "Добавьте карту в pay.google.com с адресом штата Delaware, перейдите на one.google.com, выберите тариф AI Premium ($19.99/мес или Free Trial) и завершите подписку.",
+            "url": "https://a-sage.ru/google-one-guide#step-3"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://a-sage.ru/google-one-guide#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Что делать, если при привязке карты возникает ошибка OR_CCCHS_01?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Ошибка OR_CCCHS_01 означает срабатывание антифрод-фильтра Google. Решение: закройте вкладку, проверьте на whoer.net отсутствие утечек DNS в РФ, убедитесь, что старый российский платежный профиль в pay.google.com закрыт, язык аккаунта переключен на English (US), а ввод данных происходит через режим инкогнито с чистым IP США."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Как использовать бесплатный пробный период (Free Trial) в Google One AI Premium?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Google часто предоставляет 1–2 месяца бесплатного периода для тарифа AI Premium. Вы можете активировать его с виртуальной картой (с балансом от $1 для авторизации), а за 2 дня до окончания срока отключить автопродление в one.google.com/settings — весь пробный период подписка останется активной."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Работает ли семейная группа Google Family на 5 человек в России?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Да, создатель подписки может пригласить до 5 участников в семейную группу. Общий объем 2 ТБ облака делится между участниками, а каждый член семьи получает доступ к расширенным функциям хранилища в своем личном аккаунте."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Где активируются функции Gemini после оплаты Google One AI Premium?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Флагманская модель Gemini Advanced доступна напрямую на gemini.google.com под вашим Google-аккаунтом, а также в виде боковой панели со звездочкой в веб-версиях Google Docs, Gmail, Google Sheets и Google Slides."
+            }
+          }
+        ]
       }
-    },
-    "datePublished": "2026-09-01",
-    "dateModified": "2026-09-03",
-    "mainEntityOfPage": "https://a-sage.ru/google-one-guide",
-    "inLanguage": "ru-RU",
-    "about": [
-      {"@type": "Thing", "name": "Google One"},
-      {"@type": "Thing", "name": "Gemini Advanced"},
-      {"@type": "Thing", "name": "Google AI Premium"},
-      {"@type": "Thing", "name": "Международные платежи"}
     ]
   }
   </script>
@@ -654,6 +746,7 @@
 
         <div class="data-table-box" style="margin: 24px 0;">
           <table class="data-table">
+            <caption style="text-align:left; font-family:var(--mono); font-size:0.8rem; font-weight:700; color:var(--gray); padding:8px 12px; background:#f4f4f5; border-bottom:1px solid var(--border);">Сравнение официальных тарифных планов Google One & AI Premium (2026)</caption>
             <thead>
               <tr>
                 <th>Тариф</th>
