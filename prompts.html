@@ -3006,12 +3006,30 @@ You are an enterprise systems auditor applying Eliyahu Goldratt&#x27;s Theory of
 
     function toggleExpand(num, btn) {
       const box = document.getElementById('prompt-text-' + num);
-      if (box.style.maxHeight === 'none') {
+      const parentBox = box.closest('.prompt-code-box');
+      const isExpanded = box.classList.contains('expanded');
+      const isEn = (typeof globalLang !== 'undefined' && globalLang === 'en');
+      
+      if (isExpanded) {
+        // Smooth collapse from actual height to 220px
+        box.style.maxHeight = box.scrollHeight + 'px';
+        void box.offsetHeight; // Force reflow
         box.style.maxHeight = '220px';
-        btn.innerText = 'Развернуть полный промпт ↓';
+        box.classList.remove('expanded');
+        if (parentBox) parentBox.classList.remove('is-expanded');
+        btn.innerText = isEn ? 'Expand ↓' : 'Развернуть ↓';
       } else {
-        box.style.maxHeight = 'none';
-        btn.innerText = 'Свернуть ↑';
+        // Smooth expand from 220px to full scrollHeight
+        box.classList.add('expanded');
+        if (parentBox) parentBox.classList.add('is-expanded');
+        box.style.maxHeight = box.scrollHeight + 'px';
+        btn.innerText = isEn ? 'Collapse ↑' : 'Свернуть ↑';
+        
+        setTimeout(() => {
+          if (box.classList.contains('expanded')) {
+            box.style.maxHeight = 'none';
+          }
+        }, 460);
       }
     }
 

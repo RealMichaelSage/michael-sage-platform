@@ -3477,18 +3477,43 @@ input[type="reset"],
   position: relative;
   margin-bottom: 16px;
   overflow: hidden;
+  border: 1px solid #27272a;
+  transition: border-color 0.25s ease;
+}
+
+.prompt-code-box:hover {
+  border-color: #3f3f46;
+}
+
+.prompt-code-box::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 54px;
+  background: linear-gradient(to bottom, rgba(9, 9, 11, 0), rgba(9, 9, 11, 0.96));
+  pointer-events: none;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 1;
+}
+
+.prompt-code-box.is-expanded::after {
+  opacity: 0;
 }
 
 .prompt-code-content {
   font-family: var(--mono);
   font-size: 0.78rem;
   line-height: 1.6;
-  padding: 16px;
+  padding: 18px;
   max-height: 220px;
-  overflow-y: auto;
+  overflow-y: hidden;
   white-space: pre-wrap;
   word-break: break-word;
   color: #e4e4e7;
+  transition: max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: max-height;
 }
 
 .prompt-actions {
