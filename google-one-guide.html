@@ -563,12 +563,12 @@
       <aside class="guide-sidebar">
         <div class="guide-sidebar-title">⚡ Содержание</div>
         <ul class="guide-toc-list">
-          <li><a href="#why-old-fails" class="guide-toc-link">1. Ошибки старых инструкций</a></li>
-          <li><a href="#step-0" class="guide-toc-link">2. Этап 0. Окружение</a></li>
+          <li><a href="#why-old-fails" class="guide-toc-link">1. Ошибки и блокировки</a></li>
+          <li><a href="#step-0" class="guide-toc-link">2. Этап 0. Подготовка окружения</a></li>
           <li><a href="#step-1" class="guide-toc-link">3. Этап 1. Профиль США (Delaware)</a></li>
           <li><a href="#step-2" class="guide-toc-link">4. Этап 2. Выпуск карты</a></li>
-          <li><a href="#step-3" class="guide-toc-link">5. Этап 3. Активация Google One</a></li>
-          <li><a href="#lecture-scenario" class="guide-toc-link">6. Сценарий мини-лекции</a></li>
+          <li><a href="#step-3" class="guide-toc-link">5. Этап 3. Активация подписки</a></li>
+          <li><a href="#troubleshooting-faq" class="guide-toc-link">6. FAQ и Траблшутинг</a></li>
         </ul>
 
         <div style="margin-top: 24px; padding-top: 16px; border-top: 1px dashed var(--border);">
@@ -747,52 +747,37 @@
           </div>
         </div>
 
-        <!-- SECTION 6: MINI LECTURE SCENARIO -->
-        <h2 id="lecture-scenario">🎓 ЧАСТЬ 2. Сценарий 15-минутной практической мини-лекции</h2>
-        <p>
-          Готовый план выступления для вебинаров, мастермайндов или обучающих корпоративных сессий:
-        </p>
+                <!-- SECTION 6: TROUBLESHOOTING & FAQ -->
+        <h2 id="troubleshooting-faq">❓ Частые вопросы и Траблшутинг</h2>
 
-        <div class="lecture-slides-grid">
+        <div style="display:flex; flex-direction:column; gap:16px; margin-top:20px;">
           
-          <div class="slide-card">
-            <div class="slide-num-box">СЛАЙД 1 · 2 МИН</div>
-            <div class="slide-content-box">
-              <h4>Введение: Зачем Google One AI Premium в 2026 году?</h4>
-              <p>2 ТБ диска + флагманская модель Gemini Advanced внутри почты, таблиц и документов. Разрушение мифа: «Из РФ нельзя оплатить Google» — всё работает при понимании логики шлюза.</p>
-            </div>
+          <div class="callout-box" style="margin:0; background:#ffffff; border-left-color:var(--black);">
+            <h4 style="margin-top:0; margin-bottom:8px; font-size:1.1rem; color:var(--black);">1. Что делать, если при привязке карты возникает ошибка OR_CCCHS_01?</h4>
+            <p style="font-size:0.95rem; color:#4b5563; margin-bottom:0;">
+              Эта ошибка означает, что сработал антифрод Google. <strong>Решение:</strong> полностью закройте вкладку, проверьте на <code>whoer.net</code>, что DNS не указывает на РФ, убедитесь, что старый российский платежный профиль в <code>pay.google.com</code> закрыт, и повторите ввод данных через режим инкогнито.
+            </p>
           </div>
 
-          <div class="slide-card">
-            <div class="slide-num-box">СЛАЙД 2 · 3 МИН</div>
-            <div class="slide-content-box">
-              <h4>Подводные камни и ошибки</h4>
-              <p>Разница между домашним адресом и Payments Profile. Налог штатов 9% vs Delaware (0% Sales Tax). Что такое чистый браузер и почему дешевые VPN блокируются.</p>
-            </div>
+          <div class="callout-box" style="margin:0; background:#ffffff; border-left-color:var(--green);">
+            <h4 style="margin-top:0; margin-bottom:8px; font-size:1.1rem; color:var(--black);">2. Как использовать бесплатный пробный период (Free Trial) и не платить за продление?</h4>
+            <p style="font-size:0.95rem; color:#4b5563; margin-bottom:0;">
+              Google часто предоставляет 1–2 месяца бесплатного периода для тарифа AI Premium. Вы можете активировать его с виртуальной картой (с балансом от $1 для проверки), а за 2 дня до окончания срока отменить автопродление в <code>one.google.com/settings</code> — все 2 месяца подписка останется полностью активной.
+            </p>
           </div>
 
-          <div class="slide-card">
-            <div class="slide-num-box">СЛАЙД 3 · 4 МИН</div>
-            <div class="slide-content-box">
-              <h4>Финансовая логистика за 5 минут</h4>
-              <p>Выпуск виртуальной карты за 3 минуты в Telegram. Пополнение через USDT без бирж. Правило буфера баланса: почему нужно класть $25 вместо $19.99.</p>
-            </div>
+          <div class="callout-box" style="margin:0; background:#ffffff; border-left-color:#3b82f6;">
+            <h4 style="margin-top:0; margin-bottom:8px; font-size:1.1rem; color:var(--black);">3. Работает ли семейная группа (Google Family) на 5 человек?</h4>
+            <p style="font-size:0.95rem; color:#4b5563; margin-bottom:0;">
+              Да! Создатель подписки может пригласить до 5 участников в семейную группу. Объем 2 ТБ облака делится между участниками, а каждый член семьи получает доступ к расширенным функциям хранилища в своем личном аккаунте.
+            </p>
           </div>
 
-          <div class="slide-card">
-            <div class="slide-num-box">СЛАЙД 4 · 4 МИН</div>
-            <div class="slide-content-box">
-              <h4>Живая демонстрация (Screen Sharing)</h4>
-              <p>Переключение в pay.google.com ➔ удаление старого РФ-профиля ➔ ввод Delaware 19801 ➔ привязка карты ➔ клик «Subscribe» на one.google.com ➔ запуск Gemini Advanced.</p>
-            </div>
-          </div>
-
-          <div class="slide-card">
-            <div class="slide-num-box">СЛАЙД 5 · 2 МИН</div>
-            <div class="slide-content-box">
-              <h4>Финал и памятка</h4>
-              <p>QR-код на текстовый мануал. Чек-лист безопасности: не отключать автопродление раньше времени, чтобы не слетел Free Trial. Ответы на вопросы.</p>
-            </div>
+          <div class="callout-box" style="margin:0; background:#ffffff; border-left-color:#a855f7;">
+            <h4 style="margin-top:0; margin-bottom:8px; font-size:1.1rem; color:var(--black);">4. Где активируются функции Gemini после оплаты?</h4>
+            <p style="font-size:0.95rem; color:#4b5563; margin-bottom:0;">
+              Флагманская модель Gemini Advanced доступна напрямую на <strong><a href="https://gemini.google.com" target="_blank" style="text-decoration:underline; color:#000;">gemini.google.com</a></strong> под вашим Google-аккаунтом, а также в виде боковой панели со звездочкой в веб-версиях Google Docs, Gmail и Google Sheets.
+            </p>
           </div>
 
         </div>
