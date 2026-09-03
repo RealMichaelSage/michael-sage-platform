@@ -80,8 +80,8 @@
       background: #ffffff;
     }
     .prompts-hero-fixed {
-      padding-top: 116px;
-      padding-bottom: 28px;
+      padding-top: 124px;
+      padding-bottom: 36px;
       padding-left: clamp(20px, 4.5vw, 64px);
       padding-right: clamp(20px, 4.5vw, 64px);
       border-bottom: 1px solid var(--border);
@@ -94,11 +94,11 @@
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
-      padding: 16px clamp(20px, 4.5vw, 64px);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+      padding: 24px clamp(20px, 4.5vw, 64px) 22px;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.04);
     }
     .prompts-grid-section {
-      padding: 32px clamp(20px, 4.5vw, 64px) 80px;
+      padding: 40px clamp(20px, 4.5vw, 64px) 80px;
       background: #ffffff;
     }
   </style>
@@ -165,7 +165,7 @@
 
     <!-- STICKY SEARCH & CATEGORIES TOOLBAR -->
     <section class="prompts-page-frame prompts-sticky-toolbar">
-      <div style="display: flex; gap: 14px; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap;">
+      <div style="display: flex; gap: 16px; align-items: center; justify-content: space-between; margin-bottom: 18px; flex-wrap: wrap;">
         <div class="search-box-wrapper" style="flex: 1 1 420px; margin-bottom: 0;">
           <span class="search-icon">🔍</span>
           <input type="text" id="promptSearch" class="search-input" placeholder="Поиск роли, задачи или ключевого слова (напр. юрист, Reels, SPIN, налоги, Nginx)..." oninput="filterPrompts()">
