@@ -672,22 +672,22 @@
 
     <!-- TAB NAVIGATION -->
     <nav class="cabinet-tabs-bar" role="tablist">
-      <button class="cabinet-tab-btn active" onclick="switchCabinetTab('knowledge', this)">
+      <button class="cabinet-tab-btn active" data-tab="knowledge" onclick="switchCabinetTab('knowledge', this)">
         <span>📚 База Знаний</span>
       </button>
-      <button class="cabinet-tab-btn" onclick="switchCabinetTab('education', this)">
+      <button class="cabinet-tab-btn" data-tab="education" onclick="switchCabinetTab('education', this)">
         <span>🎓 Записи & Мастер-классы</span>
         <span class="cabinet-tab-badge">6 мастер-классов</span>
       </button>
-      <button class="cabinet-tab-btn" onclick="switchCabinetTab('club', this)">
+      <button class="cabinet-tab-btn" data-tab="club" onclick="switchCabinetTab('club', this)">
         <span>💎 Закрытый Клуб</span>
         <span class="cabinet-tab-badge pro">PRO</span>
       </button>
-      <button class="cabinet-tab-btn" onclick="switchCabinetTab('members', this)">
+      <button class="cabinet-tab-btn" data-tab="members" onclick="switchCabinetTab('members', this)">
         <span>👥 Участники Клуба</span>
         <span id="members-count-badge" class="cabinet-tab-badge">1</span>
       </button>
-      <button class="cabinet-tab-btn" onclick="switchCabinetTab('favorites', this)">
+      <button class="cabinet-tab-btn" data-tab="favorites" onclick="switchCabinetTab('favorites', this)">
         <span>⭐ Мое Избранное</span>
         <span id="fav-counter-badge" class="cabinet-tab-badge">0</span>
       </button>
@@ -1010,19 +1010,39 @@
   <script src="/js/main.js?v=2.6"></script>
 
   <script>
-    // Tab Switching Logic
+    // Tab Switching Logic with Persistence & URL Sync
     function switchCabinetTab(tabId, btnElem) {
+      if (!tabId) tabId = 'knowledge';
+
       document.querySelectorAll('.cabinet-tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.cabinet-tab-pane').forEach(p => p.classList.remove('active'));
 
-      if (btnElem) btnElem.classList.add('active');
+      const activeBtn = btnElem || document.querySelector(`.cabinet-tab-btn[data-tab="${tabId}"]`);
+      if (activeBtn) activeBtn.classList.add('active');
+
       const targetPane = document.getElementById('tab-' + tabId);
       if (targetPane) targetPane.classList.add('active');
+
+      // 1. Save active tab to localStorage so page reloads stay on this tab
+      try {
+        localStorage.setItem('asage_cabinet_tab', tabId);
+      } catch (e) {}
+
+      // 2. Keep URL in sync with query parameter (?tab=...) without reload
+      try {
+        const url = new URL(window.location.href);
+        if (url.searchParams.get('tab') !== tabId) {
+          url.searchParams.set('tab', tabId);
+          window.history.replaceState({ tab: tabId }, '', url.pathname + '?' + url.searchParams.toString() + window.location.hash);
+        }
+      } catch (e) {}
 
       if (tabId === 'members') {
         loadMembersDirectory();
       } else if (tabId === 'favorites') {
         renderFavorites();
+      } else if (tabId === 'education') {
+        renderClubLessons();
       }
 
       if (typeof window.trackMetrikaEvent === 'function') {
@@ -1961,23 +1981,38 @@
       renderFavorites();
       renderClubLessons();
 
+      // Determine initial active tab: URL query param -> URL hash -> localStorage -> default 'knowledge'
       const urlParams = new URLSearchParams(window.location.search);
-      const initialTab = urlParams.get('tab');
-      if (initialTab) {
-        const tabBtns = document.querySelectorAll('.cabinet-tab-btn');
-        let matchedBtn = null;
-        if (initialTab === 'knowledge') matchedBtn = tabBtns[0];
-        else if (initialTab === 'education') matchedBtn = tabBtns[1];
-        else if (initialTab === 'club') matchedBtn = tabBtns[2];
-        else if (initialTab === 'members') matchedBtn = tabBtns[3];
-        else if (initialTab === 'favorites') matchedBtn = tabBtns[4];
-        if (matchedBtn) switchCabinetTab(initialTab, matchedBtn);
+      const urlTab = urlParams.get('tab');
+      const hashTab = window.location.hash ? window.location.hash.replace('#tab-', '').replace('#', '') : null;
+      const savedTab = localStorage.getItem('asage_cabinet_tab');
+
+      const validTabs = ['knowledge', 'education', 'club', 'members', 'favorites'];
+      let activeTab = 'knowledge';
+
+      if (urlTab && validTabs.includes(urlTab)) {
+        activeTab = urlTab;
+      } else if (hashTab && validTabs.includes(hashTab)) {
+        activeTab = hashTab;
+      } else if (savedTab && validTabs.includes(savedTab)) {
+        activeTab = savedTab;
       }
+
+      switchCabinetTab(activeTab);
 
       if (Auth.isLoggedIn()) {
         await Auth.fetchFreshUserProfile();
         updateCabinetProfile();
         renderClubLessons();
+      }
+    });
+
+    window.addEventListener('popstate', (e) => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const tab = urlParams.get('tab') || 'knowledge';
+      const validTabs = ['knowledge', 'education', 'club', 'members', 'favorites'];
+      if (validTabs.includes(tab)) {
+        switchCabinetTab(tab);
       }
     });
 
