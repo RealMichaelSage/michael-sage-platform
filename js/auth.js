@@ -462,12 +462,8 @@ const Auth = {
   },
 
   // 7. Modal Popup Management
-  openModal() {
+  openModal(customMessage = null, customTitle = null) {
     const user = this.getUser();
-    if (user) {
-      window.location.href = '/cabinet';
-      return;
-    }
 
     let modal = document.getElementById('asage-auth-modal');
     if (!modal) {
@@ -476,6 +472,39 @@ const Auth = {
     }
 
     if (modal) {
+      const tagElem = modal.querySelector('#auth-modal-tag');
+      const titleElem = modal.querySelector('#auth-modal-title');
+      const descElem = modal.querySelector('#auth-modal-desc');
+      const noticeElem = modal.querySelector('#auth-modal-notice');
+
+      if (customMessage) {
+        if (tagElem) tagElem.innerText = '// ТОЛЬКО ДЛЯ РЕЗИДЕНТОВ КЛУБА В ЛК';
+        if (titleElem) titleElem.innerText = customTitle || 'Материал Базы Знаний';
+        if (descElem) descElem.innerHTML = 'Зарегистрируйтесь или войдите в личный кабинет через Telegram, чтобы получить доступ к закрытым инженерным гайдам и сценариям.';
+        if (noticeElem) {
+          noticeElem.innerHTML = `🔒 ${customMessage}`;
+          noticeElem.style.display = 'block';
+        }
+      } else {
+        if (tagElem) tagElem.innerText = '// АВТОРИЗАЦИЯ & РЕГИСТРАЦИЯ';
+        if (titleElem) titleElem.innerText = 'Вход в Личный Кабинет';
+        if (descElem) descElem.innerHTML = 'Быстрый доступ к Базе Знаний, практическим урокам и Закрытому Клубу.';
+        if (noticeElem) noticeElem.style.display = 'none';
+      }
+
+      // If user is already logged in
+      if (user) {
+        if (!this.hasClubAccess() && customMessage) {
+          if (noticeElem) {
+            noticeElem.innerHTML = `🔒 <strong>Материал доступен только резидентам Закрытого Клуба.</strong><br><span style="display:inline-block; margin-top:6px; color:#52525b; font-size:0.8rem;">Вы авторизованы как ${user.first_name || 'пользователь'}, но для доступа к этому гайду требуется статус резидента SAGE Neuro Family.</span><div style="margin-top:12px;"><a href="/cabinet?tab=club" class="btn-primary" style="display:inline-block; padding:8px 16px; font-size:0.8rem; background:#09090b; color:#fff; text-decoration:none;">Оформить доступ в Клуб ↗</a></div>`;
+            noticeElem.style.display = 'block';
+          }
+        } else {
+          window.location.href = '/cabinet';
+          return;
+        }
+      }
+
       // Ensure Telegram widget script is injected and executed
       const widgetBox = modal.querySelector('.auth-modal-widget-box');
       if (widgetBox && !widgetBox.querySelector('script') && !widgetBox.querySelector('iframe')) {
@@ -493,8 +522,19 @@ const Auth = {
       modal.classList.add('active');
       document.body.style.overflow = 'hidden';
       if (typeof window.trackMetrikaEvent === 'function') {
-        window.trackMetrikaEvent('open_auth_modal');
+        window.trackMetrikaEvent('open_auth_modal', { custom_message: !!customMessage });
       }
+    }
+  },
+
+  openResidentGuide(guideUrl, guideTitle = '') {
+    if (this.hasClubAccess()) {
+      window.location.href = guideUrl;
+    } else {
+      this.openModal(
+        'Данный гайд доступен только в личном кабинете для резидентов клуба.',
+        'Доступен только в личном кабинете'
+      );
     }
   },
 
@@ -511,22 +551,25 @@ const Auth = {
 
     const modalHtml = `
       <div id="asage-auth-modal" class="auth-modal-overlay" onclick="if(event.target === this) Auth.closeModal()">
-        <div class="auth-modal-dialog">
-          <button class="auth-modal-close" onclick="Auth.closeModal()" aria-label="Закрыть">✕</button>
+        <div class="auth-modal-dialog" style="border-radius:0 !important;">
+          <button class="auth-modal-close" onclick="Auth.closeModal()" aria-label="Закрыть" style="border-radius:0 !important;">✕</button>
           
-          <div style="font-family:var(--mono, monospace); font-size:0.75rem; font-weight:700; color:#71717a; margin-bottom:8px; text-transform:uppercase;">
+          <div id="auth-modal-tag" style="font-family:var(--mono, monospace); font-size:0.75rem; font-weight:700; color:#71717a; margin-bottom:8px; text-transform:uppercase;">
             // АВТОРИЗАЦИЯ & РЕГИСТРАЦИЯ
           </div>
           
-          <h2 style="font-size:1.5rem; font-weight:800; margin:0 0 8px 0; color:#09090b; letter-spacing:-0.02em;">
+          <h2 id="auth-modal-title" style="font-size:1.5rem; font-weight:800; margin:0 0 8px 0; color:#09090b; letter-spacing:-0.02em;">
             Вход в Личный Кабинет
           </h2>
           
-          <p style="font-size:0.92rem; color:#71717a; line-height:1.55; margin:0 0 24px 0;">
+          <p id="auth-modal-desc" style="font-size:0.92rem; color:#71717a; line-height:1.55; margin:0 0 16px 0;">
             Быстрый доступ к Базе Знаний, практическим урокам и Закрытому Клубу.
           </p>
 
-          <div class="auth-modal-widget-box" style="display:flex; justify-content:center; align-items:center; min-height:48px; padding:16px 0; background:#f4f4f5; border:1px solid #e4e4e7; margin-bottom:20px;">
+          <div id="auth-modal-notice" style="display:none; background:#fafafa; border:1px solid #09090b; padding:12px 14px; margin-bottom:20px; font-family:var(--mono, monospace); font-size:0.82rem; color:#09090b; line-height:1.5;">
+          </div>
+
+          <div class="auth-modal-widget-box" style="display:flex; justify-content:center; align-items:center; min-height:48px; padding:16px 0; background:#f4f4f5; border:1px solid #e4e4e7; margin-bottom:20px; border-radius:0 !important;">
           </div>
 
           <div style="font-family:var(--mono, monospace); font-size:0.72rem; color:#a1a1aa; line-height:1.5; text-align:center;">
