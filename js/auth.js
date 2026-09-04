@@ -667,40 +667,116 @@ const Auth = {
     return favorites.some(f => f.item_type === itemType && f.item_id === itemId);
   },
 
-  // 6. Update Header Profile Button & Auth Elements
+  // 6. User Profile Dropdown Menu in Navigation
+  toggleUserDropdown(e, btn) {
+    if (e) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+    const wrap = btn ? btn.closest('.nav-user-dropdown-wrap') : document.querySelector('.nav-user-dropdown-wrap');
+    if (!wrap) return;
+    const menu = wrap.querySelector('.nav-user-dropdown-menu');
+    const chevron = wrap.querySelector('.nav-dropdown-chevron');
+    if (!menu) return;
+
+    const isOpen = menu.classList.contains('show');
+    if (isOpen) {
+      this.closeUserDropdown();
+    } else {
+      this.closeUserDropdown();
+      menu.classList.add('show');
+      if (chevron) chevron.style.transform = 'rotate(180deg)';
+      if (btn) btn.setAttribute('aria-expanded', 'true');
+    }
+  },
+
+  closeUserDropdown() {
+    document.querySelectorAll('.nav-user-dropdown-menu.show').forEach(menu => {
+      menu.classList.remove('show');
+    });
+    document.querySelectorAll('.nav-dropdown-chevron').forEach(ch => {
+      ch.style.transform = 'rotate(0deg)';
+    });
+    document.querySelectorAll('#nav-user-profile-trigger').forEach(btn => {
+      btn.setAttribute('aria-expanded', 'false');
+    });
+  },
+
+  // 7. Update Header Profile Button & Auth Elements
   updateHeaderUI() {
     const user = this.getUser();
     const navRights = document.querySelectorAll('.nav-right');
 
     navRights.forEach(nr => {
-      // Find or create .nav-auth-btn right after .nav-cta (Забронировать слот)
+      let dropdownWrap = nr.querySelector('.nav-user-dropdown-wrap');
       let authBtn = nr.querySelector('.nav-auth-btn');
       const burger = nr.querySelector('.nav-burger');
 
-      if (!authBtn) {
-        authBtn = document.createElement('button');
-        authBtn.className = 'nav-auth-btn';
-        if (burger) {
-          nr.insertBefore(authBtn, burger);
-        } else {
-          nr.appendChild(authBtn);
-        }
-      }
-
       if (user) {
-        const displayName = user.first_name || user.username || 'Кабинет';
+        if (authBtn && !dropdownWrap) {
+          authBtn.remove();
+          authBtn = null;
+        }
+
+        if (!dropdownWrap) {
+          dropdownWrap = document.createElement('div');
+          dropdownWrap.className = 'nav-user-dropdown-wrap';
+          if (burger) {
+            nr.insertBefore(dropdownWrap, burger);
+          } else {
+            nr.appendChild(dropdownWrap);
+          }
+        }
+
+        const displayName = user.first_name ? (user.first_name + (user.last_name ? ' ' + user.last_name : '')) : (user.username || 'Кабинет');
+        const usernameDisplay = user.username ? '@' + user.username : (user.id ? 'ID: ' + user.id : 'Авторизован');
         const avatarHtml = user.photo_url 
           ? `<img src="${user.photo_url}" alt="${displayName}" class="nav-user-avatar-mini" style="width:20px; height:20px; border-radius:50%; object-fit:cover; border:1px solid rgba(0,0,0,0.15);">`
           : `<span class="nav-user-avatar-placeholder-mini" style="width:20px; height:20px; border-radius:50%; background:#18181b; color:#fff; font-size:10px; font-weight:700; display:inline-flex; align-items:center; justify-content:center;">${displayName.charAt(0).toUpperCase()}</span>`;
 
-        authBtn.innerHTML = `
-          ${avatarHtml}
-          <span>${displayName}</span>
-          <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#22c55e; margin-left:2px;" title="Онлайн"></span>
+        dropdownWrap.innerHTML = `
+          <button class="nav-auth-btn logged-in" id="nav-user-profile-trigger" aria-haspopup="true" aria-expanded="false" onclick="Auth.toggleUserDropdown(event, this)">
+            ${avatarHtml}
+            <span>${displayName}</span>
+            <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#22c55e; margin-left:2px;" title="Онлайн"></span>
+            <svg class="nav-dropdown-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left:2px; transition:transform 0.2s ease;"><path d="M6 9l6 6 6-6"></path></svg>
+          </button>
+          <div class="nav-user-dropdown-menu" id="nav-user-dropdown-menu">
+            <div class="nav-user-dropdown-header">
+              <div class="nav-user-dropdown-name">${displayName}</div>
+              <div class="nav-user-dropdown-sub">${usernameDisplay}</div>
+            </div>
+            <a href="/cabinet" class="nav-user-dropdown-item">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+              <span>Личный Кабинет</span>
+            </a>
+            <a href="/cabinet?tab=profile" class="nav-user-dropdown-item">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <span>Мой Профиль</span>
+            </a>
+            <div class="nav-user-dropdown-divider"></div>
+            <button type="button" onclick="Auth.logout()" class="nav-user-dropdown-item nav-user-dropdown-logout">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+              <span>Выйти из аккаунта</span>
+            </button>
+          </div>
         `;
-        authBtn.setAttribute('title', 'Перейти в Личный Кабинет');
-        authBtn.onclick = () => { window.location.href = '/cabinet'; };
       } else {
+        if (dropdownWrap) {
+          dropdownWrap.remove();
+          dropdownWrap = null;
+        }
+
+        if (!authBtn) {
+          authBtn = document.createElement('button');
+          authBtn.className = 'nav-auth-btn';
+          if (burger) {
+            nr.insertBefore(authBtn, burger);
+          } else {
+            nr.appendChild(authBtn);
+          }
+        }
+
         authBtn.innerHTML = `
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
           <span>Войти</span>
@@ -714,13 +790,34 @@ const Auth = {
     const mobileAuthSlots = document.querySelectorAll('.mobile-menu-auth-slot');
     mobileAuthSlots.forEach(slot => {
       if (user) {
-        slot.innerHTML = `<a href="/cabinet" class="m-cta" style="background:#f4f4f5; color:#18181b; border:1px solid #e4e4e7;">👤 ${user.first_name || 'Кабинет'} (ЛК) ↗</a>`;
+        slot.innerHTML = `
+          <a href="/cabinet" class="m-cta" style="background:#f4f4f5; color:#18181b; border:1px solid #e4e4e7; margin-bottom:8px;">👤 ${user.first_name || 'Кабинет'} (ЛК) ↗</a>
+          <button onclick="Auth.logout()" class="m-cta" style="background:#fef2f2; color:#dc2626; border:1px solid #fecaca; width:100%; cursor:pointer;">🚪 Выйти из аккаунта</button>
+        `;
       } else {
         slot.innerHTML = `<button onclick="Auth.openModal()" class="m-cta" style="background:#f4f4f5; color:#18181b; border:1px solid #e4e4e7; width:100%; cursor:pointer;">👤 Войти / Регистрация ↗</button>`;
       }
     });
   }
 };
+
+// Global click outside to close dropdown
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.nav-user-dropdown-wrap')) {
+    if (typeof Auth !== 'undefined' && Auth.closeUserDropdown) {
+      Auth.closeUserDropdown();
+    }
+  }
+});
+
+// Global Escape to close dropdown
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    if (typeof Auth !== 'undefined' && Auth.closeUserDropdown) {
+      Auth.closeUserDropdown();
+    }
+  }
+});
 
 // Global callback for Telegram Widget
 window.onTelegramAuth = function(user) {

@@ -302,6 +302,124 @@ button {
   color: #18181b;
 }
 
+/* User Profile Dropdown Menu in Navigation */
+.nav-user-dropdown-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-user-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 220px;
+  background: #ffffff;
+  border: 1px solid var(--black);
+  border-radius: 0 !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+  z-index: 10001;
+  display: none;
+  flex-direction: column;
+  padding: 6px 0;
+  box-sizing: border-box;
+  animation: navDropdownFadeIn 0.15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.nav-user-dropdown-menu.show {
+  display: flex;
+}
+
+@keyframes navDropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.nav-user-dropdown-header {
+  padding: 10px 14px;
+  background: #fafafa;
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-user-dropdown-name {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #09090b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-user-dropdown-sub {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: #71717a;
+  margin-top: 2px;
+}
+
+.nav-user-dropdown-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 4px 0;
+}
+
+.nav-user-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #27272a;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: background 0.15s ease, color 0.15s ease;
+  font-family: var(--font);
+}
+
+.nav-user-dropdown-item:hover {
+  background: #f4f4f5;
+  color: #09090b;
+}
+
+.nav-user-dropdown-item svg {
+  flex-shrink: 0;
+  color: #71717a;
+  transition: color 0.15s ease;
+}
+
+.nav-user-dropdown-item:hover svg {
+  color: #09090b;
+}
+
+.nav-user-dropdown-logout {
+  color: #dc2626 !important;
+}
+
+.nav-user-dropdown-logout svg {
+  color: #dc2626 !important;
+}
+
+.nav-user-dropdown-logout:hover {
+  background: #fef2f2 !important;
+  color: #b91c1c !important;
+}
+
+.nav-user-dropdown-logout:hover svg {
+  color: #b91c1c !important;
+}
+
 /* Auth Modal Popup */
 .auth-modal-overlay {
   position: fixed;
