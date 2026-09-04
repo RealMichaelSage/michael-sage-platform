@@ -66,6 +66,7 @@ const Auth = {
         bio: dbUser && dbUser.bio ? dbUser.bio : '',
         channel_url: dbUser && dbUser.channel_url ? dbUser.channel_url : '',
         website_url: dbUser && dbUser.website_url ? dbUser.website_url : '',
+        is_private: dbUser ? Boolean(dbUser.is_private) : false,
         role: dbUser ? dbUser.role : 'member',
         auth_date: tgUser.auth_date
       };
@@ -107,6 +108,7 @@ const Auth = {
         bio: '',
         channel_url: '',
         website_url: '',
+        is_private: false,
         role: 'member'
       };
       localStorage.setItem('asage_user', JSON.stringify(fallbackUser));
@@ -128,6 +130,7 @@ const Auth = {
     }
 
     try {
+      const isPrivateVal = profileData.is_private !== undefined ? Boolean(profileData.is_private) : Boolean(user.is_private);
       const payload = {
         telegram_id: user.telegram_id,
         first_name: profileData.first_name !== undefined ? profileData.first_name.trim() : user.first_name,
@@ -138,6 +141,7 @@ const Auth = {
         bio: profileData.bio !== undefined ? profileData.bio.trim() : (user.bio || ''),
         channel_url: profileData.channel_url !== undefined ? profileData.channel_url.trim() : (user.channel_url || ''),
         website_url: profileData.website_url !== undefined ? profileData.website_url.trim() : (user.website_url || ''),
+        is_private: isPrivateVal,
         updated_at: new Date().toISOString()
       };
 
@@ -166,6 +170,7 @@ const Auth = {
         bio: payload.bio,
         channel_url: payload.channel_url,
         website_url: payload.website_url,
+        is_private: payload.is_private,
         id: dbUser ? dbUser.id : user.id,
         role: dbUser ? dbUser.role : user.role
       };
@@ -179,7 +184,8 @@ const Auth = {
         window.trackMetrikaEvent('profile_update_success', {
           telegram_id: user.telegram_id,
           has_email: !!payload.email,
-          has_bio: !!payload.bio
+          has_bio: !!payload.bio,
+          is_private: payload.is_private
         });
       }
 
@@ -226,6 +232,7 @@ const Auth = {
             bio: dbUser.bio || '',
             channel_url: dbUser.channel_url || '',
             website_url: dbUser.website_url || '',
+            is_private: dbUser.is_private !== undefined ? Boolean(dbUser.is_private) : false,
             id: dbUser.id || user.id
           };
           localStorage.setItem('asage_user', JSON.stringify(freshUser));
@@ -237,6 +244,29 @@ const Auth = {
       console.warn('[Fetch Profile Warning]', e);
     }
     return user;
+  },
+
+  // 5. Fetch Public Members Directory from Supabase
+  async fetchMembersDirectory() {
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/platform_users?select=id,telegram_id,first_name,last_name,username,photo_url,role,bio,channel_url,website_url,is_private,last_login_at&order=last_login_at.desc.nullslast&limit=80`, {
+        method: 'GET',
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+        }
+      });
+
+      if (res.ok) {
+        const users = await res.json();
+        // Filter out users who chose to be private
+        return users.filter(u => u.is_private !== true);
+      }
+      return [];
+    } catch (e) {
+      console.warn('[Fetch Members Error]', e);
+      return [];
+    }
   },
 
   // 5. Toast Notification System

@@ -272,22 +272,29 @@
       color: #ffffff;
     }
 
-    /* Cabinet Tab Navigation */
+    /* Cabinet Tab Navigation (Sleek Swiss Stark) */
     .cabinet-tabs-bar {
       display: flex;
+      align-items: stretch;
       border-bottom: 1px solid var(--border);
-      background: #fafafa;
+      background: #ffffff;
       padding: 0 40px;
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .cabinet-tabs-bar::-webkit-scrollbar {
+      display: none;
     }
     .cabinet-tab-btn {
-      padding: 18px 24px;
+      height: 56px;
+      padding: 0 20px;
       font-family: var(--mono);
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.04em;
-      color: var(--gray);
+      color: #71717a;
       background: transparent;
       border: none;
       border-bottom: 2px solid transparent;
@@ -295,25 +302,131 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      transition: all 0.2s ease;
+      transition: all 0.15s ease;
       white-space: nowrap;
+      margin-bottom: -1px;
     }
     .cabinet-tab-btn:hover {
       color: var(--black);
-      background: rgba(0,0,0,0.02);
+      background: #f8fafc;
     }
     .cabinet-tab-btn.active {
       color: var(--black);
       border-bottom-color: var(--black);
       background: #ffffff;
+      font-weight: 800;
     }
     .cabinet-tab-badge {
-      display: inline-block;
-      padding: 2px 6px;
-      background: #e4e4e7;
-      border-radius: 10px;
-      font-size: 0.7rem;
+      display: inline-flex;
+      align-items: center;
+      height: 18px;
+      padding: 0 6px;
+      background: #f4f4f5;
+      border: 1px solid #e4e4e7;
+      border-radius: 3px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      font-family: var(--mono);
       color: #18181b;
+    }
+    .cabinet-tab-badge.pro {
+      background: #18181b;
+      color: #ffffff;
+      border-color: #18181b;
+    }
+
+    /* Member Directory Filter & Cards */
+    .member-filter-btn {
+      padding: 7px 16px;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      background: #ffffff;
+      color: #71717a;
+      border: 1px solid #e4e4e7;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .member-filter-btn:hover {
+      color: #09090b;
+      border-color: #09090b;
+      background: #f8fafc;
+    }
+    .member-filter-btn.active {
+      background: #09090b;
+      color: #ffffff;
+      border-color: #09090b;
+    }
+    .member-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .member-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.04);
+      border-color: #09090b;
+    }
+    .member-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .member-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid #18181b;
+      background: #f4f4f5;
+      flex-shrink: 0;
+    }
+    .member-avatar-placeholder {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #18181b;
+      color: #ffffff;
+      font-size: 20px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      border: 1px solid #18181b;
+      flex-shrink: 0;
+    }
+    .member-name {
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin: 0 0 4px 0;
+      color: #09090b;
+      line-height: 1.2;
+    }
+    .member-bio {
+      font-size: 0.88rem;
+      color: #52525b;
+      line-height: 1.5;
+      margin-bottom: 16px;
+      flex-grow: 1;
+      min-height: 40px;
+    }
+    .member-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      border-top: 1px solid #f4f4f5;
+      padding-top: 14px;
+      margin-top: auto;
     }
 
     /* Tab Content Area */
@@ -548,18 +661,22 @@
     <!-- TAB NAVIGATION -->
     <nav class="cabinet-tabs-bar" role="tablist">
       <button class="cabinet-tab-btn active" onclick="switchCabinetTab('knowledge', this)">
-        📚 База Знаний
+        <span>📚 База Знаний</span>
       </button>
       <button class="cabinet-tab-btn" onclick="switchCabinetTab('education', this)">
-        🎓 Обучение & Уроки
+        <span>🎓 Обучение & Уроки</span>
         <span class="cabinet-tab-badge">2 курса</span>
       </button>
       <button class="cabinet-tab-btn" onclick="switchCabinetTab('club', this)">
-        💎 Закрытый Клуб
-        <span class="cabinet-tab-badge" style="background:#18181b; color:#ffffff; font-weight:700;">PRO</span>
+        <span>💎 Закрытый Клуб</span>
+        <span class="cabinet-tab-badge pro">PRO</span>
+      </button>
+      <button class="cabinet-tab-btn" onclick="switchCabinetTab('members', this)">
+        <span>👥 Участники Клуба</span>
+        <span id="members-count-badge" class="cabinet-tab-badge">1</span>
       </button>
       <button class="cabinet-tab-btn" onclick="switchCabinetTab('favorites', this)">
-        ⭐ Мое Избранное
+        <span>⭐ Мое Избранное</span>
         <span id="fav-counter-badge" class="cabinet-tab-badge">0</span>
       </button>
     </nav>
@@ -823,7 +940,49 @@
     </section>
 
     <!-- ═════════════════════════════════════════════════════════════ -->
-    <!-- TAB 4: FAVORITES -->
+    <!-- TAB 4: MEMBERS DIRECTORY -->
+    <!-- ═════════════════════════════════════════════════════════════ -->
+    <section id="tab-members" class="cabinet-tab-pane">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px; margin-bottom:24px;">
+        <div>
+          <div style="font-family:var(--mono); font-size:0.8rem; font-weight:700; color:var(--gray); margin-bottom:4px;">
+            // СООБЩЕСТВО ПЛАТФОРМЫ & РЕЗИДЕНТЫ КЛУБА
+          </div>
+          <h2 style="font-size:1.6rem; font-weight:800; margin:0;">Участники & Резиденты</h2>
+          <p style="color:var(--gray); margin-top:6px; font-size:0.95rem;">
+            Каталог резидентов закрытого клуба, учеников наставничества и разработчиков платформы.
+          </p>
+        </div>
+        <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+          <input type="text" id="members-search-input" placeholder="🔍 Поиск участника или навыка..." oninput="filterMembersList()" style="padding:9px 16px; font-family:var(--font); font-size:0.9rem; border:1px solid var(--border); width:280px; outline:none; background:#ffffff;">
+        </div>
+      </div>
+
+      <!-- Filter Categories -->
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px;">
+        <button class="member-filter-btn active" onclick="setMemberRoleFilter('all', this)">Все участники</button>
+        <button class="member-filter-btn" onclick="setMemberRoleFilter('club_member', this)">💎 Резиденты Клуба</button>
+        <button class="member-filter-btn" onclick="setMemberRoleFilter('student', this)">🎓 Ученики Наставничества</button>
+      </div>
+
+      <!-- Members Grid Container -->
+      <div id="members-grid-container" class="cabinet-grid">
+        <!-- Rendered dynamically via JS -->
+      </div>
+
+      <!-- Privacy Notice Footer -->
+      <div style="margin-top:32px; padding:16px 20px; background:#f8fafc; border:1px solid var(--border); border-left:3px solid #09090b; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+        <div style="font-size:0.88rem; color:#52525b;">
+          🔒 <strong>Управление видимостью:</strong> Вы можете скрыть свой профиль из этого каталога в любой момент в настройках.
+        </div>
+        <a href="/profile" class="btn-secondary" style="padding:6px 14px; font-size:0.78rem; font-family:var(--mono);">
+          Настройки приватности ⚙
+        </a>
+      </div>
+    </section>
+
+    <!-- ═════════════════════════════════════════════════════════════ -->
+    <!-- TAB 5: FAVORITES -->
     <!-- ═════════════════════════════════════════════════════════════ -->
     <section id="tab-favorites" class="cabinet-tab-pane">
       <div style="margin-bottom:24px;">
@@ -895,13 +1054,134 @@
       const targetPane = document.getElementById('tab-' + tabId);
       if (targetPane) targetPane.classList.add('active');
 
-      if (tabId === 'favorites') {
+      if (tabId === 'members') {
+        loadMembersDirectory();
+      } else if (tabId === 'favorites') {
         renderFavorites();
       }
 
       if (typeof window.trackMetrikaEvent === 'function') {
         window.trackMetrikaEvent('cabinet_tab_switch', { tab: tabId });
       }
+    }
+
+    // Members Directory Logic
+    let allMembersCache = [];
+    let currentRoleFilter = 'all';
+
+    async function loadMembersDirectory() {
+      const container = document.getElementById('members-grid-container');
+      if (container && (!allMembersCache || allMembersCache.length === 0)) {
+        container.innerHTML = `
+          <div style="grid-column:1/-1; padding:40px; text-align:center; color:var(--gray); font-family:var(--mono); font-size:0.85rem;">
+            ⏳ Загрузка каталога участников...
+          </div>
+        `;
+      }
+
+      allMembersCache = await Auth.fetchMembersDirectory();
+      const countBadge = document.getElementById('members-count-badge');
+      if (countBadge) countBadge.innerText = allMembersCache.length;
+      
+      filterMembersList();
+    }
+
+    function setMemberRoleFilter(role, btnElem) {
+      currentRoleFilter = role;
+      document.querySelectorAll('.member-filter-btn').forEach(b => b.classList.remove('active'));
+      if (btnElem) btnElem.classList.add('active');
+      filterMembersList();
+    }
+
+    function filterMembersList() {
+      const searchInput = document.getElementById('members-search-input');
+      const query = (searchInput ? searchInput.value : '').toLowerCase().trim();
+
+      let filtered = allMembersCache.filter(m => {
+        if (currentRoleFilter !== 'all') {
+          if (currentRoleFilter === 'club_member' && m.role !== 'club_member') return false;
+          if (currentRoleFilter === 'student' && m.role !== 'student') return false;
+        }
+        if (!query) return true;
+        const name = (m.first_name + ' ' + (m.last_name || '')).toLowerCase();
+        const username = (m.username || '').toLowerCase();
+        const bio = (m.bio || '').toLowerCase();
+        return name.includes(query) || username.includes(query) || bio.includes(query);
+      });
+
+      renderMembersDirectory(filtered);
+    }
+
+    function renderMembersDirectory(members) {
+      const container = document.getElementById('members-grid-container');
+      if (!container) return;
+
+      if (!members || members.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column:1/-1; background:#ffffff; border:1px solid var(--border); padding:48px 24px; text-align:center;">
+            <div style="font-size:2.2rem; margin-bottom:12px;">👥</div>
+            <h3 style="font-size:1.25rem; font-weight:700; margin-bottom:8px;">Участники не найдены</h3>
+            <p style="color:var(--gray); font-size:0.9rem; max-width:400px; margin:0 auto 16px auto;">
+              Попробуйте изменить поисковый запрос или выбрать другой фильтр.
+            </p>
+            <button onclick="document.getElementById('members-search-input').value=''; setMemberRoleFilter('all', document.querySelectorAll('.member-filter-btn')[0]);" class="btn-secondary" style="padding:6px 14px; font-size:0.8rem;">
+              Сбросить фильтры
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      let html = '';
+      members.forEach(m => {
+        const name = (m.first_name + ' ' + (m.last_name || '')).trim() || (m.username ? '@' + m.username : 'Участник платформы');
+        let roleBadge = '<span class="badge-role" style="font-size:0.68rem; padding:2px 6px;">Участник</span>';
+        if (m.role === 'club_member') {
+          roleBadge = '<span class="badge-role club" style="font-size:0.68rem; padding:2px 6px;">💎 Резидент</span>';
+        } else if (m.role === 'student') {
+          roleBadge = '<span class="badge-role" style="font-size:0.68rem; padding:2px 6px; background:#eff6ff; color:#1d4ed8; border-color:#bfdbfe;">🎓 Ученик</span>';
+        }
+
+        const avatar = m.photo_url
+          ? `<img src="${m.photo_url}" alt="${name}" class="member-avatar">`
+          : `<div class="member-avatar-placeholder">${name.charAt(0).toUpperCase()}</div>`;
+
+        let linksHtml = '';
+        if (m.username) {
+          linksHtml += `<a href="https://t.me/${m.username}" target="_blank" class="cabinet-chip cabinet-chip-email" style="font-size:0.75rem;">💬 @${m.username} ↗</a>`;
+        }
+        if (m.channel_url) {
+          const chHref = m.channel_url.startsWith('http') ? m.channel_url : (m.channel_url.startsWith('@') ? `https://t.me/${m.channel_url.slice(1)}` : `https://t.me/${m.channel_url}`);
+          linksHtml += `<a href="${chHref}" target="_blank" class="cabinet-chip cabinet-chip-channel" style="font-size:0.75rem;">📢 Канал ↗</a>`;
+        }
+        if (m.website_url) {
+          const webHref = m.website_url.startsWith('http') ? m.website_url : `https://${m.website_url}`;
+          linksHtml += `<a href="${webHref}" target="_blank" class="cabinet-chip cabinet-chip-website" style="font-size:0.75rem;">🌐 Сайт ↗</a>`;
+        }
+
+        html += `
+          <div class="member-card">
+            <div>
+              <div class="member-header">
+                ${avatar}
+                <div>
+                  <h3 class="member-name">${name}</h3>
+                  <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                    ${roleBadge}
+                    ${m.username ? `<span style="font-family:var(--mono); font-size:0.75rem; color:var(--gray);">@${m.username}</span>` : ''}
+                  </div>
+                </div>
+              </div>
+              <div class="member-bio">${m.bio || 'Участник платформы Михаила Пузырёва.'}</div>
+            </div>
+            <div class="member-actions">
+              ${linksHtml || '<span style="font-family:var(--mono); font-size:0.72rem; color:#a1a1aa;">Контакты не указаны</span>'}
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
     }
 
     // Profile Display Update
@@ -992,7 +1272,7 @@
       if (badge) badge.innerText = favs.length;
     }
 
-    // Render Favorites in Tab 4
+    // Render Favorites in Tab 5
     function renderFavorites() {
       const container = document.getElementById('favorites-list-container');
       if (!container) return;
@@ -1054,6 +1334,7 @@
 
     document.addEventListener('DOMContentLoaded', async () => {
       updateCabinetProfile();
+      loadMembersDirectory();
       renderFavorites();
       if (Auth.isLoggedIn()) {
         await Auth.fetchFreshUserProfile();
@@ -1063,6 +1344,7 @@
 
     window.addEventListener('asage_auth_changed', () => {
       updateCabinetProfile();
+      loadMembersDirectory();
       renderFavorites();
     });
 
