@@ -170,17 +170,34 @@
 }
 ```
 
-### 4.3. Карточки (Cards)
-- **Стандартная карточка (Light):**
-  - Фон: `#ffffff`
-  - Граница: `1px solid var(--border)` (`#e2e8f0`)
-  - Паддинг: `28px` – `32px`
-  - Hover: `transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,0.04);`
-- **Премиум / Dark Focus карточка (Club / PRO):**
-  - Фон: `#09090b`
-  - Текст: Заголовки `#ffffff`, параграфы `#a1a1aa`, списки `#d4d4d8`
-  - Граница: `1px solid #27272a`
-  - Кнопка внутри: Инвертированная белая (`background: #ffffff; color: #09090b;`)
+### 4.3. Карточки и Плашки (Cards & Option Blocks)
+
+> ⚠️ **КРИТИЧЕСКИЙ СТАНДАРТ:** Запрещены любые «недорисованные» или «висящие в воздухе» плашки без границ (`border: none` СТРОГО ЗАПРЕЩЁН). Все карточки, колонки и блоки сравнения обязаны иметь явную физическую рамку `border: 1px solid var(--border)` (`#e4e4e7` / `#e2e8f0`) либо контрастную статусную окантовку.
+
+1. **Стандартная карточка (Light Feature Card):**
+   - Фон: `#ffffff`
+   - Граница: `1px solid var(--border)` (`#e4e4e7`)
+   - Скругление: `0px` (`border-radius: 0 !important;`)
+   - Паддинг: `clamp(24px, 3vw, 36px)`
+   - Hover: `border-color: #a1a1aa; transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,0.04);`
+
+2. **Сравнительные карточки форматов (Comparison / Option Cards):**
+   - **Негативный/Устаревший вариант (Курсы в записи / ❌):**
+     - Фон: `#ffffff`, Граница: `1px solid var(--border)`, верхняя планка: `border-top: 3px solid #ef4444`
+     - Бейдж: `<span style="color:#ef4444; background:#fef2f2; border:1px solid #fecaca;">КУРСЫ В ЗАПИСИ ❌</span>`
+   - **Нейтральный вариант (Обычный трекер / ❌):**
+     - Фон: `#ffffff`, Граница: `1px solid var(--border)`, верхняя планка: `border-top: 3px solid #f59e0b`
+     - Бейдж: `<span style="color:#b45309; background:#fffbeb; border:1px solid #fde68a;">ОБЫЧНЫЙ ТРЕКЕР ❌</span>`
+   - **Рекомендуемый флагманский вариант (Личное сопровождение / ✅):**
+     - Фон: `#f0fdf4`, Граница: `2px solid #10b981`, Текст заголовка: `#064e3b`
+     - Бейджи: `<span style="color:#047857; background:#dcfce7; border:1px solid #86efac;">ЛИЧНОЕ СОПРОВОЖДЕНИЕ ✅</span>` + `<span style="color:#fff; background:#10b981;">РЕКОМЕНДУЕМ</span>`
+     - Тень: `box-shadow: 0 10px 30px rgba(16, 185, 129, 0.08);`
+
+3. **Премиум / Dark Focus карточка (Club / PRO / VIP):**
+   - Фон: `#09090b`
+   - Текст: Заголовки `#ffffff`, параграфы `#a1a1aa`, списки `#d4d4d8`
+   - Граница: `1px solid #27272a`
+   - Кнопка внутри: Инвертированная белая (`background: #ffffff; color: #09090b;`)
 
 ### 4.4. Навигационные Табы (Tab Navigation Bar)
 - Высота: `54px` – `60px`
