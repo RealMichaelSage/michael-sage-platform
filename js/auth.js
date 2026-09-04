@@ -263,7 +263,7 @@ const Auth = {
     return false;
   },
 
-  // 6. Initial / Demo Members Directory (SAGE Neuro Family Residents & Students)
+  // 6. Initial Members Directory (SAGE Neuro Family Founder)
   getInitialMembers() {
     return [
       {
@@ -277,45 +277,6 @@ const Auth = {
         bio: 'Основатель платформы, AI-архитектор & инженер-разработчик. Создаю автономные агентные системы и обучаю Vibe Coding.',
         channel_url: '@uncrn_sage',
         website_url: 'https://a-sage.ru',
-        is_private: false
-      },
-      {
-        id: 'member-2',
-        telegram_id: 1002,
-        first_name: 'Александр',
-        last_name: 'Власов',
-        username: 'vlasov_ai',
-        photo_url: '',
-        role: 'club_member',
-        bio: 'Product Lead в EdTech. Резидент SAGE Neuro Family. Внедряю AI-пайплайны автоматизации и кастомные LLM-агенты.',
-        channel_url: '@vlasov_tech',
-        website_url: '',
-        is_private: false
-      },
-      {
-        id: 'member-3',
-        telegram_id: 1003,
-        first_name: 'Елена',
-        last_name: 'Романова',
-        username: 'elena_romanova_design',
-        photo_url: '',
-        role: 'student',
-        bio: 'Senior UX/UI Designer. Ученик наставничества 1-на-1 по Vibe Coding и разработке AI-интерфейсов.',
-        channel_url: '@design_romanova',
-        website_url: '',
-        is_private: false
-      },
-      {
-        id: 'member-4',
-        telegram_id: 1004,
-        first_name: 'Дмитрий',
-        last_name: 'Ковалёв',
-        username: 'dk_engineer',
-        photo_url: '',
-        role: 'club_member',
-        bio: 'Fullstack разработчик (Node / Python / React). Резидент SAGE Neuro Family. Создаю Telegram Mini Apps.',
-        channel_url: '',
-        website_url: '',
         is_private: false
       }
     ];
