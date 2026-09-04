@@ -9,10 +9,11 @@
   - **Высокий контраст и монохромность:** Чистый белый холст (`#ffffff`), глубокий угольно-черный (`#09090b`), прецизионная сетка серых оттенков.
   - **Инженерная эстетика:** Моноширинные технические бейджи (`JetBrains Mono`), четкие линейные разделители (`1px solid`), отсутствие декоративного визуального шума.
   - **Анти-шаблоны (СТРОГО ЗАПРЕЩЕНО):**
+    - ❌ **НИКАКИХ скруглений углов (ZERO BORDER-RADIUS):** Запрещены любые скругления (`border-radius: 0px !important;` везде без исключений: кнопки, карточки, инпуты, аватары, чипы, плашки, бейджи, всплывающие окна, модалки, чекбоксы).
     - ❌ **НИКАКИХ фиолетовых, сиреневых или пастельно-пурпурных фонов** (`#faf5ff`, `#7e22ce`, `#a855f7`, `#d8b4fe`, `#c084fc`).
     - ❌ **Никаких радужных градиентов** и размытых «неоновых» свечений.
     - ❌ **Никаких узких центрированных колонок** (сетка 1440–1600px).
-    - ❌ **Никаких «детских» скруглений** (border-radius > 8px запрещен для карточек и кнопок; базовый радиус — 0–4px).
+    - ❌ **Никаких дублирующихся аккаунтов** или декоративных точек-буллетов в текстовых строках.
 
 ---
 
@@ -82,7 +83,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  border-radius: 4px;
+  border-radius: 0;
   text-decoration: none;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -106,7 +107,7 @@
   font-family: var(--mono);
   font-size: 0.85rem;
   font-weight: 700;
-  border-radius: 4px;
+  border-radius: 0;
   text-decoration: none;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -125,7 +126,7 @@
   font-family: var(--mono);
   font-weight: 700;
   text-transform: uppercase;
-  border-radius: 4px;
+  border-radius: 0;
   transition: all 0.2s ease;
 }
 .btn-dark-cta:hover {
@@ -144,7 +145,7 @@
   padding: 4px 10px;
   background: #f4f4f5;
   border: 1px solid #e4e4e7;
-  border-radius: 4px;
+  border-radius: 0;
   font-family: var(--mono);
   font-size: 0.75rem;
   font-weight: 700;
@@ -157,6 +158,7 @@
   background: #18181b;
   border-color: #18181b;
   color: #ffffff;
+  border-radius: 0;
 }
 
 /* Открытый / Успешный статус */
@@ -164,6 +166,7 @@
   background: #ecfdf5;
   border-color: #a7f3d0;
   color: #047857;
+  border-radius: 0;
 }
 ```
 

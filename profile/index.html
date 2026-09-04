@@ -82,7 +82,7 @@
     .preview-avatar {
       width: 88px;
       height: 88px;
-      border-radius: 50%;
+      border-radius: 0;
       object-fit: cover;
       border: 2px solid var(--black);
       background: #f4f4f5;
@@ -90,7 +90,7 @@
     .preview-avatar-placeholder {
       width: 88px;
       height: 88px;
-      border-radius: 50%;
+      border-radius: 0;
       background: #18181b;
       color: #ffffff;
       font-size: 34px;
@@ -375,13 +375,13 @@
             </div>
           </div>
 
-          <div id="preview-privacy-status" style="margin-top:16px; padding:8px 12px; background:#f4f4f5; border:1px solid #e4e4e7; border-radius:4px; font-family:var(--mono); font-size:0.75rem; color:#52525b; display:flex; align-items:center; gap:6px;">
-            <span id="preview-privacy-dot" style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#10b981;"></span>
+          <div id="preview-privacy-status" style="margin-top:16px; padding:8px 12px; background:#f4f4f5; border:1px solid #e4e4e7; font-family:var(--mono); font-size:0.75rem; color:#52525b; display:flex; align-items:center; gap:8px;">
+            <span id="preview-privacy-dot" style="display:inline-block; width:7px; height:7px; background:#10b981; flex-shrink:0;"></span>
             <span id="preview-privacy-text">Виден в каталоге участников</span>
           </div>
 
-          <div style="margin-top:20px; padding-top:16px; border-top:1px solid #e4e4e7; font-family:var(--mono); font-size:0.72rem; color:#71717a; display:flex; align-items:center; gap:6px;">
-            <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#10b981;"></span>
+          <div style="margin-top:20px; padding-top:16px; border-top:1px solid #e4e4e7; font-family:var(--mono); font-size:0.72rem; color:#71717a; display:flex; align-items:center; gap:8px;">
+            <span style="display:inline-block; width:7px; height:7px; background:#10b981; flex-shrink:0;"></span>
             <span>Синхронизировано с базой платформы</span>
           </div>
         </aside>
@@ -415,7 +415,7 @@
               <div class="form-group">
                 <label class="form-label">Telegram ID</label>
                 <input type="text" id="inp-tg-id" class="form-input" readonly disabled value="ID">
-                <div class="form-hint">🔒 Уникальный идентификатор авторизации</div>
+                <div class="form-hint">Уникальный идентификатор авторизации</div>
               </div>
             </div>
 
@@ -464,7 +464,7 @@
               <span>05</span> <span>Приватность & Каталог участников</span>
             </div>
 
-            <div style="background:#f8fafc; border:1px solid #e4e4e7; padding:20px; border-radius:4px; margin-bottom:16px;">
+            <div style="background:#f8fafc; border:1px solid #e4e4e7; padding:20px; margin-bottom:16px;">
               <label style="display:flex; align-items:flex-start; gap:12px; cursor:pointer; font-size:0.92rem; color:var(--black);">
                 <input type="checkbox" id="inp-is-private" style="width:18px; height:18px; margin-top:2px; accent-color:#09090b; cursor:pointer;" onchange="updateLivePreview()">
                 <div>
@@ -684,11 +684,11 @@
       if (privDot && privText) {
         if (isPrivate) {
           privDot.style.background = '#71717a';
-          privText.innerText = '🔒 Скрыт из каталога участников';
+          privText.innerText = 'Скрыт из каталога участников';
           privText.style.color = '#71717a';
         } else {
           privDot.style.background = '#10b981';
-          privText.innerText = '● Виден в каталоге участников';
+          privText.innerText = 'Виден в каталоге участников';
           privText.style.color = '#059669';
         }
       }

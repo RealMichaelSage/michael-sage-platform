@@ -82,7 +82,7 @@
     .cabinet-avatar {
       width: 76px;
       height: 76px;
-      border-radius: 50%;
+      border-radius: 0;
       object-fit: cover;
       border: 2px solid #18181b;
       box-shadow: 0 4px 12px rgba(0,0,0,0.06);
@@ -91,7 +91,7 @@
     .cabinet-avatar-placeholder {
       width: 76px;
       height: 76px;
-      border-radius: 50%;
+      border-radius: 0;
       background: #18181b;
       color: #ffffff;
       font-size: 28px;
@@ -148,7 +148,7 @@
       font-size: 0.75rem;
       font-weight: 500;
       padding: 4px 10px;
-      border-radius: 4px;
+      border-radius: 0;
       text-decoration: none;
       transition: all 0.15s ease;
     }
@@ -223,7 +223,7 @@
       background: #fafafa;
       border: 1px solid #e4e4e7;
       padding: 3px 8px;
-      border-radius: 3px;
+      border-radius: 0;
     }
     .stat-pill-label {
       color: #a1a1aa;
@@ -259,7 +259,7 @@
       padding: 4px 10px;
       background: #f4f4f5;
       border: 1px solid #e4e4e7;
-      border-radius: 4px;
+      border-radius: 0;
       font-family: var(--mono);
       font-size: 0.75rem;
       font-weight: 700;
@@ -323,7 +323,7 @@
       padding: 0 6px;
       background: #f4f4f5;
       border: 1px solid #e4e4e7;
-      border-radius: 3px;
+      border-radius: 0;
       font-size: 0.68rem;
       font-weight: 700;
       font-family: var(--mono);
@@ -346,7 +346,7 @@
       background: #ffffff;
       color: #71717a;
       border: 1px solid #e4e4e7;
-      border-radius: 4px;
+      border-radius: 0;
       cursor: pointer;
       transition: all 0.15s ease;
     }
@@ -383,7 +383,7 @@
     .member-avatar {
       width: 52px;
       height: 52px;
-      border-radius: 50%;
+      border-radius: 0;
       object-fit: cover;
       border: 1px solid #18181b;
       background: #f4f4f5;
@@ -392,7 +392,7 @@
     .member-avatar-placeholder {
       width: 52px;
       height: 52px;
-      border-radius: 50%;
+      border-radius: 0;
       background: #18181b;
       color: #ffffff;
       font-size: 20px;
@@ -719,7 +719,19 @@
           </div>
         </div>
 
-        <!-- Card 3: Google One Guide -->
+        <!-- Card 3: SAGE VPN -->
+        <div class="cabinet-card">
+          <div class="cabinet-card-tag">ИНФРАСТРУКТУРА // VPN</div>
+          <h3>SAGE VPN (Michael_Sage_bot)</h3>
+          <p>
+            Высокоскоростной защищенный VPN на базе современных протоколов (VLESS, Shadowsocks, WireGuard). Управление подпиской, генерация ключей и мгновенное подключение для iOS, Android, macOS и Windows через Telegram-бота <strong>@Michael_Sage_bot</strong>.
+          </p>
+          <div class="cabinet-card-actions">
+            <a href="https://t.me/Michael_Sage_bot" target="_blank" class="btn-primary" style="padding:8px 16px; font-size:0.8rem;">Подключить VPN ↗</a>
+          </div>
+        </div>
+
+        <!-- Card 4: Google One Guide -->
         <div class="cabinet-card">
           <div class="cabinet-card-tag">ПОШАГОВЫЙ ГАЙД</div>
           <h3>Оплата Google One AI Premium из РФ</h3>
@@ -731,7 +743,7 @@
           </div>
         </div>
 
-        <!-- Card 4: Finmodel Calc -->
+        <!-- Card 5: Finmodel Calc -->
         <div class="cabinet-card">
           <div class="cabinet-card-tag">ФИНАНСОВЫЙ ИНСТРУМЕНТ</div>
           <h3>Калькулятор Финмодели & Инвестиций</h3>
@@ -743,7 +755,7 @@
           </div>
         </div>
 
-        <!-- Card 5: Tax Calc -->
+        <!-- Card 6: Tax Calc -->
         <div class="cabinet-card">
           <div class="cabinet-card-tag">НАЛОГОВЫЙ ИНСТРУМЕНТ</div>
           <h3>Калькулятор Налогов и Наценки</h3>
@@ -755,7 +767,7 @@
           </div>
         </div>
 
-        <!-- Card 6: All Base Materials -->
+        <!-- Card 7: All Base Materials -->
         <div class="cabinet-card">
           <div class="cabinet-card-tag">СВОДНЫЙ РЕЕСТР</div>
           <h3>Архив & База Знаний</h3>
@@ -893,7 +905,7 @@
         <!-- Club Status Card (Stark Black Pro Card) -->
         <div style="background:#09090b; color:#ffffff; border:1px solid #18181b; padding:32px; display:flex; flex-direction:column; justify-content:space-between; position:relative;">
           <div>
-            <div style="display:inline-block; padding:4px 10px; background:#18181b; border:1px solid #27272a; border-radius:4px; font-family:var(--mono); font-size:0.75rem; font-weight:700; color:#a1a1aa; margin-bottom:16px;">
+            <div style="display:inline-block; padding:4px 10px; background:#18181b; border:1px solid #27272a; border-radius:0; font-family:var(--mono); font-size:0.75rem; font-weight:700; color:#a1a1aa; margin-bottom:16px;">
               // РЕЗИДЕНТСТВО В КЛУБЕ
             </div>
             <h3 style="font-size:1.5rem; font-weight:800; color:#ffffff; margin:0 0 12px 0; letter-spacing:-0.02em;">Доступ в Закрытый Чат & Базу PRO</h3>
@@ -946,22 +958,22 @@
       <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px; margin-bottom:24px;">
         <div>
           <div style="font-family:var(--mono); font-size:0.8rem; font-weight:700; color:var(--gray); margin-bottom:4px;">
-            // СООБЩЕСТВО ПЛАТФОРМЫ & РЕЗИДЕНТЫ КЛУБА
+            // РЕЗИДЕНТЫ СООБЩЕСТВА & НАСТАВНИЧЕСТВО
           </div>
-          <h2 style="font-size:1.6rem; font-weight:800; margin:0;">Участники & Резиденты</h2>
+          <h2 style="font-size:1.6rem; font-weight:800; margin:0;">Резиденты Клуба & Ученики</h2>
           <p style="color:var(--gray); margin-top:6px; font-size:0.95rem;">
-            Каталог резидентов закрытого клуба, учеников наставничества и разработчиков платформы.
+            Каталог резидентов закрытого чата SAGE Neuro Family и участников личного наставничества.
           </p>
         </div>
-        <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
-          <input type="text" id="members-search-input" placeholder="🔍 Поиск участника или навыка..." oninput="filterMembersList()" style="padding:9px 16px; font-family:var(--font); font-size:0.9rem; border:1px solid var(--border); width:280px; outline:none; background:#ffffff;">
+        <div id="members-search-wrapper" style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+          <input type="text" id="members-search-input" placeholder="🔍 Поиск резидента или компетенции..." oninput="filterMembersList()" style="padding:9px 16px; font-family:var(--font); font-size:0.9rem; border:1px solid var(--border); border-radius:0; width:280px; outline:none; background:#ffffff;">
         </div>
       </div>
 
       <!-- Filter Categories -->
-      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px;">
-        <button class="member-filter-btn active" onclick="setMemberRoleFilter('all', this)">Все участники</button>
-        <button class="member-filter-btn" onclick="setMemberRoleFilter('club_member', this)">💎 Резиденты Клуба</button>
+      <div id="members-filter-wrapper" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px;">
+        <button class="member-filter-btn active" onclick="setMemberRoleFilter('all', this)">Все резиденты</button>
+        <button class="member-filter-btn" onclick="setMemberRoleFilter('club_member', this)">💎 Резиденты SAGE Neuro Family</button>
         <button class="member-filter-btn" onclick="setMemberRoleFilter('student', this)">🎓 Ученики Наставничества</button>
       </div>
 
@@ -1041,8 +1053,8 @@
   </footer>
 
   <!-- Scripts -->
-  <script src="/js/auth.js?v=1.1"></script>
-  <script src="/js/main.js?v=2.5"></script>
+  <script src="/js/auth.js?v=1.2"></script>
+  <script src="/js/main.js?v=2.6"></script>
 
   <script>
     // Tab Switching Logic
@@ -1071,18 +1083,55 @@
 
     async function loadMembersDirectory() {
       const container = document.getElementById('members-grid-container');
-      if (container && (!allMembersCache || allMembersCache.length === 0)) {
-        container.innerHTML = `
-          <div style="grid-column:1/-1; padding:40px; text-align:center; color:var(--gray); font-family:var(--mono); font-size:0.85rem;">
-            ⏳ Загрузка каталога участников...
-          </div>
-        `;
-      }
+      const searchWrapper = document.getElementById('members-search-wrapper');
+      const filterWrapper = document.getElementById('members-filter-wrapper');
+      const countBadge = document.getElementById('members-count-badge');
 
       allMembersCache = await Auth.fetchMembersDirectory();
-      const countBadge = document.getElementById('members-count-badge');
       if (countBadge) countBadge.innerText = allMembersCache.length;
-      
+
+      // Access Check: Only Club Residents (SAGE Neuro Family) and 1-on-1 Students have access to the catalog
+      if (!Auth.hasClubAccess()) {
+        if (searchWrapper) searchWrapper.style.display = 'none';
+        if (filterWrapper) filterWrapper.style.display = 'none';
+
+        if (container) {
+          const isGuest = !Auth.isLoggedIn();
+          container.innerHTML = `
+            <div style="grid-column:1/-1; background:#ffffff; border:1px solid var(--border); padding:64px 28px; text-align:center;">
+              <div style="font-family:var(--mono); font-size:0.78rem; font-weight:700; color:var(--gray); margin-bottom:10px; letter-spacing:0.04em;">
+                // ЗАКРЫТЫЙ КАТАЛОГ РЕЗИДЕНТОВ
+              </div>
+              <h3 style="font-size:1.6rem; font-weight:800; margin-bottom:12px; color:var(--black); letter-spacing:-0.02em;">
+                Каталог открыт для участников Закрытого Клуба
+              </h3>
+              <p style="color:var(--gray); font-size:0.95rem; line-height:1.6; max-width:620px; margin:0 auto 28px auto;">
+                Каталог резидентов, база навыков и прямые контакты для нетворкинга доступны участникам закрытого чата <strong>SAGE Neuro Family</strong> и ученикам программы личного наставничества 1-на-1.
+              </p>
+              <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+                ${isGuest ? `
+                  <button onclick="Auth.openModal()" class="btn-primary" style="padding:12px 24px; font-size:0.85rem;">
+                    Войти через Telegram ↗
+                  </button>
+                ` : `
+                  <button onclick="switchCabinetTab('club', document.querySelectorAll('.cabinet-tab-btn')[2])" class="btn-primary" style="padding:12px 24px; font-size:0.85rem;">
+                    Вступить в Закрытый Клуб [PRO] ↗
+                  </button>
+                `}
+                <a href="/booking" target="_blank" class="btn-secondary" style="padding:12px 24px; font-size:0.85rem;">
+                  Наставничество 1-на-1 ↗
+                </a>
+              </div>
+            </div>
+          `;
+        }
+        return;
+      }
+
+      // If authorized with club access:
+      if (searchWrapper) searchWrapper.style.display = 'flex';
+      if (filterWrapper) filterWrapper.style.display = 'flex';
+
       filterMembersList();
     }
 
@@ -1119,8 +1168,8 @@
       if (!members || members.length === 0) {
         container.innerHTML = `
           <div style="grid-column:1/-1; background:#ffffff; border:1px solid var(--border); padding:48px 24px; text-align:center;">
-            <div style="font-size:2.2rem; margin-bottom:12px;">👥</div>
-            <h3 style="font-size:1.25rem; font-weight:700; margin-bottom:8px;">Участники не найдены</h3>
+            <div style="font-size:2rem; margin-bottom:12px;">👥</div>
+            <h3 style="font-size:1.25rem; font-weight:700; margin-bottom:8px;">Резиденты не найдены</h3>
             <p style="color:var(--gray); font-size:0.9rem; max-width:400px; margin:0 auto 16px auto;">
               Попробуйте изменить поисковый запрос или выбрать другой фильтр.
             </p>
@@ -1134,11 +1183,9 @@
 
       let html = '';
       members.forEach(m => {
-        const name = (m.first_name + ' ' + (m.last_name || '')).trim() || (m.username ? '@' + m.username : 'Участник платформы');
-        let roleBadge = '<span class="badge-role" style="font-size:0.68rem; padding:2px 6px;">Участник</span>';
-        if (m.role === 'club_member') {
-          roleBadge = '<span class="badge-role club" style="font-size:0.68rem; padding:2px 6px;">💎 Резидент</span>';
-        } else if (m.role === 'student') {
+        const name = (m.first_name + ' ' + (m.last_name || '')).trim() || (m.username ? '@' + m.username : 'Резидент Клуба');
+        let roleBadge = '<span class="badge-role club" style="font-size:0.68rem; padding:2px 6px;">💎 Резидент</span>';
+        if (m.role === 'student') {
           roleBadge = '<span class="badge-role" style="font-size:0.68rem; padding:2px 6px; background:#eff6ff; color:#1d4ed8; border-color:#bfdbfe;">🎓 Ученик</span>';
         }
 
@@ -1172,7 +1219,7 @@
                   </div>
                 </div>
               </div>
-              <div class="member-bio">${m.bio || 'Участник платформы Михаила Пузырёва.'}</div>
+              <div class="member-bio">${m.bio || 'Резидент сообщества Михаила Пузырёва (SAGE Neuro Family).'}</div>
             </div>
             <div class="member-actions">
               ${linksHtml || '<span style="font-family:var(--mono); font-size:0.72rem; color:#a1a1aa;">Контакты не указаны</span>'}

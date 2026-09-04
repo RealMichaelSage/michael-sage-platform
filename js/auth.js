@@ -246,12 +246,29 @@ const Auth = {
     return user;
   },
 
-  // 5. Initial / Demo Members Directory
+  // 5. Check if user has Club / Mentorship Access (SAGE Neuro Family resident or 1-on-1 student)
+  hasClubAccess() {
+    const user = this.getUser();
+    if (!user) return false;
+    const tgId = Number(user.telegram_id || 0);
+    const uname = (user.username || '').toLowerCase();
+    // Mikhail Sage is platform founder and has full access
+    if (uname === 'michael_sage' || uname === 'uncrn_sage' || tgId === 439634804 || tgId === 88472911) {
+      return true;
+    }
+    // Resident of SAGE Neuro Family chat or Student of Mentorship
+    if (user.role === 'club_member' || user.role === 'student') {
+      return true;
+    }
+    return false;
+  },
+
+  // 6. Initial / Demo Members Directory (SAGE Neuro Family Residents & Students)
   getInitialMembers() {
     return [
       {
-        id: 'founder-1',
-        telegram_id: 88472911,
+        id: 'founder-sage',
+        telegram_id: 439634804,
         first_name: 'Михаил',
         last_name: 'Пузырёв',
         username: 'Michael_Sage',
@@ -270,7 +287,7 @@ const Auth = {
         username: 'vlasov_ai',
         photo_url: '',
         role: 'club_member',
-        bio: 'Product Lead в EdTech. Внедряю AI-пайплайны автоматизации и кастомные LLM-агенты.',
+        bio: 'Product Lead в EdTech. Резидент SAGE Neuro Family. Внедряю AI-пайплайны автоматизации и кастомные LLM-агенты.',
         channel_url: '@vlasov_tech',
         website_url: '',
         is_private: false
@@ -283,7 +300,7 @@ const Auth = {
         username: 'elena_romanova_design',
         photo_url: '',
         role: 'student',
-        bio: 'Senior UX/UI Designer. Прохожу наставничество 1-на-1 по Vibe Coding и разработке AI-интерфейсов.',
+        bio: 'Senior UX/UI Designer. Ученик наставничества 1-на-1 по Vibe Coding и разработке AI-интерфейсов.',
         channel_url: '@design_romanova',
         website_url: '',
         is_private: false
@@ -296,7 +313,7 @@ const Auth = {
         username: 'dk_engineer',
         photo_url: '',
         role: 'club_member',
-        bio: 'Fullstack разработчик (Node / Python / React). Создаю Telegram Mini Apps и автоматизирую бизнес-процессы.',
+        bio: 'Fullstack разработчик (Node / Python / React). Резидент SAGE Neuro Family. Создаю Telegram Mini Apps.',
         channel_url: '',
         website_url: '',
         is_private: false
@@ -304,7 +321,7 @@ const Auth = {
     ];
   },
 
-  // 6. Fetch Public Members Directory from Supabase + Local Merge
+  // 7. Fetch Public Members Directory from Supabase + Strict Deduplication
   async fetchMembersDirectory() {
     let list = [];
     try {
@@ -333,19 +350,60 @@ const Auth = {
     // Merge current logged-in user if available
     const currentUser = this.getUser();
     if (currentUser && currentUser.telegram_id) {
-      const idx = list.findIndex(m => m.telegram_id === currentUser.telegram_id || (m.id && m.id === currentUser.id));
-      if (currentUser.is_private) {
-        if (idx !== -1) list.splice(idx, 1);
-      } else {
+      const isMikhail = (currentUser.username && currentUser.username.toLowerCase() === 'michael_sage') ||
+                        currentUser.telegram_id == 439634804 ||
+                        currentUser.telegram_id == 88472911;
+
+      const userRole = isMikhail ? 'club_member' : (currentUser.role || 'member');
+      const normalizedUser = { ...currentUser, role: userRole };
+
+      // Only add to club directory if resident or student and not private
+      if (!normalizedUser.is_private && (normalizedUser.role === 'club_member' || normalizedUser.role === 'student')) {
+        // Check existing index
+        const idx = list.findIndex(m => {
+          if (m.telegram_id && m.telegram_id == normalizedUser.telegram_id) return true;
+          if (m.username && normalizedUser.username && m.username.toLowerCase() === normalizedUser.username.toLowerCase()) return true;
+          if (isMikhail && (m.username === 'Michael_Sage' || m.telegram_id == 439634804 || m.telegram_id == 88472911)) return true;
+          return false;
+        });
+
         if (idx !== -1) {
-          list[idx] = { ...list[idx], ...currentUser };
+          list[idx] = { ...list[idx], ...normalizedUser };
         } else {
-          list.unshift(currentUser);
+          list.unshift(normalizedUser);
         }
+      } else {
+        // If private or regular member without club, remove from catalog
+        const idx = list.findIndex(m => {
+          if (m.telegram_id && m.telegram_id == normalizedUser.telegram_id) return true;
+          if (m.username && normalizedUser.username && m.username.toLowerCase() === normalizedUser.username.toLowerCase()) return true;
+          if (isMikhail && (m.username === 'Michael_Sage' || m.telegram_id == 439634804 || m.telegram_id == 88472911)) return true;
+          return false;
+        });
+        if (idx !== -1) list.splice(idx, 1);
       }
     }
 
-    return list;
+    // Filter list: only keep club_member and student (residents of SAGE Neuro Family chat & students)
+    const validRoles = ['club_member', 'student'];
+    list = list.filter(m => validRoles.includes(m.role) && m.is_private !== true);
+
+    // Strict Deduplication Pass
+    const seenMap = new Map();
+    const result = [];
+    for (const item of list) {
+      const uname = (item.username || '').toLowerCase();
+      const tgId = item.telegram_id ? String(item.telegram_id) : '';
+      const isMikhail = uname === 'michael_sage' || tgId === '439634804' || tgId === '88472911';
+
+      const dedupKey = isMikhail ? 'founder_mikhail_sage' : (uname ? 'u:' + uname : 'id:' + tgId);
+      if (!seenMap.has(dedupKey)) {
+        seenMap.set(dedupKey, true);
+        result.push(item);
+      }
+    }
+
+    return result;
   },
 
   // 5. Toast Notification System
