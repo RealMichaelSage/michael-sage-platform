@@ -133,14 +133,21 @@
       margin: 0 0 28px 0;
     }
 
-    /* Search & Filter Controls */
+    /* Search & Filter Controls (Sticky Header) */
     .solutions-controls-bar {
-      padding: 24px clamp(20px, 4.5vw, 64px);
-      background: #fafafa;
+      position: sticky;
+      top: 68px;
+      z-index: 100;
+      padding: 16px clamp(20px, 4.5vw, 64px);
+      background: rgba(250, 250, 250, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+      transition: all 0.2s ease;
     }
     .search-input-box {
       position: relative;
@@ -170,7 +177,7 @@
       color: #a1a1aa;
     }
 
-    /* Category Filter Buttons (Button Pill Style matching Cabinet) */
+    /* Category Filter Buttons */
     .filter-tabs-grid {
       display: flex;
       align-items: center;
@@ -190,6 +197,7 @@
       align-items: center;
       gap: 8px;
       transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      white-space: nowrap;
     }
     .filter-cat-btn:hover {
       background: #f4f4f5;
@@ -213,6 +221,37 @@
       background: #27272a;
       color: #ffffff;
       border-color: #3f3f46;
+    }
+
+    /* Responsive Sticky Bar for Tablets & Mobile */
+    @media (max-width: 900px) {
+      .solutions-controls-bar {
+        top: 68px;
+        padding: 12px 16px;
+        gap: 10px;
+      }
+      .search-input-box {
+        max-width: 100%;
+      }
+      .search-input-box input {
+        padding: 10px 14px 10px 38px;
+        font-size: 0.88rem;
+      }
+      .filter-tabs-grid {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 4px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .filter-tabs-grid::-webkit-scrollbar {
+        display: none;
+      }
+      .filter-cat-btn {
+        flex-shrink: 0;
+        padding: 7px 12px;
+        font-size: 0.75rem;
+      }
     }
 
     /* Solutions Grid Section */
