@@ -58,10 +58,14 @@ const Auth = {
       const sessionUser = {
         id: dbUser ? dbUser.id : 'tg_' + tgUser.id,
         telegram_id: tgUser.id,
-        first_name: tgUser.first_name || 'Гость',
-        last_name: tgUser.last_name || '',
+        first_name: (dbUser && dbUser.first_name) ? dbUser.first_name : (tgUser.first_name || 'Гость'),
+        last_name: (dbUser && dbUser.last_name !== undefined) ? dbUser.last_name : (tgUser.last_name || ''),
         username: tgUser.username || '',
         photo_url: tgUser.photo_url || '',
+        email: dbUser && dbUser.email ? dbUser.email : '',
+        bio: dbUser && dbUser.bio ? dbUser.bio : '',
+        channel_url: dbUser && dbUser.channel_url ? dbUser.channel_url : '',
+        website_url: dbUser && dbUser.website_url ? dbUser.website_url : '',
         role: dbUser ? dbUser.role : 'member',
         auth_date: tgUser.auth_date
       };
@@ -82,8 +86,8 @@ const Auth = {
         });
       }
 
-      // If user is on a page other than cabinet and logs in, redirect to cabinet or update UI
-      if (!window.location.pathname.includes('cabinet')) {
+      // If user is on a page other than cabinet/profile and logs in, redirect to cabinet or update UI
+      if (!window.location.pathname.includes('cabinet') && !window.location.pathname.includes('profile')) {
         window.location.href = '/cabinet';
       } else {
         window.location.reload();
@@ -99,30 +103,198 @@ const Auth = {
         last_name: tgUser.last_name || '',
         username: tgUser.username || '',
         photo_url: tgUser.photo_url || '',
+        email: '',
+        bio: '',
+        channel_url: '',
+        website_url: '',
         role: 'member'
       };
       localStorage.setItem('asage_user', JSON.stringify(fallbackUser));
       this.closeModal();
       window.dispatchEvent(new CustomEvent('asage_auth_changed', { detail: fallbackUser }));
-      if (!window.location.pathname.includes('cabinet')) {
+      if (!window.location.pathname.includes('cabinet') && !window.location.pathname.includes('profile')) {
         window.location.href = '/cabinet';
       }
       return fallbackUser;
     }
   },
 
-  // 3. Logout
+  // 3. Update User Profile in Supabase & LocalStorage
+  async updateUserProfile(profileData) {
+    const user = this.getUser();
+    if (!user || !user.telegram_id) {
+      this.showToast('Ошибка: Пользователь не авторизован', 'error');
+      return { success: false, error: 'Пользователь не авторизован' };
+    }
+
+    try {
+      const payload = {
+        telegram_id: user.telegram_id,
+        first_name: profileData.first_name !== undefined ? profileData.first_name.trim() : user.first_name,
+        last_name: profileData.last_name !== undefined ? profileData.last_name.trim() : (user.last_name || ''),
+        username: user.username || '',
+        photo_url: user.photo_url || '',
+        email: profileData.email !== undefined ? profileData.email.trim() : (user.email || ''),
+        bio: profileData.bio !== undefined ? profileData.bio.trim() : (user.bio || ''),
+        channel_url: profileData.channel_url !== undefined ? profileData.channel_url.trim() : (user.channel_url || ''),
+        website_url: profileData.website_url !== undefined ? profileData.website_url.trim() : (user.website_url || ''),
+        updated_at: new Date().toISOString()
+      };
+
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/platform_users`, {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/json',
+          'Prefer': 'resolution=merge-duplicates,return=representation'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      let dbUser = null;
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.length > 0) dbUser = data[0];
+      }
+
+      const updatedSessionUser = {
+        ...user,
+        first_name: payload.first_name,
+        last_name: payload.last_name,
+        email: payload.email,
+        bio: payload.bio,
+        channel_url: payload.channel_url,
+        website_url: payload.website_url,
+        id: dbUser ? dbUser.id : user.id,
+        role: dbUser ? dbUser.role : user.role
+      };
+
+      localStorage.setItem('asage_user', JSON.stringify(updatedSessionUser));
+      window.dispatchEvent(new CustomEvent('asage_auth_changed', { detail: updatedSessionUser }));
+      
+      this.showToast('Данные профиля успешно сохранены', 'success');
+
+      if (typeof window.trackMetrikaEvent === 'function') {
+        window.trackMetrikaEvent('profile_update_success', {
+          telegram_id: user.telegram_id,
+          has_email: !!payload.email,
+          has_bio: !!payload.bio
+        });
+      }
+
+      return { success: true, user: updatedSessionUser };
+    } catch (err) {
+      console.warn('[Update Profile Warning]', err);
+      const fallbackUser = {
+        ...user,
+        ...profileData
+      };
+      localStorage.setItem('asage_user', JSON.stringify(fallbackUser));
+      window.dispatchEvent(new CustomEvent('asage_auth_changed', { detail: fallbackUser }));
+      this.showToast('Данные сохранены локально', 'success');
+      return { success: true, user: fallbackUser };
+    }
+  },
+
+  // 4. Fetch fresh profile data from Supabase
+  async fetchFreshUserProfile() {
+    const user = this.getUser();
+    if (!user || !user.telegram_id) return null;
+
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/platform_users?telegram_id=eq.${user.telegram_id}`, {
+        method: 'GET',
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+        }
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.length > 0) {
+          const dbUser = data[0];
+          const freshUser = {
+            ...user,
+            first_name: dbUser.first_name || user.first_name,
+            last_name: dbUser.last_name !== undefined ? dbUser.last_name : user.last_name,
+            username: dbUser.username || user.username,
+            photo_url: dbUser.photo_url || user.photo_url,
+            role: dbUser.role || user.role,
+            email: dbUser.email || '',
+            bio: dbUser.bio || '',
+            channel_url: dbUser.channel_url || '',
+            website_url: dbUser.website_url || '',
+            id: dbUser.id || user.id
+          };
+          localStorage.setItem('asage_user', JSON.stringify(freshUser));
+          window.dispatchEvent(new CustomEvent('asage_auth_changed', { detail: freshUser }));
+          return freshUser;
+        }
+      }
+    } catch (e) {
+      console.warn('[Fetch Profile Warning]', e);
+    }
+    return user;
+  },
+
+  // 5. Toast Notification System
+  showToast(message, type = 'info') {
+    let toast = document.getElementById('asage-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'asage-toast';
+      toast.style.cssText = `
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        z-index: 99999;
+        background: #09090b;
+        color: #ffffff;
+        padding: 12px 20px;
+        font-family: var(--mono, monospace);
+        font-size: 0.85rem;
+        font-weight: 600;
+        border: 1px solid #27272a;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transform: translateY(100px);
+        opacity: 0;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        pointer-events: none;
+      `;
+      document.body.appendChild(toast);
+    }
+
+    const icon = type === 'success' ? '✓' : type === 'error' ? '✕' : 'ℹ';
+    const accentColor = type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#06b6d4';
+    
+    toast.innerHTML = `<span style="color:${accentColor}; font-weight:800;">${icon}</span> <span>${message}</span>`;
+    toast.style.transform = 'translateY(0)';
+    toast.style.opacity = '1';
+
+    clearTimeout(this._toastTimeout);
+    this._toastTimeout = setTimeout(() => {
+      toast.style.transform = 'translateY(100px)';
+      toast.style.opacity = '0';
+    }, 3500);
+  },
+
+  // 6. Logout
   logout() {
     localStorage.removeItem('asage_user');
     window.dispatchEvent(new CustomEvent('asage_auth_changed', { detail: null }));
-    if (window.location.pathname.includes('cabinet')) {
+    if (window.location.pathname.includes('cabinet') || window.location.pathname.includes('profile')) {
       window.location.reload();
     } else {
       this.updateHeaderUI();
     }
   },
 
-  // 4. Modal Popup Management
+  // 7. Modal Popup Management
   openModal() {
     const user = this.getUser();
     if (user) {
