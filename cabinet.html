@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Личный Кабинет Платформы | Михаил Пузырёв</title>
+  <meta name="description" content="Личный кабинет платформы Михаила Пузырёва: доступ к Базе Знаний (промпты, глоссарий, калькуляторы), практическим курсам и материалам Закрытого Клуба.">
+  <meta name="author" content="Михаил Пузырёв">
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://a-sage.ru/cabinet">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Личный Кабинет — Платформа Михаила Пузырёва">
+  <meta property="og:description" content="База Знаний, видео-уроки по Vibe Coding и материалы Закрытого Клуба.">
+  <meta property="og:url" content="https://a-sage.ru/cabinet">
+  <meta property="og:site_name" content="Михаил Пузырёв — AI Архитектура & Внедрение">
+  <meta property="og:image" content="https://a-sage.ru/img/og-preview.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css?v=2.5">
+
+  <!-- Yandex.Metrika -->
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();
+    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(101414837, "init", {
+         clickmap:true,
+         trackLinks:true,
+         accurateTrackBounce:true,
+         webvisor:true
+    });
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/101414837" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+
+  <style>
+    /* Cabinet Specific Styles (Swiss Stark) */
+    .cabinet-page-frame {
+      max-width: 1440px;
+      margin: 0 auto;
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      background: var(--bg);
+      min-height: calc(100vh - 70px);
+    }
+    .cabinet-header-block {
+      padding: 100px 40px 32px;
+      border-bottom: 1px solid var(--border);
+      background: #ffffff;
+    }
+    .cabinet-profile-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+    .cabinet-user-info {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .cabinet-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--border);
+      background: #f4f4f5;
+    }
+    .cabinet-avatar-placeholder {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: #18181b;
+      color: #ffffff;
+      font-size: 28px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+    }
+    .cabinet-user-meta h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin: 0 0 6px 0;
+      letter-spacing: -0.02em;
+    }
+    .cabinet-user-badges {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .badge-role {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      background: #f4f4f5;
+      border: 1px solid #e4e4e7;
+      border-radius: 4px;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--black);
+    }
+    .badge-role.club {
+      background: #faf5ff;
+      border-color: #d8b4fe;
+      color: #7e22ce;
+    }
+
+    /* Cabinet Tab Navigation */
+    .cabinet-tabs-bar {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      background: #fafafa;
+      padding: 0 40px;
+      overflow-x: auto;
+    }
+    .cabinet-tab-btn {
+      padding: 18px 24px;
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--gray);
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .cabinet-tab-btn:hover {
+      color: var(--black);
+      background: rgba(0,0,0,0.02);
+    }
+    .cabinet-tab-btn.active {
+      color: var(--black);
+      border-bottom-color: var(--black);
+      background: #ffffff;
+    }
+    .cabinet-tab-badge {
+      display: inline-block;
+      padding: 2px 6px;
+      background: #e4e4e7;
+      border-radius: 10px;
+      font-size: 0.7rem;
+      color: #18181b;
+    }
+
+    /* Tab Content Area */
+    .cabinet-tab-pane {
+      display: none;
+      padding: 40px;
+    }
+    .cabinet-tab-pane.active {
+      display: block;
+    }
+
+    /* Card Grids */
+    .cabinet-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 24px;
+      margin-top: 24px;
+    }
+    .cabinet-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+    }
+    .cabinet-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.04);
+    }
+    .cabinet-card-tag {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--gray);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+    .cabinet-card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 0 0 12px 0;
+      line-height: 1.35;
+    }
+    .cabinet-card p {
+      color: var(--gray);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+    .cabinet-card-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid #f4f4f5;
+      padding-top: 16px;
+      margin-top: auto;
+    }
+
+    /* Auth Banner for Unauthenticated Users */
+    .cabinet-auth-banner {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 40px;
+      text-align: center;
+      margin: 32px 0;
+    }
+    .cabinet-auth-banner h2 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .cabinet-auth-banner p {
+      color: var(--gray);
+      max-width: 600px;
+      margin: 0 auto 24px auto;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    /* Course Lesson Item */
+    .lesson-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      margin-bottom: 12px;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+    .lesson-item:hover {
+      background: #f8fafc;
+      border-color: #000000;
+      transform: translateX(4px);
+    }
+    .lesson-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .lesson-num {
+      font-family: var(--mono);
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--gray);
+    }
+
+    @media (max-width: 768px) {
+      .cabinet-header-block { padding: 90px 20px 24px; }
+      .cabinet-tabs-bar { padding: 0 10px; }
+      .cabinet-tab-btn { padding: 14px 16px; font-size: 0.75rem; }
+      .cabinet-tab-pane { padding: 24px 20px; }
+      .cabinet-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER NAVIGATION (FLAT SINGLE LEVEL) -->
+  <header class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <strong>Михаил Пузыр<span class="accent-yo">ё</span>в</strong>
+        <span class="nav-logo-badge">01. КАБИНЕТ</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="/mentoring"><span class="nav-link-text">Наставничество 1-на-1</span></a></li>
+        <li><a href="/automation"><span class="nav-link-text">Внедрение & Разработка</span></a></li>
+        <li><a href="/corporate"><span class="nav-link-text">Компаниям</span></a></li>
+        <li><a href="/club/"><span class="nav-link-text">Клуб</span></a></li>
+        <li><a href="/about"><span class="nav-link-text">Обо&nbsp;мне & Кейсы</span></a></li>
+        <li><a href="/base"><span class="nav-link-text">База</span></a></li>
+        <li><a href="/cabinet" class="active"><span class="nav-link-text">Кабинет</span></a></li>
+      </ul>
+
+      <div class="nav-right">
+        <a href="/booking" class="nav-cta">Забронировать слот ↗</a>
+        <button class="nav-burger" aria-label="Открыть меню">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu">
+    <a href="/">Главная</a>
+    <a href="/mentoring">Наставничество 1-на-1</a>
+    <a href="/automation">Внедрение & Разработка</a>
+    <a href="/corporate">Компаниям</a>
+    <a href="/club/">Клуб</a>
+    <a href="/about">Обо мне & Кейсы</a>
+    <a href="/base">База</a>
+    <a href="/cabinet" class="active">Личный Кабинет</a>
+    <a href="/glossary">→ AI-Глоссарий</a>
+    <a href="/prompts">→ Промпты</a>
+    <a href="/calculators">→ Калькуляторы</a>
+    <a href="/booking" class="m-cta">Забронировать слот ↗</a>
+  </div>
+
+  <!-- MAIN CABINET WRAPPER -->
+  <main class="cabinet-page-frame">
+
+    <!-- USER PROFILE HERO BLOCK -->
+    <section class="cabinet-header-block">
+      <div id="profile-container-logged-in" style="display:none;">
+        <div class="cabinet-profile-card">
+          <div class="cabinet-user-info">
+            <div id="user-avatar-wrap"></div>
+            <div class="cabinet-user-meta">
+              <h1 id="user-display-name">Пользователь</h1>
+              <div class="cabinet-user-badges">
+                <span id="user-role-badge" class="badge-role">Участник платформы</span>
+                <span id="user-username-badge" style="font-family:var(--mono); font-size:0.8rem; color:var(--gray);">@username</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <button onclick="Auth.logout()" class="btn-secondary" style="padding:8px 16px; font-size:0.8rem; font-family:var(--mono);">
+              Выйти из аккаунта
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- GUEST / UNLOGGED STATE -->
+      <div id="profile-container-guest">
+        <div class="cabinet-auth-banner">
+          <div style="display:inline-block; padding:4px 12px; background:#f4f4f5; font-family:var(--mono); font-size:0.75rem; font-weight:700; margin-bottom:12px; border:1px solid #e4e4e7;">
+            // ВХОД В ОДИН КЛИК БЕЗ ПАРОЛЕЙ
+          </div>
+          <h2>Личный Кабинет Платформы</h2>
+          <p>
+            Авторизуйтесь через Telegram для доступа к открытым курсам, закрытым материалам Клуба и персональному сохранению промптов в Избранное.
+          </p>
+
+          <div id="telegram-login-widget-container" style="display:flex; justify-content:center; margin: 20px 0;">
+            <!-- Official Telegram Login Widget -->
+            <script async 
+              src="https://telegram.org/js/telegram-widget.js?22" 
+              data-telegram-login="Michaelsage_bot" 
+              data-size="large" 
+              data-radius="0"
+              data-onauth="onTelegramAuth(user)" 
+              data-request-access="write">
+            </script>
+          </div>
+
+          <div style="font-family:var(--mono); font-size:0.75rem; color:var(--gray); margin-top:12px;">
+            🔒 Безопасная криптографическая авторизация через Telegram API. Мы не запрашиваем пароли.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB NAVIGATION -->
+    <nav class="cabinet-tabs-bar" role="tablist">
+      <button class="cabinet-tab-btn active" onclick="switchCabinetTab('knowledge', this)">
+        📚 База Знаний
+      </button>
+      <button class="cabinet-tab-btn" onclick="switchCabinetTab('education', this)">
+        🎓 Обучение & Уроки
+        <span class="cabinet-tab-badge">3 курса</span>
+      </button>
+      <button class="cabinet-tab-btn" onclick="switchCabinetTab('club', this)">
+        💎 Закрытый Клуб
+        <span class="cabinet-tab-badge" style="background:#faf5ff; color:#7e22ce; font-weight:700;">PRO</span>
+      </button>
+      <button class="cabinet-tab-btn" onclick="switchCabinetTab('favorites', this)">
+        ⭐ Мое Избранное
+        <span id="fav-counter-badge" class="cabinet-tab-badge">0</span>
+      </button>
+    </nav>
+
+    <!-- ═════════════════════════════════════════════════════════════ -->
+    <!-- TAB 1: KNOWLEDGE BASE -->
+    <!-- ═════════════════════════════════════════════════════════════ -->
+    <section id="tab-knowledge" class="cabinet-tab-pane active">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px; margin-bottom:16px;">
+        <div>
+          <div style="font-family:var(--mono); font-size:0.8rem; font-weight:700; color:var(--gray); margin-bottom:4px;">
+            // ЕДИНЫЙ ЦЕНТР ЗНАНИЙ И ИНСТРУМЕНТОВ
+          </div>
+          <h2 style="font-size:1.6rem; font-weight:800; margin:0;">База Знаний Платформы</h2>
+        </div>
+      </div>
+
+      <div class="cabinet-grid">
+        <!-- Card 1: Prompts -->
+        <div class="cabinet-card">
+          <div class="cabinet-card-tag">37 ПРОФЕССИОНАЛЬНЫХ РОЛЕЙ</div>
+          <h3>Библиотека Системных Промптов</h3>
+          <p>
+            Готовые ролевые промпты по когнитивному стандарту <strong>GRACEF</strong> для ChatGPT, Claude 3.7, Gemini и DeepSeek. Маркетинг, продажи, IT, юриспруденция и финансы.
+          </p>
+          <div class="cabinet-card-actions">
+            <a href="/prompts" class="btn-primary" style="padding:8px 16px; font-size:0.8rem;">Открыть каталог ↗</a>
+            <span style="font-family:var(--mono); font-size:0.75rem; color:var(--gray);">37 ролей</span>
+          </div>
+        </div>
+
+        <!-- Card 2: Glossary -->
+        <div class="cabinet-card">
+          <div class="cabinet-card-tag">120+ ТЕРМИНОВ & МЕТОДОЛОГИЙ</div>
+          <h3>AI-Глоссарий & Энциклопедия</h3>
+          <p>
+            Фундаментальный справочник по нейросетям, LLM, RAG-архитектурам, MCP-серверам и автономным агентам с удобным поиском от А до Я.
+          </p>
+          <div class="cabinet-card-actions">
+            <a href="/glossary" class="btn-primary" style="padding:8px 16px; font-size:0.8rem;">Изучить глоссарий ↗</a>
+            <span style="font-family:var(--mono); font-size:0.75rem; color:var(--gray);">120+ статей</span>
+          </div>
+        </div>
+
+        <!-- Card 3: Google One Guide -->
+        <div class="cabinet-card">
+          <div class="cabinet-card-tag">ПРАКТИЧЕСКИЙ ГАЙД 2026</div>
+          <h3>Оплата Google One AI Premium из РФ</h3>
+          <p>
+            Пошаговое руководство: безналоговый штат Delaware (0% tax), генератор адресов, выпуск карт с US BIN и активация Gemini Advanced 2 TB без блокировок.
+          </p>
+          <div class="cabinet-card-actions">
+            <a href="/google-one-guide" class="btn-primary" style="padding:8px 16px; font-size:0.8rem;">Читать гайд ↗</a>
+            <span style="font-family:var(--mono); font-size:0.75rem; color:var(--green-dark); font-weight:700;">Актуально 2026</span>
+          </div>
+        </div>
+
+        <!-- Card 4: Finmodel Calc -->
+        <div class="cabinet-card">
+          <div class="cabinet-card-tag">ИНТЕРАКТИВНЫЙ ИНСТРУМЕНТ</div>
+          <h3>Калькулятор Финмодели & Инвестиций</h3>
+          <p>
+            Моделирование кассовых разрывов, расчет Unit-экономики, оценка размера инвестиционного раунда и доходности инвестора (IRR/MOIC) по FAST Standard.
+          </p>
+          <div class="cabinet-card-actions">
+            <a href="/calculator-finmodel" class="btn-primary" style="padding:8px 16px; font-size:0.8rem;">Запустить расчет ↗</a>
+            <span style="font-family:var(--mono); font-size:0.75rem; color:var(--gray);">Экспорт в Excel</span>
+          </div>
+        </div>
+
+        <!-- Card 5: Tax Calc -->
+        <div class="cabinet-card">
+          <div class="cabinet-card-tag">ИНТЕРАКТИВНЫЙ ИНСТРУМЕНТ</div>
+          <h3>Калькулятор Налогов и Наценки</h3>
+          <p>
+            Расчет чистой маржи, наценки «сверху» и прибыли «внутри» с учетом УСН 6%, УСН 15%, НДС 5%/7%/20% и эквайринга без кассовых разрывов.
+          </p>
+          <div class="cabinet-card-actions">
+            <a href="/calculator-tax" class="btn-primary" style="padding:8px 16px; font-size:0.8rem;">Рассчитать налоги ↗</a>
+            <span style="font-family:var(--mono); font-size:0.75rem; color:var(--gray);">УСН / НДС / Эквайринг</span>
+          </div>
+        </div>
+
+        <!-- Card 6: All Base Materials -->
+        <div class="cabinet-card">
+          <div class="cabinet-card-tag">ПОЛНЫЙ РЕЕСТР</div>
+          <h3>Архив & База Знаний</h3>
+          <p>
+            Все материалы, презентации, аналитические исследования и методологии платформы в едином структурированном каталоге.
+          </p>
+          <div class="cabinet-card-actions">
+            <a href="/base" class="btn-secondary" style="padding:8px 16px; font-size:0.8rem;">Все материалы ↗</a>
+            <span style="font-family:var(--mono); font-size:0.75rem; color:var(--gray);">Сводный реестр</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═════════════════════════════════════════════════════════════ -->
+    <!-- TAB 2: EDUCATION & COURSES -->
+    <!-- ═════════════════════════════════════════════════════════════ -->
+    <section id="tab-education" class="cabinet-tab-pane">
+      <div style="margin-bottom:24px;">
+        <div style="font-family:var(--mono); font-size:0.8rem; font-weight:700; color:var(--gray); margin-bottom:4px;">
+          // ПРАКТИЧЕСКИЕ КУРСЫ И ОТКРЫТЫЕ ЛЕКЦИИ
+        </div>
+        <h2 style="font-size:1.6rem; font-weight:800; margin:0;">Обучение & Видео-уроки</h2>
+        <p style="color:var(--gray); margin-top:6px;">
+          Прикладные обучающие программы Михаила Пузырёва по быстрой разработке сервисов и внедрению автономных ИИ-агентов.
+        </p>
+      </div>
+
+      <!-- Course 1: Vibe Coding -->
+      <div style="background:#ffffff; border:1px solid var(--border); padding:32px; margin-bottom:32px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px; margin-bottom:16px;">
+          <div>
+            <span class="badge-role" style="background:#ecfdf5; color:#047857; border-color:#a7f3d0; margin-bottom:8px;">ОТКРЫТЫЙ КУРС</span>
+            <h3 style="font-size:1.4rem; font-weight:800; margin:4px 0 8px 0;">Vibe Coding: Скоростная разработка продуктов через ИИ</h3>
+            <p style="color:var(--gray); max-width:750px; margin:0; font-size:0.95rem;">
+              Полный алгоритм сборки боевых веб-сервисов, баз данных и связок API за 3–5 дней с помощью инструментов нового поколения (Google Antigravity, Claude Code, Next.js, Supabase).
+            </p>
+          </div>
+          <a href="/education/vibecoding-lecture/" class="btn-primary" style="padding:10px 20px;">Открыть интерактивную лекцию ↗</a>
+        </div>
+
+        <div style="margin-top:20px; border-top:1px solid #f4f4f5; padding-top:16px;">
+          <div style="font-family:var(--mono); font-size:0.75rem; font-weight:700; color:var(--gray); margin-bottom:12px;">ПРОГРАММА ЛЕКЦИИ:</div>
+          
+          <a href="/education/vibecoding-lecture/#part-1" class="lesson-item">
+            <div class="lesson-title-wrap">
+              <span class="lesson-num">01</span>
+              <div>
+                <strong>Смена парадигмы: От написания синтаксиса к оркестрации агентов</strong>
+                <div style="font-size:0.8rem; color:var(--gray);">Как формулировать архитектурные требования и избегать накопления технического долга.</div>
+              </div>
+            </div>
+            <span style="font-family:var(--mono); font-size:0.8rem; color:var(--black);">Изучить ➔</span>
+          </a>
+
+          <a href="/education/vibecoding-lecture/#part-2" class="lesson-item">
+            <div class="lesson-title-wrap">
+              <span class="lesson-num">02</span>
+              <div>
+                <strong>Инженерный стек: Antigravity, Next.js, Supabase, Tailwind, Beget VPS</strong>
+                <div style="font-size:0.8rem; color:var(--gray);">Настройка локального окружения, интеграция MCP-серверов и непрерывный деплой.</div>
+              </div>
+            </div>
+            <span style="font-family:var(--mono); font-size:0.8rem; color:var(--black);">Изучить ➔</span>
+          </a>
+
+          <a href="/education/vibecoding-lecture/#part-3" class="lesson-item">
+            <div class="lesson-title-wrap">
+              <span class="lesson-num">03</span>
+              <div>
+                <strong>Практический разбор: Сборка и релиз рабочего сервиса за 4 часа</strong>
+                <div style="font-size:0.8rem; color:var(--gray);">Пошаговый кейс от пустого репозитория до первых пользователей и приема оплат.</div>
+              </div>
+            </div>
+            <span style="font-family:var(--mono); font-size:0.8rem; color:var(--black);">Изучить ➔</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Course 2: AI Agents & Automation -->
+      <div style="background:#ffffff; border:1px solid var(--border); padding:32px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px; margin-bottom:16px;">
+          <div>
+            <span class="badge-role" style="background:#eff6ff; color:#1d4ed8; border-color:#bfdbfe; margin-bottom:8px;">ОТКРЫТЫЙ КУРС</span>
+            <h3 style="font-size:1.4rem; font-weight:800; margin:4px 0 8px 0;">Автономные ИИ-Агенты & CRM-Роботизация</h3>
+            <p style="color:var(--gray); max-width:750px; margin:0; font-size:0.95rem;">
+              Автоматизация рутинных процессов бизнеса: распознавание голосовых сообщений из Telegram через Whisper, сквозная передача лидов в Bitrix24/amoCRM и генерация КП без участия менеджера.
+            </p>
+          </div>
+          <a href="/education/automation-lecture/" class="btn-primary" style="padding:10px 20px;">Открыть интерактивную лекцию ↗</a>
+        </div>
+
+        <div style="margin-top:20px; border-top:1px solid #f4f4f5; padding-top:16px;">
+          <div style="font-family:var(--mono); font-size:0.75rem; font-weight:700; color:var(--gray); margin-bottom:12px;">ПРОГРАММА ЛЕКЦИИ:</div>
+          
+          <a href="/education/automation-lecture/#part-1" class="lesson-item">
+            <div class="lesson-title-wrap">
+              <span class="lesson-num">01</span>
+              <div>
+                <strong>Архитектура LLM-конвейера: Парсинг, суммаризация и классификация</strong>
+                <div style="font-size:0.8rem; color:var(--gray);">Как извлечь суть сделки из аудиосообщений и неструктурированных чатов.</div>
+              </div>
+            </div>
+            <span style="font-family:var(--mono); font-size:0.8rem; color:var(--black);">Изучить ➔</span>
+          </a>
+
+          <a href="/education/automation-lecture/#part-2" class="lesson-item">
+            <div class="lesson-title-wrap">
+              <span class="lesson-num">02</span>
+              <div>
+                <strong>Интеграция с Bitrix24 & amoCRM через REST API и Вебхуки</strong>
+                <div style="font-size:0.8rem; color:var(--gray);">Автоматическая постановка задач, фиксация Timeline сделки и генерация счетов.</div>
+              </div>
+            </div>
+            <span style="font-family:var(--mono); font-size:0.8rem; color:var(--black);">Изучить ➔</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═════════════════════════════════════════════════════════════ -->
+    <!-- TAB 3: CLUB -->
+    <!-- ═════════════════════════════════════════════════════════════ -->
+    <section id="tab-club" class="cabinet-tab-pane">
+      <div style="margin-bottom:24px;">
+        <div style="font-family:var(--mono); font-size:0.8rem; font-weight:700; color:var(--gray); margin-bottom:4px;">
+          // ЗАКРЫТОЕ СООБЩЕСТВО ПРАКТИКОВ
+        </div>
+        <h2 style="font-size:1.6rem; font-weight:800; margin:0;">Закрытый Клуб Михаила Пузырёва</h2>
+        <p style="color:var(--gray); margin-top:6px;">
+          Прямой доступ к исходникам ботов, еженедельным мастермайнам по Vibe Coding и закрытому чату фаундеров и разработчиков.
+        </p>
+      </div>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:24px; margin-bottom:32px;">
+        <!-- Club Status Card -->
+        <div style="background:#faf5ff; border:1px solid #d8b4fe; padding:32px; display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="display:inline-block; padding:4px 10px; background:#f3e8ff; border:1px solid #c084fc; border-radius:4px; font-family:var(--mono); font-size:0.75rem; font-weight:700; color:#7e22ce; margin-bottom:16px;">
+              РЕЗИДЕНТСТВО В КЛУБЕ
+            </div>
+            <h3 style="font-size:1.5rem; font-weight:800; color:#581c87; margin:0 0 12px 0;">Доступ в Закрытый Чат & Базу PRO</h3>
+            <p style="color:#6b21a8; font-size:0.95rem; line-height:1.6; margin-bottom:24px;">
+              Оформите подписку через Tribute, чтобы получить мгновенную ссылку на закрытый Telegram-чат сообщества и базу исходников.
+            </p>
+            <ul style="color:#6b21a8; font-size:0.9rem; line-height:1.8; margin-bottom:24px; padding-left:20px;">
+              <li>Еженедельные живые мастермайнды и код-ревью</li>
+              <li>Исходные коды Telegram-ботов и MCP-серверов</li>
+              <li>Закрытая база промптов уровня PRO</li>
+              <li>Прямое общение с Михаилом Пузырёвым и резидентами</li>
+            </ul>
+          </div>
+          <div>
+            <a href="https://web.tribute.tg/s/O6I" target="_blank" class="btn-primary" style="background:#7e22ce; border-color:#7e22ce; color:#fff; width:100%; text-align:center; padding:14px;">
+              Вступить в Клуб (1 500 ₽/мес) ↗
+            </a>
+            <div style="text-align:center; font-family:var(--mono); font-size:0.75rem; color:#9333ea; margin-top:8px;">
+              Оплата через Tribute (карты РФ и зарубежные)
+            </div>
+          </div>
+        </div>
+
+        <!-- Mastermind Schedule -->
+        <div style="background:#ffffff; border:1px solid var(--border); padding:32px;">
+          <div style="font-family:var(--mono); font-size:0.75rem; font-weight:700; color:var(--gray); margin-bottom:12px;">
+            // РАСПИСАНИЕ МАСТЕРМАЙНДОВ
+          </div>
+          <h3 style="font-size:1.3rem; font-weight:800; margin:0 0 16px 0;">Ближайшие встречи Клуба</h3>
+
+          <div style="border-left:2px solid #18181b; padding-left:16px; margin-bottom:20px;">
+            <div style="font-family:var(--mono); font-size:0.8rem; font-weight:700; color:var(--gray);">КАЖДЫЙ ЧЕТВЕРГ • 19:00 МСК</div>
+            <strong style="font-size:1.05rem; display:block; margin:4px 0;">Живой разбор кода & Архитектуры AI-агентов</strong>
+            <div style="font-size:0.85rem; color:var(--gray);">Онлайн-встреча в Telegram Video Chat: разбор проектов участников, решение сложных интеграций.</div>
+          </div>
+
+          <div style="border-left:2px solid #a1a1aa; padding-left:16px;">
+            <div style="font-family:var(--mono); font-size:0.8rem; font-weight:700; color:var(--gray);">ВОСКРЕСЕНЬЕ • 12:00 МСК</div>
+            <strong style="font-size:1.05rem; display:block; margin:4px 0;">Венчурный дайджест & Тренды AI</strong>
+            <div style="font-size:0.85rem; color:var(--gray);">Анализ новых моделей, релизов инструментов и точек монетизации для стартапов.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═════════════════════════════════════════════════════════════ -->
+    <!-- TAB 4: FAVORITES -->
+    <!-- ═════════════════════════════════════════════════════════════ -->
+    <section id="tab-favorites" class="cabinet-tab-pane">
+      <div style="margin-bottom:24px;">
+        <div style="font-family:var(--mono); font-size:0.8rem; font-weight:700; color:var(--gray); margin-bottom:4px;">
+          // ПЕРСОНАЛЬНЫЕ ЗАКЛАДКИ
+        </div>
+        <h2 style="font-size:1.6rem; font-weight:800; margin:0;">Мое Избранное</h2>
+        <p style="color:var(--gray); margin-top:6px;">
+          Здесь сохраняются промпты, термины глоссария и статьи, которые вы отметили звездочкой на сайте.
+        </p>
+      </div>
+
+      <div id="favorites-list-container">
+        <!-- Rendered dynamically via JS -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-col">
+        <div class="footer-logo">Михаил Пузырёв</div>
+        <p class="footer-desc">
+          AI-архитектура, скоростная разработка и внедрение автономных систем.
+        </p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-title">Разделы</div>
+        <ul class="footer-links">
+          <li><a href="/mentoring">Наставничество 1-на-1</a></li>
+          <li><a href="/automation">Внедрение & Разработка</a></li>
+          <li><a href="/club">Закрытый Клуб</a></li>
+          <li><a href="/prompts">Библиотека промптов</a></li>
+          <li><a href="/glossary">AI-Глоссарий</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-title">Контакты</div>
+        <ul class="footer-links">
+          <li><a href="https://t.me/Michael_Sage" target="_blank">Telegram: @Michael_Sage</a></li>
+          <li><a href="https://t.me/uncrn_sage" target="_blank">Канал: @uncrn_sage</a></li>
+          <li><a href="mailto:i@michaelpuzyrev.ru">i@michaelpuzyrev.ru</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-title">Юридическая информация</div>
+        <ul class="footer-links">
+          <li><a href="/privacy">Политика конфиденциальности</a></li>
+          <li><a href="/terms">Пользовательское соглашение</a></li>
+          <li><span style="font-family:var(--mono); font-size:0.75rem; color:var(--gray);">ИП Пузырёв М.М. ИНН 500177901407</span></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/auth.js?v=1.1"></script>
+  <script src="js/main.js?v=2.5"></script>
+
+  <script>
+    // Tab Switching Logic
+    function switchCabinetTab(tabId, btnElem) {
+      document.querySelectorAll('.cabinet-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.cabinet-tab-pane').forEach(p => p.classList.remove('active'));
+
+      if (btnElem) btnElem.classList.add('active');
+      const targetPane = document.getElementById('tab-' + tabId);
+      if (targetPane) targetPane.classList.add('active');
+
+      if (tabId === 'favorites') {
+        renderFavorites();
+      }
+
+      if (typeof window.trackMetrikaEvent === 'function') {
+        window.trackMetrikaEvent('cabinet_tab_switch', { tab: tabId });
+      }
+    }
+
+    // Profile Display Update
+    function updateCabinetProfile() {
+      const user = Auth.getUser();
+      const loggedInContainer = document.getElementById('profile-container-logged-in');
+      const guestContainer = document.getElementById('profile-container-guest');
+
+      if (user) {
+        if (loggedInContainer) loggedInContainer.style.display = 'block';
+        if (guestContainer) guestContainer.style.display = 'none';
+
+        const displayName = (user.first_name + ' ' + (user.last_name || '')).trim() || user.username || 'Пользователь';
+        document.getElementById('user-display-name').innerText = displayName;
+        
+        const usernameEl = document.getElementById('user-username-badge');
+        if (usernameEl) {
+          usernameEl.innerText = user.username ? '@' + user.username : 'ID: ' + user.telegram_id;
+        }
+
+        const roleEl = document.getElementById('user-role-badge');
+        if (roleEl) {
+          if (user.role === 'club_member') {
+            roleEl.innerText = '💎 Резидент Клуба';
+            roleEl.className = 'badge-role club';
+          } else if (user.role === 'student') {
+            roleEl.innerText = '🎓 Ученик Наставничества';
+            roleEl.className = 'badge-role';
+          } else {
+            roleEl.innerText = 'Участник платформы';
+            roleEl.className = 'badge-role';
+          }
+        }
+
+        const avatarWrap = document.getElementById('user-avatar-wrap');
+        if (avatarWrap) {
+          avatarWrap.innerHTML = user.photo_url
+            ? `<img src="${user.photo_url}" alt="${displayName}" class="cabinet-avatar">`
+            : `<div class="cabinet-avatar-placeholder">${displayName.charAt(0).toUpperCase()}</div>`;
+        }
+      } else {
+        if (loggedInContainer) loggedInContainer.style.display = 'none';
+        if (guestContainer) guestContainer.style.display = 'block';
+      }
+
+      // Update favorites counter badge
+      const favs = Auth.getFavorites();
+      const badge = document.getElementById('fav-counter-badge');
+      if (badge) badge.innerText = favs.length;
+    }
+
+    // Render Favorites in Tab 4
+    function renderFavorites() {
+      const container = document.getElementById('favorites-list-container');
+      if (!container) return;
+
+      const favs = Auth.getFavorites();
+      const badge = document.getElementById('fav-counter-badge');
+      if (badge) badge.innerText = favs.length;
+
+      if (favs.length === 0) {
+        container.innerHTML = `
+          <div style="background:#ffffff; border:1px solid var(--border); padding:40px; text-align:center;">
+            <div style="font-size:2rem; margin-bottom:12px;">⭐</div>
+            <h3 style="font-size:1.2rem; font-weight:700; margin-bottom:8px;">У вас пока нет сохраненных материалов</h3>
+            <p style="color:var(--gray); max-width:450px; margin:0 auto 20px auto; font-size:0.9rem;">
+              Перейдите в библиотеку промптов или глоссарий и нажимайте кнопку «⭐ В избранное», чтобы нужные материалы всегда были под рукой.
+            </p>
+            <a href="/prompts" class="btn-primary" style="padding:10px 20px;">Перейти к библиотеке промптов ↗</a>
+          </div>
+        `;
+        return;
+      }
+
+      let html = '<div class="cabinet-grid">';
+      favs.forEach(f => {
+        let link = '/prompts';
+        let typeLabel = 'ПРОМПТ';
+        if (f.item_type === 'glossary') {
+          link = '/glossary#' + f.item_id;
+          typeLabel = 'ТЕРМИН ГЛОССАРИЯ';
+        } else if (f.item_type === 'guide') {
+          link = '/google-one-guide';
+          typeLabel = 'РУКОВОДСТВО';
+        }
+
+        html += `
+          <div class="cabinet-card">
+            <div class="cabinet-card-tag">${typeLabel}</div>
+            <h3>${f.item_title || f.item_id}</h3>
+            <p style="font-size:0.85rem; color:var(--gray);">
+              ${f.item_meta && f.item_meta.desc ? f.item_meta.desc : 'Сохранено в избранное'}
+            </p>
+            <div class="cabinet-card-actions">
+              <a href="${link}" class="btn-primary" style="padding:6px 14px; font-size:0.75rem;">Открыть ↗</a>
+              <button onclick="removeFavorite('${f.item_type}', '${f.item_id}')" class="btn-secondary" style="padding:6px 10px; font-size:0.75rem; border:none; color:#ef4444;">
+                ✕ Удалить
+              </button>
+            </div>
+          </div>
+        `;
+      });
+      html += '</div>';
+      container.innerHTML = html;
+    }
+
+    function removeFavorite(type, id) {
+      Auth.toggleFavorite(type, id, '');
+      renderFavorites();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateCabinetProfile();
+      renderFavorites();
+    });
+
+    window.addEventListener('asage_auth_changed', () => {
+      updateCabinetProfile();
+      renderFavorites();
+    });
+
+    window.addEventListener('asage_favorites_changed', () => {
+      renderFavorites();
+    });
+  </script>
+
+</body>
+</html>

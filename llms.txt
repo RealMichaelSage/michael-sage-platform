@@ -43,6 +43,7 @@
 - Клиенты: Росатом (Корпоративная Академия), Сбер, НИУ ВШЭ, ГК TAVROS и др.
 
 ### 6. Практические руководства и База Знаний (2026)
+- **Личный Кабинет Платформы (База знаний, Обучение, Клуб):** https://a-sage.ru/cabinet
 - **Оплата Google One (AI Premium & Gemini Advanced 2 TB) из РФ:** https://a-sage.ru/google-one-guide (Markdown: https://a-sage.ru/google-one-guide.md)
   Пошаговая инструкция по настройке платежного профиля США (Delaware 0% tax), выпуску карт и активации тарифов Gemini Advanced без блокировок.
 - **AI-Глоссарий (120+ терминов):** https://a-sage.ru/glossary

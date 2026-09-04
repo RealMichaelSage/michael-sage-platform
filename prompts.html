@@ -2908,10 +2908,46 @@ You are an enterprise systems auditor applying Eliyahu Goldratt&#x27;s Theory of
   </div>
 
   <!-- Scripts -->
+  <script src="js/auth.js?v=1.1"></script>
   <script src="js/main.js"></script>
   <script>
     let activeFilter = 'all';
     let currentGlobalLang = 'ru';
+
+    // Inject Favorite buttons into cards
+    function initCardFavorites() {
+      document.querySelectorAll('.prompt-card').forEach(card => {
+        const actions = card.querySelector('.prompt-actions');
+        const numElem = card.querySelector('.prompt-num');
+        const titleElem = card.querySelector('.prompt-title');
+        if (!actions || !numElem || !titleElem) return;
+
+        const num = numElem.innerText.replace('#', '').trim();
+        const title = titleElem.innerText.trim();
+        const descElem = card.querySelector('.prompt-code-content');
+        const desc = descElem ? descElem.innerText.slice(0, 120) + '...' : '';
+
+        if (!card.querySelector('.btn-fav-prompt')) {
+          const isFav = Auth.isFavorite('prompt', num);
+          const favBtn = document.createElement('button');
+          favBtn.className = 'btn-fav-prompt' + (isFav ? ' active' : '');
+          favBtn.setAttribute('title', isFav ? 'Удалить из избранного' : 'Добавить в избранное ЛК');
+          favBtn.style.cssText = 'display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border:1px solid var(--border); background:#ffffff; border-radius:4px; font-size:16px; cursor:pointer; margin-left:8px; transition:all 0.2s ease;';
+          favBtn.innerHTML = isFav ? '⭐' : '☆';
+          
+          favBtn.onclick = function(e) {
+            e.stopPropagation();
+            const added = Auth.toggleFavorite('prompt', num, title, { desc: desc });
+            favBtn.innerHTML = added ? '⭐' : '☆';
+            favBtn.classList.toggle('active', added);
+            favBtn.setAttribute('title', added ? 'Удалить из избранного' : 'Добавить в избранное ЛК');
+            showToast(added ? '⭐ Промпт #' + num + ' добавлен в Избранное ЛК!' : 'Промпт #' + num + ' удален из Избранного');
+          };
+
+          actions.appendChild(favBtn);
+        }
+      });
+    }
 
     // Global Language Toggle (Switches ONLY the prompt code texts, keeping all site UI in Russian)
     function setGlobalLang(lang) {
@@ -3041,6 +3077,14 @@ You are an enterprise systems auditor applying Eliyahu Goldratt&#x27;s Theory of
         toast.classList.remove('show');
       }, 2600);
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initCardFavorites();
+    });
+
+    window.addEventListener('asage_favorites_changed', () => {
+      initCardFavorites();
+    });
   </script>
 </body>
 </html>
