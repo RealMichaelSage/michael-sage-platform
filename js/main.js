@@ -952,6 +952,236 @@ function initUniversalAnalytics() {
   }, { passive: true });
 }
 
+// Universal Interactive Guide Modals (Camera Angles & Lighting Schemes)
+function openAnglesGuideModal() {
+  const existing = document.getElementById('guide-angles-modal');
+  if (existing) existing.remove();
+
+  const modal = document.createElement('div');
+  modal.id = 'guide-angles-modal';
+  modal.className = 'guide-modal-overlay';
+  modal.onclick = (e) => { if (e.target === modal) closeGuideModal('guide-angles-modal'); };
+
+  modal.innerHTML = `
+    <div class="guide-modal-content">
+      <div class="guide-modal-header">
+        <h3>📸 Полный гид по ракурсам (20 схем)</h3>
+        <button class="guide-modal-close-btn" onclick="closeGuideModal('guide-angles-modal')" aria-label="Закрыть">✕</button>
+      </div>
+      <div class="guide-modal-body">
+        <div style="font-family:var(--mono, monospace); font-size:0.8rem; font-weight:700; color:var(--gray, #71717a); margin-bottom:12px;">// 1. ГОРИЗОНТАЛЬНЫЕ РАКУРСЫ (ПОВОРОТ ОБЪЕКТА)</div>
+        
+        <div class="guide-item-row">
+          <div class="guide-item-info">
+            <strong>Анфас (Full Face) — Прямой взгляд, идеальная симметрия</strong>
+            <div class="guide-prompt-code">front view, looking at camera, symmetrical face</div>
+          </div>
+          <button class="guide-copy-btn" onclick="copyGuidePrompt('front view, looking at camera, symmetrical face', this)">Копировать</button>
+        </div>
+
+        <div class="guide-item-row">
+          <div class="guide-item-info">
+            <strong>Три четверти (3/4 View) — Поворот на 45°, объем и глубина</strong>
+            <div class="guide-prompt-code">three-quarter view, 45 degree turn, depth of field</div>
+          </div>
+          <button class="guide-copy-btn" onclick="copyGuidePrompt('three-quarter view, 45 degree turn, depth of field', this)">Копировать</button>
+        </div>
+
+        <div class="guide-item-row">
+          <div class="guide-item-info">
+            <strong>Профиль (Profile) — Строго боком, акцент на силуэте</strong>
+            <div class="guide-prompt-code">side view, profile shot, silhouette focus</div>
+          </div>
+          <button class="guide-copy-btn" onclick="copyGuidePrompt('side view, profile shot, silhouette focus', this)">Копировать</button>
+        </div>
+
+        <div class="guide-item-row">
+          <div class="guide-item-info">
+            <strong>Полуанфас (Semi-profile) — Между 3/4 и профилем, скулы</strong>
+            <div class="guide-prompt-code">semi-profile, subtle head turn, highlighting cheekbones</div>
+          </div>
+          <button class="guide-copy-btn" onclick="copyGuidePrompt('semi-profile, subtle head turn, highlighting cheekbones', this)">Копировать</button>
+        </div>
+
+        <div class="guide-item-row">
+          <div class="guide-item-info">
+            <strong>Со спины (Back View) — Загадочность и эффект присутствия</strong>
+            <div class="guide-prompt-code">view from behind, back to camera, mysterious mood</div>
+          </div>
+          <button class="guide-copy-btn" onclick="copyGuidePrompt('view from behind, back to camera, mysterious mood', this)">Копировать</button>
+        </div>
+
+        <div style="font-family:var(--mono, monospace); font-size:0.8rem; font-weight:700; color:var(--gray, #71717a); margin:20px 0 12px 0;">// 2. ВЕРТИКАЛЬНЫЕ РАКУРСЫ (ТОЧКА СЪЕМКИ)</div>
+
+        <div class="guide-item-row">
+          <div class="guide-item-info">
+            <strong>Уровень глаз (Eye Level) — Нейтрально и естественно</strong>
+            <div class="guide-prompt-code">eye-level shot, natural perspective, direct gaze</div>
+          </div>
+          <button class="guide-copy-btn" onclick="copyGuidePrompt('eye-level shot, natural perspective, direct gaze', this)">Копировать</button>
+        </div>
+
+        <div class="guide-item-row">
+          <div class="guide-item-info">
+            <strong>Нижний ракурс (Low Angle) — Властный, монументальный ракурс снизу</strong>
+            <div class="guide-prompt-code">low angle shot, looking up at person, heroic perspective</div>
+          </div>
+          <button class="guide-copy-btn" onclick="copyGuidePrompt('low angle shot, looking up at person, heroic perspective', this)">Копировать</button>
+        </div>
+
+        <div class="guide-item-row">
+          <div class="guide-item-info">
+            <strong>Верхний ракурс (High Angle) — Взгляд сверху, уязвимость</strong>
+            <div class="guide-prompt-code">high angle shot, looking down at subject, emotional vulnerability</div>
+          </div>
+          <button class="guide-copy-btn" onclick="copyGuidePrompt('high angle shot, looking down at subject, emotional vulnerability', this)">Копировать</button>
+        </div>
+
+        <div class="guide-item-row">
+          <div class="guide-item-info">
+            <strong>Птичий полет (Bird's Eye) — Вид строго сверху (Top-down)</strong>
+            <div class="guide-prompt-code">bird's eye view, top-down perspective, high altitude shot</div>
+          </div>
+          <button class="guide-copy-btn" onclick="copyGuidePrompt('bird\\'s eye view, top-down perspective, high altitude shot', this)">Копировать</button>
+        </div>
+
+        <div class="guide-item-row">
+          <div class="guide-item-info">
+            <strong>Лягушачий ракурс (Worm's Eye) — Экстремальный ракурс от самой земли</strong>
+            <div class="guide-prompt-code">worm's eye view, ground level photography, extreme perspective</div>
+          </div>
+          <button class="guide-copy-btn" onclick="copyGuidePrompt('worm\\'s eye view, ground level photography, extreme perspective', this)">Копировать</button>
+        </div>
+
+        <div style="font-family:var(--mono, monospace); font-size:0.8rem; font-weight:700; color:var(--gray, #71717a); margin:20px 0 12px 0;">// 3. КРЕАТИВ & КИНЕМАТОГРАФИЧНОСТЬ</div>
+
+        <div class="guide-item-row">
+          <div class="guide-item-info">
+            <strong>Голландский угол (Dutch Angle) — Заваленный горизонт, динамика</strong>
+            <div class="guide-prompt-code">dutch angle shot, tilted horizon, cinematic tension</div>
+          </div>
+          <button class="guide-copy-btn" onclick="copyGuidePrompt('dutch angle shot, tilted horizon, cinematic tension', this)">Копировать</button>
+        </div>
+
+        <div class="guide-item-row">
+          <div class="guide-item-info">
+            <strong>Субъективный ракурс (POV) — Вид от первого лица</strong>
+            <div class="guide-prompt-code">first person point of view, POV shot, immersive perspective</div>
+          </div>
+          <button class="guide-copy-btn" onclick="copyGuidePrompt('first person point of view, POV shot, immersive perspective', this)">Копировать</button>
+        </div>
+
+        <div class="guide-item-row">
+          <div class="guide-item-info">
+            <strong>Овершолдер (Over-the-shoulder) — Взгляд через плечо собеседника</strong>
+            <div class="guide-prompt-code">over-the-shoulder shot, conversation framing, blurred foreground shoulder</div>
+          </div>
+          <button class="guide-copy-btn" onclick="copyGuidePrompt('over-the-shoulder shot, conversation framing, blurred foreground shoulder', this)">Копировать</button>
+        </div>
+
+        <div class="guide-item-row">
+          <div class="guide-item-info">
+            <strong>Макро (Macro) — Сверхкрупный план детали</strong>
+            <div class="guide-prompt-code">extreme close-up, macro shot of an eye, hyper-detailed texture</div>
+          </div>
+          <button class="guide-copy-btn" onclick="copyGuidePrompt('extreme close-up, macro shot of an eye, hyper-detailed texture', this)">Копировать</button>
+        </div>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
+
+function openLightingGuideModal() {
+  const existing = document.getElementById('guide-lighting-modal');
+  if (existing) existing.remove();
+
+  const modal = document.createElement('div');
+  modal.id = 'guide-lighting-modal';
+  modal.className = 'guide-modal-overlay';
+  modal.onclick = (e) => { if (e.target === modal) closeGuideModal('guide-lighting-modal'); };
+
+  const lightingSchemes = [
+    { name: '🌅 Golden Hour', desc: 'Тёплые золотистые оттенки, мягкие длинные тени, закатный вайб', prompt: 'golden hour lighting, warm golden tones, soft long shadows, cinematic sunset atmosphere' },
+    { name: '🌌 Blue Hour', desc: 'Холодный синий свет, рассветная или сумеречная атмосфера', prompt: 'blue hour lighting, cool deep blue tones, subtle shadows, dawn atmosphere' },
+    { name: '☁️ Overcast Light', desc: 'Мягкий рассеянный свет без резких теней, естественные цвета', prompt: 'overcast diffused lighting, soft even illumination, natural neutral colors' },
+    { name: '✨ Diffused Light', desc: 'Равномерный мягкий свет, идеален для студийных портретов', prompt: 'diffused studio lighting, soft flattering light, gentle falloff' },
+    { name: '🌇 Backlighting & Rim Light', desc: 'Источник света позади объекта, создаёт сияющий контур', prompt: 'strong backlighting, rim light, glowing silhouette edge, cinematic halo' },
+    { name: '🌿 Soft Ambient Light', desc: 'Нежное рассеянное освещение интерьера, уют и глубина', prompt: 'soft ambient light, cozy room illumination, natural gentle shadows' },
+    { name: '🖤 Low-Key Lighting', desc: 'Тёмный контрастный свет, глубокие тени и драматизм', prompt: 'dramatic low-key lighting, deep dark shadows, high contrast, moody chiaroscuro' },
+    { name: '🤍 High-Key Lighting', desc: 'Яркое, светлое с минимумом теней — чистота и свежесть', prompt: 'high-key lighting, bright airy scene, minimal soft shadows, pure clean look' },
+    { name: '🏠 Window Light', desc: 'Естественный свет из окна, мягкие блики и текстура кожи', prompt: 'natural window light, soft directional sunlight, organic shadow gradient' },
+    { name: '🌳 Dappled Light', desc: 'Солнечные блики и пятна сквозь листву — динамика и игра света', prompt: 'dappled sunlight filtering through foliage, organic light patterns, textured shadows' },
+    { name: '💡 Spotlight', desc: 'Фокус жесткого света на одном объекте, максимальная драма', prompt: 'intense direct spotlight, sharp dramatic focal beam, heavy contrast falloff' },
+    { name: '🌆 Twilight Light', desc: 'Мягкий свет вечерних сумерек, кинематографичность', prompt: 'twilight evening light, dusky cinematic ambient, rich deep sky tones' },
+    { name: '🕯 Candlelight', desc: 'Тёплый мерцающий свет свечей, интимность и золотой оттенок', prompt: 'warm flickering candlelight, intimate golden glow, soft penumbra shadows' },
+    { name: '🎇 Neon Light', desc: 'Яркие неоновые огни, футуристичный киберпанк / ночной город', prompt: 'vibrant neon lighting, dual color cyan and magenta reflections, cyberpunk city night' },
+    { name: '🌕 Moonlight', desc: 'Холодный серебристый ночной свет, магия луны', prompt: 'ethereal cool moonlight, silvery highlights, deep midnight shadows' },
+    { name: '🚦 Street Light', desc: 'Желтоватое свечение уличных фонарей, городской вайб', prompt: 'warm sodium street lamp lighting, nighttime urban atmosphere, wet asphalt reflections' },
+    { name: '🔁 Bounced Light', desc: 'Отражённый свет от поверхностей, естественный fill-свет', prompt: 'bounced indirect illumination, soft ambient bounce, natural fill light' },
+    { name: '🌞 Lens Flare', desc: 'Анаморфотные солнечные блики в объективе, реализм', prompt: 'cinematic anamorphic lens flare, bright sun streak, photographic optical realism' },
+    { name: '🎥 Studio 3-Point Light', desc: 'Трехточечный студийный свет (Key, Fill, Backlight)', prompt: 'professional 3-point studio lighting, balanced key and fill light, crisp rim highlight' },
+    { name: '🔲 Pattern Light (Gobo)', desc: 'Свет с узорами через жалюзи или решётку, графичность', prompt: 'gobo patterned light, window blind shadows projected onto subject, graphic depth' }
+  ];
+
+  let rowsHtml = lightingSchemes.map(s => `
+    <div class="guide-item-row">
+      <div class="guide-item-info">
+        <strong>${s.name} — ${s.desc}</strong>
+        <div class="guide-prompt-code">${s.prompt}</div>
+      </div>
+      <button class="guide-copy-btn" onclick="copyGuidePrompt('${s.prompt.replace(/'/g, "\\'")}', this)">Копировать</button>
+    </div>
+  `).join('');
+
+  modal.innerHTML = `
+    <div class="guide-modal-content">
+      <div class="guide-modal-header">
+        <h3>💡 Шпаргалка по свету (20 схем освещения)</h3>
+        <button class="guide-modal-close-btn" onclick="closeGuideModal('guide-lighting-modal')" aria-label="Закрыть">✕</button>
+      </div>
+      <div class="guide-modal-body">
+        <div style="font-family:var(--mono, monospace); font-size:0.8rem; font-weight:700; color:var(--gray, #71717a); margin-bottom:12px;">// 20 КИНЕМАТОГРАФИЧЕСКИХ СХЕМ СВЕТА ДЛЯ MIDJOURNEY, FLUX & DALL-E</div>
+        ${rowsHtml}
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
+
+function closeGuideModal(id) {
+  const m = document.getElementById(id);
+  if (m) m.remove();
+}
+
+function copyGuidePrompt(text, btn) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => {
+      const orig = btn.innerText;
+      btn.innerText = '✓ Скопировано';
+      btn.style.background = '#10b981';
+      btn.style.borderColor = '#10b981';
+      btn.style.color = '#fff';
+      setTimeout(() => {
+        btn.innerText = orig;
+        btn.style.background = '';
+        btn.style.borderColor = '';
+        btn.style.color = '';
+      }, 1500);
+    }).catch(() => {
+      prompt('Скопируйте промпт:', text);
+    });
+  } else {
+    prompt('Скопируйте промпт:', text);
+  }
+}
+
+// Global exports
+window.openAnglesGuideModal = openAnglesGuideModal;
+window.openLightingGuideModal = openLightingGuideModal;
+window.closeGuideModal = closeGuideModal;
+window.copyGuidePrompt = copyGuidePrompt;
+
 // Export to window for explicit programmatic triggers
 window.trackMetrikaEvent = trackMetrikaEvent;
 

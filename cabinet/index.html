@@ -677,7 +677,7 @@
       </button>
       <button class="cabinet-tab-btn" onclick="switchCabinetTab('education', this)">
         <span>🎓 Обучение & Уроки</span>
-        <span class="cabinet-tab-badge">2 курса • 10 записей клуба</span>
+        <span class="cabinet-tab-badge">2 курса • 8 записей клуба</span>
       </button>
       <button class="cabinet-tab-btn" onclick="switchCabinetTab('club', this)">
         <span>💎 Закрытый Клуб</span>
@@ -926,13 +926,13 @@
         <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px; margin-bottom:20px;">
           <div>
             <div style="font-family:var(--mono); font-size:0.8rem; font-weight:700; color:var(--gray); margin-bottom:4px;">
-              // ЗАКРЫТЫЕ МАТЕРИАЛЫ КЛУБА • 10 ЗАКРЫТЫХ УРОКОВ & ШПАРГАЛОК
+              // ЗАКРЫТЫЕ МАТЕРИАЛЫ КЛУБА • 8 ЗАКРЫТЫХ МАСТЕР-КЛАССОВ & ТУТОРИАЛОВ
             </div>
             <h2 style="font-size:1.6rem; font-weight:800; margin:0; letter-spacing:-0.02em;">
               Записи & Мастер-классы SAGE Neuro Family
             </h2>
             <p style="color:var(--gray); margin-top:6px; max-width:780px; font-size:0.95rem;">
-              Эксклюзивный архив видеозаписей, практических воркшопов, закрытых туториалов и инженерных шпаргалок из закрытого Telegram-чата сообщества. Доступно только для резидентов клуба по подписке.
+              Эксклюзивный архив видеозаписей, практических воркшопов и закрытых туториалов из закрытого Telegram-чата сообщества. Доступно только для резидентов клуба по подписке.
             </p>
           </div>
           <div id="club-lessons-status-pill"></div>
@@ -1540,28 +1540,6 @@
         topics: ['Промпт-дизайн', 'GRACEF', 'Ассистенты', 'Системный промпт']
       },
       {
-        id: 'lesson-777',
-        title: 'Полный гид по ракурсам: от теории до промптов',
-        badge: 'ШПАРГАЛКА // 20 РАКУРСОВ',
-        type: 'guide_angles',
-        cover: '/assets/club-lessons/lesson_media_777.jpg',
-        date: '1 мая 2026',
-        duration: '20 схем с промптами',
-        description: 'Фундаментальная шпаргалка по всем ракурсам (горизонтальные, вертикальные, кинематографичные: Full Face, 3/4, Low Angle, Dutch Angle, POV) с готовыми копируемыми промптами.',
-        topics: ['Ракурсы', 'Midjourney', 'DALL-E 3', 'Кинематография']
-      },
-      {
-        id: 'lesson-137',
-        title: 'Шпаргалка по свету для генераторов фото и видео',
-        badge: 'ШПАРГАЛКА // 20 СХЕМ СВЕТА',
-        type: 'guide_lighting',
-        cover: '/assets/club-lessons/lesson_media_137.jpg',
-        date: '16 февраля 2026',
-        duration: '20 видов освещения',
-        description: '20 видов кинематографичного света (Golden Hour, Blue Hour, Low-Key, Soft Ambient, Rim Light, Spotlight) с промптами для реализма без «эффекта нейросети».',
-        topics: ['Свет', 'Cinema Light', 'Промпты', 'Реализм']
-      },
-      {
         id: 'lesson-83',
         title: 'Мастер-класс «Как создавать нейро-фотосессии»',
         badge: 'МАСТЕР-КЛАСС // НЕЙРОФОТО',
@@ -1603,7 +1581,7 @@
                 <div class="banner-icon">💎</div>
                 <div class="banner-text">
                   <strong>Доступ резидента сообщества активен // SAGE Neuro Family</strong>
-                  <span>Вам открыт неограниченный просмотр всех 10 закрытых записей, видеоуроков и интерактивных шпаргалок.</span>
+                  <span>Вам открыт неограниченный просмотр всех закрытых записей и мастер-классов.</span>
                 </div>
               </div>
               <div>
@@ -1618,7 +1596,7 @@
                 <div class="banner-icon">🔒</div>
                 <div class="banner-text">
                   <strong>Материалы доступны только резидентам клуба SAGE Neuro Family</strong>
-                  <span>Эксклюзивные записи живых воркшопов, детальные туториалы и закрытые шпаргалки доступны участникам клуба по подписке (1 500 ₽/мес).</span>
+                  <span>Эксклюзивные записи живых воркшопов и закрытые туториалы доступны участникам клуба по подписке (1 500 ₽/мес).</span>
                 </div>
               </div>
               <div>
@@ -1642,10 +1620,6 @@
             actionBtnHtml = `<button onclick="openClubVideo('${l.id}')" class="btn-primary" style="padding:9px 16px; font-size:0.82rem; width:100%; text-align:center; justify-content:center; cursor:pointer; display:inline-flex; align-items:center; gap:6px;"><span>▶</span> Смотреть запись онлайн</button>`;
           } else if (l.type === 'doc') {
             actionBtnHtml = `<a href="${l.docUrl}" target="_blank" class="btn-primary" style="padding:9px 16px; font-size:0.82rem; width:100%; text-align:center; justify-content:center; text-decoration:none;">📄 Открыть туториал (Google Docs) ↗</a>`;
-          } else if (l.type === 'guide_angles') {
-            actionBtnHtml = `<button onclick="openAnglesGuideModal()" class="btn-primary" style="padding:9px 16px; font-size:0.82rem; width:100%; text-align:center; justify-content:center; cursor:pointer;">📋 Открыть шпаргалку по ракурсам</button>`;
-          } else if (l.type === 'guide_lighting') {
-            actionBtnHtml = `<button onclick="openLightingGuideModal()" class="btn-primary" style="padding:9px 16px; font-size:0.82rem; width:100%; text-align:center; justify-content:center; cursor:pointer;">📋 Открыть шпаргалку по свету</button>`;
           }
         } else {
           actionBtnHtml = `<button onclick="promptJoinClub('${l.title}')" class="btn-secondary" style="padding:9px 14px; font-size:0.82rem; width:100%; text-align:center; justify-content:center; background:#fafafa; color:#52525b; border:1px dashed #d4d4d8; cursor:pointer; font-weight:600;">🔒 Доступно в SAGE Neuro Family ↗</button>`;
