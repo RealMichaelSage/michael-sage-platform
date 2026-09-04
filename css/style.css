@@ -5354,9 +5354,9 @@ input[type="reset"],
    SAGE NEURO FAMILY // CLUB LESSONS STYLES
 ══════════════════════════════════════════ */
 .club-lessons-section {
-  margin-top: 48px;
-  border-top: 2px solid var(--black);
-  padding-top: 36px;
+  margin-top: 0;
+  border-top: none;
+  padding-top: 0;
 }
 
 .club-access-status-banner {
