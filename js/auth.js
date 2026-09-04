@@ -538,6 +538,39 @@ const Auth = {
     }
   },
 
+  // Protect standalone page from unauthorized / guest access
+  protectPageAccess(type = 'club') {
+    const check = () => {
+      const hasAccess = this.hasClubAccess();
+      const user = this.getUser();
+      const lockwall = document.getElementById('page-gate-lockwall');
+      const protectedContent = document.getElementById('page-protected-content');
+
+      if (!hasAccess) {
+        if (protectedContent) protectedContent.style.display = 'none';
+        if (lockwall) lockwall.style.display = 'block';
+
+        if (!user) {
+          this.openModal(
+            'Данный сценарий доступен только в личном кабинете для резидентов клуба.',
+            'Доступен только в личном кабинете'
+          );
+        }
+      } else {
+        if (protectedContent) protectedContent.style.display = 'block';
+        if (lockwall) lockwall.style.display = 'none';
+      }
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', check);
+    } else {
+      check();
+    }
+
+    window.addEventListener('asage_auth_changed', check);
+  },
+
   closeModal() {
     const modal = document.getElementById('asage-auth-modal');
     if (modal) {

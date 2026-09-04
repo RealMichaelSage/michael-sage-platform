@@ -1449,6 +1449,7 @@
         type: 'video',
         platform: 'Kinescope',
         videoUrl: 'https://kinescope.io/ooYCG6pSQoMx28ikQiXbCp/pliG4cRv',
+        embedUrl: 'https://kinescope.io/embed/ooYCG6pSQoMx28ikQiXbCp',
         cover: '/assets/club-lessons/lesson_media_969.jpg',
         date: '22 июня 2026',
         duration: '1ч 45мин',
@@ -1462,6 +1463,7 @@
         type: 'video',
         platform: 'Kinescope',
         videoUrl: 'https://kinescope.io/6caXdYNxSMZWduyUB6ChQM/pljpPBB6',
+        embedUrl: 'https://kinescope.io/embed/6caXdYNxSMZWduyUB6ChQM',
         cover: '/assets/club-lessons/lesson_media_764.jpg',
         date: '29 апреля 2026',
         duration: '1ч 12мин',
@@ -1475,6 +1477,7 @@
         type: 'video',
         platform: 'Kinescope',
         videoUrl: 'https://kinescope.io/qNU4ub4VBQCmSHLhpeGSt9/plOoNiik',
+        embedUrl: 'https://kinescope.io/embed/qNU4ub4VBQCmSHLhpeGSt9',
         cover: '/assets/club-lessons/lesson_media_619.jpg',
         date: '6 апреля 2026',
         duration: '54 мин',
@@ -1488,6 +1491,7 @@
         type: 'video',
         platform: 'Kinescope',
         videoUrl: 'https://kinescope.io/snmkLPhNSqQQqWhMhCsSFF/pld6Hc5o',
+        embedUrl: 'https://kinescope.io/embed/snmkLPhNSqQQqWhMhCsSFF',
         cover: '/assets/club-lessons/lesson_media_615.jpg',
         date: '6 апреля 2026',
         duration: '1ч 20мин',
@@ -1501,6 +1505,7 @@
         type: 'video',
         platform: 'VK Video',
         videoUrl: 'https://vk.com/video708436546_456239175?list=ln-OazFwvzG9xkf9G1n2A',
+        embedUrl: 'https://vk.com/video_ext.php?oid=708436546&id=456239175&hash=44ba6d5be9fb7a75&hd=2',
         cover: '/assets/club-lessons/lesson_media_546.jpg',
         date: '25 марта 2026',
         duration: '1ч 35мин',
@@ -1527,6 +1532,7 @@
         type: 'video',
         platform: 'Kinescope',
         videoUrl: 'https://kinescope.io/0uEaDKVHDdqLmAj7krZ4Jd/plO41fqw',
+        embedUrl: 'https://kinescope.io/embed/0uEaDKVHDdqLmAj7krZ4Jd',
         cover: '/assets/club-lessons/lesson_media_332.jpg',
         date: '1 марта 2026',
         duration: '1ч 40мин',
@@ -1562,6 +1568,7 @@
         type: 'video',
         platform: 'Kinescope',
         videoUrl: 'https://kinescope.io/pQrVubsiwzmXJSRgkZRxoM',
+        embedUrl: 'https://kinescope.io/embed/pQrVubsiwzmXJSRgkZRxoM',
         cover: '/assets/club-lessons/lesson_media_83.jpg',
         date: '9 февраля 2026',
         duration: '1ч 50мин',
@@ -1632,7 +1639,7 @@
         let actionBtnHtml = '';
         if (hasAccess) {
           if (l.type === 'video') {
-            actionBtnHtml = `<a href="${l.videoUrl}" target="_blank" class="btn-primary" style="padding:9px 16px; font-size:0.82rem; width:100%; text-align:center; justify-content:center; text-decoration:none;">▶ Смотреть запись (${l.platform}) ↗</a>`;
+            actionBtnHtml = `<button onclick="openClubVideo('${l.id}')" class="btn-primary" style="padding:9px 16px; font-size:0.82rem; width:100%; text-align:center; justify-content:center; cursor:pointer; display:inline-flex; align-items:center; gap:6px;"><span>▶</span> Смотреть запись онлайн</button>`;
           } else if (l.type === 'doc') {
             actionBtnHtml = `<a href="${l.docUrl}" target="_blank" class="btn-primary" style="padding:9px 16px; font-size:0.82rem; width:100%; text-align:center; justify-content:center; text-decoration:none;">📄 Открыть туториал (Google Docs) ↗</a>`;
           } else if (l.type === 'guide_angles') {
@@ -1663,9 +1670,9 @@
               <div class="club-lesson-topics">
                 ${topicsHtml}
               </div>
-              <div class="club-lesson-footer">
-                ${actionBtnHtml}
-              </div>
+            </div>
+            <div class="club-lesson-footer">
+              ${actionBtnHtml}
             </div>
           </div>
         `;
@@ -1681,6 +1688,117 @@
       }
       switchCabinetTab('club', document.querySelectorAll('.cabinet-tab-btn')[2]);
       window.scrollTo({ top: 350, behavior: 'smooth' });
+    }
+
+    // Video Player In-Modal System
+    let currentVideoLessonId = null;
+
+    function openClubVideo(lessonId) {
+      if (!Auth.hasClubAccess()) {
+        promptJoinClub('Запись закрытого воркшопа');
+        return;
+      }
+
+      const lesson = CLUB_LESSONS_DATA.find(l => l.id === lessonId);
+      if (!lesson || !lesson.embedUrl) return;
+      currentVideoLessonId = lessonId;
+
+      const existing = document.getElementById('club-video-modal');
+      if (existing) existing.remove();
+
+      const videoLessons = CLUB_LESSONS_DATA.filter(l => l.type === 'video' && l.embedUrl);
+      const currentIdx = videoLessons.findIndex(l => l.id === lessonId);
+      const prevLesson = currentIdx > 0 ? videoLessons[currentIdx - 1] : null;
+      const nextLesson = currentIdx < videoLessons.length - 1 ? videoLessons[currentIdx + 1] : null;
+
+      const modal = document.createElement('div');
+      modal.id = 'club-video-modal';
+      modal.className = 'guide-modal-overlay';
+      modal.onclick = (e) => { if (e.target === modal) closeClubVideoModal(); };
+
+      const topicsHtml = (lesson.topics || []).map(t => `<span class="club-lesson-topic-chip" style="background:#27272a; border-color:#3f3f46; color:#d4d4d8;">${t}</span>`).join('');
+
+      modal.innerHTML = `
+        <div class="guide-modal-content" style="max-width:980px; width:100%; background:#09090b; border:1px solid #27272a;">
+          <div class="guide-modal-header" style="background:#18181b; border-bottom:1px solid #27272a; padding:16px 20px;">
+            <div style="display:flex; flex-direction:column; gap:4px; max-width:85%;">
+              <div style="font-family:var(--mono); font-size:0.72rem; color:#10b981; font-weight:700; letter-spacing:0.04em;">
+                ${lesson.badge || 'ВИДЕО-УРОК // SAGE NEURO FAMILY'} · ${lesson.duration}
+              </div>
+              <h3 style="margin:0; font-size:1.15rem; color:#ffffff; line-height:1.3;">
+                ${lesson.title}
+              </h3>
+            </div>
+            <button class="guide-modal-close-btn" onclick="closeClubVideoModal()" aria-label="Закрыть плеер">✕</button>
+          </div>
+
+          <div style="position:relative; width:100%; padding-top:56.25%; background:#000000;">
+            <iframe 
+              id="club-video-iframe" 
+              src="${lesson.embedUrl}" 
+              style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;" 
+              allow="autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer" 
+              allowfullscreen>
+            </iframe>
+          </div>
+
+          <div style="padding:20px 24px; background:#121215; border-top:1px solid #27272a; color:#e4e4e7;">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:20px; flex-wrap:wrap; margin-bottom:16px;">
+              <div style="max-width:680px;">
+                <div style="font-size:0.92rem; line-height:1.6; color:#a1a1aa; margin-bottom:12px;">
+                  ${lesson.description}
+                </div>
+                <div class="club-lesson-topics" style="display:flex; gap:6px; flex-wrap:wrap;">
+                  ${topicsHtml}
+                </div>
+              </div>
+              <div style="display:flex; flex-direction:column; gap:8px; align-items:flex-end;">
+                <div style="font-family:var(--mono); font-size:0.75rem; color:#71717a;">
+                  📅 Запись от ${lesson.date}
+                </div>
+                ${lesson.videoUrl ? `<a href="${lesson.videoUrl}" target="_blank" style="font-family:var(--mono); font-size:0.75rem; color:#a1a1aa; text-decoration:underline;">Внешняя ссылка ↗</a>` : ''}
+              </div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid #27272a; padding-top:14px; margin-top:14px; gap:12px;">
+              <div>
+                ${prevLesson ? `
+                  <button onclick="openClubVideo('${prevLesson.id}')" class="btn-secondary" style="padding:8px 14px; font-size:0.8rem; background:#18181b; color:#ffffff; border:1px solid #3f3f46; cursor:pointer;">
+                    ← Предыдущий урок
+                  </button>
+                ` : `<span style="font-family:var(--mono); font-size:0.75rem; color:#52525b;">Первый урок</span>`}
+              </div>
+              <div style="font-family:var(--mono); font-size:0.75rem; color:#71717a;">
+                Урок ${currentIdx + 1} из ${videoLessons.length}
+              </div>
+              <div>
+                ${nextLesson ? `
+                  <button onclick="openClubVideo('${nextLesson.id}')" class="btn-primary" style="padding:8px 14px; font-size:0.8rem; background:#ffffff; color:#09090b; border:1px solid #ffffff; cursor:pointer;">
+                    Следующий урок →
+                  </button>
+                ` : `<span style="font-family:var(--mono); font-size:0.75rem; color:#52525b;">Последний урок</span>`}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.body.appendChild(modal);
+      document.body.style.overflow = 'hidden';
+
+      if (typeof window.trackMetrikaEvent === 'function') {
+        window.trackMetrikaEvent('watch_club_video_player', { lesson_id: lessonId, title: lesson.title });
+      }
+    }
+
+    function closeClubVideoModal() {
+      const modal = document.getElementById('club-video-modal');
+      if (modal) {
+        const iframe = modal.querySelector('iframe');
+        if (iframe) iframe.src = '';
+        modal.remove();
+        document.body.style.overflow = '';
+      }
     }
 
     // Guide Modals
