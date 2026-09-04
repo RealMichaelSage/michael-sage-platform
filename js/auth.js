@@ -246,8 +246,67 @@ const Auth = {
     return user;
   },
 
-  // 5. Fetch Public Members Directory from Supabase
+  // 5. Initial / Demo Members Directory
+  getInitialMembers() {
+    return [
+      {
+        id: 'founder-1',
+        telegram_id: 88472911,
+        first_name: 'Михаил',
+        last_name: 'Пузырёв',
+        username: 'Michael_Sage',
+        photo_url: 'https://a-sage.ru/img/mikhail_about.jpg',
+        role: 'club_member',
+        bio: 'Основатель платформы, AI-архитектор & инженер-разработчик. Создаю автономные агентные системы и обучаю Vibe Coding.',
+        channel_url: '@uncrn_sage',
+        website_url: 'https://a-sage.ru',
+        is_private: false
+      },
+      {
+        id: 'member-2',
+        telegram_id: 1002,
+        first_name: 'Александр',
+        last_name: 'Власов',
+        username: 'vlasov_ai',
+        photo_url: '',
+        role: 'club_member',
+        bio: 'Product Lead в EdTech. Внедряю AI-пайплайны автоматизации и кастомные LLM-агенты.',
+        channel_url: '@vlasov_tech',
+        website_url: '',
+        is_private: false
+      },
+      {
+        id: 'member-3',
+        telegram_id: 1003,
+        first_name: 'Елена',
+        last_name: 'Романова',
+        username: 'elena_romanova_design',
+        photo_url: '',
+        role: 'student',
+        bio: 'Senior UX/UI Designer. Прохожу наставничество 1-на-1 по Vibe Coding и разработке AI-интерфейсов.',
+        channel_url: '@design_romanova',
+        website_url: '',
+        is_private: false
+      },
+      {
+        id: 'member-4',
+        telegram_id: 1004,
+        first_name: 'Дмитрий',
+        last_name: 'Ковалёв',
+        username: 'dk_engineer',
+        photo_url: '',
+        role: 'club_member',
+        bio: 'Fullstack разработчик (Node / Python / React). Создаю Telegram Mini Apps и автоматизирую бизнес-процессы.',
+        channel_url: '',
+        website_url: '',
+        is_private: false
+      }
+    ];
+  },
+
+  // 6. Fetch Public Members Directory from Supabase + Local Merge
   async fetchMembersDirectory() {
+    let list = [];
     try {
       const res = await fetch(`${SUPABASE_URL}/rest/v1/platform_users?select=id,telegram_id,first_name,last_name,username,photo_url,role,bio,channel_url,website_url,is_private,last_login_at&order=last_login_at.desc.nullslast&limit=80`, {
         method: 'GET',
@@ -259,14 +318,34 @@ const Auth = {
 
       if (res.ok) {
         const users = await res.json();
-        // Filter out users who chose to be private
-        return users.filter(u => u.is_private !== true);
+        if (Array.isArray(users) && users.length > 0) {
+          list = users.filter(u => u.is_private !== true);
+        }
       }
-      return [];
     } catch (e) {
       console.warn('[Fetch Members Error]', e);
-      return [];
     }
+
+    if (!list || list.length === 0) {
+      list = this.getInitialMembers();
+    }
+
+    // Merge current logged-in user if available
+    const currentUser = this.getUser();
+    if (currentUser && currentUser.telegram_id) {
+      const idx = list.findIndex(m => m.telegram_id === currentUser.telegram_id || (m.id && m.id === currentUser.id));
+      if (currentUser.is_private) {
+        if (idx !== -1) list.splice(idx, 1);
+      } else {
+        if (idx !== -1) {
+          list[idx] = { ...list[idx], ...currentUser };
+        } else {
+          list.unshift(currentUser);
+        }
+      }
+    }
+
+    return list;
   },
 
   // 5. Toast Notification System
