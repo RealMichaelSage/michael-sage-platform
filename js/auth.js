@@ -68,6 +68,9 @@ const Auth = {
 
       localStorage.setItem('asage_user', JSON.stringify(sessionUser));
       
+      // Close modal if open
+      this.closeModal();
+
       // Trigger event
       window.dispatchEvent(new CustomEvent('asage_auth_changed', { detail: sessionUser }));
       
@@ -79,10 +82,16 @@ const Auth = {
         });
       }
 
+      // If user is on a page other than cabinet and logs in, redirect to cabinet or update UI
+      if (!window.location.pathname.includes('cabinet')) {
+        window.location.href = '/cabinet';
+      } else {
+        window.location.reload();
+      }
+
       return sessionUser;
     } catch (err) {
       console.warn('[Auth Error]', err);
-      // Fallback local session if offline
       const fallbackUser = {
         id: 'tg_' + tgUser.id,
         telegram_id: tgUser.id,
@@ -93,7 +102,11 @@ const Auth = {
         role: 'member'
       };
       localStorage.setItem('asage_user', JSON.stringify(fallbackUser));
+      this.closeModal();
       window.dispatchEvent(new CustomEvent('asage_auth_changed', { detail: fallbackUser }));
+      if (!window.location.pathname.includes('cabinet')) {
+        window.location.href = '/cabinet';
+      }
       return fallbackUser;
     }
   },
@@ -109,7 +122,85 @@ const Auth = {
     }
   },
 
-  // 4. Favorites Management (Prompts / Glossary / Articles)
+  // 4. Modal Popup Management
+  openModal() {
+    const user = this.getUser();
+    if (user) {
+      window.location.href = '/cabinet';
+      return;
+    }
+
+    let modal = document.getElementById('asage-auth-modal');
+    if (!modal) {
+      this.injectModal();
+      modal = document.getElementById('asage-auth-modal');
+    }
+
+    if (modal) {
+      // Ensure Telegram widget script is injected and executed
+      const widgetBox = modal.querySelector('.auth-modal-widget-box');
+      if (widgetBox && !widgetBox.querySelector('script') && !widgetBox.querySelector('iframe')) {
+        const script = document.createElement('script');
+        script.src = 'https://telegram.org/js/telegram-widget.js?22';
+        script.setAttribute('data-telegram-login', 'Michaelsage_bot');
+        script.setAttribute('data-size', 'large');
+        script.setAttribute('data-radius', '0');
+        script.setAttribute('data-onauth', 'onTelegramAuth(user)');
+        script.setAttribute('data-request-access', 'write');
+        script.async = true;
+        widgetBox.appendChild(script);
+      }
+
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      if (typeof window.trackMetrikaEvent === 'function') {
+        window.trackMetrikaEvent('open_auth_modal');
+      }
+    }
+  },
+
+  closeModal() {
+    const modal = document.getElementById('asage-auth-modal');
+    if (modal) {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  },
+
+  injectModal() {
+    if (document.getElementById('asage-auth-modal')) return;
+
+    const modalHtml = `
+      <div id="asage-auth-modal" class="auth-modal-overlay" onclick="if(event.target === this) Auth.closeModal()">
+        <div class="auth-modal-dialog">
+          <button class="auth-modal-close" onclick="Auth.closeModal()" aria-label="Закрыть">✕</button>
+          
+          <div style="font-family:var(--mono, monospace); font-size:0.75rem; font-weight:700; color:#71717a; margin-bottom:8px; text-transform:uppercase;">
+            // АВТОРИЗАЦИЯ & РЕГИСТРАЦИЯ
+          </div>
+          
+          <h2 style="font-size:1.5rem; font-weight:800; margin:0 0 8px 0; color:#09090b; letter-spacing:-0.02em;">
+            Вход в Личный Кабинет
+          </h2>
+          
+          <p style="font-size:0.92rem; color:#71717a; line-height:1.55; margin:0 0 24px 0;">
+            Быстрый доступ к Базе Знаний, практическим урокам и Закрытому Клубу.
+          </p>
+
+          <div class="auth-modal-widget-box" style="display:flex; justify-content:center; align-items:center; min-height:48px; padding:16px 0; background:#f4f4f5; border:1px solid #e4e4e7; margin-bottom:20px;">
+          </div>
+
+          <div style="font-family:var(--mono, monospace); font-size:0.72rem; color:#a1a1aa; line-height:1.5; text-align:center;">
+            🔒 Официальная криптографическая авторизация Telegram API.<br>Никаких паролей и спам-рассылок.
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+  },
+
+  // 5. Favorites Management (Prompts / Glossary / Articles)
   getFavorites() {
     try {
       const stored = localStorage.getItem('asage_favorites');
@@ -194,25 +285,56 @@ const Auth = {
     return favorites.some(f => f.item_type === itemType && f.item_id === itemId);
   },
 
-  // 5. Update Header User Profile Badge across pages
+  // 6. Update Header Profile Button & Auth Elements
   updateHeaderUI() {
     const user = this.getUser();
-    const userBtnContainers = document.querySelectorAll('.nav-auth-slot, .nav-cta-wrapper');
+    const navRights = document.querySelectorAll('.nav-right');
 
-    userBtnContainers.forEach(container => {
+    navRights.forEach(nr => {
+      // Find or create .nav-auth-btn right after .nav-cta (Забронировать слот)
+      let authBtn = nr.querySelector('.nav-auth-btn');
+      const burger = nr.querySelector('.nav-burger');
+
+      if (!authBtn) {
+        authBtn = document.createElement('button');
+        authBtn.className = 'nav-auth-btn';
+        if (burger) {
+          nr.insertBefore(authBtn, burger);
+        } else {
+          nr.appendChild(authBtn);
+        }
+      }
+
       if (user) {
         const displayName = user.first_name || user.username || 'Кабинет';
         const avatarHtml = user.photo_url 
-          ? `<img src="${user.photo_url}" alt="${displayName}" class="nav-user-avatar" style="width:24px; height:24px; border-radius:50%; object-fit:cover; margin-right:8px; border:1px solid rgba(0,0,0,0.1);">`
-          : `<span class="nav-user-avatar-placeholder" style="display:inline-flex; width:24px; height:24px; border-radius:50%; background:#18181b; color:#fff; font-size:11px; font-weight:700; align-items:center; justify-content:center; margin-right:8px;">${displayName.charAt(0).toUpperCase()}</span>`;
+          ? `<img src="${user.photo_url}" alt="${displayName}" class="nav-user-avatar-mini" style="width:20px; height:20px; border-radius:50%; object-fit:cover; border:1px solid rgba(0,0,0,0.15);">`
+          : `<span class="nav-user-avatar-placeholder-mini" style="width:20px; height:20px; border-radius:50%; background:#18181b; color:#fff; font-size:10px; font-weight:700; display:inline-flex; align-items:center; justify-content:center;">${displayName.charAt(0).toUpperCase()}</span>`;
 
-        container.innerHTML = `
-          <a href="/cabinet" class="nav-user-pill" style="display:inline-flex; align-items:center; padding:4px 12px 4px 6px; background:#f4f4f5; border:1px solid #e4e4e7; border-radius:100px; text-decoration:none; color:#18181b; font-family:var(--font-mono, monospace); font-size:0.8rem; font-weight:600; transition:all 0.2s ease;">
-            ${avatarHtml}
-            <span>${displayName}</span>
-            <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#22c55e; margin-left:8px;" title="Онлайн"></span>
-          </a>
+        authBtn.innerHTML = `
+          ${avatarHtml}
+          <span>${displayName}</span>
+          <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#22c55e; margin-left:2px;" title="Онлайн"></span>
         `;
+        authBtn.setAttribute('title', 'Перейти в Личный Кабинет');
+        authBtn.onclick = () => { window.location.href = '/cabinet'; };
+      } else {
+        authBtn.innerHTML = `
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <span>Войти</span>
+        `;
+        authBtn.setAttribute('title', 'Войти в Личный Кабинет');
+        authBtn.onclick = () => { Auth.openModal(); };
+      }
+    });
+
+    // Also update mobile menu auth button if present
+    const mobileAuthSlots = document.querySelectorAll('.mobile-menu-auth-slot');
+    mobileAuthSlots.forEach(slot => {
+      if (user) {
+        slot.innerHTML = `<a href="/cabinet" class="m-cta" style="background:#f4f4f5; color:#18181b; border:1px solid #e4e4e7;">👤 ${user.first_name || 'Кабинет'} (ЛК) ↗</a>`;
+      } else {
+        slot.innerHTML = `<button onclick="Auth.openModal()" class="m-cta" style="background:#f4f4f5; color:#18181b; border:1px solid #e4e4e7; width:100%; cursor:pointer;">👤 Войти / Регистрация ↗</button>`;
       }
     });
   }
@@ -220,13 +342,7 @@ const Auth = {
 
 // Global callback for Telegram Widget
 window.onTelegramAuth = function(user) {
-  Auth.handleTelegramAuth(user).then(() => {
-    if (window.location.pathname.includes('cabinet')) {
-      window.location.reload();
-    } else {
-      Auth.updateHeaderUI();
-    }
-  });
+  Auth.handleTelegramAuth(user);
 };
 
 // Global export
@@ -234,6 +350,7 @@ window.Auth = Auth;
 
 // Auto init on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
+  Auth.injectModal();
   Auth.updateHeaderUI();
 });
 
