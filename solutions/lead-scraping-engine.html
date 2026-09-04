@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Парсинг целевых ЛПР из открытых источников и AI-скоринг — Инженерный Гайд | Михаил Пузырёв</title>
+  <meta name="description" content="Пошаговый инженерный гайд и готовый промпт для Google Antigravity: парсинг ЛПР из Telegram, 2ГИС, Яндекс Карт и HeadHunter, фильтрация через Gemini 3.6 Flash и обогащение через DaData.">
+  <meta name="keywords" content="парсинг ЛПР, B2B лидогенерация нейросети, Gemini 3.6 Flash парсинг, Antigravity автоматизация, DaData обогащение лидов, AI SDR, Telegram парсер лидов">
+  <meta name="author" content="Михаил Пузырёв">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+  <!-- Canonical & Markdown Twin for LLMs/GEO -->
+  <link rel="canonical" href="https://a-sage.ru/solutions/lead-scraping-engine">
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Парсинг целевых ЛПР из открытых источников и AI-скоринг — Инженерный Гайд">
+  <meta property="og:description" content="Готовая архитектура, пошаговый Roadmap и Copy-Paste промпт для развертывания B2B лидогенератора на базе Gemini 3.6 Flash и Google Antigravity.">
+  <meta property="og:url" content="https://a-sage.ru/solutions/lead-scraping-engine">
+  <meta property="og:site_name" content="Михаил Пузырёв — AI Архитектура & Внедрение">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:image" content="https://a-sage.ru/img/og-preview.png">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "TechArticle",
+        "@id": "https://a-sage.ru/solutions/lead-scraping-engine#article",
+        "headline": "Парсинг целевых ЛПР из открытых источников и AI-скоринг",
+        "description": "Пошаговый инженерный гайд по созданию автономного сервиса лидогенерации на базе Gemini 3.6 Flash, Telethon, DaData и Google Antigravity.",
+        "author": {
+          "@type": "Person",
+          "name": "Михаил Пузырёв",
+          "url": "https://a-sage.ru/about"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Михаил Пузырёв",
+          "url": "https://a-sage.ru"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Главная",
+            "item": "https://a-sage.ru/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "База Знаний",
+            "item": "https://a-sage.ru/base"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Решения ИИ-Автоматизации",
+            "item": "https://a-sage.ru/solutions"
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "name": "Парсинг ЛПР (Lead Scraping Engine)",
+            "item": "https://a-sage.ru/solutions/lead-scraping-engine"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/style.css?v=2.4">
+
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();
+    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(101414837, "init", {
+         clickmap:true,
+         trackLinks:true,
+         accurateTrackBounce:true,
+         webvisor:true
+    });
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/101414837" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+
+  <style>
+    /* Strict Zero Border Radius everywhere */
+    * {
+      border-radius: 0 !important;
+    }
+
+    .solution-page-frame {
+      max-width: 1440px;
+      margin: 0 auto;
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      box-sizing: border-box;
+      background: #ffffff;
+    }
+
+    /* Breadcrumbs */
+    .breadcrumbs-bar {
+      padding: 18px clamp(20px, 4.5vw, 64px);
+      background: #fafafa;
+      border-bottom: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      color: #71717a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .breadcrumbs-bar a {
+      color: #18181b;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .breadcrumbs-bar a:hover {
+      text-decoration: underline;
+    }
+    .breadcrumbs-bar .sep {
+      color: #a1a1aa;
+    }
+    .breadcrumbs-bar .current {
+      color: #71717a;
+    }
+
+    /* Hero Section */
+    .solution-hero {
+      padding: 48px clamp(20px, 4.5vw, 64px) 40px;
+      border-bottom: 1px solid var(--border);
+      background: #ffffff;
+    }
+    .solution-tag-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #10b981;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      padding: 4px 10px;
+      margin-bottom: 20px;
+      letter-spacing: 0.04em;
+    }
+    .solution-title {
+      font-size: clamp(2rem, 3.8vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      color: #09090b;
+      margin: 0 0 18px 0;
+    }
+    .solution-desc {
+      font-size: clamp(1.05rem, 1.4vw, 1.22rem);
+      line-height: 1.6;
+      color: #52525b;
+      max-width: 960px;
+      margin: 0 0 32px 0;
+    }
+
+    /* Spec Metrics Bar */
+    .solution-spec-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .spec-item {
+      background: #fafafa;
+      border: 1px solid var(--border);
+      padding: 16px;
+    }
+    .spec-label {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: #71717a;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      letter-spacing: 0.04em;
+    }
+    .spec-val {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #09090b;
+      font-family: var(--font-main);
+    }
+
+    /* Content Layout */
+    .solution-body {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 40px;
+      padding: 48px clamp(20px, 4.5vw, 64px) 80px;
+      background: var(--bg-alt);
+    }
+    @media (max-width: 1100px) {
+      .solution-body {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+    }
+
+    .solution-main-content {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: clamp(24px, 3.5vw, 44px);
+    }
+
+    .solution-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .sticky-box {
+      position: sticky;
+      top: 96px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 24px;
+    }
+
+    /* Section Headings */
+    .sec-badge {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #71717a;
+      letter-spacing: 0.04em;
+      margin-bottom: 8px;
+    }
+    .sec-title {
+      font-size: 1.55rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #09090b;
+      margin: 0 0 20px 0;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Architecture Diagram Box */
+    .arch-diagram-card {
+      background: #09090b;
+      color: #f4f4f5;
+      padding: 24px;
+      border: 1px solid #27272a;
+      margin-bottom: 36px;
+      font-family: var(--mono);
+      font-size: 0.84rem;
+      line-height: 1.6;
+      overflow-x: auto;
+    }
+    .arch-diagram-card pre {
+      margin: 0;
+      color: #34d399;
+    }
+
+    /* Steps Roadmap */
+    .steps-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    .step-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 20px 24px;
+      transition: all 0.2s ease;
+    }
+    .step-card:hover {
+      border-color: #09090b;
+      background: #fafafa;
+    }
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .step-num {
+      background: #09090b;
+      color: #ffffff;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 8px;
+    }
+    .step-title {
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: #09090b;
+      margin: 0;
+    }
+    .step-content {
+      font-size: 0.94rem;
+      line-height: 1.65;
+      color: #52525b;
+    }
+    .step-content code {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      background: #f4f4f5;
+      border: 1px solid #e4e4e7;
+      padding: 2px 6px;
+      color: #18181b;
+    }
+    .step-content pre {
+      background: #18181b;
+      color: #f4f4f5;
+      padding: 14px 16px;
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      overflow-x: auto;
+      margin: 12px 0 0 0;
+    }
+
+    /* Copy Prompt Container */
+    .prompt-box-wrapper {
+      background: #fafafa;
+      border: 2px solid #09090b;
+      padding: 24px;
+      margin: 36px 0;
+      position: relative;
+    }
+    .prompt-box-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #e4e4e7;
+    }
+    .btn-copy-prompt {
+      background: #09090b;
+      color: #ffffff;
+      border: 1px solid #09090b;
+      padding: 10px 18px;
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+    .btn-copy-prompt:hover {
+      background: #27272a;
+    }
+    .btn-copy-prompt.copied {
+      background: #10b981;
+      border-color: #10b981;
+      color: #ffffff;
+    }
+    .prompt-code-box {
+      background: #09090b;
+      color: #f4f4f5;
+      padding: 20px;
+      font-family: var(--mono);
+      font-size: 0.84rem;
+      line-height: 1.6;
+      max-height: 480px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      border: 1px solid #27272a;
+    }
+
+    /* Checklist */
+    .qa-checklist {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 20px 0 36px 0;
+    }
+    .qa-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: #fafafa;
+      border: 1px solid var(--border);
+      padding: 12px 16px;
+      font-size: 0.92rem;
+      color: #27272a;
+      line-height: 1.5;
+    }
+    .qa-item-box {
+      width: 18px;
+      height: 18px;
+      border: 1px solid #71717a;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: #10b981;
+      font-weight: 800;
+      font-size: 12px;
+    }
+
+    /* Sidebar Navigation Links */
+    .sidebar-nav-title {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #71717a;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      letter-spacing: 0.04em;
+    }
+    .sidebar-links-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .sidebar-links-list a {
+      font-size: 0.88rem;
+      color: #27272a;
+      text-decoration: none;
+      padding: 8px 12px;
+      background: #fafafa;
+      border: 1px solid var(--border);
+      display: block;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    .sidebar-links-list a:hover {
+      background: #09090b;
+      color: #ffffff;
+      border-color: #09090b;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER NAVIGATION -->
+  <header class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <strong>Михаил Пузыр<span class="accent-yo">ё</span>в</strong>
+        <span class="nav-logo-badge">РЕШЕНИЯ</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="/mentoring"><span class="nav-link-text">Наставничество 1-на-1</span></a></li>
+        <li><a href="/automation"><span class="nav-link-text">Внедрение & Разработка</span></a></li>
+        <li><a href="/corporate"><span class="nav-link-text">Компаниям</span></a></li>
+        <li><a href="/club/"><span class="nav-link-text">Клуб</span></a></li>
+        <li><a href="/about"><span class="nav-link-text">Обо&nbsp;мне & Кейсы</span></a></li>
+        <li><a href="/base" class="active"><span class="nav-link-text">База</span></a></li>
+      </ul>
+
+      <div class="nav-right">
+        <a href="/booking" class="nav-cta">Забронировать слот ↗</a>
+        <button class="nav-burger" aria-label="Открыть меню">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="solution-page-frame">
+
+    <!-- BREADCRUMBS -->
+    <div class="breadcrumbs-bar">
+      <a href="/">Главная</a>
+      <span class="sep">/</span>
+      <a href="/base">База Знаний</a>
+      <span class="sep">/</span>
+      <a href="/solutions">Решения ИИ-Автоматизации</a>
+      <span class="sep">/</span>
+      <span class="current">Lead Scraping Engine (Решение #02)</span>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section class="solution-hero">
+      <div class="solution-tag-pill">
+        <span>⚡️ КОНТУР 01 · МАРКЕТИНГ & ЛИДОГЕНЕРАЦИЯ</span>
+        <span>·</span>
+        <span>РЕШЕНИЕ #02</span>
+      </div>
+
+      <h1 class="solution-title">
+        Парсинг целевых ЛПР из открытых источников и AI-скоринг
+      </h1>
+
+      <p class="solution-desc">
+        Автоматический сбор теплых баз ЛПР из тематических Telegram-чатов, 2ГИС, Яндекс Карт и HeadHunter. Интеллектуальная фильтрация спама через Gemini 3.6 Flash, автоматическое обогащение реквизитов по ИНН через DaData и моментальная доставка квалифицированных лидов в Telegram-чат отдела продаж.
+      </p>
+
+      <!-- SPEC METRICS -->
+      <div class="solution-spec-grid">
+        <div class="spec-item">
+          <div class="spec-label">// Время развертывания</div>
+          <div class="spec-val">⏱️ ~2 часа под ключ</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">// Базовая AI-модель</div>
+          <div class="spec-val">⚡️ Gemini 3.6 Flash</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">// Экономия ресурсов</div>
+          <div class="spec-val">💰 20+ часов/нед рутины</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">// Среда разработки</div>
+          <div class="spec-val">🛠 Google Antigravity</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">// Хранение данных</div>
+          <div class="spec-val">🔒 SQLite + Google Sheets</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BODY LAYOUT -->
+    <div class="solution-body">
+      
+      <!-- MAIN ARTICLE CONTENT -->
+      <main class="solution-main-content">
+        
+        <!-- SECTION 1: ARCHITECTURE -->
+        <section id="architecture" style="margin-bottom:48px;">
+          <div class="sec-badge">// РАЗДЕЛ 01 · АРХИТЕКТУРА ПРОЦЕССА</div>
+          <h2 class="sec-title">Бизнес-логика пайплайна «со стрелочками»</h2>
+          
+          <p style="font-size:0.96rem; line-height:1.65; color:#52525b; margin-bottom:18px;">
+            Вся система работает в полностью асинхронном режиме. Парсеры извлекают сырой поток сообщений и карточек организаций, Gemini 3.6 Flash на лету отделяет реальный спрос от предложений услуг и спама, DaData подтягивает официальные данные ФНС, а менеджер получает готовое досье за 60 секунд.
+          </p>
+
+          <div class="arch-diagram-card">
+<pre>[Открытые источники] (Чаты TG / 2ГИС / Карты / Вакансии HH)
+        │
+        ▼ (Парсинг сырых данных через HTTP / Playwright / Telethon)
+[Сырой поток данных] (Тексты сообщений, карточки компаний, сниппеты)
+        │
+        ▼ (Обработка Gemini 3.6 Flash: фильтрация спама + извлечение ЛПР)
+[Структурированный лид] (ФИО, Должность, Компания, Телефон, Telegram, Боль)
+        │
+        ▼ (Обогащение через DaData / Checko по ИНН: выручка, штат, суды)
+[Квалифицированное досье] (Оценка соответствия ICP: от 1 до 10)
+        │
+        ▼ (Запись в базу и доставка в отдел продаж)
+[Google Таблица / CRM / Telegram-чат] ➔ [Менеджер берет в работу за 60 сек]</pre>
+          </div>
+        </section>
+
+        <!-- SECTION 2: ROADMAP -->
+        <section id="roadmap" style="margin-bottom:48px;">
+          <div class="sec-badge">// РАЗДЕЛ 02 · ПОШАГОВЫЙ ПЛАН</div>
+          <h2 class="sec-title">Roadmap реализации сервиса (Шаги 1–6)</h2>
+
+          <div class="steps-list">
+            
+            <div class="step-card">
+              <div class="step-header">
+                <span class="step-num">ШАГ 01</span>
+                <h3 class="step-title">Настройка окружения на компьютере</h3>
+              </div>
+              <div class="step-content">
+                Убедитесь, что установлен Python 3.10+ и Git. Включите качественный VPN (локация США) для доступа к Gemini API и Antigravity.
+                <pre>mkdir -p ~/Automations/lead_scraping_engine
+cd ~/Automations/lead_scraping_engine
+python3 -m venv venv
+source venv/bin/activate</pre>
+              </div>
+            </div>
+
+            <div class="step-card">
+              <div class="step-header">
+                <span class="step-num">ШАГ 02</span>
+                <h3 class="step-title">Правила Harness проекта (.agents/AGENTS.md)</h3>
+              </div>
+              <div class="step-content">
+                Создайте в корне проекта файл правил <code>.agents/AGENTS.md</code>, чтобы агент Antigravity:
+                <ul style="margin:8px 0 0 20px; padding:0;">
+                  <li>Хранил все секреты и токены строго в <code>.env</code>.</li>
+                  <li>Не перезаписывал рабочие базы данных без бэкапа.</li>
+                  <li>Использовал Pydantic для строгой валидации структуры контактов.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="step-card">
+              <div class="step-header">
+                <span class="step-num">ШАГ 03</span>
+                <h3 class="step-title">Сбор необходимых доступов и API-ключей</h3>
+              </div>
+              <div class="step-content">
+                Подготовьте ключи перед передачей промпта:
+                <ul style="margin:8px 0 0 20px; padding:0;">
+                  <li><strong>GEMINI_API_KEY</strong> — ключ Google AI Studio (тариф Free / Pay-as-you-go).</li>
+                  <li><strong>TG_API_ID & TG_API_HASH</strong> — с портала <a href="https://my.telegram.org" target="_blank" style="color:#09090b; font-weight:700;">my.telegram.org</a>.</li>
+                  <li><strong>ALERT_BOT_TOKEN & ALERT_CHAT_ID</strong> — бот от <a href="https://t.me/BotFather" target="_blank" style="color:#09090b; font-weight:700;">@BotFather</a> для оповещений.</li>
+                  <li><strong>DADATA_API_KEY</strong> — бесплатный ключ DaData.ru на 10 000 запросов/сутки.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="step-card">
+              <div class="step-header">
+                <span class="step-num">ШАГ 04</span>
+                <h3 class="step-title">Конфигурация .env</h3>
+              </div>
+              <div class="step-content">
+                Агент сгенерирует файл <code>.env</code> и проверит валидность подключений перед запуском парсинга.
+              </div>
+            </div>
+
+            <div class="step-card">
+              <div class="step-header">
+                <span class="step-num">ШАГ 05</span>
+                <h3 class="step-title">Генерация архитектуры в Google Antigravity</h3>
+              </div>
+              <div class="step-content">
+                Скопируйте готовый промпт из Раздела 3 ниже. Antigravity создаст модули:
+                <code>scrapers/</code>, <code>ai_filter.py</code>, <code>enricher.py</code>, <code>storage.py</code> и <code>bot_notifier.py</code>.
+              </div>
+            </div>
+
+            <div class="step-card">
+              <div class="step-header">
+                <span class="step-num">ШАГ 06</span>
+                <h3 class="step-title">Тестовый запуск и калибровка фильтров</h3>
+              </div>
+              <div class="step-content">
+                Запустите тестовый сбор по 1 каналу или поисковой выдаче карт, проверьте качество отсечения спама и запись в <code>leads.db</code>.
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- SECTION 3: COPY-PASTE PROMPT -->
+        <section id="prompt" style="margin-bottom:48px;">
+          <div class="sec-badge">// РАЗДЕЛ 03 · ГОТОВЫЙ ПРОМПТ ДЛЯ ANTIGRAVITY</div>
+          <h2 class="sec-title">Copy-Paste Промпт для сборки в Google Antigravity</h2>
+
+          <div class="prompt-box-wrapper">
+            <div class="prompt-box-header">
+              <div>
+                <strong style="font-size:0.95rem; color:#09090b;">Промпт для Google Antigravity IDE / CLI</strong>
+                <div style="font-family:var(--mono); font-size:0.75rem; color:#71717a; margin-top:2px;">Вставьте в диалог агента для полной сборки сервиса</div>
+              </div>
+              <button class="btn-copy-prompt" onclick="copyAntigravityPrompt(this)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <span>Скопировать промпт ⎘</span>
+              </button>
+            </div>
+
+            <pre class="prompt-code-box" id="antigravity-prompt-text">Ты — Lead Scraping & AI Automation Architect в Google Antigravity.
+
+Твоя задача — создать под ключ модульный асинхронный микросервис на Python для автоматического парсинга, обогащения и скоринга целевых контактов ЛПР (Лиц, Принимающих Решения) из открытых источников:
+1. Тематические Telegram-чаты и каналы (сообщения о поиске подрядчиков/услуг).
+2. Гео-сервисы и открытые каталоги (Яндекс Карты, 2ГИС — карточки компаний, телефоны, сайты, email).
+3. Сайты вакансий (HeadHunter — вакансии компаний, где ищут специалистов под расширение бизнеса).
+
+ПЕРВЫМ ШАГОМ:
+1. Проверь наличие файла `.env` в текущей директории.
+2. Если файла нет или в нем отсутствуют переменные, выведи пользователю вежливый и четкий запрос:
+   "Для запуска парсера мне понадобятся следующие доступы:
+    1. GEMINI_API_KEY (ключ Google AI Studio)
+    2. TG_API_ID и TG_API_HASH (с my.telegram.org, если нужен сбор из Telegram)
+    3. ALERT_BOT_TOKEN и ALERT_CHAT_ID (Telegram-бот для отправки готовых лидов)
+    4. DADATA_API_KEY (по желанию, для автоматического пробива выручки и ИНН)
+    Пожалуйста, пришли их или укажи, какие источники мы подключаем в первую очередь."
+3. Создай шаблон `.env.example`.
+
+ТРЕБОВАНИЯ К АРХИТЕКТУРЕ КОДА:
+1. Модуль парсинга (scrapers/):
+   - telegram_collector.py: использует Telethon для безопасного мониторинга публичных чатов по ключевым словам ("ищем", "нужен подрядчик", "посоветуйте", "куплю").
+   - web_collector.py: парсер карточек организаций (название, категория, город, телефон, сайт, email).
+2. Модуль AI-анализа и фильтрации (ai_filter.py):
+   - Используй Gemini 3.6 Flash через официальный google-generativeai или прямой REST API.
+   - Промпт для Gemini:
+     "Ты — квалификатор B2B-лидов. На входе текст сообщения/карточки.
+      Задача:
+      1. Определи тип: РЕАЛЬНЫЙ СПРОС (клиент ищет услугу) или СПАМ (продавец предлагает услуги / резюме). Если спам — верни ignore: true.
+      2. Извлеки: суть потребности, контактное лицо, название компании, контакты.
+      3. Оцени теплоту лида от 1 до 10."
+3. Модуль обогащения (enricher.py):
+   - По сайту или названию компании находит ИНН, ФИО генерального директора и выручку через API DaData.
+4. Модуль сохранения и уведомлений:
+   - Сохраняет валидных лидов в локальную базу SQLite (leads.db) с защитой от дублей по contact_id/phone/username.
+   - Отправляет горячие лиды (оценка 7+) в Telegram-чат отдела продаж:
+     🔥 НАЙДЕН ЦЕЛЕВОЙ ЛПР (Оценка: {score}/10)
+     🏢 Компания: {company} | ИНН: {inn} (Выручка: {revenue} млн ₽)
+     👤 ЛПР: {director_name} ({position})
+     📞 Контакты: {phone} | {telegram} | {email}
+     💡 Потребность: {need_summary}
+     📍 Источник: {source}
+     [💬 Написать в Telegram]  [📞 Позвонить]
+
+Сделай код чистым, модульным, добавь обработку ошибок сети и подробное логирование. Начни выполнение с анализа окружения и создания структуры проекта.</pre>
+          </div>
+        </section>
+
+        <!-- SECTION 4: QA CHECKLIST -->
+        <section id="qa" style="margin-bottom:48px;">
+          <div class="sec-badge">// РАЗДЕЛ 04 · КОНТРОЛЬ КАЧЕСТВА (QA)</div>
+          <h2 class="sec-title">Чек-лист проверки работоспособности</h2>
+
+          <div class="qa-checklist">
+            <div class="qa-item">
+              <div class="qa-item-box">✓</div>
+              <div>Файл <code>.env</code> заполнен, переменные и API-ключи проверены.</div>
+            </div>
+            <div class="qa-item">
+              <div class="qa-item-box">✓</div>
+              <div>Запущен проверочный скрипт <code>python main.py --source test</code>.</div>
+            </div>
+            <div class="qa-item">
+              <div class="qa-item-box">✓</div>
+              <div>В тестовый чат отправлено сообщение с реальным запросом на услугу.</div>
+            </div>
+            <div class="qa-item">
+              <div class="qa-item-box">✓</div>
+              <div>Gemini за 2 секунды распознал намерение покупки, отсек спам и сформировал карточку.</div>
+            </div>
+            <div class="qa-item">
+              <div class="qa-item-box">✓</div>
+              <div>Менеджеру в Telegram прилетело сообщение с кнопкой перехода в диалог к клиенту.</div>
+            </div>
+            <div class="qa-item">
+              <div class="qa-item-box">✓</div>
+              <div>Контакт сохранен в локальной базе <code>leads.db</code> и Google Таблице.</div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+      <!-- SIDEBAR -->
+      <aside class="solution-sidebar">
+        
+        <!-- Table of Contents -->
+        <div class="sticky-box">
+          <div class="sidebar-nav-title">// НАВИГАЦИЯ ПО ГАЙДУ</div>
+          <ul class="sidebar-links-list">
+            <li><a href="#architecture">1. Архитектура со стрелочками</a></li>
+            <li><a href="#roadmap">2. Пошаговый Roadmap (1–6)</a></li>
+            <li><a href="#prompt">3. Готовый Copy-Paste Промпт</a></li>
+            <li><a href="#qa">4. Чек-лист проверки (QA)</a></li>
+          </ul>
+
+          <div style="border-top:1px solid var(--border); padding-top:20px; margin-top:16px;">
+            <div class="sidebar-nav-title">// ВНЕДРЕНИЕ ПОД КЛЮЧ</div>
+            <p style="font-size:0.86rem; color:#52525b; line-height:1.5; margin:0 0 16px 0;">
+              Нужно настроить и адаптировать этот пайплайн под специфику вашего бизнеса?
+            </p>
+            <a href="https://t.me/Michael_Sage" target="_blank" class="btn-primary" style="display:block; text-align:center; padding:12px; font-size:0.85rem; text-decoration:none; margin-bottom:8px;">Написать Михаилу ↗</a>
+            <a href="/booking" class="btn-secondary" style="display:block; text-align:center; padding:12px; font-size:0.85rem; text-decoration:none;">Забронировать слот ↗</a>
+          </div>
+
+          <div style="border-top:1px solid var(--border); padding-top:16px; margin-top:16px;">
+            <a href="/solutions" style="font-family:var(--mono); font-size:0.8rem; color:#71717a; text-decoration:none; display:flex; align-items:center; gap:6px;">
+              <span>← Все 43 решения Атласа</span>
+            </a>
+          </div>
+        </div>
+
+      </aside>
+
+    </div>
+
+  </div>
+
+  <!-- DIRECT CONTACT SECTION -->
+  <section id="contact" class="form-section" data-nav-title="Связь">
+    <div class="form-inner" style="align-items:center;">
+      <div class="form-left" style="max-width:540px;">
+        <div class="section-tag" style="color:#a1a1aa;">СВЯЗЬ & БРОНИРОВАНИЕ</div>
+        <h2 class="form-title">Получите персональный план и&nbsp;оценку задачи<br>за&nbsp;1&nbsp;день</h2>
+        <p class="form-sub">
+          Напишите, какую задачу нужно решить: запустить сервис, внедрить AI-агентов в&nbsp;отдел, прокачать команду или&nbsp;снять ограничения роста. Отвечу лично и&nbsp;предложу пошаговый план.
+        </p>
+        <div style="margin-top:24px;font-family:var(--mono);font-size:0.88rem;color:#a1a1aa;line-height:1.8;">
+          <div>• Канал в&nbsp;Telegram: <a href="https://t.me/uncrn_sage" target="_blank" style="color:#fff;text-decoration:underline;">@uncrn_sage</a></div>
+        </div>
+      </div>
+
+      <div class="direct-contact-card">
+        <div style="font-family:var(--mono);font-size:0.75rem;color:#34d399;font-weight:600;margin-bottom:4px;letter-spacing:0.04em;">
+          // ПРЯМАЯ СВЯЗЬ БЕЗ ПОСРЕДНИКОВ
+        </div>
+
+        <a href="https://t.me/Michael_Sage" target="_blank" class="btn-primary" style="display:flex;align-items:center;justify-content:center;gap:12px;padding:16px;font-size:0.95rem;background:#ffffff;border-color:#ffffff;color:#09090b;text-decoration:none;font-weight:700;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-2.02 1.28-5.7 3.77-.54.37-1.03.55-1.47.54-.48-.01-1.4-.27-2.09-.49-.84-.27-1.51-.42-1.45-.89.03-.25.38-.51 1.07-.78 4.19-1.82 6.98-3.03 8.37-3.61 3.98-1.66 4.81-1.95 5.35-1.96.12 0 .39.03.56.17.14.12.18.28.2.4.01.07.01.21 0 .36z"/></svg>
+          <span>Написать в&nbsp;Telegram ↗</span>
+        </a>
+
+        <a href="/booking" class="btn-secondary" style="display:flex;align-items:center;justify-content:center;gap:12px;padding:16px;font-size:0.95rem;background:#27272a;border-color:#3f3f46;color:#fff;text-decoration:none;font-weight:600;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><rect x="3" y="4" width="18" height="18"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          <span>Забронировать слот в&nbsp;Календаре ↗</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <strong>ИП Пузырёв Михаил Михайлович</strong> · ИНН 500177901407 · ОГРНИП 318505300123140
+      </div>
+      <ul class="footer-links">
+        <li><a href="/privacy">Политика конфиденциальности</a></li>
+        <li><a href="/terms">Пользовательское соглашение</a></li>
+        <li><a href="https://t.me/uncrn_sage" target="_blank">Telegram</a></li>
+        <li><a href="/booking">Забронировать слот</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/js/auth.js?v=1.2"></script>
+  <script src="/js/main.js"></script>
+  <script>
+    function copyAntigravityPrompt(btn) {
+      const code = document.getElementById('antigravity-prompt-text').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        const originalText = btn.innerHTML;
+        btn.classList.add('copied');
+        btn.innerHTML = '<span>✓ Скопировано в буфер!</span>';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.innerHTML = originalText;
+        }, 3000);
+      }).catch(err => {
+        console.error('Copy failed', err);
+      });
+    }
+  </script>
+</body>
+</html>
