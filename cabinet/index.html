@@ -676,8 +676,8 @@
         <span>📚 База Знаний</span>
       </button>
       <button class="cabinet-tab-btn" onclick="switchCabinetTab('education', this)">
-        <span>🎓 Обучение & Уроки</span>
-        <span class="cabinet-tab-badge">2 курса • 6 записей клуба</span>
+        <span>🎓 Записи & Мастер-классы</span>
+        <span class="cabinet-tab-badge">6 мастер-классов</span>
       </button>
       <button class="cabinet-tab-btn" onclick="switchCabinetTab('club', this)">
         <span>💎 Закрытый Клуб</span>
@@ -815,114 +815,8 @@
     </section>
 
     <!-- ═════════════════════════════════════════════════════════════ -->
-    <!-- TAB 2: EDUCATION & COURSES -->
-    <!-- ═════════════════════════════════════════════════════════════ -->
     <section id="tab-education" class="cabinet-tab-pane">
-      <div style="margin-bottom:24px;">
-        <div style="font-family:var(--mono); font-size:0.8rem; font-weight:700; color:var(--gray); margin-bottom:4px;">
-          // 2 ПРАКТИЧЕСКИХ КУРСА • 5 ИНТЕРАКТИВНЫХ ЛЕКЦИЙ
-        </div>
-        <h2 style="font-size:1.6rem; font-weight:800; margin:0;">Обучение & Видео-уроки</h2>
-        <p style="color:var(--gray); margin-top:6px;">
-          Прикладные обучающие программы Михаила Пузырёва по быстрой разработке сервисов и внедрению автономных ИИ-агентов.
-        </p>
-      </div>
-
-      <!-- Course 1: Vibe Coding -->
-      <div style="background:#ffffff; border:1px solid var(--border); padding:32px; margin-bottom:32px;">
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px; margin-bottom:16px;">
-          <div>
-            <span class="badge-role" style="background:#ecfdf5; color:#047857; border-color:#a7f3d0; margin-bottom:8px;">ОТКРЫТЫЙ КУРС</span>
-            <h3 style="font-size:1.4rem; font-weight:800; margin:4px 0 8px 0;">Vibe Coding: Скоростная разработка продуктов через ИИ</h3>
-            <p style="color:var(--gray); max-width:750px; margin:0; font-size:0.95rem;">
-              Полный алгоритм сборки боевых веб-сервисов, баз данных и связок API за 3–5 дней с помощью инструментов нового поколения (Google Antigravity, Claude Code, Next.js, Supabase).
-            </p>
-          </div>
-          <a href="/education/vibecoding-lecture/" class="btn-primary" style="padding:10px 20px;">Открыть интерактивную лекцию ↗</a>
-        </div>
-
-        <div style="margin-top:20px; border-top:1px solid #f4f4f5; padding-top:16px;">
-          <div style="font-family:var(--mono); font-size:0.75rem; font-weight:700; color:var(--gray); margin-bottom:12px;">ПРОГРАММА ЛЕКЦИИ:</div>
-          
-          <a href="/education/vibecoding-lecture/#part-1" class="lesson-item">
-            <div class="lesson-title-wrap">
-              <span class="lesson-num">01</span>
-              <div>
-                <strong>Смена парадигмы: От написания синтаксиса к оркестрации агентов</strong>
-                <div style="font-size:0.8rem; color:var(--gray);">Как формулировать архитектурные требования и избегать накопления технического долга.</div>
-              </div>
-            </div>
-            <span style="font-family:var(--mono); font-size:0.8rem; color:var(--black);">Изучить ➔</span>
-          </a>
-
-          <a href="/education/vibecoding-lecture/#part-2" class="lesson-item">
-            <div class="lesson-title-wrap">
-              <span class="lesson-num">02</span>
-              <div>
-                <strong>Инженерный стек: Antigravity, Next.js, Supabase, Tailwind, Beget VPS</strong>
-                <div style="font-size:0.8rem; color:var(--gray);">Настройка локального окружения, интеграция MCP-серверов и непрерывный деплой.</div>
-              </div>
-            </div>
-            <span style="font-family:var(--mono); font-size:0.8rem; color:var(--black);">Изучить ➔</span>
-          </a>
-
-          <a href="/education/vibecoding-lecture/#part-3" class="lesson-item">
-            <div class="lesson-title-wrap">
-              <span class="lesson-num">03</span>
-              <div>
-                <strong>Практический разбор: Сборка и релиз рабочего сервиса за 4 часа</strong>
-                <div style="font-size:0.8rem; color:var(--gray);">Пошаговый кейс от пустого репозитория до первых пользователей и приема оплат.</div>
-              </div>
-            </div>
-            <span style="font-family:var(--mono); font-size:0.8rem; color:var(--black);">Изучить ➔</span>
-          </a>
-        </div>
-      </div>
-
-      <!-- Course 2: AI Agents & Automation -->
-      <div style="background:#ffffff; border:1px solid var(--border); padding:32px;">
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px; margin-bottom:16px;">
-          <div>
-            <span class="badge-role" style="background:#eff6ff; color:#1d4ed8; border-color:#bfdbfe; margin-bottom:8px;">ОТКРЫТЫЙ КУРС</span>
-            <h3 style="font-size:1.4rem; font-weight:800; margin:4px 0 8px 0;">Автономные ИИ-Агенты & CRM-Роботизация</h3>
-            <p style="color:var(--gray); max-width:750px; margin:0; font-size:0.95rem;">
-              Автоматизация рутинных процессов бизнеса: распознавание голосовых сообщений из Telegram через Whisper, сквозная передача лидов в Bitrix24/amoCRM и генерация КП без участия менеджера.
-            </p>
-          </div>
-          <a href="/education/automation-lecture/" class="btn-primary" style="padding:10px 20px;">Открыть интерактивную лекцию ↗</a>
-        </div>
-
-        <div style="margin-top:20px; border-top:1px solid #f4f4f5; padding-top:16px;">
-          <div style="font-family:var(--mono); font-size:0.75rem; font-weight:700; color:var(--gray); margin-bottom:12px;">ПРОГРАММА ЛЕКЦИИ:</div>
-          
-          <a href="/education/automation-lecture/#part-1" class="lesson-item">
-            <div class="lesson-title-wrap">
-              <span class="lesson-num">01</span>
-              <div>
-                <strong>Архитектура LLM-конвейера: Парсинг, суммаризация и классификация</strong>
-                <div style="font-size:0.8rem; color:var(--gray);">Как извлечь суть сделки из аудиосообщений и неструктурированных чатов.</div>
-              </div>
-            </div>
-            <span style="font-family:var(--mono); font-size:0.8rem; color:var(--black);">Изучить ➔</span>
-          </a>
-
-          <a href="/education/automation-lecture/#part-2" class="lesson-item">
-            <div class="lesson-title-wrap">
-              <span class="lesson-num">02</span>
-              <div>
-                <strong>Интеграция с Bitrix24 & amoCRM через REST API и Вебхуки</strong>
-                <div style="font-size:0.8rem; color:var(--gray);">Автоматическая постановка задач, фиксация Timeline сделки и генерация счетов.</div>
-              </div>
-            </div>
-            <span style="font-family:var(--mono); font-size:0.8rem; color:var(--black);">Изучить ➔</span>
-          </a>
-        </div>
-      </div>
-
-      <!-- ══════════════════════════════════════════════════════════ -->
-      <!-- SECTION 2: EXCLUSIVE SAGE NEURO FAMILY RECORDINGS & GUIDES -->
-      <!-- ══════════════════════════════════════════════════════════ -->
-      <div class="club-lessons-section">
+      <div class="club-lessons-section" style="margin-top:0;">
         <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px; margin-bottom:20px;">
           <div>
             <div style="font-family:var(--mono); font-size:0.8rem; font-weight:700; color:var(--gray); margin-bottom:4px;">
