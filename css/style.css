@@ -290,14 +290,16 @@ button {
 }
 
 .nav-auth-btn.logged-in {
-  background: #f4f4f5;
-  border-color: #e4e4e7;
+  background: #ffffff;
+  border: 1px solid var(--border);
   color: #18181b;
+  padding: 0 8px;
+  gap: 6px;
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.04);
 }
 
 .nav-auth-btn.logged-in:hover {
-  background: #ffffff;
+  background: #f4f4f5;
   border-color: var(--black);
   color: #18181b;
 }

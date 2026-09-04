@@ -731,15 +731,14 @@ const Auth = {
         const displayName = user.first_name ? (user.first_name + (user.last_name ? ' ' + user.last_name : '')) : (user.username || 'Кабинет');
         const usernameDisplay = user.username ? '@' + user.username : (user.id ? 'ID: ' + user.id : 'Авторизован');
         const avatarHtml = user.photo_url 
-          ? `<img src="${user.photo_url}" alt="${displayName}" class="nav-user-avatar-mini" style="width:20px; height:20px; border-radius:50%; object-fit:cover; border:1px solid rgba(0,0,0,0.15);">`
-          : `<span class="nav-user-avatar-placeholder-mini" style="width:20px; height:20px; border-radius:50%; background:#18181b; color:#fff; font-size:10px; font-weight:700; display:inline-flex; align-items:center; justify-content:center;">${displayName.charAt(0).toUpperCase()}</span>`;
+          ? `<img src="${user.photo_url}" alt="${displayName}" class="nav-user-avatar-mini" style="width:26px; height:26px; border-radius:50%; object-fit:cover; border:1px solid rgba(0,0,0,0.15);">`
+          : `<span class="nav-user-avatar-placeholder-mini" style="width:26px; height:26px; border-radius:50%; background:#18181b; color:#fff; font-size:11px; font-weight:700; display:inline-flex; align-items:center; justify-content:center;">${displayName.charAt(0).toUpperCase()}</span>`;
 
         dropdownWrap.innerHTML = `
-          <button class="nav-auth-btn logged-in" id="nav-user-profile-trigger" aria-haspopup="true" aria-expanded="false" onclick="Auth.toggleUserDropdown(event, this)">
+          <button class="nav-auth-btn logged-in" id="nav-user-profile-trigger" aria-haspopup="true" aria-expanded="false" onclick="Auth.toggleUserDropdown(event, this)" title="${displayName} (${usernameDisplay})">
             ${avatarHtml}
-            <span>${displayName}</span>
-            <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#22c55e; margin-left:2px;" title="Онлайн"></span>
-            <svg class="nav-dropdown-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left:2px; transition:transform 0.2s ease;"><path d="M6 9l6 6 6-6"></path></svg>
+            <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#22c55e;" title="Онлайн"></span>
+            <svg class="nav-dropdown-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="transition:transform 0.2s ease;"><path d="M6 9l6 6 6-6"></path></svg>
           </button>
           <div class="nav-user-dropdown-menu" id="nav-user-dropdown-menu">
             <div class="nav-user-dropdown-header">
@@ -750,9 +749,9 @@ const Auth = {
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
               <span>Личный Кабинет</span>
             </a>
-            <a href="/cabinet?tab=profile" class="nav-user-dropdown-item">
+            <a href="/profile" class="nav-user-dropdown-item">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-              <span>Мой Профиль</span>
+              <span>Настройки Профиля</span>
             </a>
             <div class="nav-user-dropdown-divider"></div>
             <button type="button" onclick="Auth.logout()" class="nav-user-dropdown-item nav-user-dropdown-logout">
