@@ -157,13 +157,13 @@ button {
 
 .nav-links {
   display: flex;
-  gap: clamp(16px, 1.8vw, 28px);
+  gap: clamp(14px, 1.6vw, 24px);
   list-style: none;
   align-items: center;
-  margin-left: auto;
-  margin-right: 0;
+  justify-content: center;
+  margin: 0 auto;
   padding: 0;
-  flex-shrink: 0;
+  flex: 1 1 auto;
 }
 
 .nav-links li {
@@ -216,8 +216,8 @@ button {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 14px;
-  flex-shrink: 0;
+  gap: 10px;
+  flex: 0 0 auto;
   margin-left: 0;
 }
 
@@ -225,22 +225,23 @@ button {
   background: var(--black);
   color: #fff;
   border: 1px solid var(--black);
-  padding: 10px 18px;
+  padding: 0 18px;
+  height: 40px;
+  min-height: 40px;
   font-size: 0.88rem;
   font-weight: 600;
   font-family: var(--font);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   letter-spacing: -0.01em;
   white-space: nowrap;
-  flex-shrink: 0;
-}
-  min-height: 40px;
-  white-space: nowrap;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
   cursor: pointer;
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.06);
+  border-radius: 0;
+  box-sizing: border-box;
 }
 
 .nav-cta:hover {
@@ -250,32 +251,54 @@ button {
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
 }
 
-/* Nav Auth Button (Square Profile Button) */
+/* Nav Auth Button (Square Profile Button matching all platform buttons) */
 .nav-auth-btn {
   height: 40px;
-  padding: 0 14px;
+  min-height: 40px;
+  padding: 0 16px;
   background: #ffffff;
   color: var(--black);
-  border: 1px solid var(--border);
+  border: 1px solid var(--black);
   font-family: var(--font);
   font-size: 0.88rem;
   font-weight: 600;
   letter-spacing: -0.01em;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   cursor: pointer;
   border-radius: 0;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   white-space: nowrap;
-  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.06);
+  text-decoration: none;
+  box-sizing: border-box;
 }
 
 .nav-auth-btn:hover {
+  background: #18181b;
+  color: #ffffff;
+  border-color: #18181b;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+
+.nav-auth-btn:hover svg {
+  stroke: #ffffff;
+}
+
+.nav-auth-btn.logged-in {
   background: #f4f4f5;
+  border-color: #e4e4e7;
+  color: #18181b;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.04);
+}
+
+.nav-auth-btn.logged-in:hover {
+  background: #ffffff;
   border-color: var(--black);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  color: #18181b;
 }
 
 /* Auth Modal Popup */
