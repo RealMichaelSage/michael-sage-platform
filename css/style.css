@@ -5360,8 +5360,8 @@ input[type="reset"],
 
 .club-lesson-lock-overlay {
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 10px;
+  right: 50px;
   background: #09090b;
   color: #fbbf24;
   padding: 3px 8px;
@@ -5373,6 +5373,64 @@ input[type="reset"],
   display: flex;
   align-items: center;
   gap: 4px;
+}
+
+.club-lesson-fav-btn-float {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 34px;
+  height: 34px;
+  background: rgba(9, 9, 11, 0.8);
+  backdrop-filter: blur(8px);
+  color: #a1a1aa;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 4;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 2px;
+}
+.club-lesson-fav-btn-float:hover {
+  background: #09090b;
+  border-color: #fbbf24;
+  color: #fbbf24;
+  transform: scale(1.08);
+}
+.club-lesson-fav-btn-float.active {
+  background: #09090b;
+  border-color: #f59e0b;
+  color: #fbbf24;
+}
+
+.club-lesson-fav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--border);
+  background: #ffffff;
+  color: #71717a;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+  border-radius: 2px;
+}
+.club-lesson-fav-btn:hover {
+  background: #fefce8;
+  border-color: #fbbf24;
+  color: #d97706;
+  transform: scale(1.04);
+}
+.club-lesson-fav-btn.active {
+  background: #fefce8;
+  border-color: #f59e0b;
+  color: #d97706;
 }
 
 .club-lesson-body {

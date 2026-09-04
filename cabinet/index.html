@@ -1287,9 +1287,12 @@
             <div style="font-size:2rem; margin-bottom:12px;">⭐</div>
             <h3 style="font-size:1.2rem; font-weight:700; margin-bottom:8px;">У вас пока нет сохраненных материалов</h3>
             <p style="color:var(--gray); max-width:450px; margin:0 auto 20px auto; font-size:0.9rem;">
-              Перейдите в библиотеку промптов или глоссарий и нажимайте кнопку «⭐ В избранное», чтобы нужные материалы всегда были под рукой.
+              Перейдите в базу знаний, записи мастер-классов или библиотеку промптов и нажимайте кнопку «⭐ В избранное», чтобы нужные материалы всегда были под рукой.
             </p>
-            <a href="/prompts" class="btn-primary" style="padding:10px 20px;">Перейти к библиотеке промптов ↗</a>
+            <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+              <button onclick="switchCabinetTab('education', document.querySelectorAll('.cabinet-tab-btn')[1])" class="btn-primary" style="padding:10px 20px;">Открыть мастер-классы ↗</button>
+              <a href="/prompts" class="btn-secondary" style="padding:10px 20px; background:#ffffff; text-decoration:none;">Библиотека промптов ↗</a>
+            </div>
           </div>
         `;
         return;
@@ -1299,12 +1302,19 @@
       favs.forEach(f => {
         let link = '/prompts';
         let typeLabel = 'ПРОМПТ';
+        let actionBtn = `<a href="${link}" class="btn-primary" style="padding:6px 14px; font-size:0.75rem; text-decoration:none;">Открыть ↗</a>`;
+
         if (f.item_type === 'glossary') {
           link = '/glossary#' + f.item_id;
           typeLabel = 'ТЕРМИН ГЛОССАРИЯ';
+          actionBtn = `<a href="${link}" class="btn-primary" style="padding:6px 14px; font-size:0.75rem; text-decoration:none;">Открыть ↗</a>`;
         } else if (f.item_type === 'guide') {
           link = '/google-one-guide';
           typeLabel = 'РУКОВОДСТВО';
+          actionBtn = `<a href="${link}" class="btn-primary" style="padding:6px 14px; font-size:0.75rem; text-decoration:none;">Открыть ↗</a>`;
+        } else if (f.item_type === 'lesson' || f.item_type === 'club_lesson') {
+          typeLabel = '🎓 ЗАПИСЬ // SAGE FAMILY';
+          actionBtn = `<button onclick="openClubLessonFromFav('${f.item_id}')" class="btn-primary" style="padding:6px 14px; font-size:0.75rem; cursor:pointer; display:inline-flex; align-items:center; gap:4px;"><span>▶</span> Смотреть запись</button>`;
         }
 
         html += `
@@ -1315,8 +1325,8 @@
               ${f.item_meta && f.item_meta.desc ? f.item_meta.desc : 'Сохранено в избранное'}
             </p>
             <div class="cabinet-card-actions">
-              <a href="${link}" class="btn-primary" style="padding:6px 14px; font-size:0.75rem;">Открыть ↗</a>
-              <button onclick="removeFavorite('${f.item_type}', '${f.item_id}')" class="btn-secondary" style="padding:6px 10px; font-size:0.75rem; border:none; color:#ef4444;">
+              ${actionBtn}
+              <button onclick="removeFavorite('${f.item_type}', '${f.item_id}')" class="btn-secondary" style="padding:6px 10px; font-size:0.75rem; border:none; color:#ef4444; cursor:pointer;">
                 ✕ Удалить
               </button>
             </div>
@@ -1330,6 +1340,17 @@
     function removeFavorite(type, id) {
       Auth.toggleFavorite(type, id, '');
       renderFavorites();
+      renderClubLessons();
+    }
+
+    function openClubLessonFromFav(lessonId) {
+      const tabBtns = document.querySelectorAll('.cabinet-tab-btn');
+      if (tabBtns && tabBtns[1]) {
+        switchCabinetTab('education', tabBtns[1]);
+      }
+      setTimeout(() => {
+        openClubVideo(lessonId);
+      }, 150);
     }
 
     // ═════════════════════════════════════════════════════════════
@@ -1479,6 +1500,7 @@
       // Render Cards Grid
       let html = '';
       CLUB_LESSONS_DATA.forEach(l => {
+        const isFav = Auth.isFavorite('lesson', l.id);
         const topicsHtml = l.topics.map(t => `<span class="club-lesson-topic-chip">${t}</span>`).join('');
         
         let actionBtnHtml = '';
@@ -1489,17 +1511,23 @@
             actionBtnHtml = `<a href="${l.docUrl}" target="_blank" class="btn-primary" style="padding:9px 16px; font-size:0.82rem; width:100%; text-align:center; justify-content:center; text-decoration:none;">📄 Открыть туториал (Google Docs) ↗</a>`;
           }
         } else {
-          actionBtnHtml = `<button onclick="promptJoinClub('${l.title}')" class="btn-secondary" style="padding:9px 14px; font-size:0.82rem; width:100%; text-align:center; justify-content:center; background:#fafafa; color:#52525b; border:1px dashed #d4d4d8; cursor:pointer; font-weight:600;">🔒 Доступно в SAGE Neuro Family ↗</button>`;
+          actionBtnHtml = `<button onclick="promptJoinClub('${l.title.replace(/'/g, "\\'")}')" class="btn-secondary" style="padding:9px 14px; font-size:0.82rem; width:100%; text-align:center; justify-content:center; background:#fafafa; color:#52525b; border:1px dashed #d4d4d8; cursor:pointer; font-weight:600;">🔒 Доступно в SAGE Neuro Family ↗</button>`;
         }
 
         const lockBadgeHtml = !hasAccess ? `<div class="club-lesson-lock-overlay">🔒 Для резидентов</div>` : '';
 
         html += `
-          <div class="club-lesson-card">
+          <div class="club-lesson-card" id="card-${l.id}">
             <div class="club-lesson-cover-wrap">
               <img src="${l.cover}" alt="${l.title}" loading="lazy">
               <div class="club-lesson-badge-overlay">${l.badge}</div>
               ${lockBadgeHtml}
+              <button class="club-lesson-fav-btn-float ${isFav ? 'active' : ''}" 
+                      onclick="toggleClubLessonFavorite(event, '${l.id}')" 
+                      title="${isFav ? 'Удалить из избранного' : 'Добавить в избранное'}" 
+                      aria-label="В избранное">
+                ${isFav ? '⭐' : '☆'}
+              </button>
             </div>
             <div class="club-lesson-body">
               <div class="club-lesson-meta">
@@ -1513,13 +1541,57 @@
               </div>
             </div>
             <div class="club-lesson-footer">
-              ${actionBtnHtml}
+              <div style="display:flex; gap:8px; width:100%; align-items:center;">
+                <div style="flex:1;">
+                  ${actionBtnHtml}
+                </div>
+                <button class="club-lesson-fav-btn ${isFav ? 'active' : ''}" 
+                        onclick="toggleClubLessonFavorite(event, '${l.id}')" 
+                        title="${isFav ? 'Удалить из избранного' : 'Добавить в избранное'}" 
+                        aria-label="В избранное">
+                  ${isFav ? '⭐' : '☆'}
+                </button>
+              </div>
             </div>
           </div>
         `;
       });
 
       grid.innerHTML = html;
+    }
+
+    function toggleClubLessonFavorite(e, lessonId) {
+      if (e) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+      const lesson = CLUB_LESSONS_DATA.find(l => l.id === lessonId);
+      if (!lesson) return;
+
+      const added = Auth.toggleFavorite('lesson', lessonId, lesson.title, {
+        desc: lesson.description,
+        badge: lesson.badge,
+        date: lesson.date,
+        duration: lesson.duration,
+        cover: lesson.cover
+      });
+
+      renderClubLessons();
+      renderFavorites();
+
+      if (typeof Auth.showToast === 'function') {
+        Auth.showToast(added ? `⭐ «${lesson.title}» добавлен в Избранное!` : `Урок «${lesson.title}» удален из Избранного`, 'success');
+      }
+    }
+
+    function updateModalFavBtn(lessonId) {
+      const btn = document.getElementById('modal-fav-btn');
+      if (!btn) return;
+      const isFav = Auth.isFavorite('lesson', lessonId);
+      btn.style.background = isFav ? 'rgba(251, 191, 36, 0.15)' : 'rgba(255,255,255,0.08)';
+      btn.style.color = isFav ? '#fbbf24' : '#ffffff';
+      btn.style.borderColor = isFav ? '#fbbf24' : 'rgba(255,255,255,0.2)';
+      btn.innerHTML = isFav ? '⭐ В избранном' : '☆ В избранное';
     }
 
     function promptJoinClub(lessonTitle) {
@@ -1544,6 +1616,8 @@
       if (!lesson || !lesson.embedUrl) return;
       currentVideoLessonId = lessonId;
 
+      const isFav = Auth.isFavorite('lesson', lessonId);
+
       const existing = document.getElementById('club-video-modal');
       if (existing) existing.remove();
 
@@ -1562,7 +1636,7 @@
       modal.innerHTML = `
         <div class="guide-modal-content" style="max-width:980px; width:100%; background:#09090b; border:1px solid #27272a;">
           <div class="guide-modal-header" style="background:#18181b; border-bottom:1px solid #27272a; padding:16px 20px;">
-            <div style="display:flex; flex-direction:column; gap:4px; max-width:85%;">
+            <div style="display:flex; flex-direction:column; gap:4px; max-width:75%;">
               <div style="font-family:var(--mono); font-size:0.72rem; color:#10b981; font-weight:700; letter-spacing:0.04em;">
                 ${lesson.badge || 'ВИДЕО-УРОК // SAGE NEURO FAMILY'} · ${lesson.duration}
               </div>
@@ -1570,7 +1644,14 @@
                 ${lesson.title}
               </h3>
             </div>
-            <button class="guide-modal-close-btn" onclick="closeClubVideoModal()" aria-label="Закрыть плеер">✕</button>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <button id="modal-fav-btn" 
+                      onclick="toggleClubLessonFavorite(event, '${lesson.id}'); updateModalFavBtn('${lesson.id}');"
+                      style="background:${isFav ? 'rgba(251, 191, 36, 0.15)' : 'rgba(255,255,255,0.08)'}; color:${isFav ? '#fbbf24' : '#ffffff'}; border:1px solid ${isFav ? '#fbbf24' : 'rgba(255,255,255,0.2)'}; padding:6px 12px; font-family:var(--mono); font-size:0.75rem; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:5px; border-radius:2px;">
+                ${isFav ? '⭐ В избранном' : '☆ В избранное'}
+              </button>
+              <button class="guide-modal-close-btn" onclick="closeClubVideoModal()" aria-label="Закрыть плеер">✕</button>
+            </div>
           </div>
 
           <div style="position:relative; width:100%; padding-top:56.25%; background:#000000;">
