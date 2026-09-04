@@ -506,8 +506,6 @@
         <span>⚡️ КОНТУР 01 · МАРКЕТИНГ & ЛИДОГЕНЕРАЦИЯ</span>
         <span>·</span>
         <span>РЕШЕНИЕ #02</span>
-        <span>·</span>
-        <span style="color:#09090b; font-weight:700;">🔒 ТОЛЬКО ДЛЯ РЕЗИДЕНТОВ КЛУБА</span>
       </div>
 
       <h1 class="solution-title">
@@ -545,31 +543,6 @@
 
     <!-- BODY LAYOUT -->
     <div class="solution-body">
-      
-      <!-- RESIDENT ACCESS RESTRICTION GATE (SHOWN FOR NON-RESIDENTS) -->
-      <div id="resident-access-gate" style="display:none; grid-column:1/-1; background:#ffffff; border:2px solid #09090b; padding:clamp(36px, 5vw, 64px) clamp(20px, 4vw, 40px); text-align:center;">
-        <div style="display:inline-block; padding:4px 10px; background:#09090b; color:#ffffff; font-family:var(--mono); font-size:0.75rem; font-weight:700; margin-bottom:16px;">
-          // ЗАКРЫТАЯ БАЗА ЗНАНИЙ · SAGE NEURO FAMILY
-        </div>
-        <h2 style="font-size:clamp(1.5rem, 3vw, 2.1rem); font-weight:800; color:#09090b; letter-spacing:-0.02em; margin:0 0 16px 0;">
-          Данный гайд доступен только в Личном Кабинете для резидентов Клуба
-        </h2>
-        <p style="color:#52525b; font-size:1rem; line-height:1.65; max-width:680px; margin:0 auto 32px auto;">
-          Пошаговое руководство, архитектура со стрелочками, сборка модулей <code>scrapers/</code> на Python и полный Copy-Paste промпт для Google Antigravity размещены в закрытой Базе Знаний Личного Кабинета.
-        </p>
-        <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap;">
-          <button type="button" onclick="Auth.openModal('Данный гайд доступен только в базе знаний личного кабинета для резидентов клуба.', 'Доступен только в личном кабинете')" class="btn-primary" style="padding:14px 28px; font-size:0.9rem; cursor:pointer;">
-            Войти через Telegram ↗
-          </button>
-          <a href="/cabinet?tab=club" class="btn-secondary" style="padding:14px 28px; font-size:0.9rem; text-decoration:none;">
-            Вступить в Закрытый Клуб [PRO] ↗
-          </a>
-          <a href="/solutions" class="btn-secondary" style="padding:14px 28px; font-size:0.9rem; text-decoration:none;">
-            ← Все решения для бизнеса
-          </a>
-        </div>
-      </div>
-
       <!-- MAIN ARTICLE CONTENT -->
       <main class="solution-main-content">
         
@@ -877,30 +850,6 @@ source venv/bin/activate</pre>
   <script src="/js/auth.js?v=1.2"></script>
   <script src="/js/main.js"></script>
   <script>
-    function checkResidentAccess() {
-      const isResident = typeof Auth !== 'undefined' && Auth.hasClubAccess();
-      const gate = document.getElementById('resident-access-gate');
-      const mainContent = document.querySelector('.solution-main-content');
-      const sidebar = document.querySelector('.solution-sidebar');
-
-      if (!isResident) {
-        if (gate) gate.style.display = 'block';
-        if (mainContent) mainContent.style.display = 'none';
-        if (sidebar) sidebar.style.display = 'none';
-      } else {
-        if (gate) gate.style.display = 'none';
-        if (mainContent) mainContent.style.display = 'block';
-        if (sidebar) sidebar.style.display = 'flex';
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      checkResidentAccess();
-    });
-
-    window.addEventListener('asage_auth_changed', () => {
-      checkResidentAccess();
-    });
 
     function copyAntigravityPrompt(btn) {
       const code = document.getElementById('antigravity-prompt-text').innerText;
