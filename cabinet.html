@@ -677,7 +677,7 @@
       </button>
       <button class="cabinet-tab-btn" onclick="switchCabinetTab('education', this)">
         <span>🎓 Обучение & Уроки</span>
-        <span class="cabinet-tab-badge">2 курса</span>
+        <span class="cabinet-tab-badge">2 курса • 10 записей клуба</span>
       </button>
       <button class="cabinet-tab-btn" onclick="switchCabinetTab('club', this)">
         <span>💎 Закрытый Клуб</span>
@@ -917,6 +917,32 @@
             <span style="font-family:var(--mono); font-size:0.8rem; color:var(--black);">Изучить ➔</span>
           </a>
         </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════════════ -->
+      <!-- SECTION 2: EXCLUSIVE SAGE NEURO FAMILY RECORDINGS & GUIDES -->
+      <!-- ══════════════════════════════════════════════════════════ -->
+      <div class="club-lessons-section">
+        <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px; margin-bottom:20px;">
+          <div>
+            <div style="font-family:var(--mono); font-size:0.8rem; font-weight:700; color:var(--gray); margin-bottom:4px;">
+              // ЗАКРЫТЫЕ МАТЕРИАЛЫ КЛУБА • 10 ЗАКРЫТЫХ УРОКОВ & ШПАРГАЛОК
+            </div>
+            <h2 style="font-size:1.6rem; font-weight:800; margin:0; letter-spacing:-0.02em;">
+              Записи & Мастер-классы SAGE Neuro Family
+            </h2>
+            <p style="color:var(--gray); margin-top:6px; max-width:780px; font-size:0.95rem;">
+              Эксклюзивный архив видеозаписей, практических воркшопов, закрытых туториалов и инженерных шпаргалок из закрытого Telegram-чата сообщества. Доступно только для резидентов клуба по подписке.
+            </p>
+          </div>
+          <div id="club-lessons-status-pill"></div>
+        </div>
+
+        <!-- Dynamic Access Notice Banner -->
+        <div id="club-lessons-access-banner"></div>
+
+        <!-- Grid of 10 Club Lessons -->
+        <div class="club-lessons-grid" id="club-lessons-grid"></div>
       </div>
     </section>
 
@@ -1412,13 +1438,506 @@
       renderFavorites();
     }
 
+    // ═════════════════════════════════════════════════════════════
+    // SAGE NEURO FAMILY // CLUB LESSONS DATA & RENDERING
+    // ═════════════════════════════════════════════════════════════
+    const CLUB_LESSONS_DATA = [
+      {
+        id: 'lesson-969',
+        title: 'SKILLS: Навыки в нейронных сетях. Настраиваем агентов',
+        badge: 'МАСТЕР-КЛАСС // КЛУБ',
+        type: 'video',
+        platform: 'Kinescope',
+        videoUrl: 'https://kinescope.io/ooYCG6pSQoMx28ikQiXbCp/pliG4cRv',
+        cover: '/assets/club-lessons/lesson_media_969.jpg',
+        date: '22 июня 2026',
+        duration: '1ч 45мин',
+        description: 'Архитектура кастомных навыков (skills) для LLM-агентов. Как проектировать системные промпты, связывать инструменты через MCP и исключать галлюцинации моделей в проде.',
+        topics: ['AI-Агенты', 'Промпт-инжиниринг', 'MCP-серверы', 'Контекст']
+      },
+      {
+        id: 'lesson-764',
+        title: 'Как создавать сайты с помощью нейросетей. Обзор Stitch',
+        badge: 'ВИДЕО-УРОК // STITCH',
+        type: 'video',
+        platform: 'Kinescope',
+        videoUrl: 'https://kinescope.io/6caXdYNxSMZWduyUB6ChQM/pljpPBB6',
+        cover: '/assets/club-lessons/lesson_media_764.jpg',
+        date: '29 апреля 2026',
+        duration: '1ч 12мин',
+        description: 'Пошаговый пайплайн генерации веб-интерфейсов и адаптивных дизайн-систем через Google Stitch MCP. Экспорт чистого Tailwind/HTML и быстрая посадка на хостинг.',
+        topics: ['Google Stitch', 'Vibe Coding', 'UI/UX', 'Tailwind']
+      },
+      {
+        id: 'lesson-619',
+        title: 'Как создавать нейро-фотосессии: FLOW. Разбор инструмента',
+        badge: 'МАСТЕР-КЛАСС // FLOW',
+        type: 'video',
+        platform: 'Kinescope',
+        videoUrl: 'https://kinescope.io/qNU4ub4VBQCmSHLhpeGSt9/plOoNiik',
+        cover: '/assets/club-lessons/lesson_media_619.jpg',
+        date: '6 апреля 2026',
+        duration: '54 мин',
+        description: 'Полноценный разбор генератора FLOW для создания реалистичных коммерческих фотосессий, лукбуков для брендов и сохранения внешности моделей.',
+        topics: ['FLOW', 'Нейрофото', 'Face Lock', 'Промпты']
+      },
+      {
+        id: 'lesson-615',
+        title: 'NotebookLM: Полный разбор всех возможностей',
+        badge: 'ВИДЕО-УРОК // NOTEBOOKLM',
+        type: 'video',
+        platform: 'Kinescope',
+        videoUrl: 'https://kinescope.io/snmkLPhNSqQQqWhMhCsSFF/pld6Hc5o',
+        cover: '/assets/club-lessons/lesson_media_615.jpg',
+        date: '6 апреля 2026',
+        duration: '1ч 20мин',
+        description: 'Глубокое погружение в Google NotebookLM: работа с базой знаний из сотен документов, генерация глубоких аудио-подкастов и извлечение инсайтов из PDF.',
+        topics: ['NotebookLM', 'База Знаний', 'RAG', 'Аудио-обзоры']
+      },
+      {
+        id: 'lesson-546',
+        title: 'Мастер-класс «Создание Нейро-Подкастов»',
+        badge: 'МАСТЕР-КЛАСС // ПОДКАСТЫ',
+        type: 'video',
+        platform: 'VK Video',
+        videoUrl: 'https://vk.com/video708436546_456239175?list=ln-OazFwvzG9xkf9G1n2A',
+        cover: '/assets/club-lessons/lesson_media_546.jpg',
+        date: '25 марта 2026',
+        duration: '1ч 35мин',
+        description: 'Полный цикл производства аудио и видео-подкастов с помощью генеративных нейросетей: от сценария и структуры выпуска до клонирования голоса и сведения.',
+        topics: ['Подкасты', 'Голосовые модели', 'Сценарии', 'ElevenLabs']
+      },
+      {
+        id: 'lesson-393',
+        title: 'Туториал «Как делать подкасты» (Документ & Чеклисты)',
+        badge: 'ИНСТРУКЦИЯ // ДОКУМЕНТ',
+        type: 'doc',
+        platform: 'Google Docs',
+        docUrl: 'https://docs.google.com/document/d/1GaFTye_FK8_rmQEv-lT4igF6o6tTJZyKf3LWIaD8PGA/edit?tab=t.vu8r95x1iq3u#heading=h.i8gzl06n893l',
+        cover: '/assets/club-lessons/lesson_media_393.jpg',
+        date: '9 марта 2026',
+        duration: 'Мануал • 15 стр.',
+        description: 'Пошаговый инженерный документ с шаблонами сценариев, чеклистом контроля качества аудио, правилами монтажа и таймкодами для автоматизации.',
+        topics: ['Google Docs', 'Инструкция', 'Пайплайн', 'Чеклисты']
+      },
+      {
+        id: 'lesson-332',
+        title: 'Мастер-класс «Промпт-дизайн и создание ассистентов»',
+        badge: 'МАСТЕР-КЛАСС // АССИСТЕНТЫ',
+        type: 'video',
+        platform: 'Kinescope',
+        videoUrl: 'https://kinescope.io/0uEaDKVHDdqLmAj7krZ4Jd/plO41fqw',
+        cover: '/assets/club-lessons/lesson_media_332.jpg',
+        date: '1 марта 2026',
+        duration: '1ч 40мин',
+        description: 'Системный фреймворк создания надёжных промптов, ролевых моделей (GRACEF) и проектирования контекстных окон для цифровых ассистентов бизнеса.',
+        topics: ['Промпт-дизайн', 'GRACEF', 'Ассистенты', 'Системный промпт']
+      },
+      {
+        id: 'lesson-777',
+        title: 'Полный гид по ракурсам: от теории до промптов',
+        badge: 'ШПАРГАЛКА // 20 РАКУРСОВ',
+        type: 'guide_angles',
+        cover: '/assets/club-lessons/lesson_media_777.jpg',
+        date: '1 мая 2026',
+        duration: '20 схем с промптами',
+        description: 'Фундаментальная шпаргалка по всем ракурсам (горизонтальные, вертикальные, кинематографичные: Full Face, 3/4, Low Angle, Dutch Angle, POV) с готовыми копируемыми промптами.',
+        topics: ['Ракурсы', 'Midjourney', 'DALL-E 3', 'Кинематография']
+      },
+      {
+        id: 'lesson-137',
+        title: 'Шпаргалка по свету для генераторов фото и видео',
+        badge: 'ШПАРГАЛКА // 20 СХЕМ СВЕТА',
+        type: 'guide_lighting',
+        cover: '/assets/club-lessons/lesson_media_137.jpg',
+        date: '16 февраля 2026',
+        duration: '20 видов освещения',
+        description: '20 видов кинематографичного света (Golden Hour, Blue Hour, Low-Key, Soft Ambient, Rim Light, Spotlight) с промптами для реализма без «эффекта нейросети».',
+        topics: ['Свет', 'Cinema Light', 'Промпты', 'Реализм']
+      },
+      {
+        id: 'lesson-83',
+        title: 'Мастер-класс «Как создавать нейро-фотосессии»',
+        badge: 'МАСТЕР-КЛАСС // НЕЙРОФОТО',
+        type: 'video',
+        platform: 'Kinescope',
+        videoUrl: 'https://kinescope.io/pQrVubsiwzmXJSRgkZRxoM',
+        cover: '/assets/club-lessons/lesson_media_83.jpg',
+        date: '9 февраля 2026',
+        duration: '1ч 50мин',
+        description: 'Фундаментальный вебинар по сохранению консистентности лица персонажа (Face Consistency), контролю поз и созданию серийных коммерческих фото.',
+        topics: ['Нейрофото', 'Kinescope', 'Консистентность', 'Коммерция']
+      }
+    ];
+
+    function renderClubLessons() {
+      const grid = document.getElementById('club-lessons-grid');
+      const banner = document.getElementById('club-lessons-access-banner');
+      const pill = document.getElementById('club-lessons-status-pill');
+      if (!grid) return;
+
+      const hasAccess = Auth.hasClubAccess();
+
+      // Render Status Pill
+      if (pill) {
+        if (hasAccess) {
+          pill.innerHTML = `<span class="badge-role" style="background:#ecfdf5; color:#047857; border-color:#a7f3d0; font-weight:700;">💎 ДОСТУП РЕЗИДЕНТА АКТИВЕН</span>`;
+        } else {
+          pill.innerHTML = `<span class="badge-role" style="background:#fef2f2; color:#dc2626; border-color:#fecaca; font-weight:700;">🔒 ДОСТУП ЗАКРЫТ</span>`;
+        }
+      }
+
+      // Render Banner
+      if (banner) {
+        if (hasAccess) {
+          banner.innerHTML = `
+            <div class="club-access-status-banner unlocked">
+              <div class="banner-info">
+                <div class="banner-icon">💎</div>
+                <div class="banner-text">
+                  <strong>Доступ резидента сообщества активен // SAGE Neuro Family</strong>
+                  <span>Вам открыт неограниченный просмотр всех 10 закрытых записей, видеоуроков и интерактивных шпаргалок.</span>
+                </div>
+              </div>
+              <div>
+                <a href="https://t.me/c/3802053746/82" target="_blank" class="btn-secondary" style="padding:9px 18px; font-size:0.82rem; background:#ffffff; font-weight:600; text-decoration:none;">Тема чата в Telegram ↗</a>
+              </div>
+            </div>
+          `;
+        } else {
+          banner.innerHTML = `
+            <div class="club-access-status-banner locked">
+              <div class="banner-info">
+                <div class="banner-icon">🔒</div>
+                <div class="banner-text">
+                  <strong>Материалы доступны только резидентам клуба SAGE Neuro Family</strong>
+                  <span>Эксклюзивные записи живых воркшопов, детальные туториалы и закрытые шпаргалки доступны участникам клуба по подписке (1 500 ₽/мес).</span>
+                </div>
+              </div>
+              <div>
+                <button onclick="switchCabinetTab('club', document.querySelectorAll('.cabinet-tab-btn')[2])" class="btn-primary" style="background:#ffffff; color:#09090b; border-color:#ffffff; padding:11px 20px; font-size:0.84rem; font-weight:700; font-family:var(--mono);">
+                  Вступить в Клуб (1 500 ₽/мес) ↗
+                </button>
+              </div>
+            </div>
+          `;
+        }
+      }
+
+      // Render Cards Grid
+      let html = '';
+      CLUB_LESSONS_DATA.forEach(l => {
+        const topicsHtml = l.topics.map(t => `<span class="club-lesson-topic-chip">${t}</span>`).join('');
+        
+        let actionBtnHtml = '';
+        if (hasAccess) {
+          if (l.type === 'video') {
+            actionBtnHtml = `<a href="${l.videoUrl}" target="_blank" class="btn-primary" style="padding:9px 16px; font-size:0.82rem; width:100%; text-align:center; justify-content:center; text-decoration:none;">▶ Смотреть запись (${l.platform}) ↗</a>`;
+          } else if (l.type === 'doc') {
+            actionBtnHtml = `<a href="${l.docUrl}" target="_blank" class="btn-primary" style="padding:9px 16px; font-size:0.82rem; width:100%; text-align:center; justify-content:center; text-decoration:none;">📄 Открыть туториал (Google Docs) ↗</a>`;
+          } else if (l.type === 'guide_angles') {
+            actionBtnHtml = `<button onclick="openAnglesGuideModal()" class="btn-primary" style="padding:9px 16px; font-size:0.82rem; width:100%; text-align:center; justify-content:center; cursor:pointer;">📋 Открыть шпаргалку по ракурсам</button>`;
+          } else if (l.type === 'guide_lighting') {
+            actionBtnHtml = `<button onclick="openLightingGuideModal()" class="btn-primary" style="padding:9px 16px; font-size:0.82rem; width:100%; text-align:center; justify-content:center; cursor:pointer;">📋 Открыть шпаргалку по свету</button>`;
+          }
+        } else {
+          actionBtnHtml = `<button onclick="promptJoinClub('${l.title}')" class="btn-secondary" style="padding:9px 14px; font-size:0.82rem; width:100%; text-align:center; justify-content:center; background:#fafafa; color:#52525b; border:1px dashed #d4d4d8; cursor:pointer; font-weight:600;">🔒 Доступно в SAGE Neuro Family ↗</button>`;
+        }
+
+        const lockBadgeHtml = !hasAccess ? `<div class="club-lesson-lock-overlay">🔒 Для резидентов</div>` : '';
+
+        html += `
+          <div class="club-lesson-card">
+            <div class="club-lesson-cover-wrap">
+              <img src="${l.cover}" alt="${l.title}" loading="lazy">
+              <div class="club-lesson-badge-overlay">${l.badge}</div>
+              ${lockBadgeHtml}
+            </div>
+            <div class="club-lesson-body">
+              <div class="club-lesson-meta">
+                <span>🗓 ${l.date}</span>
+                <span>⏱ ${l.duration}</span>
+              </div>
+              <h3 class="club-lesson-title">${l.title}</h3>
+              <p class="club-lesson-desc">${l.description}</p>
+              <div class="club-lesson-topics">
+                ${topicsHtml}
+              </div>
+              <div class="club-lesson-footer">
+                ${actionBtnHtml}
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      grid.innerHTML = html;
+    }
+
+    function promptJoinClub(lessonTitle) {
+      if (!Auth.isLoggedIn()) {
+        Auth.openModal();
+        return;
+      }
+      switchCabinetTab('club', document.querySelectorAll('.cabinet-tab-btn')[2]);
+      window.scrollTo({ top: 350, behavior: 'smooth' });
+    }
+
+    // Guide Modals
+    function openAnglesGuideModal() {
+      if (!Auth.hasClubAccess()) {
+        promptJoinClub('Гид по ракурсам');
+        return;
+      }
+      const existing = document.getElementById('guide-angles-modal');
+      if (existing) existing.remove();
+
+      const modal = document.createElement('div');
+      modal.id = 'guide-angles-modal';
+      modal.className = 'guide-modal-overlay';
+      modal.onclick = (e) => { if (e.target === modal) closeGuideModal('guide-angles-modal'); };
+
+      modal.innerHTML = `
+        <div class="guide-modal-content">
+          <div class="guide-modal-header">
+            <h3>📸 Полный гид по ракурсам (20 схем)</h3>
+            <button class="guide-modal-close-btn" onclick="closeGuideModal('guide-angles-modal')">✕</button>
+          </div>
+          <div class="guide-modal-body">
+            <div style="font-family:var(--mono); font-size:0.8rem; font-weight:700; color:var(--gray); margin-bottom:12px;">// 1. ГОРИЗОНТАЛЬНЫЕ РАКУРСЫ (ПОВОРОТ ОБЪЕКТА)</div>
+            
+            <div class="guide-item-row">
+              <div class="guide-item-info">
+                <strong>Анфас (Full Face) — Прямой взгляд, идеальная симметрия</strong>
+                <div class="guide-prompt-code">front view, looking at camera, symmetrical face</div>
+              </div>
+              <button class="guide-copy-btn" onclick="copyGuidePrompt('front view, looking at camera, symmetrical face', this)">Копировать</button>
+            </div>
+
+            <div class="guide-item-row">
+              <div class="guide-item-info">
+                <strong>Три четверти (3/4 View) — Поворот на 45°, объем и глубина</strong>
+                <div class="guide-prompt-code">three-quarter view, 45 degree turn, depth of field</div>
+              </div>
+              <button class="guide-copy-btn" onclick="copyGuidePrompt('three-quarter view, 45 degree turn, depth of field', this)">Копировать</button>
+            </div>
+
+            <div class="guide-item-row">
+              <div class="guide-item-info">
+                <strong>Профиль (Profile) — Строго боком, акцент на силуэте</strong>
+                <div class="guide-prompt-code">side view, profile shot, silhouette focus</div>
+              </div>
+              <button class="guide-copy-btn" onclick="copyGuidePrompt('side view, profile shot, silhouette focus', this)">Копировать</button>
+            </div>
+
+            <div class="guide-item-row">
+              <div class="guide-item-info">
+                <strong>Полуанфас (Semi-profile) — Между 3/4 и профилем, скулы</strong>
+                <div class="guide-prompt-code">semi-profile, subtle head turn, highlighting cheekbones</div>
+              </div>
+              <button class="guide-copy-btn" onclick="copyGuidePrompt('semi-profile, subtle head turn, highlighting cheekbones', this)">Копировать</button>
+            </div>
+
+            <div class="guide-item-row">
+              <div class="guide-item-info">
+                <strong>Со спины (Back View) — Загадочность и эффект присутствия</strong>
+                <div class="guide-prompt-code">view from behind, back to camera, mysterious mood</div>
+              </div>
+              <button class="guide-copy-btn" onclick="copyGuidePrompt('view from behind, back to camera, mysterious mood', this)">Копировать</button>
+            </div>
+
+            <div style="font-family:var(--mono); font-size:0.8rem; font-weight:700; color:var(--gray); margin:20px 0 12px 0;">// 2. ВЕРТИКАЛЬНЫЕ РАКУРСЫ (ТОЧКА СЪЕМКИ)</div>
+
+            <div class="guide-item-row">
+              <div class="guide-item-info">
+                <strong>Уровень глаз (Eye Level) — Нейтрально и естественно</strong>
+                <div class="guide-prompt-code">eye-level shot, natural perspective, direct gaze</div>
+              </div>
+              <button class="guide-copy-btn" onclick="copyGuidePrompt('eye-level shot, natural perspective, direct gaze', this)">Копировать</button>
+            </div>
+
+            <div class="guide-item-row">
+              <div class="guide-item-info">
+                <strong>Нижний ракурс (Low Angle) — Властный, монументальный ракурс снизу</strong>
+                <div class="guide-prompt-code">low angle shot, looking up at person, heroic perspective</div>
+              </div>
+              <button class="guide-copy-btn" onclick="copyGuidePrompt('low angle shot, looking up at person, heroic perspective', this)">Копировать</button>
+            </div>
+
+            <div class="guide-item-row">
+              <div class="guide-item-info">
+                <strong>Верхний ракурс (High Angle) — Взгляд сверху, уязвимость</strong>
+                <div class="guide-prompt-code">high angle shot, looking down at subject, emotional vulnerability</div>
+              </div>
+              <button class="guide-copy-btn" onclick="copyGuidePrompt('high angle shot, looking down at subject, emotional vulnerability', this)">Копировать</button>
+            </div>
+
+            <div class="guide-item-row">
+              <div class="guide-item-info">
+                <strong>Птичий полет (Bird\'s Eye) — Вид строго сверху (Top-down)</strong>
+                <div class="guide-prompt-code">bird\'s eye view, top-down perspective, high altitude shot</div>
+              </div>
+              <button class="guide-copy-btn" onclick="copyGuidePrompt('bird\\'s eye view, top-down perspective, high altitude shot', this)">Копировать</button>
+            </div>
+
+            <div class="guide-item-row">
+              <div class="guide-item-info">
+                <strong>Лягушачий ракурс (Worm\'s Eye) — Экстремальный ракурс от самой земли</strong>
+                <div class="guide-prompt-code">worm\'s eye view, ground level photography, extreme perspective</div>
+              </div>
+              <button class="guide-copy-btn" onclick="copyGuidePrompt('worm\\'s eye view, ground level photography, extreme perspective', this)">Копировать</button>
+            </div>
+
+            <div style="font-family:var(--mono); font-size:0.8rem; font-weight:700; color:var(--gray); margin:20px 0 12px 0;">// 3. КРЕАТИВ & КИНЕМАТОГРАФИЧНОСТЬ</div>
+
+            <div class="guide-item-row">
+              <div class="guide-item-info">
+                <strong>Голландский угол (Dutch Angle) — Заваленный горизонт, динамика</strong>
+                <div class="guide-prompt-code">dutch angle shot, tilted horizon, cinematic tension</div>
+              </div>
+              <button class="guide-copy-btn" onclick="copyGuidePrompt('dutch angle shot, tilted horizon, cinematic tension', this)">Копировать</button>
+            </div>
+
+            <div class="guide-item-row">
+              <div class="guide-item-info">
+                <strong>Субъективный ракурс (POV) — Вид от первого лица</strong>
+                <div class="guide-prompt-code">first person point of view, POV shot, immersive perspective</div>
+              </div>
+              <button class="guide-copy-btn" onclick="copyGuidePrompt('first person point of view, POV shot, immersive perspective', this)">Копировать</button>
+            </div>
+
+            <div class="guide-item-row">
+              <div class="guide-item-info">
+                <strong>Овершолдер (Over-the-shoulder) — Взгляд через плечо собеседника</strong>
+                <div class="guide-prompt-code">over-the-shoulder shot, conversation framing, blurred foreground shoulder</div>
+              </div>
+              <button class="guide-copy-btn" onclick="copyGuidePrompt('over-the-shoulder shot, conversation framing, blurred foreground shoulder', this)">Копировать</button>
+            </div>
+
+            <div class="guide-item-row">
+              <div class="guide-item-info">
+                <strong>Макро (Macro) — Сверхкрупный план детали</strong>
+                <div class="guide-prompt-code">extreme close-up, macro shot of an eye, hyper-detailed texture</div>
+              </div>
+              <button class="guide-copy-btn" onclick="copyGuidePrompt('extreme close-up, macro shot of an eye, hyper-detailed texture', this)">Копировать</button>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
+
+    function openLightingGuideModal() {
+      if (!Auth.hasClubAccess()) {
+        promptJoinClub('Шпаргалка по свету');
+        return;
+      }
+      const existing = document.getElementById('guide-lighting-modal');
+      if (existing) existing.remove();
+
+      const modal = document.createElement('div');
+      modal.id = 'guide-lighting-modal';
+      modal.className = 'guide-modal-overlay';
+      modal.onclick = (e) => { if (e.target === modal) closeGuideModal('guide-lighting-modal'); };
+
+      const lightingSchemes = [
+        { name: '🌅 Golden Hour', desc: 'Тёплые золотистые оттенки, мягкие длинные тени, закатный вайб', prompt: 'golden hour lighting, warm golden tones, soft long shadows, cinematic sunset atmosphere' },
+        { name: '🌌 Blue Hour', desc: 'Холодный синий свет, рассветная или сумеречная атмосфера', prompt: 'blue hour lighting, cool deep blue tones, subtle shadows, dawn atmosphere' },
+        { name: '☁️ Overcast Light', desc: 'Мягкий рассеянный свет без резких теней, естественные цвета', prompt: 'overcast diffused lighting, soft even illumination, natural neutral colors' },
+        { name: '✨ Diffused Light', desc: 'Равномерный мягкий свет, идеален для студийных портретов', prompt: 'diffused studio lighting, soft flattering light, gentle falloff' },
+        { name: '🌇 Backlighting & Rim Light', desc: 'Источник света позади объекта, создаёт сияющий контур', prompt: 'strong backlighting, rim light, glowing silhouette edge, cinematic halo' },
+        { name: '🌿 Soft Ambient Light', desc: 'Нежное рассеянное освещение интерьера, уют и глубина', prompt: 'soft ambient light, cozy room illumination, natural gentle shadows' },
+        { name: '🖤 Low-Key Lighting', desc: 'Тёмный контрастный свет, глубокие тени и драматизм', prompt: 'dramatic low-key lighting, deep dark shadows, high contrast, moody chiaroscuro' },
+        { name: '🤍 High-Key Lighting', desc: 'Яркое, светлое с минимумом теней — чистота и свежесть', prompt: 'high-key lighting, bright airy scene, minimal soft shadows, pure clean look' },
+        { name: '🏠 Window Light', desc: 'Естественный свет из окна, мягкие блики и текстура кожи', prompt: 'natural window light, soft directional sunlight, organic shadow gradient' },
+        { name: '🌳 Dappled Light', desc: 'Солнечные блики и пятна сквозь листву — динамика и игра света', prompt: 'dappled sunlight filtering through foliage, organic light patterns, textured shadows' },
+        { name: '💡 Spotlight', desc: 'Фокус жесткого света на одном объекте, максимальная драма', prompt: 'intense direct spotlight, sharp dramatic focal beam, heavy contrast falloff' },
+        { name: '🌆 Twilight Light', desc: 'Мягкий свет вечерних сумерек, кинематографичность', prompt: 'twilight evening light, dusky cinematic ambient, rich deep sky tones' },
+        { name: '🕯 Candlelight', desc: 'Тёплый мерцающий свет свечей, интимность и золотой оттенок', prompt: 'warm flickering candlelight, intimate golden glow, soft penumbra shadows' },
+        { name: '🎇 Neon Light', desc: 'Яркие неоновые огни, футуристичный киберпанк / ночной город', prompt: 'vibrant neon lighting, dual color cyan and magenta reflections, cyberpunk city night' },
+        { name: '🌕 Moonlight', desc: 'Холодный серебристый ночной свет, магия луны', prompt: 'ethereal cool moonlight, silvery highlights, deep midnight shadows' },
+        { name: '🚦 Street Light', desc: 'Желтоватое свечение уличных фонарей, городской вайб', prompt: 'warm sodium street lamp lighting, nighttime urban atmosphere, wet asphalt reflections' },
+        { name: '🔁 Bounced Light', desc: 'Отражённый свет от поверхностей, естественный fill-свет', prompt: 'bounced indirect illumination, soft ambient bounce, natural fill light' },
+        { name: '🌞 Lens Flare', desc: 'Анаморфотные солнечные блики в объективе, реализм', prompt: 'cinematic anamorphic lens flare, bright sun streak, photographic optical realism' },
+        { name: '🎥 Studio 3-Point Light', desc: 'Трехточечный студийный свет (Key, Fill, Backlight)', prompt: 'professional 3-point studio lighting, balanced key and fill light, crisp rim highlight' },
+        { name: '🔲 Pattern Light (Gobo)', desc: 'Свет с узорами через жалюзи или решётку, графичность', prompt: 'gobo patterned light, window blind shadows projected onto subject, graphic depth' }
+      ];
+
+      let rowsHtml = lightingSchemes.map(s => `
+        <div class="guide-item-row">
+          <div class="guide-item-info">
+            <strong>${s.name} — ${s.desc}</strong>
+            <div class="guide-prompt-code">${s.prompt}</div>
+          </div>
+          <button class="guide-copy-btn" onclick="copyGuidePrompt('${s.prompt.replace(/'/g, "\\'")}', this)">Копировать</button>
+        </div>
+      `).join('');
+
+      modal.innerHTML = `
+        <div class="guide-modal-content">
+          <div class="guide-modal-header">
+            <h3>💡 Шпаргалка по свету (20 схем освещения)</h3>
+            <button class="guide-modal-close-btn" onclick="closeGuideModal('guide-lighting-modal')">✕</button>
+          </div>
+          <div class="guide-modal-body">
+            <div style="font-family:var(--mono); font-size:0.8rem; font-weight:700; color:var(--gray); margin-bottom:12px;">// 20 КИНЕМАТОГРАФИЧЕСКИХ СХЕМ СВЕТА ДЛЯ MIDJOURNEY, FLUX & DALL-E</div>
+            ${rowsHtml}
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
+
+    function closeGuideModal(id) {
+      const m = document.getElementById(id);
+      if (m) m.remove();
+    }
+
+    function copyGuidePrompt(text, btn) {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => {
+          const orig = btn.innerText;
+          btn.innerText = '✓ Скопировано';
+          btn.style.background = '#10b981';
+          btn.style.borderColor = '#10b981';
+          btn.style.color = '#fff';
+          setTimeout(() => {
+            btn.innerText = orig;
+            btn.style.background = '';
+            btn.style.borderColor = '';
+            btn.style.color = '';
+          }, 1500);
+        }).catch(() => {
+          prompt('Скопируйте промпт:', text);
+        });
+      } else {
+        prompt('Скопируйте промпт:', text);
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', async () => {
       updateCabinetProfile();
       loadMembersDirectory();
       renderFavorites();
+      renderClubLessons();
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const initialTab = urlParams.get('tab');
+      if (initialTab) {
+        const tabBtns = document.querySelectorAll('.cabinet-tab-btn');
+        let matchedBtn = null;
+        if (initialTab === 'knowledge') matchedBtn = tabBtns[0];
+        else if (initialTab === 'education') matchedBtn = tabBtns[1];
+        else if (initialTab === 'club') matchedBtn = tabBtns[2];
+        else if (initialTab === 'members') matchedBtn = tabBtns[3];
+        else if (initialTab === 'favorites') matchedBtn = tabBtns[4];
+        if (matchedBtn) switchCabinetTab(initialTab, matchedBtn);
+      }
+
       if (Auth.isLoggedIn()) {
         await Auth.fetchFreshUserProfile();
         updateCabinetProfile();
+        renderClubLessons();
       }
     });
 
@@ -1426,6 +1945,7 @@
       updateCabinetProfile();
       loadMembersDirectory();
       renderFavorites();
+      renderClubLessons();
     });
 
     window.addEventListener('asage_favorites_changed', () => {
