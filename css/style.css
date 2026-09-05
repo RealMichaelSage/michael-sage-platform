@@ -3122,7 +3122,7 @@ input[type="reset"],
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
   margin: 0;
   padding: 0;
   align-items: flex-end;
@@ -3132,35 +3132,40 @@ input[type="reset"],
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  position: relative;
 }
 
 .scrollspy-link {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   text-decoration: none;
-  padding: 4px 0;
+  padding: 3px 0;
   cursor: pointer;
+  position: relative;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .scrollspy-label {
+  position: absolute;
+  right: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%) translateX(6px);
   font-family: var(--mono);
   font-size: 0.72rem;
-  font-weight: 500;
-  color: #71717a;
+  font-weight: 600;
+  color: #ffffff;
+  background: #09090b;
+  border: 1px solid #27272a;
+  padding: 4px 10px;
+  border-radius: 0;
   opacity: 0;
-  max-width: 0;
-  overflow: hidden;
-  letter-spacing: 0.02em;
-  white-space: nowrap;
-  transition: opacity 0.2s ease, max-width 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s ease;
-  transform: translateX(6px);
   pointer-events: none;
-  background: transparent !important;
-  border: none !important;
-  padding: 0 !important;
-  box-shadow: none !important;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  z-index: 100;
 }
 
 .scrollspy-num {
@@ -3170,6 +3175,8 @@ input[type="reset"],
   color: #a1a1aa;
   letter-spacing: 0.04em;
   transition: color 0.2s ease, transform 0.2s ease;
+  width: 18px;
+  text-align: right;
 }
 
 .scrollspy-dot {
@@ -3185,10 +3192,7 @@ input[type="reset"],
 /* Hover States */
 .scrollspy-link:hover .scrollspy-label {
   opacity: 1;
-  max-width: 240px;
-  color: var(--black);
-  transform: translateX(0);
-  pointer-events: auto;
+  transform: translateY(-50%) translateX(0);
 }
 
 .scrollspy-link:hover .scrollspy-num {
@@ -3203,15 +3207,6 @@ input[type="reset"],
 }
 
 /* Active State */
-.scrollspy-item.active .scrollspy-label {
-  opacity: 1;
-  max-width: 240px;
-  color: var(--black);
-  font-weight: 700;
-  transform: translateX(0);
-  pointer-events: auto;
-}
-
 .scrollspy-item.active .scrollspy-num {
   color: var(--black);
   font-weight: 700;
@@ -3228,7 +3223,9 @@ input[type="reset"],
    DARK SECTION ADAPTATION (When scrolling over dark footer)
 ══════════════════════════════════════════ */
 .page-scrollspy.on-dark .scrollspy-label {
-  color: #a1a1aa;
+  color: #ffffff;
+  background: #27272a;
+  border-color: #3f3f46;
 }
 
 .page-scrollspy.on-dark .scrollspy-num {
@@ -3240,12 +3237,6 @@ input[type="reset"],
   border-color: #52525b;
 }
 
-.page-scrollspy.on-dark .scrollspy-link:hover .scrollspy-label {
-  color: #ffffff;
-  opacity: 1;
-  max-width: 240px;
-}
-
 .page-scrollspy.on-dark .scrollspy-link:hover .scrollspy-num {
   color: #ffffff;
 }
@@ -3253,14 +3244,6 @@ input[type="reset"],
 .page-scrollspy.on-dark .scrollspy-link:hover .scrollspy-dot {
   background: #ffffff;
   border-color: #ffffff;
-}
-
-.page-scrollspy.on-dark .scrollspy-item.active .scrollspy-label {
-  color: #ffffff;
-  opacity: 1;
-  max-width: 240px;
-  font-weight: 700;
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
 }
 
 .page-scrollspy.on-dark .scrollspy-item.active .scrollspy-num {
