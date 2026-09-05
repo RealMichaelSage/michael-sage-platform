@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Исследование: Оптимизация корпоративных бизнес-процессов на базе нейросетей и агентных сред | Михаил Пузырёв</title>
-  <meta name="description" content="Фундаментальное исследование и White Paper 2026: архитектурно-технологический стек Google Antigravity, Gemini 3.1 Pro, MCP, разграничение детерминированного кода и LLM, реестр 20 бизнес-процессов и 4-этапный Enterprise Roadmap.">
-  <meta name="keywords" content="агентная автоматизация, оптимизация бизнес процессов нейросети, Google Antigravity enterprise, Model Context Protocol MCP, Gemini 3.1 Pro внедрение, Human in the loop HITL, автоматизация 1C нейросети, AI архитектура предприятия, McKinsey ИИ экономика">
+  <title>Как внедрить ИИ-агентов в бизнес: Пошаговый план, окупаемость (ROI) и безопасность — Руководство 2026 | Михаил Пузырёв</title>
+  <meta name="description" content="Практическое руководство для предпринимателей и руководителей: как автоматизировать рутину компании с помощью автономных ИИ-агентов, расчет окупаемости (ROI), архитектурные границы (SQL vs LLM), безопасность данных и 4-этапная дорожная карта внедрения.">
+  <meta name="keywords" content="внедрение нейросетей в бизнес, ИИ агенты автоматизация, ROI нейросетей, окупаемость искусственного интеллекта, Google Antigravity для бизнеса, автоматизация 1C нейросети, Model Context Protocol MCP, безопасность ИИ на предприятии, McKinsey GenAI экономика">
   <meta name="author" content="Михаил Пузырёв">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 
   <!-- Canonical & Alternate -->
   <link rel="canonical" href="https://a-sage.ru/base/research-agentic-processes/">
   
-  <!-- Open Graph / Social -->
+  <!-- Open Graph -->
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Исследование: Оптимизация корпоративных бизнес-процессов на базе нейросетей и агентных сред">
-  <meta property="og:description" content="Архитектурно-технологический стек Antigravity & MCP, реестр 20 бизнес-процессов с расчетом ROI (McKinsey), матрица SQL vs LLM и дорожная карта внедрения.">
+  <meta property="og:title" content="Как внедрить ИИ-агентов в бизнес: Пошаговый план, окупаемость (ROI) и безопасность">
+  <meta property="og:description" content="Практическое руководство для бизнеса: экономический эффект McKinsey (.6–4.4T), разграничение детерминированного SQL и LLM, безопасность данных и 4 этапа внедрения.">
   <meta property="og:url" content="https://a-sage.ru/base/research-agentic-processes/">
   <meta property="og:site_name" content="Михаил Пузырёв — AI Архитектура & Внедрение">
   <meta property="og:locale" content="ru_RU">
@@ -23,8 +23,8 @@
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Исследование: Агентная автоматизация enterprise-процессов 2026">
-  <meta name="twitter:description" content="Белый документ (White Paper) по архитектуре агентных систем, Model Context Protocol, 20 корпоративным сценариям и модели HITL.">
+  <meta name="twitter:title" content="Как внедрить ИИ-агентов в бизнес: Руководство 2026 | Михаил Пузырёв">
+  <meta name="twitter:description" content="Практический разбор для предпринимателей: расчет ROI, архитектура агентов, защита данных и дорожная карта.">
   <meta name="twitter:image" content="https://a-sage.ru/img/og-preview.png">
 
   <!-- Schema.org JSON-LD -->
@@ -35,8 +35,8 @@
       {
         "@type": "TechArticle",
         "@id": "https://a-sage.ru/base/research-agentic-processes/#article",
-        "headline": "Исследование оптимизации корпоративных бизнес-процессов на базе нейросетевых систем и агентных сред разработки",
-        "description": "Анализ экономической эффективности, архитектурных паттернов (Antigravity, MCP, HITL) и реестр 20 прикладных корпоративных сценариев.",
+        "headline": "Как внедрить ИИ-агентов в бизнес: Пошаговый план, окупаемость (ROI) и безопасность",
+        "description": "Практическое руководство для предпринимателей по оптимизации бизнес-процессов на базе нейросетей, стека Google Antigravity и MCP.",
         "author": {
           "@type": "Person",
           "name": "Михаил Пузырёв",
@@ -68,13 +68,7 @@
           {
             "@type": "ListItem",
             "position": 3,
-            "name": "Исследования & White Papers",
-            "item": "https://a-sage.ru/base"
-          },
-          {
-            "@type": "ListItem",
-            "position": 4,
-            "name": "Оптимизация бизнес-процессов на базе ИИ-агентов",
+            "name": "Как внедрить ИИ-агентов в бизнес",
             "item": "https://a-sage.ru/base/research-agentic-processes/"
           }
         ]
@@ -87,239 +81,86 @@
   <link rel="stylesheet" href="/css/style.css?v=3.0">
 
   <style>
-    .research-wrapper {
+    .guide-page-frame {
+      max-width: 1440px;
+      margin: 0 auto;
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      box-sizing: border-box;
       background: #ffffff;
-      min-height: 100vh;
-      border-bottom: 1px solid var(--border);
     }
-
-    .research-hero {
+    .guide-hero {
       padding-top: 116px;
-      padding-bottom: 48px;
-      padding-left: clamp(20px, 5vw, 80px);
-      padding-right: clamp(20px, 5vw, 80px);
-      background: #fafafa;
+      padding-bottom: 40px;
+      padding-left: clamp(20px, 4.5vw, 64px);
+      padding-right: clamp(20px, 4.5vw, 64px);
+      border-bottom: 1px solid var(--border);
+      background: #ffffff;
+    }
+    .guide-section-block {
+      padding: 48px clamp(20px, 4.5vw, 64px) 56px;
       border-bottom: 1px solid var(--border);
     }
-
-    .research-breadcrumbs {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 8px;
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      color: #71717a;
+    .guide-content-wrap {
+      max-width: 980px;
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: #27272a;
+    }
+    .guide-content-wrap h2 {
+      font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: #09090b;
+      margin: 0 0 20px 0;
+    }
+    .guide-content-wrap h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #09090b;
+      margin: 28px 0 14px 0;
+    }
+    .guide-content-wrap p {
       margin-bottom: 20px;
     }
-
-    .research-breadcrumbs a {
-      color: #52525b;
-      text-decoration: none;
-      transition: color 0.15s ease;
+    .guide-content-wrap ul, .guide-content-wrap ol {
+      margin-bottom: 24px;
+      padding-left: 24px;
     }
-    .research-breadcrumbs a:hover {
-      color: var(--black);
+    .guide-content-wrap li {
+      margin-bottom: 10px;
     }
 
-    .research-hero-tag {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: #10b981;
-      letter-spacing: 0.06em;
-      margin-bottom: 16px;
-    }
-
-    .research-title {
-      font-size: clamp(2.2rem, 4.5vw, 3.8rem);
-      font-weight: 800;
-      letter-spacing: -0.035em;
-      line-height: 1.1;
-      color: #09090b;
-      max-width: 1120px;
-      margin: 0 0 24px 0;
-    }
-
-    .research-meta-bar {
+    .guide-meta-bar {
       display: flex;
       flex-wrap: wrap;
-      align-items: center;
       gap: 20px;
+      margin-top: 24px;
       padding-top: 20px;
       border-top: 1px solid #e4e4e7;
       font-family: var(--mono);
       font-size: 0.8rem;
       color: #52525b;
     }
-
-    .research-meta-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .research-badge-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 10px;
-      background: #09090b;
-      color: #ffffff;
-      font-size: 0.72rem;
-      font-weight: 700;
-    }
-
-    .research-layout-grid {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 56px;
-      max-width: 1440px;
-      margin: 0 auto;
-      padding: 48px clamp(20px, 4vw, 64px) 100px;
-    }
-
-    @media (max-width: 1080px) {
-      .research-layout-grid {
-        grid-template-columns: 1fr;
-        gap: 32px;
-      }
-    }
-
-    .research-sidebar {
-      position: sticky;
-      top: 96px;
-      height: fit-content;
-      max-height: calc(100vh - 120px);
-      overflow-y: auto;
-      padding: 20px;
-      background: #fafafa;
-      border: 1px solid var(--border);
-      scrollbar-width: thin;
-    }
-
-    .sidebar-toc-title {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: #71717a;
-      margin-bottom: 16px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid #e4e4e7;
-    }
-
-    .sidebar-toc-nav {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .sidebar-toc-nav a {
-      font-size: 0.84rem;
-      line-height: 1.4;
-      color: #52525b;
-      text-decoration: none;
-      padding: 6px 8px;
-      border-left: 2px solid transparent;
-      transition: all 0.15s ease;
-    }
-
-    .sidebar-toc-nav a:hover,
-    .sidebar-toc-nav a.active {
+    .guide-meta-item strong {
       color: #09090b;
-      font-weight: 600;
-      border-left-color: #09090b;
-      background: #f4f4f5;
     }
 
-    .sidebar-cta-box {
-      margin-top: 24px;
-      padding: 16px;
-      background: #09090b;
-      color: #ffffff;
-      text-align: center;
-    }
-    .sidebar-cta-box h4 {
-      font-size: 0.9rem;
-      margin: 0 0 8px 0;
-      color: #ffffff;
-    }
-    .sidebar-cta-box p {
-      font-size: 0.75rem;
-      color: #a1a1aa;
-      line-height: 1.4;
-      margin: 0 0 12px 0;
-    }
-    .sidebar-cta-box a {
-      display: block;
-      padding: 8px 12px;
-      background: #10b981;
-      color: #ffffff;
-      font-size: 0.78rem;
-      font-weight: 700;
-      text-decoration: none;
-    }
-
-    .research-content {
-      max-width: 960px;
-      min-width: 0;
-      font-size: 1.05rem;
-      line-height: 1.75;
-      color: #27272a;
-    }
-
-    .research-content h2 {
-      font-size: clamp(1.6rem, 2.5vw, 2.2rem);
-      font-weight: 800;
-      letter-spacing: -0.025em;
-      color: #09090b;
-      margin: 48px 0 20px 0;
-      padding-top: 24px;
-      border-top: 1px solid var(--border);
-    }
-    .research-content h2:first-of-type {
-      margin-top: 0;
-      padding-top: 0;
-      border-top: none;
-    }
-
-    .research-content h3 {
-      font-size: 1.35rem;
-      font-weight: 700;
-      letter-spacing: -0.015em;
-      color: #09090b;
-      margin: 36px 0 16px 0;
-    }
-
-    .research-content p {
-      margin-bottom: 20px;
-    }
-
-    .research-content ul, .research-content ol {
-      margin-bottom: 24px;
-      padding-left: 24px;
-    }
-    .research-content li {
-      margin-bottom: 10px;
-    }
-
-    .research-callout {
+    .callout-box {
       padding: 24px;
       background: #fafafa;
       border-left: 4px solid #09090b;
-      margin: 32px 0;
+      margin: 28px 0;
     }
-    .research-callout.highlight {
+    .callout-box.callout-emerald {
       background: #f0fdf4;
       border-left-color: #10b981;
     }
-    .research-callout.warning {
+    .callout-box.callout-warning {
       background: #fef2f2;
       border-left-color: #ef4444;
     }
-    .research-callout-title {
+    .callout-title {
       font-weight: 700;
       font-size: 1rem;
       color: #09090b;
@@ -330,125 +171,31 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 16px;
-      margin: 28px 0 36px;
+      margin: 28px 0 32px;
     }
     .mckinsey-stat-card {
       background: #ffffff;
       border: 1px solid var(--border);
       padding: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
     }
     .stat-val {
-      font-size: 1.9rem;
+      font-size: 2rem;
       font-weight: 800;
       color: #09090b;
       letter-spacing: -0.03em;
       margin-bottom: 6px;
     }
     .stat-lbl {
-      font-size: 0.82rem;
+      font-size: 0.84rem;
       color: #71717a;
       line-height: 1.4;
-    }
-
-    .proc-card {
-      background: #ffffff;
-      border: 1px solid var(--border);
-      padding: 28px;
-      margin: 24px 0;
-      transition: all 0.2s ease;
-    }
-    .proc-card:hover {
-      border-color: #09090b;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.04);
-    }
-    .proc-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 12px;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
-    }
-    .proc-num-tag {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: #71717a;
-      text-transform: uppercase;
-    }
-    .proc-title {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: #09090b;
-      margin: 4px 0 0 0;
-    }
-    .proc-hitl-badge {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      font-weight: 700;
-      padding: 3px 8px;
-      background: #f4f4f5;
-      border: 1px solid #e4e4e7;
-    }
-    .proc-hitl-badge.hitl {
-      background: #fee2e2;
-      color: #991b1b;
-      border-color: #fca5a5;
-    }
-    .proc-hitl-badge.hotl {
-      background: #fef3c7;
-      color: #92400e;
-      border-color: #fcd34d;
-    }
-    .proc-hitl-badge.hool {
-      background: #dcfce7;
-      color: #166534;
-      border-color: #86efac;
-    }
-
-    .proc-section-row {
-      margin-top: 14px;
-      padding-top: 12px;
-      border-top: 1px solid #f4f4f5;
-    }
-    .proc-label {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: #71717a;
-      letter-spacing: 0.04em;
-      margin-bottom: 4px;
-    }
-    .proc-text {
-      font-size: 0.95rem;
-      color: #3f3f46;
-      line-height: 1.6;
-      margin: 0;
-    }
-    .proc-stack-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 8px;
-    }
-    .proc-pill {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      padding: 2px 7px;
-      background: #fafafa;
-      border: 1px solid #e4e4e7;
-      color: #27272a;
     }
 
     .table-scroll-wrapper {
       width: 100%;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
-      margin: 28px 0 36px;
+      margin: 28px 0;
       border: 1px solid var(--border);
     }
     .research-table {
@@ -464,7 +211,6 @@
       padding: 14px 16px;
       font-weight: 700;
       font-size: 0.82rem;
-      letter-spacing: 0.02em;
     }
     .research-table td {
       padding: 12px 16px;
@@ -476,15 +222,12 @@
     .research-table tr:nth-child(even) td {
       background: #fafafa;
     }
-    .research-table tr:hover td {
-      background: #f4f4f5;
-    }
 
     .roadmap-timeline {
       display: flex;
       flex-direction: column;
       gap: 20px;
-      margin: 32px 0;
+      margin: 28px 0;
     }
     .roadmap-step {
       background: #ffffff;
@@ -513,33 +256,35 @@
       margin: 0 0 8px 0;
     }
 
-    .research-cta-frame {
+    .solutions-banner-card {
       background: #09090b;
+      border: 1px solid #27272a;
+      padding: 32px;
       color: #ffffff;
-      padding: clamp(32px, 5vw, 64px);
-      margin-top: 60px;
-      text-align: center;
+      margin: 36px 0;
     }
-    .research-cta-frame h2 {
+    .solutions-banner-card h3 {
       color: #ffffff;
-      border-top: none;
-      margin: 0 0 16px 0;
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin: 0 0 10px 0;
     }
-    .research-cta-frame p {
+    .solutions-banner-card p {
       color: #a1a1aa;
-      max-width: 680px;
-      margin: 0 auto 28px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin: 0 0 20px 0;
     }
   </style>
 </head>
 <body>
 
   <!-- HEADER NAVIGATION -->
-  <header class=nav>
-    <div class=nav-inner>
+  <header class="nav">
+    <div class="nav-inner">
       <a href="/" class="nav-logo">
         <strong>Михаил Пузыр<span class="accent-yo">ё</span>в</strong>
-        <span class="nav-logo-badge">WHITE PAPER</span>
+        <span class="nav-logo-badge">ИССЛЕДОВАНИЕ</span>
       </a>
 
       <ul class="nav-links">
@@ -575,1010 +320,330 @@
     <a href="/booking" class="m-cta">Забронировать слот ↗</a>
   </div>
 
-  <div class="research-wrapper">
+  <main>
 
     <!-- HERO SECTION -->
-    <section class="research-hero">
-      <div class="research-breadcrumbs">
-        <a href="/">Главная</a>
-        <span>/</span>
-        <a href="/base">База Знаний</a>
-        <span>/</span>
-        <a href="/solutions">ИИ-Автоматизация</a>
-        <span>/</span>
-        <span style="color: #09090b; font-weight: 600;">White Paper: Агентная оптимизация</span>
+    <section id="hero" class="guide-page-frame guide-hero" data-nav-title="ИИ в бизнесе 2026">
+      <div style="font-family:var(--mono); font-size:0.8rem; color:var(--gray); margin-bottom:12px;">
+        <a href="/base" style="text-decoration:underline; color:#52525b;">База Знаний</a> / Практические Руководства & White Papers 2026
       </div>
-
-      <div class="research-hero-tag">// ФУНДАМЕНТАЛЬНОЕ ИССЛЕДОВАНИЕ & WHITE PAPER</div>
-
-      <h1 class="research-title">
-        Оптимизация корпоративных бизнес-процессов на базе нейросетевых систем и агентных сред разработки
+      <div class="hero-badge">
+        <span class="dot"></span>
+        РУКОВОДСТВО ДЛЯ БИЗНЕСА // LIVE
+      </div>
+      <h1 class="hero-title" style="margin-top: 16px; margin-bottom: 14px; font-size: clamp(2rem, 3.8vw, 3.2rem);">
+        Как внедрить ИИ-агентов в бизнес: Пошаговый план, расчет окупаемости (ROI) и безопасность
       </h1>
+      <p class="hero-sub" style="max-width: 920px; font-size: 1.15rem; line-height: 1.6; color: #52525b;">
+        Практический разбор для собственников, операционных директоров и руководителей: как перейти от хаотичных ChatGPT-промптов к надежным автономным ИИ-агентам, сократить 60–70% рутины и защитить данные компании.
+      </p>
 
-      <div class="research-meta-bar">
-        <div class="research-meta-item">
-          <span class="research-badge-pill">ENTERPRISE EDITION</span>
-        </div>
-        <div class="research-meta-item">
-          <strong>Автор:</strong> Михаил Пузырёв
-        </div>
-        <div class="research-meta-item">
-          <strong>Время чтения:</strong> ~18 минут
-        </div>
-        <div class="research-meta-item">
-          <strong>Актуальность:</strong> Сентябрь 2026
+      <div class="guide-meta-bar">
+        <div class="guide-meta-item">Автор: <strong>Михаил Пузырёв</strong></div>
+        <div class="guide-meta-item">Формат: <strong>White Paper & Методология</strong></div>
+        <div class="guide-meta-item">Время чтения: <strong>12 минут</strong></div>
+        <div class="guide-meta-item" style="color:#10b981;">● <strong>Проверено на 15+ внедрениях</strong></div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: PARADIGM -->
+    <section id="paradigm" class="guide-page-frame guide-section-block" data-nav-title="01. Агентный контур">
+      <div class="guide-content-wrap">
+        <div class="section-tag">ЭВОЛЮЦИЯ НЕЙРОСЕТЕЙ</div>
+        <h2>1. Что такое ИИ-агенты и чем они отличаются от обычных чат-ботов</h2>
+        <p>
+          Эра классических чат-ботов, которые работают по принципу разового ответа («вопрос в чат ➔ текстовый ответ»), подошла к концу. Для бизнеса один текст бесполезен: компании нужен <strong>конкретный завершенный результат</strong> — проверенный контрагент, выставленный счет в 1С, квалифицированный лид в CRM или сверенный договор.
+        </p>
+        <p>
+          Современный искусственный интеллект строится на базе <strong>автономных агентных контуров (Agent Loops)</strong>. Агент не просто пишет текст, а выполняет непрерывный производственный цикл:
+        </p>
+
+        <div class="callout-box callout-emerald">
+          <div class="callout-title">Цикл работы ИИ-агента (Agent Loop):</div>
+          <strong>1. Восприятие (Perceive)</strong> — считывает входящую заявку, аудиозапись звонка или скан акта.<br>
+          <strong>2. Рассуждение (Reason)</strong> — анализирует контекст по корпоративной базе знаний и регламентам.<br>
+          <strong>3. Планирование (Plan)</strong> — разбивает сложную бизнес-задачу на 3–5 пошаговых действий.<br>
+          <strong>4. Действие (Act)</strong> — вызывает внешние API (1С, CRM, мессенджеры, поиск, базы данных).<br>
+          <strong>5. Наблюдение и контроль (Observe)</strong> — проверяет результат и готовит отчет человеку.
         </div>
       </div>
     </section>
 
-    <!-- LAYOUT GRID: SIDEBAR + CONTENT -->
-    <div class="research-layout-grid">
-      
-      <!-- STICKY SIDEBAR -->
-      <aside class="research-sidebar">
-        <div class="sidebar-toc-title">Содержание исследования</div>
-        <nav class="sidebar-toc-nav" id="sidebar-toc">
-          <a href="#section-stack">1. Архитектура и стек</a>
-          <a href="#section-boundaries">2. Разграничение: SQL vs RPA vs LLM</a>
-          <a href="#section-processes">3. Реестр 20 бизнес-процессов</a>
-          <a href="#contour-marketing" style="padding-left: 18px; font-size: 0.78rem;">— Маркетинг и Трафик</a>
-          <a href="#contour-sales" style="padding-left: 18px; font-size: 0.78rem;">— Отдел Продаж (Sales)</a>
-          <a href="#contour-hr" style="padding-left: 18px; font-size: 0.78rem;">— Документооборот и HR</a>
-          <a href="#contour-finance" style="padding-left: 18px; font-size: 0.78rem;">— Бухгалтерия и Финансы</a>
-          <a href="#contour-legal" style="padding-left: 18px; font-size: 0.78rem;">— Юридический блок</a>
-          <a href="#contour-support" style="padding-left: 18px; font-size: 0.78rem;">— Операционка и Сервис</a>
-          <a href="#contour-product" style="padding-left: 18px; font-size: 0.78rem;">— Управление продуктом</a>
-          <a href="#contour-bi" style="padding-left: 18px; font-size: 0.78rem;">— Корпоративная аналитика</a>
-          <a href="#section-matrix">4. Сводная матрица эффектов</a>
-          <a href="#section-roadmap">5. Дорожная карта внедрения</a>
-          <a href="#section-consult">6. Консультация & Аудит</a>
-        </nav>
+    <!-- SECTION 2: ROI & MCKINSEY -->
+    <section id="roi" class="guide-page-frame guide-section-block" data-nav-title="02. Экономика & ROI">
+      <div class="guide-content-wrap">
+        <div class="section-tag">ОЦИФРОВКА ЭФФЕКТИВНОСТИ</div>
+        <h2>2. Окупаемость внедрения (ROI) и мировая аналитика McKinsey</h2>
+        <p>
+          По данным глобального исследования <strong>McKinsey & Company</strong>, внедрение генеративного искусственного интеллекта автоматизирует задачи, занимающие от <strong>60% до 70%</strong> рабочего времени сотрудников, обеспечивая ежегодный прирост продуктивности в ,6–4,4 трлн.
+        </p>
 
-        <div class="sidebar-cta-box">
-          <h4>Аудит процессов компании</h4>
-          <p>Разбор узких мест предприятия и расчет экономического эффекта от внедрения ИИ.</p>
-          <a href="/booking">Забронировать слот ↗</a>
+        <div class="mckinsey-stat-grid">
+          <div class="mckinsey-stat-card">
+            <div class="stat-val">60–70%</div>
+            <div class="stat-lbl">Рутинного времени квалифицированных специалистов высвобождается ИИ-агентами</div>
+          </div>
+          <div class="mckinsey-stat-card">
+            <div class="stat-val">75%</div>
+            <div class="stat-lbl">Совокупной ценности концентрируется в 4 блоках: Продажи, Маркетинг, R&D и Поддержка</div>
+          </div>
+          <div class="mckinsey-stat-card">
+            <div class="stat-val">30 сек</div>
+            <div class="stat-lbl">Скорость реакции на заявку (Speed-to-Lead), повышающая конверсию в сделку на 30–40%</div>
+          </div>
         </div>
-      </aside>
 
-      <!-- MAIN CONTENT -->
-      <main class="research-content">
+        <p>
+          В реальном бизнесе это выражается не в «гипотетической экономии», а в конкретных показателях: сокращение ФОТ на первичной обработке, ускорение выставления КП с 3 дней до 15 минут и ликвидация потерь от неперезвоненных заявок.
+        </p>
+      </div>
+    </section>
 
-        <!-- SECTION 1 -->
-        <section id="section-stack">
-          <h2>1. Архитектурно-технологический стек и агентная парадигма</h2>
+    <!-- SECTION 3: BOUNDARIES -->
+    <section id="boundaries" class="guide-page-frame guide-section-block" data-nav-title="03. Границы: SQL vs LLM">
+      <div class="guide-content-wrap">
+        <div class="section-tag">ГРАНИЦЫ ПРИМЕНИМОСТИ</div>
+        <h2>3. Где нейросети категорически НЕ нужны, а где дают x10</h2>
+        <p>
+          Самая частая ошибка при внедрении ИИ — попытка заставить языковую модель считать налоги, рассчитывать зарплаты или сводить бухгалтерские балансы. Нейросети вероятностны по своей природе. Там, где действует жесткая математика, они несут прямую угрозу бизнесу.
+        </p>
+
+        <div class="callout-box callout-warning">
+          <div class="callout-title">⚠️ Где нейросети избыточны и опасны:</div>
+          Расчет налогооблагаемой базы, начисление зарплаты по табелю, проводка бухгалтерских сальдо, синхронизация остатков по штрихкодам. Здесь работают классические SQL-базы данных и ERP-системы (1C/SAP) со 100% транзакционной точностью и нулевой погрешностью.
+        </div>
+
+        <p>
+          <strong>Где нейросети незаменимы:</strong> в неструктурированных данных — аудит телефонных звонков менеджеров, смысловой анализ входящих договоров на скрытые риски, квалификация лидов в диалоге, сверка сканов счетов и распознавание потребностей клиента.
+        </p>
+
+        <div class="table-scroll-wrapper">
+          <table class="research-table">
+            <thead>
+              <tr>
+                <th>Критерий</th>
+                <th>Детерминированный код / SQL / ERP</th>
+                <th>Традиционный RPA (UiPath, роботы)</th>
+                <th>Агентные системы на базе LLM (Antigravity)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Тип входных данных</strong></td>
+                <td>Строго структурированные (БД, таблицы, JSON)</td>
+                <td>Фиксированные экранные формы</td>
+                <td><strong style="color:#10b981;">Неструктурированные (текст, диалоги, сканы, аудио)</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Характер логики</strong></td>
+                <td>100% формализуемый (if-then-else)</td>
+                <td>Жесткая последовательность кликов</td>
+                <td><strong style="color:#10b981;">Адаптивная, смысловая, контекстная</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Толерантность к ошибкам</strong></td>
+                <td>Нулевая (математическая точность)</td>
+                <td>Минимальная (сбой при смене верстки)</td>
+                <td><strong style="color:#10b981;">Контролируемая через контур человека (HITL)</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Стоимость транзакции</strong></td>
+                <td>Менее zsh,0001 (доли копейки)</td>
+                <td>Низкая (лицензия на робота)</td>
+                <td>От 1 до 50 руб. за многошаговый анализ</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: MASTER MATRIX -->
+    <section id="matrix" class="guide-page-frame guide-section-block" data-nav-title="04. Сводная матрица">
+      <div class="guide-content-wrap">
+        <div class="section-tag">ПРИМЕНЕНИЕ В КОМПАНИИ</div>
+        <h2>4. Сводная матрица эффектов по 8 контурам предприятия</h2>
+        <p>
+          Ниже приведена сводка применения ИИ-агентов по ключевым подразделениям компании с измеримой отдачей:
+        </p>
+
+        <div class="table-scroll-wrapper">
+          <table class="research-table">
+            <thead>
+              <tr>
+                <th>Подразделение</th>
+                <th>Ключевой сценарий</th>
+                <th>Оцифрованный эффект</th>
+                <th>Модель контроля</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Отдел Продаж</strong></td>
+                <td>Скоринг лидов и авто-генерация КП (CPQ)</td>
+                <td>Speed-to-Lead 30 сек, цикл КП с 3 дней до 15 мин</td>
+                <td>Human-in-the-Loop (визирование РОПом)</td>
+              </tr>
+              <tr>
+                <td><strong>Маркетинг</strong></td>
+                <td>Парсинг ЛПР и персонализация коммуникаций</td>
+                <td>Рост продуктивности на 15%, снижение CAC на 40%</td>
+                <td>Human-on-the-Loop (контроль маркетологом)</td>
+              </tr>
+              <tr>
+                <td><strong>Бухгалтерия</strong></td>
+                <td>Сверка первички (3-Way Matching: Счет-Акт-1С)</td>
+                <td>Снижение трудоемкости на 85%, 0 ошибок в оплатах</td>
+                <td>HITL при расхождениях сумм</td>
+              </tr>
+              <tr>
+                <td><strong>Финансы</strong></td>
+                <td>Сценарный прогноз кассовых разрывов</td>
+                <td>Предупреждение за 14–30 дней, экономия 12 ч/нед CFO</td>
+                <td>Human-in-the-Loop (утверждение мер)</td>
+              </tr>
+              <tr>
+                <td><strong>Юристы</strong></td>
+                <td>Аудит договоров на риски и протокол разногласий</td>
+                <td>Вычитка за 5 минут, 100% перехват скрытых неустоек</td>
+                <td>Human-in-the-Loop (юрист визирует правки)</td>
+              </tr>
+              <tr>
+                <td><strong>HR & Найм</strong></td>
+                <td>Скрининг сотен резюме и асинхронное AI-интервью</td>
+                <td>Первичный отбор быстрее на 80%, найм дешевле на 35%</td>
+                <td>Human-in-the-Loop (решение за HRD)</td>
+              </tr>
+              <tr>
+                <td><strong>Клиентский Сервис</strong></td>
+                <td>Автономная 1-я линия поддержки (L1 Support) 24/7</td>
+                <td>Автозакрытие 50–70% тикетов без оператора</td>
+                <td>Human-on-the-Loop (эскалация сложных жалоб)</td>
+              </tr>
+              <tr>
+                <td><strong>Аналитика & BI</strong></td>
+                <td>Text-to-SQL ad-hoc аналитика для руководства</td>
+                <td>Отчет за 1 минуту вместо 3 дней ожидания отчетов</td>
+                <td>Human-out-of-the-loop (режим чтения)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- LINK TO SOLUTIONS -->
+        <div class="solutions-banner-card">
+          <div style="font-family:var(--mono); font-size:0.75rem; color:#10b981; font-weight:700; margin-bottom:8px;">// ПРАКТИЧЕСКАЯ ВИТРИНА РЕШЕНИЙ</div>
+          <h3>Все 20 готовых сценариев с архитектурой и промптами вынесены в интерактивный каталог</h3>
           <p>
-            Трансформация корпоративного сектора под воздействием систем искусственного интеллекта перешла в фазу <strong>агентной автоматизации</strong>. Классические большие языковые модели (LLM), функционирующие по принципу однократного синхронного ответа (<em>single-pass chatbot</em>), подходят лишь для изолированных текстовых операций.
+            В каталоге готовых решений вы можете подробно изучить схемы реализации, необходимые коннекторы (MCP), требования к интеграции с 1С / CRM и запустить готовый сценарий.
           </p>
-          <p>
-            Современная оптимизация процессов опирается на автономные агентные контуры (<strong>Agent Loops</strong>), реализующие непрерывный цикл:
-          </p>
+          <a href="/solutions" class="btn-primary" style="background:#10b981; color:#09090b; padding:12px 24px; text-decoration:none; font-weight:700;">
+            Открыть интерактивный каталог решений (20 сценариев) ↗
+          </a>
+        </div>
+      </div>
+    </section>
 
-          <div class="research-callout highlight">
-            <div class="research-callout-title">Цикл агентного действия (Agent Loop):</div>
-            <strong>Perceive</strong> (Восприятие входящих стимулов) → <strong>Reason</strong> (Логическое рассуждение) → <strong>Plan</strong> (Декомпозиция задач) → <strong>Act</strong> (Воздействие на внешнюю среду через API и инструменты) → <strong>Observe</strong> (Рефлексивный анализ полученных результатов).
-          </div>
+    <!-- SECTION 5: SECURITY & HITL -->
+    <section id="security" class="guide-page-frame guide-section-block" data-nav-title="05. Безопасность & HITL">
+      <div class="guide-content-wrap">
+        <div class="section-tag">ИНФОРМАЦИОННАЯ БЕЗОПАСНОСТЬ</div>
+        <h2>5. Безопасность данных и архитектура контроля (Human-in-the-Loop)</h2>
+        <p>
+          Главное опасение собственника бизнеса при внедрении ИИ: <em>«Что если нейросеть отправит не ту сумму, сольет базу клиентов или испортит данные в 1С?»</em>
+        </p>
+        <p>
+          В профессиональной агентной среде (на базе Google Antigravity и протокола MCP) безопасность обеспечивается тремя обязательными уровнями:
+        </p>
 
-          <p>
-            Согласно экономическим оценкам <strong>McKinsey & Company</strong>, технологии генеративного искусственного интеллекта способны автоматизировать операции, поглощающие от <strong>60% до 70%</strong> рабочего времени квалифицированных специалистов, обеспечивая совокупный ежегодный экономический эффект в диапазоне от <strong>,6 трлн до ,4 трлн</strong>. При этом приблизительно 75% совокупной ценности концентрируется в четырех ключевых сегментах: маркетинг и продажи, разработка ПО, клиентские операции и продуктовый R&D.
-          </p>
+        <ul>
+          <li>
+            <strong>1. Изолированные Linux-песочницы (Sandboxes):</strong> Агент исполняет код и анализирует файлы в изолированном защищенном контейнере. У него нет прямого доступа к серверам компании.
+          </li>
+          <li>
+            <strong>2. Model Context Protocol (MCP) с прокси-ключами:</strong> Пароли от баз данных и токены API никогда не передаются внутрь текста промпта. Модель видит только строго регламентированные функции чтения/записи.
+          </li>
+          <li>
+            <strong>3. Блокирующие перехватчики (Decide Hooks & HITL):</strong> Любое действие, изменяющее финансовые данные или отправляющее документ клиенту, оформляется как <em>«Предложение действия» (Propose Action)</em>. Агент останавливается и ждет подтверждения от уполномоченного сотрудника в 1 клик.
+          </li>
+        </ul>
+      </div>
+    </section>
 
-          <div class="mckinsey-stat-grid">
-            <div class="mckinsey-stat-card">
-              <div class="stat-val">60–70%</div>
-              <div class="stat-lbl">Рутинного рабочего времени автоматизируется генеративным ИИ (McKinsey)</div>
-            </div>
-            <div class="mckinsey-stat-card">
-              <div class="stat-val">.6–4.4T</div>
-              <div class="stat-lbl">Ежегодный мировой экономический эффект внедрения GenAI</div>
-            </div>
-            <div class="mckinsey-stat-card">
-              <div class="stat-val">75%</div>
-              <div class="stat-lbl">Ценности генерируется в 4 функциях: Маркетинг, Продажи, R&D, Сервис</div>
-            </div>
-          </div>
+    <!-- SECTION 6: ROADMAP -->
+    <section id="roadmap" class="guide-page-frame guide-section-block" data-nav-title="06. Дорожная карта">
+      <div class="guide-content-wrap">
+        <div class="section-tag">ПЛАН ВНЕДРЕНИЯ</div>
+        <h2>6. 4-этапная дорожная карта внедрения ИИ в предприятие</h2>
+        <p>
+          Не нужно пытаться автоматизировать всё предприятие за один день. Эффективная стратегия внедрения делится на 4 последовательных этапа:
+        </p>
 
-          <h3>Технологические столпы агентной архитектуры</h3>
-          <ul>
-            <li>
-              <strong>Google Antigravity и Gemini Agent Harness:</strong> Интегрированная агент-ориентированная платформа разработки на базе модифицированного ядра VS Code. Архитектура разделена на две рабочие области: <em>Editor View</em> (для интерактивной работы специалиста с кодом и документами) и <em>Manager Surface</em> — диспетчерскую панель, позволяющую параллельно запускать, координировать и асинхронно контролировать до пяти независимых агентов под управлением Gemini 3.1 Pro и Gemini 3 Flash. Вместо неструктурированных системных логов агенты генерируют верифицируемые <strong>Артефакты</strong> (пошаговые планы, diff-файлы, скриншоты).
-            </li>
-            <li>
-              <strong>Gemini Interactions API и Antigravity Managed Agents:</strong> Серверное промышленное развертывание, при котором вызов API инициализирует защищенную изолированную Linux-песочницу (Sandbox). Агент наделен правами на выполнение shell-команд (Bash, Python, Node.js), манипуляции с файловой системой, запуск тестов и сохранение состояния сессии (statefulness). Автоматическое сжатие контекста (Context Compaction при превышении 135 000 токенов) предотвращает деградацию рассуждений.
-            </li>
-            <li>
-              <strong>Model Context Protocol (MCP):</strong> Открытый стандарт двунаправленной коммуникации между ИИ-моделями и внешними источниками данных. MCP предоставляет агентам безопасный доступ к базам данных (PostgreSQL, AlloyDB), корпоративным CRM (Salesforce, Bitrix24, amoCRM), ERP (1С, SAP) и таск-трекерам (Jira, Linear) без передачи сырых учетных записей внутрь промпта.
-            </li>
-            <li>
-              <strong>Декларативная архитектура контекста (AGENTS.md и SKILL.md):</strong> Файл <code>AGENTS.md</code> задает неизменную глобальную «конституцию» агента (правила ролевого доступа, корпоративные ограничения, политики Zero Trust). Модули <code>SKILL.md</code> представляют собой изолированные каталоги процедурных инструкций, подгружаемые динамически только при возникновении профильной задачи.
-            </li>
-            <li>
-              <strong>Программный SDK и точки перехвата (Hooks):</strong> Библиотека Google Antigravity SDK на Python предоставляет детерминированные хуки: <em>Inspect</em> (неблокирующий аудит), <em>Decide</em> (блокирующая авторизация операций) и <em>Transform</em> (санитизация транзитных данных).
-            </li>
-            <li>
-              <strong>Архитектура верификации (Human-in-the-Loop, HITL):</strong> В процессах с высокой стоимостью ошибки внедряются три модели контроля: <strong>Human-in-the-Loop</strong> (агент блокирует операцию до подтверждения человеком), <strong>Human-on-the-Loop</strong> (агент действует самостоятельно в рамках допусков, оператор сохраняет право прерывания) и <strong>Human-out-of-the-loop</strong> (полная автономия в обратимых операциях). Каждое модифицирующее действие оформляется в виде идемпотентного объекта предложения (<em>Propose Action Object</em>).
-            </li>
-          </ul>
-        </section>
-
-        <!-- SECTION 2 -->
-        <section id="section-boundaries">
-          <h2>2. Разграничение применимости: критерии целесообразности и избыточности</h2>
-          <p>
-            Ошибочное внедрение стохастических больших языковых моделей в строго алгоритмические операции порождает риски финансовых расхождений, галлюцинаций и кратного роста эксплуатационных издержек.
-          </p>
-
-          <div class="research-callout warning">
-            <div class="research-callout-title">Где нейросети категорически избыточны и опасны:</div>
-            Области с жесткими детерминированными математическими правилами: расчет налоговой базы, начисление заработной платы по табелю, проводка регулярных бухгалтерских сальдо, синхронизация складских остатков по штрихкодам. В таких сценариях классические SQL-процедуры, встроенные модули ERP (1C/SAP) и традиционные алгоритмы Robotic Process Automation (RPA) обеспечивают нулевую погрешность, микросекундную скорость и пренебрежимо малую стоимость транзакции.
-          </div>
-
-          <p>
-            Применение нейросетевых агентов оправдано там, где есть <strong>неструктурированные входящие данные</strong> (естественный язык, сканы первички, аудиозаписи, переписка), неоднозначность контекста, необходимость смыслового синтеза и динамическая адаптация логики.
-          </p>
-
-          <div class="table-scroll-wrapper">
-            <table class="research-table">
-              <thead>
-                <tr>
-                  <th>Параметр сравнения</th>
-                  <th>Детерминированный код / SQL / ERP</th>
-                  <th>Традиционный RPA (UiPath, 1C-скрипты)</th>
-                  <th>Агентные системы на базе LLM (Antigravity, MCP)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Характер входных данных</strong></td>
-                  <td>Строго структурированные (SQL, JSON, XML)</td>
-                  <td>Полуструктурированные, фиксированные формы</td>
-                  <td>Неструктурированные (текст, диалоги, сканы, аудио)</td>
-                </tr>
-                <tr>
-                  <td><strong>Тип бизнес-логики</strong></td>
-                  <td>100% формализуемые алгоритмы (if-then-else)</td>
-                  <td>Жесткая последовательность кликов и нажатий</td>
-                  <td>Вероятностная, контекстно-зависимая, адаптивная</td>
-                </tr>
-                <tr>
-                  <td><strong>Толерантность к ошибкам</strong></td>
-                  <td>Нулевая (транзакционная точность)</td>
-                  <td>Минимальная (сбой при смещении UI-кнопок)</td>
-                  <td>Допустима контролируемая погрешность (контур HITL)</td>
-                </tr>
-                <tr>
-                  <td><strong>Стоимость транзакции</strong></td>
-                  <td>Менее zsh,0001 (доли цента)</td>
-                  <td>Низкая (амортизация лицензии робота)</td>
-                  <td>От zsh,01 до zsh,50+ в зависимости от шагов рассуждения</td>
-                </tr>
-                <tr>
-                  <td><strong>Время отклика (Latency)</strong></td>
-                  <td>Миллисекунды (1–50 мс)</td>
-                  <td>Секунды (1–10 с)</td>
-                  <td>От секунд до минут на полный Agent Loop</td>
-                </tr>
-                <tr>
-                  <td><strong>Устойчивость к изменениям</strong></td>
-                  <td>Требует переписывания кода инженерами</td>
-                  <td>Крайне хрупкая при любых визуальных апдейтах UI</td>
-                  <td>Высокая адаптивность к новым формулировкам и форматам</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <!-- SECTION 3: PROCESSES -->
-        <section id="section-processes">
-          <h2>3. Детальный реестр 20 корпоративных бизнес-процессов</h2>
-          <p>
-            Ниже систематизированы ключевые сценарии внедрения агентных систем по 8 функциональным подразделениям предприятия.
-          </p>
-
-          <!-- CONTOUR 1: MARKETING -->
-          <div id="contour-marketing">
-            <h3>1. Блок маркетинга и бренд-коммуникаций</h3>
-
-            <!-- Proc 01 -->
-            <div class="proc-card">
-              <div class="proc-card-header">
-                <div>
-                  <span class="proc-num-tag">ПРОЦЕСС #01 · МАРКЕТИНГ</span>
-                  <h4 class="proc-title">Мультиканальная гиперперсонализация маркетинговых коммуникаций</h4>
-                </div>
-                <span class="proc-hitl-badge hitl">Human-in-the-Loop</span>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Зачем бизнесу</div>
-                <p class="proc-text">Масштабная адаптация рекламных и контентных сообщений под узкие микросегменты клиентской базы, преодоление баннерной слепоты и снижение CAC.</p>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Экономический эффект (McKinsey)</div>
-                <p class="proc-text">Прирост продуктивности маркетинга на <strong>9–15%</strong>. Сокращение срока подготовки кампании с 14 дней до 24–48 часов. Снижение затрат на агентства на 40–60%, рост конверсии (CR) на 15–25%.</p>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Пошаговая логика Agent Loop</div>
-                <p class="proc-text">n8n фиксирует промо-кампанию в Jira → Агент Antigravity (Gemini 3.1 Pro) считывает сегменты из CDP через MCP → Запускает 3 суб-агента (копирайтинг, промпты для баннеров, комплаенс-проверка) → Формирует интерактивный Artifact Review в Manager Surface → Маркетолог утверждает → Автоэкспорт в ESP и рекламные кабинеты.</p>
-              </div>
-              <div class="proc-stack-pills">
-                <span class="proc-pill">Antigravity</span>
-                <span class="proc-pill">Gemini 3.1 Pro</span>
-                <span class="proc-pill">n8n</span>
-                <span class="proc-pill">CDP MCP</span>
-                <span class="proc-pill">AGENTS.md</span>
-              </div>
-            </div>
-
-            <!-- Proc 02 -->
-            <div class="proc-card">
-              <div class="proc-card-header">
-                <div>
-                  <span class="proc-num-tag">ПРОЦЕСС #02 · МАРКЕТИНГ</span>
-                  <h4 class="proc-title">Автоматизированное поисковое продвижение (SEO) и семантическое покрытие</h4>
-                </div>
-                <span class="proc-hitl-badge hotl">Human-on-the-Loop</span>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Зачем бизнесу</div>
-                <p class="proc-text">Непрерывный рост органического трафика за счет выявления контентных пробелов относительно конкурентов и генерации посадочных страниц.</p>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Экономический эффект</div>
-                <p class="proc-text">Сокращение трудоемкости кластеризации семантики на <strong>70–80%</strong>. Наполнение каталогов оптимизированными материалами возрастает до десятков страниц в сутки. Снижение стоимости органического визита на 30–50%.</p>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Пошаговая логика Agent Loop</div>
-                <p class="proc-text">Antigravity CLI выгружает поисковые кластеры (Search Console, Ahrefs) → Активирует <code>seo-clustering/SKILL.md</code> → В Linux-песочнице собирает метаданные топ-5 конкурентов → Генерирует драфты посадочных страниц с микроразметкой Schema.org → Headless браузер проверяет верстку → Сохранение в CMS со статусом черновика.</p>
-              </div>
-              <div class="proc-stack-pills">
-                <span class="proc-pill">Antigravity CLI</span>
-                <span class="proc-pill">SKILL.md</span>
-                <span class="proc-pill">Browser Tool</span>
-                <span class="proc-pill">Schema.org</span>
-              </div>
-            </div>
-
-            <!-- Proc 03 -->
-            <div class="proc-card">
-              <div class="proc-card-header">
-                <div>
-                  <span class="proc-num-tag">ПРОЦЕСС #03 · МАРКЕТИНГ</span>
-                  <h4 class="proc-title">Непрерывный мониторинг конкурентной среды и цен</h4>
-                </div>
-                <span class="proc-hitl-badge hool">Human-out-of-the-loop</span>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Зачем бизнесу</div>
-                <p class="proc-text">Оперативная реакция на демпинг, скидочные акции и новинки конкурентов для защиты рыночной доли.</p>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Экономический эффект</div>
-                <p class="proc-text">Экономия <strong>10–15 часов</strong> аналитиков еженедельно. Сокращение времени управленческой реакции на демпинг с полутора недель до 4–6 часов.</p>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Пошаговая логика Agent Loop</div>
-                <p class="proc-text">Managed Agent по таймеру парсит витрины конкурентов → Gemini 3 Flash сопоставляет позиции с номенклатурой PostgreSQL через MCP → При дельте цен >5% скрипт рассчитывает маржинальность → Markdown-справка с графиками отправляется коммерческому директору.</p>
-              </div>
-              <div class="proc-stack-pills">
-                <span class="proc-pill">Managed Agents</span>
-                <span class="proc-pill">Gemini 3 Flash</span>
-                <span class="proc-pill">PostgreSQL MCP</span>
-                <span class="proc-pill">Python Sandbox</span>
-              </div>
+        <div class="roadmap-timeline">
+          
+          <div class="roadmap-step">
+            <div class="roadmap-step-time">ЭТАП 1 · МЕСЯЦЫ 1–3</div>
+            <div>
+              <h4 class="roadmap-step-title">Аудит процессов и быстрые победы (Quick Wins)</h4>
+              <p style="font-size:0.95rem; color:#52525b; margin:0 0 10px 0;">
+                Оцифровка регламентов компании, внедрение внутреннего AI-ассистента онбординга сотрудников, запуск автогенерации контента и первичного скоринга лидов.
+              </p>
+              <span style="font-family:var(--mono); font-size:0.75rem; background:#f4f4f5; padding:3px 8px; border:1px solid #e4e4e7;">Результат: Сокращение времени поиска внутренней информации на 70%</span>
             </div>
           </div>
 
-          <!-- CONTOUR 2: SALES -->
-          <div id="contour-sales">
-            <h3>2. Блок продаж (Sales)</h3>
-
-            <!-- Proc 04 -->
-            <div class="proc-card">
-              <div class="proc-card-header">
-                <div>
-                  <span class="proc-num-tag">ПРОЦЕСС #04 · ПРОДАЖИ</span>
-                  <h4 class="proc-title">Автономный скоринг, квалификация B2B-лидов и исследование контрагентов</h4>
-                </div>
-                <span class="proc-hitl-badge hotl">Human-on-the-Loop</span>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Зачем бизнесу</div>
-                <p class="proc-text">Устранение потерь времени дорогих сейлзов на нецелевые лиды и ручной сбор досье на контрагентов.</p>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Экономический эффект (McKinsey)</div>
-                <p class="proc-text">Рост эффективности продаж на <strong>3–5%</strong> от затрат подразделения. Время первичной реакции (Speed-to-Lead) падает с часов до <strong>30 секунд</strong>, конверсия в сделку возрастает на 30–40%, разгрузка SDR на 50–70%.</p>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Пошаговая логика Agent Loop</div>
-                <p class="proc-text">Входящая заявка → Managed Agent извлекает домен и контакты → Через google_search и реестры юрлиц собирает выручку, штат, ОКВЭД → Рассчитывает балл BANT/MEDDIC из <code>AGENTS.md</code> → Создает карточку в CRM с персональным скриптом звонка → Лиды приоритета «A» пушатся топ-менеджерам.</p>
-              </div>
-              <div class="proc-stack-pills">
-                <span class="proc-pill">Interactions API</span>
-                <span class="proc-pill">Search Tool</span>
-                <span class="proc-pill">CRM MCP</span>
-                <span class="proc-pill">BANT/MEDDIC</span>
-              </div>
-            </div>
-
-            <!-- Proc 05 -->
-            <div class="proc-card">
-              <div class="proc-card-header">
-                <div>
-                  <span class="proc-num-tag">ПРОЦЕСС #05 · ПРОДАЖИ</span>
-                  <h4 class="proc-title">Конфигурирование и генерация индивидуальных коммерческих предложений (CPQ)</h4>
-                </div>
-                <span class="proc-hitl-badge hitl">Human-in-the-Loop</span>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Зачем бизнесу</div>
-                <p class="proc-text">Ликвидация лага между выявлением потребностей и выставлением точного коммерческого предложения.</p>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Экономический эффект</div>
-                <p class="proc-text">Сокращение цикла подготовки КП с <strong>2–3 дней до 10–15 минут</strong>. Рост Win Rate на 10–15%. Экономия до 20 часов рабочего времени каждого менеджера в месяц.</p>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Пошаговая логика Agent Loop</div>
-                <p class="proc-text">Менеджер жмет кнопку в CRM → SDK собирает транскрипт встречи и бриф → Через MCP запрашивает прайсы и остатки в ERP → Сопоставляет опции, считает смету и формирует Pydantic-модель → Рендерит PDF → При скидке >10% срабатывает Decide Hook (подтверждение РОПа) → Отправка клиенту.</p>
-              </div>
-              <div class="proc-stack-pills">
-                <span class="proc-pill">Antigravity SDK</span>
-                <span class="proc-pill">Decide Hook</span>
-                <span class="proc-pill">ERP MCP</span>
-                <span class="proc-pill">Pydantic</span>
-              </div>
-            </div>
-
-            <!-- Proc 06 -->
-            <div class="proc-card">
-              <div class="proc-card-header">
-                <div>
-                  <span class="proc-num-tag">ПРОЦЕСС #06 · ПРОДАЖИ</span>
-                  <h4 class="proc-title">Семантический аудит телефонных переговоров и заполнение CRM</h4>
-                </div>
-                <span class="proc-hitl-badge hotl">Human-on-the-Loop</span>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Зачем бизнесу</div>
-                <p class="proc-text">100% контроль качества переговоров и ликвидация проблемы незаполненных CRM-полей.</p>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Экономический эффект</div>
-                <p class="proc-text">Высвобождение <strong>1,5 часов</strong> рабочего времени менеджера ежедневно. Сплошной аудит 100% созвонов вместо 3–5% супервайзером. Точный прогноз воронки продаж.</p>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Пошаговая логика Agent Loop</div>
-                <p class="proc-text">Запись из АТС транскрибируется с диаризацией реплик → Модель исполняет <code>sales-audit/SKILL.md</code> → Извлекает договоренности, бюджет, блокеры и оценку удовлетворенности → Заполняет поля CRM и ставит дедлайны → При риске срыва сделки отправляет алерт руководителю.</p>
-              </div>
-              <div class="proc-stack-pills">
-                <span class="proc-pill">Gemini Transcribe</span>
-                <span class="proc-pill">SKILL.md</span>
-                <span class="proc-pill">CRM REST API</span>
-                <span class="proc-pill">Bitrix24 / amoCRM</span>
-              </div>
+          <div class="roadmap-step">
+            <div class="roadmap-step-time">ЭТАП 2 · МЕСЯЦЫ 3–6</div>
+            <div>
+              <h4 class="roadmap-step-title">Стандартизация интеграций через MCP</h4>
+              <p style="font-size:0.95rem; color:#52525b; margin:0 0 10px 0;">
+                Подключение защищенных MCP-серверов к 1С, Bitrix24 и базам данных. Автоматизация операций чтения: аналитические запросы Text-to-SQL, сплошной аудит звонков отдела продаж, скрининг резюме.
+              </p>
+              <span style="font-family:var(--mono); font-size:0.75rem; background:#f4f4f5; padding:3px 8px; border:1px solid #e4e4e7;">Результат: 95% аналитических отчетов без привлечения программистов</span>
             </div>
           </div>
 
-          <!-- CONTOUR 3: HR & OFFICE -->
-          <div id="contour-hr">
-            <h3>3. Блок делопроизводства, документооборота и HR</h3>
-
-            <!-- Proc 07 -->
-            <div class="proc-card">
-              <div class="proc-card-header">
-                <div>
-                  <span class="proc-num-tag">ПРОЦЕСС #07 · HR & НАЙМ</span>
-                  <h4 class="proc-title">Интеллектуальный скрининг резюме и первичное интервьюирование</h4>
-                </div>
-                <span class="proc-hitl-badge hitl">Human-in-the-Loop</span>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Экономический эффект</div>
-                <p class="proc-text">Сокращение длительности первичной обработки кандидатов на <strong>75–85%</strong>. Снижение стоимости найма (Cost-per-Hire) на 30–40%. Рост доходимости до финальных интервью на 25%.</p>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Пошаговая логика Agent Loop</div>
-                <p class="proc-text">Резюме из HeadHunter/ATS парсятся моделью → Сопоставляются с матрицей компетенций вакансии → Лидерам скоринга высылается ссылка на асинхронное AI-интервью → Модель агрегирует ответы и готовит профиль кандидата со спорными зонами → Рекрутер визирует оффер/отказ.</p>
-              </div>
-              <div class="proc-stack-pills">
-                <span class="proc-pill">Managed Agent</span>
-                <span class="proc-pill">ATS API</span>
-                <span class="proc-pill">Multimodal Input</span>
-                <span class="proc-pill">HH Parser</span>
-              </div>
-            </div>
-
-            <!-- Proc 08 -->
-            <div class="proc-card">
-              <div class="proc-card-header">
-                <div>
-                  <span class="proc-num-tag">ПРОЦЕСС #08 · HR & ОНБОРДИНГ</span>
-                  <h4 class="proc-title">Корпоративный онбординг персонала и навигация по регламентам (Enterprise Copilot)</h4>
-                </div>
-                <span class="proc-hitl-badge hool">Human-out-of-the-loop</span>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Экономический эффект</div>
-                <p class="proc-text">Сокращение периода адаптации сотрудника на <strong>30–45%</strong>. Экономия до 5 часов в неделю у наставников. Снижение оттока на испытательном сроке на 15–20%.</p>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Пошаговая логика Agent Loop</div>
-                <p class="proc-text">Регламенты компании индексируются в векторном хранилище (text-embedding-005) → Вопрос новичка в корпоративном чате → Векторный поиск извлекает точные цитаты ЛНА и бланки → Формируется ответ со ссылками на пункты приказов → При запросе отпуска агент создает заявку в 1C:ЗУП через MCP.</p>
-              </div>
-              <div class="proc-stack-pills">
-                <span class="proc-pill">GEAP Serverless RAG</span>
-                <span class="proc-pill">text-embedding-005</span>
-                <span class="proc-pill">1C:ЗУП MCP</span>
-              </div>
-            </div>
-
-            <!-- Proc 09 -->
-            <div class="proc-card">
-              <div class="proc-card-header">
-                <div>
-                  <span class="proc-num-tag">ПРОЦЕСС #09 · ДОКУМЕНТООБОРОТ</span>
-                  <h4 class="proc-title">Интеллектуальная маршрутизация входящей первичной корреспонденции</h4>
-                </div>
-                <span class="proc-hitl-badge hotl">Human-on-the-Loop</span>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Экономический эффект</div>
-                <p class="proc-text">Сокращение регистрации писем с суток до <strong>2 минут</strong>. Снижение риска пропуска судебных сроков до 0%. Сокращение затрат на канцелярию на 40–50%.</p>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Пошаговая логика Agent Loop</div>
-                <p class="proc-text">Сканы писем и претензий из email поступают в Antigravity → Мультимодальный Gemini распознает реквизиты, номера, суть и дедлайн → Навык <code>SKILL.md</code> определяет категорию → Агент создает карточку в СЭД через MCP и назначает контрольную задачу исполнителю.</p>
-              </div>
-              <div class="proc-stack-pills">
-                <span class="proc-pill">Antigravity Multimodal</span>
-                <span class="proc-pill">СЭД MCP</span>
-                <span class="proc-pill">SKILL.md</span>
-              </div>
+          <div class="roadmap-step">
+            <div class="roadmap-step-time">ЭТАП 3 · МЕСЯЦЫ 6–12</div>
+            <div>
+              <h4 class="roadmap-step-title">Агентные контуры с подтверждением человеком (HITL)</h4>
+              <p style="font-size:0.95rem; color:#52525b; margin:0 0 10px 0;">
+                Запуск сценариев с правом создания документов: сверка первички (3-Way Matching), экспресс-аудит договоров, расчет смет и автогенерация КП, предиктивный автозаказ на склад.
+              </p>
+              <span style="font-family:var(--mono); font-size:0.75rem; background:#f4f4f5; padding:3px 8px; border:1px solid #e4e4e7;">Результат: Автоматизация >80% рутинных транзакций при 0% сбоев</span>
             </div>
           </div>
 
-          <!-- CONTOUR 4: FINANCE -->
-          <div id="contour-finance">
-            <h3>4. Бухгалтерия и финансы</h3>
-
-            <!-- Proc 10 -->
-            <div class="proc-card">
-              <div class="proc-card-header">
-                <div>
-                  <span class="proc-num-tag">ПРОЦЕСС #10 · БУХГАЛТЕРИЯ</span>
-                  <h4 class="proc-title">Сверка первичных документов с заказами и выписками (3-Way Matching)</h4>
-                </div>
-                <span class="proc-hitl-badge hitl">HITL при расхождениях</span>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Экономический эффект</div>
-                <p class="proc-text">Снижение трудоемкости сверки бухгалтерией на <strong>80–90%</strong>. Исключение повторных или мошеннических оплат. Ускорение цикла Accounts Payable с 7 дней до пары часов.</p>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Пошаговая логика Agent Loop</div>
-                <p class="proc-text">Мультимодальный парсинг сканов счетов/актов в JSON → Через MCP агент сверяет строки с заказом в ERP (1C/SAP) и складом → В Python-песочнице проверяется математика сумм и НДС → При совпадении — автоплатеж в график; при дельте — блокировка и алерт бухгалтеру.</p>
-              </div>
-              <div class="proc-stack-pills">
-                <span class="proc-pill">Antigravity SDK</span>
-                <span class="proc-pill">Linux Sandbox</span>
-                <span class="proc-pill">1C/SAP MCP</span>
-                <span class="proc-pill">JSON Schema</span>
-              </div>
-            </div>
-
-            <!-- Proc 11 -->
-            <div class="proc-card">
-              <div class="proc-card-header">
-                <div>
-                  <span class="proc-num-tag">ПРОЦЕСС #11 · ФИНАНСЫ</span>
-                  <h4 class="proc-title">Автоматизированный аудит авансовых отчетов и командировочных расходов</h4>
-                </div>
-                <span class="proc-hitl-badge hitl">Human-in-the-Loop</span>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Экономический эффект</div>
-                <p class="proc-text">Валидация чека ускоряется с 30 минут до <strong>30 секунд</strong>. Снижение нецелевых трат на 10–15%. Исключение рисков налоговых штрафов за неверную первичку.</p>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Пошаговая логика Agent Loop</div>
-                <p class="proc-text">Фото чека из приложения → Модель считывает фискальные признаки → <code>expense-policy/SKILL.md</code> сверяет лимиты отелей и отсутствие нецелевых трат → Проверка ФНС через API → Генерация проводок и реестра на выплату компенсации.</p>
-              </div>
-              <div class="proc-stack-pills">
-                <span class="proc-pill">Multimodal Gemini</span>
-                <span class="proc-pill">ФНС API</span>
-                <span class="proc-pill">SKILL.md</span>
-                <span class="proc-pill">1C:Бухгалтерия</span>
-              </div>
-            </div>
-
-            <!-- Proc 12 -->
-            <div class="proc-card">
-              <div class="proc-card-header">
-                <div>
-                  <span class="proc-num-tag">ПРОЦЕСС #12 · ФИНАНСЫ</span>
-                  <h4 class="proc-title">Сценарное моделирование денежных потоков и предотвращение кассовых разрывов</h4>
-                </div>
-                <span class="proc-hitl-badge hitl">Human-in-the-Loop</span>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Экономический эффект</div>
-                <p class="proc-text">Выявление риска кассового разрыва за <strong>14–30 дней</strong> до наступления. Снижение затрат на экстренные кредиты/овердрафты на 25–35%. Экономия до 12 часов CFO в неделю.</p>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Пошаговая логика Agent Loop</div>
-                <p class="proc-text">Выгрузка остатков и графиков платежей дебиторов через MCP → Симуляция Монте-Карло в Python Sandbox с учетом задержек оплат → Модель формирует 3 сценария Cash Flow → При дефиците генерирует компенсационный план (факторинг, перенос платежей) в дашборд CFO.</p>
-              </div>
-              <div class="proc-stack-pills">
-                <span class="proc-pill">Python Sandbox</span>
-                <span class="proc-pill">Monte-Carlo</span>
-                <span class="proc-pill">ERP MCP</span>
-                <span class="proc-pill">Cash Flow Engine</span>
-              </div>
+          <div class="roadmap-step">
+            <div class="roadmap-step-time">ЭТАП 4 · ОТ 12 МЕСЯЦЕВ</div>
+            <div>
+              <h4 class="roadmap-step-title">Системная автономия и непрерывное обучение</h4>
+              <p style="font-size:0.95rem; color:#52525b; margin:0 0 10px 0;">
+                Сквозная синхронизация межфункциональных цепочек, самообучение агентов на принятых решениях верификаторов и снижение операционных расходов компании (OPEX) на 15–25%.
+              </p>
             </div>
           </div>
 
-          <!-- CONTOUR 5: LEGAL -->
-          <div id="contour-legal">
-            <h3>5. Юридический блок (Legal)</h3>
+        </div>
+      </div>
+    </section>
 
-            <!-- Proc 13 -->
-            <div class="proc-card">
-              <div class="proc-card-header">
-                <div>
-                  <span class="proc-num-tag">ПРОЦЕСС #13 · ЮРИДИЧЕСКИЙ БЛОК</span>
-                  <h4 class="proc-title">Автоматизированный аудит типовых договоров и составление протокола разногласий</h4>
-                </div>
-                <span class="proc-hitl-badge hitl">Human-in-the-Loop</span>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Экономический эффект</div>
-                <p class="proc-text">Вычитка договора сокращается с 4 часов до <strong>3–5 минут</strong>. Ускорение согласования сделок в 3–4 раза. 100% перехват скрытых неустоек и кабальных условий.</p>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Пошаговая логика Agent Loop</div>
-                <p class="proc-text">Загрузка DOCX → Подгрузка чек-листа рисков из <code>legal-playbook/SKILL.md</code> → Построчный анализ неустоек и подсудности → Генерация документа в режиме рецензирования (Track Changes) с правками на полях → Юрист утверждает протокол разногласий в один клик.</p>
-              </div>
-              <div class="proc-stack-pills">
-                <span class="proc-pill">Antigravity Editor</span>
-                <span class="proc-pill">Artifacts</span>
-                <span class="proc-pill">SKILL.md</span>
-                <span class="proc-pill">Track Changes</span>
-              </div>
-            </div>
+    <!-- SECTION 7: CONSULTATION -->
+    <section id="consult" class="guide-page-frame guide-section-block" data-nav-title="Связь & Аудит" style="background:#09090b; color:#ffffff;">
+      <div class="guide-content-wrap" style="text-align:center; margin:0 auto;">
+        <div style="font-family:var(--mono); font-size:0.75rem; color:#10b981; font-weight:700; margin-bottom:8px;">// СТРАТЕГИЧЕСКАЯ СЕССИЯ</div>
+        <h2 style="color:#ffffff;">Проведите аудит бизнес-процессов вашей компании</h2>
+        <p style="color:#a1a1aa; max-width:680px; margin:0 auto 28px;">
+          Запишитесь на 45-минутную сессию с Михаилом Пузырёвым. Мы разберем узкие места в операционке вашей компании, рассчитаем потенциальный ROI и сформируем пошаговый план внедрения ИИ-агентов.
+        </p>
+        <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap;">
+          <a href="/booking" class="btn-primary" style="background:#ffffff; color:#09090b; padding:14px 28px; text-decoration:none; font-weight:700;">Забронировать слот на аудит ↗</a>
+          <a href="https://t.me/uncrn_sage" target="_blank" class="btn-secondary" style="border-color:#3f3f46; color:#ffffff; padding:14px 24px; text-decoration:none;">Написать в Telegram ↗</a>
+        </div>
+      </div>
+    </section>
 
-            <!-- Proc 14 -->
-            <div class="proc-card">
-              <div class="proc-card-header">
-                <div>
-                  <span class="proc-num-tag">ПРОЦЕСС #14 · ЮРИДИЧЕСКИЙ БЛОК</span>
-                  <h4 class="proc-title">Мониторинг изменений законодательства и комплаенс-контроль внутренних актов</h4>
-                </div>
-                <span class="proc-hitl-badge hitl">Human-in-the-Loop</span>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Экономический эффект</div>
-                <p class="proc-text">Экономия до 20 часов юристов в месяц. Снижение регуляторных рисков на <strong>80–90%</strong>. Обновление оферт и политик до вступления поправок в силу.</p>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Пошаговая логика Agent Loop</div>
-                <p class="proc-text">Плановый веб-поиск по базам нормативных актов → Сопоставление законов со спецификой компании → Извлечение действующих оферт из репозитория → Формирование таблицы расхождений и проекта формулировок → Передача комплаенс-офицеру.</p>
-              </div>
-              <div class="proc-stack-pills">
-                <span class="proc-pill">Gemini Search</span>
-                <span class="proc-pill">Document Parser</span>
-                <span class="proc-pill">Git Repository</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- CONTOUR 6: OPERATIONS & SUPPORT -->
-          <div id="contour-support">
-            <h3>6. Операционные процессы, логистика и клиентский сервис</h3>
-
-            <!-- Proc 15 -->
-            <div class="proc-card">
-              <div class="proc-card-header">
-                <div>
-                  <span class="proc-num-tag">ПРОЦЕСС #15 · КЛИЕНТСКИЙ СЕРВИС</span>
-                  <h4 class="proc-title">Автоматизированная обработка клиентских инцидентов (L1/L2 Support)</h4>
-                </div>
-                <span class="proc-hitl-badge hotl">Human-on-the-Loop</span>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Экономический эффект (McKinsey)</div>
-                <p class="proc-text">Автоматическое закрытие <strong>50–70%</strong> входящих обращений 1-й линии без человека. Снижение расходов на поддержку на 35–50%, время ожидания падает с 10 минут до секунд.</p>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Пошаговая логика Agent Loop</div>
-                <p class="proc-text">Запрос из чата → Классификация интента и тональности → Вызов инструмента проверки доставки в логистической системе через MCP → Формулирование эмпатичного ответа → При высоком негативе — эскалация живому оператору с саммари ситуации.</p>
-              </div>
-              <div class="proc-stack-pills">
-                <span class="proc-pill">Gemini 3 Flash</span>
-                <span class="proc-pill">Omnichannel MCP</span>
-                <span class="proc-pill">Helpdesk API</span>
-              </div>
-            </div>
-
-            <!-- Proc 16 -->
-            <div class="proc-card">
-              <div class="proc-card-header">
-                <div>
-                  <span class="proc-num-tag">ПРОЦЕСС #16 · СКЛАД & СНАБЖЕНИЕ</span>
-                  <h4 class="proc-title">Предиктивное управление складскими запасами и автозаказ</h4>
-                </div>
-                <span class="proc-hitl-badge hitl">Human-in-the-Loop</span>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Экономический эффект</div>
-                <p class="proc-text">Высвобождение <strong>15–25%</strong> оборотного капитала из неликвидов. Сокращение упущенной выручки (Out-of-Stock) на 60–80%. Экономия до 30 часов закупщиков в неделю.</p>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Пошаговая логика Agent Loop</div>
-                <p class="proc-text">Сбор остатков и темпов списания из ERP через SQL MCP → Сопоставление с сезонностью и графиком поставок в песочнице → Расчет точки перезаказа → Формирование проекта заказов поставщикам → Менеджер визирует список → Автоотправка по EDI.</p>
-              </div>
-              <div class="proc-stack-pills">
-                <span class="proc-pill">Interactions API</span>
-                <span class="proc-pill">SQL MCP</span>
-                <span class="proc-pill">EDI Gateways</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- CONTOUR 7: PRODUCT MANAGEMENT -->
-          <div id="contour-product">
-            <h3>7. Управление продуктом (Product Management) и R&D</h3>
-
-            <!-- Proc 17 -->
-            <div class="proc-card">
-              <div class="proc-card-header">
-                <div>
-                  <span class="proc-num-tag">ПРОЦЕСС #17 · ПРОДУКТ</span>
-                  <h4 class="proc-title">Агрегация обратной связи (Voice of Customer) и приоритизация бэклога</h4>
-                </div>
-                <span class="proc-hitl-badge hotl">Human-on-the-Loop</span>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Экономический эффект</div>
-                <p class="proc-text">Экономия до 40 часов аналитиков в месяц. Рост востребованности функций (Feature Adoption) на <strong>20–30%</strong>. Обнаружение багов после релизов ускоряется до 1 часа.</p>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Пошаговая логика Agent Loop</div>
-                <p class="proc-text">Отзывы из App Store/Google Play/тикетов → Векторная кластеризация в семантические группы → Сопоставление с выручкой затронутых когорт в CRM → Расчет скоринга RICE/ICE → Автосоздание задач в Jira/Linear с цитатами пользователей.</p>
-              </div>
-              <div class="proc-stack-pills">
-                <span class="proc-pill">GEAP Vector Search</span>
-                <span class="proc-pill">Gemini 3 Flash</span>
-                <span class="proc-pill">Jira/Linear MCP</span>
-              </div>
-            </div>
-
-            <!-- Proc 18 -->
-            <div class="proc-card">
-              <div class="proc-card-header">
-                <div>
-                  <span class="proc-num-tag">ПРОЦЕСС #18 · R&D & РАЗРАБОТКА</span>
-                  <h4 class="proc-title">Автоматическая генерация спецификаций продуктовых требований (PRD)</h4>
-                </div>
-                <span class="proc-hitl-badge hitl">Human-in-the-Loop</span>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Экономический эффект (McKinsey)</div>
-                <p class="proc-text">Сокращение цикла подготовки PRD с недели до <strong>2–3 часов</strong>. Прирост производительности R&D на 20–45%. Снижение архитектурных дефектов на 25–35%.</p>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Пошаговая логика Agent Loop</div>
-                <p class="proc-text">Концепция фичи вводится в Editor View → Агент анализирует репозиторий, контракты API и схему БД → Генерирует User Stories и критерии Given-When-Then по <code>prd/SKILL.md</code> → Browser Tool эмулирует UI-путь со скриншотами → Утверждение архитектором в Manager Surface.</p>
-              </div>
-              <div class="proc-stack-pills">
-                <span class="proc-pill">Antigravity Manager</span>
-                <span class="proc-pill">Browser Tool</span>
-                <span class="proc-pill">Codebase Analysis</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- CONTOUR 8: ANALYTICS & BI -->
-          <div id="contour-bi">
-            <h3>8. Корпоративная аналитика и бизнес-интеллект (Analytics & BI)</h3>
-
-            <!-- Proc 19 -->
-            <div class="proc-card">
-              <div class="proc-card-header">
-                <div>
-                  <span class="proc-num-tag">ПРОЦЕСС #19 · BI & АНАЛИТИКА</span>
-                  <h4 class="proc-title">Автономный Ad-hoc анализ данных (Text-to-SQL и исполнение кода)</h4>
-                </div>
-                <span class="proc-hitl-badge hool">Human-out-of-the-loop</span>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Экономический эффект</div>
-                <p class="proc-text">Время получения сложных срезов сокращается с 5 дней до <strong>1 минуты</strong>. Высвобождение до 50% времени DWH-инженеров от рутинных выгрузок в Excel.</p>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Пошаговая логика Agent Loop</div>
-                <p class="proc-text">Запрос руководителя на естественном языке → Считывание метаданных хранилища (BigQuery/Postgres) через MCP → Компиляция SQL в режиме Read-Only → Статистическая обработка и графики в Python Sandbox → Проверка Inspect Hook на конфиденциальность → Выдача ответа.</p>
-              </div>
-              <div class="proc-stack-pills">
-                <span class="proc-pill">Interactions API</span>
-                <span class="proc-pill">DWH MCP</span>
-                <span class="proc-pill">Inspect Hook</span>
-                <span class="proc-pill">Python Sandbox</span>
-              </div>
-            </div>
-
-            <!-- Proc 20 -->
-            <div class="proc-card">
-              <div class="proc-card-header">
-                <div>
-                  <span class="proc-num-tag">ПРОЦЕСС #20 · RETENTION & СЕРВИС</span>
-                  <h4 class="proc-title">Предиктивный скоринг оттока клиентов (Churn Prediction) и удержание</h4>
-                </div>
-                <span class="proc-hitl-badge hitl">Human-in-the-Loop</span>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Экономический эффект</div>
-                <p class="proc-text">Снижение оттока на <strong>2–4 п.п.</strong> Прирост операционной прибыли на 10–20% за счет дешевого удержания текущих клиентов. Прицельная работа Customer Success.</p>
-              </div>
-              <div class="proc-section-row">
-                <div class="proc-label">Пошаговая логика Agent Loop</div>
-                <p class="proc-text">Анализ активности (входы, объем транзакций, тикеты) → Алгоритмическая оценка Churn Risk (0-100) в песочнице → Анализ последних переписок Gemini → Формирование индивидуального оффера удержания → Задача аккаунт-менеджеру в CRM со сценарием диалога.</p>
-              </div>
-              <div class="proc-stack-pills">
-                <span class="proc-pill">Python Sandbox</span>
-                <span class="proc-pill">Gemini 3 Pro</span>
-                <span class="proc-pill">CRM MCP</span>
-                <span class="proc-pill">Retention Engine</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- SECTION 4: MASTER MATRIX -->
-        <section id="section-matrix">
-          <h2>4. Сводная матрица распределения ответственности и экономической отдачи</h2>
-          <p>
-            Итоговая таблица сопоставления всех 20 процессов, стека реализации и моделей человеческого контроля:
-          </p>
-
-          <div class="table-scroll-wrapper">
-            <table class="research-table">
-              <thead>
-                <tr>
-                  <th>Подразделение</th>
-                  <th>Бизнес-процесс</th>
-                  <th>Экономический эффект</th>
-                  <th>Технологический стек</th>
-                  <th>Модель контроля</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Маркетинг</strong></td>
-                  <td>Персонализация коммуникаций</td>
-                  <td>Рост продуктивности на 9–15%, ускорение в 5–7 раз</td>
-                  <td>Antigravity, Gemini 3.1, n8n, CDP MCP</td>
-                  <td>Human-in-the-Loop</td>
-                </tr>
-                <tr>
-                  <td><strong>Маркетинг</strong></td>
-                  <td>Автоматизированное SEO</td>
-                  <td>Экономия 75% времени, рост органики</td>
-                  <td>Antigravity CLI, SKILL.md, Browser Tool</td>
-                  <td>Human-on-the-Loop</td>
-                </tr>
-                <tr>
-                  <td><strong>Маркетинг</strong></td>
-                  <td>Конкурентная разведка и цены</td>
-                  <td>Экономия 10–15 ч/нед, лаг реакции 4 ч</td>
-                  <td>Managed Agents, Gemini 3 Flash, Python</td>
-                  <td>Human-out-of-the-loop</td>
-                </tr>
-                <tr>
-                  <td><strong>Продажи</strong></td>
-                  <td>Скоринг и квалификация лидов</td>
-                  <td>Speed-to-Lead 30 сек, конверсия +30–40%</td>
-                  <td>Interactions API, Search Tool, CRM MCP</td>
-                  <td>Human-on-the-Loop</td>
-                </tr>
-                <tr>
-                  <td><strong>Продажи</strong></td>
-                  <td>Автогенерация КП (CPQ)</td>
-                  <td>Срок с 3 дней до 15 мин, Win Rate +15%</td>
-                  <td>Antigravity SDK, Decide Hook, ERP MCP</td>
-                  <td>Human-in-the-Loop</td>
-                </tr>
-                <tr>
-                  <td><strong>Продажи</strong></td>
-                  <td>Семантический аудит звонков</td>
-                  <td>Экономия 1,5 ч/день на менеджера, 100% аудит</td>
-                  <td>Gemini Transcribe, SKILL.md, CRM API</td>
-                  <td>Human-on-the-Loop</td>
-                </tr>
-                <tr>
-                  <td><strong>HR и Офис</strong></td>
-                  <td>Скрининг резюме и интервью</td>
-                  <td>Скрининг быстрее на 80%, найм дешевле на 35%</td>
-                  <td>Managed Agent, ATS API, Multimodal Input</td>
-                  <td>Human-in-the-Loop</td>
-                </tr>
-                <tr>
-                  <td><strong>HR и Офис</strong></td>
-                  <td>Корпоративный Copilot</td>
-                  <td>Онбординг быстрее на 40%, экономия 5 ч/нед</td>
-                  <td>GEAP RAG Serverless, text-embedding-005</td>
-                  <td>Human-out-of-the-loop</td>
-                </tr>
-                <tr>
-                  <td><strong>HR и Офис</strong></td>
-                  <td>Маршрутизация почты</td>
-                  <td>Регистрация за 2 мин, 0% просрочек сроков</td>
-                  <td>Antigravity Multimodal, СЭД MCP</td>
-                  <td>Human-on-the-Loop</td>
-                </tr>
-                <tr>
-                  <td><strong>Финансы</strong></td>
-                  <td>Сверка 3-Way Matching</td>
-                  <td>Снижение трудоемкости на 85%, 0 ошибок оплат</td>
-                  <td>Antigravity SDK, Linux Sandbox, 1C MCP</td>
-                  <td>HITL при расхождениях</td>
-                </tr>
-                <tr>
-                  <td><strong>Финансы</strong></td>
-                  <td>Аудит авансовых отчетов</td>
-                  <td>Проверка чека за 30 сек, 0 налоговых рисков</td>
-                  <td>Multimodal Gemini, ФНС API, SKILL.md</td>
-                  <td>Human-in-the-Loop</td>
-                </tr>
-                <tr>
-                  <td><strong>Финансы</strong></td>
-                  <td>Предотвращение кассовых разрывов</td>
-                  <td>Предупреждение за 30 дней, экономия 12 ч CFO</td>
-                  <td>Python Sandbox, Monte-Carlo, ERP MCP</td>
-                  <td>Human-in-the-Loop</td>
-                </tr>
-                <tr>
-                  <td><strong>Юристы</strong></td>
-                  <td>Аудит договоров и Redlines</td>
-                  <td>Проверка за 5 мин, 100% перехват скрытых неустоек</td>
-                  <td>Antigravity Editor, Artifacts, SKILL.md</td>
-                  <td>Human-in-the-Loop</td>
-                </tr>
-                <tr>
-                  <td><strong>Юристы</strong></td>
-                  <td>Комплаенс-мониторинг законов</td>
-                  <td>Экономия 20 ч/мес, снижение рисков на 90%</td>
-                  <td>Gemini Search, Document Parser, Git</td>
-                  <td>Human-in-the-Loop</td>
-                </tr>
-                <tr>
-                  <td><strong>Операции</strong></td>
-                  <td>L1/L2 поддержка клиентов</td>
-                  <td>Автозакрытие 50–70% тикетов, затраты -40%</td>
-                  <td>Gemini 3 Flash, Omnichannel MCP, Helpdesk</td>
-                  <td>Human-on-the-Loop</td>
-                </tr>
-                <tr>
-                  <td><strong>Операции</strong></td>
-                  <td>Управление складскими запасами</td>
-                  <td>Высвобождение 20% капитала, Out-of-Stock -70%</td>
-                  <td>Interactions API, SQL MCP, EDI Gateways</td>
-                  <td>Human-in-the-Loop</td>
-                </tr>
-                <tr>
-                  <td><strong>Продукт</strong></td>
-                  <td>Анализ Voice of Customer</td>
-                  <td>Обработка отзывов быстрее на 85%, Adoption +25%</td>
-                  <td>GEAP Vector Search, Gemini 3 Flash, Jira</td>
-                  <td>Human-on-the-Loop</td>
-                </tr>
-                <tr>
-                  <td><strong>Продукт</strong></td>
-                  <td>Генерация требований (PRD)</td>
-                  <td>ТЗ за 3 часа, производительность R&D +20–45%</td>
-                  <td>Antigravity Manager, Browser Tool, Codebase</td>
-                  <td>Human-in-the-Loop</td>
-                </tr>
-                <tr>
-                  <td><strong>Аналитика</strong></td>
-                  <td>Автономный Text-to-SQL</td>
-                  <td>Ответ за 1 мин, высвобождение 50% DWH</td>
-                  <td>Interactions API, DWH MCP, Inspect Hook</td>
-                  <td>Human-out-of-the-loop</td>
-                </tr>
-                <tr>
-                  <td><strong>Аналитика</strong></td>
-                  <td>Скоринг оттока клиентов</td>
-                  <td>Снижение оттока на 2–4 п.п., прибыль +15%</td>
-                  <td>Python Sandbox, Gemini 3 Pro, CRM MCP</td>
-                  <td>Human-in-the-Loop</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <!-- SECTION 5: ROADMAP -->
-        <section id="section-roadmap">
-          <h2>5. Архитектурные паттерны безопасности и дорожная карта развертывания</h2>
-          <p>
-            Внедрение агентных платформ в контур предприятия сопряжено с решением задач информационной безопасности, предотвращением утечек коммерческой тайны и защитой от неконтролируемых модификаций производственных баз данных.
-          </p>
-          <p>
-            Основной архитектурный паттерн безопасной интеграции предполагает развертывание <strong>детерминированного шлюза авторизации полномочий</strong> между нейросетевым ядром и корпоративной инфраструктурой. Взаимодействие агента с внешними базами данных через MCP изолируется: токены внедряются сервером интеграции (<em>Credential Proxy</em>) и никогда не передаются в память модели. Любое модифицирующее действие оформляется в виде идемпотентного объекта предложения действия (<em>Propose Action Object</em>).
-          </p>
-
-          <div class="roadmap-timeline">
-            
-            <div class="roadmap-step">
-              <div class="roadmap-step-time">ЭТАП 1 · МЕСЯЦЫ 1–3</div>
-              <div>
-                <h4 class="roadmap-step-title">Аудит и быстрые победы (Quick Wins)</h4>
-                <p class="proc-text">Оцифровка корпоративных баз знаний, регламентов; внедрение внутреннего RAG-ассистента онбординга; запуск базовых задач контент-маркетинга.</p>
-                <div class="proc-stack-pills">
-                  <span class="proc-pill">Стек: GEAP Serverless RAG, text-embedding-005, Gemini 3 Flash, n8n</span>
-                  <span class="proc-pill" style="background:#dcfce7;color:#166534;">Критерий: Сокращение поиска информации на 70%</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="roadmap-step">
-              <div class="roadmap-step-time">ЭТАП 2 · МЕСЯЦЫ 3–6</div>
-              <div>
-                <h4 class="roadmap-step-title">Стандартизация интеграций через MCP</h4>
-                <p class="proc-text">Подключение защищенных MCP-серверов к корпоративным системам; автоматизация процессов чтения (Text-to-SQL, аудит звонков продаж, скрининг резюме).</p>
-                <div class="proc-stack-pills">
-                  <span class="proc-pill">Стек: Model Context Protocol, Interactions API, Antigravity CLI, AGENTS.md</span>
-                  <span class="proc-pill" style="background:#dcfce7;color:#166534;">Критерий: 95% аналитических ad-hoc запросов без DWH</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="roadmap-step">
-              <div class="roadmap-step-time">ЭТАП 3 · МЕСЯЦЫ 6–12</div>
-              <div>
-                <h4 class="roadmap-step-title">Агентные песочницы и контуры HITL</h4>
-                <p class="proc-text">Запуск многоагентных процессов с правом модификации данных: сверка 3-Way Matching, экспресс-аудит договоров, генерация CPQ, предиктивный автозаказ.</p>
-                <div class="proc-stack-pills">
-                  <span class="proc-pill">Стек: Google Antigravity SDK, Linux Sandboxes, Decide/Inspect Hooks, CRM/ERP MCP</span>
-                  <span class="proc-pill" style="background:#dcfce7;color:#166534;">Критерий: Автоматизация >80% рутины при 0% несанкционированных сбоев</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="roadmap-step">
-              <div class="roadmap-step-time">ЭТАП 4 · ОТ 12 МЕСЯЦЕВ</div>
-              <div>
-                <h4 class="roadmap-step-title">Системная автономия и непрерывное обучение</h4>
-                <p class="proc-text">Сквозная интеграция межфункциональных сценариев; внедрение контуров самообучения (Active Learning) на основе решений верификаторов.</p>
-                <div class="proc-stack-pills">
-                  <span class="proc-pill">Стек: Antigravity Manager Surface, динамическое пополнение SKILL.md, Multi-Agent Orchestration</span>
-                  <span class="proc-pill" style="background:#dcfce7;color:#166534;">Критерий: Снижение совокупного OPEX на 15–25%</span>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </section>
-
-        <!-- SECTION 6: CONSULTATION CTA -->
-        <section id="section-consult" class="research-cta-frame">
-          <h2>Внедрите агентную архитектуру в ваш бизнес</h2>
-          <p>
-            Запишитесь на 45-минутную стратегическую сессию с Михаилом Пузырёвым. Мы проведем аудит текущих процессов, определим точки быстрого возврата инвестиций (ROI) и сформируем персональный план внедрения ИИ-агентов.
-          </p>
-          <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap;">
-            <a href="/booking" class="btn-primary" style="background:#ffffff; color:#09090b; padding:14px 28px; text-decoration:none; font-weight:700;">Забронировать слот на аудит ↗</a>
-            <a href="https://t.me/uncrn_sage" target="_blank" class="btn-secondary" style="border-color:#3f3f46; color:#ffffff; padding:14px 24px; text-decoration:none;">Написать в Telegram ↗</a>
-          </div>
-        </section>
-
-      </main>
-
-    </div>
-
-  </div>
+  </main>
 
   <!-- FOOTER -->
   <footer class="footer">
@@ -1602,13 +667,13 @@
             <li><a href="/solutions">Каталог решений</a></li>
           </ul>
         </div>
-        <div class=footer-nav-col>
+        <div class="footer-nav-col">
           <div class="footer-col-title">База Знаний</div>
           <ul>
             <li><a href="/glossary">AI-Глоссарий</a></li>
             <li><a href="/prompts">Промпты</a></li>
             <li><a href="/calculators">Калькуляторы</a></li>
-            <li><a href="/base/research-agentic-processes/">White Paper по агентам</a></li>
+            <li><a href="/base/research-agentic-processes/">Как внедрить ИИ в бизнес</a></li>
             <li><a href="/google-one-guide">Гайд Google One</a></li>
           </ul>
         </div>
@@ -1634,33 +699,5 @@
   <!-- Scripts -->
   <script src="/js/auth.js?v=1.4"></script>
   <script src="/js/main.js?v=2.7"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const links = document.querySelectorAll('#sidebar-toc a');
-      const sections = [];
-      links.forEach(link => {
-        const id = link.getAttribute('href').substring(1);
-        const sec = document.getElementById(id);
-        if (sec) sections.push({ el: sec, link: link });
-      });
-
-      window.addEventListener('scroll', () => {
-        let current = '';
-        const scrollPos = window.scrollY + 140;
-        sections.forEach(s => {
-          if (s.el.offsetTop <= scrollPos) {
-            current = s.link.getAttribute('href').substring(1);
-          }
-        });
-        links.forEach(link => {
-          if (link.getAttribute('href') === '#' + current) {
-            link.classList.add('active');
-          } else {
-            link.classList.remove('active');
-          }
-        });
-      }, { passive: true });
-    });
-  </script>
 </body>
 </html>

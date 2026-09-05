@@ -34,7 +34,7 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  overflow-x: clip;
   max-width: 100%;
 }
 
@@ -43,7 +43,7 @@ body {
   color: var(--black);
   font-family: var(--font);
   line-height: 1.6;
-  overflow-x: hidden;
+  overflow-x: clip;
   max-width: 100%;
   width: 100%;
   position: relative;
