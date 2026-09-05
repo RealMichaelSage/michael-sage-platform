@@ -3207,6 +3207,11 @@ input[type="reset"],
 }
 
 /* Active State */
+.scrollspy-item.active .scrollspy-label {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
 .scrollspy-item.active .scrollspy-num {
   color: var(--black);
   font-weight: 700;
