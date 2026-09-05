@@ -664,6 +664,23 @@ document.addEventListener('DOMContentLoaded', () => {
     nav.innerHTML = '';
     nav.appendChild(ul);
 
+    // Helper to calculate total sticky obstruction above content
+    function getStickyHeaderOffset(targetSec) {
+      const nav = document.querySelector('header.nav, .nav');
+      const navHeight = nav ? nav.offsetHeight : 68;
+
+      const controlsBar = document.querySelector('.solutions-controls-bar, .sticky-controls-bar, .prompts-sticky-toolbar, .prompts-controls, .glossary-sticky-toolbar');
+      let barHeight = 0;
+      if (controlsBar && window.getComputedStyle(controlsBar).display !== 'none') {
+        if (!targetSec || (controlsBar.compareDocumentPosition(targetSec) & Node.DOCUMENT_POSITION_FOLLOWING)) {
+          barHeight = controlsBar.offsetHeight;
+        }
+      }
+
+      const extraPad = barHeight > 0 ? 16 : 14;
+      return navHeight + barHeight + extraPad;
+    }
+
     // Smooth scroll on click
     ul.addEventListener('click', (e) => {
       const link = e.target.closest('.scrollspy-link');
@@ -672,11 +689,28 @@ document.addEventListener('DOMContentLoaded', () => {
         const targetId = link.dataset.id;
         const targetSec = document.getElementById(targetId);
         if (targetSec) {
-          const headerOffset = 72;
+          // If contour or card was hidden by search/filter, restore visibility
+          if (targetSec.classList.contains('contour-block') && window.getComputedStyle(targetSec).display === 'none') {
+            document.querySelectorAll('.contour-block').forEach(c => {
+              c.style.display = 'block';
+              c.querySelectorAll('.sol-card').forEach(card => card.style.display = 'flex');
+            });
+          }
+
+          if (typeof window.triggerSolutionsClickScrolling === 'function') {
+            window.triggerSolutionsClickScrolling();
+          }
+          if (typeof window.setActiveButton === 'function') {
+            const contour = targetSec.getAttribute('data-contour') || (targetSec.id === 'hero' ? 'all' : targetSec.id);
+            window.setActiveButton(contour);
+          }
+
+          const totalOffset = getStickyHeaderOffset(targetSec);
           const elementPosition = targetSec.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          const offsetPosition = elementPosition + window.pageYOffset - totalOffset;
+
           window.scrollTo({
-            top: offsetPosition,
+            top: Math.max(0, offsetPosition),
             behavior: 'smooth'
           });
         }
@@ -697,7 +731,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (scrollY + viewportHeight >= docHeight - 80) {
         activeIndex = items.length - 1;
       } else {
-        const controlsBar = document.querySelector('.solutions-controls-bar');
+        const controlsBar = document.querySelector('.solutions-controls-bar, .sticky-controls-bar, .prompts-sticky-toolbar, .prompts-controls, .glossary-sticky-toolbar');
         const barHeight = (controlsBar && window.getComputedStyle(controlsBar).display !== 'none') ? controlsBar.offsetHeight : 0;
         const triggerPoint = scrollY + 68 + barHeight + 40;
 

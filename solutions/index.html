@@ -1650,11 +1650,17 @@
 
   <!-- Scripts -->
   <script src="/js/auth.js?v=1.4"></script>
-  <script src="/js/main.js?v=2.7"></script>
+  <script src="/js/main.js?v=2.8"></script>
   <script>
     let currentCategory = 'all';
     let isClickScrolling = false;
     let clickTimer = null;
+
+    window.triggerSolutionsClickScrolling = function() {
+      isClickScrolling = true;
+      clearTimeout(clickTimer);
+      clickTimer = setTimeout(() => { isClickScrolling = false; }, 900);
+    };
 
     function setActiveButton(cat) {
       document.querySelectorAll('.filter-cat-btn').forEach(b => {
@@ -1676,6 +1682,7 @@
         }
       });
     }
+    window.setActiveButton = setActiveButton;
 
     function setCategory(cat, btn) {
       currentCategory = cat;
