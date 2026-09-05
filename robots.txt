@@ -3,48 +3,127 @@
 
 User-agent: *
 Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /sitemap.xml
 Disallow: /cdn-cgi/
 Disallow: /admin/
 Disallow: /api/
 Disallow: /KP/
 Disallow: /kp/
+Disallow: /cabinet/
+Disallow: /cabinet
+Disallow: /profile/
+Disallow: /profile
 
 # AI Search & LLM Engine Optimization (GEO)
 User-agent: GPTBot
 Allow: /
+Disallow: /cabinet/
+Disallow: /cabinet
+Disallow: /profile/
+Disallow: /profile
+Disallow: /KP/
+Disallow: /kp/
 
 User-agent: OAI-SearchBot
 Allow: /
+Disallow: /cabinet/
+Disallow: /cabinet
+Disallow: /profile/
+Disallow: /profile
+Disallow: /KP/
+Disallow: /kp/
 
 User-agent: ChatGPT-User
 Allow: /
+Disallow: /cabinet/
+Disallow: /cabinet
+Disallow: /profile/
+Disallow: /profile
+Disallow: /KP/
+Disallow: /kp/
 
 User-agent: PerplexityBot
 Allow: /
+Disallow: /cabinet/
+Disallow: /cabinet
+Disallow: /profile/
+Disallow: /profile
+Disallow: /KP/
+Disallow: /kp/
 
 User-agent: Diffbot
 Allow: /
+Disallow: /cabinet/
+Disallow: /cabinet
+Disallow: /profile/
+Disallow: /profile
+Disallow: /KP/
+Disallow: /kp/
 
 User-agent: ClaudeBot
 Allow: /
+Disallow: /cabinet/
+Disallow: /cabinet
+Disallow: /profile/
+Disallow: /profile
+Disallow: /KP/
+Disallow: /kp/
 
 User-agent: anthropic-ai
 Allow: /
+Disallow: /cabinet/
+Disallow: /cabinet
+Disallow: /profile/
+Disallow: /profile
+Disallow: /KP/
+Disallow: /kp/
 
 User-agent: Google-Extended
 Allow: /
+Disallow: /cabinet/
+Disallow: /cabinet
+Disallow: /profile/
+Disallow: /profile
+Disallow: /KP/
+Disallow: /kp/
 
 User-agent: Applebot-Extended
 Allow: /
+Disallow: /cabinet/
+Disallow: /cabinet
+Disallow: /profile/
+Disallow: /profile
+Disallow: /KP/
+Disallow: /kp/
 
 User-agent: CCBot
 Allow: /
+Disallow: /cabinet/
+Disallow: /cabinet
+Disallow: /profile/
+Disallow: /profile
+Disallow: /KP/
+Disallow: /kp/
 
 User-agent: YandexBot
 Allow: /
+Disallow: /cabinet/
+Disallow: /cabinet
+Disallow: /profile/
+Disallow: /profile
+Disallow: /KP/
+Disallow: /kp/
 
 User-agent: Googlebot
 Allow: /
+Disallow: /cabinet/
+Disallow: /cabinet
+Disallow: /profile/
+Disallow: /profile
+Disallow: /KP/
+Disallow: /kp/
 
 Sitemap: https://a-sage.ru/sitemap.xml
 Host: https://a-sage.ru
