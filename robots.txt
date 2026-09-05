@@ -109,6 +109,8 @@ Disallow: /kp/
 
 User-agent: YandexBot
 Allow: /
+Disallow: /llms.txt
+Disallow: /llms-full.txt
 Disallow: /cabinet/
 Disallow: /cabinet
 Disallow: /profile/
@@ -118,6 +120,8 @@ Disallow: /kp/
 
 User-agent: Googlebot
 Allow: /
+Disallow: /llms.txt
+Disallow: /llms-full.txt
 Disallow: /cabinet/
 Disallow: /cabinet
 Disallow: /profile/
