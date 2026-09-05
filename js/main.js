@@ -697,11 +697,14 @@ document.addEventListener('DOMContentLoaded', () => {
       if (scrollY + viewportHeight >= docHeight - 80) {
         activeIndex = items.length - 1;
       } else {
-        // Find the section closest to the top of viewport (offset by header height)
-        const triggerPoint = scrollY + 120;
+        const controlsBar = document.querySelector('.solutions-controls-bar');
+        const barHeight = (controlsBar && window.getComputedStyle(controlsBar).display !== 'none') ? controlsBar.offsetHeight : 0;
+        const triggerPoint = scrollY + 68 + barHeight + 40;
+
         for (let i = 0; i < items.length; i++) {
           const sec = items[i].el;
-          const top = sec.offsetTop;
+          const rect = sec.getBoundingClientRect();
+          const top = rect.top + scrollY;
           const height = sec.offsetHeight;
           if (triggerPoint >= top && triggerPoint < top + height) {
             activeIndex = i;
