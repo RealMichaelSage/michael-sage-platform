@@ -3132,41 +3132,33 @@ input[type="reset"],
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  position: relative;
 }
 
 .scrollspy-link {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   text-decoration: none;
   padding: 3px 0;
   cursor: pointer;
-  position: relative;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .scrollspy-label {
-  position: absolute;
-  right: calc(100% + 10px);
-  top: 50%;
-  transform: translateY(-50%) translateX(6px);
   font-family: var(--mono);
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: var(--black);
-  background: #ffffff;
-  border: 1px solid var(--border);
-  padding: 3px 8px;
-  border-radius: 0;
-  opacity: 0;
-  pointer-events: none;
-  white-space: nowrap;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: #71717a;
+  opacity: 0.65;
   letter-spacing: 0.02em;
-  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  z-index: 100;
+  white-space: nowrap;
+  transition: opacity 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  transform: translateX(0);
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.95), 0 0 2px rgba(255, 255, 255, 1);
 }
 
 .scrollspy-num {
@@ -3176,8 +3168,7 @@ input[type="reset"],
   color: #a1a1aa;
   letter-spacing: 0.04em;
   transition: color 0.2s ease, transform 0.2s ease;
-  width: 18px;
-  text-align: right;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.95);
 }
 
 .scrollspy-dot {
@@ -3193,7 +3184,8 @@ input[type="reset"],
 /* Hover States */
 .scrollspy-link:hover .scrollspy-label {
   opacity: 1;
-  transform: translateY(-50%) translateX(0);
+  color: var(--black);
+  transform: translateX(-3px);
 }
 
 .scrollspy-link:hover .scrollspy-num {
@@ -3208,15 +3200,24 @@ input[type="reset"],
 }
 
 /* Active State */
+.scrollspy-item.active .scrollspy-label {
+  opacity: 1;
+  color: var(--black);
+  font-weight: 700;
+  transform: translateX(-3px);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.95), 0 0 3px rgba(255, 255, 255, 1);
+}
+
 .scrollspy-item.active .scrollspy-num {
   color: var(--black);
-  font-weight: 800;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.95);
 }
 
 .scrollspy-item.active .scrollspy-dot {
   background: #34d399;
   border-color: #059669;
-  box-shadow: 0 0 8px rgba(52, 211, 153, 0.7);
+  box-shadow: 0 0 8px rgba(52, 211, 153, 0.65);
   transform: scale(1.25);
 }
 
@@ -3224,18 +3225,25 @@ input[type="reset"],
    DARK SECTION ADAPTATION (When scrolling over dark footer)
 ══════════════════════════════════════════ */
 .page-scrollspy.on-dark .scrollspy-label {
-  color: #ffffff;
-  background: #18181b;
-  border-color: #27272a;
+  color: #a1a1aa;
+  opacity: 0.75;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85);
 }
 
 .page-scrollspy.on-dark .scrollspy-num {
   color: #71717a;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85);
 }
 
 .page-scrollspy.on-dark .scrollspy-dot {
   background: #18181b;
   border-color: #52525b;
+}
+
+.page-scrollspy.on-dark .scrollspy-link:hover .scrollspy-label {
+  color: #ffffff;
+  opacity: 1;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
 }
 
 .page-scrollspy.on-dark .scrollspy-link:hover .scrollspy-num {
@@ -3247,9 +3255,17 @@ input[type="reset"],
   border-color: #ffffff;
 }
 
+.page-scrollspy.on-dark .scrollspy-item.active .scrollspy-label {
+  color: #ffffff;
+  opacity: 1;
+  font-weight: 700;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.95);
+}
+
 .page-scrollspy.on-dark .scrollspy-item.active .scrollspy-num {
   color: #ffffff;
-  font-weight: 800;
+  font-weight: 700;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.95);
 }
 
 .page-scrollspy.on-dark .scrollspy-item.active .scrollspy-dot {
