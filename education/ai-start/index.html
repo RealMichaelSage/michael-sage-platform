@@ -1,0 +1,2694 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta name="robots" content="index, follow">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Старт: Мастерство с Google AI — Михаил Пузырёв | Курс по ИИ для подростков</title>
+    <meta name="description" content="Практический курс по искусственному интеллекту для подростков 10–16 лет от Михаила Пузырёва. 10 занятий: Gemini, ImageFX, NotebookLM, вайб-кодинг и запуск собственных IT-проектов.">
+    <meta name="keywords" content="AI-Старт, курс по ИИ для детей, нейросети для подростков, Google AI, Gemini, NotebookLM, вайбкодинг для школьников, Михаил Пузырёв, обучение нейросетям">
+    <link rel="canonical" href="https://a-sage.ru/education/ai-start/">
+
+    <!-- OpenGraph / Social Media -->
+    <meta property="og:title" content="AI-Старт: Мастерство с Google AI — Курс для подростков 10–16 лет">
+    <meta property="og:description" content="10 интерактивных занятий: от точных промптов и ИИ-репетитора до вайб-кодинга, собственных веб-приложений и Demo Day.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://a-sage.ru/education/ai-start/">
+    <meta property="og:image" content="https://a-sage.ru/education/ai-start/mikhail_avatar.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AI-Старт: Мастерство с Google AI — Михаил Пузырёв">
+    <meta name="twitter:description" content="Превращаем нейросети из развлечения в суперсилу для учебы, творчества и первого IT-проекта.">
+    <meta name="twitter:image" content="https://a-sage.ru/education/ai-start/mikhail_avatar.png">
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Course",
+      "name": "AI-Старт: Мастерство с Google AI",
+      "description": "Практическая образовательная программа по искусственному интеллекту для подростков 10-16 лет. Google Gemini, ImageFX, NotebookLM, вайб-кодинг и создание финального веб-приложения.",
+      "provider": {
+        "@type": "Person",
+        "name": "Михаил Пузырёв",
+        "url": "https://a-sage.ru/#person"
+      },
+      "educationalLevel": "Beginner to Intermediate",
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Подростки 10–16 лет, школьники, родители"
+      },
+      "inLanguage": "ru-RU",
+      "url": "https://a-sage.ru/education/ai-start/"
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style>
+        :root {
+            --bg-dark: #07080c;
+            --pop-yellow: #FFDE59;
+            --pop-yellow-alt: #FBBC04;
+            --pop-pink: #FF007F;
+            --pop-red: #EA4335;
+            --pop-blue: #4285F4;
+            --pop-cyan: #00F0FF;
+            --pop-green: #34A853;
+            --pop-neon-green: #39FF14;
+            --pop-purple: #9D4EDD;
+            --pop-white: #FFFFFF;
+            
+            --thick-border: 3.5px solid #000000;
+            --thin-border: 2px solid #000000;
+            --hard-shadow: 6px 6px 0px #000000;
+            --hard-shadow-lg: 10px 10px 0px #000000;
+            --hard-shadow-sm: 4px 4px 0px #000000;
+
+            --card-opaque-dark: #12131A;
+            --card-opaque-light: #1A1C26;
+            --card-opaque-blue: #111B33;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        @media (min-width: 1025px) {
+            *, *::before, *::after, html, body, a, button, input, select, textarea, [data-tip], .pop-modal-overlay, .pop-modal-card {
+                cursor: none !important;
+            }
+        }
+
+        /* Comic Pop-Art Custom Cursor */
+        .custom-cursor-dot {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 24px;
+            height: 24px;
+            background: var(--pop-yellow);
+            border: 3px solid #000000;
+            border-radius: 0;
+            pointer-events: none;
+            z-index: 2147483647 !important;
+            transform: translate(-50%, -50%);
+            box-shadow: 3px 3px 0px #000000;
+            transition: width 0.15s ease, height 0.15s ease, background-color 0.15s ease, opacity 0.15s ease, transform 0.1s ease;
+        }
+
+        .custom-cursor-dot::after {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: 6px;
+            height: 6px;
+            background: #FFFFFF;
+            border-radius: 0;
+        }
+
+        .custom-cursor-dot.hovered {
+            width: 34px;
+            height: 34px;
+            background: var(--pop-pink);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        /* Comic Speech Bubble Tooltip */
+        .comic-speech-bubble {
+            position: fixed;
+            z-index: 2147483646 !important;
+            pointer-events: none;
+            background: #FFFFFF;
+            color: #000000;
+            border: 3.5px solid #000000;
+            border-radius: 0;
+            padding: 9px 16px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 1.05rem;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            box-shadow: 6px 6px 0px #000000;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-width: 280px;
+            text-align: center;
+            line-height: 1.2;
+            white-space: nowrap;
+        }
+
+        .comic-speech-bubble.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .comic-speech-bubble::before {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 12px solid #000000;
+        }
+
+        .comic-speech-bubble::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 22px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 9px solid #FFFFFF;
+        }
+
+        .comic-speech-bubble.flip-y::before {
+            top: auto;
+            bottom: 100%;
+            border-top: none;
+            border-bottom: 12px solid #000000;
+        }
+
+        .comic-speech-bubble.flip-y::after {
+            top: auto;
+            bottom: 100%;
+            border-top: none;
+            border-bottom: 9px solid #FFFFFF;
+        }
+
+        .comic-speech-bubble.flip-x::before {
+            left: auto;
+            right: 20px;
+        }
+
+        .comic-speech-bubble.flip-x::after {
+            left: auto;
+            right: 22px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: #FFFFFF;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            user-select: none;
+        }
+
+        /* ---------------------------------- */
+        /* Pop Art Cyber Space Background */
+        /* ---------------------------------- */
+        .bg-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .pop-halftone {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.08) 1.5px, transparent 1.5px);
+            background-size: 26px 26px;
+            z-index: 2;
+        }
+
+        .pop-sunburst {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-conic-gradient(
+                from 0deg,
+                rgba(66, 133, 244, 0.025) 0deg 10deg,
+                rgba(255, 222, 89, 0.02) 10deg 20deg,
+                transparent 20deg 30deg
+            );
+            z-index: 1;
+            animation: rotate-sunburst 120s linear infinite;
+            transform-origin: center center;
+        }
+
+        @keyframes rotate-sunburst {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .google-accent-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: 0.12;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .glow-blue { top: -100px; right: -100px; background: var(--pop-blue); }
+        .glow-yellow { bottom: -100px; left: -100px; background: var(--pop-yellow); }
+
+        /* ---------------------------------- */
+        /* Header Top Navigation Bar */
+        /* ---------------------------------- */
+        header {
+            position: relative;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 32px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(8px);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-badge {
+            background: var(--pop-yellow);
+            color: #000000;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 0.85rem;
+            padding: 5px 12px;
+            border: var(--thin-border);
+            box-shadow: var(--hard-shadow-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            flex-shrink: 0;
+        }
+
+        .header-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 1.15rem;
+            letter-spacing: 0.03em;
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .header-title span.accent-google {
+            background: linear-gradient(90deg, #4285F4 0%, #EA4335 33%, #FBBC04 66%, #34A853 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .slide-counter {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            font-weight: 700;
+            background: var(--card-opaque-dark);
+            border: var(--thin-border);
+            padding: 6px 12px;
+            box-shadow: var(--hard-shadow-sm);
+            color: var(--pop-yellow);
+        }
+
+        .header-btn {
+            background: #FFFFFF;
+            color: #000000;
+            border: var(--thin-border);
+            padding: 8px 14px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 0.88rem;
+            text-transform: uppercase;
+            box-shadow: var(--hard-shadow-sm);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: transform 0.15s ease, background 0.15s ease;
+        }
+
+        .header-btn:hover {
+            background: var(--pop-yellow);
+            transform: translateY(-2px);
+        }
+
+        .header-btn.btn-cta {
+            background: var(--pop-pink);
+            color: #FFFFFF;
+            border: var(--thin-border);
+        }
+
+        .header-btn.btn-cta:hover {
+            background: var(--pop-cyan);
+            color: #000000;
+        }
+
+        /* ---------------------------------- */
+        /* Slides Main Container */
+        /* ---------------------------------- */
+        main {
+            position: relative;
+            z-index: 10;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 24px;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            max-width: 1380px;
+            height: 100%;
+            max-height: calc(100vh - 150px);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: scale(0.96) translateY(20px);
+            transition: opacity 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0.35s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: all;
+            transform: scale(1) translateY(0);
+        }
+
+        .slide-content-card {
+            width: 100%;
+            height: 100%;
+            background: rgba(18, 19, 26, 0.96);
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow-lg);
+            padding: 2.2vw 3vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .slide-content-card::-webkit-scrollbar {
+            width: 6px;
+        }
+        .slide-content-card::-webkit-scrollbar-thumb {
+            background: var(--pop-yellow);
+            border: 1px solid #000000;
+        }
+
+        /* Comic Pop Headings */
+        .slide-tag {
+            display: inline-block;
+            background: var(--pop-cyan);
+            color: #000000;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 0.85rem;
+            padding: 4px 10px;
+            border: var(--thin-border);
+            box-shadow: 3px 3px 0px #000000;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 12px;
+        }
+
+        .slide-tag.tag-pink { background: var(--pop-pink); color: #FFFFFF; }
+        .slide-tag.tag-yellow { background: var(--pop-yellow); color: #000000; }
+        .slide-tag.tag-green { background: var(--pop-green); color: #FFFFFF; }
+        .slide-tag.tag-blue { background: var(--pop-blue); color: #FFFFFF; }
+
+        .slide-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: clamp(2rem, 3.4vw, 3.2rem);
+            line-height: 1.08;
+            text-transform: uppercase;
+            letter-spacing: -0.01em;
+            margin-bottom: 14px;
+            color: #FFFFFF;
+            text-shadow: 3px 3px 0px #000000;
+        }
+
+        .slide-subtitle {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(1rem, 1.4vw, 1.25rem);
+            line-height: 1.45;
+            color: #CCCCCC;
+            max-width: 820px;
+        }
+
+        /* ---------------------------------- */
+        /* SLIDE 1: Cover Hero */
+        /* ---------------------------------- */
+        .cover-grid {
+            display: grid;
+            grid-template-columns: 1.35fr 1fr;
+            gap: 40px;
+            height: 100%;
+            align-items: center;
+        }
+
+        .cover-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-banner {
+            background: var(--pop-yellow);
+            color: #000000;
+            display: inline-block;
+            padding: 6px 14px;
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow-sm);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 18px;
+            transform: rotate(-1.5deg);
+            align-self: flex-start;
+        }
+
+        .hero-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: clamp(2.4rem, 4.4vw, 4.4rem);
+            line-height: 1.02;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            color: #FFFFFF;
+            margin-bottom: 18px;
+            text-shadow: 4px 4px 0px #000000;
+        }
+
+        .hero-title .glow-word {
+            color: var(--pop-yellow);
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-age-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--card-opaque-light);
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow);
+            padding: 10px 18px;
+            margin-bottom: 24px;
+            align-self: flex-start;
+        }
+
+        .hero-age-pill .age-badge {
+            background: var(--pop-pink);
+            color: #FFFFFF;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 1.15rem;
+            padding: 4px 10px;
+            border: 2px solid #000000;
+        }
+
+        .hero-age-pill .age-text {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #FFFFFF;
+        }
+
+        .author-box-cover {
+            background: var(--card-opaque-dark);
+            border: var(--thin-border);
+            box-shadow: var(--hard-shadow-sm);
+            padding: 14px 18px;
+            border-left: 6px solid var(--pop-blue);
+            max-width: 580px;
+        }
+
+        .author-box-cover .author-label {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 0.85rem;
+            color: var(--pop-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+        }
+
+        .author-box-cover .author-name {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 1.25rem;
+            color: #FFFFFF;
+            margin-bottom: 4px;
+        }
+
+        .author-box-cover .author-desc {
+            font-size: 0.95rem;
+            color: #A0A5B5;
+            line-height: 1.35;
+        }
+
+        .cover-right {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .sticker-frame-hero {
+            position: relative;
+            max-width: 440px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sticker-img-hero {
+            width: 100%;
+            max-height: 480px;
+            object-fit: contain;
+            filter: drop-shadow(8px 8px 0px rgba(0, 0, 0, 0.95));
+            transition: transform 0.3s ease;
+        }
+
+        .sticker-img-hero:hover {
+            transform: scale(1.03) rotate(1deg);
+        }
+
+        .hero-floating-badge {
+            position: absolute;
+            bottom: 10px;
+            right: 0px;
+            background: var(--pop-neon-green);
+            color: #000000;
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow);
+            padding: 8px 14px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            transform: rotate(3deg);
+            animation: pulse-badge 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse-badge {
+            0% { transform: rotate(3deg) scale(1); }
+            100% { transform: rotate(2deg) scale(1.04); }
+        }
+
+        /* ---------------------------------- */
+        /* SLIDE 2: Speaker Bio & Mission */
+        /* ---------------------------------- */
+        .speaker-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.35fr;
+            gap: 32px;
+            height: 100%;
+            align-items: stretch;
+        }
+
+        .speaker-left-col {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .speaker-photo-card {
+            background: var(--card-opaque-light);
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow);
+            padding: 16px;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .speaker-avatar-img {
+            width: 110px;
+            height: 110px;
+            border-radius: 0;
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow-sm);
+            object-fit: cover;
+            background: #20222F;
+        }
+
+        .speaker-intro-meta h3 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 1.45rem;
+            color: #FFFFFF;
+            margin-bottom: 4px;
+        }
+
+        .speaker-intro-meta .badge-role {
+            background: var(--pop-yellow);
+            color: #000000;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border: 1.5px solid #000000;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        .speaker-diploma-card {
+            background: var(--card-opaque-dark);
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow);
+            padding: 14px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .diploma-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 0.95rem;
+            color: var(--pop-yellow);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .diploma-img-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000000;
+            border: var(--thin-border);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .diploma-img {
+            max-width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+            transition: transform 0.2s ease;
+        }
+
+        .diploma-img:hover {
+            transform: scale(1.05);
+        }
+
+        .speaker-right-col {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            justify-content: space-between;
+        }
+
+        .mission-quote-card {
+            background: #191B28;
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow);
+            border-left: 8px solid var(--pop-pink);
+            padding: 20px 24px;
+            position: relative;
+        }
+
+        .mission-quote-card .quote-tag {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 0.85rem;
+            color: var(--pop-pink);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 8px;
+        }
+
+        .mission-quote-card .quote-text {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            line-height: 1.4;
+            color: #FFFFFF;
+        }
+
+        .speaker-facts-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .fact-item {
+            background: var(--card-opaque-dark);
+            border: var(--thin-border);
+            box-shadow: var(--hard-shadow-sm);
+            padding: 12px 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .fact-icon {
+            background: var(--pop-blue);
+            color: #FFFFFF;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            border: 2px solid #000000;
+            flex-shrink: 0;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .fact-text {
+            font-size: 0.98rem;
+            line-height: 1.4;
+            color: #D1D5DB;
+        }
+
+        .fact-text a {
+            color: var(--pop-cyan);
+            text-decoration: underline;
+            font-weight: 600;
+        }
+
+        /* ---------------------------------- */
+        /* SLIDE 3: Course Overview */
+        /* ---------------------------------- */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr) 0.85fr;
+            gap: 20px;
+            height: 100%;
+            align-items: stretch;
+        }
+
+        .overview-cards-area {
+            grid-column: span 2;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .overview-card {
+            background: var(--card-opaque-dark);
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow);
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            transition: transform 0.2s ease;
+        }
+
+        .overview-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .overview-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .overview-icon-badge {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 1.3rem;
+            border: var(--thin-border);
+            box-shadow: 3px 3px 0px #000000;
+            flex-shrink: 0;
+        }
+
+        .overview-card-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 1.15rem;
+            text-transform: uppercase;
+            color: #FFFFFF;
+        }
+
+        .overview-card-content {
+            font-size: 1.05rem;
+            line-height: 1.45;
+            color: #D6D9E0;
+        }
+
+        .overview-card-content strong {
+            color: #FFFFFF;
+            font-weight: 700;
+        }
+
+        .overview-card-content .highlight {
+            background: rgba(255, 222, 89, 0.2);
+            color: var(--pop-yellow);
+            padding: 2px 6px;
+            border-radius: 0;
+            font-weight: 700;
+        }
+
+        .stack-tags-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .stack-pill {
+            background: #252838;
+            color: #FFFFFF;
+            border: 1.5px solid #000000;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            box-shadow: 2px 2px 0px #000000;
+        }
+
+        .overview-sticker-sidebar {
+            background: var(--card-opaque-light);
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            text-align: center;
+        }
+
+        .sidebar-sticker-img {
+            max-width: 100%;
+            max-height: 310px;
+            object-fit: contain;
+            filter: drop-shadow(6px 6px 0px #000000);
+        }
+
+        .sidebar-sticker-badge {
+            background: var(--pop-yellow);
+            color: #000000;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 1.15rem;
+            border: var(--thin-border);
+            box-shadow: var(--hard-shadow-sm);
+            padding: 8px 16px;
+            text-transform: uppercase;
+            width: 100%;
+        }
+
+        /* ---------------------------------- */
+        /* SLIDE 4: FAQ */
+        /* ---------------------------------- */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 28px;
+            height: 100%;
+            align-items: stretch;
+        }
+
+        .faq-accordion-col {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .faq-item-card {
+            background: var(--card-opaque-dark);
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow-sm);
+            padding: 16px 20px;
+            transition: transform 0.15s ease, border-color 0.15s ease;
+        }
+
+        .faq-item-card:hover {
+            transform: translateX(4px);
+            border-color: var(--pop-yellow);
+        }
+
+        .faq-question {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 1.15rem;
+            color: var(--pop-yellow);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 6px;
+        }
+
+        .faq-answer {
+            font-size: 0.96rem;
+            line-height: 1.45;
+            color: #D1D5DB;
+        }
+
+        .faq-answer strong {
+            color: #FFFFFF;
+        }
+
+        .faq-sticker-col {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: var(--card-opaque-light);
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow);
+            padding: 24px;
+            text-align: center;
+        }
+
+        .faq-sticker-img {
+            max-width: 100%;
+            max-height: 280px;
+            object-fit: contain;
+            filter: drop-shadow(6px 6px 0px #000000);
+            margin: 0 auto;
+        }
+
+        .curator-box-faq {
+            background: #1F2233;
+            border: var(--thin-border);
+            box-shadow: var(--hard-shadow-sm);
+            padding: 14px 18px;
+            text-align: left;
+        }
+
+        .curator-badge {
+            background: var(--pop-pink);
+            color: #FFFFFF;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border: 1.5px solid #000000;
+            display: inline-block;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .curator-name {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #FFFFFF;
+            margin-bottom: 4px;
+        }
+
+        .curator-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--pop-cyan);
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+
+        /* ---------------------------------- */
+        /* SLIDE 5: 10-Lesson Syllabus Breakdown */
+        /* ---------------------------------- */
+        .syllabus-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            height: 100%;
+        }
+
+        .syllabus-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+        }
+
+        .syllabus-hint-badge {
+            background: var(--pop-neon-green);
+            color: #000000;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 0.85rem;
+            padding: 6px 12px;
+            border: var(--thin-border);
+            box-shadow: var(--hard-shadow-sm);
+            text-transform: uppercase;
+            animation: pulse-badge 2s infinite alternate;
+        }
+
+        .syllabus-modules-grid {
+            display: grid;
+            grid-template-columns: 1.35fr 1fr;
+            gap: 20px;
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .module-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .module-section-header {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 1.05rem;
+            text-transform: uppercase;
+            padding: 6px 14px;
+            border: var(--thin-border);
+            box-shadow: 3px 3px 0px #000000;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            width: fit-content;
+        }
+
+        .header-base { background: var(--pop-yellow); color: #000000; }
+        .header-pro { background: var(--pop-pink); color: #FFFFFF; }
+
+        .lessons-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .lesson-item-btn {
+            background: var(--card-opaque-dark);
+            border: var(--thin-border);
+            box-shadow: var(--hard-shadow-sm);
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-align: left;
+            color: #FFFFFF;
+            transition: all 0.15s ease;
+            position: relative;
+        }
+
+        .lesson-item-btn:hover {
+            background: var(--card-opaque-light);
+            border-color: var(--pop-cyan);
+            transform: translateX(4px);
+        }
+
+        .lesson-item-btn.active {
+            border-color: var(--pop-yellow);
+            background: #1C1F2E;
+        }
+
+        .lesson-num-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 0.82rem;
+            padding: 3px 8px;
+            background: #25283A;
+            border: 1px solid #000000;
+            color: var(--pop-yellow);
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+
+        .lesson-pro-tag {
+            color: var(--pop-cyan);
+        }
+
+        .lesson-name {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.98rem;
+            flex: 1;
+        }
+
+        .lesson-arrow-action {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--pop-yellow);
+            padding: 2px 6px;
+            background: #000000;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            flex-shrink: 0;
+            margin-left: 8px;
+        }
+
+        /* ---------------------------------- */
+        /* SLIDE 6: Final CTA & Contacts */
+        /* ---------------------------------- */
+        .final-grid {
+            display: grid;
+            grid-template-columns: 1.25fr 1fr;
+            gap: 36px;
+            height: 100%;
+            align-items: center;
+        }
+
+        .final-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .final-hint-callout {
+            background: #1C1A2E;
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow);
+            border-left: 8px solid var(--pop-neon-green);
+            padding: 16px 20px;
+            margin-bottom: 24px;
+        }
+
+        .final-hint-callout .hint-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 0.95rem;
+            color: var(--pop-neon-green);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 6px;
+        }
+
+        .final-hint-callout .hint-body {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.08rem;
+            font-weight: 600;
+            line-height: 1.45;
+            color: #FFFFFF;
+        }
+
+        .final-buttons-group {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            max-width: 520px;
+        }
+
+        .cta-big-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 22px;
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow);
+            text-decoration: none;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .cta-big-btn:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 9px 9px 0px #000000;
+        }
+
+        .cta-btn-primary {
+            background: var(--pop-yellow);
+            color: #000000;
+        }
+
+        .cta-btn-secondary {
+            background: var(--card-opaque-light);
+            color: #FFFFFF;
+            border-color: #000000;
+        }
+
+        .cta-btn-accent {
+            background: var(--pop-blue);
+            color: #FFFFFF;
+        }
+
+        .cta-btn-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cta-btn-label {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 1.15rem;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .cta-btn-sub {
+            font-size: 0.85rem;
+            opacity: 0.85;
+            margin-top: 2px;
+        }
+
+        .cta-btn-arrow {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 1.4rem;
+        }
+
+        .final-right {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .final-sticker-img {
+            max-width: 100%;
+            max-height: 380px;
+            object-fit: contain;
+            filter: drop-shadow(8px 8px 0px #000000);
+            transition: transform 0.25s ease;
+        }
+
+        .final-sticker-img:hover {
+            transform: scale(1.04) rotate(-1deg);
+        }
+
+        .qr-codes-row {
+            display: flex;
+            gap: 16px;
+            margin-top: 14px;
+        }
+
+        .qr-box-small {
+            background: #FFFFFF;
+            padding: 8px;
+            border: var(--thin-border);
+            box-shadow: var(--hard-shadow-sm);
+            text-align: center;
+        }
+
+        .qr-box-small .qr-img-target {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto;
+        }
+
+        .qr-box-small .qr-label {
+            color: #000000;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        /* ---------------------------------- */
+        /* Footer Slider Buttons (Transparent, No Bar) */
+        /* ---------------------------------- */
+        footer {
+            position: relative;
+            z-index: 100;
+            width: 100%;
+            padding: 10px 30px 18px 30px;
+            background: transparent;
+            border-top: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .nav-arrows-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .pop-nav-arrow {
+            background: var(--card-opaque-dark);
+            color: #FFFFFF;
+            border: var(--thin-border);
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 1.2rem;
+            box-shadow: var(--hard-shadow-sm);
+            transition: all 0.15s ease;
+        }
+
+        .pop-nav-arrow:hover {
+            background: var(--pop-yellow);
+            color: #000000;
+            transform: translateY(-2px);
+        }
+
+        .footer-controls-names {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            background: transparent;
+        }
+
+        .btn-slide-name {
+            background: var(--card-opaque-dark);
+            color: #FFFFFF;
+            border: var(--thin-border);
+            padding: 9px 15px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 0.88rem;
+            text-transform: uppercase;
+            transition: all 0.15s ease;
+            box-shadow: var(--hard-shadow-sm);
+        }
+
+        .btn-slide-name:hover {
+            background: var(--card-opaque-light);
+            transform: translateY(-2px);
+        }
+
+        .btn-slide-name.active {
+            background: var(--pop-yellow);
+            color: #000000;
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow-sm);
+            transform: scale(1.05) translateY(-2px);
+        }
+
+        .footer-shortcuts-hint {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: #787E91;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .footer-shortcuts-hint kbd {
+            background: #181A24;
+            border: 1px solid #3A3D4D;
+            padding: 2px 6px;
+            color: #FFFFFF;
+            font-weight: 700;
+        }
+
+        /* ---------------------------------- */
+        /* Mobile Bottom Navigation Bar */
+        /* ---------------------------------- */
+        .mobile-nav-bar {
+            display: none;
+        }
+
+        /* ---------------------------------- */
+        /* Interactive Modal for Lesson Details */
+        /* ---------------------------------- */
+        .pop-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(4, 5, 8, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+        }
+
+        .pop-modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: all;
+        }
+
+        .pop-modal-card {
+            background: #151620;
+            border: var(--thick-border);
+            box-shadow: 12px 12px 0px #000000;
+            max-width: 680px;
+            width: 100%;
+            padding: 30px;
+            position: relative;
+            transform: scale(0.92) translateY(20px);
+            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .pop-modal-overlay.open .pop-modal-card {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            background: var(--pop-pink);
+            color: #FFFFFF;
+            width: 38px;
+            height: 38px;
+            border: var(--thin-border);
+            box-shadow: var(--hard-shadow-sm);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.15s ease, background 0.15s ease;
+        }
+
+        .modal-close-btn:hover {
+            background: var(--pop-yellow);
+            color: #000000;
+            transform: scale(1.1);
+        }
+
+        .modal-lesson-tag {
+            display: inline-block;
+            background: var(--pop-yellow);
+            color: #000000;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 0.85rem;
+            padding: 4px 10px;
+            border: var(--thin-border);
+            box-shadow: 3px 3px 0px #000000;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .modal-lesson-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 1.85rem;
+            line-height: 1.15;
+            color: #FFFFFF;
+            margin-bottom: 18px;
+            padding-right: 40px;
+        }
+
+        .modal-section-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 0.95rem;
+            color: var(--pop-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 16px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .modal-lesson-body {
+            font-size: 1.05rem;
+            line-height: 1.5;
+            color: #D1D5DB;
+        }
+
+        .modal-skills-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        .modal-skills-list li {
+            font-size: 0.98rem;
+            line-height: 1.4;
+            color: #E2E8F0;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .modal-skills-list li::before {
+            content: '⚡';
+            color: var(--pop-yellow);
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .modal-outcome-box {
+            background: #1C2030;
+            border: var(--thin-border);
+            box-shadow: var(--hard-shadow-sm);
+            border-left: 6px solid var(--pop-green);
+            padding: 14px 18px;
+            margin-top: 18px;
+        }
+
+        .modal-outcome-box strong {
+            color: var(--pop-neon-green);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .modal-outcome-box p {
+            font-size: 0.98rem;
+            color: #FFFFFF;
+            line-height: 1.4;
+        }
+
+        .modal-btn-confirm {
+            margin-top: 22px;
+            width: 100%;
+            background: var(--pop-yellow);
+            color: #000000;
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow-sm);
+            padding: 12px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 1.05rem;
+            text-transform: uppercase;
+            transition: all 0.15s ease;
+        }
+
+        .modal-btn-confirm:hover {
+            background: var(--pop-cyan);
+            transform: translateY(-2px);
+        }
+
+        /* ---------------------------------- */
+        /* Responsive Adaptations */
+        /* ---------------------------------- */
+        @media (max-width: 1024px) {
+            body {
+                overflow-y: auto;
+                height: auto;
+                min-height: 100vh;
+            }
+
+            header {
+                padding: 12px 16px;
+                gap: 8px;
+            }
+
+            @media (max-width: 768px) {
+                .header-title {
+                    display: none !important;
+                }
+                .slide-counter {
+                    display: none !important;
+                }
+                .logo-badge {
+                    font-size: 0.82rem;
+                    padding: 6px 10px;
+                }
+            }
+
+            .logo-badge {
+                font-size: 0.72rem;
+                padding: 4px 8px;
+            }
+
+            .header-title {
+                font-size: 0.95rem;
+            }
+
+            .header-title span.author-hide-mobile {
+                display: none;
+            }
+
+            .btn-screen-hide {
+                display: none !important;
+            }
+
+            main {
+                padding: 10px 14px 90px 14px;
+                overflow: visible;
+            }
+
+            .slide {
+                position: relative;
+                max-height: none;
+                height: auto;
+                opacity: 1 !important;
+                visibility: visible !important;
+                transform: none !important;
+                display: none;
+            }
+
+            .slide.active {
+                display: block;
+            }
+
+            .slide-content-card {
+                padding: 20px 16px;
+                height: auto;
+                max-height: none;
+            }
+
+            .cover-grid, .speaker-grid, .faq-grid, .final-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .overview-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .overview-cards-area {
+                grid-column: span 1;
+                grid-template-columns: 1fr;
+            }
+
+            .syllabus-modules-grid {
+                grid-template-columns: 1fr;
+            }
+
+            footer {
+                display: none !important;
+            }
+
+            /* Mobile Bottom Toolbar */
+            .mobile-nav-bar {
+                display: flex;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                z-index: 99999;
+                background: #0E1017;
+                border-top: 3px solid #000000;
+                padding: 8px 12px;
+                justify-content: space-between;
+                align-items: center;
+                gap: 8px;
+                box-shadow: 0 -4px 16px rgba(0,0,0,0.7);
+            }
+
+            .btn-mob-nav {
+                background: var(--pop-cyan);
+                color: #000000;
+                font-family: 'Outfit', sans-serif;
+                font-weight: 900;
+                font-size: 0.85rem;
+                padding: 10px 12px;
+                border: 2px solid #000000;
+                box-shadow: 2px 2px 0px #000000;
+                text-transform: uppercase;
+                flex: 1;
+                text-align: center;
+            }
+
+            .btn-mob-nav.next {
+                background: var(--pop-yellow);
+            }
+
+            .btn-mob-counter {
+                background: #191B26;
+                color: var(--pop-yellow);
+                border: 2px solid #000000;
+                padding: 9px 12px;
+                font-family: 'JetBrains Mono', monospace;
+                font-weight: 700;
+                font-size: 0.85rem;
+                box-shadow: 2px 2px 0px #000000;
+            }
+
+            .custom-cursor-dot, .comic-speech-bubble {
+                display: none !important;
+            }
+
+            *, *::before, *::after, html, body, a, button {
+                cursor: auto !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Pop Art Background Layers -->
+    <div class="bg-container">
+        <div class="pop-sunburst"></div>
+        <div class="pop-halftone"></div>
+        <div class="google-accent-glow glow-blue"></div>
+        <div class="google-accent-glow glow-yellow"></div>
+    </div>
+
+    <!-- Comic Pop Custom Cursor -->
+    <div class="custom-cursor-dot" id="cursor-dot"></div>
+    <div class="comic-speech-bubble" id="speech-bubble">AI-СТАРТ</div>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="logo-area">
+            <div class="logo-badge">КУРС ДЛЯ ПОДРОСТКОВ</div>
+            <div class="header-title">
+                «AI-СТАРТ: <span class="accent-google">GOOGLE AI</span>»
+                <span class="author-hide-mobile" style="color: #7E849E; font-size: 0.95rem; font-weight: 500;">// Михаил Пузырёв</span>
+            </div>
+        </div>
+
+        <div class="header-actions">
+            <div class="slide-counter" id="slide-indicator">01 / 06</div>
+            <button class="header-btn btn-screen-hide" id="btn-fullscreen" data-tip="Во весь экран (F)">⛶ ЭКРАН</button>
+            <a href="https://t.me/MarinaPali" target="_blank" class="header-btn btn-cta" data-tip="Записаться в Telegram">ЗАПИСАТЬСЯ ↗</a>
+        </div>
+    </header>
+
+    <!-- Slides Viewport -->
+    <main>
+
+        <!-- SLIDE 1: Cover Hero -->
+        <section class="slide active" id="slide-0" data-name="01. СТАРТ">
+            <div class="slide-content-card">
+                <div class="cover-grid">
+                    <div class="cover-left">
+                        <div class="hero-banner">ПРОГРАММА ПРАКТИЧЕСКОГО КУРСА</div>
+                        <h1 class="hero-title">
+                            AI-СТАРТ: <br>
+                            МАСТЕРСТВО С <br>
+                            <span class="glow-word">GOOGLE AI</span>
+                        </h1>
+
+                        <div class="hero-age-pill">
+                            <span class="age-badge">10–16 ЛЕТ</span>
+                            <span class="age-text">Для подростков и старших школьников (8–18 лет)</span>
+                        </div>
+
+                        <div class="author-box-cover">
+                            <div class="author-label">Автор и ведущий программы</div>
+                            <div class="author-name">Михаил Пузырёв</div>
+                            <div class="author-desc">
+                                Основатель нейро-комьюнити, исследователь ИИ-технологий, ментор НИУ ВШЭ и Сколково, эксперт по внедрению нейросетей в реальные проекты.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cover-right">
+                        <div class="sticker-frame-hero">
+                            <img src="sticker_privet.png" alt="Михаил Пузырёв - Привет!" class="sticker-img-hero" data-tip="Привет! Давай освоим суперсилу ИИ!">
+                            <div class="hero-floating-badge">★ СТАРТ В МАЕ 2025</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 2: Speaker Bio & Mission -->
+        <section class="slide" id="slide-1" data-name="02. СПИКЕР">
+            <div class="slide-content-card">
+                <div>
+                    <span class="slide-tag tag-blue">ВИЗИТКА ПРЕПОДАВАТЕЛЯ</span>
+                    <h2 class="slide-title">КТО ВЕДЕТ ПРОГРАММУ</h2>
+                </div>
+
+                <div class="speaker-grid">
+                    <div class="speaker-left-col">
+                        <div class="speaker-photo-card">
+                            <img src="mikhail_avatar.png" alt="Михаил Пузырёв" class="speaker-avatar-img">
+                            <div class="speaker-intro-meta">
+                                <span class="badge-role">АВТОР & МЕНТОР</span>
+                                <h3>Михаил Пузырёв</h3>
+                                <p style="color: #9CA3AF; font-size: 0.9rem; line-height: 1.35;">
+                                    Основатель digital-агентства Sage, стартап-кафе №1, партнер UNCRN.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="speaker-diploma-card">
+                            <div class="diploma-title">
+                                <span>🏅</span> ОДИН ИЗ МОИХ ДИПЛОМОВ
+                            </div>
+                            <div class="diploma-img-wrapper">
+                                <img src="diploma_hse.png" alt="Диплом ментора HSE Fest 2022" class="diploma-img" data-tip="Диплом ментора НИУ ВШЭ Fest">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="speaker-right-col">
+                        <div class="mission-quote-card">
+                            <div class="quote-tag">ПОЧЕМУ Я СОЗДАЮ КУРСЫ ДЛЯ ВЗРОСЛЫХ И ПОДРОСТКОВ?</div>
+                            <div class="quote-text">
+                                «Верю, что ИИ это суперсила, которая не заменяет человека, а делает его в 10 раз эффективнее. Моя цель — научить детей использовать нейросети не только для развлечения, а для создания невероятных проектов, развития лидерства и продуктивности.»
+                            </div>
+                        </div>
+
+                        <div class="speaker-facts-list">
+                            <div class="fact-item">
+                                <div class="fact-icon">01</div>
+                                <div class="fact-text">
+                                    <strong>Практик индустрии:</strong> основатель digital-агентства Sage, основатель стартап-кафе №1 (<a href="https://startupcafe.one" target="_blank">startupcafe.one</a>), партнер студии UNCRN (<a href="https://uncrn.ru" target="_blank">uncrn.ru</a>).
+                                </div>
+                            </div>
+
+                            <div class="fact-item">
+                                <div class="fact-icon">02</div>
+                                <div class="fact-text">
+                                    <strong>Наставник и спикер:</strong> ментор, трекер и лектор в НИУ ВШЭ, Сколково, РУДН, НТИ, Мой Бизнес, СБЕР, Нетологии.
+                                </div>
+                            </div>
+
+                            <div class="fact-item">
+                                <div class="fact-icon">03</div>
+                                <div class="fact-text">
+                                    <strong>Эксперт в области венчурных инвестиций</strong> и прикладного внедрения ИИ-агентов в повседневную жизнь, бизнес и учебу.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 3: Course Overview -->
+        <section class="slide" id="slide-2" data-name="03. О КУРСЕ">
+            <div class="slide-content-card">
+                <div>
+                    <span class="slide-tag tag-yellow">ФОРМАТ & ПАРАМЕТРЫ</span>
+                    <h2 class="slide-title">КРАТКО ПРО КУРС «AI-СТАРТ»</h2>
+                </div>
+
+                <div class="overview-grid">
+                    <div class="overview-cards-area">
+                        <div class="overview-card">
+                            <div>
+                                <div class="overview-card-header">
+                                    <div class="overview-icon-badge" style="background: var(--pop-pink); color: #FFF;">👥</div>
+                                    <div class="overview-card-title">Целевая аудитория</div>
+                                </div>
+                                <div class="overview-card-content">
+                                    <strong>Подростки 10–16 лет</strong> <br>
+                                    <span style="color: #9CA3AF; font-size: 0.95rem;">(при желании и высокой мотивации принимаем ребят с 8 лет и до 18-ти).</span>
+                                </div>
+                            </div>
+                            <div class="stack-tags-group">
+                                <span class="stack-pill">Для новичков</span>
+                                <span class="stack-pill">Для опытных</span>
+                            </div>
+                        </div>
+
+                        <div class="overview-card">
+                            <div>
+                                <div class="overview-card-header">
+                                    <div class="overview-icon-badge" style="background: var(--pop-blue); color: #FFF;">⏱️</div>
+                                    <div class="overview-card-title">Продолжительность</div>
+                                </div>
+                                <div class="overview-card-content">
+                                    <strong>10 занятий по 1,5 часа</strong> <br>
+                                    <span class="highlight">Базовый интенсив (6 занятий)</span> + <br>
+                                    <span class="highlight" style="background: rgba(0,240,255,0.2); color: var(--pop-cyan);">Продвинутый блок (4 занятия)</span>
+                                </div>
+                            </div>
+                            <div class="stack-tags-group">
+                                <span class="stack-pill">15 академических часов</span>
+                            </div>
+                        </div>
+
+                        <div class="overview-card">
+                            <div>
+                                <div class="overview-card-header">
+                                    <div class="overview-icon-badge" style="background: var(--pop-green); color: #FFF;">📅</div>
+                                    <div class="overview-card-title">График занятий</div>
+                                </div>
+                                <div class="overview-card-content">
+                                    <strong>Онлайн 1–2 раза в неделю</strong> <br>
+                                    Точное расписание согласуется с группой: вечернее удобное время по будням и/или комфортные слоты в выходные.
+                                </div>
+                            </div>
+                            <div class="stack-tags-group">
+                                <span class="stack-pill">Удобные слоты</span>
+                                <span class="stack-pill">Видеозаписи</span>
+                            </div>
+                        </div>
+
+                        <div class="overview-card">
+                            <div>
+                                <div class="overview-card-header">
+                                    <div class="overview-icon-badge" style="background: var(--pop-yellow); color: #000;">⚡</div>
+                                    <div class="overview-card-title">Инструментарий Google AI</div>
+                                </div>
+                                <div class="overview-card-content">
+                                    Передовой мировой стек технологий ИИ:
+                                    <div class="stack-tags-group" style="margin-top: 8px;">
+                                        <span class="stack-pill" style="color: var(--pop-blue);">Google Gemini</span>
+                                        <span class="stack-pill" style="color: var(--pop-pink);">ImageFX</span>
+                                        <span class="stack-pill" style="color: var(--pop-yellow);">NotebookLM</span>
+                                        <span class="stack-pill" style="color: var(--pop-cyan);">Workspace</span>
+                                        <span class="stack-pill" style="color: var(--pop-neon-green);">Google Colab</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="overview-sticker-sidebar">
+                        <img src="sticker_budet_sdelano.png" alt="Будет сделано!" class="sidebar-sticker-img" data-tip="Закатываем рукава и учимся делать реальные вещи!">
+                        <div class="sidebar-sticker-badge">БУДЕТ СДЕЛАНО! 🚀</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 4: FAQ -->
+        <section class="slide" id="slide-3" data-name="04. FAQ">
+            <div class="slide-content-card">
+                <div>
+                    <span class="slide-tag tag-pink">ВОПРОСЫ И ОТВЕТЫ</span>
+                    <h2 class="slide-title">ОТВЕТЫ НА FAQ ПРО КУРС</h2>
+                </div>
+
+                <div class="faq-grid">
+                    <div class="faq-accordion-col">
+                        <div class="faq-item-card">
+                            <div class="faq-question">
+                                <span>❓</span> Для кого подходит курс?
+                            </div>
+                            <div class="faq-answer">
+                                Курс подойдет и для ребят, которые уже пробовали общаться с нейросетями, и для совсем начинающих. Программа построена по принципу <strong>«от простого к сложному»</strong>: сначала база для учебы и креатива, затем реальное создание веб-продуктов.
+                            </div>
+                        </div>
+
+                        <div class="faq-item-card">
+                            <div class="faq-question">
+                                <span>💬</span> Как устроена координация и общение?
+                            </div>
+                            <div class="faq-answer">
+                                У группы будет уютный <strong>закрытый Telegram-чат</strong> для общения, вопросов по домашним заданиям и взаимопомощи. Коммуникацию с учениками и родителями сопровождает куратор программы <strong>Марина Пали (@MarinaPali)</strong>.
+                            </div>
+                        </div>
+
+                        <div class="faq-item-card">
+                            <div class="faq-question">
+                                <span>📹</span> Что делать, если ребенок пропустил урок?
+                            </div>
+                            <div class="faq-answer">
+                                <strong>Все уроки сохраняются в видеоформате в высоком качестве</strong>. Материал всегда можно пересмотреть, но мы рекомендуем не пропускать живые эфиры для интерактива и разбора вопросов со спикером.
+                            </div>
+                        </div>
+
+                        <div class="faq-item-card">
+                            <div class="faq-question">
+                                <span>🎯</span> Будут ли домашние задания?
+                            </div>
+                            <div class="faq-answer">
+                                Да, у нас будут небольшие творческие и практические ДЗ без занудства. Ребята будут создавать картинки, промпты, конспекты и кусочки кода. Детали и обратная связь обсуждаются на каждом уроке.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-sticker-col">
+                        <img src="sticker_bolshe_chatov.png" alt="Нужно больше чатов!" class="faq-sticker-img" data-tip="В нашем чате всегда живая поддержка!">
+                        
+                        <div class="curator-box-faq">
+                            <span class="curator-badge">КУРАТОР ПРОГРАММЫ</span>
+                            <div class="curator-name">Марина Пали</div>
+                            <p style="color: #9CA3AF; font-size: 0.88rem; margin-bottom: 8px;">
+                                Ответит на любые вопросы родителей по расписанию, оплате и процессу:
+                            </p>
+                            <a href="https://t.me/MarinaPali" target="_blank" class="curator-link" data-tip="Написать Марине в Telegram">
+                                ✈ @MarinaPali ↗
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 5: 10-Lesson Syllabus Breakdown -->
+        <section class="slide" id="slide-4" data-name="05. ПРОГРАММА">
+            <div class="slide-content-card">
+                <div class="syllabus-container">
+                    <div class="syllabus-header-row">
+                        <div>
+                            <span class="slide-tag tag-green">ПОШАГОВЫЙ ПЛАН</span>
+                            <h2 class="slide-title" style="margin-bottom: 4px;">ПРОГРАММА 10 ЗАНЯТИЙ</h2>
+                        </div>
+                        <div class="syllabus-hint-badge">
+                            💡 НАЖМИТЕ НА ЛЮБОЕ ЗАНЯТИЕ ДЛЯ ПОДРОБНОСТЕЙ
+                        </div>
+                    </div>
+
+                    <div class="syllabus-modules-grid">
+                        <!-- Module 1: Basic Intensive -->
+                        <div class="module-section">
+                            <div class="module-section-header header-base">
+                                <span>🚀</span> БАЗОВЫЙ ИНТЕНСИВ (ЗАНЯТИЯ 0–6)
+                            </div>
+                            <div class="lessons-stack">
+                                <button class="lesson-item-btn" onclick="openLessonModal(0)">
+                                    <span class="lesson-num-tag">00</span>
+                                    <span class="lesson-name">Погружение (дети + родители). Старт курса</span>
+                                    <span class="lesson-arrow-action">ИНФО ↗</span>
+                                </button>
+
+                                <button class="lesson-item-btn" onclick="openLessonModal(1)">
+                                    <span class="lesson-num-tag">01</span>
+                                    <span class="lesson-name">Промпты: основа точного мышления с Gemini</span>
+                                    <span class="lesson-arrow-action">ИНФО ↗</span>
+                                </button>
+
+                                <button class="lesson-item-btn" onclick="openLessonModal(2)">
+                                    <span class="lesson-num-tag">02</span>
+                                    <span class="lesson-name">Ассистенты: твой персональный ИИ-помощник</span>
+                                    <span class="lesson-arrow-action">ИНФО ↗</span>
+                                </button>
+
+                                <button class="lesson-item-btn" onclick="openLessonModal(3)">
+                                    <span class="lesson-num-tag">03</span>
+                                    <span class="lesson-name">Фотография: визуальный взрыв в Google ImageFX</span>
+                                    <span class="lesson-arrow-action">ИНФО ↗</span>
+                                </button>
+
+                                <button class="lesson-item-btn" onclick="openLessonModal(4)">
+                                    <span class="lesson-num-tag">04</span>
+                                    <span class="lesson-name">Для школы: ИИ-репетитор по сложным предметам</span>
+                                    <span class="lesson-arrow-action">ИНФО ↗</span>
+                                </button>
+
+                                <button class="lesson-item-btn" onclick="openLessonModal(5)">
+                                    <span class="lesson-num-tag">05</span>
+                                    <span class="lesson-name">Видео и креативы: оживляем реальность и сториборды</span>
+                                    <span class="lesson-arrow-action">ИНФО ↗</span>
+                                </button>
+
+                                <button class="lesson-item-btn" onclick="openLessonModal(6)">
+                                    <span class="lesson-num-tag">06</span>
+                                    <span class="lesson-name">NotebookLM: твой второй мозг и аудио-подкасты</span>
+                                    <span class="lesson-arrow-action">ИНФО ↗</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Module 2: Advanced Block -->
+                        <div class="module-section">
+                            <div class="module-section-header header-pro">
+                                <span>⚡</span> ПРОДВИНУТЫЙ БЛОК (ЗАНЯТИЯ 7–10)
+                            </div>
+                            <div class="lessons-stack">
+                                <button class="lesson-item-btn" onclick="openLessonModal(7)">
+                                    <span class="lesson-num-tag lesson-pro-tag">07</span>
+                                    <span class="lesson-name">Документы и презентации: автоматизация 2.0</span>
+                                    <span class="lesson-arrow-action">ИНФО ↗</span>
+                                </button>
+
+                                <button class="lesson-item-btn" onclick="openLessonModal(8)">
+                                    <span class="lesson-num-tag lesson-pro-tag">08</span>
+                                    <span class="lesson-name">Основы разработки: вайб-кодинг с ИИ-напарником</span>
+                                    <span class="lesson-arrow-action">ИНФО ↗</span>
+                                </button>
+
+                                <button class="lesson-item-btn" onclick="openLessonModal(9)">
+                                    <span class="lesson-num-tag lesson-pro-tag">09</span>
+                                    <span class="lesson-name">Финальный проект: сборка веб-приложения или игры</span>
+                                    <span class="lesson-arrow-action">ИНФО ↗</span>
+                                </button>
+
+                                <button class="lesson-item-btn" onclick="openLessonModal(10)">
+                                    <span class="lesson-num-tag lesson-pro-tag">10</span>
+                                    <span class="lesson-name">Предпринимательство: презентация и Demo Day</span>
+                                    <span class="lesson-arrow-action">ИНФО ↗</span>
+                                </button>
+
+                                <div style="margin-top: 8px; text-align: center;">
+                                    <img src="sticker_seryozno.png" alt="Серьёзно?" style="max-height: 120px; object-fit: contain; filter: drop-shadow(4px 4px 0px #000);" data-tip="Да, мы реально создаем рабочие IT-проекты!">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 6: Final CTA & Contacts -->
+        <section class="slide" id="slide-5" data-name="06. ЗАПИСАТЬСЯ">
+            <div class="slide-content-card">
+                <div>
+                    <span class="slide-tag tag-yellow">СТАРТУЕМ ВМЕСТЕ</span>
+                    <h2 class="slide-title">ЖДЕМ ВАС НА КУРСЕ «AI-СТАРТ»!</h2>
+                </div>
+
+                <div class="final-grid">
+                    <div class="final-left">
+                        <div class="final-hint-callout">
+                            <div class="hint-title">💡 ВАЖНАЯ ПОДСКАЗКА ДЛЯ ПОДРОСТКОВ И РОДИТЕЛЕЙ:</div>
+                            <div class="hint-body">
+                                «Проведя май с максимальной пользой, летом ты сможешь начать создавать крутые проекты и зарабатывать на своих знаниях ИИ 💪»
+                            </div>
+                        </div>
+
+                        <div class="final-buttons-group">
+                            <a href="https://t.me/MarinaPali" target="_blank" class="cta-big-btn cta-btn-primary" data-tip="Связаться с куратором Мариной Пали">
+                                <div class="cta-btn-content">
+                                    <span class="cta-btn-label">ЗАПИСАТЬСЯ ЧЕРЕЗ КУРАТОРА</span>
+                                    <span class="cta-btn-sub">Марина Пали (@MarinaPali) • Все вопросы и бронь места</span>
+                                </div>
+                                <span class="cta-btn-arrow">✈</span>
+                            </a>
+
+                            <a href="https://t.me/michael_sage" target="_blank" class="cta-big-btn cta-btn-secondary" data-tip="Задать личный вопрос автору">
+                                <div class="cta-btn-content">
+                                    <span class="cta-btn-label">НАПИСАТЬ МИХАИЛУ ПУЗЫРЁВУ</span>
+                                    <span class="cta-btn-sub">Автор курса (@michael_sage) • Личные консультации</span>
+                                </div>
+                                <span class="cta-btn-arrow">💬</span>
+                            </a>
+
+                            <a href="https://t.me/uncrn_sage" target="_blank" class="cta-big-btn cta-btn-accent" data-tip="Перейти в Telegram-канал про ИИ">
+                                <div class="cta-btn-content">
+                                    <span class="cta-btn-label">ТЕЛЕГРАМ-КАНАЛ UNCRN SAGE</span>
+                                    <span class="cta-btn-sub">Новости ИИ, кейсы и разборы технологий</span>
+                                </div>
+                                <span class="cta-btn-arrow">📢</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="final-right">
+                        <img src="sticker_sfokusiruysya.png" alt="Сфокусируйся!" class="final-sticker-img" data-tip="Сфокусируйся на будущем уже сегодня!">
+                        
+                        <div class="qr-codes-row">
+                            <div class="qr-box-small">
+                                <div id="qr-curator" class="qr-img-target"></div>
+                                <div class="qr-label">Куратор</div>
+                            </div>
+                            <div class="qr-box-small">
+                                <div id="qr-author" class="qr-img-target"></div>
+                                <div class="qr-label">Михаил</div>
+                            </div>
+                            <div class="qr-box-small">
+                                <div id="qr-channel" class="qr-img-target"></div>
+                                <div class="qr-label">Канал ИИ</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Bottom Slide Navigation (Transparent, Direct on Background) -->
+    <footer>
+        <div class="nav-arrows-group">
+            <button class="pop-nav-arrow" id="btn-prev" data-tip="Предыдущий слайд (←)">←</button>
+            <button class="pop-nav-arrow" id="btn-next" data-tip="Следующий слайд (→)">→</button>
+        </div>
+
+        <div class="footer-controls-names" id="controls-container">
+            <!-- Buttons dynamically populated for slides 0..5 -->
+        </div>
+
+        <div class="footer-shortcuts-hint">
+            Навигация: <kbd>←</kbd> <kbd>→</kbd> <kbd>Пробел</kbd> <kbd>F</kbd>
+        </div>
+    </footer>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <div class="mobile-nav-bar">
+        <button class="btn-mob-nav" id="btn-mob-prev">← НАЗАД</button>
+        <div class="btn-mob-counter" id="mob-slide-indicator">01 / 06</div>
+        <button class="btn-mob-nav next" id="btn-mob-next">ВПЕРЕД →</button>
+    </div>
+
+    <!-- Interactive Pop-up Modal for 10 Lessons -->
+    <div class="pop-modal-overlay" id="lesson-modal" onclick="closeLessonModal(event)">
+        <div class="pop-modal-card" onclick="event.stopPropagation()">
+            <button class="modal-close-btn" onclick="closeLessonModal()" data-tip="Закрыть (Esc)">✕</button>
+            <div class="modal-lesson-tag" id="modal-tag">ЗАНЯТИЕ 00</div>
+            <h3 class="modal-lesson-title" id="modal-title">Название занятия</h3>
+            
+            <div class="modal-section-title"><span>📌</span> О чем это занятие:</div>
+            <div class="modal-lesson-body" id="modal-desc">
+                Описание занятия.
+            </div>
+
+            <div class="modal-section-title"><span>⚡</span> Чему научится подросток:</div>
+            <ul class="modal-skills-list" id="modal-skills">
+                <li>Навык 1</li>
+            </ul>
+
+            <div class="modal-outcome-box">
+                <strong>Артефакт / Практический результат:</strong>
+                <p id="modal-outcome">Результат занятия</p>
+            </div>
+
+            <button class="modal-btn-confirm" onclick="closeLessonModal()">ПОНЯТНО, ЗАКРЫТЬ ✓</button>
+        </div>
+    </div>
+
+    <script>
+        // --- Lesson Data Dictionary for Interactive Modals ---
+        const LESSONS_DATA = {
+            0: {
+                tag: "БАЗОВЫЙ ИНТЕНСИВ • ЗАНЯТИЕ 0",
+                title: "Погружение (дети + родители). Старт курса",
+                desc: "Вводная сессия, где мы знакомимся, синхронизируем ожидания и настраиваем цифровую лабораторию. Родители видят, как устроена среда обучения и как помочь ребенку безопасно войти в мир нейросетей.",
+                skills: [
+                    "Знакомство с экосистемой Google AI и правильная регистрация рабочих аккаунтов.",
+                    "Основы цифровой гигиены, безопасность данных и этика взаимодействия с искусственным интеллектом.",
+                    "Понимание: почему ИИ — это инструмент-усилитель мышления, а не замена учебе."
+                ],
+                outcome: "Полностью настроенный рабочий профиль в Google AI, установленные закладки и первый приветственный диалог с Gemini."
+            },
+            1: {
+                tag: "БАЗОВЫЙ ИНТЕНСИВ • ЗАНЯТИЕ 1",
+                title: "Промпты: основа точного мышления с Gemini",
+                desc: "Искусство формулировать мысли так, чтобы модель понимала тебя с полуслова. Переходим от детских односложных запросов к системному ролевому промптингу профессионального уровня.",
+                skills: [
+                    "Анатомия идеального промпта: роль, контекст, задача, формат вывода и ограничения.",
+                    "Методы Few-Shot и Chain-of-Thought (пошаговое рассуждение модели).",
+                    "Как заставлять модель перепроверять свои ответы и избегать галлюцинаций."
+                ],
+                outcome: "Собственная персональная библиотека шаблонов промптов для разных школьных и творческих задач."
+            },
+            2: {
+                tag: "БАЗОВЫЙ ИНТЕНСИВ • ЗАНЯТИЕ 2",
+                title: "Ассистенты: твой персональный ИИ-помощник",
+                desc: "Учимся кастомизировать ИИ под свои индивидуальные потребности, характер и увлечения. Создаем умных ассистентов, умеющих отвечать в заданном тоне и стиле.",
+                skills: [
+                    "Создание кастомных системных инструкций (System Prompts).",
+                    "Настройка персонажа: ментор по шахматам, креативный сценарист, тренер по тайм-менеджменту.",
+                    "Управление памятью диалогов и долгосрочным контекстом."
+                ],
+                outcome: "Персональный ИИ-ассистент в Gemini, настроенный под хобби подростка (игры, спорт, языки, блог)."
+            },
+            3: {
+                tag: "БАЗОВЫЙ ИНТЕНСИВ • ЗАНЯТИЕ 3",
+                title: "Фотография: визуальный взрыв в Google ImageFX",
+                desc: "Глубокое погружение в новейшую нейросеть для генерации изображений от Google — ImageFX и модель Imagen 3. Создаем кинематографичные иллюстрации, постеры и концепт-арты.",
+                skills: [
+                    "Работа с экспрессивными фишками ImageFX (Expressive Chips) для быстрой вариации стилей.",
+                    "Управление ракурсом камеры, фокусным расстоянием, освещением и текстурами в промптах.",
+                    "Генерация персонажей, игровых концептов и аватаров для соцсетей."
+                ],
+                outcome: "Портфолио из 5 авторских артов высочайшего разрешения в едином визуальном стиле."
+            },
+            4: {
+                tag: "БАЗОВЫЙ ИНТЕНСИВ • ЗАНЯТИЕ 4",
+                title: "Для школы: ИИ-репетитор по сложным предметам",
+                desc: "Превращаем Gemini в личного терпеливого репетитора 24/7. Как за 15 минут разобрать любую тему по алгебре, физике, истории или английскому без зубрежки.",
+                skills: [
+                    "Метод Сократа: учим нейросеть задавать наводящие вопросы вместо того, чтобы сразу давать готовое решение.",
+                    "Разбор сложных олимпиадных задач и подготовка к контрольным с интерактивными тестами.",
+                    "Тренировка разговорного английского через аудио-диалог с ИИ."
+                ],
+                outcome: "Готовый интерактивный обучающий тренажер для подготовки к школьным урокам и экзаменам."
+            },
+            5: {
+                tag: "БАЗОВЫЙ ИНТЕНСИВ • ЗАНЯТИЕ 5",
+                title: "Видео и креативы: оживляем реальность",
+                desc: "Создание сценариев, озвучки и динамических видеороликов с помощью ИИ. Как за пару часов придумать сюжет, сгенерировать персонажей и смонтировать цепляющий ролик для YouTube/Reels.",
+                skills: [
+                    "Написание сценариев и сторибордов (раскадровок) с динамическим таймингом.",
+                    "Синтез реалистичной озвучки и саунд-дизайна нейросетями.",
+                    "Анимация статичных артов и сборка цельного видео-креатива."
+                ],
+                outcome: "Готовый короткий видеоролик (Shorts/Reels) со сценарием, ИИ-озвучкой и видеорядом."
+            },
+            6: {
+                tag: "БАЗОВЫЙ ИНТЕНСИВ • ЗАНЯТИЕ 6",
+                title: "NotebookLM: твой второй мозг и аудио-подкасты",
+                desc: "Осваиваем главную исследовательскую нейросеть Google. Загружаем десятки учебников, PDF-документов и ссылок, получаем мгновенные ответы строго по источникам и генерируем Deep Dive аудио-подкасты.",
+                skills: [
+                    "Создание персональной базы знаний (Second Brain) из школьных конспектов и книг.",
+                    "Генерация автоматических аудио-подкастов с двумя ведущими на основе любых материалов.",
+                    "Мгновенный факт-чекинг с интерактивными цитатами на первоисточники."
+                ],
+                outcome: "Собственный интерактивный цифровой блокнот NotebookLM с аудио-подкастом по любимой теме."
+            },
+            7: {
+                tag: "ПРОДВИНУТЫЙ БЛОК • ЗАНЯТИЕ 7",
+                title: "Документы и презентации: автоматизация 2.0",
+                desc: "Связка Google Workspace (Docs, Sheets, Slides) с искусственным интеллектом. Автоматизация рутины, аналитика данных в таблицах и создание презентаций агентского уровня.",
+                skills: [
+                    "Генерация структуры презентаций и питч-деков за 3 минуты.",
+                    "Формулы и умный анализ данных в Google Таблицах с помощью Gemini.",
+                    "Создание визуально выверенных отчетов и проектных заявок."
+                ],
+                outcome: "Готовая стильная презентация проекта на 10 слайдов, созданная в связке с ИИ."
+            },
+            8: {
+                tag: "ПРОДВИНУТЫЙ БЛОК • ЗАНЯТИЕ 8",
+                title: "Основы разработки: вайб-кодинг с ИИ-напарником",
+                desc: "Вайб-кодинг — это создание работающего софта на обычном русском языке без заучивания синтаксиса. Учимся формулировать технические задания и управлять ИИ как Senior разработчиком.",
+                skills: [
+                    "Основы архитектуры веб-приложений (HTML, CSS, JavaScript, логика).",
+                    "Работа в интерактивных облачных средах (Google Colab / Replit / Antigravity).",
+                    "Отладка кода и поиск ошибок через диалог с нейросетью."
+                ],
+                outcome: "Первая рабочая интерактивная страница с кнопками, анимациями и динамической логикой."
+            },
+            9: {
+                tag: "ПРОДВИНУТЫЙ БЛОК • ЗАНЯТИЕ 9",
+                title: "Финальный проект: сборка веб-приложения или игры",
+                desc: "Создание главного курсового проекта: от концепта до развернутого в интернете сервиса. Подросток может выбрать: игра-викторина, мини-сервис полезных советов или Telegram-бот.",
+                skills: [
+                    "Сборка интерфейса и подключение интерактивных компонентов.",
+                    "Интеграция ИИ API в свой продукт.",
+                    "Бесплатный деплой приложения в интернет с публичной ссылкой для друзей и семьи."
+                ],
+                outcome: "Работающее веб-приложение или игра с живой рабочей ссылкой в интернете."
+            },
+            10: {
+                tag: "ПРОДВИНУТЫЙ БЛОК • ЗАНЯТИЕ 10",
+                title: "Предпринимательство: презентация и Demo Day",
+                desc: "Финальный выпускной день! Учимся публично защищать свой проект, формулировать его ценность для людей, говорить о монетизации и строить планы развития.",
+                skills: [
+                    "Искусство питчинга: как рассказать о своем проекте за 3 минуты и зацепить зрителя.",
+                    "Основы продуктового мышления: для кого этот продукт и как его развивать.",
+                    "Получение обратной связи от Михаила Пузырёва и приглашенных менторов."
+                ],
+                outcome: "Успешная защита проекта на Demo Day, электронный сертификат выпускника и готовый кейс в портфолио."
+            }
+        };
+
+        // --- Slide Engine State ---
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const controlsContainer = document.getElementById('controls-container');
+        const slideIndicator = document.getElementById('slide-indicator');
+        const mobSlideIndicator = document.getElementById('mob-slide-indicator');
+
+        // Dynamically create footer buttons
+        slides.forEach((slide, index) => {
+            const btn = document.createElement('button');
+            btn.className = `btn-slide-name ${index === 0 ? 'active' : ''}`;
+            btn.innerText = slide.getAttribute('data-name');
+            btn.setAttribute('data-tip', `Перейти к слайду ${index + 1}`);
+            btn.addEventListener('click', () => showSlide(index));
+            controlsContainer.appendChild(btn);
+        });
+
+        const navButtons = document.querySelectorAll('.btn-slide-name');
+
+        function showSlide(index) {
+            if (index < 0 || index >= totalSlides) return;
+            
+            slides[currentSlide].classList.remove('active');
+            if (navButtons[currentSlide]) navButtons[currentSlide].classList.remove('active');
+
+            currentSlide = index;
+
+            slides[currentSlide].classList.add('active');
+            if (navButtons[currentSlide]) navButtons[currentSlide].classList.add('active');
+
+            const counterText = `${String(currentSlide + 1).padStart(2, '0')} / ${String(totalSlides).padStart(2, '0')}`;
+            slideIndicator.innerText = counterText;
+            if (mobSlideIndicator) mobSlideIndicator.innerText = counterText;
+        }
+
+        // Navigation buttons
+        document.getElementById('btn-prev').addEventListener('click', () => {
+            let prev = currentSlide - 1;
+            if (prev < 0) prev = totalSlides - 1;
+            showSlide(prev);
+        });
+
+        document.getElementById('btn-next').addEventListener('click', () => {
+            let next = currentSlide + 1;
+            if (next >= totalSlides) next = 0;
+            showSlide(next);
+        });
+
+        // Mobile toolbar buttons
+        document.getElementById('btn-mob-prev').addEventListener('click', () => {
+            let prev = currentSlide - 1;
+            if (prev < 0) prev = totalSlides - 1;
+            showSlide(prev);
+        });
+
+        document.getElementById('btn-mob-next').addEventListener('click', () => {
+            let next = currentSlide + 1;
+            if (next >= totalSlides) next = 0;
+            showSlide(next);
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            const modal = document.getElementById('lesson-modal');
+            if (modal.classList.contains('open')) {
+                if (e.key === 'Escape') {
+                    closeLessonModal();
+                }
+                return;
+            }
+
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                e.preventDefault();
+                let next = currentSlide + 1;
+                if (next >= totalSlides) next = 0;
+                showSlide(next);
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp' || e.key === 'Backspace') {
+                e.preventDefault();
+                let prev = currentSlide - 1;
+                if (prev < 0) prev = totalSlides - 1;
+                showSlide(prev);
+            } else if (e.key === 'f' || e.key === 'F') {
+                toggleFullscreen();
+            } else if (e.key >= '1' && e.key <= '6') {
+                showSlide(parseInt(e.key) - 1);
+            }
+        });
+
+        // Touch Swipe
+        let touchStartX = 0;
+        let touchEndX = 0;
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchEndX - touchStartX;
+            if (Math.abs(diff) > 50) {
+                if (diff < 0) {
+                    let next = currentSlide + 1;
+                    if (next >= totalSlides) next = 0;
+                    showSlide(next);
+                } else {
+                    let prev = currentSlide - 1;
+                    if (prev < 0) prev = totalSlides - 1;
+                    showSlide(prev);
+                }
+            }
+        }, { passive: true });
+
+        // Fullscreen Toggle
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(() => {});
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen().catch(() => {});
+                }
+            }
+        }
+        const fullscreenBtn = document.getElementById('btn-fullscreen');
+        if (fullscreenBtn) fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+        // --- Interactive Lesson Modal Handlers ---
+        function openLessonModal(lessonIndex) {
+            const data = LESSONS_DATA[lessonIndex];
+            if (!data) return;
+
+            document.getElementById('modal-tag').innerText = data.tag;
+            document.getElementById('modal-title').innerText = data.title;
+            document.getElementById('modal-desc').innerText = data.desc;
+
+            const skillsList = document.getElementById('modal-skills');
+            skillsList.innerHTML = '';
+            data.skills.forEach(skill => {
+                const li = document.createElement('li');
+                li.innerText = skill;
+                skillsList.appendChild(li);
+            });
+
+            document.getElementById('modal-outcome').innerText = data.outcome;
+
+            const modal = document.getElementById('lesson-modal');
+            modal.classList.add('open');
+        }
+
+        function closeLessonModal(e) {
+            const modal = document.getElementById('lesson-modal');
+            modal.classList.remove('open');
+        }
+
+        // --- Dynamic QR Codes Generation on Final Slide ---
+        window.addEventListener('DOMContentLoaded', () => {
+            const createQR = (id, text, size = 90) => {
+                const el = document.getElementById(id);
+                if (el) {
+                    new QRCode(el, {
+                        text: text,
+                        width: size,
+                        height: size,
+                        colorDark : "#07080C",
+                        colorLight : "#FFFFFF",
+                        correctLevel : QRCode.CorrectLevel.M
+                    });
+                }
+            };
+
+            createQR("qr-curator", "https://t.me/MarinaPali", 90);
+            createQR("qr-author", "https://t.me/michael_sage", 90);
+            createQR("qr-channel", "https://t.me/uncrn_sage", 90);
+        });
+
+        // --- Smart Boundary-Aware Custom Cursor & Comic Speech Bubble Tooltip Engine ---
+        const cursorDot = document.getElementById('cursor-dot');
+        const speechBubble = document.getElementById('speech-bubble');
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        let bubbleVisible = false;
+
+        function updateBubblePosition() {
+            if (!bubbleVisible) return;
+
+            const bubbleRect = speechBubble.getBoundingClientRect();
+            const bubbleWidth = bubbleRect.width || 180;
+            const bubbleHeight = bubbleRect.height || 45;
+
+            const padding = 15;
+            let leftPos = mouseX + 20;
+            let topPos = mouseY - bubbleHeight - 16;
+            let flipX = false;
+            let flipY = false;
+
+            if (leftPos + bubbleWidth > window.innerWidth - padding) {
+                leftPos = mouseX - bubbleWidth - 20;
+                flipX = true;
+            }
+
+            if (topPos < padding) {
+                topPos = mouseY + 24;
+                flipY = true;
+            }
+
+            if (leftPos < padding) {
+                leftPos = padding;
+            }
+
+            if (flipX) speechBubble.classList.add('flip-x');
+            else speechBubble.classList.remove('flip-x');
+
+            if (flipY) speechBubble.classList.add('flip-y');
+            else speechBubble.classList.remove('flip-y');
+
+            speechBubble.style.left = `${leftPos}px`;
+            speechBubble.style.top = `${topPos}px`;
+        }
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            cursorDot.style.left = `${mouseX}px`;
+            cursorDot.style.top = `${mouseY}px`;
+
+            updateBubblePosition();
+        });
+
+        document.addEventListener('mouseover', (e) => {
+            const isClickable = e.target.closest('button, a, .pop-nav-arrow, .btn-slide-name, .lesson-item-btn, .modal-close-btn, .modal-btn-confirm, [data-tip]');
+            if (isClickable) {
+                cursorDot.classList.add('hovered');
+            } else {
+                cursorDot.classList.remove('hovered');
+            }
+
+            const tipTarget = e.target.closest('[data-tip]');
+            if (tipTarget) {
+                const tip = tipTarget.getAttribute('data-tip');
+                if (tip) {
+                    speechBubble.innerHTML = tip;
+                    speechBubble.classList.add('visible');
+                    bubbleVisible = true;
+                    updateBubblePosition();
+                }
+            } else if (bubbleVisible) {
+                speechBubble.classList.remove('visible');
+                bubbleVisible = false;
+            }
+        });
+
+        document.addEventListener('mouseleave', () => {
+            cursorDot.style.opacity = '0';
+            speechBubble.classList.remove('visible');
+            bubbleVisible = false;
+        });
+
+        document.addEventListener('mouseenter', () => {
+            cursorDot.style.opacity = '1';
+        });
+
+        window.addEventListener('mousedown', () => {
+            cursorDot.style.transform = 'translate(-50%, -50%) scale(0.85)';
+        });
+
+        window.addEventListener('mouseup', () => {
+            cursorDot.style.transform = cursorDot.classList.contains('hovered') 
+                ? 'translate(-50%, -50%) scale(1.1)' 
+                : 'translate(-50%, -50%) scale(1)';
+        });
+    </script>
+</body>
+</html>
