@@ -1009,19 +1009,33 @@ function initScrollSpy() {
 
       updateActiveAlphabetSpy();
     }
-document.addEventListener('DOMContentLoaded', () => {
-      renderTerms();
-
-      if (window.location.hash) {
-        const targetId = window.location.hash.substring(1);
-        setTimeout(() => {
-          const el = document.getElementById(targetId);
-          if (el) {
-            el.scrollIntoView({ behavior: 'smooth' });
-            el.style.borderColor = 'var(--green)';
-          }
-        }, 350);
+    function scrollToHashTerm() {
+      if (!window.location.hash) return;
+      const targetId = window.location.hash.substring(1);
+      const termObj = allTerms.find(t => t.id === targetId);
+      if (termObj && (currentCategory !== 'all' || (document.getElementById('glossarySearch') && document.getElementById('glossarySearch').value))) {
+        currentCategory = 'all';
+        if (document.getElementById('glossarySearch')) document.getElementById('glossarySearch').value = '';
+        renderTerms();
       }
+      setTimeout(() => {
+        const el = document.getElementById(targetId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+          el.style.borderColor = '#10b981';
+          el.style.boxShadow = '0 0 0 2px rgba(16, 185, 129, 0.25)';
+          setTimeout(() => {
+            el.style.borderColor = '';
+            el.style.boxShadow = '';
+          }, 4000);
+        }
+      }, 350);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderTerms();
+      scrollToHashTerm();
+      window.addEventListener('hashchange', scrollToHashTerm);
     });
   </script>
   <script src="/js/auth.js?v=1.4"></script>

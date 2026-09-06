@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Внедрение ИИ-агентов в бизнес: План и Окупаемость | Михаил Пузырёв</title>
   <meta name="description" content="Практическое руководство для предпринимателей и руководителей: как автоматизировать рутину компании с помощью автономных ИИ-агентов, расчет окупаемости (ROI), архитектурные границы (SQL vs LLM), безопасность данных и 4-этапная дорожная карта внедрения.">
-  <meta name="keywords" content="внедрение нейросетей в бизнес, ИИ агенты автоматизация, ROI нейросетей, окупаемость искусственного интеллекта, Google Antigravity для бизнеса, автоматизация 1C нейросети, Model Context Protocol MCP, безопасность ИИ на предприятии, McKinsey GenAI экономика">
+  <meta name="keywords" content="внедрение нейросетей в бизнес, ИИ агенты автоматизация, агентный харнесс, Agent Harness runtime, ROI нейросетей, окупаемость искусственного интеллекта, Google Antigravity для бизнеса, автоматизация 1C нейросети, Model Context Protocol MCP, безопасность ИИ на предприятии, McKinsey GenAI экономика">
   <meta name="author" content="Михаил Пузырёв">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 
@@ -37,7 +37,7 @@
         "@type": "TechArticle",
         "@id": "https://a-sage.ru/base/research-agentic-processes/#article",
         "headline": "Как внедрить ИИ-агентов в бизнес: Пошаговый план, окупаемость (ROI) и безопасность",
-        "description": "Практическое руководство для предпринимателей по оптимизации бизнес-процессов на базе нейросетей, стека Google Antigravity и MCP.",
+        "description": "Практическое руководство для предпринимателей по оптимизации бизнес-процессов на базе нейросетей, стека Google Antigravity, агентных харнессов и MCP.",
         "author": {
           "@type": "Person",
           "name": "Михаил Пузырёв",
@@ -49,11 +49,12 @@
           "url": "https://a-sage.ru"
         },
         "datePublished": "2026-09-05",
-        "dateModified": "2026-09-05",
+        "dateModified": "2026-09-06",
         "inLanguage": "ru-RU",
         "about": [
           "ИИ-автоматизация бизнеса",
           "Автономные ИИ-агенты",
+          "Агентный харнесс (Agent Harness)",
           "Экономика и ROI нейросетей",
           "Безопасность корпоративных данных",
           "Google Antigravity",
@@ -303,6 +304,87 @@
       line-height: 1.6;
       margin: 0 0 20px 0;
     }
+
+    /* Term link to AI Glossary */
+    .term-link {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1.5px dashed #10b981;
+      padding-bottom: 1px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .term-link:hover {
+      color: #059669;
+      border-bottom-style: solid;
+      background: rgba(16, 185, 129, 0.08);
+      border-radius: 2px;
+    }
+
+    /* Harness Architecture Card */
+    .harness-architecture-card {
+      background: #09090b;
+      border: 1px solid #27272a;
+      padding: 28px;
+      color: #ffffff;
+      margin: 28px 0;
+    }
+    .harness-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #27272a;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .harness-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+    @media (max-width: 768px) {
+      .harness-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+    }
+    .harness-feature {
+      background: #18181b;
+      border: 1px solid #27272a;
+      padding: 18px 16px;
+    }
+    .harness-feat-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+    .harness-feature p {
+      font-size: 0.88rem;
+      line-height: 1.55;
+      color: #a1a1aa;
+      margin: 0;
+    }
+    .harness-footer-note {
+      margin-top: 20px;
+      padding-top: 14px;
+      border-top: 1px solid #27272a;
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      color: #34d399;
+      line-height: 1.6;
+    }
+    .harness-architecture-card .term-link {
+      color: #34d399;
+      border-bottom-color: #34d399;
+    }
+    .harness-architecture-card .term-link:hover {
+      color: #6ee7b7;
+      background: rgba(52, 211, 153, 0.15);
+    }
   </style>
 </head>
 <body>
@@ -363,14 +445,17 @@
         Как внедрить ИИ-агентов в бизнес: Пошаговый план, расчет окупаемости (ROI) и безопасность
       </h1>
       <p class="hero-sub" style="max-width: 920px; font-size: 1.15rem; line-height: 1.6; color: #52525b;">
-        Практический разбор для собственников, операционных директоров и руководителей: как перейти от хаотичных ChatGPT-промптов к надежным автономным ИИ-агентам, сократить 60–70% рутины и защитить данные компании.
+        Практический разбор для собственников, операционных директоров и руководителей: как перейти от хаотичных <a href="/glossary#term-prompt" class="term-link" target="_blank" title="Открыть определение в Глоссарии">ChatGPT-промптов</a> к надежным <a href="/glossary#term-autonomous-ai-agent" class="term-link" target="_blank" title="Открыть определение в Глоссарии">автономным ИИ-агентам</a> и промышленным <a href="/glossary#term-agent-harness-execution-runtime" class="term-link" target="_blank" title="Открыть определение в Глоссарии">агентным харнессам</a>, сократить 60–70% рутины и защитить данные компании.
       </p>
 
       <div class="guide-meta-bar">
         <div class="guide-meta-item">Автор: <strong>Михаил Пузырёв</strong></div>
         <div class="guide-meta-item">Формат: <strong>White Paper & Методология</strong></div>
-        <div class="guide-meta-item">Время чтения: <strong>12 минут</strong></div>
+        <div class="guide-meta-item">Время чтения: <strong>14 минут</strong></div>
         <div class="guide-meta-item" style="color:#10b981;">● <strong>Проверено на 15+ внедрениях</strong></div>
+      </div>
+      <div style="margin-top:14px; font-family:var(--mono); font-size:0.75rem; color:#059669; display:inline-flex; align-items:center; gap:6px; background:#f0fdf4; border:1px solid #bbf7d0; padding:4px 10px;">
+        <span>💡</span> Пунктирные термины интерактивны — клик открывает статью в AI-Глоссарии.
       </div>
     </section>
 
@@ -383,16 +468,55 @@
           Эра классических чат-ботов, которые работают по принципу разового ответа («вопрос в чат ➔ текстовый ответ»), подошла к концу. Для бизнеса один текст бесполезен: компании нужен <strong>конкретный завершенный результат</strong> — проверенный контрагент, выставленный счет в 1С, квалифицированный лид в CRM или сверенный договор.
         </p>
         <p>
-          Современный искусственный интеллект строится на базе <strong>автономных агентных контуров (Agent Loops)</strong>. Агент не просто пишет текст, а выполняет непрерывный производственный цикл:
+          Современный искусственный интеллект строится на базе <strong>автономных агентных контуров (<a href="/glossary#term-agent-execution-loop" class="term-link" target="_blank" title="Открыть определение в Глоссарии">Agent Loops</a>)</strong>. <a href="/glossary#term-autonomous-ai-agent" class="term-link" target="_blank" title="Открыть определение в Глоссарии">ИИ-агент</a> не просто пишет текст, а выполняет непрерывный производственный цикл:
         </p>
 
         <div class="callout-box callout-emerald">
-          <div class="callout-title">Цикл работы ИИ-агента (Agent Loop):</div>
+          <div class="callout-title">Цикл работы ИИ-агента (<a href="/glossary#term-agent-execution-loop" class="term-link" target="_blank" title="Открыть в Глоссарии">Agent Execution Loop</a> / <a href="/glossary#term-reasoning-acting" class="term-link" target="_blank" title="Открыть в Глоссарии">ReAct</a>):</div>
           <strong>1. Восприятие (Perceive)</strong> — считывает входящую заявку, аудиозапись звонка или скан акта.<br>
-          <strong>2. Рассуждение (Reason)</strong> — анализирует контекст по корпоративной базе знаний и регламентам.<br>
+          <strong>2. Рассуждение (Reason)</strong> — анализирует контекст по корпоративной базе знаний (<a href="/glossary#term-retrieval-augmented-generation" class="term-link" target="_blank" title="Открыть в Глоссарии">RAG</a>) и регламентам.<br>
           <strong>3. Планирование (Plan)</strong> — разбивает сложную бизнес-задачу на 3–5 пошаговых действий.<br>
-          <strong>4. Действие (Act)</strong> — вызывает внешние API (1С, CRM, мессенджеры, поиск, базы данных).<br>
+          <strong>4. Действие (Act)</strong> — вызывает внешние API через <a href="/glossary#term-model-context-protocol" class="term-link" target="_blank" title="Открыть в Глоссарии">MCP-протокол</a> (1С, CRM, мессенджеры, поиск, базы данных).<br>
           <strong>5. Наблюдение и контроль (Observe)</strong> — проверяет результат и готовит отчет человеку.
+        </div>
+
+        <h3 style="margin-top:40px;">Анатомия агента: почему языковая модель (LLM) бессильна без Харнесса (Agent Harness)</h3>
+        <p>
+          Главное концептуальное заблуждение бизнеса в 2026 году — ставить знак равенства между <a href="/glossary#term-large-language-model" class="term-link" target="_blank" title="Открыть определение в Глоссарии">большой языковой моделью (LLM)</a> и готовым <a href="/glossary#term-autonomous-ai-agent" class="term-link" target="_blank" title="Открыть определение в Глоссарии">ИИ-агентом</a>.
+        </p>
+        <p>
+          Сама по себе языковая модель (будь то GPT-4o, Claude 3.7 Sonnet или Gemini 2.5) — это лишь вероятностный генератор следующего <a href="/glossary#term-token" class="term-link" target="_blank" title="Открыть определение в Глоссарии">токена</a> («мозг в изоляции»). Модель не имеет состояния (stateless), не умеет сама выполнять команды в операционной системе, не может безопасно авторизоваться в вашей базе данных 1С и начисто забывает весь контекст сразу после генерации ответа.
+        </p>
+        <p>
+          Чтобы языковая модель превратилась в надежного цифрового сотрудника, ей необходим <strong><a href="/glossary#term-agent-harness-execution-runtime" class="term-link" target="_blank" title="Открыть определение в Глоссарии">Агентный Харнесс (Agent Harness / Execution Runtime)</a></strong> — специализированный программный каркас («экзоскелет» и среда исполнения), который берет на себя всю инженерную обвязку, управление памятью и безопасность:
+        </p>
+
+        <div class="harness-architecture-card">
+          <div class="harness-card-header">
+            <span style="font-family:var(--mono); font-size:0.75rem; color:#10b981; font-weight:700; letter-spacing:0.04em;">// АРХИТЕКТУРНЫЙ КАРКАС АГЕНТА: МОДЕЛЬ + ХАРНЕСС</span>
+            <span style="font-family:var(--mono); font-size:0.72rem; background:#27272a; color:#a1a1aa; padding:2px 8px;">EXECUTION RUNTIME</span>
+          </div>
+          <div class="harness-grid">
+            <div class="harness-feature">
+              <div class="harness-feat-title">🔄 1. Управление Агентным Циклом (<a href="/glossary#term-agent-execution-loop" class="term-link" target="_blank" title="Открыть в Глоссарии">Agent Loop</a>)</div>
+              <p>Харнесс непрерывно ведет диалог с моделью по циклу <a href="/glossary#term-reasoning-acting" class="term-link" target="_blank" title="Открыть в Глоссарии">ReAct</a> (Рассуждение ➔ Действие ➔ Наблюдение), парсит намерения модели, исполняет команды и возвращает результат в следующем витке петли до полного завершения бизнес-задачи.</p>
+            </div>
+            <div class="harness-feature">
+              <div class="harness-feat-title">🔌 2. Исполнение Инструментов & <a href="/glossary#term-model-context-protocol" class="term-link" target="_blank" title="Открыть в Глоссарии">MCP-Шлюз</a></div>
+              <p>Физическое исполнение зарегистрированных инструментов на сервере: SQL-запросы к ERP, поиск в <a href="/glossary#term-retrieval-augmented-generation" class="term-link" target="_blank" title="Открыть в Глоссарии">RAG-базе знаний</a>, вызов API банков и генерация счетов через стандарт Model Context Protocol с валидацией прав.</p>
+            </div>
+            <div class="harness-feature">
+              <div class="harness-feat-title">🧠 3. Управление Контекстом & <a href="/glossary#term-subagents-context-branching" class="term-link" target="_blank" title="Открыть в Глоссарии">Субагенты</a></div>
+              <p>Контроль лимитов <a href="/glossary#term-context-window" class="term-link" target="_blank" title="Открыть в Глоссарии">контекстного окна</a>, компрессия истории, отсечение информационного шума и запуск дочерних <a href="/glossary#term-subagents-context-branching" class="term-link" target="_blank" title="Открыть в Глоссарии">субагентов</a> в изолированных ветках памяти (Context Branching) для параллельной работы.</p>
+            </div>
+            <div class="harness-feature">
+              <div class="harness-feat-title">🛡️ 4. Песочницы & Ограждения (<a href="/glossary#term-sandbox-e2b-docker-modal-firecracker" class="term-link" target="_blank" title="Открыть в Глоссарии">Sandbox Isolation</a>)</div>
+              <p>Изоляция выполнения сгенерированного кода в защищенных Linux-песочницах (Docker / E2B), нейтрализация попыток <a href="/glossary#term-prompt-injection" class="term-link" target="_blank" title="Открыть в Глоссарии">промпт-инъекций</a> и принудительная блокировка опасных операций до одобрения человеком (<a href="/glossary#term-hitl" class="term-link" target="_blank" title="Открыть в Глоссарии">HITL</a>).</p>
+            </div>
+          </div>
+          <div class="harness-footer-note">
+            <strong>Формула надежности:</strong> Языковая модель формирует только логику и намерение (Intent). Реальное, безопасное и безошибочное исполнение в контуре компании осуществляет <strong><a href="/glossary#term-agent-harness-execution-runtime" class="term-link" target="_blank" title="Открыть в Глоссарии">Агентный Харнесс</a></strong>.
+          </div>
         </div>
       </div>
     </section>
@@ -403,13 +527,13 @@
         <div class="section-tag">ОЦИФРОВКА ЭФФЕКТИВНОСТИ</div>
         <h2>2. Окупаемость внедрения (ROI) и мировая аналитика McKinsey</h2>
         <p>
-          По данным глобального исследования <strong>McKinsey & Company</strong>, внедрение генеративного искусственного интеллекта автоматизирует задачи, занимающие от <strong>60% до 70%</strong> рабочего времени сотрудников, обеспечивая ежегодный прирост продуктивности в $2,6–4,4 трлн.
+          По данным глобального исследования <strong>McKinsey & Company</strong>, внедрение <a href="/glossary#term-large-language-model" class="term-link" target="_blank" title="Открыть определение в Глоссарии">генеративного искусственного интеллекта (GenAI / LLM)</a> автоматизирует задачи, занимающие от <strong>60% до 70%</strong> рабочего времени сотрудников, обеспечивая ежегодный прирост продуктивности в $2,6–4,4 трлн.
         </p>
 
         <div class="mckinsey-stat-grid">
           <div class="mckinsey-stat-card">
             <div class="stat-val">60–70%</div>
-            <div class="stat-lbl">Рутинного времени квалифицированных специалистов высвобождается ИИ-агентами</div>
+            <div class="stat-lbl">Рутинного времени квалифицированных специалистов высвобождается <a href="/glossary#term-autonomous-ai-agent" class="term-link" target="_blank" title="Открыть определение в Глоссарии">ИИ-агентами</a></div>
           </div>
           <div class="mckinsey-stat-card">
             <div class="stat-val">75%</div>
@@ -422,7 +546,7 @@
         </div>
 
         <p>
-          В реальном бизнесе это выражается не в «гипотетической экономии», а в конкретных показателях: сокращение ФОТ на первичной обработке, ускорение выставления КП с 3 дней до 15 минут и ликвидация потерь от неперезвоненных заявок.
+          В реальном бизнесе это выражается не в «гипотетической экономии», а в конкретных показателях: сокращение ФОТ на первичной обработке, ускорение выставления КП с 3 дней до 15 минут и ликвидация потерь от неперезвоненных заявок с окупаемой <a href="/glossary#term-token-unit-economics" class="term-link" target="_blank" title="Открыть определение в Глоссарии">Unit-токеномикой</a>.
         </p>
       </div>
     </section>
@@ -433,7 +557,7 @@
         <div class="section-tag">ГРАНИЦЫ ПРИМЕНИМОСТИ</div>
         <h2>3. Где нейросети категорически НЕ нужны, а где дают x10</h2>
         <p>
-          Самая частая ошибка при внедрении ИИ — попытка заставить языковую модель считать налоги, рассчитывать зарплаты или сводить бухгалтерские балансы. Нейросети вероятностны по своей природе. Там, где действует жесткая математика, они несут прямую угрозу бизнесу.
+          Самая частая ошибка при внедрении ИИ — попытка заставить <a href="/glossary#term-large-language-model" class="term-link" target="_blank" title="Открыть определение в Глоссарии">языковую модель</a> считать налоги, рассчитывать зарплаты или сводить бухгалтерские балансы. Нейросети <a href="/glossary#term-stochasticity" class="term-link" target="_blank" title="Открыть определение в Глоссарии">вероятностны (стохастичны)</a> по своей природе и подвержены <a href="/glossary#term-hallucination" class="term-link" target="_blank" title="Открыть определение в Глоссарии">галлюцинациям</a> без внешнего <a href="/glossary#term-grounding" class="term-link" target="_blank" title="Открыть определение в Глоссарии">заземления (Grounding)</a>. Там, где действует жесткая математика, они несут прямую угрозу бизнесу.
         </p>
 
         <div class="callout-box callout-warning">
@@ -452,7 +576,7 @@
                 <th>Критерий</th>
                 <th>Детерминированный код / SQL / ERP</th>
                 <th>Традиционный RPA (UiPath, роботы)</th>
-                <th>Агентные системы на базе LLM (Antigravity)</th>
+                <th>Агентные системы на базе LLM & Харнессов (<a href="/glossary#term-google-antigravity" class="term-link" target="_blank" title="Открыть определение в Глоссарии">Google Antigravity</a>)</th>
               </tr>
             </thead>
             <tbody>
@@ -472,13 +596,13 @@
                 <td><strong>Толерантность к ошибкам</strong></td>
                 <td>Нулевая (математическая точность)</td>
                 <td>Минимальная (сбой при смене верстки)</td>
-                <td><strong style="color:#10b981;">Контролируемая через контур человека (HITL)</strong></td>
+                <td><strong style="color:#10b981;">Контролируемая через контур человека (<a href="/glossary#term-hitl" class="term-link" target="_blank" title="Открыть определение в Глоссарии">HITL</a>) и политики <a href="/glossary#term-agent-harness-execution-runtime" class="term-link" target="_blank" title="Открыть определение в Глоссарии">Харнесса</a></strong></td>
               </tr>
               <tr>
                 <td><strong>Стоимость транзакции</strong></td>
                 <td>Менее $0,0001 (доли копейки)</td>
                 <td>Низкая (лицензия на робота)</td>
-                <td>От 1 до 50 руб. за многошаговый анализ</td>
+                <td>От 1 до 50 руб. за многошаговый анализ (<a href="/glossary#term-token-unit-economics" class="term-link" target="_blank" title="Открыть определение в Глоссарии">Unit-токеномика</a>)</td>
               </tr>
             </tbody>
           </table>
@@ -510,7 +634,7 @@
                 <td><strong>Отдел Продаж</strong></td>
                 <td>Скоринг лидов и авто-генерация КП (CPQ)</td>
                 <td>Speed-to-Lead 30 сек, цикл КП с 3 дней до 15 мин</td>
-                <td>Human-in-the-Loop (визирование РОПом)</td>
+                <td><a href="/glossary#term-hitl" class="term-link" target="_blank" title="Открыть в Глоссарии">Human-in-the-Loop</a> (визирование РОПом)</td>
               </tr>
               <tr>
                 <td><strong>Маркетинг</strong></td>
@@ -522,25 +646,25 @@
                 <td><strong>Бухгалтерия</strong></td>
                 <td>Сверка первички (3-Way Matching: Счет-Акт-1С)</td>
                 <td>Снижение трудоемкости на 85%, 0 ошибок в оплатах</td>
-                <td>HITL при расхождениях сумм</td>
+                <td><a href="/glossary#term-hitl" class="term-link" target="_blank" title="Открыть в Глоссарии">HITL</a> при расхождениях сумм</td>
               </tr>
               <tr>
                 <td><strong>Финансы</strong></td>
                 <td>Сценарный прогноз кассовых разрывов</td>
                 <td>Предупреждение за 14–30 дней, экономия 12 ч/нед CFO</td>
-                <td>Human-in-the-Loop (утверждение мер)</td>
+                <td><a href="/glossary#term-hitl" class="term-link" target="_blank" title="Открыть в Глоссарии">Human-in-the-Loop</a> (утверждение мер)</td>
               </tr>
               <tr>
                 <td><strong>Юристы</strong></td>
                 <td>Аудит договоров на риски и протокол разногласий</td>
                 <td>Вычитка за 5 минут, 100% перехват скрытых неустоек</td>
-                <td>Human-in-the-Loop (юрист визирует правки)</td>
+                <td><a href="/glossary#term-hitl" class="term-link" target="_blank" title="Открыть в Глоссарии">Human-in-the-Loop</a> (юрист визирует правки)</td>
               </tr>
               <tr>
                 <td><strong>HR & Найм</strong></td>
                 <td>Скрининг сотен резюме и асинхронное AI-интервью</td>
                 <td>Первичный отбор быстрее на 80%, найм дешевле на 35%</td>
-                <td>Human-in-the-Loop (решение за HRD)</td>
+                <td><a href="/glossary#term-hitl" class="term-link" target="_blank" title="Открыть в Глоссарии">Human-in-the-Loop</a> (решение за HRD)</td>
               </tr>
               <tr>
                 <td><strong>Клиентский Сервис</strong></td>
@@ -552,7 +676,7 @@
                 <td><strong>Аналитика & BI</strong></td>
                 <td>Text-to-SQL ad-hoc аналитика для руководства</td>
                 <td>Отчет за 1 минуту вместо 3 дней ожидания отчетов</td>
-                <td>Human-out-of-the-loop (режим чтения)</td>
+                <td>Режим чтения (<a href="/glossary#term-reasoning-acting" class="term-link" target="_blank" title="Открыть в Глоссарии">ReAct-агент</a>)</td>
               </tr>
             </tbody>
           </table>
@@ -563,7 +687,7 @@
           <div style="font-family:var(--mono); font-size:0.75rem; color:#10b981; font-weight:700; margin-bottom:8px;">// ПРАКТИЧЕСКАЯ ВИТРИНА РЕШЕНИЙ</div>
           <h3>Все 51 готовый прикладной сценарий с архитектурой и промптами вынесены в интерактивный каталог</h3>
           <p>
-            В каталоге готовых решений вы можете подробно изучить схемы реализации, необходимые коннекторы (MCP), требования к интеграции с 1С / CRM и запустить готовый сценарий.
+            В каталоге готовых решений вы можете подробно изучить схемы реализации, необходимые коннекторы (<a href="/glossary#term-model-context-protocol" class="term-link" target="_blank" style="color:#10b981;" title="Открыть в Глоссарии">MCP</a>), системные <a href="/glossary#term-system-prompt-developer-prompt" class="term-link" target="_blank" style="color:#10b981;" title="Открыть в Глоссарии">промпты</a>, требования к интеграции с 1С / CRM и запустить готовый сценарий.
           </p>
           <a href="/solutions" class="btn-primary" style="background:#10b981; color:#09090b; padding:12px 24px; text-decoration:none; font-weight:700;">
             Открыть интерактивный каталог решений (51 сценарий) ↗
@@ -576,23 +700,26 @@
     <section id="security" class="guide-page-frame guide-section-block" data-nav-title="Безопасность & HITL">
       <div class="guide-content-wrap">
         <div class="section-tag">ИНФОРМАЦИОННАЯ БЕЗОПАСНОСТЬ</div>
-        <h2>5. Безопасность данных и архитектура контроля (Human-in-the-Loop)</h2>
+        <h2>5. Безопасность данных и архитектура контроля (Human-in-the-Loop & Харнесс)</h2>
         <p>
           Главное опасение собственника бизнеса при внедрении ИИ: <em>«Что если нейросеть отправит не ту сумму, сольет базу клиентов или испортит данные в 1С?»</em>
         </p>
         <p>
-          В профессиональной агентной среде (на базе Google Antigravity и протокола MCP) безопасность обеспечивается тремя обязательными уровнями:
+          В профессиональной корпоративной среде (на базе <a href="/glossary#term-google-antigravity" class="term-link" target="_blank" title="Открыть определение в Глоссарии">Google Antigravity</a>, исполнительного <a href="/glossary#term-agent-harness-execution-runtime" class="term-link" target="_blank" title="Открыть определение в Глоссарии">агентного харнесса</a> и протокола <a href="/glossary#term-model-context-protocol" class="term-link" target="_blank" title="Открыть определение в Глоссарии">MCP</a>) безопасность обеспечивается четырьмя обязательными эшелонами защиты:
         </p>
 
         <ul>
           <li>
-            <strong>1. Изолированные Linux-песочницы (Sandboxes):</strong> Агент исполняет код и анализирует файлы в изолированном защищенном контейнере. У него нет прямого доступа к серверам компании.
+            <strong>1. Изолированные Linux-песочницы (<a href="/glossary#term-sandbox-e2b-docker-modal-firecracker" class="term-link" target="_blank" title="Открыть определение в Глоссарии">Sandboxes</a>):</strong> Агент исполняет сгенерированный код, преобразует файлы и запускает аналитические скрипты строго в изолированном контейнере (Docker, E2B, Modal). У него нет прямого доступа к серверам и файловой системе компании.
           </li>
           <li>
-            <strong>2. Model Context Protocol (MCP) с прокси-ключами:</strong> Пароли от баз данных и токены API никогда не передаются внутрь текста промпта. Модель видит только строго регламентированные функции чтения/записи.
+            <strong>2. Исполнительный Харнесс как шлюз безопасности (<a href="/glossary#term-agent-harness-execution-runtime" class="term-link" target="_blank" title="Открыть определение в Глоссарии">Harness Guardrails</a>):</strong> Все системные вызовы агента проходят через центральный контроллер рантайма. Харнесс проверяет права доступа, маскирует персональные данные (PII), валидирует схемы вызовов и нейтрализует попытки <a href="/glossary#term-prompt-injection" class="term-link" target="_blank" title="Открыть определение в Глоссарии">промпт-инъекций</a> из внешних источников.
           </li>
           <li>
-            <strong>3. Блокирующие перехватчики (Decide Hooks & HITL):</strong> Любое действие, изменяющее финансовые данные или отправляющее документ клиенту, оформляется как <em>«Предложение действия» (Propose Action)</em>. Агент останавливается и ждет подтверждения от уполномоченного сотрудника в 1 клик.
+            <strong>3. <a href="/glossary#term-model-context-protocol" class="term-link" target="_blank" title="Открыть определение в Глоссарии">Model Context Protocol (MCP)</a> с прокси-ключами:</strong> Пароли от баз данных, сертификаты и сервисные API-ключи никогда не попадают внутрь контекста или текста промпта. Модель видит только строго регламентированные функции чтения/записи.
+          </li>
+          <li>
+            <strong>4. Блокирующие перехватчики (Decide Hooks & <a href="/glossary#term-hitl" class="term-link" target="_blank" title="Открыть определение в Глоссарии">HITL</a>):</strong> Любое действие, изменяющее финансовые данные, списывающее средства или отправляющее документ клиенту, оформляется как <em>«Предложение действия» (Propose Action)</em>. Харнесс принудительно замораживает транзакцию и ждет физического подтверждения от уполномоченного сотрудника в 1 клик.
           </li>
         </ul>
       </div>
@@ -614,7 +741,7 @@
             <div>
               <h4 class="roadmap-step-title">Аудит процессов и быстрые победы (Quick Wins)</h4>
               <p style="font-size:0.95rem; color:#52525b; margin:0 0 10px 0;">
-                Оцифровка регламентов компании, внедрение внутреннего AI-ассистента онбординга сотрудников, запуск автогенерации контента и первичного скоринга лидов.
+                Оцифровка регламентов компании, создание базы знаний (<a href="/glossary#term-retrieval-augmented-generation" class="term-link" target="_blank" title="Открыть в Глоссарии">RAG</a>), внедрение внутреннего AI-ассистента онбординга сотрудников, запуск автогенерации контента по стандартизированным <a href="/glossary#term-system-prompt-developer-prompt" class="term-link" target="_blank" title="Открыть в Глоссарии">промптам</a> и первичный скоринг входящих лидов.
               </p>
               <span style="font-family:var(--mono); font-size:0.75rem; background:#f4f4f5; padding:3px 8px; border:1px solid #e4e4e7;">Результат: Сокращение времени поиска внутренней информации на 70%</span>
             </div>
@@ -623,9 +750,9 @@
           <div class="roadmap-step">
             <div class="roadmap-step-time">ЭТАП 2 · МЕСЯЦЫ 3–6</div>
             <div>
-              <h4 class="roadmap-step-title">Стандартизация интеграций через MCP</h4>
+              <h4 class="roadmap-step-title">Развертывание агентного харнесса и стандартизация MCP</h4>
               <p style="font-size:0.95rem; color:#52525b; margin:0 0 10px 0;">
-                Подключение защищенных MCP-серверов к 1С, Bitrix24 и базам данных. Автоматизация операций чтения: аналитические запросы Text-to-SQL, сплошной аудит звонков отдела продаж, скрининг резюме.
+                Развертывание производственного <a href="/glossary#term-agent-harness-execution-runtime" class="term-link" target="_blank" title="Открыть в Глоссарии">агентного харнесса</a> и подключение защищенных <a href="/glossary#term-model-context-protocol" class="term-link" target="_blank" title="Открыть в Глоссарии">MCP-серверов</a> к 1С, Bitrix24 и базам данных. Автоматизация операций чтения: аналитические запросы Text-to-SQL, сплошной аудит звонков отдела продаж, скоринг резюме.
               </p>
               <span style="font-family:var(--mono); font-size:0.75rem; background:#f4f4f5; padding:3px 8px; border:1px solid #e4e4e7;">Результат: 95% аналитических отчетов без привлечения программистов</span>
             </div>
@@ -636,7 +763,7 @@
             <div>
               <h4 class="roadmap-step-title">Агентные контуры с подтверждением человеком (HITL)</h4>
               <p style="font-size:0.95rem; color:#52525b; margin:0 0 10px 0;">
-                Запуск сценариев с правом создания документов: сверка первички (3-Way Matching), экспресс-аудит договоров, расчет смет и автогенерация КП, предиктивный автозаказ на склад.
+                Запуск <a href="/glossary#term-agent-execution-loop" class="term-link" target="_blank" title="Открыть в Глоссарии">агентных циклов</a> с правом формирования документов: сверка первички (3-Way Matching), экспресс-аудит договоров, расчет смет и автогенерация КП, предиктивный автозаказ на склад. Внедрение <a href="/glossary#term-multi-agent-systems-mas" class="term-link" target="_blank" title="Открыть в Глоссарии">мультиагентных связок (MAS)</a> с обязательной верификацией <a href="/glossary#term-hitl" class="term-link" target="_blank" title="Открыть в Глоссарии">HITL</a>.
               </p>
               <span style="font-family:var(--mono); font-size:0.75rem; background:#f4f4f5; padding:3px 8px; border:1px solid #e4e4e7;">Результат: Автоматизация >80% рутинных транзакций при 0% сбоев</span>
             </div>
@@ -647,7 +774,7 @@
             <div>
               <h4 class="roadmap-step-title">Системная автономия и непрерывное обучение</h4>
               <p style="font-size:0.95rem; color:#52525b; margin:0 0 10px 0;">
-                Сквозная синхронизация межфункциональных цепочек, самообучение агентов на принятых решениях верификаторов и снижение операционных расходов компании (OPEX) на 15–25%.
+                Сквозная синхронизация межфункциональных цепочек, координация изолированных <a href="/glossary#term-subagents-context-branching" class="term-link" target="_blank" title="Открыть в Глоссарии">субагентов</a>, самообучение моделей на базе решений операторов и снижение операционных расходов компании (OPEX) на 15–25%.
               </p>
             </div>
           </div>
