@@ -502,17 +502,314 @@
       }
     }
 
-    @media (max-width: 900px) {
+    
+    .badge-text-short { display: none; }
+    .slot-text-short { display: none; }
+    @media (max-width: 768px) {
+      .badge-text-full { display: none !important; }
+      .badge-text-short { display: inline !important; }
+      .slot-text-full { display: none !important; }
+      .slot-text-short { display: inline !important; }
+      .confidential-meta .meta-id,
+      .confidential-meta .meta-ver { display: none !important; }
+      .kp-client-info { flex: 0 0 auto !important; }
+      .kp-client-info a { font-size: 0.95rem !important; white-space: nowrap !important; }
+    }
+
+    /* Mobile Polish & Responsive Architecture */
+    @media (max-width: 768px) {
+      /* 1. Sleek Single-Line Confidential Bar */
+      .confidential-bar {
+        position: relative !important;
+        top: auto !important;
+        padding: 6px 14px !important;
+        font-size: 0.68rem !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        background: #09090b !important;
+        border-bottom: 1px solid #1f1f23 !important;
+      }
+      .confidential-badge {
+        font-size: 0.68rem !important;
+        gap: 4px !important;
+      }
+      .confidential-meta {
+        gap: 8px !important;
+      }
+      .confidential-meta span:not(:last-child) {
+        display: none !important;
+      }
+
+      /* 2. Compact Sticky Header (46px high, zero screen blocking) */
+      .kp-nav-bar {
+        position: sticky !important;
+        top: 0 !important;
+        padding: 6px 0 !important;
+        background: rgba(255, 255, 255, 0.98) !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+        border-bottom: 1px solid var(--border) !important;
+        z-index: 1000 !important;
+      }
+      .kp-nav-inner {
+        padding: 0 14px !important;
+        flex-wrap: nowrap !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        gap: 10px !important;
+      }
+      .kp-client-info {
+        display: flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        min-width: 0 !important;
+        overflow: hidden !important;
+      }
+      .kp-client-info a {
+        font-size: 0.92rem !important;
+        white-space: nowrap !important;
+        font-weight: 700 !important;
+        color: #09090b !important;
+      }
+      .kp-logo-tag {
+        display: none !important;
+      }
+      .kp-client-info span {
+        display: none !important;
+      }
+      .kp-actions {
+        display: flex !important;
+        gap: 6px !important;
+        flex-shrink: 0 !important;
+        align-items: center !important;
+      }
+      .kp-actions a {
+        padding: 7px 11px !important;
+        font-size: 0.78rem !important;
+        white-space: nowrap !important;
+        border-radius: 4px !important;
+      }
+      .kp-actions a[href*="max.ru"] {
+        display: none !important;
+      }
+
+      /* 3. Hero Section Typography & Rhythm */
+      .kp-hero .container {
+        padding-top: 24px !important;
+        padding-bottom: 24px !important;
+      }
+      .kp-tag {
+        font-size: 0.68rem !important;
+        padding: 3px 8px !important;
+        margin-bottom: 10px !important;
+      }
+      .kp-title {
+        font-size: clamp(1.6rem, 6.8vw, 2.1rem) !important;
+        line-height: 1.16 !important;
+        letter-spacing: -0.03em !important;
+      }
+      .kp-desc {
+        font-size: 0.94rem !important;
+        line-height: 1.55 !important;
+        margin-top: 12px !important;
+      }
+
+      /* 4. Balanced 2x2 Meta Grid */
+      .kp-meta-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+        margin-top: 20px !important;
+      }
+      .kp-meta-card {
+        padding: 12px 14px !important;
+      }
+      .kp-meta-card .label {
+        font-size: 0.66rem !important;
+        margin-bottom: 4px !important;
+      }
+      .kp-meta-card .value {
+        font-size: 1.25rem !important;
+      }
+      .kp-meta-card .sub {
+        font-size: 0.72rem !important;
+        margin-top: 2px !important;
+      }
+
+      /* 5. Section Paddings */
+      .kp-section .container {
+        padding-top: 36px !important;
+        padding-bottom: 36px !important;
+      }
+      .kp-section-head {
+        margin-bottom: 20px !important;
+      }
+
+      /* 6. Cards: Single Column with clean padding */
+      .kp-grid-3,
+      .kp-grid-2 {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+      }
+      .kp-card {
+        padding: 18px 16px !important;
+      }
+      .kp-card-title {
+        font-size: 1.08rem !important;
+        margin-bottom: 8px !important;
+      }
+      .kp-card-desc {
+        font-size: 0.88rem !important;
+        line-height: 1.5 !important;
+      }
+      .kp-card-list {
+        margin-top: 10px !important;
+        padding-top: 10px !important;
+      }
+      .kp-card-list li {
+        font-size: 0.86rem !important;
+        padding-left: 18px !important;
+        margin-bottom: 7px !important;
+        line-height: 1.45 !important;
+      }
+
+      /* 7. Stepper / Roadmap on Mobile */
+      .timeline-steps {
+        gap: 12px !important;
+        margin-top: 20px !important;
+      }
       .timeline-step {
-        grid-template-columns: 1fr;
-        gap: 12px;
+        padding: 16px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+        align-items: flex-start !important;
+      }
+      .timeline-badge {
+        font-size: 0.92rem !important;
+        text-align: left !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        background: #f1f5f9 !important;
+        padding: 3px 8px !important;
+        border-radius: 3px !important;
+      }
+      .timeline-badge small {
+        display: inline !important;
+        font-size: 0.7rem !important;
+      }
+      .timeline-content h4 {
+        font-size: 1.02rem !important;
+        margin-bottom: 4px !important;
+      }
+      .timeline-content p {
+        font-size: 0.86rem !important;
+        line-height: 1.45 !important;
       }
       .timeline-meta {
-        text-align: left;
+        width: 100% !important;
+        padding-top: 8px !important;
+        border-top: 1px dashed var(--border) !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        text-align: left !important;
       }
-      .accept-box {
-        grid-template-columns: 1fr;
-        gap: 32px;
+      .timeline-meta .duration {
+        font-size: 0.82rem !important;
+      }
+      .timeline-meta .deliverable {
+        font-size: 0.74rem !important;
+      }
+      .rules-banner {
+        padding: 12px 14px !important;
+        font-size: 0.84rem !important;
+        margin-top: 16px !important;
+      }
+
+      /* 8. Pricing Tranches */
+      .tranches-box {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+        margin-top: 20px !important;
+      }
+      .tranche-card {
+        padding: 22px 16px !important;
+      }
+      .tranche-price {
+        font-size: 1.95rem !important;
+        margin: 6px 0 4px 0 !important;
+      }
+      .tranche-title {
+        font-size: 1.15rem !important;
+        margin-bottom: 6px !important;
+      }
+      .tranche-desc {
+        font-size: 0.86rem !important;
+        margin-bottom: 14px !important;
+      }
+
+      /* 9. Contact Section & Direct Card on Mobile */
+      section,
+      .kp-section,
+      .form-section {
+        scroll-margin-top: 70px !important;
+      }
+      .form-section {
+        padding: 0 !important;
+      }
+      .form-inner {
+        grid-template-columns: 1fr !important;
+        padding: 104px 16px 44px !important;
+        gap: 28px !important;
+      }
+      .form-left {
+        max-width: 100% !important;
+      }
+      .form-title {
+        font-size: clamp(1.65rem, 6.8vw, 2.1rem) !important;
+        line-height: 1.15 !important;
+        margin-bottom: 12px !important;
+      }
+      .form-sub {
+        font-size: 0.9rem !important;
+        line-height: 1.55 !important;
+        margin-bottom: 16px !important;
+      }
+      .direct-contact-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 18px 14px !important;
+        gap: 10px !important;
+        display: flex !important;
+        flex-direction: column !important;
+      }
+      .direct-contact-card a {
+        padding: 14px 16px !important;
+        font-size: 0.92rem !important;
+        min-height: 48px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+
+      /* 10. Footer */
+      .footer {
+        padding: 20px 0 28px 0 !important;
+      }
+      .footer-inner {
+        padding: 0 14px !important;
+        gap: 12px !important;
+        font-size: 0.74rem !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+      }
+      .footer-links {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 8px 14px !important;
+        font-size: 0.76rem !important;
       }
     }
   </style>
@@ -522,12 +819,12 @@
   <!-- CONFIDENTIAL STATUS BAR -->
   <div class="confidential-bar">
     <div class="confidential-badge">
-      <span>🔒</span> КОНФИДЕНЦИАЛЬНО · ДОСТУП ПО ПРЯМОЙ ССЫЛКЕ
+      <span>🔒</span> <span class="badge-text-full">КОНФИДЕНЦИАЛЬНО · ДОСТУП ПО ПРЯМОЙ ССЫЛКЕ</span><span class="badge-text-short">КОНФИДЕНЦИАЛЬНО</span>
     </div>
     <div class="confidential-meta">
-      <span><strong>ID:</strong> KP-FLOWERS-060926</span>
-      <span><strong>Дата:</strong> 06.09.2026</span>
-      <span><strong>Версия:</strong> 2.0 (Финальная)</span>
+      <span class="meta-id"><strong>ID:</strong> KP-FLOWERS-060926</span>
+      <span class="meta-date"><strong>Дата:</strong> 06.09.2026</span>
+      <span class="meta-ver"><strong>Версия:</strong> 2.0 (Финальная)</span>
     </div>
   </div>
 
@@ -546,8 +843,8 @@
       </div>
 
       <div class="kp-actions no-print" style="display:flex; gap:10px; align-items:center;">
-        <a href="/booking" target="_blank" class="btn-secondary" style="padding:8px 14px; font-size:0.84rem; text-decoration:none; color:var(--black); background:#ffffff; border:1px solid var(--border); font-family:var(--font-heading); font-weight:600; display:inline-flex; align-items:center; gap:6px;">
-          📅 Забронировать слот
+        <a href="/booking" target="_blank" class="btn-secondary btn-kp-booking" style="padding:8px 14px; font-size:0.84rem; text-decoration:none; color:var(--black); background:#ffffff; border:1px solid var(--border); font-family:var(--font-heading); font-weight:600; display:inline-flex; align-items:center; gap:6px;">
+          📅 <span class="slot-text-full">Забронировать слот</span><span class="slot-text-short">Слот</span>
         </a>
         <a href="https://max.ru/u/f9LHodD0cOJxk9sLajkZ5u_-WbQydR8lkTH6y34KqdU-QKoLzrW7FH8yJG0" target="_blank" class="btn-secondary" style="padding:8px 14px; font-size:0.84rem; text-decoration:none; color:#ffffff; background:#27272a; border:1px solid #3f3f46; font-family:var(--font-heading); font-weight:600; display:inline-flex; align-items:center; gap:6px;">
           💬 MAX ↗
@@ -561,7 +858,7 @@
 
   <main>
     <!-- HERO SECTION -->
-    <section id="intro" class="kp-hero" data-nav-title="Паспорт КП">
+    <section id="intro" class="kp-hero" data-nav-title="Паспорт">
       <div class="container">
         <span class="kp-tag">FLOWERS & FLORISTICS · ПРОДАЮЩИЙ ЛЕНДИНГ НА КОДЕ</span>
         <h1 class="kp-title">
@@ -599,7 +896,7 @@
     </section>
 
     <!-- SECTION 1: CONTEXT & CONVERSION (EXACTLY 3 IN A ROW) -->
-    <section id="goals" class="kp-section" data-nav-title="Цели & Конверсия">
+    <section id="goals" class="kp-section" data-nav-title="Цели">
       <div class="container">
         <div class="kp-section-head">
           <span class="kp-tag">01 / ЦЕЛИ И КОНВЕРСИЯ</span>
@@ -908,31 +1205,6 @@
               </a>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 6: ACCEPTANCE BOX -->
-    <section class="kp-section" style="padding:0; border-bottom:none;">
-      <div class="accept-box">
-        <div>
-          <h3>Порядок запуска проекта</h3>
-          <p>
-            Мы начинаем работу сразу после согласования тарифа и внесения 50% предоплаты. Все договоренности фиксируются в договоре.
-          </p>
-          <div style="margin-top:24px;">
-            <a href="https://t.me/Michael_Sage" target="_blank" class="btn-primary" style="display:inline-block; padding:14px 28px; background:#ffffff; color:#09090b; text-decoration:none; font-weight:700; border-radius:4px;">
-              Запустить проект в Telegram ➔
-            </a>
-          </div>
-        </div>
-        <div>
-          <h4 style="color:#ffffff; font-size:1.1rem; margin-bottom:16px;">Что требуется от вас в 1-й день:</h4>
-          <ul class="req-list">
-            <li><strong>Фотографии букетов и салона:</strong> актуальные снимки ваших работ (поможем отобрать лучшие).</li>
-            <li><strong>Прайс-лист и условия доставки:</strong> зоны по Сочи, минимальный чек, стоимость курьера.</li>
-            <li><strong>Доступы к хостингу:</strong> логин и пароль для привязки домена (или поможем зарегистрировать с нуля).</li>
-          </ul>
         </div>
       </div>
     </section>

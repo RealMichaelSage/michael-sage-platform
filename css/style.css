@@ -2751,10 +2751,20 @@ main > .section:first-child {
   }
 
   .form-inner {
-    padding: 0 16px;
-    gap: 24px;
-    width: 100%;
-    box-sizing: border-box;
+    grid-template-columns: 1fr !important;
+    padding: clamp(48px, 6vw, 64px) 16px !important;
+    gap: 32px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .form-left {
+    max-width: 100% !important;
+  }
+
+  .direct-contact-card {
+    width: 100% !important;
+    max-width: 100% !important;
   }
 
   .form-title {
@@ -3094,6 +3104,11 @@ input[type="reset"],
    FLOATING SECTION NAVIGATOR (PURE AIRY / NO CONTAINER)
    (Swiss Stark Pure Modernist Architecture)
 ══════════════════════════════════════════ */
+
+.slot-text-short {
+  display: none;
+}
+
 .page-scrollspy {
   position: fixed;
   right: clamp(16px, 2.5vw, 40px);
@@ -3113,8 +3128,322 @@ input[type="reset"],
 }
 
 @media (min-width: 1240px) {
-  .page-scrollspy {
+  
+.slot-text-short {
+  display: none;
+}
+
+.page-scrollspy {
     display: flex;
+  }
+}
+
+@media (min-width: 1240px) and (max-width: 1680px) {
+  .page-kp .container,
+  .page-kp .kp-nav-inner {
+    padding-right: clamp(140px, 11vw, 180px) !important;
+  }
+}
+
+/* ══════════════════════════════════════════
+   COMMERCIAL PROPOSALS (KP) MOBILE OPTIMIZATION
+══════════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* 1. Sleek Single-Line Confidential Bar */
+  .page-kp .confidential-bar {
+    position: relative !important;
+    top: auto !important;
+    padding: 6px 14px !important;
+    font-size: 0.68rem !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    background: #09090b !important;
+    border-bottom: 1px solid #1f1f23 !important;
+    z-index: 10 !important;
+  }
+  .page-kp .confidential-badge {
+    font-size: 0.68rem !important;
+    gap: 4px !important;
+  }
+  .page-kp .confidential-meta {
+    gap: 8px !important;
+  }
+  .page-kp .confidential-meta .meta-id,
+  .page-kp .confidential-meta .meta-ver {
+    display: none !important;
+  }
+  .page-kp .slot-text-full {
+    display: none !important;
+  }
+  .page-kp .slot-text-short {
+    display: inline !important;
+  }
+  .page-kp .kp-client-info {
+    flex: 0 0 auto !important;
+  }
+  .page-kp .kp-client-info a {
+    font-size: 0.95rem !important;
+    white-space: nowrap !important;
+  }
+
+  /* 2. Compact Sticky Header (48px high, no content blocking) */
+  .page-kp .kp-nav-bar {
+    position: sticky !important;
+    top: 0 !important;
+    padding: 6px 0 !important;
+    background: rgba(255, 255, 255, 0.98) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border-bottom: 1px solid var(--border) !important;
+    z-index: 1000 !important;
+  }
+  .page-kp .kp-nav-inner {
+    padding: 0 14px !important;
+    flex-wrap: nowrap !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 10px !important;
+  }
+  .page-kp .kp-client-info {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+  .page-kp .kp-client-info a {
+    font-size: 0.9rem !important;
+    white-space: nowrap !important;
+    font-weight: 700 !important;
+  }
+  .page-kp .kp-logo-tag {
+    display: none !important;
+  }
+  .page-kp .kp-client-info span {
+    display: none !important;
+  }
+  .page-kp .kp-actions {
+    display: flex !important;
+    gap: 6px !important;
+    flex-shrink: 0 !important;
+    align-items: center !important;
+  }
+  .page-kp .kp-actions a {
+    padding: 7px 11px !important;
+    font-size: 0.78rem !important;
+    white-space: nowrap !important;
+    border-radius: 4px !important;
+  }
+  .page-kp .kp-actions a[href*="max.ru"] {
+    display: none !important;
+  }
+
+  /* 3. Hero Section Padding & Typography */
+  .page-kp .kp-hero .container {
+    padding-top: 24px !important;
+    padding-bottom: 24px !important;
+  }
+  .page-kp .kp-tag {
+    font-size: 0.68rem !important;
+    padding: 3px 8px !important;
+    margin-bottom: 10px !important;
+  }
+  .page-kp .kp-title {
+    font-size: clamp(1.6rem, 6.8vw, 2.1rem) !important;
+    line-height: 1.16 !important;
+    letter-spacing: -0.03em !important;
+  }
+  .page-kp .kp-desc {
+    font-size: 0.94rem !important;
+    line-height: 1.55 !important;
+    margin-top: 12px !important;
+  }
+
+  /* 4. Balanced 2x2 Meta Grid (No tall 1-column stack) */
+  .page-kp .kp-meta-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    margin-top: 20px !important;
+  }
+  .page-kp .kp-meta-card {
+    padding: 12px 14px !important;
+  }
+  .page-kp .kp-meta-card .label {
+    font-size: 0.66rem !important;
+    margin-bottom: 4px !important;
+  }
+  .page-kp .kp-meta-card .value {
+    font-size: 1.25rem !important;
+  }
+  .page-kp .kp-meta-card .sub {
+    font-size: 0.72rem !important;
+    margin-top: 2px !important;
+  }
+
+  /* 5. Sections Spacing */
+  .page-kp .kp-section .container {
+    padding-top: 36px !important;
+    padding-bottom: 36px !important;
+  }
+  .page-kp .kp-section-head {
+    margin-bottom: 20px !important;
+  }
+
+  /* 6. Cards (Single Column with comfortable tap padding) */
+  .page-kp .kp-grid-3,
+  .page-kp .kp-grid-2 {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+  .page-kp .kp-card {
+    padding: 18px 16px !important;
+  }
+  .page-kp .kp-card-title {
+    font-size: 1.08rem !important;
+    margin-bottom: 8px !important;
+  }
+  .page-kp .kp-card-desc {
+    font-size: 0.88rem !important;
+    line-height: 1.5 !important;
+  }
+  .page-kp .kp-card-list {
+    margin-top: 10px !important;
+    padding-top: 10px !important;
+  }
+  .page-kp .kp-card-list li {
+    font-size: 0.86rem !important;
+    padding-left: 18px !important;
+    margin-bottom: 7px !important;
+    line-height: 1.45 !important;
+  }
+
+  /* 7. Stepper / Roadmap on Mobile */
+  .page-kp .timeline-steps {
+    gap: 12px !important;
+    margin-top: 20px !important;
+  }
+  .page-kp .timeline-step {
+    padding: 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    align-items: flex-start !important;
+  }
+  .page-kp .timeline-badge {
+    font-size: 0.92rem !important;
+    text-align: left !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    background: #f1f5f9 !important;
+    padding: 3px 8px !important;
+    border-radius: 3px !important;
+  }
+  .page-kp .timeline-badge small {
+    display: inline !important;
+    font-size: 0.7rem !important;
+  }
+  .page-kp .timeline-content h4 {
+    font-size: 1.02rem !important;
+    margin-bottom: 4px !important;
+  }
+  .page-kp .timeline-content p {
+    font-size: 0.86rem !important;
+    line-height: 1.45 !important;
+  }
+  .page-kp .timeline-meta {
+    width: 100% !important;
+    padding-top: 8px !important;
+    border-top: 1px dashed var(--border) !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    text-align: left !important;
+  }
+  .page-kp .timeline-meta .duration {
+    font-size: 0.82rem !important;
+  }
+  .page-kp .timeline-meta .deliverable {
+    font-size: 0.74rem !important;
+  }
+  .page-kp .rules-banner {
+    padding: 12px 14px !important;
+    font-size: 0.84rem !important;
+    margin-top: 16px !important;
+  }
+
+  /* 8. Pricing Tranches */
+  .page-kp .tranches-box {
+    gap: 16px !important;
+    margin-top: 20px !important;
+  }
+  .page-kp .tranche-card {
+    padding: 22px 16px !important;
+  }
+  .page-kp .tranche-price {
+    font-size: 1.95rem !important;
+    margin: 6px 0 4px 0 !important;
+  }
+  .page-kp .tranche-title {
+    font-size: 1.15rem !important;
+    margin-bottom: 6px !important;
+  }
+  .page-kp .tranche-desc {
+    font-size: 0.86rem !important;
+    margin-bottom: 14px !important;
+  }
+
+  /* 9. Contact Section & Direct Card on Mobile */
+  .page-kp section,
+  .page-kp .kp-section,
+  .page-kp .form-section {
+    scroll-margin-top: 70px !important;
+  }
+  .page-kp .form-section {
+    padding: 0 !important;
+  }
+  .page-kp .form-inner {
+    padding: 104px 16px 44px !important;
+    gap: 28px !important;
+  }
+  .page-kp .form-title {
+    font-size: clamp(1.65rem, 6.8vw, 2.1rem) !important;
+    line-height: 1.15 !important;
+    margin-bottom: 12px !important;
+  }
+  .page-kp .form-sub {
+    font-size: 0.9rem !important;
+    line-height: 1.55 !important;
+    margin-bottom: 16px !important;
+  }
+  .page-kp .direct-contact-card {
+    padding: 18px 14px !important;
+    gap: 10px !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .page-kp .direct-contact-card a {
+    padding: 14px 16px !important;
+    font-size: 0.92rem !important;
+    min-height: 48px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* 10. Footer */
+  .page-kp .footer {
+    padding: 20px 0 28px 0 !important;
+  }
+  .page-kp .footer-inner {
+    padding: 0 14px !important;
+    gap: 12px !important;
+    font-size: 0.74rem !important;
+  }
+  .page-kp .footer-links {
+    gap: 8px 14px !important;
+    font-size: 0.76rem !important;
   }
 }
 
