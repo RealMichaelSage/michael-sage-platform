@@ -1476,29 +1476,39 @@
         }
 
         /* 5-item slide dense layout */
+        #slide-4 .about-cards-list,
+        #slide-5 .about-cards-list,
         #slide-6 .about-cards-list {
-            gap: 0.65rem;
-            margin-top: 0.4rem;
+            gap: 0.55rem;
+            margin-top: 0.3rem;
         }
+        #slide-4 .about-sticker,
+        #slide-5 .about-sticker,
         #slide-6 .about-sticker {
-            padding: 11px 18px;
-            font-size: clamp(0.98rem, 1.25vw, 1.22rem);
-            gap: 14px;
+            padding: 9px 16px;
+            font-size: clamp(0.92rem, 1.15vw, 1.15rem);
+            gap: 12px;
             border-radius: 0;
         }
+        #slide-4 .sticker-icon,
+        #slide-5 .sticker-icon,
         #slide-6 .sticker-icon {
-            min-width: 44px;
-            width: 44px;
-            height: 44px;
-            font-size: 1.25rem;
+            min-width: 40px;
+            width: 40px;
+            height: 40px;
+            font-size: 1.15rem;
             border-radius: 0;
         }
+        #slide-4 .pop-title-section,
+        #slide-5 .pop-title-section,
         #slide-6 .pop-title-section {
-            margin-top: 0.15rem;
-            margin-bottom: 0.8rem;
+            margin-top: 0.1rem;
+            margin-bottom: 0.6rem;
         }
-        #slide-6 .pop-cta-group {
-            margin-top: 10px;
+        #slide-4 .pop-badges,
+        #slide-5 .pop-badges,
+        #slide-6 .pop-badges {
+            margin-top: 0.6rem;
         }
 
     
@@ -1799,23 +1809,23 @@
                 <div class="about-cards-list">
                     <div class="about-sticker" style="cursor: default;">
                         <div class="sticker-icon" style="background: var(--pop-yellow);">10м</div>
-                        <span><strong>1. Кто такой ИИ:</strong> «Стажёр-отличник» и 3 главных вора времени в бизнесе.</span>
+                        <span><strong>1. Воры времени:</strong> где бизнес теряет 20+ часов в неделю и роль ИИ как цифрового штата.</span>
                     </div>
                     <div class="about-sticker" style="cursor: default;">
                         <div class="sticker-icon" style="background: var(--pop-cyan);">15м</div>
-                        <span><strong>2. Продажи:</strong> Радар клиентов в Telegram, реквизиты по фото и КП за 1 минуту.</span>
-                    </div>
-                    <div class="about-sticker" style="cursor: default;">
-                        <div class="sticker-icon" style="background: var(--pop-green);">10м</div>
-                        <span><strong>3. Документы & HR:</strong> Чек сразу в учет, аудит чужих договоров и отбор резюме.</span>
+                        <span><strong>2. Продажи и Сделки:</strong> радар лидов в TG, авто-CRM, сквозной документооборот за 1 минуту.</span>
                     </div>
                     <div class="about-sticker" style="cursor: default;">
                         <div class="sticker-icon" style="background: var(--pop-pink);">15м</div>
-                        <span><strong>4. Маркетинг & Запуск:</strong> Сайты за 2 часа, калькуляторы и контент без агентств.</span>
+                        <span><strong>3. Маркетинг и Трафик:</strong> сбор баз ЛПР, контент-завод, SEO/GEO-блог и сквозная аналитика.</span>
+                    </div>
+                    <div class="about-sticker" style="cursor: default;">
+                        <div class="sticker-icon" style="background: var(--pop-green);">10м</div>
+                        <span><strong>4. Операционка и HR:</strong> дашборд собственника, база знаний компании, AI-юрист и умный найм.</span>
                     </div>
                     <div class="about-sticker" style="cursor: default;">
                         <div class="sticker-icon" style="background: var(--pop-purple); color:#fff;">10м</div>
-                        <span><strong>5. Опасности & Старт:</strong> Где ИИ опасен и с чего начать уже в понедельник.</span>
+                        <span><strong>5. Опасности & Старт:</strong> красная зона (где ИИ запрещён) и план внедрения на понедельник.</span>
                     </div>
                 </div>
             </div>
@@ -1930,158 +1940,146 @@
             </div>
         </div>
 
-        <!-- Slide 4: Sales -->
+        <!-- Slide 4: Sales (5 automations) -->
         <div class="slide layout-flipped" id="slide-4">
             <div class="pop-image-wrapper">
                 <div class="pop-frame" style="transform: rotate(-1.5deg);">
-                    <img src="pop_art_sales_auto_ru916.webp" alt="Продажи" class="pop-img" loading="lazy">
+                    <img src="pop_art_sales_auto_ru916.webp" alt="Продажи и Сделки" class="pop-img" loading="lazy">
                 </div>
             </div>
             <div>
                 <span class="pop-subtitle" style="background: var(--pop-cyan);">ЧАСТЬ 2. ПРОДАЖИ БЕЗ ТОРМОЗОВ</span>
-                <h2 class="pop-title-section" style="margin-top: 0.3rem;">Продажи и Клиенты</h2>
+                <h2 class="pop-title-section" style="margin-top: 0.1rem;">Продажи и Сделки</h2>
                 <div class="about-cards-list">
-                    <div class="about-sticker" data-tip="Лиды за 3 секунды!" onclick="openPopup('sales_1', 'РАДАР В TELEGRAM', 'ПОИСК КЛИЕНТОВ', '📡', '• Бот круглосуточно сканирует 50+ целевых чатов и групп в Telegram.<br><br>• Как только появляется сообщение «ищу юриста / куплю станки / посоветуйте дизайнера», ИИ определяет намерение и отправляет лид продавцу с прямой ссылкой на автора.')">
+                    <div class="about-sticker" data-tip="Лиды за 3 секунды!" onclick="openPopup('sales_1', '1. СБОР ЛИДОВ ИЗ TELEGRAM ЧАТОВ', 'ПОИСК КЛИЕНТОВ', '📡', '• <strong>В чем суть:</strong> бот мониторит 50+ целевых чатов и каналов в Telegram, где уже состоит бизнес.<br><br>• <strong>Как работает:</strong> моментально ловит сообщения «ищу юриста / куплю станки / посоветуйте подрядчика», определяет коммерческий интерес и за 3 секунды пересылает контакт менеджеру.')">
                         <div class="sticker-icon" style="background: var(--pop-yellow);">📡</div>
-                        <span><strong>Радар в Telegram:</strong> система ловит в 50 чатах фразы <em>«ищу подрядчика / куплю»</em> и за 3 секунды передает лид продавцу.</span>
+                        <span><strong>1. Радар лидов в Telegram:</strong> перехват запросов <em>«ищу подрядчика / куплю»</em> в чатах за 3 секунды.</span>
                     </div>
-                    <div class="about-sticker" data-tip="Без ошибок в ИНН" onclick="openPopup('sales_2', 'РЕКВИЗИТЫ ПО ФОТО', 'АВТОМАТИЗАЦИЯ СДЕЛОК', '📸', '• Клиент прислал фото карточки предприятия или PDF-скан в WhatsApp/Telegram.<br><br>• ИИ извлекает ИНН, автоматически делает запрос к ФНС/DaData, заполняет расчетный счет, юр. адрес и создает готовую сделку в CRM.')">
-                        <div class="sticker-icon" style="background: var(--pop-cyan);">📸</div>
-                        <span><strong>Реквизиты по фото:</strong> клиент прислал скан или фото ➔ система находит компанию по ИНН и заполняет сделку без ошибок.</span>
+                    <div class="about-sticker" data-tip="Биржи под контролем!" onclick="openPopup('sales_2', '2. МОНИТОРИНГ БИРЖ И ПЛОЩАДОК', 'АГРЕГАТОР ЗАКАЗОВ', '🌐', '• <strong>В чем суть:</strong> сбор горячих заказов со специализированных платформ (Kwork, FL, Хабр Фриланс, отраслевые тендеры).<br><br>• <strong>Как работает:</strong> фильтрует спам, отбирает проекты с твердым чеком и уведомляет отдел продаж первым.')">
+                        <div class="sticker-icon" style="background: var(--pop-cyan);">🌐</div>
+                        <span><strong>2. Сбор с бирж и площадок:</strong> авто-фильтрация и сбор заказов с фриланса и тендерных площадок.</span>
                     </div>
-                    <div class="about-sticker" data-tip="Мгновенный PDF!" onclick="openPopup('sales_3', 'КП ИЗ ГОЛОСОВОГО', 'СКОРОСТЬ ЗАКРЫТИЯ', '🎙️', '• Вы провели встречу и надиктовали в чат: «Клиенту нужно 50 лицензий, скидка 10%, оплата в 2 этапа».<br><br>• ИИ берет фирменный шаблон компании и через 60 секунд формирует официальный PDF с печатью и расчетом, готовый к отправке.')">
-                        <div class="sticker-icon" style="background: var(--pop-pink);">🎙️</div>
-                        <span><strong>КП из голосового:</strong> наговорили итоги встречи в чат ➔ клиент сразу получает красивый PDF с ценами и оплатой.</span>
+                    <div class="about-sticker" data-tip="Без потери данных!" onclick="openPopup('sales_3', '3. АВТО-ЗАНЕСЕНИЕ ЛИДОВ В CRM', 'НУЛЕВАЯ ПОТЕРЯ', '📥', '• <strong>В чем суть:</strong> ни один контакт не теряется в личных переписках сотрудников.<br><br>• <strong>Как работает:</strong> любой лид из TG, почты, сайта или звонка автоматически создает сделку в CRM с записью источника, диалога и тегами.')">
+                        <div class="sticker-icon" style="background: var(--pop-green);">📥</div>
+                        <span><strong>3. Мгновенная фиксация в CRM:</strong> авто-создание сделки из любого источника без ручного ввода.</span>
                     </div>
-                    <div class="about-sticker" data-tip="Контроль качества" onclick="openPopup('sales_4', 'КОНТРОЛЬ 100% ЗВОНКОВ', 'РЕЧЕВАЯ АНАЛИТИКА', '🎧', '• РОП физически может послушать 3–5% звонков. ИИ слушает 100% звонков каждый вечер.<br><br>• Система проверяет чек-лист: назвали ли акцию, отработали ли возражение, была ли вежливость, и ставит оценку каждому менеджеру.')">
-                        <div class="sticker-icon" style="background: var(--pop-green);">🎧</div>
-                        <span><strong>Контроль 100% звонков:</strong> ИИ слушает всех менеджеров и подсвечивает, где забыли назвать цену или отработать возражение.</span>
+                    <div class="about-sticker" data-tip="Сквозной документооборот за 1 минуту!" onclick="openPopup('sales_4', '4. ДОКУМЕНТООБОРОТ ЗА 1 МИНУТУ', 'СКВОЗНАЯ СВЯЗКА', '⚡', '• <strong>В чем суть:</strong> клиент отправляет реквизиты (текстом или фото) в Telegram.<br><br>• <strong>Как работает:</strong> реквизиты сразу заносятся в сделку CRM и папку на Google Диске ➔ на их основе и истории переписки формируются договор, приложение и счет ➔ проект падает директору в Telegram на 1 клик подтверждения ➔ документ подписывается и улетает клиенту в TG за 1 минуту!')">
+                        <div class="sticker-icon" style="background: var(--pop-pink);">⚡</div>
+                        <span><strong>4. Документы сделки за 1 минуту:</strong> реквизиты из TG ➔ CRM + Диск ➔ договор, приложение и счёт ➔ аппрув ➔ клиенту.</span>
+                    </div>
+                    <div class="about-sticker" data-tip="Ответ за секунду 24/7!" onclick="openPopup('sales_5', '5. ИИ-ПЕРВАЯ ЛИНИЯ ПОДДЕРЖКИ', 'СЕРВИС 24/7', '💬', '• <strong>В чем суть:</strong> обработка типовых вопросов клиентов, статусов заказов и первичная квалификация.<br><br>• <strong>Как работает:</strong> бот помнит контекст переписки и ассортимент компании, мгновенно снимает возражения, а сложные вопросы плавно переводит на живого продавца.')">
+                        <div class="sticker-icon" style="background: var(--pop-purple); color:#fff;">💬</div>
+                        <span><strong>5. ИИ-поддержка 1-й линии:</strong> ответы 24/7 по услугам, статусу заказа и передача теплого клиента менеджеру.</span>
                     </div>
                 </div>
                 <div class="pop-badges">
-                    <div class="pop-badge" data-tip="Увеличение конверсии">+30% к скорости сделок</div>
+                    <div class="pop-badge" data-tip="Увеличение скорости">+30% к скорости сделок</div>
                     <div class="pop-badge" data-tip="Вся база под контролем">0 потерянных лидов</div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 5: Docs & HR -->
+        <!-- Slide 5: Marketing (4 automations) -->
         <div class="slide" id="slide-5">
             <div>
-                <span class="pop-subtitle" style="background: var(--pop-green);">ЧАСТЬ 3. ДОКУМЕНТЫ И НАЙМ</span>
-                <h2 class="pop-title-section" style="margin-top: 0.3rem;">Порядок в Делах</h2>
+                <span class="pop-subtitle" style="background: var(--pop-yellow);">ЧАСТЬ 3. СИСТЕМНЫЙ МАРКЕТИНГ</span>
+                <h2 class="pop-title-section" style="margin-top: 0.1rem;">Маркетинг и Трафик</h2>
                 <div class="about-cards-list">
-                    <div class="about-sticker" data-tip="Автосортировка" onclick="openPopup('doc_1', 'СЧЕТА САМИ ЛЕТЯТ В ПАПКИ', 'АВТОМАТИЧЕСКИЙ АРХИВ', '📁', '• Как только бухгалтер или менеджер создает счет, документ автоматически переименовывается по стандарту «Дата_Счет_Компания.pdf» и раскладывается на Google Drive / Яндекс Диск по папкам.')">
-                        <div class="sticker-icon" style="background: var(--pop-cyan);">📁</div>
-                        <span><strong>Счета сами летят в папки:</strong> документ создан ➔ сам разложился по папкам <em>«Клиенты / 2026 / Компания»</em> без человека.</span>
+                    <div class="about-sticker" data-tip="Теплые базы под ключ!" onclick="openPopup('mkt_1', '1. СБОР БАЗ ЛПР И АУТРИЧ', 'B2B-ЛИДОГЕНЕРАЦИЯ', '🎯', '• <strong>В чем суть:</strong> автоматический парсинг контактов лиц, принимающих решения (ЛПР), из открытых источников и закрытых каталогов.<br><br>• <strong>Как работает:</strong> сбор из Telegram, гео-сервисов (Карты, 2ГИС) и вакансий ➔ обогащение выручкой и ИНН ➔ занесение в CRM ➔ запуск цепочек активации и аутрича.')">
+                        <div class="sticker-icon" style="background: var(--pop-yellow);">🎯</div>
+                        <span><strong>1. Сбор баз ЛПР и аутрич:</strong> авто-парсинг контактов из TG и геосервисов ➔ CRM ➔ активация.</span>
                     </div>
-                    <div class="about-sticker" data-tip="5 секунд на чек!" onclick="openPopup('doc_2', 'ФОТО ЧЕКА ➔ В ТАБЛИЦУ', 'УЧЕТ РАСХОДОВ', '🧾', '• Подотчетные лица фотографируют чеки с заправок, гостиниц или кафе в Telegram-бот.<br><br>• ИИ считывает дату, сумму, НДС, наименования позиций и сразу заносит строчку в таблицу финучета с прикреплением фото оригинала.')">
-                        <div class="sticker-icon" style="background: var(--pop-yellow);">🧾</div>
-                        <span><strong>Фото чека ➔ В таблицу:</strong> сфотографировали расход на телефон ➔ все позиции и суммы сами попали в учет за 5 секунд.</span>
+                    <div class="about-sticker" data-tip="Трафик из поиска и нейросетей!" onclick="openPopup('mkt_2', '2. АВТОМАТИЧЕСКИЙ БЛОГ & SEO/GEO', 'ОРГАНИЧЕСКИЙ ТРАФИК', '📰', '• <strong>В чем суть:</strong> привлечение органического трафика без постоянной покупки рекламы.<br><br>• <strong>Как работает:</strong> публикация 3–4 глубоких экспертных статей в неделю с авто-индексацией в Яндексе и цитированием в AI-поиске (GEO: ChatGPT, Perplexity, AI Overviews).')">
+                        <div class="sticker-icon" style="background: var(--pop-cyan);">📰</div>
+                        <span><strong>2. Авто-блог & SEO/GEO:</strong> 3–4 экспертные статьи в неделю с авто-индексацией в поиске и ИИ.</span>
                     </div>
-                    <div class="about-sticker" data-tip="Поиск скрытых штрафов" onclick="openPopup('doc_3', 'ЮРИСТ ЗА 15 СЕКУНД', 'ПРОВЕРКА РИСКОВ', '⚖️', '• Загружаете 30-страничный договор от поставщика.<br><br>• ИИ анализирует текст по базе прецедентов и подсвечивает опасные пункты: одностороннее расторжение, завышенные пени 1% в день, невыгодную подсудность.')">
-                        <div class="sticker-icon" style="background: var(--pop-pink);">⚖️</div>
-                        <span><strong>Юрист за 15 секунд:</strong> загрузили договор поставщика ➔ ИИ выделил скрытые штрафы, односторонние пени и риски.</span>
+                    <div class="about-sticker" data-tip="Фабрика контента!" onclick="openPopup('mkt_3', '3. КОНТЕНТ-ЗАВОД И АКТИВАЦИЯ', 'КОНТЕНТ-МАРКЕТИНГ', '🎨', '• <strong>В чем суть:</strong> превращение одного инсайта или созвона в десятки форматов контента.<br><br>• <strong>Как работает:</strong> автоматическая сборка каруселей, сценариев и видео Reels/Shorts + подключение чат-бота для выдачи лид-магнитов и прогрева аудитории.')">
+                        <div class="sticker-icon" style="background: var(--pop-green);">🎨</div>
+                        <span><strong>3. Контент-завод & Активация:</strong> генерация каруселей, Reels и чат-бот для прогрева лидов.</span>
                     </div>
-                    <div class="about-sticker" data-tip="Фильтр от спама" onclick="openPopup('doc_4', 'ОТБОР 300 РЕЗЮМЕ ЗА 5 МИНУТ', 'HR-АВТОМАТИЗАЦИЯ', '🎯', '• При открытии популярной вакансии на HeadHunter падает 300+ откликов.<br><br>• ИИ сверяет опыт кандидатов с профилем должности, отсекает нерелевантные резюме и формирует ТОП-10 специалистов с краткими саммари для собеседования.')">
-                        <div class="sticker-icon" style="background: var(--pop-purple); color:#fff;">🎯</div>
-                        <span><strong>Отбор 300 резюме за 5 минут:</strong> ИИ отсекает спам и оставляет ТОП-10 кандидатов с реальным твердым опытом.</span>
+                    <div class="about-sticker" data-tip="Оптимизация на основе цифр!" onclick="openPopup('mkt_4', '4. ЗАМКНУТАЯ АНАЛИТИКА (CLOSED-LOOP)', 'АНАЛИТИКА И ROI', '📊', '• <strong>В чем суть:</strong> сквозная корректировка сайта и рекламы на основе реальных данных поведения, а не догадок.<br><br>• <strong>Как работает:</strong> связка Яндекс Метрики, Вебмастера и CRM. Система видит узкие места, процент отказов и автоматически подсказывает улучшения офферов.')">
+                        <div class="sticker-icon" style="background: var(--pop-pink);">📊</div>
+                        <span><strong>4. Замкнутая аналитика (Closed-loop):</strong> связка Метрики, Вебмастера и CRM для роста конверсий.</span>
                     </div>
                 </div>
                 <div class="pop-badges">
-                    <div class="pop-badge" data-tip="Меньше рутины юриста">Экономия 10 часов юриста</div>
-                    <div class="pop-badge" data-tip="Только лучшие люди">Найм без рутины</div>
+                    <div class="pop-badge" data-tip="Органический поток">Трафик без слива бюджета</div>
+                    <div class="pop-badge" data-tip="Прозрачная окупаемость">Сквозной контроль ROI</div>
                 </div>
             </div>
             <div class="pop-image-wrapper">
                 <div class="pop-frame" style="transform: rotate(1.5deg);">
-                    <img src="pop_art_docflow_hr_ru916.webp" alt="Документы и HR" class="pop-img" loading="lazy">
+                    <img src="pop_art_marketing_launch_ru916.webp" alt="Маркетинг и Трафик" class="pop-img" loading="lazy">
                 </div>
             </div>
         </div>
 
-        <!-- Slide 6: Marketing & Hypotheses (5 Solutions) -->
-                <div class="slide layout-flipped" id="slide-6">
+        <!-- Slide 6: Operations (5 automations) -->
+        <div class="slide layout-flipped" id="slide-6">
             <div class="pop-image-wrapper">
                 <div class="pop-frame" style="transform: rotate(-1.5deg);">
-                    <img src="pop_art_marketing_launch_ru916.webp" alt="Маркетинг & Трафик" class="pop-img" loading="lazy">
+                    <img src="pop_art_docflow_hr_ru916.webp" alt="Операционка и Управление" class="pop-img" loading="lazy">
                 </div>
             </div>
             <div>
-                <span class="pop-subtitle" style="background: var(--pop-yellow);">ЧАСТЬ 4. МАРКЕТИНГ & ПРИВЛЕЧЕНИЕ КЛИЕНТОВ</span>
-                <h2 class="pop-title-section" style="margin-top: 0.3rem;">Трафик и Лидогенерация</h2>
+                <span class="pop-subtitle" style="background: var(--pop-pink);">ЧАСТЬ 4. ОПЕРАЦИОНКА И УПРАВЛЕНИЕ</span>
+                <h2 class="pop-title-section" style="margin-top: 0.1rem;">Операционные Процессы</h2>
                 <div class="about-cards-list">
-                    <div class="about-sticker" data-tip="Готовые контакты ЛПР!" onclick="openPopup('mkt_1', '1. ПАРСИНГ ЛИДОВ & ОБОГАЩЕНИЕ БАЗ', 'ЛИДОГЕНЕРАЦИЯ', '🎯', '• <strong>В чем суть:</strong> поиск целевых клиентов без ручного блуждания по сайтам и каталогам.<br><br>• <strong>Как работает:</strong> парсер автоматически собирает открытые контакты ЛПР (Telegram, сайты, реестры), сверяет ИНН, выручку и сферу деятельности, формируя готовую теплую базу для менеджеров.<br><br>• Экономит до 15 часов ручного сбора данных в неделю.')">
-                        <div class="sticker-icon" style="background: var(--pop-yellow);">🎯</div>
-                        <span><strong>1. Парсинг лидов & Обогащение баз:</strong> автоматический сбор контактов ЛПР и сегментация компаний под ваши критерии.</span>
+                    <div class="about-sticker" data-tip="Бизнес на ладони!" onclick="openPopup('ops_1', '1. ДИНАМИЧЕСКИЙ ДАШБОРД СОБСТВЕННИКА', 'УПРАВЛЕНИЕ', '📈', '• <strong>В чем суть:</strong> собственник видит реальное состояние всех отделов в одной точке.<br><br>• <strong>Как работает:</strong> дашборд автоматически агрегирует метрики продаж, маркетинга, финансов и статусы ключевых проектов без выпрашивания отчетов у сотрудников.')">
+                        <div class="sticker-icon" style="background: var(--pop-yellow);">📈</div>
+                        <span><strong>1. Дашборд собственника:</strong> сквозная онлайн-сводка выручки, лидов и задач всех отделов.</span>
                     </div>
-
-                    <div class="about-sticker" data-tip="Трафик из Яндекса и ИИ!" onclick="openPopup('mkt_2', '2. АВТОНОМНОЕ СМИ & SEO/GEO ТРАФИК', 'ОРГАНИЧЕСКИЙ ТРАФИК', '📰', '• <strong>В чем суть:</strong> привлечение тысяч органических клиентов из поиска и ответов нейросетей без постоянного рекламного бюджета.<br><br>• <strong>Как работает:</strong> ИИ мониторит тренды ниши, пишет по 50+ экспертных статей в день с авто-перелинковкой и оптимизирует бренд под ответы нейросетей (GEO) (кейс Aipsy.press).')">
-                        <div class="sticker-icon" style="background: var(--pop-cyan);">📰</div>
-                        <span><strong>2. Автономное СМИ & SEO/GEO:</strong> 50+ экспертных статей в день, вывод бренда в топ Яндекса и ответы ИИ (ChatGPT, Perplexity).</span>
+                    <div class="about-sticker" data-tip="Мозг компании!" onclick="openPopup('ops_2', '2. ЕДИНАЯ БАЗА ЗНАНИЙ КОМПАНИИ', 'КОРПОРАТИВНЫЙ РАЗУМ', '🧠', '• <strong>В чем суть:</strong> централизация регламентов, стандартов работы и решений в формате Wiki/Second Brain.<br><br>• <strong>Как работает:</strong> любой сотрудник находит точный ответ по процессам компании за секунду, не отвлекая руководителя и коллег.')">
+                        <div class="sticker-icon" style="background: var(--pop-cyan);">🧠</div>
+                        <span><strong>2. Единая база знаний (Wiki):</strong> вся экспертиза, регламенты и стандарты в одном месте.</span>
                     </div>
-
-                    <div class="about-sticker" data-tip="30 баннеров за 5 минут!" onclick="openPopup('mkt_3', '3. ФАБРИКИ РЕКЛАМНЫХ КРЕАТИВОВ', 'КОНТЕНТ & РЕКЛАМА', '🎨', '• <strong>В чем суть:</strong> для теста гипотез нужно проверять десятки баннеров и заголовков под разные сегменты.<br><br>• <strong>Как работает:</strong> нейросеть генерирует 30 креативов в едином фирменном стиле за 5 минут, пишет цепляющие офферы и готовит форматы под любые рекламные кабинеты.')">
-                        <div class="sticker-icon" style="background: var(--pop-green);">🎨</div>
-                        <span><strong>3. Фабрика креативов & Баннеров:</strong> генерация 30+ рекламных баннеров и продающих офферов за 5 минут.</span>
+                    <div class="about-sticker" data-tip="Порядок в архиве!" onclick="openPopup('ops_3', '3. МАРШРУТИЗАЦИЯ И ОБЛАЧНЫЙ АРХИВ', 'ЭЛЕКТРОННЫЙ АРХИВ', '📁', '• <strong>В чем суть:</strong> автоматическая сортировка и тегирование всех документов компании.<br><br>• <strong>Как работает:</strong> акты, выписки, счета и договоры сами переименовываются по стандарту и раскладываются по защищенным папкам облака.')">
+                        <div class="sticker-icon" style="background: var(--pop-green);">📁</div>
+                        <span><strong>3. Маршрутизация документов:</strong> авто-раскладка актов, счетов и договоров по облачным папкам.</span>
                     </div>
-
-                    <div class="about-sticker" data-tip="Реклама под контролем!" onclick="openPopup('mkt_4', '4. АВТОМАТИЗАЦИЯ ДИРЕКТА & РЕКЛАМЫ', 'КОНТЕКСТ & ТАРГЕТ', '📢', '• <strong>В чем суть:</strong> ручная настройка рекламы отнимает недели и бюджет специалистов.<br><br>• <strong>Как работает:</strong> ИИ собирает семантическое ядро, группирует кластеры, генерирует сотни релевантных объявлений в Яндекс Директ и автоматически корректирует ставки по конверсиям.')">
-                        <div class="sticker-icon" style="background: var(--pop-pink);">📢</div>
-                        <span><strong>4. Автоматизация рекламы & Контекста:</strong> сбор семантики, генерация сотен объявлений в Директ и авто-ставки.</span>
+                    <div class="about-sticker" data-tip="Юрист, который сам правит договор!" onclick="openPopup('ops_4', '4. АВТОНОМНЫЙ ЮРИДИЧЕСКИЙ АГЕНТ', 'ЮРИСПРУДЕНЦИЯ', '⚖️', '• <strong>В чем суть:</strong> проверка договоров подрядчиков и клиентов за секунды.<br><br>• <strong>Как работает:</strong> ИИ выявляет скрытые штрафы и невыгодные условия, вносит протокол разногласий и может автономно вести переписку с юристом контрагента до согласования!')">
+                        <div class="sticker-icon" style="background: var(--pop-pink);">⚖️</div>
+                        <span><strong>4. Автономный AI-юрист:</strong> аудит рисков, протокол разногласий и согласование с контрагентом.</span>
                     </div>
-
-                    <div class="about-sticker" data-tip="Точный расчет окупаемости!" onclick="openPopup('mkt_5', '5. СКВОЗНАЯ АНАЛИТИКА & ДАШБОРД ROI', 'АНАЛИТИКА', '📊', '• <strong>В чем суть:</strong> понимание точной стоимости привлечения клиента (CAC) и реальной окупаемости каждого рекламного канала.<br><br>• <strong>Как работает:</strong> автоматическая связка рекламных кабинетов с CRM и банком. Вы видите в реальном времени, какая реклама приносит чистую прибыль, а какая сжигает бюджет.')">
-                        <div class="sticker-icon" style="background: var(--pop-purple); color:#fff;">📊</div>
-                        <span><strong>5. Сквозная аналитика & Живой ROI:</strong> авто-сведение расходов рекламы, лидов и продаж из CRM в единый дашборд.</span>
-                    </div>
-                </div>
-
-                <div class="pop-cta-group" style="margin-top: 14px;">
-                    <a href="https://aipsy.press" target="_blank" class="pop-action-btn btn-cyan" data-tip="Пример автономного СМИ!">
-                        <span>📰</span> Автономное СМИ Aipsy.press ↗
-                    </a>
-                    <a href="https://a-sage.ru/automation#services" target="_blank" class="pop-action-btn" data-tip="Связки для маркетинга и CRM!">
-                        <span>🎯</span> Заказать маркетинг-связку ↗
-                    </a>
-                    <a href="https://t.me/Michael_Sage" target="_blank" class="pop-action-btn btn-pink" data-tip="Обсудить внедрение с экспертом!">
-                        <span>💬</span> Написать в Telegram ↗
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 7: Content Factories -->
-        <div class="slide" id="slide-7">
-            <div>
-                <span class="pop-subtitle" style="background: var(--pop-purple); color:#fff;">ЧАСТЬ 5. КОНТЕНТ-ЗАВОД</span>
-                <h2 class="pop-title-section" style="margin-top: 0.3rem;">Контент Без Агентств</h2>
-                <div class="about-cards-list">
-                    <div class="about-sticker" data-tip="1 час = 30 постов!" onclick="openPopup('content_1', '1 СОЗВОН ➔ 30 ПОСТОВ', 'РЕПАКИНГ КОНТЕНТА', '♻️', '• Вы проводите 1 созвон с клиентом или внутреннюю лекцию на 45 минут.<br><br>• ИИ транскрибирует аудио, вытаскивает главные инсайты и нарезает материал на: 10 постов в Telegram, 3 статьи на VC/Habr и сценарии для коротких видео.')">
-                        <div class="sticker-icon" style="background: var(--pop-yellow);">♻️</div>
-                        <span><strong>1 созвон ➔ 30 постов:</strong> часовая лекция превращается в 10 коротких видео, 3 статьи и рассылку.</span>
-                    </div>
-                    <div class="about-sticker" data-tip="Без дизайнера!" onclick="openPopup('content_2', 'КАРТИНКИ И КАРУСЕЛИ', 'ГЕНЕРАЦИЯ ГРАФИКИ', '🎨', '• ИИ создает визуальный контент в фирменном стиле компании за считанные секунды.<br><br>• Слайды для соцсетей, обложки для статей и промо-баннеры без ожидания дизайнеров и правок.')">
-                        <div class="sticker-icon" style="background: var(--pop-pink);">🎨</div>
-                        <span><strong>Картинки и Карусели:</strong> ИИ сам создает яркие слайды и текст без дизайнера за 5 000 ₽.</span>
-                    </div>
-                    <div class="about-sticker" data-tip="Озвучка + Титры!" onclick="openPopup('content_3', 'REELS & SHORTS НА АВТОМАТЕ', 'ВИДЕО-ПРОДАКШН', '🎬', '• Автоматический монтаж вертикальных видео: генерация реалистичного голоса, наложение фоновой музыки и анимированных ярких титров слово-в-слово.')">
-                        <div class="sticker-icon" style="background: var(--pop-cyan);">🎬</div>
-                        <span><strong>Короткие видео (Reels / Shorts):</strong> реалистичная озвучка голосом и анимированные титры на автомате.</span>
-                    </div>
-                    <div class="about-sticker" data-tip="Тренды конкурентов" onclick="openPopup('content_4', 'РАДАР ТРЕНДОВ', 'АНАЛИТИКА ТЕМ', '🎯', '• Система мониторит ТОП-100 лидеров вашей ниши в YouTube и Telegram.<br><br>• Выявляет посты и видео с аномальным количеством репостов (2x+ от среднего) и выдает готовые темы для вашего контент-плана.')">
-                        <div class="sticker-icon" style="background: var(--pop-green);">🎯</div>
-                        <span><strong>Радар трендов:</strong> система находит самые вирусные темы конкурентов и подсказывает план на неделю.</span>
+                    <div class="about-sticker" data-tip="Итоги планерок в задачи!" onclick="openPopup('ops_5', '5. АВТОМАТИЗАЦИЯ ПЛАНЕРОК И ВСТРЕЧ', 'КООРДИНАЦИЯ', '🎙️', '• <strong>В чем суть:</strong> синхронизация 1-на-1 встреч и командных синков без потери договоренностей.<br><br>• <strong>Как работает:</strong> авто-транскрибация записи встречи ➔ структурированное саммари ➔ мгновенная постановка задач в таск-трекер с дедлайнами и ответственными.')">
+                        <div class="sticker-icon" style="background: var(--pop-purple); color:#fff;">🎙️</div>
+                        <span><strong>5. Автоматизация планерок:</strong> запись встречи ➔ саммари ➔ постановка задач с дедлайнами.</span>
                     </div>
                 </div>
                 <div class="pop-badges">
-                    <div class="pop-badge" data-tip="Экономия бюджета">Экономия 150 000 ₽/мес</div>
-                    <div class="pop-badge" data-tip="Постоянный трафик">Регулярные охваты</div>
+                    <div class="pop-badge" data-tip="Меньше рутины">+20 часов свободы собственника</div>
+                    <div class="pop-badge" data-tip="Дисциплина">100% фиксация договоренностей</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: HR & Team (3 automations) -->
+        <div class="slide" id="slide-7">
+            <div>
+                <span class="pop-subtitle" style="background: var(--pop-purple); color:#fff;">ЧАСТЬ 5. КОМАНДА И КАДРЫ</span>
+                <h2 class="pop-title-section" style="margin-top: 0.1rem;">HR и Найм</h2>
+                <div class="about-cards-list">
+                    <div class="about-sticker" data-tip="Размещение за 1 минуту!" onclick="openPopup('hr_1', '1. МУЛЬТИПОСТИНГ ВАКАНСИЙ', 'ОХВАТ КАНДИДАТОВ', '📢', '• <strong>В чем суть:</strong> публикация вакансий в десятки источников в один клик.<br><br>• <strong>Как работает:</strong> через API и MCP вакансия автоматически размещается на job-бордах, сайтах вакансий, в Telegram-каналах и профильных чатах с адаптацией под форматы каждого канала.')">
+                        <div class="sticker-icon" style="background: var(--pop-yellow);">📢</div>
+                        <span><strong>1. Мультипостинг вакансий:</strong> авто-размещение на job-бордах и в Telegram-каналах через API.</span>
+                    </div>
+                    <div class="about-sticker" data-tip="300 резюме за 5 минут!" onclick="openPopup('hr_2', '2. СКРИНИНГ РЕЗЮМЕ & ДИАЛОГ-БОТ', 'ПЕРВИЧНЫЙ ОТБОР', '🎯', '• <strong>В чем суть:</strong> фильтрация сотен входящих откликов без ручной перегрузки HR.<br><br>• <strong>Как работает:</strong> парсинг и скоринг резюме под критерии должности ➔ первичный текстовый диалог в Telegram с проверкой опыта ➔ передача HR только финалистов.')">
+                        <div class="sticker-icon" style="background: var(--pop-cyan);">🎯</div>
+                        <span><strong>2. Скрининг резюме & Диалог-бот:</strong> отбор кандидатов по скорингу и первичный опрос в Telegram.</span>
+                    </div>
+                    <div class="about-sticker" data-tip="Наставник на корпоративной базе знаний!" onclick="openPopup('hr_3', '3. ИИ-АССИСТЕНТ ОНБОРДИНГА И ОБУЧЕНИЯ', 'ВЫХОД НА РЕЗУЛЬТАТ', '🎓', '• <strong>В чем суть:</strong> новый сотрудник быстрее выходит на плановые результаты без дергания наставника.<br><br>• <strong>Как работает:</strong> ИИ-наставник на базе единой корпоративной Wiki отвечает на любые вопросы новичка за 2 секунды, проводит интерактивное тестирование и квалификационную аттестацию.')">
+                        <div class="sticker-icon" style="background: var(--pop-green);">🎓</div>
+                        <span><strong>3. ИИ-наставник онбординга:</strong> обучение новичков на базе знаний компании и аттестация.</span>
+                    </div>
+                </div>
+                <div class="pop-badges">
+                    <div class="pop-badge" data-tip="Быстрый выход">Выход новичка в бой за 3 дня</div>
+                    <div class="pop-badge" data-tip="Без рутины">-80% времени HR на скрининг</div>
                 </div>
             </div>
             <div class="pop-image-wrapper">
                 <div class="pop-frame" style="transform: rotate(2deg);">
-                    <img src="pop_art_content_factory_ru916.webp" alt="Контент-Завод" class="pop-img" loading="lazy">
+                    <img src="pop_art_content_factory_ru916.webp" alt="HR и Найм" class="pop-img" loading="lazy">
                 </div>
             </div>
         </div>
@@ -2286,11 +2284,11 @@
             "📱 QR-код",
             "План (60м)",
             "Спикер",
-            "1. Суть ИИ",
+            "1. Воры времени",
             "2. Продажи",
-            "3. Документы",
-            "4. Маркетинг",
-            "5. Контент",
+            "3. Маркетинг",
+            "4. Операционка",
+            "5. HR и Найм",
             "6. Опасности",
             "7. С чего начать",
             "Финал"
