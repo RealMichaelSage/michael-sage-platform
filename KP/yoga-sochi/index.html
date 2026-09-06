@@ -279,7 +279,7 @@
       border: 1px solid var(--border);
       padding: 24px;
       display: grid;
-      grid-template-columns: 80px 1fr 240px;
+      grid-template-columns: 80px 1fr 260px;
       gap: 20px;
       align-items: center;
       transition: all 0.2s ease;
@@ -331,17 +331,17 @@
       margin-top: 4px;
     }
 
-    /* Financial Tranches Box */
+    /* Financial Tranches Box (3 columns) */
     .tranches-box {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
       gap: 24px;
       margin-top: 28px;
     }
     .tranche-card {
       background: #ffffff;
       border: 1px solid var(--border);
-      padding: 32px;
+      padding: 30px;
       position: relative;
       display: flex;
       flex-direction: column;
@@ -359,23 +359,23 @@
       font-weight: 700;
     }
     .tranche-price {
-      font-size: 2.3rem;
+      font-size: 2.2rem;
       font-weight: 800;
       color: #09090b;
-      margin: 12px 0 6px 0;
+      margin: 10px 0 6px 0;
       letter-spacing: -0.03em;
     }
     .tranche-title {
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       font-weight: 700;
       color: #09090b;
       margin-bottom: 8px;
     }
     .tranche-desc {
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       color: #64748b;
       line-height: 1.55;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     /* Acceptance Box */
@@ -411,6 +411,17 @@
     }
     .req-list strong {
       color: #ffffff;
+    }
+
+    /* Alert Banner */
+    .rules-banner {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 16px 20px;
+      font-size: 0.92rem;
+      color: #334155;
+      margin-top: 24px;
+      border-left: 4px solid #09090b;
     }
 
     /* Print styling */
@@ -471,7 +482,7 @@
     <div class="confidential-meta">
       <span><strong>ID:</strong> KP-YOGA-SOCHI-060926</span>
       <span><strong>Дата:</strong> 06.09.2026</span>
-      <span><strong>Версия:</strong> 1.0 (Финальная)</span>
+      <span><strong>Версия:</strong> 2.0 (Обновленная)</span>
     </div>
   </div>
 
@@ -507,15 +518,20 @@
           для студии йоги в Сочи
         </h1>
         <p class="kp-desc">
-          Создание эстетичного, воздушного и конверсионного промо-сайта на чистом коде. Погружение гостей в атмосферу спокойствия, интерактивный гид по направлениям практик, удобное расписание и онлайн-запись на пробное занятие в 1 клик.
+          Создание эстетичного, воздушного и конверсионного промо-сайта на чистом коде. Погружение гостей в атмосферу спокойствия, 3 варианта дизайна на выбор, интеграции с CRM/Telegram/почтой и публикация на вашем хостинге под ключ.
         </p>
 
         <!-- KPI SUMMARY CARDS -->
         <div class="kp-meta-grid">
           <div class="kp-meta-card">
             <div class="label">Срок разработки</div>
-            <div class="value">1–3 дня</div>
-            <div class="sub">Быстрый запуск и релиз</div>
+            <div class="value">4 дня</div>
+            <div class="sub">Пошаговая дорожная карта</div>
+          </div>
+          <div class="kp-meta-card">
+            <div class="label">Варианты дизайна</div>
+            <div class="value" style="color:var(--blue);">3 концепта</div>
+            <div class="sub">На выбор во 2-й день</div>
           </div>
           <div class="kp-meta-card">
             <div class="label">Скорость загрузки</div>
@@ -523,14 +539,9 @@
             <div class="sub">0.5 сек на смартфонах</div>
           </div>
           <div class="kp-meta-card">
-            <div class="label">Уведомления о заявках</div>
-            <div class="value" style="color:var(--blue);">Telegram / WA</div>
-            <div class="sub">Мгновенно администратору</div>
-          </div>
-          <div class="kp-meta-card">
             <div class="label">Юридический блок</div>
             <div class="value" style="color:var(--purple);">152-ФЗ РФ</div>
-            <div class="sub">Политика и согласия под ключ</div>
+            <div class="sub">Все политики и документы</div>
           </div>
         </div>
       </div>
@@ -564,9 +575,9 @@
             <h3 class="kp-card-title" style="color:#14532d;">Что получает ваша студия:</h3>
             <ul class="kp-card-list">
               <li><strong>Эстетика и атмосфера:</strong> воздушный премиальный дизайн во всю ширину экрана с видео-акцентами залов.</li>
-              <li><strong>Воронка первого шага:</strong> яркий оффер на пробное занятие (или тест-день) для снятия барьера страха у новичков.</li>
+              <li><strong>3 концепта на выбор:</strong> во второй день вы получаете три разных визуальных стиля и выбираете лучший.</li>
               <li><strong>Интерактивный гид по практикам:</strong> фильтр по запросам (для гибкости, от стресса, здоровая спина, медитации).</li>
-              <li><strong>Запись в 1 клик:</strong> интеграция с WhatsApp/Telegram или CRM, где заявка улетает администратору за 1 секунду.</li>
+              <li><strong>Интеграции без потерь лидов:</strong> заявки мгновенно падают в вашу CRM, Telegram-чат и на почту.</li>
               <li><strong>Идеальная мобильность:</strong> безупречная верстка под экраны iPhone и Android с крупными tap-кнопками.</li>
             </ul>
           </div>
@@ -650,7 +661,7 @@
           <span class="kp-tag">03 / ТЕХНОЛОГИИ И СКОРОСТЬ</span>
           <h2 class="kp-title">Преимущества разработки на чистом коде</h2>
           <p class="kp-desc">
-            Мы не используем шаблонные конструкторы (Tilda/WordPress), которые тормозят на телефонах. Сайт пишется на легковесном чистом коде.
+            Мы не используем тяжелые конструкторы. Сайт пишется на чистом легковесном коде и размещается на вашем собственном хостинге.
           </p>
         </div>
 
@@ -681,21 +692,21 @@
           </div>
 
           <div class="kp-card">
-            <h4 class="kp-card-title">🚀 Бесплатный хостинг</h4>
-            <p class="kp-card-desc">Размещение на надежном скоростном хостинге Beget или деплой на ваш домен без ежемесячных платежей за конструкторы.</p>
+            <h4 class="kp-card-title">🌐 Размещение на вашем хостинге</h4>
+            <p class="kp-card-desc">Помощь в регистрации хостинга, привязке домена и настройке SSL-сертификата. Сайт полностью принадлежит вам без абонплат за конструкторы.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- SECTION 4: TIMELINE -->
+    <!-- SECTION 4: TIMELINE (4 DAYS) -->
     <section class="kp-section alt-bg">
       <div class="container">
         <div class="kp-section-head">
           <span class="kp-tag">04 / ЭТАПЫ И СРОКИ</span>
-          <h2 class="kp-title">Дорожная карта разработки за 3 дня</h2>
+          <h2 class="kp-title">Дорожная карта разработки за 4 дня</h2>
           <p class="kp-desc">
-            Благодаря технологиям ускоренной разработки на коде (вайбкодинг), мы запускаем полноценный сайт за считанные дни.
+            Четкий пошаговый процесс от сбора материалов до финального запуска на вашем хостинге.
           </p>
         </div>
 
@@ -706,12 +717,12 @@
               <small>ДЕНЬ 1</small>
             </div>
             <div class="timeline-content">
-              <h4>Смысловая распаковка и прототип</h4>
-              <p>Сбор материалов студии (фото, расписание, прайс), проектирование продающей структуры и текстов.</p>
+              <h4>Сбор материалов и настройка доступов</h4>
+              <p>Сбор всех фото, расписания, прайса и контактов студии. Помощь заказчику в регистрации хостинга и получении всех необходимых доступов.</p>
             </div>
             <div class="timeline-meta">
               <div class="duration">1 рабочий день</div>
-              <div class="deliverable">Утвержденная структура</div>
+              <div class="deliverable">Хостинг & Тексты готовы</div>
             </div>
           </div>
 
@@ -721,93 +732,137 @@
               <small>ДЕНЬ 2</small>
             </div>
             <div class="timeline-content">
-              <h4>Дизайн и верстка на чистом коде</h4>
-              <p>Создание адаптивного воздушного интерфейса, плавной анимации, карточек направлений и расписания.</p>
+              <h4>Предоставление 3 вариантов дизайна</h4>
+              <p>Разработка и презентация трёх визуальных концепций лендинга. Вы выбираете наиболее понравившийся стиль и атмосферу для студии.</p>
             </div>
             <div class="timeline-meta">
               <div class="duration">1 рабочий день</div>
-              <div class="deliverable">Готовый интерактивный сайт</div>
+              <div class="deliverable">3 концепта на выбор</div>
+            </div>
+          </div>
+
+          <div class="timeline-step">
+            <div class="timeline-badge">
+              03
+              <small>ДЕНЬ 3</small>
+            </div>
+            <div class="timeline-content">
+              <h4>Оттачивание лендинга и внесение правок</h4>
+              <p>Полная доработка выбранного дизайна, наполнение всех блоков, интеграция анимаций и внесение корректировок (1 круг правок включен).</p>
+            </div>
+            <div class="timeline-meta">
+              <div class="duration">1 рабочий день</div>
+              <div class="deliverable">Идеально отточенный лендинг</div>
             </div>
           </div>
 
           <div class="timeline-step qa">
             <div class="timeline-badge" style="color:#7c3aed;">
-              03
-              <small>ДЕНЬ 3</small>
+              04
+              <small>ДЕНЬ 4</small>
             </div>
             <div class="timeline-content">
-              <h4>Интеграция, аналитика и релиз</h4>
-              <p>Подключение Telegram-бота заявок, Яндекс Метрики, привязка домена и финальное тестирование на смартфонах.</p>
+              <h4>Публикация на хостинге и запуск</h4>
+              <p>Деплой сайта на хостинг заказчика, подключение домена, SSL-сертификата безопасности, интеграций и финальное тестирование.</p>
             </div>
             <div class="timeline-meta">
               <div class="duration">1 рабочий день</div>
-              <div class="deliverable" style="color:#7c3aed;">Запущенный рабочий сайт</div>
+              <div class="deliverable" style="color:#7c3aed;">Запущенный сайт онлайн</div>
             </div>
           </div>
+        </div>
+
+        <div class="rules-banner">
+          ℹ️ <strong>Регламент правок:</strong> 1 круг правок включен в стоимость любого тарифа. Каждый последующий дополнительный круг правок — <strong>5 000 ₽</strong>.
         </div>
       </div>
     </section>
 
-    <!-- SECTION 5: PRICING -->
+    <!-- SECTION 5: PRICING (3 TIERS) -->
     <section class="kp-section">
       <div class="container">
         <div class="kp-section-head">
           <span class="kp-tag">05 / СТОИМОСТЬ И ТАРИФЫ</span>
           <h2 class="kp-title">Прозрачные тарифные планы</h2>
           <p class="kp-desc">
-            Фиксированная стоимость без скрытых доплат. Все ключевые функции включены в базовый тариф.
+            Фиксированные цены под любой бюджет. 1 круг правок включен во все пакеты.
           </p>
         </div>
 
         <div class="tranches-box">
           <!-- TIER 1 -->
-          <div class="tranche-card featured">
+          <div class="tranche-card">
             <div>
-              <div class="tranche-num" style="color:var(--green-dark);">ТАРИФ 01 · ОПТИМАЛЬНЫЙ</div>
-              <div class="tranche-price">25 000 ₽</div>
-              <div class="tranche-title">Продающий лендинг «Под ключ»</div>
-              <div class="tranche-desc">Идеальный выбор для быстрого запуска рекламы и приема первых записей на пробные занятия.</div>
+              <div class="tranche-num" style="color:#64748b;">ТАРИФ 01 · БАЗОВЫЙ</div>
+              <div class="tranche-price">16 500 ₽</div>
+              <div class="tranche-title">Лендинг Простой</div>
+              <div class="tranche-desc">Качественный продающий лендинг для быстрого старта и презентации студии.</div>
               
               <ul class="kp-card-list">
-                <li>Индивидуальный дизайн на чистом коде (HTML/CSS/JS)</li>
-                <li>Все 9 продающих блоков (Гид, Расписание, Мастера, Цены, Карта)</li>
-                <li>Мгновенная отправка заявок в Telegram / WhatsApp</li>
-                <li>Установка Яндекс Метрики и целей</li>
-                <li>Юридический блок (152-ФЗ РФ)</li>
+                <li>Индивидуальный дизайн на чистом коде (3 варианта на выбор)</li>
+                <li>Все основные блоки студии (Гид, Расписание, Мастера, Цены, Карта)</li>
+                <li>Все политики конфиденциальности и документы (152-ФЗ)</li>
+                <li>Помощь в регистрации хостинга и домена</li>
                 <li>1 круг правок включен в стоимость</li>
-                <li>Срок разработки: 1–3 дня</li>
+                <li>Срок разработки: 4 рабочих дня</li>
               </ul>
             </div>
 
             <div style="margin-top:24px;">
-              <a href="https://t.me/Michael_Sage?text=Привет!%20Хочу%20заказать%20лендинг%20йога-студии%20за%2025000" target="_blank" class="btn-primary" style="display:block; text-align:center; padding:12px 20px; background:#09090b; color:#ffffff; text-decoration:none; font-family:var(--font-heading); font-weight:700; border-radius:4px;">
-                Выбрать тариф «Под ключ» ➔
+              <a href="https://t.me/Michael_Sage?text=Привет!%20Хочу%20заказать%20лендинг%20йога-студии%20Базовый%20за%2016500" target="_blank" class="btn-secondary" style="display:block; text-align:center; padding:12px 20px; background:#ffffff; color:#09090b; border:1px solid var(--border); text-decoration:none; font-family:var(--font-heading); font-weight:700; border-radius:4px;">
+                Выбрать за 16 500 ₽ ➔
               </a>
             </div>
           </div>
 
-          <!-- TIER 2 -->
-          <div class="tranche-card">
+          <!-- TIER 2 (FEATURED) -->
+          <div class="tranche-card featured">
             <div>
-              <div class="tranche-num" style="color:var(--blue);">ТАРИФ 02 · МАКСИМУМ</div>
-              <div class="tranche-price">35 000 ₽</div>
-              <div class="tranche-title">Лендинг + Интерактивные сервисы</div>
-              <div class="tranche-desc">Для студий, которым нужна бесшовная онлайн-запись в CRM и расширенная интерактивность.</div>
+              <div class="tranche-num" style="color:var(--green-dark);">ТАРИФ 02 · ХИТ ПРОДАЖ</div>
+              <div class="tranche-price">27 500 ₽</div>
+              <div class="tranche-title">Лендинг + 3 Интеграции</div>
+              <div class="tranche-desc">Максимальная конверсия: заявки падают напрямую в CRM, Telegram и на почту.</div>
               
               <ul class="kp-card-list">
-                <li><strong>Всё, что входит в тариф «Под ключ»</strong></li>
-                <li>Интерактивный живой фильтр расписания по дням и направлениям</li>
-                <li>Интеграция с виджетом онлайн-записи (YClients / Dikidi / CRM)</li>
-                <li>Видео-фон в Hero-секции и расширенная галерея залов</li>
-                <li>Интерактивный квиз «Подбор направления йоги под ваш запрос»</li>
-                <li>2 круга правок включены в стоимость</li>
-                <li>Срок разработки: 3–5 дней</li>
+                <li><strong>Всё, что входит в тариф «Базовый»</strong></li>
+                <li>3 концепта дизайна на выбор во 2-й день</li>
+                <li><strong>Интеграция с Telegram:</strong> мгновенные заявки в чат</li>
+                <li><strong>Интеграция с CRM:</strong> авто-создание лидов</li>
+                <li><strong>Интеграция с Email:</strong> дублирование на почту</li>
+                <li>Настройка Яндекс Метрики и целей на кнопки</li>
+                <li>1 круг правок включен в стоимость</li>
+                <li>Срок разработки: 4 рабочих дня</li>
               </ul>
             </div>
 
             <div style="margin-top:24px;">
-              <a href="https://t.me/Michael_Sage?text=Привет!%20Хочу%20заказать%20лендинг%20йога-студии%20Премиум%20за%2035000" target="_blank" class="btn-secondary" style="display:block; text-align:center; padding:12px 20px; background:#ffffff; color:#09090b; border:1px solid var(--border); text-decoration:none; font-family:var(--font-heading); font-weight:700; border-radius:4px;">
-                Выбрать тариф «Максимум» ➔
+              <a href="https://t.me/Michael_Sage?text=Привет!%20Хочу%20заказать%20лендинг%20йога-студии%20с%20интеграциями%20за%2027500" target="_blank" class="btn-primary" style="display:block; text-align:center; padding:12px 20px; background:#09090b; color:#ffffff; text-decoration:none; font-family:var(--font-heading); font-weight:700; border-radius:4px;">
+                Выбрать за 27 500 ₽ ➔
+              </a>
+            </div>
+          </div>
+
+          <!-- TIER 3 (NDA) -->
+          <div class="tranche-card">
+            <div>
+              <div class="tranche-num" style="color:var(--purple);">ТАРИФ 03 · ПРИВАТНЫЙ</div>
+              <div class="tranche-price">39 000 ₽</div>
+              <div class="tranche-title">Тариф под NDA</div>
+              <div class="tranche-desc">Полный функционал тарифа за 27 500 ₽ со строгой защитой конфиденциальности.</div>
+              
+              <ul class="kp-card-list">
+                <li><strong>Всё, что входит в тариф за 27 500 ₽</strong> (все 3 интеграции)</li>
+                <li><strong>Полная конфиденциальность (NDA):</strong> проект не публикуется в портфолио, кейсах и статьях</li>
+                <li>Приоритетная сборка и поддержка</li>
+                <li>Помощь в подключении всех сервисов</li>
+                <li>1 круг правок включен в стоимость</li>
+                <li>Срок разработки: 4 рабочих дня</li>
+              </ul>
+            </div>
+
+            <div style="margin-top:24px;">
+              <a href="https://t.me/Michael_Sage?text=Привет!%20Хочу%20заказать%20лендинг%20йога-студии%20под%20NDA%20за%2039000" target="_blank" class="btn-secondary" style="display:block; text-align:center; padding:12px 20px; background:#ffffff; color:#09090b; border:1px solid var(--border); text-decoration:none; font-family:var(--font-heading); font-weight:700; border-radius:4px;">
+                Выбрать под NDA за 39 000 ₽ ➔
               </a>
             </div>
           </div>
@@ -839,11 +894,11 @@
               Порядок запуска проекта:
             </div>
             <ul class="req-list">
-              <li><strong>1. Согласование:</strong> выбор тарифа и передача фото/прайса студии.</li>
+              <li><strong>1. Согласование:</strong> выбор тарифа и передача материалов.</li>
               <li><strong>2. Предоплата:</strong> 50% перед стартом разработки.</li>
-              <li><strong>3. Сборка:</strong> 1–3 дня на чистую верстку и интеграцию.</li>
-              <li><strong>4. Приемка:</strong> демонстрация сайта, внесение правок.</li>
-              <li><strong>5. Запуск:</strong> финальная оплата 50% и привязка к домену.</li>
+              <li><strong>3. Сборка (4 дня):</strong> концепты ➔ верстка ➔ интеграция.</li>
+              <li><strong>4. Приемка:</strong> 1 круг правок включен в стоимость.</li>
+              <li><strong>5. Релиз:</strong> финальная оплата 50% и публикация на вашем хостинге.</li>
             </ul>
           </div>
         </div>
