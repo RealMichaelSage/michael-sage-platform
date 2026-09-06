@@ -66,7 +66,12 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            cursor: default;
+        }
+
+        @media (min-width: 1025px) {
+            *, *::before, *::after, html, body, a, button, input, select, textarea, [data-tip] {
+                cursor: none !important;
+            }
         }
 
         body {
@@ -1325,6 +1330,7 @@
             .pop-nav-arrow { display: none !important; }
             .footer-controls-names { display: none !important; }
             .custom-cursor-dot, .comic-speech-bubble { display: none !important; }
+            *, *::before, *::after, html, body, a, button { cursor: auto !important; }
 
             /* Mobile Bottom Navigation Toolbar */
             .mobile-nav-bar {
@@ -2541,28 +2547,48 @@
             updateBubblePosition();
         });
 
-        // Delegate hover on interactive elements with data-tip
+        // Smart hover detection on clickable items and data-tip elements
         document.addEventListener('mouseover', (e) => {
-            const target = e.target.closest('[data-tip]');
-            if (target) {
-                const tip = target.getAttribute('data-tip');
+            const isClickable = e.target.closest('button, a, .slide-nav-btn, .nav-track-item, .fullscreen-btn, .pop-action-btn, [data-tip], [onclick], input, select, textarea');
+            if (isClickable) {
+                cursorDot.classList.add('hovered');
+            } else {
+                cursorDot.classList.remove('hovered');
+            }
+
+            const tipTarget = e.target.closest('[data-tip]');
+            if (tipTarget) {
+                const tip = tipTarget.getAttribute('data-tip');
                 if (tip) {
                     speechBubble.innerHTML = tip;
                     speechBubble.classList.add('visible');
-                    cursorDot.classList.add('hovered');
                     bubbleVisible = true;
                     updateBubblePosition();
                 }
+            } else if (bubbleVisible) {
+                speechBubble.classList.remove('visible');
+                bubbleVisible = false;
             }
         });
 
-        document.addEventListener('mouseout', (e) => {
-            const target = e.target.closest('[data-tip]');
-            if (target) {
-                speechBubble.classList.remove('visible');
-                cursorDot.classList.remove('hovered');
-                bubbleVisible = false;
-            }
+        document.addEventListener('mouseleave', () => {
+            cursorDot.style.opacity = '0';
+            speechBubble.classList.remove('visible');
+            bubbleVisible = false;
+        });
+
+        document.addEventListener('mouseenter', () => {
+            cursorDot.style.opacity = '1';
+        });
+
+        window.addEventListener('mousedown', () => {
+            cursorDot.style.transform = 'translate(-50%, -50%) scale(0.85)';
+        });
+
+        window.addEventListener('mouseup', () => {
+            cursorDot.style.transform = cursorDot.classList.contains('hovered') 
+                ? 'translate(-50%, -50%) scale(1.1)' 
+                : 'translate(-50%, -50%) scale(1)';
         });
     </script>
 </body>
