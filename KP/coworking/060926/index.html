@@ -156,9 +156,19 @@
 
     .kp-meta-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(4, 1fr);
       gap: 16px;
       margin-top: 36px;
+    }
+    @media (max-width: 1024px) {
+      .kp-meta-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 540px) {
+      .kp-meta-grid {
+        grid-template-columns: 1fr;
+      }
     }
     .kp-meta-card {
       background: #f8fafc;
@@ -207,17 +217,34 @@
       margin-bottom: 36px;
     }
 
-    /* Cards & Grids */
+    /* Cards & Grids (EXACTLY 3 IN A ROW - NO EMPTY SPACES) */
     .kp-grid-2 {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 24px;
     }
+    @media (max-width: 768px) {
+      .kp-grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
     .kp-grid-3 {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 20px;
     }
+    @media (max-width: 1024px) {
+      .kp-grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 680px) {
+      .kp-grid-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+
     .kp-card {
       background: #ffffff;
       border: 1px solid var(--border);
@@ -331,12 +358,17 @@
       margin-top: 4px;
     }
 
-    /* Financial Tranches Box (3 columns) */
+    /* Financial Tranches Box (EXACTLY 3 TIERS: Air, Pro, Pro MAX) */
     .tranches-box {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 24px;
       margin-top: 28px;
+    }
+    @media (max-width: 1024px) {
+      .tranches-box {
+        grid-template-columns: 1fr;
+      }
     }
     .tranche-card {
       background: #ffffff;
@@ -357,6 +389,7 @@
       color: #64748b;
       text-transform: uppercase;
       font-weight: 700;
+      letter-spacing: 0.04em;
     }
     .tranche-price {
       font-size: 2.2rem;
@@ -366,7 +399,7 @@
       letter-spacing: -0.03em;
     }
     .tranche-title {
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       font-weight: 700;
       color: #09090b;
       margin-bottom: 8px;
@@ -477,12 +510,12 @@
   <!-- CONFIDENTIAL STATUS BAR -->
   <div class="confidential-bar">
     <div class="confidential-badge">
-      <span>🏢</span> КОММЕРЧЕСКОЕ ПРЕДЛОЖЕНИЕ · ПРЯМОЙ ДОСТУП
+      <span>🔒</span> КОНФИДЕНЦИАЛЬНО · ДОСТУП ПО ПРЯМОЙ ССЫЛКЕ
     </div>
     <div class="confidential-meta">
       <span><strong>ID:</strong> KP-COWORKING-060926</span>
       <span><strong>Дата:</strong> 06.09.2026</span>
-      <span><strong>Версия:</strong> 1.0 (Финальная)</span>
+      <span><strong>Версия:</strong> 2.0 (Финальная)</span>
     </div>
   </div>
 
@@ -527,7 +560,7 @@
           Создание современного, стильного и высококонверсионного промо-сайта на чистом коде. Презентация форматов рабочих мест, переговорных комнат и смарт-офисов, 3 варианта дизайна на выбор, удобное бронирование бесплатного тест-дня и 100% мобильная скорость.
         </p>
 
-        <!-- KPI SUMMARY CARDS -->
+        <!-- KPI SUMMARY CARDS (4 CARDS) -->
         <div class="kp-meta-grid">
           <div class="kp-meta-card">
             <div class="label">Срок разработки</div>
@@ -591,7 +624,7 @@
       </div>
     </section>
 
-    <!-- SECTION 2: STRUCTURE -->
+    <!-- SECTION 2: STRUCTURE (EXACTLY 9 BLOCKS = 3x3 GRID, NO EMPTY SPACE) -->
     <section class="kp-section alt-bg">
       <div class="container">
         <div class="kp-section-head">
@@ -660,7 +693,7 @@
       </div>
     </section>
 
-    <!-- SECTION 3: TECHNICAL STANDARDS -->
+    <!-- SECTION 3: TECHNICAL STANDARDS (EXACTLY 6 BLOCKS = 2x3 GRID, NO EMPTY SPACE) -->
     <section class="kp-section">
       <div class="container">
         <div class="kp-section-head">
@@ -784,7 +817,7 @@
       </div>
     </section>
 
-    <!-- SECTION 5: PRICING (3 TIERS) -->
+    <!-- SECTION 5: PRICING (Air, Pro, Pro MAX) -->
     <section class="kp-section">
       <div class="container">
         <div class="kp-section-head">
@@ -796,12 +829,12 @@
         </div>
 
         <div class="tranches-box">
-          <!-- TIER 1 -->
+          <!-- TIER 1: AIR -->
           <div class="tranche-card">
             <div>
-              <div class="tranche-num" style="color:#64748b;">ТАРИФ 01 · БАЗОВЫЙ</div>
+              <div class="tranche-num" style="color:#64748b;">ТАРИФ 01 · AIR</div>
               <div class="tranche-price">16 500 ₽</div>
-              <div class="tranche-title">Лендинг Простой</div>
+              <div class="tranche-title">Air</div>
               <div class="tranche-desc">Качественный продающий лендинг для быстрого старта и презентации коворкинга.</div>
               
               <ul class="kp-card-list">
@@ -815,22 +848,22 @@
             </div>
 
             <div style="margin-top:24px;">
-              <a href="https://t.me/Michael_Sage?text=Привет!%20Хочу%20заказать%20лендинг%20коворкинга%20Базовый%20за%2016500" target="_blank" class="btn-secondary" style="display:block; text-align:center; padding:12px 20px; background:#ffffff; color:#09090b; border:1px solid var(--border); text-decoration:none; font-family:var(--font-heading); font-weight:700; border-radius:4px;">
-                Выбрать за 16 500 ₽ ➔
+              <a href="https://t.me/Michael_Sage?text=Привет!%20Хочу%20заказать%20лендинг%20коворкинга%20Air%20за%2016500" target="_blank" class="btn-secondary" style="display:block; text-align:center; padding:12px 20px; background:#ffffff; color:#09090b; border:1px solid var(--border); text-decoration:none; font-family:var(--font-heading); font-weight:700; border-radius:4px;">
+                Выбрать Air за 16 500 ₽ ➔
               </a>
             </div>
           </div>
 
-          <!-- TIER 2 (FEATURED) -->
+          <!-- TIER 2: PRO (FEATURED) -->
           <div class="tranche-card featured">
             <div>
-              <div class="tranche-num" style="color:var(--green-dark);">ТАРИФ 02 · ХИТ ПРОДАЖ</div>
+              <div class="tranche-num" style="color:var(--green-dark);">ТАРИФ 02 · PRO (ХИТ)</div>
               <div class="tranche-price">27 500 ₽</div>
-              <div class="tranche-title">Лендинг + 3 Интеграции</div>
+              <div class="tranche-title">Pro</div>
               <div class="tranche-desc">Максимальная конверсия: заявки падают напрямую в CRM, Telegram и на почту.</div>
               
               <ul class="kp-card-list">
-                <li><strong>Всё, что входит в тариф «Базовый»</strong></li>
+                <li><strong>Всё, что входит в тариф Air</strong></li>
                 <li>3 концепта дизайна на выбор во 2-й день</li>
                 <li><strong>Интеграция с Telegram:</strong> мгновенные заявки в чат</li>
                 <li><strong>Интеграция с CRM:</strong> авто-создание лидов</li>
@@ -842,22 +875,22 @@
             </div>
 
             <div style="margin-top:24px;">
-              <a href="https://t.me/Michael_Sage?text=Привет!%20Хочу%20заказать%20лендинг%20коворкинга%20с%20интеграциями%20за%2027500" target="_blank" class="btn-primary" style="display:block; text-align:center; padding:12px 20px; background:#09090b; color:#ffffff; text-decoration:none; font-family:var(--font-heading); font-weight:700; border-radius:4px;">
-                Выбрать за 27 500 ₽ ➔
+              <a href="https://t.me/Michael_Sage?text=Привет!%20Хочу%20заказать%20лендинг%20коворкинга%20Pro%20за%2027500" target="_blank" class="btn-primary" style="display:block; text-align:center; padding:12px 20px; background:#09090b; color:#ffffff; text-decoration:none; font-family:var(--font-heading); font-weight:700; border-radius:4px;">
+                Выбрать Pro за 27 500 ₽ ➔
               </a>
             </div>
           </div>
 
-          <!-- TIER 3 (NDA) -->
+          <!-- TIER 3: PRO MAX (NDA) -->
           <div class="tranche-card">
             <div>
-              <div class="tranche-num" style="color:var(--purple);">ТАРИФ 03 · ПРИВАТНЫЙ</div>
+              <div class="tranche-num" style="color:var(--purple);">ТАРИФ 03 · PRO MAX</div>
               <div class="tranche-price">39 000 ₽</div>
-              <div class="tranche-title">Тариф под NDA</div>
-              <div class="tranche-desc">Полный функционал тарифа за 27 500 ₽ со строгой защитой конфиденциальности.</div>
+              <div class="tranche-title">Pro MAX (NDA)</div>
+              <div class="tranche-desc">Полный функционал тарифа Pro со строгой защитой конфиденциальности под NDA.</div>
               
               <ul class="kp-card-list">
-                <li><strong>Всё, что входит в тариф за 27 500 ₽</strong> (все 3 интеграции)</li>
+                <li><strong>Всё, что входит в тариф Pro</strong> (все 3 интеграции)</li>
                 <li><strong>Полная конфиденциальность (NDA):</strong> проект не публикуется в портфолио, кейсах и статьях</li>
                 <li>Приоритетная сборка и поддержка</li>
                 <li>Помощь в подключении всех сервисов</li>
@@ -867,8 +900,8 @@
             </div>
 
             <div style="margin-top:24px;">
-              <a href="https://t.me/Michael_Sage?text=Привет!%20Хочу%20заказать%20лендинг%20коворкинга%20под%20NDA%20за%2039000" target="_blank" class="btn-secondary" style="display:block; text-align:center; padding:12px 20px; background:#ffffff; color:#09090b; border:1px solid var(--border); text-decoration:none; font-family:var(--font-heading); font-weight:700; border-radius:4px;">
-                Выбрать под NDA за 39 000 ₽ ➔
+              <a href="https://t.me/Michael_Sage?text=Привет!%20Хочу%20заказать%20лендинг%20коворкинга%20Pro%20MAX%20за%2039000" target="_blank" class="btn-secondary" style="display:block; text-align:center; padding:12px 20px; background:#ffffff; color:#09090b; border:1px solid var(--border); text-decoration:none; font-family:var(--font-heading); font-weight:700; border-radius:4px;">
+                Выбрать Pro MAX за 39 000 ₽ ➔
               </a>
             </div>
           </div>
