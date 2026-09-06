@@ -549,7 +549,7 @@
 
   <main>
     <!-- HERO SECTION -->
-    <section class="kp-hero">
+    <section id="intro" class="kp-hero" data-nav-title="Паспорт КП">
       <div class="container">
         <span class="kp-tag">COWORKING SPACE · ПРОДАЮЩИЙ ЛЕНДИНГ НА КОДЕ</span>
         <h1 class="kp-title">
@@ -587,7 +587,7 @@
     </section>
 
     <!-- SECTION 1: CONTEXT & CONVERSION -->
-    <section class="kp-section">
+    <section id="goals" class="kp-section" data-nav-title="Цели & Конверсия">
       <div class="container">
         <div class="kp-section-head">
           <span class="kp-tag">01 / ЦЕЛИ И КОНВЕРСИЯ</span>
@@ -625,7 +625,7 @@
     </section>
 
     <!-- SECTION 2: STRUCTURE (EXACTLY 9 BLOCKS = 3x3 GRID, NO EMPTY SPACE) -->
-    <section class="kp-section alt-bg">
+    <section id="structure" class="kp-section alt-bg" data-nav-title="Архитектура">
       <div class="container">
         <div class="kp-section-head">
           <span class="kp-tag">02 / АРХИТЕКТУРА СТРАНИЦЫ</span>
@@ -694,7 +694,7 @@
     </section>
 
     <!-- SECTION 3: TECHNICAL STANDARDS (EXACTLY 6 BLOCKS = 2x3 GRID, NO EMPTY SPACE) -->
-    <section class="kp-section">
+    <section id="tech" class="kp-section" data-nav-title="Технологии">
       <div class="container">
         <div class="kp-section-head">
           <span class="kp-tag">03 / ТЕХНОЛОГИИ И СКОРОСТЬ</span>
@@ -739,7 +739,7 @@
     </section>
 
     <!-- SECTION 4: TIMELINE (4 DAYS) -->
-    <section class="kp-section alt-bg">
+    <section id="roadmap" class="kp-section alt-bg" data-nav-title="Дорожная карта">
       <div class="container">
         <div class="kp-section-head">
           <span class="kp-tag">04 / ЭТАПЫ И СРОКИ</span>
@@ -818,7 +818,7 @@
     </section>
 
     <!-- SECTION 5: PRICING (Air, Pro, Pro MAX) -->
-    <section class="kp-section">
+    <section id="pricing" class="kp-section" data-nav-title="Тарифы">
       <div class="container">
         <div class="kp-section-head">
           <span class="kp-tag">05 / СТОИМОСТЬ И ТАРИФЫ</span>
@@ -909,39 +909,45 @@
       </div>
     </section>
 
-    <!-- SECTION 6: ACCEPTANCE BOX (OFFER & ACTIONS) -->
-    <section class="kp-section">
-      <div class="container">
-        <div class="accept-box">
-          <div>
-            <h3>Готовы привлечь резидентов в коворкинг?</h3>
-            <p>
-              Я лично проектирую и верстаю сайт, гарантируя безупречное качество кода, эстетику и конверсию в заявки на тест-день. Выберите удобный способ связи:
-            </p>
-            <div style="display:flex; gap:12px; flex-wrap:wrap;">
-              <a href="https://t.me/Michael_Sage" target="_blank" style="display:inline-flex; align-items:center; gap:8px; background:#10b981; color:#09090b; padding:12px 20px; font-weight:700; font-family:var(--font-heading); text-decoration:none; border-radius:4px;">
-                💬 Telegram ↗
-              </a>
-              <a href="https://max.ru/u/f9LHodD0cOJxk9sLajkZ5u_-WbQydR8lkTH6y34KqdU-QKoLzrW7FH8yJG0" target="_blank" style="display:inline-flex; align-items:center; gap:8px; background:#27272a; color:#ffffff; border:1px solid #3f3f46; padding:12px 20px; font-weight:600; font-family:var(--font-heading); text-decoration:none; border-radius:4px;">
-                💬 MAX ↗
-              </a>
-              <a href="/booking" target="_blank" style="display:inline-flex; align-items:center; gap:8px; background:#ffffff; color:#09090b; padding:12px 20px; font-weight:600; font-family:var(--font-heading); text-decoration:none; border-radius:4px;">
-                📅 Забронировать слот ↗
-              </a>
+    <!-- SECTION 6: DIRECT CONTACT & BOOKING (MATCHING HOMEPAGE) -->
+    <section id="contact" class="form-section" data-nav-title="Связь">
+      <div class="form-inner" style="align-items:center;">
+        <div class="form-left" style="max-width:580px;">
+          <div class="section-tag" style="color:#a1a1aa;">СВЯЗЬ & БРОНИРОВАНИЕ</div>
+          <h2 class="form-title">Готовы привлечь резидентов в&nbsp;коворкинг?</h2>
+          <p class="form-sub">
+            Я лично проектирую и&nbsp;верстаю сайт, гарантируя безупречное качество кода, эстетику и&nbsp;конверсию в&nbsp;заявки на&nbsp;тест-день. Отвечу лично и&nbsp;предложу пошаговый план запуска.
+          </p>
+          <div style="margin-top:24px;font-family:var(--font-mono);font-size:0.88rem;color:#a1a1aa;line-height:1.8;">
+            <div>• Канал в&nbsp;Telegram: <a href="https://t.me/uncrn_sage" target="_blank" style="color:#fff;text-decoration:underline;">@uncrn_sage</a></div>
+            <div style="margin-top:8px;color:#71717a;font-size:0.82rem;">
+              <strong>Порядок запуска:</strong> выбор тарифа ➔ 50% предоплата ➔ 4 дня разработки ➔ сдача (1 круг правок включен) ➔ релиз на вашем хостинге.
             </div>
           </div>
+        </div>
 
-          <div>
-            <div style="font-family:var(--font-mono); font-size:0.75rem; color:#a1a1aa; text-transform:uppercase; margin-bottom:12px; letter-spacing:0.04em;">
-              Порядок запуска проекта:
-            </div>
-            <ul class="req-list">
-              <li><strong>1. Согласование:</strong> выбор тарифа и передача материалов.</li>
-              <li><strong>2. Предоплата:</strong> 50% перед стартом разработки.</li>
-              <li><strong>3. Сборка (4 дня):</strong> концепты ➔ верстка ➔ интеграция.</li>
-              <li><strong>4. Приемка:</strong> 1 круг правок включен в стоимость.</li>
-              <li><strong>5. Релиз:</strong> финальная оплата 50% и публикация на вашем хостинге.</li>
-            </ul>
+        <div class="direct-contact-card">
+          <div style="font-family:var(--font-mono);font-size:0.75rem;color:#34d399;font-weight:600;margin-bottom:4px;letter-spacing:0.04em;">
+            // ПРЯМАЯ СВЯЗЬ БЕЗ ПОСРЕДНИКОВ
+          </div>
+
+          <a href="https://t.me/Michael_Sage" target="_blank" class="btn-primary" style="display:flex;align-items:center;justify-content:center;gap:12px;padding:16px;font-size:0.95rem;background:#ffffff;border-color:#ffffff;color:#09090b;text-decoration:none;font-weight:700;border-radius:0;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-2.02 1.28-5.7 3.77-.54.37-1.03.55-1.47.54-.48-.01-1.4-.27-2.09-.49-.84-.27-1.51-.42-1.45-.89.03-.25.38-.51 1.07-.78 4.19-1.82 6.98-3.03 8.37-3.61 3.98-1.66 4.81-1.95 5.35-1.96.12 0 .39.03.56.17.14.12.18.28.2.4.01.07.01.21 0 .36z"/></svg>
+            <span>Написать в&nbsp;Telegram ↗</span>
+          </a>
+
+          <a href="/booking" class="btn-secondary" style="display:flex;align-items:center;justify-content:center;gap:12px;padding:16px;font-size:0.95rem;background:#27272a;border-color:#3f3f46;color:#fff;text-decoration:none;font-weight:600;border-radius:0;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><rect x="3" y="4" width="18" height="18"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <span>Забронировать слот в&nbsp;Календаре ↗</span>
+          </a>
+
+          <a href="https://max.ru/u/f9LHodD0cOJxk9sLajkZ5u_-WbQydR8lkTH6y34KqdU-QKoLzrW7FH8yJG0" target="_blank" class="btn-secondary" style="display:flex;align-items:center;justify-content:center;gap:12px;padding:16px;font-size:0.95rem;background:#18181b;border-color:#27272a;color:#d4d4d8;text-decoration:none;font-weight:600;border-radius:0;">
+            <span>Написать в&nbsp;MAX ↗</span>
+          </a>
+
+          <div style="margin-top:6px;padding-top:14px;border-top:1px solid #27272a;display:flex;justify-content:space-between;align-items:center;font-family:var(--font-mono);font-size:0.78rem;color:#a1a1aa;">
+            <span>Прямой контакт</span>
+            <span style="color:#34d399;">● Online</span>
           </div>
         </div>
       </div>
@@ -949,20 +955,21 @@
   </main>
 
   <!-- FOOTER (EXACTLY AS ON HOMEPAGE) -->
-  <footer class="footer" style="background:#09090b; color:#a1a1aa; border-top:1px solid #27272a; padding:32px 0; font-size:0.86rem;">
-    <div class="container" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+  <footer class="footer">
+    <div class="footer-inner">
       <div>
-        <strong style="color:#ffffff;">ИП Пузырёв Михаил Михайлович</strong> · ИНН 500177901407 · ОГРНИП 318505300123140
+        <strong>ИП Пузырёв Михаил Михайлович</strong> · ИНН 500177901407 · ОГРНИП 318505300123140
       </div>
-      <ul style="display:flex; gap:20px; list-style:none; margin:0; padding:0; flex-wrap:wrap; font-family:var(--font-heading);">
-        <li><a href="/privacy" style="color:#a1a1aa; text-decoration:none;">Политика конфиденциальности</a></li>
-        <li><a href="/terms" style="color:#a1a1aa; text-decoration:none;">Пользовательское соглашение</a></li>
-        <li><a href="https://t.me/uncrn_sage" target="_blank" style="color:#a1a1aa; text-decoration:none;">Telegram</a></li>
-        <li><a href="https://max.ru/u/f9LHodD0cOJxk9sLajkZ5u_-WbQydR8lkTH6y34KqdU-QKoLzrW7FH8yJG0" target="_blank" style="color:#a1a1aa; text-decoration:none;">MAX</a></li>
-        <li><a href="/booking" style="color:#a1a1aa; text-decoration:none;">Забронировать слот</a></li>
+      <ul class="footer-links">
+        <li><a href="/privacy">Политика конфиденциальности</a></li>
+        <li><a href="/terms">Пользовательское соглашение</a></li>
+        <li><a href="https://t.me/uncrn_sage" target="_blank">Telegram</a></li>
+        <li><a href="https://max.ru/u/f9LHodD0cOJxk9sLajkZ5u_-WbQydR8lkTH6y34KqdU-QKoLzrW7FH8yJG0" target="_blank">MAX</a></li>
+        <li><a href="/booking">Забронировать слот</a></li>
       </ul>
     </div>
   </footer>
 
+  <script src="/js/main.js?v=2.8"></script>
 </body>
 </html>

@@ -666,8 +666,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Helper to calculate total sticky obstruction above content
     function getStickyHeaderOffset(targetSec) {
-      const nav = document.querySelector('header.nav, .nav');
+      const nav = document.querySelector('header.nav, .nav, .kp-nav-bar');
       const navHeight = nav ? nav.offsetHeight : 68;
+      const confBar = document.querySelector('.confidential-bar');
+      const confHeight = (confBar && window.getComputedStyle(confBar).position === 'sticky') ? confBar.offsetHeight : 0;
 
       const controlsBar = document.querySelector('.solutions-controls-bar, .sticky-controls-bar, .prompts-sticky-toolbar, .prompts-controls, .glossary-sticky-toolbar');
       let barHeight = 0;
@@ -678,7 +680,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const extraPad = barHeight > 0 ? 16 : 14;
-      return navHeight + barHeight + extraPad;
+      return navHeight + confHeight + barHeight + extraPad;
     }
 
     // Smooth scroll on click
