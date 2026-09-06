@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI-Старт: Мастерство с Google AI — Михаил Пузырёв | Практический курс для подростков</title>
-  <meta name="description" content="Практический интенсив по искусственному интеллекту для подростков 10–16 лет от Михаила Пузырёва. 10 занятий: Google Gemini, ImageFX, NotebookLM, вайб-кодинг и запуск собственного IT-проекта.">
-  <meta name="keywords" content="AI-Старт, курс по искусственному интеллекту для детей, нейросети для подростков, Google AI, Gemini, ImageFX, NotebookLM, вайбкодинг для школьников, Михаил Пузырёв">
+  <title>AI-Старт: Мастерство с&nbsp;Google AI — Михаил Пузырёв | Практический курс для&nbsp;подростков</title>
+  <meta name="description" content="Практический интенсив по&nbsp;искусственному интеллекту для&nbsp;подростков 10–16 лет от&nbsp;Михаила Пузырёва. 10 занятий: Google Gemini, Google Antigravity, Google Flow, Nano Banana, Omni, NotebookLM и&nbsp;вайб-кодинг.">
+  <meta name="keywords" content="AI-Старт, курс по&nbsp;искусственному интеллекту для&nbsp;детей, нейросети для&nbsp;подростков, Google AI, Gemini, Google Antigravity, Google Flow, Nano Banana, Omni, NotebookLM, вайбкодинг для&nbsp;школьников, Михаил Пузырёв">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://a-sage.ru/education/ai-start/">
 
@@ -16,14 +16,14 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 
   <!-- OpenGraph / Social Media -->
-  <meta property="og:title" content="AI-Старт: Мастерство с Google AI — Курс для подростков 10–16 лет">
-  <meta property="og:description" content="10 интерактивных занятий: от точных промптов и ИИ-репетитора до вайб-кодинга, собственных веб-приложений и Demo Day.">
+  <meta property="og:title" content="AI-Старт: Мастерство с&nbsp;Google AI — Курс для&nbsp;подростков 10–16 лет">
+  <meta property="og:description" content="10 интерактивных занятий: от&nbsp;точных промптов и&nbsp;ИИ-репетитора до&nbsp;вайб-кодинга в&nbsp;Antigravity, собственных веб-приложений и&nbsp;Demo Day.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://a-sage.ru/education/ai-start/">
   <meta property="og:image" content="https://a-sage.ru/education/ai-start/hero_teen_ai.jpg">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="AI-Старт: Мастерство с Google AI — Михаил Пузырёв">
-  <meta name="twitter:description" content="Превращаем нейросети из развлечения в суперсилу для учебы, творчества и первого IT-проекта.">
+  <meta name="twitter:title" content="AI-Старт: Мастерство с&nbsp;Google AI — Михаил Пузырёв">
+  <meta name="twitter:description" content="Превращаем нейросети из&nbsp;развлечения в&nbsp;суперсилу для&nbsp;учебы, творчества и&nbsp;первого IT-проекта.">
   <meta name="twitter:image" content="https://a-sage.ru/education/ai-start/hero_teen_ai.jpg">
 
   <!-- Schema.org JSON-LD -->
@@ -32,7 +32,7 @@
     "@context": "https://schema.org",
     "@type": "Course",
     "name": "AI-Старт: Мастерство с Google AI",
-    "description": "Практический образовательный курс по искусственному интеллекту для подростков 10-16 лет. Освоение Google Gemini, ImageFX, NotebookLM, вайб-кодинга и создание финального веб-приложения.",
+    "description": "Практический образовательный курс по искусственному интеллекту для подростков 10-16 лет. Освоение Google Gemini, Google Antigravity, Google Flow, Nano Banana, Omni, NotebookLM, вайб-кодинга и создание финального веб-приложения.",
     "provider": {
       "@type": "Person",
       "name": "Михаил Пузырёв",
@@ -52,7 +52,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <style>
     :root {
@@ -77,7 +76,6 @@
       --hard-shadow: 6px 6px 0px #000000;
       --hard-shadow-lg: 10px 10px 0px #000000;
       --hard-shadow-sm: 4px 4px 0px #000000;
-      --hard-shadow-yellow: 6px 6px 0px var(--pop-yellow);
 
       --font-display: 'Outfit', sans-serif;
       --font-body: 'Inter', sans-serif;
@@ -104,7 +102,7 @@
     }
 
     @media (min-width: 1025px) {
-      *, *::before, *::after, html, body, a, button, input, select, textarea, [data-tip], .pop-modal-overlay, .pop-modal-card {
+      *, *::before, *::after, html, body, a, button, input, select, textarea, [data-tip], .lightbox-overlay, .lightbox-card {
         cursor: none !important;
       }
     }
@@ -144,7 +142,7 @@
       transform: translate(-50%, -50%) scale(1.1);
     }
 
-    /* Comic Speech Bubble Tooltip */
+    /* Comic Speech Bubble Tooltip - Full width without truncate */
     .comic-speech-bubble {
       position: fixed;
       z-index: 2147483646 !important;
@@ -153,20 +151,19 @@
       color: #000000;
       border: 3.5px solid #000000;
       border-radius: 0;
-      padding: 9px 16px;
+      padding: 10px 18px;
       font-family: var(--font-display);
       font-weight: 900;
-      font-size: 1.05rem;
+      font-size: 0.95rem;
       letter-spacing: 0.02em;
       text-transform: uppercase;
       box-shadow: 6px 6px 0px #000000;
       opacity: 0;
       transform: scale(0.8);
-      transition: opacity 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      max-width: 280px;
-      text-align: center;
-      line-height: 1.2;
+      transition: opacity 0.12s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.12s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       white-space: nowrap;
+      width: max-content;
+      max-width: calc(100vw - 32px);
     }
 
     .comic-speech-bubble.visible {
@@ -276,32 +273,34 @@
     .glow-2 { top: 40%; left: -100px; width: 600px; height: 600px; background: var(--pop-yellow); }
     .glow-3 { top: 75%; right: -80px; width: 600px; height: 600px; background: var(--pop-pink); }
 
-    /* Layout Containers */
+    /* Wide & Spacious Container */
     .container {
       width: 100%;
-      max-width: 1260px;
+      max-width: 1440px;
       margin: 0 auto;
-      padding: 0 24px;
+      padding: 0 36px;
       position: relative;
       z-index: 2;
     }
 
-    /* Sticky Navigation Header */
+    /* Sticky Navigation Header - Wide Desktop */
     header.sticky-nav {
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: rgba(7, 8, 12, 0.92);
-      backdrop-filter: blur(12px);
+      background: rgba(7, 8, 12, 0.94);
+      backdrop-filter: blur(14px);
       border-bottom: 2px solid rgba(255, 255, 255, 0.12);
       padding: 14px 0;
+      width: 100%;
     }
 
     .nav-wrapper {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 16px;
+      gap: 24px;
+      width: 100%;
     }
 
     .nav-brand {
@@ -309,6 +308,8 @@
       align-items: center;
       gap: 12px;
       text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .nav-badge {
@@ -316,8 +317,8 @@
       color: #000000;
       font-family: var(--font-display);
       font-weight: 900;
-      font-size: 0.82rem;
-      padding: 5px 10px;
+      font-size: 0.85rem;
+      padding: 6px 12px;
       border: var(--thin-border);
       box-shadow: var(--hard-shadow-sm);
       text-transform: uppercase;
@@ -327,9 +328,10 @@
     .nav-brand-title {
       font-family: var(--font-display);
       font-weight: 800;
-      font-size: 1.12rem;
+      font-size: 1.15rem;
       color: #FFFFFF;
       letter-spacing: 0.02em;
+      white-space: nowrap;
     }
 
     .nav-brand-title .google-grad {
@@ -341,9 +343,10 @@
 
     .nav-links {
       display: flex;
-      gap: 20px;
+      gap: 24px;
       list-style: none;
       align-items: center;
+      white-space: nowrap;
     }
 
     .nav-links a {
@@ -366,16 +369,15 @@
       color: #FFFFFF;
       border: var(--thin-border);
       box-shadow: var(--hard-shadow-sm);
-      padding: 9px 18px;
+      padding: 9px 20px;
       font-family: var(--font-display);
       font-weight: 900;
       font-size: 0.92rem;
       text-decoration: none;
       text-transform: uppercase;
       letter-spacing: 0.03em;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+      white-space: nowrap;
+      flex-shrink: 0;
       transition: transform 0.15s ease, background 0.15s ease;
     }
 
@@ -387,13 +389,13 @@
 
     /* Common Section Styles */
     section {
-      padding: 70px 0;
+      padding: 75px 0;
       position: relative;
     }
 
     .section-head {
-      margin-bottom: 44px;
-      max-width: 860px;
+      margin-bottom: 40px;
+      max-width: 920px;
     }
 
     .section-tag {
@@ -418,17 +420,17 @@
     .section-title {
       font-family: var(--font-display);
       font-weight: 900;
-      font-size: clamp(2.2rem, 4vw, 3.4rem);
-      line-height: 1.06;
+      font-size: clamp(2.2rem, 3.8vw, 3.2rem);
+      line-height: 1.08;
       text-transform: uppercase;
       letter-spacing: -0.01em;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       text-shadow: 3px 3px 0px #000000;
     }
 
     .section-desc {
-      font-size: clamp(1.05rem, 1.5vw, 1.22rem);
-      color: #9CA3AF;
+      font-size: clamp(1.02rem, 1.4vw, 1.18rem);
+      color: #A0A5B5;
       line-height: 1.5;
     }
 
@@ -439,7 +441,7 @@
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.2fr 1fr;
+      grid-template-columns: 1.25fr 1fr;
       gap: 48px;
       align-items: center;
     }
@@ -507,7 +509,7 @@
       line-height: 1.55;
       color: #D1D5DB;
       margin-bottom: 32px;
-      max-width: 620px;
+      max-width: 640px;
     }
 
     .hero-cta-group {
@@ -526,7 +528,7 @@
       padding: 15px 28px;
       font-family: var(--font-display);
       font-weight: 900;
-      font-size: 1.08rem;
+      font-size: 1.05rem;
       text-transform: uppercase;
       letter-spacing: 0.03em;
       text-decoration: none;
@@ -570,7 +572,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 14px;
-      max-width: 620px;
+      max-width: 640px;
     }
 
     .stat-card-mini {
@@ -765,6 +767,7 @@
       border: var(--thin-border);
       box-shadow: var(--hard-shadow-sm);
       transition: all 0.2s ease;
+      overflow: hidden;
     }
 
     .lesson-acc-trigger {
@@ -813,7 +816,7 @@
       font-weight: 700;
       font-size: 1.1rem;
       color: var(--pop-yellow);
-      transition: transform 0.2s ease;
+      transition: transform 0.25s ease;
       flex-shrink: 0;
     }
 
@@ -1095,18 +1098,35 @@
       text-decoration: underline;
     }
 
-    /* "С КЕМ РАБОТАЮ" / PARTNERS & CLIENTS */
-    .partners-section {
-      padding: 70px 0;
+    /* ══════════════════════════════════════════
+       INFINITE CAROUSEL ENGINE (MAIN SITE STYLE)
+       ══════════════════════════════════════════ */
+    .infinite-carousel-wrapper {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      padding: 14px 0 20px 0;
+      cursor: grab;
+      user-select: none;
+      touch-action: pan-y;
     }
 
-    .logos-grid-pop {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 14px;
+    .infinite-carousel-wrapper:active {
+      cursor: grabbing;
     }
 
-    .logo-card-item {
+    .infinite-track {
+      display: flex;
+      gap: 18px;
+      width: max-content;
+      will-change: transform;
+    }
+
+    /* PARTNERS LOGOS CAROUSEL */
+    .logo-marquee-card {
+      width: 190px;
+      height: 80px;
+      flex-shrink: 0;
       background: var(--bg-card);
       border: var(--thin-border);
       box-shadow: var(--hard-shadow-sm);
@@ -1114,46 +1134,42 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 76px;
-      transition: transform 0.15s ease, border-color 0.15s ease;
+      transition: transform 0.2s ease, border-color 0.2s ease;
     }
 
-    .logo-card-item:hover {
+    .logo-marquee-card:hover {
       transform: translateY(-3px);
       border-color: var(--pop-yellow);
     }
 
-    .logo-card-item img {
+    .logo-marquee-card img {
       max-width: 85%;
       max-height: 48px;
       object-fit: contain;
-      filter: grayscale(1) brightness(1.8) contrast(1.1);
+      filter: grayscale(1) brightness(1.7) contrast(1.1);
       transition: filter 0.2s ease;
     }
 
-    .logo-card-item:hover img {
+    .logo-marquee-card:hover img {
       filter: none;
     }
 
-    /* "ДИПЛОМЫ & СЕРТИФИКАТЫ" */
+    /* DIPLOMAS CAROUSEL */
     .diplomas-section {
       background: #090A10;
-      padding: 70px 0;
+      padding: 75px 0;
       border-top: 2px solid rgba(255, 255, 255, 0.08);
       border-bottom: 2px solid rgba(255, 255, 255, 0.08);
     }
 
-    .certs-grid-pop {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-    }
-
-    .cert-card-interactive {
+    .cert-slide-card {
+      width: 250px;
+      height: 330px;
+      flex-shrink: 0;
       background: var(--bg-card);
       border: var(--thick-border);
       box-shadow: var(--hard-shadow);
-      padding: 12px;
+      padding: 10px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -1161,87 +1177,96 @@
       transition: transform 0.2s ease, border-color 0.2s ease;
     }
 
-    .cert-card-interactive:hover {
+    .cert-slide-card:hover {
       transform: translateY(-4px);
       border-color: var(--pop-cyan);
     }
 
-    .cert-img-container {
+    .cert-img-box {
+      width: 100%;
+      height: 240px;
       background: #000000;
       border: var(--thin-border);
-      height: 220px;
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 10px;
       position: relative;
     }
 
-    .cert-img-container img {
+    .cert-img-box img {
       max-width: 100%;
       max-height: 100%;
       object-fit: contain;
+      display: block;
       transition: transform 0.25s ease;
     }
 
-    .cert-card-interactive:hover .cert-img-container img {
+    .cert-slide-card:hover .cert-img-box img {
       transform: scale(1.05);
     }
 
-    .cert-zoom-pill {
+    .cert-zoom-tag {
       position: absolute;
-      bottom: 8px;
-      right: 8px;
+      bottom: 6px;
+      right: 6px;
       background: var(--pop-yellow);
       color: #000000;
       font-family: var(--font-mono);
       font-weight: 700;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       padding: 2px 6px;
       border: 1px solid #000000;
       box-shadow: 2px 2px 0px #000000;
     }
 
-    .cert-card-caption {
+    .cert-slide-caption {
       font-family: var(--font-display);
       font-weight: 800;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       color: #FFFFFF;
-      line-height: 1.3;
+      line-height: 1.25;
+      margin-top: 8px;
+      text-align: center;
     }
 
-    /* "ЧТО ОБО МНЕ ПИШУТ" / REVIEWS CAROUSEL & GRID */
+    /* REVIEWS CAROUSEL */
     .reviews-section {
-      padding: 70px 0;
+      padding: 75px 0;
     }
 
-    .reviews-grid-pop {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-    }
-
-    .review-card-item {
+    .review-slide-card {
+      width: 220px;
+      height: 330px;
+      flex-shrink: 0;
       background: var(--bg-card);
       border: var(--thick-border);
       box-shadow: var(--hard-shadow);
-      padding: 10px;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       cursor: pointer;
-      transition: transform 0.2s ease;
+      transition: transform 0.2s ease, border-color 0.2s ease;
     }
 
-    .review-card-item:hover {
+    .review-slide-card:hover {
       transform: translateY(-4px);
       border-color: var(--pop-pink);
     }
 
-    .review-card-item img {
+    .review-img-box {
       width: 100%;
-      height: 260px;
+      height: 275px;
+      border: var(--thin-border);
+      overflow: hidden;
+    }
+
+    .review-img-box img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       object-position: top;
-      border: var(--thin-border);
       display: block;
     }
 
@@ -1249,30 +1274,32 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 8px;
-      padding: 4px 6px;
+      margin-top: 6px;
+      padding: 2px 4px;
     }
 
     .review-tag {
       font-family: var(--font-display);
       font-weight: 800;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--pop-yellow);
       text-transform: uppercase;
     }
 
     .review-zoom-btn {
       font-family: var(--font-mono);
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--pop-cyan);
       font-weight: 700;
     }
 
-    /* FAQ SECTION */
+    /* ══════════════════════════════════════════
+       FAQ SECTION WITH SMOOTH CSS GRID ACCORDION
+       ══════════════════════════════════════════ */
     .faq-section {
       background: #0B0C12;
       border-top: var(--thick-border);
-      padding: 70px 0;
+      padding: 75px 0;
     }
 
     .faq-layout-grid {
@@ -1282,39 +1309,79 @@
       align-items: start;
     }
 
-    .faq-items-stack {
+    .faq-accordion-stack {
       display: flex;
       flex-direction: column;
       gap: 14px;
     }
 
-    .faq-box-card {
+    .faq-accordion-item {
       background: var(--bg-card);
       border: var(--thick-border);
       box-shadow: var(--hard-shadow-sm);
-      padding: 20px 22px;
       transition: transform 0.15s ease, border-color 0.15s ease;
+      overflow: hidden;
     }
 
-    .faq-box-card:hover {
-      transform: translateX(4px);
+    .faq-accordion-item:hover {
       border-color: var(--pop-yellow);
     }
 
-    .faq-box-title {
+    .faq-accordion-header {
+      width: 100%;
+      background: transparent;
+      border: none;
+      padding: 18px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      text-align: left;
+      color: var(--pop-yellow);
       font-family: var(--font-display);
       font-weight: 800;
-      font-size: 1.2rem;
-      color: var(--pop-yellow);
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      font-size: 1.15rem;
     }
 
-    .faq-box-body {
+    .faq-accordion-icon {
+      font-family: var(--font-mono);
+      font-weight: 900;
+      font-size: 1.4rem;
+      color: var(--pop-yellow);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .faq-accordion-item.open .faq-accordion-icon {
+      transform: rotate(45deg);
+      color: var(--pop-pink);
+    }
+
+    /* Butter-smooth height transition using CSS Grid */
+    .faq-accordion-body {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .faq-accordion-item.open .faq-accordion-body {
+      grid-template-rows: 1fr;
+    }
+
+    .faq-accordion-inner {
+      overflow: hidden;
+      padding: 0 22px;
+      transition: padding 0.32s ease;
+    }
+
+    .faq-accordion-item.open .faq-accordion-inner {
+      padding: 0 22px 20px 22px;
+    }
+
+    .faq-accordion-inner p {
       font-size: 0.98rem;
-      line-height: 1.5;
+      line-height: 1.55;
       color: #D1D5DB;
     }
 
@@ -1361,10 +1428,10 @@
       color: #000000;
       border: var(--thick-border);
       box-shadow: var(--hard-shadow-sm);
-      padding: 12px 18px;
+      padding: 13px 18px;
       font-family: var(--font-display);
       font-weight: 900;
-      font-size: 0.98rem;
+      font-size: 1rem;
       text-decoration: none;
       text-transform: uppercase;
       display: inline-flex;
@@ -1379,9 +1446,9 @@
       transform: translateY(-2px);
     }
 
-    /* FINAL CTA & BOOKING */
+    /* FINAL CTA & BOOKING (NO QR CODES) */
     .booking-section {
-      padding: 80px 0;
+      padding: 85px 0;
     }
 
     .booking-card-main {
@@ -1395,7 +1462,7 @@
     .booking-grid {
       display: grid;
       grid-template-columns: 1.3fr 1fr;
-      gap: 40px;
+      gap: 48px;
       align-items: center;
     }
 
@@ -1404,8 +1471,8 @@
       border: var(--thick-border);
       box-shadow: var(--hard-shadow-sm);
       border-left: 8px solid var(--pop-neon-green);
-      padding: 18px 22px;
-      margin-bottom: 28px;
+      padding: 20px 24px;
+      margin-top: 20px;
     }
 
     .booking-hint-quote strong {
@@ -1419,7 +1486,7 @@
     }
 
     .booking-hint-quote p {
-      font-size: 1.12rem;
+      font-size: 1.15rem;
       font-weight: 600;
       color: #FFFFFF;
       line-height: 1.45;
@@ -1435,7 +1502,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 16px 24px;
+      padding: 18px 26px;
       border: var(--thick-border);
       box-shadow: var(--hard-shadow);
       text-decoration: none;
@@ -1462,71 +1529,17 @@
       color: #FFFFFF;
     }
 
-    .booking-cta-content {
-      display: flex;
-      flex-direction: column;
-    }
-
     .booking-cta-label {
       font-family: var(--font-display);
       font-weight: 900;
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       text-transform: uppercase;
-    }
-
-    .booking-cta-sub {
-      font-size: 0.88rem;
-      opacity: 0.85;
-      margin-top: 2px;
+      letter-spacing: 0.02em;
     }
 
     .booking-cta-icon {
       font-family: var(--font-display);
-      font-size: 1.5rem;
-    }
-
-    .booking-qr-col {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-      text-align: center;
-    }
-
-    .booking-qr-title {
-      font-family: var(--font-display);
-      font-weight: 900;
-      font-size: 1.1rem;
-      text-transform: uppercase;
-      color: #FFFFFF;
-    }
-
-    .qr-boxes-row {
-      display: flex;
-      gap: 16px;
-    }
-
-    .qr-single-card {
-      background: #FFFFFF;
-      padding: 10px;
-      border: var(--thin-border);
-      box-shadow: var(--hard-shadow-sm);
-      text-align: center;
-    }
-
-    .qr-render-area {
-      width: 95px;
-      height: 95px;
-      margin: 0 auto;
-    }
-
-    .qr-label-text {
-      color: #000000;
-      font-family: var(--font-display);
-      font-weight: 800;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      margin-top: 6px;
+      font-size: 1.6rem;
     }
 
     /* FOOTER */
@@ -1545,7 +1558,7 @@
     }
 
     .footer-left-info {
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       color: #6B7280;
     }
 
@@ -1553,12 +1566,12 @@
       color: #FFFFFF;
       font-family: var(--font-display);
       font-weight: 800;
-      font-size: 1rem;
+      font-size: 1.05rem;
     }
 
     .footer-links-list {
       display: flex;
-      gap: 18px;
+      gap: 20px;
       list-style: none;
     }
 
@@ -1567,7 +1580,7 @@
       text-decoration: none;
       font-family: var(--font-display);
       font-weight: 700;
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       text-transform: uppercase;
       transition: color 0.15s ease;
     }
@@ -1576,14 +1589,14 @@
       color: var(--pop-yellow);
     }
 
-    /* LIGHTBOX & IMAGE MODAL */
+    /* LIGHTBOX MODAL */
     .lightbox-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(4, 5, 8, 0.9);
+      background: rgba(4, 5, 8, 0.92);
       backdrop-filter: blur(10px);
       z-index: 2000000;
       display: flex;
@@ -1604,7 +1617,7 @@
 
     .lightbox-card {
       position: relative;
-      max-width: 900px;
+      max-width: 920px;
       max-height: 90vh;
       background: #11121A;
       border: var(--thick-border);
@@ -1624,7 +1637,7 @@
     }
 
     .lightbox-caption {
-      margin-top: 10px;
+      margin-top: 12px;
       font-family: var(--font-display);
       font-weight: 800;
       font-size: 1.05rem;
@@ -1689,18 +1702,6 @@
         height: 320px;
       }
 
-      .logos-grid-pop {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .certs-grid-pop {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .reviews-grid-pop {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
       .faq-layout-grid {
         grid-template-columns: 1fr;
       }
@@ -1714,13 +1715,33 @@
       }
     }
 
-    @media (max-width: 640px) {
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 16px;
+      }
+
       header.sticky-nav {
-        padding: 10px 0;
+        padding: 8px 0;
+      }
+
+      .nav-wrapper {
+        gap: 8px;
+      }
+
+      .nav-badge {
+        font-size: 0.76rem;
+        padding: 5px 9px;
+        box-shadow: 2px 2px 0px #000000;
       }
 
       .nav-brand-title {
         display: none !important;
+      }
+
+      .nav-cta-btn {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+        box-shadow: 2px 2px 0px #000000;
       }
 
       .parameters-grid {
@@ -1731,20 +1752,22 @@
         grid-template-columns: 1fr;
       }
 
-      .logos-grid-pop {
-        grid-template-columns: repeat(2, 1fr);
+      .cert-slide-card {
+        width: 200px;
+        height: 280px;
       }
 
-      .certs-grid-pop {
-        grid-template-columns: 1fr;
+      .cert-img-box {
+        height: 190px;
       }
 
-      .reviews-grid-pop {
-        grid-template-columns: 1fr;
+      .review-slide-card {
+        width: 180px;
+        height: 280px;
       }
 
-      .qr-boxes-row {
-        flex-direction: column;
+      .review-img-box {
+        height: 230px;
       }
 
       .custom-cursor-dot, .comic-speech-bubble {
@@ -1772,24 +1795,24 @@
   <div class="custom-cursor-dot" id="cursor-dot"></div>
   <div class="comic-speech-bubble" id="speech-bubble">AI-СТАРТ</div>
 
-  <!-- Sticky Header Navigation -->
+  <!-- Sticky Header Navigation (Wide Desktop) -->
   <header class="sticky-nav">
     <div class="container nav-wrapper">
       <a href="#" class="nav-brand">
-        <span class="nav-badge">КУРС ДЛЯ ПОДРОСТКОВ</span>
+        <span class="nav-badge">КУРС ДЛЯ&nbsp;ПОДРОСТКОВ</span>
         <span class="nav-brand-title">«AI-СТАРТ: <span class="google-grad">GOOGLE AI</span>»</span>
       </a>
 
       <ul class="nav-links">
-        <li><a href="#about" data-tip="Параметры и формат">О курсе</a></li>
-        <li><a href="#syllabus" data-tip="10 уроков">Программа</a></li>
+        <li><a href="#about" data-tip="Параметры и&nbsp;формат">О&nbsp;курсе</a></li>
+        <li><a href="#syllabus" data-tip="10 занятий">Программа</a></li>
         <li><a href="#author" data-tip="Михаил Пузырёв">Преподаватель</a></li>
-        <li><a href="#trust" data-tip="Партнеры и дипломы">Партнеры</a></li>
+        <li><a href="#trust" data-tip="Партнеры и&nbsp;дипломы">Партнеры</a></li>
         <li><a href="#reviews" data-tip="Реальные отзывы">Отзывы</a></li>
-        <li><a href="#faq" data-tip="Частые вопросы">FAQ</a></li>
+        <li><a href="#faq" data-tip="Частые вопросы">Чаво</a></li>
       </ul>
 
-      <a href="https://t.me/MarinaPali" target="_blank" class="nav-cta-btn" data-tip="Записаться к куратору Марине Пали">
+      <a href="https://t.me/MarinaPali" target="_blank" class="nav-cta-btn" data-tip="Записаться к&nbsp;куратору">
         ЗАПИСАТЬСЯ ↗
       </a>
     </div>
@@ -1802,31 +1825,31 @@
       <div class="container hero-grid">
         <div class="hero-left-col">
           <div class="hero-tagline-box">
-            ★ ИНТЕНСИВНЫЙ КУРС ПО ИИ ДЛЯ ПОДРОСТКОВ 10–16 ЛЕТ
+            ★ ИНТЕНСИВНЫЙ КУРС ПО&nbsp;ИИ ДЛЯ&nbsp;ПОДРОСТКОВ 10–16 ЛЕТ
           </div>
 
           <h1 class="hero-heading">
             AI-СТАРТ: <br>
-            МАСТЕРСТВО С <br>
+            МАСТЕРСТВО С&nbsp;<br>
             <span class="glow-accent">GOOGLE AI</span>
           </h1>
 
           <div class="hero-pills-row">
             <div class="hero-pill accent-pink">⚡ 10–16 ЛЕТ (8–18 ЛЕТ)</div>
             <div class="hero-pill">🚀 10 ЗАНЯТИЙ (15 АКАД. ЧАСОВ)</div>
-            <div class="hero-pill">💻 ВАЙБ-КОДИНГ & ИГРЫ</div>
-            <div class="hero-pill">📅 СТАРТ В МАЕ 2025</div>
+            <div class="hero-pill">💻 ВАЙБ-КОДИНГ В&nbsp;ANTIGRAVITY</div>
+            <div class="hero-pill">📅 СТАРТ В&nbsp;МАЕ 2025</div>
           </div>
 
           <p class="hero-lead-text">
-            Превращаем искусственный интеллект из развлечения в мощную суперсилу: учимся точно формулировать мысли, использовать ИИ-репетитора для школы, создавать авторские арты, писать софт на обычном русском языке и защищать собственные проекты на Demo Day.
+            Превращаем искусственный интеллект из&nbsp;развлечения в&nbsp;мощную суперсилу: учимся точно мыслить, использовать ИИ-репетитора для&nbsp;школы, генерировать арты в&nbsp;Google Flow, Nano Banana и&nbsp;Omni, писать софт на&nbsp;русском языке в&nbsp;Google Antigravity и&nbsp;защищать свои проекты на&nbsp;Demo Day.
           </p>
 
           <div class="hero-cta-group">
-            <a href="https://t.me/MarinaPali" target="_blank" class="btn-pop-primary" data-tip="Написать куратору Марине Пали">
-              ЗАПИСАТЬСЯ ЧЕРЕЗ КУРАТОРА ↗
+            <a href="https://t.me/MarinaPali" target="_blank" class="btn-pop-primary" data-tip="Написать куратору в&nbsp;Telegram">
+              НАПИСАТЬ КУРАТОРУ ↗
             </a>
-            <a href="#syllabus" class="btn-pop-secondary" data-tip="Перейти к 10 занятиям">
+            <a href="#syllabus" class="btn-pop-secondary" data-tip="Перейти к&nbsp;программе">
               СМОТРЕТЬ ПРОГРАММУ ↓
             </a>
           </div>
@@ -1834,11 +1857,11 @@
           <div class="hero-stats-cards">
             <div class="stat-card-mini">
               <div class="stat-val">10 УРОКОВ</div>
-              <div class="stat-lbl">Базовый интенсив (6) + Про блок (4)</div>
+              <div class="stat-lbl">Базовый интенсив +&nbsp;Про блок</div>
             </div>
             <div class="stat-card-mini">
               <div class="stat-val">GOOGLE AI</div>
-              <div class="stat-lbl">Gemini, ImageFX, NotebookLM, Colab</div>
+              <div class="stat-lbl">Gemini, Antigravity, Flow, Omni</div>
             </div>
             <div class="stat-card-mini">
               <div class="stat-val">ИТОГ</div>
@@ -1850,8 +1873,8 @@
         <div class="hero-visual-frame">
           <div class="pop-art-art-card">
             <div class="floating-comic-chip chip-top">★ SUPERPOWER UNLOCKED</div>
-            <img src="hero_teen_ai.jpg" alt="Подросток управляет искусственным интеллектом Google AI" class="hero-art-img" data-tip="Твой персональный старт в мире ИИ!">
-            <div class="floating-comic-chip chip-bottom">100% ПРАКТИКА & ДЕЙСТВИЕ</div>
+            <img src="hero_teen_ai.jpg" alt="Подросток управляет искусственным интеллектом Google AI" class="hero-art-img" data-tip="Твой персональный старт в&nbsp;мире ИИ!">
+            <div class="floating-comic-chip chip-bottom">100% ПРАКТИКА И&nbsp;ДЕЙСТВИЕ</div>
           </div>
         </div>
       </div>
@@ -1861,10 +1884,10 @@
     <section id="about">
       <div class="container">
         <div class="section-head">
-          <span class="section-tag tag-yellow">ФОРМАТ & ПАРАМЕТРЫ ОБУЧЕНИЯ</span>
-          <h2 class="section-title">КРАТКО ПРО КУРС «AI-СТАРТ»</h2>
+          <span class="section-tag tag-yellow">ФОРМАТ И&nbsp;ПАРАМЕТРЫ</span>
+          <h2 class="section-title">КРАТКО ПРО&nbsp;КУРС «AI-СТАРТ»</h2>
           <p class="section-desc">
-            Все ключевые параметры программы: для кого создана, в каком темпе проходит и какие передовые технологии Google AI освоит подросток.
+            Все ключевые параметры обучения: для&nbsp;кого создана программа, в&nbsp;каком темпе проходят занятия и&nbsp;какие технологии освоит подросток.
           </p>
         </div>
 
@@ -1875,7 +1898,7 @@
               <div class="param-icon-box" style="background: var(--pop-pink); color: #FFF;">👥</div>
               <h3 class="param-title">Целевая аудитория</h3>
               <p class="param-text">
-                Подростки <strong>10–16 лет</strong>. При высокой мотивации принимаем ребят с 8 лет и до 18-ти. Курс идеально подходит как для новичков с нуля, так и для тех, кто уже пробовал общаться с нейросетями.
+                Подростки <strong>10–16 лет</strong> (при высокой мотивации принимаем ребят с&nbsp;8 лет и&nbsp;до&nbsp;18-ти). Подходит и&nbsp;для&nbsp;новичков с&nbsp;нуля, и&nbsp;для&nbsp;тех, кто уже пробовал общаться с&nbsp;нейросетями.
               </p>
             </div>
             <div class="param-tags-row">
@@ -1890,8 +1913,8 @@
               <div class="param-icon-box" style="background: var(--pop-blue); color: #FFF;">⏱️</div>
               <h3 class="param-title">Продолжительность</h3>
               <p class="param-text">
-                <strong>10 занятий по 1,5 часа (15 акад. часов)</strong>. <br>
-                Программа разбита на 2 логических этапа: <strong>Базовый интенсив</strong> (6 уроков) + <strong>Продвинутый блок</strong> разработки (4 урока).
+                <strong>10 занятий по&nbsp;1,5 часа (15 акад. часов)</strong>. <br>
+                Программа разбита на&nbsp;2 логических этапа: <strong>Базовый интенсив</strong> (6 уроков) +&nbsp;<strong>Продвинутый блок разработки</strong> (4 урока).
               </p>
             </div>
             <div class="param-tags-row">
@@ -1906,12 +1929,12 @@
               <div class="param-icon-box" style="background: var(--pop-green); color: #FFF;">📅</div>
               <h3 class="param-title">Удобный график</h3>
               <p class="param-text">
-                Занятия проходят <strong>онлайн 1–2 раза в неделю</strong>. Точное расписание согласуется с группой: комфортное вечернее время по будням и/или слоты в выходные. Все уроки пишутся на видео.
+                Занятия проходят <strong>онлайн 1–2 раза в&nbsp;неделю</strong>. Точное расписание согласуется с&nbsp;группой: вечернее время по&nbsp;будням и&nbsp;слоты в&nbsp;выходные. Все уроки пишутся на&nbsp;видео.
               </p>
             </div>
             <div class="param-tags-row">
-              <span class="param-tag-badge">Живой эфир</span>
-              <span class="param-tag-badge">Видеозаписи 24/7</span>
+              <span class="param-tag-badge">Живые эфиры</span>
+              <span class="param-tag-badge">Записи 24/7</span>
             </div>
           </div>
 
@@ -1921,12 +1944,12 @@
               <div class="param-icon-box" style="background: var(--pop-yellow); color: #000;">⚡</div>
               <h3 class="param-title">Стек Google AI</h3>
               <p class="param-text">
-                Передовые мировые инструменты: <strong>Google Gemini</strong>, генератор фотореализма <strong>ImageFX (Imagen 3)</strong>, второй мозг <strong>NotebookLM</strong>, облачные среды <strong>Google Colab</strong> и Workspace.
+                Топовые инструменты нового поколения: <strong>Google Gemini</strong>, среда вайб-кодинга <strong>Google Antigravity</strong>, визуальные генераторы <strong>Google Flow, Nano Banana и&nbsp;Omni</strong>, второй мозг <strong>NotebookLM</strong>.
               </p>
             </div>
             <div class="param-tags-row">
               <span class="param-tag-badge">Gemini</span>
-              <span class="param-tag-badge">ImageFX</span>
+              <span class="param-tag-badge">Antigravity</span>
               <span class="param-tag-badge">NotebookLM</span>
             </div>
           </div>
@@ -1941,7 +1964,7 @@
           <span class="section-tag tag-green">ПОШАГОВЫЙ ПЛАН ОБУЧЕНИЯ</span>
           <h2 class="section-title">ПРОГРАММА 10 ЗАНЯТИЙ КУРСА</h2>
           <p class="section-desc">
-            Кликните по любому занятию, чтобы раскрыть подробную программу: о чем урок, какие ключевые навыки сформируются и какой готовый практический результат ребенок заберет в свое портфолио.
+            Кликните по&nbsp;любому занятию, чтобы раскрыть подробности: о&nbsp;чем урок, какие навыки формируются и&nbsp;какой готовый результат ребенок заберет в&nbsp;портфолио.
           </p>
         </div>
 
@@ -1952,7 +1975,7 @@
             <!-- Module 1: Base -->
             <div class="module-block">
               <div class="module-badge-header badge-base">
-                <span>🚀</span> ЧАСТЬ 1. БАЗОВЫЙ ИНТЕНСИВ (ЗАНЯТИЯ 0–6)
+                <span>🚀</span> ЧАСТЬ 1. БАЗОВЫЙ ИНТЕНСИВ (ЗАНЯТИЯ 0–5)
               </div>
 
               <div class="lessons-accordion-list">
@@ -1962,22 +1985,22 @@
                   <button class="lesson-acc-trigger" onclick="toggleAccordion(this)">
                     <div class="lesson-acc-left">
                       <span class="lesson-num">00</span>
-                      <span class="lesson-acc-title">Погружение (дети + родители). Старт курса</span>
+                      <span class="lesson-acc-title">Погружение (дети +&nbsp;родители). Старт курса</span>
                     </div>
                     <span class="lesson-acc-arrow">›</span>
                   </button>
                   <div class="lesson-acc-content">
                     <p class="lesson-acc-desc">
-                      Вводная синхронизация, где мы знакомимся, определяем персональные цели каждого ученика и разворачиваем цифровую лабораторию. Родители видят процесс изнутри и понимают, как поддерживать интерес ребенка без давления.
+                      Вводная синхронизация: знакомимся, определяем персональные цели каждого ученика и&nbsp;настраиваем цифровую лабораторию. Родители видят процесс изнутри и&nbsp;понимают, как поддерживать интерес ребенка без&nbsp;давления.
                     </p>
                     <ul class="lesson-acc-skills">
-                      <li>Знакомство с экосистемой Google AI и безопасная настройка рабочих профилей.</li>
-                      <li>Цифровая этика: как отличать факты от галлюцинаций нейросетей и проверять данные.</li>
-                      <li>Главная парадигма: ИИ как партнер-усилитель мышления, а не шпаргалка.</li>
+                      <li>Знакомство с&nbsp;экосистемой Google AI и&nbsp;безопасная настройка профилей.</li>
+                      <li>Цифровая этика: как отличать факты от&nbsp;галлюцинаций нейросетей и&nbsp;проверять данные.</li>
+                      <li>Главный принцип: ИИ как партнер-усилитель мышления, а&nbsp;не&nbsp;шпаргалка.</li>
                     </ul>
                     <div class="lesson-acc-artifact">
                       <strong>🎯 Практический результат урока:</strong>
-                      <p>Полностью настроенный профиль Google AI, установленные инструменты и первый интерактивный диалог с Gemini.</p>
+                      <p>Настроенный рабочий профиль, инструменты и&nbsp;первый интерактивный диалог с&nbsp;Gemini.</p>
                     </div>
                   </div>
                 </div>
@@ -1987,22 +2010,22 @@
                   <button class="lesson-acc-trigger" onclick="toggleAccordion(this)">
                     <div class="lesson-acc-left">
                       <span class="lesson-num">01</span>
-                      <span class="lesson-acc-title">Промпты: основа точного мышления с Gemini</span>
+                      <span class="lesson-acc-title">Промпты: основа точного мышления с&nbsp;Gemini</span>
                     </div>
                     <span class="lesson-acc-arrow">›</span>
                   </button>
                   <div class="lesson-acc-content">
                     <p class="lesson-acc-desc">
-                      Искусство формулировать задачи так, чтобы модель выдавала гениальный результат с первого раза. Переходим от наивных вопросов к взрослому системному промптингу.
+                      Искусство формулировать задачи так, чтобы модель выдавала точный результат с&nbsp;первого раза. Переходим от&nbsp;наивных запросов к&nbsp;системному ролевому промптингу.
                     </p>
                     <ul class="lesson-acc-skills">
-                      <li>Формула идеального промпта: Роль + Контекст + Задача + Формат вывода + Ограничения.</li>
-                      <li>Методология Chain-of-Thought (пошаговое мышление модели для сложных задач).</li>
-                      <li>Few-Shot промптинг: обучение модели на наглядных примерах прямо в диалоге.</li>
+                      <li>Формула сильного промпта: Роль +&nbsp;Контекст +&nbsp;Задача +&nbsp;Формат вывода +&nbsp;Ограничения.</li>
+                      <li>Методология Chain-of-Thought (пошаговое мышление модели для&nbsp;сложных задач).</li>
+                      <li>Few-Shot промптинг: обучение модели на&nbsp;наглядных примерах прямо в&nbsp;диалоге.</li>
                     </ul>
                     <div class="lesson-acc-artifact">
                       <strong>🎯 Практический результат урока:</strong>
-                      <p>Персональная библиотека из 10 мощных промпт-шаблонов для школьных предметов и хобби.</p>
+                      <p>Персональная библиотека из&nbsp;10 промпт-шаблонов для&nbsp;школьных предметов и&nbsp;хобби.</p>
                     </div>
                   </div>
                 </div>
@@ -2012,22 +2035,22 @@
                   <button class="lesson-acc-trigger" onclick="toggleAccordion(this)">
                     <div class="lesson-acc-left">
                       <span class="lesson-num">02</span>
-                      <span class="lesson-acc-title">Ассистенты: твой персональный ИИ-помощник</span>
+                      <span class="lesson-acc-title">Персональные ассистенты в&nbsp;Gemini</span>
                     </div>
                     <span class="lesson-acc-arrow">›</span>
                   </button>
                   <div class="lesson-acc-content">
                     <p class="lesson-acc-desc">
-                      Создание кастомных ИИ-персонажей со своим характером, профессиональной базой знаний и заданным тоном общения (Tone of Voice).
+                      Создание кастомных ИИ-персонажей со&nbsp;своим характером, базой знаний и&nbsp;заданным тоном общения (Tone of Voice).
                     </p>
                     <ul class="lesson-acc-skills">
                       <li>Написание глубоких системных инструкций (System Instructions).</li>
-                      <li>Проектирование помощников: тренер по олимпиадам, сценарист для YouTube, эдвайзер по книгам.</li>
-                      <li>Управление контекстом и сохранение долговременной памяти ассистента.</li>
+                      <li>Проектирование помощников: тренер по&nbsp;олимпиадам, сценарист для&nbsp;блога, эдвайзер по&nbsp;книгам.</li>
+                      <li>Управление контекстом и&nbsp;сохранение долговременной памяти ассистента.</li>
                     </ul>
                     <div class="lesson-acc-artifact">
                       <strong>🎯 Практический результат урока:</strong>
-                      <p>Собственный настроенный ИИ-помощник в Gemini с уникальным характером и экспертностью.</p>
+                      <p>Собственный настроенный ИИ-помощник в&nbsp;Gemini с&nbsp;уникальным характером и&nbsp;экспертностью.</p>
                     </div>
                   </div>
                 </div>
@@ -2037,22 +2060,22 @@
                   <button class="lesson-acc-trigger" onclick="toggleAccordion(this)">
                     <div class="lesson-acc-left">
                       <span class="lesson-num">03</span>
-                      <span class="lesson-acc-title">Фотография: визуальный взрыв в Google ImageFX</span>
+                      <span class="lesson-acc-title">Визуальный взрыв: Google Flow, Nano Banana и&nbsp;Omni</span>
                     </div>
                     <span class="lesson-acc-arrow">›</span>
                   </button>
                   <div class="lesson-acc-content">
                     <p class="lesson-acc-desc">
-                      Генерация высокохудожественных концепт-артов, стикеров и фотореалистичных кадров в новейшем инструменте Google ImageFX (модель Imagen 3).
+                      Генерация высокохудожественных концепт-артов, стикеров и&nbsp;визуалов в&nbsp;новом стеке: Google Flow, Nano Banana и&nbsp;Omni.
                     </p>
                     <ul class="lesson-acc-skills">
-                      <li>Работа с экспрессивными чипами (Expressive Chips) для моментальной смены стиля.</li>
-                      <li>Режиссура кадра: оптика, кинематографичный свет, композиция, ракурс и сид (seed).</li>
-                      <li>Создание узнаваемых персонажей и мерча для своего будущего проекта.</li>
+                      <li>Работа со&nbsp;стилями, кинематографичным светом, оптикой и&nbsp;ракурсами.</li>
+                      <li>Генерация персонажей в&nbsp;единой стилистике с&nbsp;сохранением внешности.</li>
+                      <li>Создание узнаваемого визуального ряда и&nbsp;мерча для&nbsp;будущего IT-проекта.</li>
                     </ul>
                     <div class="lesson-acc-artifact">
                       <strong>🎯 Практический результат урока:</strong>
-                      <p>Портфолио из 5 авторских артов высочайшего разрешения в единой визуальной концепции.</p>
+                      <p>Портфолио из&nbsp;5 авторских артов высокого разрешения в&nbsp;единой концепции.</p>
                     </div>
                   </div>
                 </div>
@@ -2062,22 +2085,22 @@
                   <button class="lesson-acc-trigger" onclick="toggleAccordion(this)">
                     <div class="lesson-acc-left">
                       <span class="lesson-num">04</span>
-                      <span class="lesson-acc-title">Для школы: ИИ-репетитор по сложным предметам</span>
+                      <span class="lesson-acc-title">Для школы: ИИ-репетитор по&nbsp;сложным предметам</span>
                     </div>
                     <span class="lesson-acc-arrow">›</span>
                   </button>
                   <div class="lesson-acc-content">
                     <p class="lesson-acc-desc">
-                      Превращаем Gemini в терпеливого персонального тьютора 24/7. Как за 15 минут разобрать любую тему по алгебре, физике, химии или истории без зубрежки.
+                      Превращаем Gemini в&nbsp;терпеливого персонального тьютора 24/7. Как за&nbsp;15 минут разобрать сложную тему по&nbsp;алгебре, физике или химии без&nbsp;зубрежки.
                     </p>
                     <ul class="lesson-acc-skills">
-                      <li>Метод Сократа: заставляем ИИ задавать наводящие вопросы, чтобы ребенок дошел до сути сам.</li>
-                      <li>Генерация интерактивных тестов с разбором ошибок перед контрольными.</li>
-                      <li>Практика свободного разговорного английского через аудио-режим Gemini.</li>
+                      <li>Метод Сократа: учим нейросеть задавать наводящие вопросы, чтобы ребенок понимал суть сам.</li>
+                      <li>Генерация интерактивных тестов с&nbsp;разбором ошибок перед контрольными.</li>
+                      <li>Практика живого разговорного английского через аудио-режим Gemini.</li>
                     </ul>
                     <div class="lesson-acc-artifact">
                       <strong>🎯 Практический результат урока:</strong>
-                      <p>Интерактивный учебный тренажер по самому трудному для ребенка школьному предмету.</p>
+                      <p>Интерактивный учебный тренажер по&nbsp;самому сложному предмету подростка.</p>
                     </div>
                   </div>
                 </div>
@@ -2087,47 +2110,22 @@
                   <button class="lesson-acc-trigger" onclick="toggleAccordion(this)">
                     <div class="lesson-acc-left">
                       <span class="lesson-num">05</span>
-                      <span class="lesson-acc-title">Видео и креативы: оживляем реальность</span>
+                      <span class="lesson-acc-title">NotebookLM: твой второй мозг и&nbsp;аудио-подкасты</span>
                     </div>
                     <span class="lesson-acc-arrow">›</span>
                   </button>
                   <div class="lesson-acc-content">
                     <p class="lesson-acc-desc">
-                      Создание вирусных видео-креативов для YouTube Shorts и Reels: от генерации сценария и озвучки до оживления картинок нейросетями.
+                      Освоение главного исследовательского инструмента Google. Загружаем книги, конспекты и&nbsp;статьи, мгновенно получаем ответы с&nbsp;точными цитатами и&nbsp;генерируем аудио-подкасты Deep Dive.
                     </p>
                     <ul class="lesson-acc-skills">
-                      <li>Сценарное мастерство: структура хука (Hook), удержание внимания и кульминация.</li>
-                      <li>Синтез естественной многоголосной речи и звуковых эффектов.</li>
-                      <li>Анимация статичных артов и сборка динамичного видеоряда.</li>
+                      <li>Построение персональной базы знаний (Second Brain) из&nbsp;школьных заметок.</li>
+                      <li>Генерация диалогового аудио-подкаста на&nbsp;основе любых учебных материалов.</li>
+                      <li>Мгновенный факт-чекинг: поиск первоисточников без&nbsp;галлюцинаций.</li>
                     </ul>
                     <div class="lesson-acc-artifact">
                       <strong>🎯 Практический результат урока:</strong>
-                      <p>Готовый динамичный ролик (Shorts/Reels) со сценарием, ИИ-озвучкой и видеоэффектами.</p>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Lesson 6 -->
-                <div class="lesson-acc-item">
-                  <button class="lesson-acc-trigger" onclick="toggleAccordion(this)">
-                    <div class="lesson-acc-left">
-                      <span class="lesson-num">06</span>
-                      <span class="lesson-acc-title">NotebookLM: твой второй мозг и аудио-подкасты</span>
-                    </div>
-                    <span class="lesson-acc-arrow">›</span>
-                  </button>
-                  <div class="lesson-acc-content">
-                    <p class="lesson-acc-desc">
-                      Освоение главного исследовательского сервиса Google. Загружаем учебники, конспекты и статьи, мгновенно находим ответы со ссылками на цитаты и генерируем подкасты Deep Dive.
-                    </p>
-                    <ul class="lesson-acc-skills">
-                      <li>Построение персональной базы знаний (Second Brain) из школьных материалов.</li>
-                      <li>Генерация полноценного диалогового аудио-подкаста на основе любых заметок.</li>
-                      <li>Мгновенный факт-чекинг: поиск первоисточников без риска галлюцинаций.</li>
-                    </ul>
-                    <div class="lesson-acc-artifact">
-                      <strong>🎯 Практический результат урока:</strong>
-                      <p>Персональный цифровой блокнот NotebookLM с аудио-подкастом по выбранной теме.</p>
+                      <p>Цифровой блокнот NotebookLM с&nbsp;авторским аудио-подкастом по&nbsp;выбранной теме.</p>
                     </div>
                   </div>
                 </div>
@@ -2138,32 +2136,57 @@
             <!-- Module 2: Pro -->
             <div class="module-block">
               <div class="module-badge-header badge-pro">
-                <span>⚡</span> ЧАСТЬ 2. ПРОДВИНУТЫЙ БЛОК (ЗАНЯТИЯ 7–10)
+                <span>⚡</span> ЧАСТЬ 2. ПРОДВИНУТЫЙ БЛОК (ЗАНЯТИЯ 6–9)
               </div>
 
               <div class="lessons-accordion-list">
                 
-                <!-- Lesson 7 -->
+                <!-- Lesson 6 -->
                 <div class="lesson-acc-item">
                   <button class="lesson-acc-trigger" onclick="toggleAccordion(this)">
                     <div class="lesson-acc-left">
-                      <span class="lesson-num num-pro">07</span>
-                      <span class="lesson-acc-title">Документы и презентации: автоматизация 2.0</span>
+                      <span class="lesson-num num-pro">06</span>
+                      <span class="lesson-acc-title">Автоматизация и&nbsp;структура: работа со&nbsp;смыслами</span>
                     </div>
                     <span class="lesson-acc-arrow">›</span>
                   </button>
                   <div class="lesson-acc-content">
                     <p class="lesson-acc-desc">
-                      Интеграция Google Workspace (Docs, Sheets, Slides) с искусственным интеллектом. Автоматизация рутинных задач, анализ данных и быстрая упаковка идей.
+                      Систематизация проектных идей, аналитика и&nbsp;быстрая упаковка смыслов с&nbsp;помощью Gemini. Автоматизируем подготовку проектных материалов и&nbsp;презентаций.
                     </p>
                     <ul class="lesson-acc-skills">
-                      <li>Генерация структуры презентаций и питч-деков за 3 минуты.</li>
-                      <li>Умная аналитика и формулы в Google Таблицах с помощью Gemini.</li>
-                      <li>Создание стильных проектных отчетов агентского уровня.</li>
+                      <li>Генерация структуры питч-деков и&nbsp;презентаций за&nbsp;несколько минут.</li>
+                      <li>Анализ и&nbsp;структурирование табличных данных с&nbsp;помощью Gemini.</li>
+                      <li>Создание сильных проектных описаний агентского уровня.</li>
                     </ul>
                     <div class="lesson-acc-artifact">
                       <strong>🎯 Практический результат урока:</strong>
-                      <p>Готовая дизайнерская презентация своего проекта на 10 слайдов в Google Slides.</p>
+                      <p>Готовая дизайнерская презентация идеи своего проекта на&nbsp;10 слайдов.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Lesson 7 -->
+                <div class="lesson-acc-item">
+                  <button class="lesson-acc-trigger" onclick="toggleAccordion(this)">
+                    <div class="lesson-acc-left">
+                      <span class="lesson-num num-pro">07</span>
+                      <span class="lesson-acc-title">Основы разработки: вайб-кодинг в&nbsp;Antigravity</span>
+                    </div>
+                    <span class="lesson-acc-arrow">›</span>
+                  </button>
+                  <div class="lesson-acc-content">
+                    <p class="lesson-acc-desc">
+                      Вайб-кодинг — это создание работающего софта на&nbsp;обычном русском языке без&nbsp;заучивания синтаксиса. Учимся ставить ТЗ нейросети в&nbsp;Google Antigravity как опытный Team Lead.
+                    </p>
+                    <ul class="lesson-acc-skills">
+                      <li>Основы веб-интерфейсов (структура, интерактивность, логика).</li>
+                      <li>Работа в&nbsp;продвинутой среде Google Antigravity.</li>
+                      <li>Поиск и&nbsp;исправление ошибок (debugging) через диалог с&nbsp;нейросетью.</li>
+                    </ul>
+                    <div class="lesson-acc-artifact">
+                      <strong>🎯 Практический результат урока:</strong>
+                      <p>Первая работающая интерактивная веб-страница с&nbsp;кнопками, анимацией и&nbsp;логикой.</p>
                     </div>
                   </div>
                 </div>
@@ -2173,22 +2196,22 @@
                   <button class="lesson-acc-trigger" onclick="toggleAccordion(this)">
                     <div class="lesson-acc-left">
                       <span class="lesson-num num-pro">08</span>
-                      <span class="lesson-acc-title">Основы разработки: вайб-кодинг с ИИ-напарником</span>
+                      <span class="lesson-acc-title">Финальный проект: сборка веб-приложения или игры</span>
                     </div>
                     <span class="lesson-acc-arrow">›</span>
                   </button>
                   <div class="lesson-acc-content">
                     <p class="lesson-acc-desc">
-                      Вайб-кодинг — это современный метод создания программ на обычном русском языке без заучивания синтаксиса. Учимся ставить ТЗ нейросети как опытный Team Lead.
+                      Создание главного IT-продукта: от&nbsp;концепции до&nbsp;запуска в&nbsp;интернете. Подросток выбирает сам: веб-игра, полезный сервис-калькулятор, интерактивный квиз или бот.
                     </p>
                     <ul class="lesson-acc-skills">
-                      <li>Основы веб-интерфейсов (структура, интерактивность, логика).</li>
-                      <li>Работа в современных облачных средах разработки (Google Colab / Replit / Antigravity).</li>
-                      <li>Поиск и исправление ошибок (debugging) через живой диалог с ИИ.</li>
+                      <li>Сборка компонентов приложения воедино и&nbsp;оформление стильного интерфейса.</li>
+                      <li>Подключение интерактивной логики и&nbsp;ИИ-функций.</li>
+                      <li>Публикация (деплой) в&nbsp;интернет с&nbsp;живой публичной ссылкой для&nbsp;друзей и&nbsp;родителей.</li>
                     </ul>
                     <div class="lesson-acc-artifact">
                       <strong>🎯 Практический результат урока:</strong>
-                      <p>Первая работающая интерактивная веб-страница с кнопками, анимацией и логикой.</p>
+                      <p>Живой сайт, сервис или игра с&nbsp;публичным адресом в&nbsp;интернете.</p>
                     </div>
                   </div>
                 </div>
@@ -2198,47 +2221,22 @@
                   <button class="lesson-acc-trigger" onclick="toggleAccordion(this)">
                     <div class="lesson-acc-left">
                       <span class="lesson-num num-pro">09</span>
-                      <span class="lesson-acc-title">Финальный проект: сборка веб-приложения или игры</span>
+                      <span class="lesson-acc-title">Предпринимательство: презентация и&nbsp;Demo Day</span>
                     </div>
                     <span class="lesson-acc-arrow">›</span>
                   </button>
                   <div class="lesson-acc-content">
                     <p class="lesson-acc-desc">
-                      Создание главного продукта: от концепции до запуска в интернете. Подросток может выбрать: интерактивная веб-игра, полезный калькулятор, квиз или Telegram-бот.
+                      Торжественный выпускной день! Учимся публично выступать, уверенно защищать свой IT-продукт перед родителями и&nbsp;экспертами и&nbsp;отвечать на&nbsp;вопросы.
                     </p>
                     <ul class="lesson-acc-skills">
-                      <li>Сборка компонентов приложения воедино и оформление интерфейса.</li>
-                      <li>Подключение логики и ИИ-функций к своему проекту.</li>
-                      <li>Бесплатная публикация (деплой) в интернет с публичной ссылкой для друзей.</li>
+                      <li>Искусство питчинга: как за&nbsp;3 минуты влюбить аудиторию в&nbsp;свой продукт.</li>
+                      <li>Продуктовое мышление: как находить первых пользователей и&nbsp;развивать проект.</li>
+                      <li>Обратная связь и&nbsp;рекомендации от&nbsp;Михаила Пузырёва и&nbsp;приглашенных экспертов.</li>
                     </ul>
                     <div class="lesson-acc-artifact">
                       <strong>🎯 Практический результат урока:</strong>
-                      <p>Живой работающий сайт, сервис или игра, доступные по ссылке в интернете.</p>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Lesson 10 -->
-                <div class="lesson-acc-item">
-                  <button class="lesson-acc-trigger" onclick="toggleAccordion(this)">
-                    <div class="lesson-acc-left">
-                      <span class="lesson-num num-pro">10</span>
-                      <span class="lesson-acc-title">Предпринимательство: презентация и Demo Day</span>
-                    </div>
-                    <span class="lesson-acc-arrow">›</span>
-                  </button>
-                  <div class="lesson-acc-content">
-                    <p class="lesson-acc-desc">
-                      Торжественный выпускной день! Учимся публично выступать, уверенно рассказывать о своем IT-продукте перед родителями и экспертами и отвечать на вопросы.
-                    </p>
-                    <ul class="lesson-acc-skills">
-                      <li>Искусство питчинга: как за 3 минуты влюбить аудиторию в свой проект.</li>
-                      <li>Продуктовое мышление: как монетизировать свои навыки и находить первых пользователей.</li>
-                      <li>Обратная связь и рекомендации от Михаила Пузырёва и приглашенных менторов.</li>
-                    </ul>
-                    <div class="lesson-acc-artifact">
-                      <strong>🎯 Практический результат урока:</strong>
-                      <p>Успешная защита проекта на Demo Day, именной электронный сертификат и реальный IT-кейс.</p>
+                      <p>Успешная защита на&nbsp;Demo Day, именной электронный сертификат и&nbsp;первый кейс в&nbsp;портфолио.</p>
                     </div>
                   </div>
                 </div>
@@ -2254,17 +2252,17 @@
               <img src="vibe_coding_teen.jpg" alt="Подросток создает IT-проект в режиме вайб-кодинга" class="syllabus-art-img">
               <div class="syllabus-art-caption">ОТ ИДЕИ ДО СОБСТВЕННОГО СОФТА</div>
               <p class="syllabus-art-desc">
-                На уроках вайб-кодинга подростки создают не скучные абстрактные упражнения, а настоящие веб-приложения и игры, которыми можно делиться с друзьями.
+                На&nbsp;уроках вайб-кодинга подростки создают не&nbsp;скучные абстрактные упражнения, а&nbsp;настоящие веб-приложения и&nbsp;игры, которыми можно делиться с&nbsp;друзьями.
               </p>
             </div>
 
             <div class="syllabus-cta-card">
               <h4>ХОТИТЕ УЗНАТЬ ПОДРОБНЕЕ?</h4>
               <p>
-                Куратор программы Марина Пали ответит на вопросы по расписанию групп, уровню подготовки ребенка и бронированию места:
+                Куратор программы Марина Пали ответит на&nbsp;вопросы по&nbsp;расписанию групп, уровню подготовки ребенка и&nbsp;бронированию места:
               </p>
               <a href="https://t.me/MarinaPali" target="_blank" class="btn-pop-primary" style="width: 100%; justify-content: center; font-size: 0.95rem; padding: 12px;">
-                СПРОСИТЬ В ТЕЛЕГРАМ ↗
+                НАПИСАТЬ КУРАТОРУ ↗
               </a>
             </div>
           </div>
@@ -2277,10 +2275,10 @@
     <section id="author" class="speaker-section">
       <div class="container">
         <div class="section-head">
-          <span class="section-tag tag-blue">АВТОР & ВЕДУЩИЙ ПРОГРАММЫ</span>
+          <span class="section-tag tag-blue">АВТОР И&nbsp;ВЕДУЩИЙ ПРОГРАММЫ</span>
           <h2 class="section-title">КТО ВЕДЕТ КУРС</h2>
           <p class="section-desc">
-            Практикующий предприниматель, ментор ведущих вузов страны и эксперт по прикладным нейросетям.
+            Практикующий предприниматель, ментор ведущих вузов страны и&nbsp;эксперт по&nbsp;прикладным нейросетям.
           </p>
         </div>
 
@@ -2289,7 +2287,7 @@
           <div class="speaker-portrait-card">
             <div class="speaker-photo-wrap">
               <img src="mikhail_photo.jpg" alt="Михаил Пузырёв — преподаватель и основатель нейро-комьюнити" class="speaker-photo">
-              <div class="speaker-role-floating">АВТОР & ПРЕПОДАВАТЕЛЬ</div>
+              <div class="speaker-role-floating">АВТОР И&nbsp;ПРЕПОДАВАТЕЛЬ</div>
             </div>
             <div class="speaker-meta">
               <h3>Михаил Пузырёв</h3>
@@ -2300,9 +2298,9 @@
           <!-- Right: Mission & Milestones -->
           <div class="speaker-info-col">
             <div class="speaker-mission-box">
-              <div class="quote-tag">ПОЧЕМУ Я СОЗДАЮ КУРСЫ ДЛЯ ПОДРОСТКОВ?</div>
+              <div class="quote-tag">ПОЧЕМУ Я СОЗДАЮ КУРСЫ ДЛЯ&nbsp;ПОДРОСТКОВ?</div>
               <div class="quote-body">
-                «Верю, что искусственный интеллект — это суперсила, которая не заменяет человека, а делает его в 10 раз эффективнее. Моя цель — научить ребят использовать нейросети не просто для игр и списывания, а для созидания, запуска смелых проектов, развития лидерства и продуктивности.»
+                «Верю, что искусственный интеллект — это суперсила, которая не&nbsp;заменяет человека, а&nbsp;делает его в&nbsp;10 раз эффективнее. Моя цель — научить ребят использовать нейросети не&nbsp;просто для&nbsp;игр и&nbsp;списывания, а&nbsp;для&nbsp;созидания, запуска смелых проектов, развития лидерства и&nbsp;продуктивности.»
               </div>
             </div>
 
@@ -2310,21 +2308,21 @@
               <div class="milestone-item">
                 <div class="milestone-num">01</div>
                 <div class="milestone-content">
-                  <strong>Практик индустрии и предприниматель:</strong> основатель digital-агентства Sage, основатель стартап-кафе №1 (<a href="https://startupcafe.one" target="_blank">startupcafe.one</a>), партнер студии <a href="https://uncrn.ru" target="_blank">UNCRN</a>.
+                  <strong>Практик индустрии и&nbsp;предприниматель:</strong> основатель digital-агентства Sage, основатель стартап-кафе №1 (<a href="https://startupcafe.one" target="_blank">startupcafe.one</a>), партнер студии <a href="https://uncrn.ru" target="_blank">UNCRN</a>.
                 </div>
               </div>
 
               <div class="milestone-item">
                 <div class="milestone-num">02</div>
                 <div class="milestone-content">
-                  <strong>Федеральный ментор и трекер:</strong> наставник стартапов и спикер в НИУ ВШЭ, Школе стартапов Сколково, РУДН, НТИ, Мой Бизнес, СБЕР, Нетологии и Академии Росатом.
+                  <strong>Федеральный ментор и&nbsp;трекер:</strong> наставник стартапов и&nbsp;спикер в&nbsp;НИУ ВШЭ, Школе стартапов Сколково, РУДН, НТИ, Мой Бизнес, СБЕР, Нетологии и&nbsp;Академии Росатом.
                 </div>
               </div>
 
               <div class="milestone-item">
                 <div class="milestone-num">03</div>
                 <div class="milestone-content">
-                  <strong>Венчурный эксперт и AI-архитектор:</strong> 15+ лет в IT-продуктах и инвестициях. Разработчик прикладных ИИ-агентов, обучающий подростков взрослому инженерному мышлению на естественном языке.
+                  <strong>Венчурный эксперт и&nbsp;AI-архитектор:</strong> 15+ лет в&nbsp;IT-продуктах и&nbsp;инвестициях. Разработчик прикладных ИИ-агентов, обучающий подростков взрослому инженерному мышлению на&nbsp;естественном языке.
                 </div>
               </div>
             </div>
@@ -2333,136 +2331,145 @@
       </div>
     </section>
 
-    <!-- SECTION 5: "С КЕМ РАБОТАЮ" / PARTNERS -->
+    <!-- SECTION 5: "С КЕМ Я РАБОТАЮ" / INFINITE LOGOS CAROUSEL -->
     <section id="trust" class="partners-section">
       <div class="container">
         <div class="section-head">
-          <span class="section-tag tag-cyan">ДОВЕРИЕ И РЕПУТАЦИЯ</span>
-          <h2 class="section-title">С КЕМ Я РАБОТАЮ</h2>
+          <span class="section-tag tag-cyan">ДОВЕРИЕ И&nbsp;РЕПУТАЦИЯ</span>
+          <h2 class="section-title">С&nbsp;КЕМ Я&nbsp;РАБОТАЮ</h2>
           <p class="section-desc">
-            Корпорации, ведущие университеты, стартап-акселераторы и образовательные платформы, где Михаил Пузырёв выступает ментором, трекером и лектором:
+            Корпорации, ведущие университеты, стартап-акселераторы и&nbsp;образовательные платформы, где Михаил Пузырёв выступает ментором, трекером и&nbsp;лектором:
           </p>
         </div>
+      </div>
 
-        <div class="logos-grid-pop">
-          <div class="logo-card-item" title="СБЕР"><img src="../../img/logos/logo_02_СБЕР.png" alt="СБЕР" loading="lazy"></div>
-          <div class="logo-card-item" title="НИУ ВШЭ Бизнес инкубатор"><img src="../../img/logos/logo_04_ВШЭ_Бизнес_инкубарор_HSE_inc.png" alt="НИУ ВШЭ" loading="lazy"></div>
-          <div class="logo-card-item" title="Школа стартапов Сколково"><img src="../../img/logos/logo_06_Школа_стартапов_Сколково.png" alt="Сколково" loading="lazy"></div>
-          <div class="logo-card-item" title="Нетология"><img src="../../img/logos/logo_14_Нетология.png" alt="Нетология" loading="lazy"></div>
-          <div class="logo-card-item" title="GeekBrains"><img src="../../img/logos/logo_15_GeekBrains.png" alt="GeekBrains" loading="lazy"></div>
-          <div class="logo-card-item" title="РУДН"><img src="../../img/logos/logo_09_РУДН.png" alt="РУДН" loading="lazy"></div>
-          <div class="logo-card-item" title="Мой бизнес"><img src="../../img/logos/logo_10_Мой_бизнес.png" alt="Мой бизнес" loading="lazy"></div>
-          <div class="logo-card-item" title="Синергия"><img src="../../img/logos/logo_18_Синергия.png" alt="Синергия" loading="lazy"></div>
-          <div class="logo-card-item" title="Архипелаг 2022"><img src="../../img/logos/logo_05_Архипелаг_2022.png" alt="Архипелаг 2022" loading="lazy"></div>
-          <div class="logo-card-item" title="UNCRN Studio"><img src="../../img/logos/logo_28_partner_28.svg" alt="UNCRN" loading="lazy"></div>
-          <div class="logo-card-item" title="СОБА Бизнес-ангелы"><img src="../../img/logos/logo_20_Союз_организаций_бизнес_ангело.png" alt="СОБА" loading="lazy"></div>
-          <div class="logo-card-item" title="GetCourse"><img src="../../img/logos/logo_22_GetCourse.png" alt="GetCourse" loading="lazy"></div>
+      <!-- Infinite Marquee Track (Full Width) -->
+      <div class="infinite-carousel-wrapper" id="logos-carousel">
+        <div class="infinite-track" id="logos-track">
+          <div class="logo-marquee-card" title="СБЕР"><img src="../../img/logos/logo_02_СБЕР.png" alt="СБЕР" loading="lazy"></div>
+          <div class="logo-marquee-card" title="НИУ ВШЭ Бизнес инкубатор"><img src="../../img/logos/logo_04_ВШЭ_Бизнес_инкубарор_HSE_inc.png" alt="НИУ ВШЭ" loading="lazy"></div>
+          <div class="logo-marquee-card" title="Школа стартапов Сколково"><img src="../../img/logos/logo_06_Школа_стартапов_Сколково.png" alt="Сколково" loading="lazy"></div>
+          <div class="logo-marquee-card" title="Нетология"><img src="../../img/logos/logo_14_Нетология.png" alt="Нетология" loading="lazy"></div>
+          <div class="logo-marquee-card" title="GeekBrains"><img src="../../img/logos/logo_15_GeekBrains.png" alt="GeekBrains" loading="lazy"></div>
+          <div class="logo-marquee-card" title="РУДН"><img src="../../img/logos/logo_09_РУДН.png" alt="РУДН" loading="lazy"></div>
+          <div class="logo-marquee-card" title="Мой бизнес"><img src="../../img/logos/logo_10_Мой_бизнес.png" alt="Мой бизнес" loading="lazy"></div>
+          <div class="logo-marquee-card" title="Синергия"><img src="../../img/logos/logo_18_Синергия.png" alt="Синергия" loading="lazy"></div>
+          <div class="logo-marquee-card" title="Архипелаг 2022"><img src="../../img/logos/logo_05_Архипелаг_2022.png" alt="Архипелаг 2022" loading="lazy"></div>
+          <div class="logo-marquee-card" title="UNCRN Studio"><img src="../../img/logos/logo_28_partner_28.svg" alt="UNCRN" loading="lazy"></div>
+          <div class="logo-marquee-card" title="СОБА Бизнес-ангелы"><img src="../../img/logos/logo_20_Союз_организаций_бизнес_ангело.png" alt="СОБА" loading="lazy"></div>
+          <div class="logo-marquee-card" title="GetCourse"><img src="../../img/logos/logo_22_GetCourse.png" alt="GetCourse" loading="lazy"></div>
         </div>
       </div>
     </section>
 
-    <!-- SECTION 6: "ДИПЛОМЫ & БЛАГОДАРНОСТИ" -->
+    <!-- SECTION 6: "ДИПЛОМЫ И БЛАГОДАРНОСТИ" / INFINITE DIPLOMAS CAROUSEL -->
     <section class="diplomas-section">
       <div class="container">
         <div class="section-head">
-          <span class="section-tag tag-yellow">КВАЛИФИКАЦИЯ И ПРИЗНАНИЕ</span>
-          <h2 class="section-title">ДИПЛОМЫ И БЛАГОДАРНОСТИ</h2>
+          <span class="section-tag tag-yellow">КВАЛИФИКАЦИЯ И&nbsp;ПРИЗНАНИЕ</span>
+          <h2 class="section-title">ДИПЛОМЫ И&nbsp;БЛАГОДАРНОСТИ</h2>
           <p class="section-desc">
-            Официальные дипломы, благодарственные письма государственных университетов, корпоративных академий и международных бизнес-школ. Нажмите на любой документ, чтобы рассмотреть в полном размере.
+            Официальные дипломы, благодарственные письма государственных университетов, корпоративных академий и&nbsp;международных бизнес-школ. Нажмите на&nbsp;любой документ для&nbsp;увеличения.
           </p>
         </div>
+      </div>
 
-        <div class="certs-grid-pop">
+      <!-- Infinite Marquee Track for Diplomas -->
+      <div class="infinite-carousel-wrapper" id="certs-carousel">
+        <div class="infinite-track" id="certs-track">
           <!-- Cert 1 -->
-          <div class="cert-card-interactive" onclick="openLightbox('../../img/certificates/hse_thanks.png', 'Благодарственное письмо НИУ ВШЭ Михаилу Пузырёву за руководство акселератором')">
-            <div class="cert-img-container">
+          <div class="cert-slide-card" onclick="openLightbox('../../img/certificates/hse_thanks.png', 'Благодарственное письмо НИУ ВШЭ Михаилу Пузырёву за руководство акселератором')">
+            <div class="cert-img-box">
               <img src="../../img/certificates/hse_thanks.png" alt="НИУ ВШЭ — Акселератор ИИ" loading="lazy">
-              <span class="cert-zoom-pill">🔍 УВЕЛИЧИТЬ</span>
+              <span class="cert-zoom-tag">🔍 УВЕЛИЧИТЬ</span>
             </div>
-            <div class="cert-card-caption">НИУ ВШЭ — Акселератор ИИ</div>
+            <div class="cert-slide-caption">НИУ ВШЭ — Акселератор ИИ</div>
           </div>
 
           <!-- Cert 2 -->
-          <div class="cert-card-interactive" onclick="openLightbox('../../img/certificates/rosatom_thanks.png', 'Благодарность Корпоративной Академии Росатом Михаилу Пузырёву за проведение тренингов')">
-            <div class="cert-img-container">
+          <div class="cert-slide-card" onclick="openLightbox('../../img/certificates/rosatom_thanks.png', 'Благодарность Корпоративной Академии Росатом Михаилу Пузырёву за проведение тренингов')">
+            <div class="cert-img-box">
               <img src="../../img/certificates/rosatom_thanks.png" alt="ГК РОСАТОМ — Тренинги" loading="lazy">
-              <span class="cert-zoom-pill">🔍 УВЕЛИЧИТЬ</span>
+              <span class="cert-zoom-tag">🔍 УВЕЛИЧИТЬ</span>
             </div>
-            <div class="cert-card-caption">ГК РОСАТОМ — Акселерация</div>
+            <div class="cert-slide-caption">ГК РОСАТОМ — Акселерация</div>
           </div>
 
           <!-- Cert 3 -->
-          <div class="cert-card-interactive" onclick="openLightbox('../../img/certificates/neti_thanks.png', 'Благодарность НГТУ НЭТИ Михаилу Пузырёву за развитие стартап-программ')">
-            <div class="cert-img-container">
+          <div class="cert-slide-card" onclick="openLightbox('../../img/certificates/neti_thanks.png', 'Благодарность НГТУ НЭТИ Михаилу Пузырёву за развитие стартап-программ')">
+            <div class="cert-img-box">
               <img src="../../img/certificates/neti_thanks.png" alt="НГТУ НЭТИ — Экспертиза" loading="lazy">
-              <span class="cert-zoom-pill">🔍 УВЕЛИЧИТЬ</span>
+              <span class="cert-zoom-tag">🔍 УВЕЛИЧИТЬ</span>
             </div>
-            <div class="cert-card-caption">НГТУ НЭТИ — Трекинг</div>
+            <div class="cert-slide-caption">НГТУ НЭТИ — Трекинг</div>
           </div>
 
           <!-- Cert 4 -->
-          <div class="cert-card-interactive" onclick="openLightbox('../../img/certificates/cert_1.png', 'Диплом British Business Academy — Managing Innovation (Михаил Пузырёв)')">
-            <div class="cert-img-container">
+          <div class="cert-slide-card" onclick="openLightbox('../../img/certificates/cert_1.png', 'Диплом British Business Academy — Managing Innovation (Михаил Пузырёв)')">
+            <div class="cert-img-box">
               <img src="../../img/certificates/cert_1.png" alt="British Business Academy" loading="lazy">
-              <span class="cert-zoom-pill">🔍 УВЕЛИЧИТЬ</span>
+              <span class="cert-zoom-tag">🔍 УВЕЛИЧИТЬ</span>
             </div>
-            <div class="cert-card-caption">British Business Academy — Innovation</div>
+            <div class="cert-slide-caption">British Business Academy — Innovation</div>
           </div>
 
           <!-- Cert 5 -->
-          <div class="cert-card-interactive" onclick="openLightbox('../../img/certificates/cert_2.png', 'Сертификат эксперта венчурного рынка — Ассоциация Большая Медведица')">
-            <div class="cert-img-container">
+          <div class="cert-slide-card" onclick="openLightbox('../../img/certificates/cert_2.png', 'Сертификат эксперта венчурного рынка — Ассоциация Большая Медведица')">
+            <div class="cert-img-box">
               <img src="../../img/certificates/cert_2.png" alt="Венчурная экспертиза" loading="lazy">
-              <span class="cert-zoom-pill">🔍 УВЕЛИЧИТЬ</span>
+              <span class="cert-zoom-tag">🔍 УВЕЛИЧИТЬ</span>
             </div>
-            <div class="cert-card-caption">Ассоциация Большая Медведица</div>
+            <div class="cert-slide-caption">Ассоциация Большая Медведица</div>
           </div>
 
           <!-- Cert 6 -->
-          <div class="cert-card-interactive" onclick="openLightbox('../../img/certificates/cert_3.png', 'Сертификат трекера стартапов и акселерационных программ')">
-            <div class="cert-img-container">
+          <div class="cert-slide-card" onclick="openLightbox('../../img/certificates/cert_3.png', 'Сертификат трекера стартапов и акселерационных программ')">
+            <div class="cert-img-box">
               <img src="../../img/certificates/cert_3.png" alt="Экспертиза стартапов" loading="lazy">
-              <span class="cert-zoom-pill">🔍 УВЕЛИЧИТЬ</span>
+              <span class="cert-zoom-tag">🔍 УВЕЛИЧИТЬ</span>
             </div>
-            <div class="cert-card-caption">Диплом — Трекер стартапов</div>
+            <div class="cert-slide-caption">Диплом — Трекер стартапов</div>
           </div>
 
           <!-- Cert 7 -->
-          <div class="cert-card-interactive" onclick="openLightbox('../../img/certificates/cert_5.png', 'Диплом о высшем профессиональном образовании в IT и инновациях')">
-            <div class="cert-img-container">
+          <div class="cert-slide-card" onclick="openLightbox('../../img/certificates/cert_5.png', 'Диплом о высшем профессиональном образовании в IT и инновациях')">
+            <div class="cert-img-box">
               <img src="../../img/certificates/cert_5.png" alt="Высшее образование IT" loading="lazy">
-              <span class="cert-zoom-pill">🔍 УВЕЛИЧИТЬ</span>
+              <span class="cert-zoom-tag">🔍 УВЕЛИЧИТЬ</span>
             </div>
-            <div class="cert-card-caption">Высшее образование в IT</div>
+            <div class="cert-slide-caption">Высшее образование в&nbsp;IT</div>
           </div>
 
           <!-- Cert 8 -->
-          <div class="cert-card-interactive" onclick="openLightbox('../../img/certificates/cert_6.jpg', 'Сертификат бизнес-наставника и эксперта по AI-трансформации')">
-            <div class="cert-img-container">
+          <div class="cert-slide-card" onclick="openLightbox('../../img/certificates/cert_6.jpg', 'Сертификат бизнес-наставника и эксперта по AI-трансформации')">
+            <div class="cert-img-box">
               <img src="../../img/certificates/cert_6.jpg" alt="Бизнес-наставник ИИ" loading="lazy">
-              <span class="cert-zoom-pill">🔍 УВЕЛИЧИТЬ</span>
+              <span class="cert-zoom-tag">🔍 УВЕЛИЧИТЬ</span>
             </div>
-            <div class="cert-card-caption">Наставник по AI-трансформации</div>
+            <div class="cert-slide-caption">Наставник по&nbsp;AI-трансформации</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- SECTION 7: "ЧТО ПИШУТ ОБО МНЕ ЛЮДИ" / REVIEWS -->
+    <!-- SECTION 7: "ЧТО ОБО МНЕ ПИШУТ ЛЮДИ" / INFINITE REVIEWS CAROUSEL -->
     <section id="reviews" class="reviews-section">
       <div class="container">
         <div class="section-head">
-          <span class="section-tag tag-pink">ОТЗЫВЫ & РЕЗУЛЬТАТЫ</span>
-          <h2 class="section-title">ЧТО ПИШУТ ОБО МНЕ ЛЮДИ</h2>
+          <span class="section-tag tag-pink">ОТЗЫВЫ И&nbsp;РЕЗУЛЬТАТЫ</span>
+          <h2 class="section-title">ЧТО ОБО&nbsp;МНЕ ПИШУТ ЛЮДИ</h2>
           <p class="section-desc">
-            Реальные отзывы клиентов, предпринимателей, выпускников программ и участников комьюнити о совместной работе, наставничестве и обучении технологиям ИИ. Нажмите на любой отзыв для увеличения:
+            Реальные отзывы клиентов, предпринимателей, выпускников программ и&nbsp;участников комьюнити. Карусель можно листать свайпом или остановить курсором. Кликните для&nbsp;увеличения:
           </p>
         </div>
+      </div>
 
-        <div class="reviews-grid-pop">
+      <!-- Infinite Marquee Track for Reviews -->
+      <div class="infinite-carousel-wrapper" id="reviews-carousel">
+        <div class="infinite-track" id="reviews-track">
           <!-- Review 1 -->
-          <div class="review-card-item" onclick="openLightbox('../../img/reviews/review_1.png', 'Отзыв о наставничестве и трекинге Михаила Пузырёва')">
-            <img src="../../img/reviews/review_1.png" alt="Отзыв о наставничестве Михаила Пузырёва" loading="lazy">
+          <div class="review-slide-card" onclick="openLightbox('../../img/reviews/review_1.png', 'Отзыв о наставничестве и трекинге Михаила Пузырёва')">
+            <div class="review-img-box"><img src="../../img/reviews/review_1.png" alt="Отзыв о наставничестве Михаила Пузырёва" loading="lazy"></div>
             <div class="review-card-footer">
               <span class="review-tag">НАСТАВНИЧЕСТВО</span>
               <span class="review-zoom-btn">ОТКРЫТЬ ↗</span>
@@ -2470,17 +2477,17 @@
           </div>
 
           <!-- Review 2 -->
-          <div class="review-card-item" onclick="openLightbox('../../img/reviews/review_2.png', 'Отзыв основателя стартапа о бизнес-эдвайзинге')">
-            <img src="../../img/reviews/review_2.png" alt="Отзыв о бизнес-эдвайзинге" loading="lazy">
+          <div class="review-slide-card" onclick="openLightbox('../../img/reviews/review_2.png', 'Отзыв основателя стартапа о бизнес-эдвайзинге')">
+            <div class="review-img-box"><img src="../../img/reviews/review_2.png" alt="Отзыв о бизнес-эдвайзинге" loading="lazy"></div>
             <div class="review-card-footer">
-              <span class="review-tag">СТАРТАПЫ & ИНВЕСТИЦИИ</span>
+              <span class="review-tag">ИНВЕСТИЦИИ</span>
               <span class="review-zoom-btn">ОТКРЫТЬ ↗</span>
             </div>
           </div>
 
           <!-- Review 3 -->
-          <div class="review-card-item" onclick="openLightbox('../../img/reviews/review_3.png', 'Отзыв о внедрении ИИ-агентов и автоматизации')">
-            <img src="../../img/reviews/review_3.png" alt="Отзыв об автоматизации нейросетями" loading="lazy">
+          <div class="review-slide-card" onclick="openLightbox('../../img/reviews/review_3.png', 'Отзыв о внедрении ИИ-агентов и автоматизации')">
+            <div class="review-img-box"><img src="../../img/reviews/review_3.png" alt="Отзыв об автоматизации нейросетями" loading="lazy"></div>
             <div class="review-card-footer">
               <span class="review-tag">ИИ-АВТОМАТИЗАЦИЯ</span>
               <span class="review-zoom-btn">ОТКРЫТЬ ↗</span>
@@ -2488,8 +2495,8 @@
           </div>
 
           <!-- Review 4 -->
-          <div class="review-card-item" onclick="openLightbox('../../img/reviews/review_4.png', 'Отзыв о масштабировании и выходе из операционки')">
-            <img src="../../img/reviews/review_4.png" alt="Отзыв о масштабировании бизнеса" loading="lazy">
+          <div class="review-slide-card" onclick="openLightbox('../../img/reviews/review_4.png', 'Отзыв о масштабировании и выходе из операционки')">
+            <div class="review-img-box"><img src="../../img/reviews/review_4.png" alt="Отзыв о масштабировании бизнеса" loading="lazy"></div>
             <div class="review-card-footer">
               <span class="review-tag">МАСШТАБИРОВАНИЕ</span>
               <span class="review-zoom-btn">ОТКРЫТЬ ↗</span>
@@ -2497,8 +2504,8 @@
           </div>
 
           <!-- Review 5 -->
-          <div class="review-card-item" onclick="openLightbox('../../img/reviews/review_5.png', 'Отзыв участника клуба по Vibe Coding и нейросетям')">
-            <img src="../../img/reviews/review_5.png" alt="Отзыв о клубе Vibe Coding" loading="lazy">
+          <div class="review-slide-card" onclick="openLightbox('../../img/reviews/review_5.png', 'Отзыв участника клуба по Vibe Coding и нейросетям')">
+            <div class="review-img-box"><img src="../../img/reviews/review_5.png" alt="Отзыв о клубе Vibe Coding" loading="lazy"></div>
             <div class="review-card-footer">
               <span class="review-tag">VIBE CODING КЛУБ</span>
               <span class="review-zoom-btn">ОТКРЫТЬ ↗</span>
@@ -2506,17 +2513,17 @@
           </div>
 
           <!-- Review 6 -->
-          <div class="review-card-item" onclick="openLightbox('../../img/reviews/review_6.png', 'Отзыв о стратегической диагностике и плане роста')">
-            <img src="../../img/reviews/review_6.png" alt="Отзыв о стратегической диагностике" loading="lazy">
+          <div class="review-slide-card" onclick="openLightbox('../../img/reviews/review_6.png', 'Отзыв о стратегической диагностике и плане роста')">
+            <div class="review-img-box"><img src="../../img/reviews/review_6.png" alt="Отзыв о стратегической диагностике" loading="lazy"></div>
             <div class="review-card-footer">
-              <span class="review-tag">СТРАТЕГИЯ И ПЛАН</span>
+              <span class="review-tag">СТРАТЕГИЯ</span>
               <span class="review-zoom-btn">ОТКРЫТЬ ↗</span>
             </div>
           </div>
 
           <!-- Review 7 -->
-          <div class="review-card-item" onclick="openLightbox('../../img/reviews/review_7.png', 'Отзыв выпускника о быстрой разработке MVP софта')">
-            <img src="../../img/reviews/review_7.png" alt="Отзыв о создании MVP" loading="lazy">
+          <div class="review-slide-card" onclick="openLightbox('../../img/reviews/review_7.png', 'Отзыв выпускника о быстрой разработке MVP софта')">
+            <div class="review-img-box"><img src="../../img/reviews/review_7.png" alt="Отзыв о создании MVP" loading="lazy"></div>
             <div class="review-card-footer">
               <span class="review-tag">БЫСТРАЯ РАЗРАБОТКА</span>
               <span class="review-zoom-btn">ОТКРЫТЬ ↗</span>
@@ -2524,8 +2531,8 @@
           </div>
 
           <!-- Review 8 -->
-          <div class="review-card-item" onclick="openLightbox('../../img/reviews/review_8.png', 'Отзыв IT-компании о внедрении AI-пайплайнов')">
-            <img src="../../img/reviews/review_8.png" alt="Отзыв об AI-пайплайнах" loading="lazy">
+          <div class="review-slide-card" onclick="openLightbox('../../img/reviews/review_8.png', 'Отзыв IT-компании о внедрении AI-пайплайнов')">
+            <div class="review-img-box"><img src="../../img/reviews/review_8.png" alt="Отзыв об AI-пайплайнах" loading="lazy"></div>
             <div class="review-card-footer">
               <span class="review-tag">КОРПОРАТИВНЫЙ ИИ</span>
               <span class="review-zoom-btn">ОТКРЫТЬ ↗</span>
@@ -2535,58 +2542,80 @@
       </div>
     </section>
 
-    <!-- SECTION 8: FAQ -->
+    <!-- SECTION 8: FAQ WITH SMOOTH ACCORDION -->
     <section id="faq" class="faq-section">
       <div class="container">
         <div class="section-head">
-          <span class="section-tag tag-yellow">ЧАСТО ЗАДАВАЕМЫЕ ВОПРОСЫ</span>
-          <h2 class="section-title">ОТВЕТЫ НА FAQ ПРО КУРС</h2>
+          <span class="section-tag tag-yellow">ЧАВО // ВОПРОСЫ И&nbsp;ОТВЕТЫ</span>
+          <h2 class="section-title">ОТВЕТЫ НА&nbsp;ЧАСТЫЕ ВОПРОСЫ</h2>
           <p class="section-desc">
-            Все детали, которые обычно интересуют родителей перед стартом обучения.
+            Все детали, которые обычно интересуют родителей и&nbsp;подростков перед стартом обучения.
           </p>
         </div>
 
         <div class="faq-layout-grid">
-          <div class="faq-items-stack">
+          <div class="faq-accordion-stack">
+            
             <!-- Q1 -->
-            <div class="faq-box-card">
-              <div class="faq-box-title">
-                <span>❓</span> Для кого подходит программа?
+            <div class="faq-accordion-item open">
+              <button class="faq-accordion-header" onclick="toggleFaqAccordion(this)">
+                <span>Для кого подходит программа?</span>
+                <span class="faq-accordion-icon">+</span>
+              </button>
+              <div class="faq-accordion-body">
+                <div class="faq-accordion-inner">
+                  <p>
+                    Курс спроектирован для&nbsp;подростков <strong>10–16 лет</strong> (при желании принимаем мотивированных ребят с&nbsp;8 лет и&nbsp;до&nbsp;18-ти). Программа построена от&nbsp;простого к&nbsp;сложному: сначала мы учим ИИ для&nbsp;учебы и&nbsp;творчества, а&nbsp;затем переходим к&nbsp;программированию веб-приложений и&nbsp;игр на&nbsp;русском языке в&nbsp;Google Antigravity. Подходит и&nbsp;тем, кто впервые пробует ИИ, и&nbsp;тем, кто уже экспериментировал с&nbsp;чат-ботами.
+                  </p>
+                </div>
               </div>
-              <p class="faq-box-body">
-                Курс спроектирован для подростков <strong>10–16 лет</strong> (при желании принимаем мотивированных ребят с 8 лет и до 18-ти). Программа построена от простого к сложному: сначала мы учим ИИ для учебы и креатива, а затем переходим к программированию веб-приложений и игр на обычном русском языке. Подходит и тем, кто впервые пробует ИИ, и тем, кто уже экспериментировал с чат-ботами.
-              </p>
             </div>
 
             <!-- Q2 -->
-            <div class="faq-box-card">
-              <div class="faq-box-title">
-                <span>💬</span> Как устроена коммуникация и поддержка?
+            <div class="faq-accordion-item">
+              <button class="faq-accordion-header" onclick="toggleFaqAccordion(this)">
+                <span>Как устроена коммуникация и&nbsp;поддержка?</span>
+                <span class="faq-accordion-icon">+</span>
+              </button>
+              <div class="faq-accordion-body">
+                <div class="faq-accordion-inner">
+                  <p>
+                    Для каждой группы создается закрытый уютный <strong>Telegram-чат</strong>, где преподаватель Михаил Пузырёв и&nbsp;куратор Марина Пали оперативно отвечают на&nbsp;вопросы ребят, помогают с&nbsp;домашними заданиями и&nbsp;делятся дополнительными материалами.
+                  </p>
+                </div>
               </div>
-              <p class="faq-box-body">
-                Для каждой группы создается закрытый уютный <strong>Telegram-чат</strong>, где преподаватель Михаил Пузырёв и куратор Марина Пали оперативно отвечают на вопросы ребят, помогают с домашними заданиями и делятся дополнительными материалами.
-              </p>
             </div>
 
             <!-- Q3 -->
-            <div class="faq-box-card">
-              <div class="faq-box-title">
-                <span>📹</span> Что если ребенок заболел или пропустил онлайн-урок?
+            <div class="faq-accordion-item">
+              <button class="faq-accordion-header" onclick="toggleFaqAccordion(this)">
+                <span>Что если ребенок пропустил онлайн-урок?</span>
+                <span class="faq-accordion-icon">+</span>
+              </button>
+              <div class="faq-accordion-body">
+                <div class="faq-accordion-inner">
+                  <p>
+                    <strong>Абсолютно все уроки записываются в&nbsp;высоком качестве</strong> и&nbsp;публикуются в&nbsp;закрытом канале группы сразу после окончания занятия. Ребенок может в&nbsp;спокойном темпе пересмотреть материал, поставить на&nbsp;паузу и&nbsp;повторить действия спикера.
+                  </p>
+                </div>
               </div>
-              <p class="faq-box-body">
-                <strong>Абсолютно все уроки записываются в высоком качестве</strong> и публикуются в закрытом канале группы сразу после окончания занятия. Ребенок может в спокойном темпе пересмотреть материал, поставить на паузу и повторить действия спикера.
-              </p>
             </div>
 
             <!-- Q4 -->
-            <div class="faq-box-card">
-              <div class="faq-box-title">
-                <span>🎯</span> Будут ли домашние задания и сколько времени они занимают?
+            <div class="faq-accordion-item">
+              <button class="faq-accordion-header" onclick="toggleFaqAccordion(this)">
+                <span>Будут ли домашние задания и&nbsp;сколько времени они занимают?</span>
+                <span class="faq-accordion-icon">+</span>
+              </button>
+              <div class="faq-accordion-body">
+                <div class="faq-accordion-inner">
+                  <p>
+                    Да, у&nbsp;нас есть небольшие практические творческие мини-задания (15–30 минут), направленные на&nbsp;закрепление навыка: сгенерировать концепт-арт в&nbsp;Google Flow, настроить промпт для&nbsp;репетитора или собрать интерактивный прототип страницы в&nbsp;Antigravity. Никакой скучной зубрежки — только реальный результат!
+                  </p>
+                </div>
               </div>
-              <p class="faq-box-body">
-                Да, у нас есть небольшие практические творческие мини-задания (15–30 минут), направленные на закрепление навыка: сгенерировать необычный арт, настроить промпт для репетитора или собрать прототип страницы. Никакой скучной зубрежки — только реальный результат!
-              </p>
             </div>
+
           </div>
 
           <!-- Curator Card -->
@@ -2594,77 +2623,50 @@
             <span class="curator-badge-pop">КУРАТОР ПРОГРАММЫ</span>
             <div class="curator-name-pop">Марина Пали</div>
             <p class="curator-desc-pop">
-              Сопровождает родителей и учеников по всем организационным вопросам: бронирование слота, расписание групп, оформление и оплата.
+              Сопровождает родителей и&nbsp;учеников по&nbsp;всем организационным вопросам: бронирование слота, расписание групп, оформление и&nbsp;оплата.
             </p>
-            <a href="https://t.me/MarinaPali" target="_blank" class="curator-action-btn" data-tip="Написать Марине Пали в Telegram">
-              ✈ НАПИСАТЬ КУРАТОРУ @MarinaPali ↗
+            <a href="https://t.me/MarinaPali" target="_blank" class="curator-action-btn" data-tip="Написать куратору">
+              НАПИСАТЬ КУРАТОРУ ↗
             </a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- SECTION 9: FINAL CTA & BOOKING -->
-    <section class="booking-section">
+    <!-- SECTION 9: FINAL CTA & BOOKING (WITHOUT QR CODES) -->
+    <section id="booking" class="booking-section">
       <div class="container">
         <div class="booking-card-main">
           <div class="booking-grid">
             <div class="booking-left-col">
               <span class="section-tag tag-yellow">СТАРТУЕМ ВМЕСТЕ</span>
-              <h2 class="section-title" style="font-size: clamp(2rem, 3.5vw, 2.8rem);">
-                ЖДЕМ ВАС НА КУРСЕ «AI-СТАРТ»!
+              <h2 class="section-title" style="font-size: clamp(2rem, 3.4vw, 2.8rem);">
+                ЖДЕМ ВАС НА&nbsp;КУРСЕ «AI-СТАРТ»!
               </h2>
 
               <div class="booking-hint-quote">
-                <strong>💡 ВАЖНАЯ ПОДСКАЗКА ДЛЯ ПОДРОСТКОВ И РОДИТЕЛЕЙ:</strong>
+                <strong>💡 ВАЖНАЯ ПОДСКАЗКА ДЛЯ&nbsp;ПОДРОСТКОВ И&nbsp;РОДИТЕЛЕЙ:</strong>
                 <p>
-                  «Проведя май с максимальной пользой, летом ты сможешь начать создавать крутые IT-проекты и даже зарабатывать на своих знаниях ИИ 💪»
+                  «Проведя май с&nbsp;максимальной пользой, летом ты сможешь начать создавать крутые IT-проекты и&nbsp;даже зарабатывать на&nbsp;своих знаниях ИИ 💪»
                 </p>
-              </div>
-
-              <div class="booking-buttons-list">
-                <a href="https://t.me/MarinaPali" target="_blank" class="booking-cta-btn btn-curator" data-tip="Забронировать место у куратора">
-                  <div class="booking-cta-content">
-                    <span class="booking-cta-label">ЗАПИСАТЬСЯ ЧЕРЕЗ КУРАТОРА</span>
-                    <span class="booking-cta-sub">Марина Пали (@MarinaPali) • Все вопросы и бронь места</span>
-                  </div>
-                  <span class="booking-cta-icon">✈</span>
-                </a>
-
-                <a href="https://t.me/michael_sage" target="_blank" class="booking-cta-btn btn-author" data-tip="Написать Михаилу лично">
-                  <div class="booking-cta-content">
-                    <span class="booking-cta-label">НАПИСАТЬ МИХАИЛУ ПУЗЫРЁВУ</span>
-                    <span class="booking-cta-sub">Автор курса (@michael_sage) • Личные вопросы по программе</span>
-                  </div>
-                  <span class="booking-cta-icon">💬</span>
-                </a>
-
-                <a href="https://t.me/uncrn_sage" target="_blank" class="booking-cta-btn btn-channel" data-tip="Телеграм-канал UNCRN SAGE">
-                  <div class="booking-cta-content">
-                    <span class="booking-cta-label">ТЕЛЕГРАМ-КАНАЛ UNCRN SAGE</span>
-                    <span class="booking-cta-sub">Новости ИИ, кейсы и технологии от Михаила</span>
-                  </div>
-                  <span class="booking-cta-icon">📢</span>
-                </a>
               </div>
             </div>
 
-            <div class="booking-qr-col">
-              <div class="booking-qr-title">БЫСТРЫЙ ВХОД С ТЕЛЕФОНА</div>
-              <div class="qr-boxes-row">
-                <div class="qr-single-card">
-                  <div id="qr-curator-land" class="qr-render-area"></div>
-                  <div class="qr-label-text">Куратор</div>
-                </div>
-                <div class="qr-single-card">
-                  <div id="qr-author-land" class="qr-render-area"></div>
-                  <div class="qr-label-text">Михаил</div>
-                </div>
-                <div class="qr-single-card">
-                  <div id="qr-channel-land" class="qr-render-area"></div>
-                  <div class="qr-label-text">Канал ИИ</div>
-                </div>
-              </div>
+            <div class="booking-buttons-list">
+              <a href="https://t.me/MarinaPali" target="_blank" class="booking-cta-btn btn-curator" data-tip="Связаться с&nbsp;куратором">
+                <span class="booking-cta-label">НАПИСАТЬ КУРАТОРУ</span>
+                <span class="booking-cta-icon">✈</span>
+              </a>
+
+              <a href="https://t.me/michael_sage" target="_blank" class="booking-cta-btn btn-author" data-tip="Личный диалог с&nbsp;Михаилом">
+                <span class="booking-cta-label">НАПИСАТЬ МИХАИЛУ</span>
+                <span class="booking-cta-icon">💬</span>
+              </a>
+
+              <a href="https://t.me/uncrn_sage" target="_blank" class="booking-cta-btn btn-channel" data-tip="Телеграм-канал про&nbsp;ИИ">
+                <span class="booking-cta-label">ТЕЛЕГРАМ-КАНАЛ</span>
+                <span class="booking-cta-icon">📢</span>
+              </a>
             </div>
           </div>
         </div>
@@ -2677,13 +2679,13 @@
   <footer class="site-footer">
     <div class="container footer-wrapper">
       <div class="footer-left-info">
-        <strong>Михаил Пузырёв</strong> // Платформа прикладного ИИ & Vibe Coding <br>
+        <strong>Михаил Пузырёв</strong> // Платформа прикладного ИИ &amp;&nbsp;Vibe Coding <br>
         © 2026 Все права защищены. Образовательный проект «AI-Старт».
       </div>
 
       <ul class="footer-links-list">
         <li><a href="/">Главная</a></li>
-        <li><a href="/about">О Михаиле</a></li>
+        <li><a href="/about">О&nbsp;Михаиле</a></li>
         <li><a href="/automation">Внедрение ИИ</a></li>
         <li><a href="/club/">Клуб</a></li>
         <li><a href="https://t.me/uncrn_sage" target="_blank">Telegram</a></li>
@@ -2704,6 +2706,13 @@
     // --- Accordion Toggle for Syllabus ---
     function toggleAccordion(btn) {
       const item = btn.closest('.lesson-acc-item');
+      if (!item) return;
+      item.classList.toggle('open');
+    }
+
+    // --- Smooth Accordion Toggle for FAQ ---
+    function toggleFaqAccordion(headerBtn) {
+      const item = headerBtn.closest('.faq-accordion-item');
       if (!item) return;
       item.classList.toggle('open');
     }
@@ -2729,28 +2738,134 @@
       }
     });
 
-    // --- Dynamic QR Codes Generation ---
-    window.addEventListener('DOMContentLoaded', () => {
-      const makeQR = (id, url, size = 95) => {
-        const el = document.getElementById(id);
-        if (el) {
-          new QRCode(el, {
-            text: url,
-            width: size,
-            height: size,
-            colorDark: "#07080C",
-            colorLight: "#FFFFFF",
-            correctLevel: QRCode.CorrectLevel.M
-          });
-        }
-      };
+    // ══════════════════════════════════════════════════════════════════
+    // UNIFIED HIGH-PERFORMANCE INFINITE MARQUEE (REVIEWS, CERTS, LOGOS)
+    // ══════════════════════════════════════════════════════════════════
+    function setupInfiniteMarquee(wrapperId, trackId, speed = 0.8) {
+      const wrapper = document.getElementById(wrapperId);
+      const track = document.getElementById(trackId);
+      if (!wrapper || !track) return;
 
-      makeQR('qr-curator-land', 'https://t.me/MarinaPali', 95);
-      makeQR('qr-author-land', 'https://t.me/michael_sage', 95);
-      makeQR('qr-channel-land', 'https://t.me/uncrn_sage', 95);
+      // Duplicate cards to ensure seamless infinite looping
+      const originalCards = Array.from(track.children);
+      if (originalCards.length === 0) return;
+
+      // Create at least 3 sets
+      for (let s = 0; s < 2; s++) {
+        originalCards.forEach(card => {
+          const clone = card.cloneNode(true);
+          // Preserve click handler for cloned cards
+          clone.onclick = card.onclick;
+          track.appendChild(clone);
+        });
+      }
+
+      let currentPos = 0;
+      let isHovered = false;
+      let isDragging = false;
+      let dragStartX = 0;
+      let dragStartPos = 0;
+      let hasDragged = false;
+
+      wrapper.addEventListener('mouseenter', () => { isHovered = true; });
+      wrapper.addEventListener('mouseleave', () => { 
+        isHovered = false; 
+        isDragging = false;
+      });
+
+      // Mouse drag
+      wrapper.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        hasDragged = false;
+        dragStartX = e.pageX;
+        dragStartPos = currentPos;
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        const diff = e.pageX - dragStartX;
+        if (Math.abs(diff) > 4) hasDragged = true;
+        currentPos = dragStartPos + diff;
+      });
+
+      window.addEventListener('mouseup', () => {
+        isDragging = false;
+      });
+
+      // Touch drag for mobile
+      wrapper.addEventListener('touchstart', (e) => {
+        isDragging = true;
+        hasDragged = false;
+        dragStartX = e.touches[0].pageX;
+        dragStartPos = currentPos;
+      }, { passive: true });
+
+      wrapper.addEventListener('touchmove', (e) => {
+        if (!isDragging || !e.touches.length) return;
+        const diff = e.touches[0].pageX - dragStartX;
+        if (Math.abs(diff) > 4) hasDragged = true;
+        currentPos = dragStartPos + diff;
+      }, { passive: true });
+
+      wrapper.addEventListener('touchend', () => {
+        isDragging = false;
+      });
+
+      // Prevent click if dragged
+      wrapper.addEventListener('click', (e) => {
+        if (hasDragged) {
+          e.stopPropagation();
+          e.preventDefault();
+          hasDragged = false;
+        }
+      }, true);
+
+      // Measure single set width
+      function getSingleSetWidth() {
+        let w = 0;
+        const gap = 18;
+        originalCards.forEach(c => {
+          w += (c.offsetWidth || 200) + gap;
+        });
+        return w;
+      }
+
+      let singleSetWidth = getSingleSetWidth();
+      window.addEventListener('resize', () => {
+        singleSetWidth = getSingleSetWidth();
+      });
+
+      function animate() {
+        if (singleSetWidth > 0) {
+          if (!isHovered && !isDragging) {
+            currentPos -= speed;
+          }
+
+          while (currentPos <= -singleSetWidth) {
+            currentPos += singleSetWidth;
+            dragStartPos += singleSetWidth;
+          }
+          while (currentPos > 0) {
+            currentPos -= singleSetWidth;
+            dragStartPos -= singleSetWidth;
+          }
+
+          track.style.transform = `translate3d(${currentPos}px, 0, 0)`;
+        }
+        requestAnimationFrame(animate);
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    // Initialize all 3 infinite marquees
+    window.addEventListener('DOMContentLoaded', () => {
+      setupInfiniteMarquee('logos-carousel', 'logos-track', 0.7);
+      setupInfiniteMarquee('certs-carousel', 'certs-track', 0.65);
+      setupInfiniteMarquee('reviews-carousel', 'reviews-track', 0.6);
     });
 
-    // --- Custom Pixel-Art Cursor & Speech Bubble Engine ---
+    // --- Custom Pixel-Art Cursor & Smart Speech Bubble Engine ---
     const cursorDot = document.getElementById('cursor-dot');
     const speechBubble = document.getElementById('speech-bubble');
     let mouseX = window.innerWidth / 2;
@@ -2761,27 +2876,27 @@
       if (!bubbleVisible) return;
 
       const bubbleRect = speechBubble.getBoundingClientRect();
-      const bubbleWidth = bubbleRect.width || 180;
+      const bubbleWidth = bubbleRect.width || 200;
       const bubbleHeight = bubbleRect.height || 45;
 
       const padding = 15;
-      let leftPos = mouseX + 20;
+      let leftPos = mouseX + 18;
       let topPos = mouseY - bubbleHeight - 16;
       let flipX = false;
       let flipY = false;
 
       if (leftPos + bubbleWidth > window.innerWidth - padding) {
-        leftPos = mouseX - bubbleWidth - 20;
+        leftPos = mouseX - bubbleWidth - 18;
         flipX = true;
+      }
+
+      if (leftPos < padding) {
+        leftPos = padding;
       }
 
       if (topPos < padding) {
         topPos = mouseY + 24;
         flipY = true;
-      }
-
-      if (leftPos < padding) {
-        leftPos = padding;
       }
 
       if (flipX) speechBubble.classList.add('flip-x');
@@ -2805,7 +2920,7 @@
     });
 
     document.addEventListener('mouseover', (e) => {
-      const isClickable = e.target.closest('button, a, .lesson-acc-trigger, .cert-card-interactive, .review-card-item, .lightbox-close-btn, [data-tip]');
+      const isClickable = e.target.closest('button, a, .lesson-acc-trigger, .faq-accordion-header, .cert-slide-card, .review-slide-card, .lightbox-close-btn, [data-tip]');
       if (isClickable) {
         cursorDot.classList.add('hovered');
       } else {
