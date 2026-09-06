@@ -90,6 +90,7 @@
 
     html {
       scroll-behavior: smooth;
+      overflow-x: hidden;
     }
 
     body {
@@ -385,6 +386,282 @@
       background: var(--pop-cyan);
       color: #000000;
       transform: translateY(-2px);
+    }
+
+    /* Mobile Burger Button & Actions */
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .nav-burger {
+      display: none;
+      width: 38px;
+      height: 38px;
+      background: var(--pop-yellow);
+      border: var(--thin-border);
+      box-shadow: var(--hard-shadow-sm);
+      cursor: pointer;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 4.5px;
+      padding: 6px;
+      transition: transform 0.15s ease, background 0.15s ease;
+      flex-shrink: 0;
+    }
+
+    .nav-burger:hover {
+      background: var(--pop-cyan);
+      transform: translateY(-1px);
+    }
+
+    .burger-bar {
+      display: block;
+      width: 20px;
+      height: 2.5px;
+      background: #000000;
+      border-radius: 0;
+      transition: transform 0.22s ease, opacity 0.22s ease;
+    }
+
+    .nav-burger.open .burger-bar:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .nav-burger.open .burger-bar:nth-child(2) {
+      opacity: 0;
+    }
+
+    .nav-burger.open .burger-bar:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* Mobile Menu Drawer Overlay */
+    .mobile-menu-drawer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2147483640;
+      display: flex;
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+      overflow: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+
+    .mobile-menu-drawer.open {
+      visibility: visible;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .drawer-backdrop {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .drawer-panel {
+      position: relative;
+      width: 88%;
+      max-width: 380px;
+      height: 100%;
+      margin-left: auto;
+      background: #0D1017;
+      border-left: var(--thick-border);
+      box-shadow: -8px 0 28px rgba(0, 0, 0, 0.85);
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 24px 20px 32px 20px;
+      z-index: 1;
+    }
+
+    .mobile-menu-drawer.open .drawer-panel {
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 18px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.12);
+      margin-bottom: 18px;
+    }
+
+    .drawer-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .drawer-badge {
+      background: var(--pop-yellow);
+      color: #000000;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 0.8rem;
+      padding: 4px 8px;
+      border: 1.5px solid #000000;
+      box-shadow: 2px 2px 0px #000000;
+      text-transform: uppercase;
+    }
+
+    .drawer-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: #FFFFFF;
+      letter-spacing: 0.05em;
+    }
+
+    .drawer-close-btn {
+      width: 36px;
+      height: 36px;
+      background: var(--pop-pink);
+      color: #FFFFFF;
+      border: var(--thin-border);
+      box-shadow: 2px 2px 0px #000000;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 1.15rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+
+    .drawer-close-btn:hover {
+      background: var(--pop-cyan);
+      color: #000000;
+      transform: scale(1.05);
+    }
+
+    .drawer-nav {
+      flex: 1;
+      margin-bottom: 22px;
+    }
+
+    .drawer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .drawer-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 14px;
+      background: var(--bg-card);
+      border: var(--thin-border);
+      box-shadow: 2.5px 2.5px 0px #000000;
+      text-decoration: none;
+      color: #FFFFFF;
+      transition: all 0.15s ease;
+    }
+
+    .drawer-link:hover, .drawer-link:active {
+      background: var(--bg-card-light);
+      border-color: var(--pop-yellow);
+      transform: translateX(3px);
+    }
+
+    .drawer-link-num {
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: var(--pop-cyan);
+    }
+
+    .drawer-link-text {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      flex: 1;
+    }
+
+    .drawer-link-arrow {
+      font-family: var(--font-mono);
+      color: var(--pop-yellow);
+      font-size: 1.1rem;
+    }
+
+    .drawer-footer {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding-top: 18px;
+      border-top: 2px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .drawer-cta-primary {
+      background: var(--pop-yellow);
+      color: #000000;
+      border: var(--thin-border);
+      box-shadow: 3px 3px 0px #000000;
+      padding: 13px 16px;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 0.95rem;
+      text-align: center;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      display: block;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+
+    .drawer-cta-primary:hover {
+      background: var(--pop-cyan);
+      transform: translateY(-2px);
+    }
+
+    .drawer-contact-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .drawer-cta-secondary {
+      background: var(--bg-card);
+      color: #FFFFFF;
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
+      padding: 9px 8px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.78rem;
+      text-align: center;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      transition: all 0.15s ease;
+    }
+
+    .drawer-cta-secondary:hover {
+      background: var(--bg-card-light);
+      border-color: var(--pop-pink);
     }
 
     /* Common Section Styles */
@@ -1709,6 +1986,10 @@
         display: none;
       }
 
+      .nav-burger {
+        display: flex;
+      }
+
       .hero-grid {
         grid-template-columns: 1fr;
         gap: 36px;
@@ -1760,6 +2041,17 @@
         gap: 8px;
       }
 
+      .nav-actions {
+        gap: 8px;
+      }
+
+      .nav-burger {
+        width: 36px;
+        height: 36px;
+        padding: 5px;
+        box-shadow: 2px 2px 0px #000000;
+      }
+
       .nav-badge {
         font-size: 0.76rem;
         padding: 5px 9px;
@@ -1774,6 +2066,16 @@
         font-size: 0.8rem;
         padding: 6px 12px;
         box-shadow: 2px 2px 0px #000000;
+      }
+
+      .speaker-mission-box {
+        padding: 16px 14px;
+        border-left-width: 5px;
+      }
+
+      .speaker-mission-box .quote-body {
+        font-size: 1.02rem;
+        line-height: 1.45;
       }
 
       .parameters-grid {
@@ -1810,6 +2112,43 @@
         cursor: auto !important;
       }
     }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 12px;
+      }
+
+      .nav-badge {
+        font-size: 0.72rem;
+        padding: 4px 7px;
+        letter-spacing: 0.02em;
+      }
+
+      .nav-cta-btn {
+        font-size: 0.74rem;
+        padding: 5px 8px;
+      }
+
+      .nav-actions {
+        gap: 6px;
+      }
+
+      .nav-burger {
+        width: 34px;
+        height: 34px;
+        padding: 4.5px;
+      }
+
+      .section-tag {
+        font-size: 0.78rem;
+        padding: 3px 9px;
+      }
+
+      .hero-tagline-box {
+        font-size: 0.78rem;
+        padding: 5px 10px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1844,11 +2183,57 @@
         <li><a href="#faq" data-tip="Частые вопросы">Чаво</a></li>
       </ul>
 
-      <a href="https://t.me/MarinaPali" target="_blank" class="nav-cta-btn" data-tip="Записаться к&nbsp;куратору">
-        ЗАПИСАТЬСЯ ↗
-      </a>
+      <div class="nav-actions">
+        <a href="https://t.me/MarinaPali" target="_blank" class="nav-cta-btn" data-tip="Записаться к&nbsp;куратору">
+          ЗАПИСАТЬСЯ ↗
+        </a>
+        <button class="nav-burger" id="nav-burger" aria-label="Открыть меню навигации" data-tip="Меню">
+          <span class="burger-bar"></span>
+          <span class="burger-bar"></span>
+          <span class="burger-bar"></span>
+        </button>
+      </div>
     </div>
   </header>
+
+  <!-- Mobile Pop-Art Sandwich Menu Drawer -->
+  <div class="mobile-menu-drawer" id="mobile-menu-drawer" aria-hidden="true">
+    <div class="drawer-backdrop" id="drawer-backdrop"></div>
+    <div class="drawer-panel">
+      <div class="drawer-header">
+        <div class="drawer-brand">
+          <span class="drawer-badge">AI-СТАРТ</span>
+          <span class="drawer-title">МЕНЮ КУРСА</span>
+        </div>
+        <button class="drawer-close-btn" id="drawer-close-btn" aria-label="Закрыть меню">✕</button>
+      </div>
+
+      <nav class="drawer-nav">
+        <ul class="drawer-links">
+          <li><a href="#about" class="drawer-link"><span class="drawer-link-num">01</span><span class="drawer-link-text">О КУРСЕ</span><span class="drawer-link-arrow">→</span></a></li>
+          <li><a href="#syllabus" class="drawer-link"><span class="drawer-link-num">02</span><span class="drawer-link-text">ПРОГРАММА (10 УРОКОВ)</span><span class="drawer-link-arrow">→</span></a></li>
+          <li><a href="#author" class="drawer-link"><span class="drawer-link-num">03</span><span class="drawer-link-text">ПРЕПОДАВАТЕЛЬ</span><span class="drawer-link-arrow">→</span></a></li>
+          <li><a href="#trust" class="drawer-link"><span class="drawer-link-num">04</span><span class="drawer-link-text">ПАРТНЕРЫ И ДИПЛОМЫ</span><span class="drawer-link-arrow">→</span></a></li>
+          <li><a href="#reviews" class="drawer-link"><span class="drawer-link-num">05</span><span class="drawer-link-text">ОТЗЫВЫ СТУДЕНТОВ</span><span class="drawer-link-arrow">→</span></a></li>
+          <li><a href="#faq" class="drawer-link"><span class="drawer-link-num">06</span><span class="drawer-link-text">ЧАСТЫЕ ВОПРОСЫ</span><span class="drawer-link-arrow">→</span></a></li>
+        </ul>
+      </nav>
+
+      <div class="drawer-footer">
+        <a href="https://t.me/MarinaPali" target="_blank" class="drawer-cta-primary">
+          ЗАПИСАТЬСЯ К&nbsp;КУРАТОРУ ↗
+        </a>
+        <div class="drawer-contact-links">
+          <a href="https://t.me/mikhailsage" target="_blank" class="drawer-cta-secondary">
+            💬 Написать Михаилу
+          </a>
+          <a href="https://t.me/sage_ai" target="_blank" class="drawer-cta-secondary">
+            ⚡ Канал про&nbsp;ИИ
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <main>
 
@@ -3018,6 +3403,65 @@
       cursorDot.style.transform = cursorDot.classList.contains('hovered') 
         ? 'translate(-50%, -50%) scale(1.1)' 
         : 'translate(-50%, -50%) scale(1)';
+    });
+
+    // Mobile Sandwich Menu Drawer Controller
+    const navBurger = document.getElementById('nav-burger');
+    const mobileMenuDrawer = document.getElementById('mobile-menu-drawer');
+    const drawerCloseBtn = document.getElementById('drawer-close-btn');
+    const drawerBackdrop = document.getElementById('drawer-backdrop');
+    const drawerLinks = document.querySelectorAll('.drawer-link, .drawer-cta-primary, .drawer-cta-secondary');
+
+    function openMobileMenu() {
+      if (!mobileMenuDrawer) return;
+      mobileMenuDrawer.classList.add('open');
+      mobileMenuDrawer.setAttribute('aria-hidden', 'false');
+      if (navBurger) navBurger.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileMenu() {
+      if (!mobileMenuDrawer) return;
+      mobileMenuDrawer.classList.remove('open');
+      mobileMenuDrawer.setAttribute('aria-hidden', 'true');
+      if (navBurger) navBurger.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    if (navBurger) {
+      navBurger.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (mobileMenuDrawer && mobileMenuDrawer.classList.contains('open')) {
+          closeMobileMenu();
+        } else {
+          openMobileMenu();
+        }
+      });
+    }
+
+    if (drawerCloseBtn) {
+      drawerCloseBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        closeMobileMenu();
+      });
+    }
+
+    if (drawerBackdrop) {
+      drawerBackdrop.addEventListener('click', () => {
+        closeMobileMenu();
+      });
+    }
+
+    drawerLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        closeMobileMenu();
+      });
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileMenuDrawer && mobileMenuDrawer.classList.contains('open')) {
+        closeMobileMenu();
+      }
     });
   </script>
 </body>
