@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Коммерческое предложение на разработку продающего лендинга для коворкинга и гибких офисов | Михаил Пузырёв">
+  <meta property="og:description" content="Коммерческое предложение на разработку продающего лендинга для коворкинга и гибких офисов | Михаил Пузырёв">
+  <title>КП: Разработка продающего лендинга коворкинга | Михаил Пузырёв</title>
+  
+  <!-- STRICT PRIVACY & NOINDEX: Hidden from search engines and AI crawlers -->
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
+  <meta name="yandex" content="noindex, nofollow">
+  
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/style.css?v=3.0">
+  
+  <style>
+    :root {
+      --font-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      
+      --accent: #10b981;
+      --accent-dim: rgba(16, 185, 129, 0.1);
+      --accent-border: rgba(16, 185, 129, 0.3);
+      --blue: #0ea5e9;
+      --purple: #8b5cf6;
+      --gold: #f59e0b;
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: #09090b;
+      background: #ffffff;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, .kp-title, .kp-card-title, .tranche-price, .timeline-badge {
+      font-family: var(--font-heading);
+      letter-spacing: -0.03em;
+    }
+
+    /* Top Confidential Bar */
+    .confidential-bar {
+      background: #09090b;
+      color: #a1a1aa;
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      padding: 8px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #27272a;
+      position: sticky;
+      top: 0;
+      z-index: 1001;
+    }
+    .confidential-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #34d399;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .confidential-meta {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    /* Sub-nav for KP */
+    .kp-nav-bar {
+      position: sticky;
+      top: 35px;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 0;
+    }
+    .kp-nav-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 clamp(24px, 4vw, 64px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .kp-client-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .kp-logo-tag {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      background: var(--accent-dim);
+      color: var(--green-dark);
+      border: 1px solid var(--accent-border);
+      padding: 3px 8px;
+      font-weight: 700;
+    }
+
+    /* KP Specific Hero */
+    .kp-hero {
+      padding: 0;
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+    }
+    .kp-hero .container {
+      padding-top: clamp(48px, 6vw, 72px);
+      padding-bottom: clamp(32px, 4vw, 48px);
+    }
+    .kp-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid var(--accent-border);
+      padding: 4px 10px;
+      font-weight: 600;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .kp-title {
+      font-size: clamp(2rem, 4.2vw, 3.1rem);
+      font-weight: 700;
+      color: #09090b;
+      line-height: 1.15;
+    }
+    .kp-desc {
+      font-size: 1.1rem;
+      color: #52525b;
+      max-width: 920px;
+      line-height: 1.6;
+      margin-top: 14px;
+    }
+
+    .kp-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 36px;
+    }
+    .kp-meta-card {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      padding: 22px;
+      transition: all 0.2s ease;
+    }
+    .kp-meta-card:hover {
+      border-color: #cbd5e1;
+      transform: translateY(-2px);
+    }
+    .kp-meta-card .label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+    .kp-meta-card .value {
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: #09090b;
+      letter-spacing: -0.03em;
+    }
+    .kp-meta-card .sub {
+      font-size: 0.84rem;
+      color: #64748b;
+      margin-top: 4px;
+    }
+
+    /* Section Structure */
+    .kp-section {
+      padding: 0;
+      border-bottom: 1px solid var(--border);
+      background: #ffffff;
+    }
+    .kp-section .container {
+      padding-top: clamp(56px, 7vw, 92px);
+      padding-bottom: clamp(56px, 7vw, 92px);
+    }
+    .kp-section.alt-bg {
+      background: #f8fafc;
+    }
+    .kp-section-head {
+      margin-bottom: 36px;
+    }
+
+    /* Cards & Grids */
+    .kp-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 24px;
+    }
+    .kp-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .kp-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 28px;
+      position: relative;
+    }
+    .kp-card.featured {
+      border-color: #09090b;
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+    }
+    .kp-card-num {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .kp-card-title {
+      font-size: 1.22rem;
+      font-weight: 700;
+      color: #09090b;
+      margin-bottom: 10px;
+    }
+    .kp-card-desc {
+      font-size: 0.92rem;
+      color: #52525b;
+      line-height: 1.6;
+    }
+    .kp-card-list {
+      list-style: none;
+      margin-top: 14px;
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+    }
+    .kp-card-list li {
+      position: relative;
+      padding-left: 22px;
+      font-size: 0.92rem;
+      color: #334155;
+      margin-bottom: 10px;
+      line-height: 1.55;
+    }
+    .kp-card-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--green-dark);
+      font-weight: 800;
+    }
+
+    /* Timeline Stepper */
+    .timeline-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 28px;
+    }
+    .timeline-step {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 80px 1fr 260px;
+      gap: 20px;
+      align-items: center;
+      transition: all 0.2s ease;
+    }
+    .timeline-step:hover {
+      border-color: #09090b;
+    }
+    .timeline-step.qa {
+      background: #faf5ff;
+      border: 2px solid #c084fc;
+    }
+    .timeline-badge {
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: 1.35rem;
+      color: #09090b;
+      text-align: center;
+    }
+    .timeline-badge small {
+      display: block;
+      font-size: 0.68rem;
+      color: #64748b;
+      font-weight: 600;
+    }
+    .timeline-content h4 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #09090b;
+    }
+    .timeline-content p {
+      font-size: 0.9rem;
+      color: #52525b;
+      line-height: 1.5;
+    }
+    .timeline-meta {
+      text-align: right;
+      font-family: var(--font-mono);
+    }
+    .timeline-meta .duration {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #09090b;
+    }
+    .timeline-meta .deliverable {
+      font-size: 0.78rem;
+      color: #059669;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    /* Financial Tranches Box (3 columns) */
+    .tranches-box {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 24px;
+      margin-top: 28px;
+    }
+    .tranche-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 30px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .tranche-card.featured {
+      border: 2px solid #09090b;
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+    }
+    .tranche-num {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      color: #64748b;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .tranche-price {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #09090b;
+      margin: 10px 0 6px 0;
+      letter-spacing: -0.03em;
+    }
+    .tranche-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #09090b;
+      margin-bottom: 8px;
+    }
+    .tranche-desc {
+      font-size: 0.9rem;
+      color: #64748b;
+      line-height: 1.55;
+      margin-bottom: 18px;
+    }
+
+    /* Acceptance Box */
+    .accept-box {
+      background: #09090b;
+      color: #ffffff;
+      padding: clamp(32px, 5vw, 64px);
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 48px;
+    }
+    .accept-box h3 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+      color: #ffffff;
+    }
+    .accept-box p {
+      color: #a1a1aa;
+      font-size: 1.02rem;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .req-list {
+      list-style: none;
+      font-family: var(--font-mono);
+      font-size: 0.86rem;
+      color: #d4d4d8;
+      line-height: 1.85;
+      border-left: 2px solid #27272a;
+      padding-left: 18px;
+    }
+    .req-list strong {
+      color: #ffffff;
+    }
+
+    /* Alert Banner */
+    .rules-banner {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 16px 20px;
+      font-size: 0.92rem;
+      color: #334155;
+      margin-top: 24px;
+      border-left: 4px solid #09090b;
+    }
+
+    /* Print styling */
+    @media print {
+      .confidential-bar, .kp-nav-bar, .site-header, .site-footer, .kp-actions, .no-print {
+        display: none !important;
+      }
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-size: 9.5pt !important;
+      }
+      .container {
+        max-width: 100% !important;
+        padding: 0 !important;
+        border: none !important;
+      }
+      .kp-section {
+        padding: 16px 0 !important;
+        border-bottom: 1px solid #ddd !important;
+        page-break-inside: avoid;
+      }
+      .accept-box {
+        background: #f8fafc !important;
+        color: #000000 !important;
+        border: 1px solid #000000 !important;
+      }
+      .accept-box h3, .accept-box p, .req-list {
+        color: #000000 !important;
+      }
+      .req-list strong {
+        color: #000000 !important;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .timeline-step {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .timeline-meta {
+        text-align: left;
+      }
+      .accept-box {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+    }
+  </style>
+</head>
+<body class="page-kp">
+
+  <!-- CONFIDENTIAL STATUS BAR -->
+  <div class="confidential-bar">
+    <div class="confidential-badge">
+      <span>🏢</span> КОММЕРЧЕСКОЕ ПРЕДЛОЖЕНИЕ · ПРЯМОЙ ДОСТУП
+    </div>
+    <div class="confidential-meta">
+      <span><strong>ID:</strong> KP-COWORKING-060926</span>
+      <span><strong>Дата:</strong> 06.09.2026</span>
+      <span><strong>Версия:</strong> 1.0 (Финальная)</span>
+    </div>
+  </div>
+
+  <!-- STICKY HEADER ACTIONS -->
+  <header class="kp-nav-bar">
+    <div class="kp-nav-inner">
+      <div class="kp-client-info">
+        <a href="/" style="text-decoration:none; font-weight:700; color:var(--black); font-size:1.05rem; font-family:var(--font-heading);">
+          Михаил Пузырёв
+        </a>
+        <span class="kp-logo-tag">WEB-РАЗРАБОТКА & AI</span>
+        <span style="color:#cbd5e1;">/</span>
+        <span style="font-size:0.9rem; font-weight:600; color:#334155;">
+          Коворкинг и гибкие офисы (Coworking Space)
+        </span>
+      </div>
+
+      <div class="kp-actions no-print" style="display:flex; gap:10px; align-items:center;">
+        <a href="/booking" target="_blank" class="btn-secondary" style="padding:8px 14px; font-size:0.84rem; text-decoration:none; color:var(--black); background:#ffffff; border:1px solid var(--border); font-family:var(--font-heading); font-weight:600; display:inline-flex; align-items:center; gap:6px;">
+          📅 Забронировать слот
+        </a>
+        <a href="https://max.ru/u/f9LHodD0cOJxk9sLajkZ5u_-WbQydR8lkTH6y34KqdU-QKoLzrW7FH8yJG0" target="_blank" class="btn-secondary" style="padding:8px 14px; font-size:0.84rem; text-decoration:none; color:#ffffff; background:#27272a; border:1px solid #3f3f46; font-family:var(--font-heading); font-weight:600; display:inline-flex; align-items:center; gap:6px;">
+          💬 MAX ↗
+        </a>
+        <a href="https://t.me/Michael_Sage" target="_blank" class="btn-primary" style="padding:8px 14px; font-size:0.84rem; background:#09090b; color:#ffffff; text-decoration:none; font-family:var(--font-heading); font-weight:600; display:inline-flex; align-items:center; gap:6px;">
+          💬 Telegram ↗
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="kp-hero">
+      <div class="container">
+        <span class="kp-tag">COWORKING SPACE · ПРОДАЮЩИЙ ЛЕНДИНГ НА КОДЕ</span>
+        <h1 class="kp-title">
+          Разработка продающего лендинга<br>
+          для коворкинга и гибких офисов
+        </h1>
+        <p class="kp-desc">
+          Создание современного, стильного и высококонверсионного промо-сайта на чистом коде. Презентация форматов рабочих мест, переговорных комнат и смарт-офисов, 3 варианта дизайна на выбор, удобное бронирование бесплатного тест-дня и 100% мобильная скорость.
+        </p>
+
+        <!-- KPI SUMMARY CARDS -->
+        <div class="kp-meta-grid">
+          <div class="kp-meta-card">
+            <div class="label">Срок разработки</div>
+            <div class="value">4 дня</div>
+            <div class="sub">Пошаговая дорожная карта</div>
+          </div>
+          <div class="kp-meta-card">
+            <div class="label">Варианты дизайна</div>
+            <div class="value" style="color:var(--blue);">3 концепта</div>
+            <div class="sub">На выбор во 2-й день</div>
+          </div>
+          <div class="kp-meta-card">
+            <div class="label">Скорость загрузки</div>
+            <div class="value" style="color:var(--green-dark);">100 / 100</div>
+            <div class="sub">0.5 сек на смартфонах</div>
+          </div>
+          <div class="kp-meta-card">
+            <div class="label">Юридический блок</div>
+            <div class="value" style="color:var(--purple);">152-ФЗ РФ</div>
+            <div class="sub">Все политики и документы</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: CONTEXT & CONVERSION -->
+    <section class="kp-section">
+      <div class="container">
+        <div class="kp-section-head">
+          <span class="kp-tag">01 / ЦЕЛИ И КОНВЕРСИЯ</span>
+          <h2 class="kp-title">Как сайт будет превращать трафик в постоянных резидентов</h2>
+          <p class="kp-desc">
+            Фрилансеры, IT-специалисты, команды и предприниматели выбирают рабочее пространство по атмосфере, скорости интернета, комфорту мебели и прозрачности тарифов.
+          </p>
+        </div>
+
+        <div class="kp-grid-2">
+          <div class="kp-card" style="background:#fff7f7; border-color:#fed7d7;">
+            <div class="kp-card-num" style="color:#e53e3e;">ТИПИЧНЫЕ ОШИБКИ САЙТОВ КОВОРКИНГОВ</div>
+            <h3 class="kp-card-title" style="color:#9b2c2c;">Почему теряются заявки:</h3>
+            <ul class="kp-card-list">
+              <li><strong>Медленные шаблоны конструкторов:</strong> тяжелая графика на Тильде грузится по 5 секунд, потенциальный резидент закрывает вкладку.</li>
+              <li><strong>Непонятные тарифы:</strong> скрытые условия, отсутствие цен на переговорки и смарт-офисы, сложные формуляры.</li>
+              <li><strong>Нет фокуса на первом шаге:</strong> гость не готов сразу покупать месяц, если нет легкой записи на бесплатный тест-день.</li>
+              <li><strong>Сухой текст без атмосферы:</strong> отсутствие акцентов на комьюнити, комфорте кресел, кофе-зоне и нетворкинге.</li>
+            </ul>
+          </div>
+
+          <div class="kp-card" style="background:#f0fdf4; border-color:#bbf7d0;">
+            <div class="kp-card-num" style="color:#16a34a;">РЕЗУЛЬТАТ НАШЕЙ РАЗРАБОТКИ</div>
+            <h3 class="kp-card-title" style="color:#14532d;">Что получает ваше пространство:</h3>
+            <ul class="kp-card-list">
+              <li><strong>Премиальная визуализация:</strong> стильный минималистичный дизайн во всю ширину экрана с фото залов, переговорных и зон отдыха.</li>
+              <li><strong>3 концепта на выбор:</strong> во 2-й день вы получаете три разных варианта дизайна и выбираете идеальный под ваш бренд.</li>
+              <li><strong>Воронка «Бесплатный тест-день»:</strong> форма бронирования пробного рабочего дня, генерирующая постоянный входящий поток лидов.</li>
+              <li><strong>Интеграции без потерь:</strong> заявки моментально поступают в вашу CRM, рабочий Telegram-чат и на почту.</li>
+              <li><strong>Мгновенный отклик на смартфонах:</strong> чистый код обеспечивает молниеносную скорость загрузки (100/100 Mobile).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: STRUCTURE -->
+    <section class="kp-section alt-bg">
+      <div class="container">
+        <div class="kp-section-head">
+          <span class="kp-tag">02 / АРХИТЕКТУРА СТРАНИЦЫ</span>
+          <h2 class="kp-title">Продуманная структура продающего лендинга коворкинга</h2>
+          <p class="kp-desc">
+            Каждый блок лендинга отвечает на конкретный вопрос резидента и ведет к целевому действию — бронированию тест-дня или рабочего места.
+          </p>
+        </div>
+
+        <div class="kp-grid-3">
+          <div class="kp-card">
+            <span class="kp-role-tag" style="background:#e0f2fe; color:#0369a1; margin-bottom:8px;">БЛОК 01</span>
+            <h4 style="font-size:1.1rem; font-weight:700; margin-bottom:6px;">Hero: Главный экран</h4>
+            <p style="font-size:0.88rem; color:#64748b;">Фото интерьера, сильное УТП, локация, скоростной интернет и кнопка «Забронировать бесплатный тест-день».</p>
+          </div>
+
+          <div class="kp-card">
+            <span class="kp-role-tag" style="background:#fef3c7; color:#92400e; margin-bottom:8px;">БЛОК 02</span>
+            <h4 style="font-size:1.1rem; font-weight:700; margin-bottom:6px;">Форматы рабочих мест</h4>
+            <p style="font-size:0.88rem; color:#64748b;">Карточки зон: Open Space (незакрепленное место), Fix Desk (свое место 24/7), Смарт-офисы для команд (от 2 до 10 человек).</p>
+          </div>
+
+          <div class="kp-card featured">
+            <span class="kp-role-tag" style="background:#dcfce7; color:#166534; margin-bottom:8px;">БЛОК 03 · ДЛЯ БИЗНЕСА</span>
+            <h4 style="font-size:1.1rem; font-weight:700; margin-bottom:6px;">Переговорные & Zoom-будки</h4>
+            <p style="font-size:0.88rem; color:#64748b;">Аренда переговорных комнат с ТВ/проектором, шумоизолированные Skype-кабины для звонков и ивент-зал для лекций.</p>
+          </div>
+
+          <div class="kp-card">
+            <span class="kp-role-tag" style="background:#f3e8ff; color:#6b21a8; margin-bottom:8px;">БЛОК 04</span>
+            <h4 style="font-size:1.1rem; font-weight:700; margin-bottom:6px;">Инфраструктура & Сервис</h4>
+            <p style="font-size:0.88rem; color:#64748b;">Оптика до 500 Мбит/с, эргономичные кресла Herman Miller/Samurai, принтер/сканер, чай/зерновой кофе, кухня, лаунж-зона.</p>
+          </div>
+
+          <div class="kp-card">
+            <span class="kp-role-tag" style="background:#f1f5f9; color:#475569; margin-bottom:8px;">БЛОК 05</span>
+            <h4 style="font-size:1.1rem; font-weight:700; margin-bottom:6px;">Атмосфера & Комьюнити</h4>
+            <p style="font-size:0.88rem; color:#64748b;">Нетворкинг, внутренние мастермайнды, пятничные пицца-вечера, среда единомышленников для IT, маркетинга и бизнеса.</p>
+          </div>
+
+          <div class="kp-card">
+            <span class="kp-role-tag" style="background:#dcfce7; color:#166534; margin-bottom:8px;">БЛОК 06</span>
+            <h4 style="font-size:1.1rem; font-weight:700; margin-bottom:6px;">Тарифные планы и цены</h4>
+            <p style="font-size:0.88rem; color:#64748b;">Прозрачная таблица: Дневной визит (Day Pass), Абонементы на 10 дней, Месячный безлимит, Аренда переговорных по часам.</p>
+          </div>
+
+          <div class="kp-card">
+            <span class="kp-role-tag" style="background:#e0f2fe; color:#0369a1; margin-bottom:8px;">БЛОК 07</span>
+            <h4 style="font-size:1.1rem; font-weight:700; margin-bottom:6px;">Локация & Парковка</h4>
+            <p style="font-size:0.88rem; color:#64748b;">Интерактивная карта Яндекс/2ГИС, ориентиры, информация о парковочных местах и кнопка построения маршрута.</p>
+          </div>
+
+          <div class="kp-card">
+            <span class="kp-role-tag" style="background:#fee2e2; color:#991b1b; margin-bottom:8px;">БЛОК 08</span>
+            <h4 style="font-size:1.1rem; font-weight:700; margin-bottom:6px;">FAQ: частые вопросы</h4>
+            <p style="font-size:0.88rem; color:#64748b;">Ответы на вопросы: «Как устроен тестовый день?», «Есть ли доступ 24/7?», «Предоставляете ли юр. адрес?», «Правила тишины».</p>
+          </div>
+
+          <div class="kp-card featured">
+            <span class="kp-role-tag" style="background:#dcfce7; color:#166534; margin-bottom:8px;">БЛОК 09 · ФИНАЛ</span>
+            <h4 style="font-size:1.1rem; font-weight:700; margin-bottom:6px;">Лид-форма бронирования</h4>
+            <p style="font-size:0.88rem; color:#64748b;">Удобная форма записи на тест-день или выбор тарифа + прямые кнопки перехода в Telegram и MAX.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: TECHNICAL STANDARDS -->
+    <section class="kp-section">
+      <div class="container">
+        <div class="kp-section-head">
+          <span class="kp-tag">03 / ТЕХНОЛОГИИ И СКОРОСТЬ</span>
+          <h2 class="kp-title">Преимущества разработки на чистом коде</h2>
+          <p class="kp-desc">
+            Мы не используем тяжелые конструкторы. Сайт пишется на чистом легковесном коде и размещается на вашем собственном хостинге.
+          </p>
+        </div>
+
+        <div class="kp-grid-3">
+          <div class="kp-card">
+            <h4 class="kp-card-title">⚡ Мгновенная скорость</h4>
+            <p class="kp-card-desc">Загрузка менее 0.5 секунды. Идеальные показатели Google PageSpeed (100/100 Mobile). Резиденты не уходят из-за зависаний.</p>
+          </div>
+
+          <div class="kp-card">
+            <h4 class="kp-card-title">📲 Уведомления в Telegram</h4>
+            <p class="kp-card-desc">Все заявки мгновенно прилетают в личные сообщения администратора или в общий рабочий Telegram-чат коворкинга.</p>
+          </div>
+
+          <div class="kp-card">
+            <h4 class="kp-card-title">📊 Яндекс Метрика & Цели</h4>
+            <p class="kp-card-desc">Полная настройка счетчика и целей на клики кнопок записи («Тест-день», «Тарифы», «Контакты») для точной аналитики рекламы.</p>
+          </div>
+
+          <div class="kp-card">
+            <h4 class="kp-card-title">⚖️ Закон ФЗ-152 РФ</h4>
+            <p class="kp-card-desc">Внедрение политики конфиденциальности, согласия на обработку персональных данных и чекбоксов для юридической безопасности.</p>
+          </div>
+
+          <div class="kp-card">
+            <h4 class="kp-card-title">🔍 Базовое SEO и GEO</h4>
+            <p class="kp-card-desc">Микроразметка Schema.org, OpenGraph для красивых превью в мессенджерах и оптимизация под локальный поиск «коворкинг рядом».</p>
+          </div>
+
+          <div class="kp-card">
+            <h4 class="kp-card-title">🌐 Размещение на вашем хостинге</h4>
+            <p class="kp-card-desc">Помощь в регистрации хостинга, привязке домена и настройке SSL-сертификата. Сайт полностью принадлежит вам без абонплат за конструкторы.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: TIMELINE (4 DAYS) -->
+    <section class="kp-section alt-bg">
+      <div class="container">
+        <div class="kp-section-head">
+          <span class="kp-tag">04 / ЭТАПЫ И СРОКИ</span>
+          <h2 class="kp-title">Дорожная карта разработки за 4 дня</h2>
+          <p class="kp-desc">
+            Четкий пошаговый процесс от сбора материалов до финального запуска на вашем хостинге.
+          </p>
+        </div>
+
+        <div class="timeline-steps">
+          <div class="timeline-step">
+            <div class="timeline-badge">
+              01
+              <small>ДЕНЬ 1</small>
+            </div>
+            <div class="timeline-content">
+              <h4>Сбор материалов и настройка доступов</h4>
+              <p>Сбор всех фото пространства, описания залов, тарифов и контактов. Помощь заказчику в регистрации хостинга и получении всех необходимых доступов.</p>
+            </div>
+            <div class="timeline-meta">
+              <div class="duration">1 рабочий день</div>
+              <div class="deliverable">Хостинг & Тексты готовы</div>
+            </div>
+          </div>
+
+          <div class="timeline-step">
+            <div class="timeline-badge">
+              02
+              <small>ДЕНЬ 2</small>
+            </div>
+            <div class="timeline-content">
+              <h4>Предоставление 3 вариантов дизайна</h4>
+              <p>Разработка и презентация трёх визуальных концепций лендинга коворкинга. Вы выбираете наиболее подходящий стиль под позиционирование пространства.</p>
+            </div>
+            <div class="timeline-meta">
+              <div class="duration">1 рабочий день</div>
+              <div class="deliverable">3 концепта на выбор</div>
+            </div>
+          </div>
+
+          <div class="timeline-step">
+            <div class="timeline-badge">
+              03
+              <small>ДЕНЬ 3</small>
+            </div>
+            <div class="timeline-content">
+              <h4>Оттачивание лендинга и внесение правок</h4>
+              <p>Полная доработка выбранного дизайна, наполнение всех блоков, интеграция анимаций и внесение корректировок (1 круг правок включен).</p>
+            </div>
+            <div class="timeline-meta">
+              <div class="duration">1 рабочий день</div>
+              <div class="deliverable">Идеально отточенный лендинг</div>
+            </div>
+          </div>
+
+          <div class="timeline-step qa">
+            <div class="timeline-badge" style="color:#7c3aed;">
+              04
+              <small>ДЕНЬ 4</small>
+            </div>
+            <div class="timeline-content">
+              <h4>Публикация на хостинге и запуск</h4>
+              <p>Деплой сайта на хостинг заказчика, подключение домена, SSL-сертификата безопасности, интеграций и финальное тестирование.</p>
+            </div>
+            <div class="timeline-meta">
+              <div class="duration">1 рабочий день</div>
+              <div class="deliverable" style="color:#7c3aed;">Запущенный сайт онлайн</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rules-banner">
+          ℹ️ <strong>Регламент правок:</strong> 1 круг правок включен в стоимость любого тарифа. Каждый последующий дополнительный круг правок — <strong>5 000 ₽</strong>.
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: PRICING (3 TIERS) -->
+    <section class="kp-section">
+      <div class="container">
+        <div class="kp-section-head">
+          <span class="kp-tag">05 / СТОИМОСТЬ И ТАРИФЫ</span>
+          <h2 class="kp-title">Прозрачные тарифные планы</h2>
+          <p class="kp-desc">
+            Фиксированные цены под любой бюджет. 1 круг правок включен во все пакеты.
+          </p>
+        </div>
+
+        <div class="tranches-box">
+          <!-- TIER 1 -->
+          <div class="tranche-card">
+            <div>
+              <div class="tranche-num" style="color:#64748b;">ТАРИФ 01 · БАЗОВЫЙ</div>
+              <div class="tranche-price">16 500 ₽</div>
+              <div class="tranche-title">Лендинг Простой</div>
+              <div class="tranche-desc">Качественный продающий лендинг для быстрого старта и презентации коворкинга.</div>
+              
+              <ul class="kp-card-list">
+                <li>Индивидуальный дизайн на чистом коде (3 варианта на выбор)</li>
+                <li>Все основные блоки (Зоны, Переговорки, Сервис, Тарифы, Карта)</li>
+                <li>Все политики конфиденциальности и документы (152-ФЗ)</li>
+                <li>Помощь в регистрации хостинга и домена</li>
+                <li>1 круг правок включен в стоимость</li>
+                <li>Срок разработки: 4 рабочих дня</li>
+              </ul>
+            </div>
+
+            <div style="margin-top:24px;">
+              <a href="https://t.me/Michael_Sage?text=Привет!%20Хочу%20заказать%20лендинг%20коворкинга%20Базовый%20за%2016500" target="_blank" class="btn-secondary" style="display:block; text-align:center; padding:12px 20px; background:#ffffff; color:#09090b; border:1px solid var(--border); text-decoration:none; font-family:var(--font-heading); font-weight:700; border-radius:4px;">
+                Выбрать за 16 500 ₽ ➔
+              </a>
+            </div>
+          </div>
+
+          <!-- TIER 2 (FEATURED) -->
+          <div class="tranche-card featured">
+            <div>
+              <div class="tranche-num" style="color:var(--green-dark);">ТАРИФ 02 · ХИТ ПРОДАЖ</div>
+              <div class="tranche-price">27 500 ₽</div>
+              <div class="tranche-title">Лендинг + 3 Интеграции</div>
+              <div class="tranche-desc">Максимальная конверсия: заявки падают напрямую в CRM, Telegram и на почту.</div>
+              
+              <ul class="kp-card-list">
+                <li><strong>Всё, что входит в тариф «Базовый»</strong></li>
+                <li>3 концепта дизайна на выбор во 2-й день</li>
+                <li><strong>Интеграция с Telegram:</strong> мгновенные заявки в чат</li>
+                <li><strong>Интеграция с CRM:</strong> авто-создание лидов</li>
+                <li><strong>Интеграция с Email:</strong> дублирование на почту</li>
+                <li>Настройка Яндекс Метрики и целей на кнопки</li>
+                <li>1 круг правок включен в стоимость</li>
+                <li>Срок разработки: 4 рабочих дня</li>
+              </ul>
+            </div>
+
+            <div style="margin-top:24px;">
+              <a href="https://t.me/Michael_Sage?text=Привет!%20Хочу%20заказать%20лендинг%20коворкинга%20с%20интеграциями%20за%2027500" target="_blank" class="btn-primary" style="display:block; text-align:center; padding:12px 20px; background:#09090b; color:#ffffff; text-decoration:none; font-family:var(--font-heading); font-weight:700; border-radius:4px;">
+                Выбрать за 27 500 ₽ ➔
+              </a>
+            </div>
+          </div>
+
+          <!-- TIER 3 (NDA) -->
+          <div class="tranche-card">
+            <div>
+              <div class="tranche-num" style="color:var(--purple);">ТАРИФ 03 · ПРИВАТНЫЙ</div>
+              <div class="tranche-price">39 000 ₽</div>
+              <div class="tranche-title">Тариф под NDA</div>
+              <div class="tranche-desc">Полный функционал тарифа за 27 500 ₽ со строгой защитой конфиденциальности.</div>
+              
+              <ul class="kp-card-list">
+                <li><strong>Всё, что входит в тариф за 27 500 ₽</strong> (все 3 интеграции)</li>
+                <li><strong>Полная конфиденциальность (NDA):</strong> проект не публикуется в портфолио, кейсах и статьях</li>
+                <li>Приоритетная сборка и поддержка</li>
+                <li>Помощь в подключении всех сервисов</li>
+                <li>1 круг правок включен в стоимость</li>
+                <li>Срок разработки: 4 рабочих дня</li>
+              </ul>
+            </div>
+
+            <div style="margin-top:24px;">
+              <a href="https://t.me/Michael_Sage?text=Привет!%20Хочу%20заказать%20лендинг%20коворкинга%20под%20NDA%20за%2039000" target="_blank" class="btn-secondary" style="display:block; text-align:center; padding:12px 20px; background:#ffffff; color:#09090b; border:1px solid var(--border); text-decoration:none; font-family:var(--font-heading); font-weight:700; border-radius:4px;">
+                Выбрать под NDA за 39 000 ₽ ➔
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: ACCEPTANCE BOX (OFFER & ACTIONS) -->
+    <section class="kp-section">
+      <div class="container">
+        <div class="accept-box">
+          <div>
+            <h3>Готовы привлечь резидентов в коворкинг?</h3>
+            <p>
+              Я лично проектирую и верстаю сайт, гарантируя безупречное качество кода, эстетику и конверсию в заявки на тест-день. Выберите удобный способ связи:
+            </p>
+            <div style="display:flex; gap:12px; flex-wrap:wrap;">
+              <a href="https://t.me/Michael_Sage" target="_blank" style="display:inline-flex; align-items:center; gap:8px; background:#10b981; color:#09090b; padding:12px 20px; font-weight:700; font-family:var(--font-heading); text-decoration:none; border-radius:4px;">
+                💬 Telegram ↗
+              </a>
+              <a href="https://max.ru/u/f9LHodD0cOJxk9sLajkZ5u_-WbQydR8lkTH6y34KqdU-QKoLzrW7FH8yJG0" target="_blank" style="display:inline-flex; align-items:center; gap:8px; background:#27272a; color:#ffffff; border:1px solid #3f3f46; padding:12px 20px; font-weight:600; font-family:var(--font-heading); text-decoration:none; border-radius:4px;">
+                💬 MAX ↗
+              </a>
+              <a href="/booking" target="_blank" style="display:inline-flex; align-items:center; gap:8px; background:#ffffff; color:#09090b; padding:12px 20px; font-weight:600; font-family:var(--font-heading); text-decoration:none; border-radius:4px;">
+                📅 Забронировать слот ↗
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <div style="font-family:var(--font-mono); font-size:0.75rem; color:#a1a1aa; text-transform:uppercase; margin-bottom:12px; letter-spacing:0.04em;">
+              Порядок запуска проекта:
+            </div>
+            <ul class="req-list">
+              <li><strong>1. Согласование:</strong> выбор тарифа и передача материалов.</li>
+              <li><strong>2. Предоплата:</strong> 50% перед стартом разработки.</li>
+              <li><strong>3. Сборка (4 дня):</strong> концепты ➔ верстка ➔ интеграция.</li>
+              <li><strong>4. Приемка:</strong> 1 круг правок включен в стоимость.</li>
+              <li><strong>5. Релиз:</strong> финальная оплата 50% и публикация на вашем хостинге.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER (EXACTLY AS ON HOMEPAGE) -->
+  <footer class="footer" style="background:#09090b; color:#a1a1aa; border-top:1px solid #27272a; padding:32px 0; font-size:0.86rem;">
+    <div class="container" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+      <div>
+        <strong style="color:#ffffff;">ИП Пузырёв Михаил Михайлович</strong> · ИНН 500177901407 · ОГРНИП 318505300123140
+      </div>
+      <ul style="display:flex; gap:20px; list-style:none; margin:0; padding:0; flex-wrap:wrap; font-family:var(--font-heading);">
+        <li><a href="/privacy" style="color:#a1a1aa; text-decoration:none;">Политика конфиденциальности</a></li>
+        <li><a href="/terms" style="color:#a1a1aa; text-decoration:none;">Пользовательское соглашение</a></li>
+        <li><a href="https://t.me/uncrn_sage" target="_blank" style="color:#a1a1aa; text-decoration:none;">Telegram</a></li>
+        <li><a href="https://max.ru/u/f9LHodD0cOJxk9sLajkZ5u_-WbQydR8lkTH6y34KqdU-QKoLzrW7FH8yJG0" target="_blank" style="color:#a1a1aa; text-decoration:none;">MAX</a></li>
+        <li><a href="/booking" style="color:#a1a1aa; text-decoration:none;">Забронировать слот</a></li>
+      </ul>
+    </div>
+  </footer>
+
+</body>
+</html>
