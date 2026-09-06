@@ -1832,7 +1832,7 @@
                     </div>
                     <div class="about-sticker" style="cursor: default;">
                         <div class="sticker-icon" style="background: var(--pop-purple); color:#fff;">10м</div>
-                        <span><strong>5. Опасности & Старт:</strong> красная зона (где ИИ запрещён) и план внедрения на понедельник.</span>
+                        <span><strong>5. Опасности & Старт:</strong> красная зона (где и когда ИИ запрещён) и план на понедельник.</span>
                     </div>
                 </div>
             </div>
@@ -2091,71 +2091,141 @@
             </div>
         </div>
 
-        <!-- Slide 8: Red Zone (5 Vertical Cards Layout) -->
+        <!-- Slide 8: Red Zone - WHERE (5 Business Functions) -->
         <div class="slide layout-fullwidth" id="slide-8">
             <div style="text-align: center; width: 100%;">
-                <span class="pop-subtitle" style="background: var(--pop-pink); margin-bottom: 0.6rem;">ЧАСТЬ 6. КРАСНАЯ ЗОНА: СТОП ИИ</span>
-                <h2 class="pop-title-section" style="margin-top: 0.1rem; margin-bottom: 0.4rem; text-shadow: 6px 6px 0px var(--pop-yellow);">Где ИИ ЗАПРЕЩЁН</h2>
+                <span class="pop-subtitle" style="background: var(--pop-pink); margin-bottom: 0.6rem;">ЧАСТЬ 6. КРАСНАЯ ЗОНА // БАРЬЕРЫ</span>
+                <h2 class="pop-title-section" style="margin-top: 0.1rem; margin-bottom: 0.4rem; text-shadow: 6px 6px 0px var(--pop-yellow);">ГДЕ ИИ ЗАПРЕЩЁН (ПРОЦЕССЫ)</h2>
             </div>
 
             <div class="redzone-5col-grid">
                 <!-- Card 1 -->
-                <div class="redzone-card" data-tip="Только человек!" onclick="openPopup('red_1', 'БАНКИ И ОПЛАТЫ: ТОЛЬКО ЧЕЛОВЕК', 'КАТЕГОРИЧЕСКИЙ ЗАПРЕТ', '⛔', '• <strong>Правило безопасности:</strong> у ИИ-систем и ботов ни при каких обстоятельствах не должно быть доступа к банковским счетам, ключам ЭЦП и подтверждению платежей.<br><br>• ИИ может сформировать платежку или выставить счет, но кнопку «Оплатить» в интернет-банке нажимает исключительно генеральный директор или главбух.')">
+                <div class="redzone-card" data-tip="Только человек!" onclick="openPopup('red_1', 'БАНКИ И ПЛАТЕЖИ: ТОЛЬКО ЧЕЛОВЕК', 'ФИНАНСЫ', '⛔', '• <strong>Где запрещено:</strong> отправка денег, валютный контроль, сдача отчетности в ФНС.<br><br>• <strong>Почему:</strong> у ИИ ни при каких обстоятельствах нет банковской ЭЦП и права акцепта платежей. ИИ может подготовить платежку или распознать счёт, но кнопку «Оплатить» нажимает только генеральный директор или главбух.')">
                     <div class="redzone-img-box">
-                        <img src="redzone_bank.webp" alt="Деньги и банк" class="redzone-img" loading="lazy">
+                        <img src="redzone_bank.webp" alt="Банки и платежи" class="redzone-img" loading="lazy">
                     </div>
                     <div class="redzone-content">
-                        <span class="redzone-badge">⛔ СТОП 1</span>
+                        <span class="redzone-badge">⛔ ФИНАНСЫ</span>
                         <div class="redzone-title">Банки & Оплаты</div>
-                        <div class="redzone-desc">Переводить деньги компании и ставить банковскую подпись бот не должен никогда.</div>
+                        <div class="redzone-desc">Переводить деньги со счетов компании и ставить подпись ЭЦП бот не должен никогда.</div>
                     </div>
                 </div>
 
                 <!-- Card 2 -->
-                <div class="redzone-card" data-tip="Эмпатия и такт!" onclick="openPopup('red_2', 'КОНФЛИКТЫ И VIP-КЛИЕНТЫ', 'ЧЕЛОВЕЧЕСКАЯ ЭМПАТИЯ', '⛔', '• <strong>Правило безопасности:</strong> если клиент недоволен, агрессивен или требует возврата денег, автоматический бот только усугубит скандал шаблонами.<br><br>• В таких диалогах ИИ обязан моментально переключить чат на живого руководителя с пометкой «Срочно! Конфликтный клиент».')">
+                <div class="redzone-card" data-tip="Личное доверие!" onclick="openPopup('red_2', 'VIP-КЛИЕНТЫ И СТРАТЕГИЯ', 'ПРОДАЖИ', '⛔', '• <strong>Где запрещено:</strong> переговоры с ключевыми партнерами и контракты с чеком в миллионы рублей.<br><br>• <strong>Почему:</strong> большие B2B-сделки держатся на личном контакте, эмпатии и химии между людьми. Автоматизация диалога с VIP-клиентом разрушает статус и доверие.')">
                     <div class="redzone-img-box">
                         <img src="redzone_vip.webp" alt="VIP клиенты" class="redzone-img" loading="lazy">
                     </div>
                     <div class="redzone-content">
-                        <span class="redzone-badge">⛔ СТОП 2</span>
-                        <div class="redzone-title">Конфликты & VIP</div>
-                        <div class="redzone-desc">Претензии, горячие конфликты и эмоции ключевых клиентов решает только человек.</div>
+                        <span class="redzone-badge">⛔ ПРОДАЖИ</span>
+                        <div class="redzone-title">VIP & Партнёры</div>
+                        <div class="redzone-desc">Крупные стратегические контракты и партнерства требуют живого личного контакта.</div>
                     </div>
                 </div>
 
                 <!-- Card 3 -->
-                <div class="redzone-card" data-tip="Сначала порядок!" onclick="openPopup('red_3', 'ХАОС БЕЗ РЕГЛАМЕНТОВ', 'ОШИБКА ВНЕДРЕНИЯ', '⛔', '• <strong>Правило безопасности:</strong> если в процессах компании нет четких правил и царит бардак, внедрение нейросетей только умножит скорость генерации ошибок.<br><br>• Сначала описываются регламенты и твердая логика, и только затем рутина передается ассистенту.')">
+                <div class="redzone-card" data-tip="Человеческая эмпатия!" onclick="openPopup('red_3', 'КОНФЛИКТЫ И СУДЕБНЫЕ РИСКИ', 'СЕРВИС И ПРАВО', '⛔', '• <strong>Где запрещено:</strong> ответы на досудебные претензии, угрозы судом и горячие скандалы.<br><br>• <strong>Почему:</strong> шаблонный или синтетический ответ бота клиенту в ярости гарантирует переход конфликта в суд. Бот обязан моментально переключить чат на живого руководителя.')">
                     <div class="redzone-img-box">
-                        <img src="redzone_chaos.webp" alt="Хаос без правил" class="redzone-img" loading="lazy">
+                        <img src="redzone_chaos.webp" alt="Конфликты и суды" class="redzone-img" loading="lazy">
                     </div>
                     <div class="redzone-content">
-                        <span class="redzone-badge">⛔ СТОП 3</span>
-                        <div class="redzone-title">Хаос без регламентов</div>
-                        <div class="redzone-desc">Если в отделе бардак, ИИ только ускорит хаос и начнет галлюцинировать.</div>
+                        <span class="redzone-badge">⛔ КОНФЛИКТЫ</span>
+                        <div class="redzone-title">Претензии & Суды</div>
+                        <div class="redzone-desc">Горячие жалобы и судебные претензии решает только живой юрист и руководитель.</div>
                     </div>
                 </div>
 
                 <!-- Card 4 -->
-                <div class="redzone-card" data-tip="Только чтение!" onclick="openPopup('red_4', 'УДАЛЕНИЕ БАЗ ДАННЫХ', 'ЗАЩИТА ИНФОРМАЦИИ', '⛔', '• <strong>Правило безопасности:</strong> ИИ-интеграциям выдаются права строго на чтение (`read-only`) и создание новых черновиков.<br><br>• Полный запрет на операцию удаления (`delete`) в CRM, 1С и облачных хранилищах, чтобы избежать случайной потери клиентской базы.')">
+                <div class="redzone-card" data-tip="Защита активов!" onclick="openPopup('red_4', 'УДАЛЕНИЕ БАЗ ДАННЫХ', 'БЕЗОПАСНОСТЬ', '⛔', '• <strong>Где запрещено:</strong> право безвозвратного удаления (DELETE) в CRM, ERP, 1С и облаках.<br><br>• <strong>Почему:</strong> ИИ-агентам выдаются права только на чтение (`read-only`) и создание черновиков. Любое удаление данных компании аппаратно заблокировано.')">
                     <div class="redzone-img-box">
                         <img src="redzone_db.webp" alt="Базы данных" class="redzone-img" loading="lazy">
                     </div>
                     <div class="redzone-content">
-                        <span class="redzone-badge">⛔ СТОП 4</span>
+                        <span class="redzone-badge">⛔ БЕЗОПАСНОСТЬ</span>
                         <div class="redzone-title">Удаление баз</div>
                         <div class="redzone-desc">Боту дают права только на чтение и черновики. Никакого удаления боевых данных.</div>
                     </div>
                 </div>
 
                 <!-- Card 5 -->
-                <div class="redzone-card" data-tip="Жесткий контроль!" onclick="openPopup('red_5', 'ОБЕЩАНИЕ СКИДОК И СРОКОВ', 'КОНТРОЛЬ МАРЖИ', '⛔', '• <strong>Правило безопасности:</strong> ИИ не должен обещать клиенту индивидуальные скидки 50% или доставку «к вечеру», если склад пуст.<br><br>• Все финансовые и временные границы должны быть жестко зашиты в правила работы бота без права отклонения.')">
+                <div class="redzone-card" data-tip="Контроль маржи!" onclick="openPopup('red_5', 'СКИДКИ И ОБЕЩАНИЕ СРОКОВ', 'МАРЖА И СКЛАД', '⛔', '• <strong>Где запрещено:</strong> обещание индивидуальных цен, скидок 50% и сроков поставки без сверки со складом.<br><br>• <strong>Почему:</strong> ИИ не чувствует юнит-экономику. Финансовые и временные границы должны быть жестко зафиксированы в коде.')">
                     <div class="redzone-img-box">
                         <img src="redzone_discount.webp" alt="Скидки и сроки" class="redzone-img" loading="lazy">
                     </div>
                     <div class="redzone-content">
-                        <span class="redzone-badge">⛔ СТОП 5</span>
+                        <span class="redzone-badge">⛔ МАРЖА</span>
                         <div class="redzone-title">Скидки & Сроки</div>
-                        <div class="redzone-desc">Обещание нестандартных условий без жесткой сверки реальных остатков на складе.</div>
+                        <div class="redzone-desc">Запрещено давать ИИ свободу торговаться или обещать сроки без сверки склада.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8b: Red Zone - WHEN (5 Conditions) -->
+        <div class="slide layout-fullwidth" id="slide-8b">
+            <div style="text-align: center; width: 100%;">
+                <span class="pop-subtitle" style="background: var(--pop-yellow); color: #000; margin-bottom: 0.6rem;">ЧАСТЬ 6. КРАСНАЯ ЗОНА // УСЛОВИЯ</span>
+                <h2 class="pop-title-section" style="margin-top: 0.1rem; margin-bottom: 0.4rem; text-shadow: 6px 6px 0px var(--pop-pink);">КОГДА ИИ ЗАПРЕЩЁН (УСЛОВИЯ)</h2>
+            </div>
+
+            <div class="redzone-5col-grid">
+                <!-- Card 1 -->
+                <div class="redzone-card" data-tip="Сначала порядок!" onclick="openPopup('when_1', 'ХАОС И ОТСУТСТВИЕ РЕГЛАМЕНТОВ', 'УСЛОВИЕ 1', '⛔', '• <strong>В чем риск:</strong> если в процессах компании бардак и сотрудники сами не знают порядка шагов, ИИ лишь ускорит генерацию ошибок.<br><br>• <strong>Правило:</strong> автоматизация хаоса дает автоматизированный хаос. Сначала прописывается прозрачный регламент, затем подключается модель.')">
+                    <div class="redzone-img-box">
+                        <img src="when_chaos.webp" alt="Хаос без регламентов" class="redzone-img" loading="lazy">
+                    </div>
+                    <div class="redzone-content">
+                        <span class="redzone-badge">⛔ УСЛОВИЕ 1</span>
+                        <div class="redzone-title">Хаос без правил</div>
+                        <div class="redzone-desc">Если в процессах бардак, нейросеть только ускорит хаос и запутает клиентов.</div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="redzone-card" data-tip="Цена ошибки 1%!" onclick="openPopup('when_2', 'ЦЕНА ЕДИНИЧНОЙ ОШИБКИ ФАТАЛЬНА', 'УСЛОВИЕ 2', '⛔', '• <strong>В чем риск:</strong> нейросети работают с вероятностной природой (98–99% точности, но не 100%).<br><br>• <strong>Правило:</strong> если единичная ошибка влечет уголовное дело, штраф в 50 млн ₽ или угрозу жизни, процесс ведет человек или детерминированный код.')">
+                    <div class="redzone-img-box">
+                        <img src="when_fatal.webp" alt="Фатальная ошибка" class="redzone-img" loading="lazy">
+                    </div>
+                    <div class="redzone-content">
+                        <span class="redzone-badge">⛔ УСЛОВИЕ 2</span>
+                        <div class="redzone-title">Фатальная цена</div>
+                        <div class="redzone-desc">Когда 1% ошибки несет фатальный риск: крупные штрафы, суды или жизни людей.</div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="redzone-card" data-tip="Не усложняйте!" onclick="openPopup('when_3', 'ГДЕ РАБОТАЕТ ПРОСТОЙ СКРИПТ ИЛИ ТАБЛИЦА', 'УСЛОВИЕ 3', '⛔', '• <strong>В чем риск:</strong> переусложнение архитектуры. Нейросети дороже, медленнее и хуже считают строгую математику.<br><br>• <strong>Правило:</strong> если задача решается обычной формулой Excel, базовым SQL или условием IF/ELSE — используйте надежный классический код без ИИ.')">
+                    <div class="redzone-img-box">
+                        <img src="when_script.webp" alt="Простой код без ИИ" class="redzone-img" loading="lazy">
+                    </div>
+                    <div class="redzone-content">
+                        <span class="redzone-badge">⛔ УСЛОВИЕ 3</span>
+                        <div class="redzone-title">Простой код / Excel</div>
+                        <div class="redzone-desc">Не ставьте нейросеть туда, где быстрее и точнее справляется обычная формула.</div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="redzone-card" data-tip="Защита от галлюцинаций!" onclick="openPopup('when_4', 'НЕТ ПРОВЕРЕННОЙ БАЗЫ ЗНАНИЙ (RAG)', 'УСЛОВИЕ 4', '⛔', '• <strong>В чем риск:</strong> без регламентов и корпоративной Wiki нейросеть начинает «галлюцинировать» — выдумывать цены, скидки и адреса.<br><br>• <strong>Правило:</strong> бот запускается строго на подтвержденной базе знаний компании с цитированием первоисточников.')">
+                    <div class="redzone-img-box">
+                        <img src="when_rag.webp" alt="Нет базы знаний" class="redzone-img" loading="lazy">
+                    </div>
+                    <div class="redzone-content">
+                        <span class="redzone-badge">⛔ УСЛОВИЕ 4</span>
+                        <div class="redzone-title">Нет базы знаний</div>
+                        <div class="redzone-desc">Без оцифрованных регламентов ИИ начинает выдумывать факты и галлюцинировать.</div>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="redzone-card" data-tip="Human-in-the-loop!" onclick="openPopup('when_5', 'НЕТ КОНТРОЛЯ ЧЕЛОВЕКОМ (БЕЗ НАДЗОРА)', 'УСЛОВИЕ 5', '⛔', '• <strong>В чем риск:</strong> 100% автономия без регулярного надзора приводит к скрытому накоплению багов и сбоев.<br><br>• <strong>Правило Human-in-the-loop:</strong> за каждым ИИ-агентом закреплен ответственный сотрудник, проверяющий метрики и логи.')">
+                    <div class="redzone-img-box">
+                        <img src="when_human.webp" alt="Без надзора человека" class="redzone-img" loading="lazy">
+                    </div>
+                    <div class="redzone-content">
+                        <span class="redzone-badge">⛔ УСЛОВИЕ 5</span>
+                        <div class="redzone-title">Без надзора</div>
+                        <div class="redzone-desc">Нельзя оставлять ИИ в полной автономии: контроль качества всегда за человеком.</div>
                     </div>
                 </div>
             </div>
@@ -2283,7 +2353,7 @@
     </div>
 
     <script>
-        const totalSlides = 12;
+        const totalSlides = 13;
         let currentSlide = 0;
 
         const slideNames = [
@@ -2296,8 +2366,9 @@
             "3. Маркетинг",
             "4. Операционка",
             "5. HR и Найм",
-            "6. Опасности",
-            "7. С чего начать",
+            "6. Где запрещён",
+            "7. Когда нельзя",
+            "8. С чего начать",
             "Финал"
         ];
 
