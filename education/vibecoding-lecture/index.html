@@ -86,7 +86,7 @@
             border: 3px solid #000000;
             border-radius: 0;
             pointer-events: none;
-            z-index: 100000;
+            z-index: 2147483647 !important;
             transform: translate(-50%, -50%);
             box-shadow: 3px 3px 0px #000000;
             transition: width 0.15s ease, height 0.15s ease, background-color 0.15s ease, opacity 0.15s ease, transform 0.1s ease;
@@ -113,7 +113,7 @@
         /* Comic Speech Bubble Tooltip */
         .comic-speech-bubble {
             position: fixed;
-            z-index: 99999;
+            z-index: 2147483646 !important;
             pointer-events: none;
             background: #FFFFFF;
             color: #000000;
@@ -2512,7 +2512,7 @@
 
         // Smart hover detection on clickable items and data-tip elements
         document.addEventListener('mouseover', (e) => {
-            const isClickable = e.target.closest('button, a, .slide-nav-btn, .pop-nav-arrow, .nav-track-item, .fullscreen-btn, .pop-fullscreen-btn, .pop-action-btn, [data-tip], [onclick], input, select, textarea');
+            const isClickable = e.target.closest('button, a, .slide-nav-btn, .pop-nav-arrow, .nav-track-item, .fullscreen-btn, .pop-fullscreen-btn, .pop-action-btn, .btn-slide-name, .thief-card, .about-sticker, .redzone-card, .qr-card-pop, [data-tip], input, select, textarea');
             if (isClickable) {
                 cursorDot.classList.add('hovered');
             } else {
