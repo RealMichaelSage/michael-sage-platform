@@ -1019,6 +1019,38 @@
       font-weight: 600;
     }
 
+    .speaker-quick-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .speaker-stat-pill {
+      background: #0B0D14;
+      border: var(--thin-border);
+      padding: 9px 12px;
+      box-shadow: 2px 2px 0px #000000;
+    }
+
+    .speaker-stat-val {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 1.25rem;
+      color: var(--pop-yellow);
+      line-height: 1.1;
+    }
+
+    .speaker-stat-lbl {
+      font-size: 0.73rem;
+      color: #A0A5B5;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      margin-top: 3px;
+      line-height: 1.2;
+    }
+
     .speaker-info-col {
       display: flex;
       flex-direction: column;
@@ -2278,7 +2310,7 @@
           <span class="section-tag tag-blue">АВТОР И&nbsp;ВЕДУЩИЙ ПРОГРАММЫ</span>
           <h2 class="section-title">КТО ВЕДЕТ КУРС</h2>
           <p class="section-desc">
-            15+&nbsp;лет в&nbsp;IT, венчуре и&nbsp;AI. Предприниматель, инженер-разработчик и&nbsp;эдвайзер.
+            AI-архитектор, инженер-разработчик и&nbsp;предприниматель с&nbsp;15-летним опытом. Создатель 20+&nbsp;прикладных AI-проектов, через курсы которого прошло более 5000&nbsp;студентов и&nbsp;школьников.
           </p>
         </div>
 
@@ -2286,21 +2318,40 @@
           <!-- Left: Portrait Card -->
           <div class="speaker-portrait-card">
             <div class="speaker-photo-wrap">
-              <img src="mikhail_photo.jpg" alt="Михаил Пузырёв — AI-архитектор, инженер-разработчик и предприниматель" class="speaker-photo">
+              <img src="mikhail_photo.jpg" alt="Михаил Пузырёв — AI-архитектор, инженер-разработчик и преподаватель" class="speaker-photo">
               <div class="speaker-role-floating">АВТОР И&nbsp;ПРЕПОДАВАТЕЛЬ</div>
             </div>
             <div class="speaker-meta">
               <h3>Михаил Пузырёв</h3>
-              <p>AI-архитектор · Предприниматель · Инженер-разработчик</p>
+              <p>AI-архитектор · Предприниматель · Преподаватель</p>
+
+              <div class="speaker-quick-stats">
+                <div class="speaker-stat-pill">
+                  <div class="speaker-stat-val">5000+</div>
+                  <div class="speaker-stat-lbl">Студентов и&nbsp;школьников</div>
+                </div>
+                <div class="speaker-stat-pill">
+                  <div class="speaker-stat-val">20+</div>
+                  <div class="speaker-stat-lbl">Боевых AI-проектов</div>
+                </div>
+                <div class="speaker-stat-pill">
+                  <div class="speaker-stat-val">3000+</div>
+                  <div class="speaker-stat-lbl">Разобранных стартапов</div>
+                </div>
+                <div class="speaker-stat-pill">
+                  <div class="speaker-stat-val">15+ лет</div>
+                  <div class="speaker-stat-lbl">В&nbsp;IT и&nbsp;венчуре</div>
+                </div>
+              </div>
             </div>
           </div>
 
           <!-- Right: Mission & Milestones -->
           <div class="speaker-info-col">
             <div class="speaker-mission-box">
-              <div class="quote-tag">ПОЧЕМУ Я СОЗДАЮ КУРСЫ ДЛЯ&nbsp;ПОДРОСТКОВ?</div>
+              <div class="quote-tag">ПОЧЕМУ ТЕМА НЕЙРОСЕТЕЙ ТАК ВАЖНА ДЛЯ&nbsp;МЕНЯ?</div>
               <div class="quote-body">
-                «Верю, что искусственный интеллект — это суперсила, которая не&nbsp;заменяет человека, а&nbsp;делает его в&nbsp;10 раз эффективнее. Моя цель — научить ребят использовать нейросети не&nbsp;просто для&nbsp;игр и&nbsp;списывания, а&nbsp;для&nbsp;созидания, запуска смелых проектов, развития лидерства и&nbsp;продуктивности.»
+                «Верю, что искусственный интеллект — это суперсила, которая не&nbsp;заменяет человека, а&nbsp;делает его в&nbsp;10 раз эффективнее. Для&nbsp;меня нейросети — это не&nbsp;хайп, а&nbsp;новый способ созидать: стирается барьер между смелой идеей и&nbsp;готовым работающим проектом. Моя цель — научить ребят использовать нейросети не&nbsp;просто для&nbsp;игр и&nbsp;списывания, а&nbsp;для&nbsp;созидания, запуска смелых проектов, развития лидерства и&nbsp;продуктивности.»
               </div>
             </div>
 
@@ -2308,21 +2359,28 @@
               <div class="milestone-item">
                 <div class="milestone-num">01</div>
                 <div class="milestone-content">
-                  <strong>Колоссальная насмотренность и&nbsp;венчур:</strong> лично провел диагностику и&nbsp;снятие ограничений для&nbsp;<strong>3000+&nbsp;стартапов и&nbsp;бизнесов</strong>. Член правления Ассоциации венчурного рынка «Большая Медведица». Привлечено &gt;&nbsp;350&nbsp;млн ₽ в&nbsp;проекты портфеля.
+                  <strong>Боевые кейсы в&nbsp;нейросетях (20+ реализованных AI-проектов):</strong> разработка и&nbsp;внедрение прикладных мультиагентных систем, автономных профильных ИИ-медиа (генерация, фактчекинг и&nbsp;автопубликация аналитических статей без&nbsp;людей), умных голосовых ботов, CRM-ассистентов и&nbsp;платформ вайб-кодинга. Экс-руководитель Акселератора ИИ НИУ&nbsp;ВШЭ (100% доходимость батча).
                 </div>
               </div>
 
               <div class="milestone-item">
                 <div class="milestone-num">02</div>
                 <div class="milestone-content">
-                  <strong>Твердые бизнес-результаты:</strong> 15+&nbsp;лет в&nbsp;IT и&nbsp;предпринимательстве. <strong>3&nbsp;экзита</strong> (успешные продажи бизнеса или&nbsp;долей). В&nbsp;75&nbsp;раз вырастил средний чек digital-агентства. Основатель стартап-студии <a href="https://uncrn.ru" target="_blank">UNCRN</a> и&nbsp;агентства SAGE.
+                  <strong>Масштабный опыт преподавания (5000+ выпускников):</strong> авторские курсы, мастер-классы и&nbsp;практические интенсивы Михаила по&nbsp;прикладным нейросетям, технологическому лидерству и&nbsp;вайб-кодингу прошло <strong>более 5000&nbsp;студентов и&nbsp;школьников</strong> в&nbsp;НИУ&nbsp;ВШЭ, Сколково, Корпоративной Академии Росатом, СБЕРе, РУДН и&nbsp;Нетологии.
                 </div>
               </div>
 
               <div class="milestone-item">
                 <div class="milestone-num">03</div>
                 <div class="milestone-content">
-                  <strong>Академический опыт и&nbsp;AI-архитектура:</strong> магистр <strong>British Business Academy</strong> (Managing Innovation, 2025). Экс-руководитель Акселератора ИИ НИУ&nbsp;ВШЭ и&nbsp;акселератора НЭТИ. Создатель Международного Университета Инноваций и&nbsp;Инвестиций (МУИИ), наставник стартапов в&nbsp;Сколково, Академии Росатом и&nbsp;СБЕРе.
+                  <strong>Колоссальная насмотренность и&nbsp;венчур:</strong> лично провел диагностику и&nbsp;снятие ограничений для&nbsp;<strong>3000+&nbsp;стартапов и&nbsp;бизнесов</strong>. Член правления Ассоциации венчурного рынка «Большая Медведица». Привлечено &gt;&nbsp;350&nbsp;млн ₽ в&nbsp;проекты портфеля.
+                </div>
+              </div>
+
+              <div class="milestone-item">
+                <div class="milestone-num">04</div>
+                <div class="milestone-content">
+                  <strong>Твердые бизнес-результаты и&nbsp;академическая база:</strong> 15+&nbsp;лет в&nbsp;IT-индустрии. <strong>3&nbsp;успешных экзита</strong> (продажи бизнеса или&nbsp;долей). В&nbsp;75&nbsp;раз вырастил средний чек digital-агентства. Магистр <strong>British Business Academy</strong> (Managing Innovation, 2025). Основатель стартап-студии <a href="https://uncrn.ru" target="_blank">UNCRN</a> и&nbsp;агентства SAGE.
                 </div>
               </div>
             </div>
