@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Коммерческое предложение на разработку продающего лендинга для магазина цветов и доставки в Сочи | Михаил Пузырёв">
+  <meta property="og:description" content="Коммерческое предложение на разработку продающего лендинга для магазина цветов и доставки в Сочи | Михаил Пузырёв">
+  <title>КП: Разработка продающего лендинга магазина цветов в Сочи | Михаил Пузырёв</title>
+  
+  <!-- STRICT PRIVACY & NOINDEX: Hidden from search engines and AI crawlers -->
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
+  <meta name="yandex" content="noindex, nofollow">
+  
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/style.css?v=3.0">
+  
+  <style>
+    :root {
+      --font-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      
+      --accent: #059669;
+      --accent-dim: rgba(5, 150, 105, 0.08);
+      --accent-border: rgba(5, 150, 105, 0.25);
+      --blue: #0284c7;
+      --purple: #7c3aed;
+      --rose: #e11d48;
+      --gold: #d97706;
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: #09090b;
+      background: #ffffff;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, .kp-title, .kp-card-title, .tranche-price, .timeline-badge {
+      font-family: var(--font-heading);
+      letter-spacing: -0.03em;
+    }
+
+    /* Top Confidential Bar */
+    .confidential-bar {
+      background: #09090b;
+      color: #a1a1aa;
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      padding: 8px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #27272a;
+      position: sticky;
+      top: 0;
+      z-index: 1001;
+    }
+    .confidential-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #34d399;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .confidential-meta {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    /* Sub-nav for KP */
+    .kp-nav-bar {
+      position: sticky;
+      top: 35px;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 0;
+    }
+    .kp-nav-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 clamp(24px, 4vw, 64px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .kp-client-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .kp-logo-tag {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      background: var(--accent-dim);
+      color: var(--accent);
+      border: 1px solid var(--accent-border);
+      padding: 3px 8px;
+      font-weight: 700;
+    }
+
+    /* KP Specific Hero */
+    .kp-hero {
+      padding: 0;
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+    }
+    .kp-hero .container {
+      padding-top: clamp(48px, 6vw, 72px);
+      padding-bottom: clamp(32px, 4vw, 48px);
+    }
+    .kp-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid var(--accent-border);
+      padding: 4px 10px;
+      font-weight: 600;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .kp-title {
+      font-size: clamp(2rem, 4.2vw, 3.1rem);
+      font-weight: 700;
+      color: #09090b;
+      line-height: 1.15;
+    }
+    .kp-desc {
+      font-size: 1.1rem;
+      color: #52525b;
+      max-width: 920px;
+      line-height: 1.6;
+      margin-top: 14px;
+    }
+
+    .kp-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 36px;
+    }
+    @media (max-width: 1024px) {
+      .kp-meta-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 540px) {
+      .kp-meta-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .kp-meta-card {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      padding: 22px;
+      transition: all 0.2s ease;
+    }
+    .kp-meta-card:hover {
+      border-color: #cbd5e1;
+      transform: translateY(-2px);
+    }
+    .kp-meta-card .label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+    .kp-meta-card .value {
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: #09090b;
+      letter-spacing: -0.03em;
+    }
+    .kp-meta-card .sub {
+      font-size: 0.84rem;
+      color: #64748b;
+      margin-top: 4px;
+    }
+
+    /* Section Structure */
+    .kp-section {
+      padding: 0;
+      border-bottom: 1px solid var(--border);
+      background: #ffffff;
+    }
+    .kp-section .container {
+      padding-top: clamp(56px, 7vw, 92px);
+      padding-bottom: clamp(56px, 7vw, 92px);
+    }
+    .kp-section.alt-bg {
+      background: #f8fafc;
+    }
+    .kp-section-head {
+      margin-bottom: 36px;
+    }
+
+    /* Cards & Grids (EXACTLY 3 IN A ROW - NO EMPTY SPACES) */
+    .kp-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 1024px) {
+      .kp-grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 680px) {
+      .kp-grid-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+    .kp-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 28px;
+      position: relative;
+    }
+    .kp-card.featured {
+      border-color: #09090b;
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+    }
+    .kp-card-num {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .kp-card-title {
+      font-size: 1.22rem;
+      font-weight: 700;
+      color: #09090b;
+      margin-bottom: 10px;
+    }
+    .kp-card-desc {
+      font-size: 0.92rem;
+      color: #52525b;
+      line-height: 1.6;
+    }
+    .kp-card-list {
+      list-style: none;
+      margin-top: 14px;
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+    }
+    .kp-card-list li {
+      position: relative;
+      padding-left: 22px;
+      font-size: 0.92rem;
+      color: #334155;
+      margin-bottom: 10px;
+      line-height: 1.55;
+    }
+    .kp-card-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 800;
+    }
+    .kp-card-list.danger li::before {
+      content: "✕";
+      color: #e11d48;
+    }
+
+    .kp-role-tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 2px;
+      margin-bottom: 12px;
+      letter-spacing: 0.03em;
+    }
+
+    /* Timeline Stepper */
+    .timeline-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 28px;
+    }
+    .timeline-step {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 80px 1fr 260px;
+      gap: 20px;
+      align-items: center;
+      transition: all 0.2s ease;
+    }
+    .timeline-step:hover {
+      border-color: #09090b;
+    }
+    .timeline-step.qa {
+      background: #faf5ff;
+      border: 2px solid #c084fc;
+    }
+    .timeline-badge {
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: 1.35rem;
+      color: #09090b;
+      text-align: center;
+    }
+    .timeline-badge small {
+      display: block;
+      font-size: 0.68rem;
+      color: #64748b;
+      font-weight: 600;
+    }
+    .timeline-content h4 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #09090b;
+    }
+    .timeline-content p {
+      font-size: 0.9rem;
+      color: #52525b;
+      line-height: 1.5;
+    }
+    .timeline-meta {
+      text-align: right;
+      font-family: var(--font-mono);
+    }
+    .timeline-meta .duration {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #09090b;
+    }
+    .timeline-meta .deliverable {
+      font-size: 0.78rem;
+      color: #059669;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    /* Financial Tranches Box (EXACTLY 3 TIERS: Air, Pro, Pro MAX) */
+    .tranches-box {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 28px;
+    }
+    @media (max-width: 1024px) {
+      .tranches-box {
+        grid-template-columns: 1fr;
+      }
+    }
+    .tranche-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 30px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .tranche-card.featured {
+      border: 2px solid #09090b;
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+    }
+    .tranche-num {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      color: #64748b;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .tranche-price {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #09090b;
+      margin: 10px 0 6px 0;
+      letter-spacing: -0.03em;
+    }
+    .tranche-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #09090b;
+      margin-bottom: 8px;
+    }
+    .tranche-desc {
+      font-size: 0.9rem;
+      color: #64748b;
+      line-height: 1.55;
+      margin-bottom: 18px;
+    }
+
+    /* Acceptance Box */
+    .accept-box {
+      background: #09090b;
+      color: #ffffff;
+      padding: clamp(32px, 5vw, 64px);
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 48px;
+    }
+    .accept-box h3 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+      color: #ffffff;
+    }
+    .accept-box p {
+      color: #a1a1aa;
+      font-size: 1.02rem;
+      line-height: 1.6;
+    }
+    .req-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .req-list li {
+      position: relative;
+      padding-left: 28px;
+      font-size: 0.94rem;
+      color: #d4d4d8;
+      line-height: 1.55;
+    }
+    .req-list li::before {
+      content: "➔";
+      position: absolute;
+      left: 0;
+      color: #34d399;
+      font-weight: 700;
+    }
+    .req-list strong {
+      color: #ffffff;
+    }
+
+    .rules-banner {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 16px 20px;
+      font-size: 0.92rem;
+      color: #334155;
+      margin-top: 24px;
+      border-left: 4px solid #09090b;
+    }
+
+    /* Print styling */
+    @media print {
+      .confidential-bar, .kp-nav-bar, .site-header, .site-footer, .kp-actions, .no-print {
+        display: none !important;
+      }
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-size: 9.5pt !important;
+      }
+      .container {
+        max-width: 100% !important;
+        padding: 0 !important;
+        border: none !important;
+      }
+      .kp-section {
+        padding: 16px 0 !important;
+        border-bottom: 1px solid #ddd !important;
+        page-break-inside: avoid;
+      }
+      .accept-box {
+        background: #f8fafc !important;
+        color: #000000 !important;
+        border: 1px solid #000000 !important;
+      }
+      .accept-box h3, .accept-box p, .req-list {
+        color: #000000 !important;
+      }
+      .req-list strong {
+        color: #000000 !important;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .timeline-step {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .timeline-meta {
+        text-align: left;
+      }
+      .accept-box {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+    }
+  </style>
+</head>
+<body class="page-kp">
+
+  <!-- CONFIDENTIAL STATUS BAR -->
+  <div class="confidential-bar">
+    <div class="confidential-badge">
+      <span>🔒</span> КОНФИДЕНЦИАЛЬНО · ДОСТУП ПО ПРЯМОЙ ССЫЛКЕ
+    </div>
+    <div class="confidential-meta">
+      <span><strong>ID:</strong> KP-FLOWERS-060926</span>
+      <span><strong>Дата:</strong> 06.09.2026</span>
+      <span><strong>Версия:</strong> 2.0 (Финальная)</span>
+    </div>
+  </div>
+
+  <!-- STICKY HEADER ACTIONS -->
+  <header class="kp-nav-bar">
+    <div class="kp-nav-inner">
+      <div class="kp-client-info">
+        <a href="/" style="text-decoration:none; font-weight:700; color:var(--black); font-size:1.05rem; font-family:var(--font-heading);">
+          Михаил Пузырёв
+        </a>
+        <span class="kp-logo-tag">WEB-РАЗРАБОТКА & AI</span>
+        <span style="color:#cbd5e1;">/</span>
+        <span style="font-size:0.9rem; font-weight:600; color:#334155;">
+          Авторская флористика и доставка цветов (Сочи)
+        </span>
+      </div>
+
+      <div class="kp-actions no-print" style="display:flex; gap:10px; align-items:center;">
+        <a href="/booking" target="_blank" class="btn-secondary" style="padding:8px 14px; font-size:0.84rem; text-decoration:none; color:var(--black); background:#ffffff; border:1px solid var(--border); font-family:var(--font-heading); font-weight:600; display:inline-flex; align-items:center; gap:6px;">
+          📅 Забронировать слот
+        </a>
+        <a href="https://max.ru/u/f9LHodD0cOJxk9sLajkZ5u_-WbQydR8lkTH6y34KqdU-QKoLzrW7FH8yJG0" target="_blank" class="btn-secondary" style="padding:8px 14px; font-size:0.84rem; text-decoration:none; color:#ffffff; background:#27272a; border:1px solid #3f3f46; font-family:var(--font-heading); font-weight:600; display:inline-flex; align-items:center; gap:6px;">
+          💬 MAX ↗
+        </a>
+        <a href="https://t.me/Michael_Sage" target="_blank" class="btn-primary" style="padding:8px 14px; font-size:0.84rem; background:#09090b; color:#ffffff; text-decoration:none; font-family:var(--font-heading); font-weight:600; display:inline-flex; align-items:center; gap:6px;">
+          💬 Telegram ↗
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section id="intro" class="kp-hero" data-nav-title="Паспорт КП">
+      <div class="container">
+        <span class="kp-tag">FLOWERS & FLORISTICS · ПРОДАЮЩИЙ ЛЕНДИНГ НА КОДЕ</span>
+        <h1 class="kp-title">
+          Разработка продающего лендинга<br>
+          для магазина цветов и доставки в&nbsp;Сочи
+        </h1>
+        <p class="kp-desc">
+          Создание эстетичного, воздушного и&nbsp;сверхбыстрого интернет-магазина на&nbsp;чистом коде. Презентация авторских букетов, заказ в&nbsp;1&nbsp;клик с&nbsp;фотосогласованием до&nbsp;отправки, интеграции с&nbsp;Telegram/CRM и&nbsp;100% мобильная конверсия по&nbsp;всему Большому Сочи.
+        </p>
+
+        <!-- KPI SUMMARY CARDS (4 CARDS) -->
+        <div class="kp-meta-grid">
+          <div class="kp-meta-card">
+            <div class="label">Срок разработки</div>
+            <div class="value">4 дня</div>
+            <div class="sub">Пошаговая дорожная карта</div>
+          </div>
+          <div class="kp-meta-card">
+            <div class="label">Варианты дизайна</div>
+            <div class="value" style="color:var(--blue);">3 концепта</div>
+            <div class="sub">На выбор во 2-й день</div>
+          </div>
+          <div class="kp-meta-card">
+            <div class="label">Скорость загрузки</div>
+            <div class="value" style="color:var(--accent);">100 / 100</div>
+            <div class="sub">0.5 сек на смартфонах</div>
+          </div>
+          <div class="kp-meta-card">
+            <div class="label">Юридический блок</div>
+            <div class="value" style="color:var(--purple);">152-ФЗ РФ</div>
+            <div class="sub">Все политики и согласия</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: CONTEXT & CONVERSION (EXACTLY 3 IN A ROW) -->
+    <section id="goals" class="kp-section" data-nav-title="Цели & Конверсия">
+      <div class="container">
+        <div class="kp-section-head">
+          <span class="kp-tag">01 / ЦЕЛИ И КОНВЕРСИЯ</span>
+          <h2 class="kp-title">Как сайт будет превращать жителей и&nbsp;гостей Сочи в&nbsp;постоянных клиентов</h2>
+          <p class="kp-desc">
+            В цветочном ритейле Сочи (Центр, Адлер, Красная Поляна, Сириус) более 85% заказов совершаются со&nbsp;смартфонов в&nbsp;режиме срочности или желания удивить близких. Сайт снимает главные страхи и&nbsp;превращает трафик в&nbsp;оплаченные букеты.
+          </p>
+        </div>
+
+        <div class="kp-grid-3">
+          <div class="kp-card" style="background:#fff7f7; border-color:#fed7d7;">
+            <div class="kp-card-num" style="color:#e11d48;">ТИПИЧНЫЕ ОШИБКИ И СЛИВ ЛИДОВ</div>
+            <h3 class="kp-card-title" style="color:#9f1239;">Почему уходят покупатели:</h3>
+            <ul class="kp-card-list danger">
+              <li><strong>Медленная загрузка (Тильда/WP):</strong> тяжёлые сайты грузятся 4–7 сек при нестабильном 4G на пляже или в горах.</li>
+              <li><strong>Страх «ожидание / реальность»:</strong> покупатель боится, что доставят увядший или несоответствующий фото букет.</li>
+              <li><strong>Сложный процесс заказа:</strong> 10 обязательных полей регистрации вместо мгновенного заказа в 1 клик через мессенджер.</li>
+              <li><strong>Долгий ответ флориста:</strong> пока оператор отвечает в WhatsApp, клиент уже купил у ближайшего конкурента.</li>
+            </ul>
+          </div>
+
+          <div class="kp-card featured" style="background:#f0fdf4; border-color:#bbf7d0;">
+            <div class="kp-card-num" style="color:#16a34a;">РЕШЕНИЕ НА НАШЕМ ЛЕНДИНГЕ</div>
+            <h3 class="kp-card-title" style="color:#14532d;">Что получает ваш салон:</h3>
+            <ul class="kp-card-list">
+              <li><strong>Заказ в 1 клик за 25 секунд:</strong> понятные кнопки заказа с выбором удобного канала (Telegram / WhatsApp / Звонок).</li>
+              <li><strong>Фотосогласование перед выездом:</strong> демонстрация стандарта вау-сервиса (фото живого букета флористом в чат заказчику).</li>
+              <li><strong>Транспортировка в аквабоксах:</strong> гарантия свежести цветов на сочинской жаре со специальным питательным раствором.</li>
+              <li><strong>3 концепта дизайна на выбор:</strong> во 2-й день вы получаете три готовых визуальных решения на утверждение.</li>
+            </ul>
+          </div>
+
+          <div class="kp-card" style="background:#f8fafc; border-color:#e2e8f0;">
+            <div class="kp-card-num" style="color:#0284c7;">ЭКОНОМИКА И РОСТ ВЫРУЧКИ</div>
+            <h3 class="kp-card-title" style="color:#0f172a;">Финансовый результат:</h3>
+            <ul class="kp-card-list">
+              <li><strong>Рост среднего чека:</strong> встроенный модуль умных допродаж (открытка с каллиграфией, дизайнерская ваза, сладости, свечи).</li>
+              <li><strong>Цветочная подписка:</strong> блок регулярной доставки свежих цветов в апартаменты, отели, рестораны и дома Сочи.</li>
+              <li><strong>Оцифровка базы в CRM:</strong> сохранение контактов клиентов и дат (дни рождения, годовщины) для повторных продаж.</li>
+              <li><strong>Молниеносная скорость (100/100):</strong> нулевой отток мобильного трафика благодаря чистому коду.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: STRUCTURE (EXACTLY 6 CARDS = 2 ROWS OF 3) -->
+    <section id="structure" class="kp-section alt-bg" data-nav-title="Архитектура">
+      <div class="container">
+        <div class="kp-section-head">
+          <span class="kp-tag">02 / АРХИТЕКТУРА И СТРУКТУРА</span>
+          <h2 class="kp-title">Анатомия продающего цветочного лендинга</h2>
+          <p class="kp-desc">
+            Каждый экран спроектирован по&nbsp;законам коммерческой психологии: от&nbsp;первого эстетического вау-импульса до&nbsp;мгновенной оплаты или бронирования букета.
+          </p>
+        </div>
+
+        <div class="kp-grid-3">
+          <div class="kp-card">
+            <span class="kp-role-tag" style="background:#e0f2fe; color:#0369a1;">БЛОК 01 · ПЕРВЫЙ ЭКРАН</span>
+            <h4 style="font-size:1.1rem; font-weight:700; margin-bottom:6px;">Hero-экран с сочным оффером</h4>
+            <p style="font-size:0.88rem; color:#64748b;">Эмоциональный заголовок, фокус на свежести цветов утренней поставки, таймер экспресс-доставки по Большому Сочи (от 60 мин) и быстрый фильтр поводов.</p>
+          </div>
+
+          <div class="kp-card featured">
+            <span class="kp-role-tag" style="background:#fef3c7; color:#92400e;">БЛОК 02 · ВИТРИНА</span>
+            <h4 style="font-size:1.1rem; font-weight:700; margin-bottom:6px;">Каталог авторских коллекций</h4>
+            <p style="font-size:0.88rem; color:#64748b;">Карточки популярных букетов с крупными фото, составом, фиксированной ценой и кнопкой «Заказать в 1 клик». Фильтры: монобукеты, шляпные коробки, корзины, премиум.</p>
+          </div>
+
+          <div class="kp-card">
+            <span class="kp-role-tag" style="background:#dcfce7; color:#166534;">БЛОК 03 · ДОВЕРИЕ</span>
+            <h4 style="font-size:1.1rem; font-weight:700; margin-bottom:6px;">Фотоконтроль и свежесть</h4>
+            <p style="font-size:0.88rem; color:#64748b;">Демонстрация процесса: флорист собирает заказ, отправляет фото/видео букета в Telegram/WhatsApp заказчику, упаковывает в аквабокс с кризалом для сохранения стойкости.</p>
+          </div>
+
+          <div class="kp-card">
+            <span class="kp-role-tag" style="background:#f3e8ff; color:#6b21a8;">БЛОК 04 · ЛОГИСТИКА</span>
+            <h4 style="font-size:1.1rem; font-weight:700; margin-bottom:6px;">Зоны доставки по Сочи</h4>
+            <p style="font-size:0.88rem; color:#64748b;">Наглядная карта и условия: Центральный Сочи, Хоста, Мацеста, Адлер, Сириус, Красная Поляна и Эстосадок. Время курьера, условия бесплатной доставки и анонимное вручение.</p>
+          </div>
+
+          <div class="kp-card">
+            <span class="kp-role-tag" style="background:#ffe4e6; color:#9f1239;">БЛОК 05 · UPSELL</span>
+            <h4 style="font-size:1.1rem; font-weight:700; margin-bottom:6px;">Дополнения к букету</h4>
+            <p style="font-size:0.88rem; color:#64748b;">Увеличение чека: дизайнерские открытки с индивидуальным текстом каллиграфией, премиальный шоколад, аромасвечи, гелиевые шары и подходящие по форме вазы.</p>
+          </div>
+
+          <div class="kp-card">
+            <span class="kp-role-tag" style="background:#f1f5f9; color:#334155;">БЛОК 06 · ЛИД-ФОРМА</span>
+            <h4 style="font-size:1.1rem; font-weight:700; margin-bottom:6px;">Подбор под ваш бюджет</h4>
+            <p style="font-size:0.88rem; color:#64748b;">Простая форма: клиент вводит комфортную сумму (например, 5 000 ₽) и повод — флорист за 5 минут присылает 3 готовых варианта букета прямо в мессенджер.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: TECH & ADVANTAGES (EXACTLY 3 IN A ROW) -->
+    <section id="tech" class="kp-section" data-nav-title="Технологии">
+      <div class="container">
+        <div class="kp-section-head">
+          <span class="kp-tag">03 / ТЕХНОЛОГИЧЕСКИЙ СТЕК</span>
+          <h2 class="kp-title">Чистый код против медленных шаблонных конструкторов</h2>
+          <p class="kp-desc">
+            Мы не используем тяжелые конструкторы вроде Tilda или WordPress, которые грузят мегабайты лишнего кода и виснут при слабом сигнале сети. Ваш сайт летает моментально.
+          </p>
+        </div>
+
+        <div class="kp-grid-3">
+          <div class="kp-card">
+            <div class="kp-card-num" style="color:var(--accent);">ТЕХНОЛОГИЯ 01</div>
+            <h3 class="kp-card-title">100/100 Core Web Vitals</h3>
+            <p class="kp-card-desc">Сверхбыстрая загрузка за 0.4–0.6 сек на смартфонах. Чистый семантический HTML5/CSS3/JS без тормозящих плагинов. Фото букетов сжимаются в WebP/AVIF без потери сочности красок.</p>
+            <ul class="kp-card-list">
+              <li>Идеальный отклик в мобильных сетях</li>
+              <li>Мгновенный скролл без фризов</li>
+              <li>Максимальный приоритет в Яндекс и Google</li>
+            </ul>
+          </div>
+
+          <div class="kp-card featured">
+            <div class="kp-card-num" style="color:var(--blue);">ТЕХНОЛОГИЯ 02</div>
+            <h3 class="kp-card-title">Тройная интеграция без потерь</h3>
+            <p class="kp-card-desc">Все заказы мгновенно поступают дежурному флористу в Telegram за 1 секунду со всеми нюансами (состав, адрес доставки, текст открытки), дублируются в CRM и на почту.</p>
+            <ul class="kp-card-list">
+              <li>Мгновенный Telegram-бот уведомлений</li>
+              <li>Интеграция с AmoCRM / Битрикс24</li>
+              <li>Резервное дублирование на Email</li>
+            </ul>
+          </div>
+
+          <div class="kp-card">
+            <div class="kp-card-num" style="color:var(--purple);">ТЕХНОЛОГИЯ 03</div>
+            <h3 class="kp-card-title">Mobile-First & 152-ФЗ РФ</h3>
+            <p class="kp-card-desc">Интерфейс спроектирован под большой палец правой руки: крупные кликабельные кнопки, отсутствие мелкого шрифта и полная юридическая защита бизнеса.</p>
+            <ul class="kp-card-list">
+              <li>Политика конфиденциальности и согласие</li>
+              <li>Honeypot-защита от спама без капчи</li>
+              <li>Корректная разметка Open Graph для соцсетей</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: ROADMAP (4 DAYS SPRINT) -->
+    <section id="roadmap" class="kp-section alt-bg" data-nav-title="Дорожная карта">
+      <div class="container">
+        <div class="kp-section-head">
+          <span class="kp-tag">04 / ДОРОЖНАЯ КАРТА</span>
+          <h2 class="kp-title">4 дня от первого брифа до приема заказов на вашем хостинге</h2>
+          <p class="kp-desc">
+            Четкий регламент каждого дня разработки. Вы точно знаете, что происходит на каждом этапе без затягивания сроков и скрытых платежей.
+          </p>
+        </div>
+
+        <div class="timeline-steps">
+          <!-- STEP 1 -->
+          <div class="timeline-step">
+            <div class="timeline-badge">01<small>ДЕНЬ</small></div>
+            <div class="timeline-content">
+              <h4>Бриф, сбор фотоматериалов и настройка хостинга</h4>
+              <p>Анализируем ваш ассортимент, собираем фотографии букетов, прайс-лист и зоны доставки. Помогаем зарегистрировать быстрый хостинг и привязать домен.</p>
+            </div>
+            <div class="timeline-meta">
+              <div class="duration">День 1</div>
+              <div class="deliverable">✓ Готовая структура и доступы</div>
+            </div>
+          </div>
+
+          <!-- STEP 2 -->
+          <div class="timeline-step">
+            <div class="timeline-badge">02<small>ДЕНЬ</small></div>
+            <div class="timeline-content">
+              <h4>Предоставление 3 вариантов дизайна на выбор</h4>
+              <p>Разрабатываем три визуальные концепции оформления: воздушный сканди-минимализм, чувственная европейская флористика и строгий премиум-бутик. Вы выбираете лучший.</p>
+            </div>
+            <div class="timeline-meta">
+              <div class="duration">День 2</div>
+              <div class="deliverable">✓ 3 дизайн-концепта на выбор</div>
+            </div>
+          </div>
+
+          <!-- STEP 3 -->
+          <div class="timeline-step">
+            <div class="timeline-badge">03<small>ДЕНЬ</small></div>
+            <div class="timeline-content">
+              <h4>Верстка на чистом коде, наполнение и шлифовка</h4>
+              <p>Собираем утвержденный дизайн, верстаем интерактивную витрину букетов, форму быстрого заказа и блоки допродаж. Вносим все ваши пожелания и корректировки.</p>
+            </div>
+            <div class="timeline-meta">
+              <div class="duration">День 3</div>
+              <div class="deliverable">✓ 1 круг правок включен в стоимость</div>
+            </div>
+          </div>
+
+          <!-- STEP 4 -->
+          <div class="timeline-step qa">
+            <div class="timeline-badge" style="color:var(--accent);">04<small>ДЕНЬ</small></div>
+            <div class="timeline-content">
+              <h4>Интеграции, финальное QA-тестирование и релиз</h4>
+              <p>Подключаем уведомления в Telegram-чат флориста, CRM и почту. Настраиваем цели Яндекс Метрики. Тестируем отправку заказов с iPhone/Android и публикуем сайт на вашем хостинге.</p>
+            </div>
+            <div class="timeline-meta">
+              <div class="duration">День 4</div>
+              <div class="deliverable" style="color:var(--accent);">✓ Готовый рабочий сайт на вашем хостинге</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rules-banner">
+          <strong>Правило правок:</strong> В стоимость каждого тарифа уже включен <strong>1 полный круг комплексных правок</strong> на 3-й день. Все последующие дополнительные круги правок оплачиваются отдельно по ставке <strong>5 000 ₽ / круг</strong>.
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: PRICING (EXACTLY 3 TIERS: AIR, PRO, PRO MAX) -->
+    <section id="pricing" class="kp-section" data-nav-title="Тарифы">
+      <div class="container">
+        <div class="kp-section-head">
+          <span class="kp-tag">05 / СТОИМОСТЬ И ТАРИФЫ</span>
+          <h2 class="kp-title">Прозрачные тарифы без скрытых доплат</h2>
+          <p class="kp-desc">
+            Фиксированная стоимость, закрепленная договором. Оплата разбита на 2 части: 50% предоплата перед стартом и 50% после успешного релиза на вашем хостинге.
+          </p>
+        </div>
+
+        <div class="tranches-box">
+          <!-- TIER 1: AIR -->
+          <div class="tranche-card">
+            <div>
+              <div class="tranche-num">ТАРИФ 01 · БАЗОВЫЙ</div>
+              <div class="tranche-price">16 500 ₽</div>
+              <div class="tranche-title">Air</div>
+              <div class="tranche-desc">Стильный и быстрый сайт-витрина для старта онлайн-продаж букетов.</div>
+              
+              <ul class="kp-card-list">
+                <li>Продающий лендинг на чистом коде</li>
+                <li>3 концепта дизайна на выбор во 2-й день</li>
+                <li>Адаптивная верстка под все смартфоны и ПК</li>
+                <li>Каталог букетов с кнопками заказа</li>
+                <li>Базовая форма отправки заявок на Email</li>
+                <li>Пакет юридических документов (152-ФЗ РФ)</li>
+                <li>1 круг правок включен в стоимость</li>
+                <li>Срок разработки: 4 рабочих дня</li>
+              </ul>
+            </div>
+
+            <div style="margin-top:24px;">
+              <a href="https://t.me/Michael_Sage?text=Привет!%20Хочу%20заказать%20лендинг%20магазина%20цветов%20Air%20за%2016500" target="_blank" class="btn-secondary" style="display:block; text-align:center; padding:12px 20px; background:#ffffff; color:#09090b; border:1px solid var(--border); text-decoration:none; font-family:var(--font-heading); font-weight:700; border-radius:4px;">
+                Выбрать Air за 16 500 ₽ ➔
+              </a>
+            </div>
+          </div>
+
+          <!-- TIER 2: PRO (FEATURED) -->
+          <div class="tranche-card featured">
+            <div>
+              <div class="tranche-num" style="color:var(--accent);">ТАРИФ 02 · РЕКОМЕНДУЕМЫЙ</div>
+              <div class="tranche-price">27 500 ₽</div>
+              <div class="tranche-title">Pro</div>
+              <div class="tranche-desc">Максимальная конверсия: заявки падают мгновенно в Telegram флористу, CRM и на почту.</div>
+              
+              <ul class="kp-card-list">
+                <li><strong>Всё, что входит в тариф Air</strong></li>
+                <li>3 концепта дизайна на выбор во 2-й день</li>
+                <li><strong>Интеграция с Telegram:</strong> мгновенные заказы флористу в чат за 1 сек</li>
+                <li><strong>Интеграция с CRM:</strong> авто-создание сделок (AmoCRM / Битрикс24)</li>
+                <li><strong>Интеграция с Email:</strong> дублирование на почту</li>
+                <li><strong>Модуль Upsell:</strong> выбор открыток, ваз и подарков к букету</li>
+                <li>Настройка Яндекс Метрики и целей на кнопки заказа</li>
+                <li>1 круг правок включен в стоимость</li>
+                <li>Срок разработки: 4 рабочих дня</li>
+              </ul>
+            </div>
+
+            <div style="margin-top:24px;">
+              <a href="https://t.me/Michael_Sage?text=Привет!%20Хочу%20заказать%20лендинг%20магазина%20цветов%20Pro%20за%2027500" target="_blank" class="btn-primary" style="display:block; text-align:center; padding:12px 20px; background:#09090b; color:#ffffff; text-decoration:none; font-family:var(--font-heading); font-weight:700; border-radius:4px;">
+                Выбрать Pro за 27 500 ₽ ➔
+              </a>
+            </div>
+          </div>
+
+          <!-- TIER 3: PRO MAX (NDA) -->
+          <div class="tranche-card">
+            <div>
+              <div class="tranche-num" style="color:var(--purple);">ТАРИФ 03 · PRO MAX</div>
+              <div class="tranche-price">39 000 ₽</div>
+              <div class="tranche-title">Pro MAX (NDA)</div>
+              <div class="tranche-desc">Полный функционал тарифа Pro со строгой защитой коммерческой тайны под NDA.</div>
+              
+              <ul class="kp-card-list">
+                <li><strong>Всё, что входит в тариф Pro</strong> (все 3 интеграции)</li>
+                <li><strong>Полная конфиденциальность (NDA):</strong> проект не публикуется в портфолио, кейсах и статьях</li>
+                <li>Сценарии корпоративных заказов и цветочной подписки</li>
+                <li>Приоритетная сборка и личная поддержка</li>
+                <li>Помощь в подключении онлайн-эквайринга и кассы</li>
+                <li>1 круг правок включен в стоимость</li>
+                <li>Срок разработки: 4 рабочих дня</li>
+              </ul>
+            </div>
+
+            <div style="margin-top:24px;">
+              <a href="https://t.me/Michael_Sage?text=Привет!%20Хочу%20заказать%20лендинг%20магазина%20цветов%20Pro%20MAX%20за%2039000" target="_blank" class="btn-secondary" style="display:block; text-align:center; padding:12px 20px; background:#ffffff; color:#09090b; border:1px solid var(--border); text-decoration:none; font-family:var(--font-heading); font-weight:700; border-radius:4px;">
+                Выбрать Pro MAX за 39 000 ₽ ➔
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: ACCEPTANCE BOX -->
+    <section class="kp-section" style="padding:0; border-bottom:none;">
+      <div class="accept-box">
+        <div>
+          <h3>Порядок запуска проекта</h3>
+          <p>
+            Мы начинаем работу сразу после согласования тарифа и внесения 50% предоплаты. Все договоренности фиксируются в договоре.
+          </p>
+          <div style="margin-top:24px;">
+            <a href="https://t.me/Michael_Sage" target="_blank" class="btn-primary" style="display:inline-block; padding:14px 28px; background:#ffffff; color:#09090b; text-decoration:none; font-weight:700; border-radius:4px;">
+              Запустить проект в Telegram ➔
+            </a>
+          </div>
+        </div>
+        <div>
+          <h4 style="color:#ffffff; font-size:1.1rem; margin-bottom:16px;">Что требуется от вас в 1-й день:</h4>
+          <ul class="req-list">
+            <li><strong>Фотографии букетов и салона:</strong> актуальные снимки ваших работ (поможем отобрать лучшие).</li>
+            <li><strong>Прайс-лист и условия доставки:</strong> зоны по Сочи, минимальный чек, стоимость курьера.</li>
+            <li><strong>Доступы к хостингу:</strong> логин и пароль для привязки домена (или поможем зарегистрировать с нуля).</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: DIRECT CONTACT & BOOKING (MATCHING HOMEPAGE) -->
+    <section id="contact" class="form-section" data-nav-title="Связь">
+      <div class="form-inner" style="align-items:center;">
+        <div class="form-left" style="max-width:580px;">
+          <div class="section-tag" style="color:#a1a1aa;">СВЯЗЬ & БРОНИРОВАНИЕ</div>
+          <h2 class="form-title">Готовы создать лучший сайт цветов в&nbsp;Сочи?</h2>
+          <p class="form-sub">
+            Я лично проектирую и&nbsp;верстаю сайт, гарантируя безупречное качество кода, эстетику и&nbsp;конверсию в&nbsp;заказы букетов с&nbsp;доставкой по&nbsp;Сочи. Отвечу лично и&nbsp;предложу пошаговый план запуска.
+          </p>
+          <div style="margin-top:24px;font-family:var(--font-mono);font-size:0.88rem;color:#a1a1aa;line-height:1.8;">
+            <div>• Канал в&nbsp;Telegram: <a href="https://t.me/uncrn_sage" target="_blank" style="color:#fff;text-decoration:underline;">@uncrn_sage</a></div>
+            <div style="margin-top:8px;color:#71717a;font-size:0.82rem;">
+              <strong>Порядок запуска:</strong> выбор тарифа ➔ 50% предоплата ➔ 4 дня разработки ➔ сдача (1 круг правок включен) ➔ релиз на вашем хостинге.
+            </div>
+          </div>
+        </div>
+
+        <div class="direct-contact-card">
+          <div style="font-family:var(--font-mono);font-size:0.75rem;color:#34d399;font-weight:600;margin-bottom:4px;letter-spacing:0.04em;">
+            // ПРЯМАЯ СВЯЗЬ БЕЗ ПОСРЕДНИКОВ
+          </div>
+
+          <a href="https://t.me/Michael_Sage" target="_blank" class="btn-primary" style="display:flex;align-items:center;justify-content:center;gap:12px;padding:16px;font-size:0.95rem;background:#ffffff;border-color:#ffffff;color:#09090b;text-decoration:none;font-weight:700;border-radius:0;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-2.02 1.28-5.7 3.77-.54.37-1.03.55-1.47.54-.48-.01-1.4-.27-2.09-.49-.84-.27-1.51-.42-1.45-.89.03-.25.38-.51 1.07-.78 4.19-1.82 6.98-3.03 8.37-3.61 3.98-1.66 4.81-1.95 5.35-1.96.12 0 .39.03.56.17.14.12.18.28.2.4.01.07.01.21 0 .36z"/></svg>
+            <span>Написать в&nbsp;Telegram ↗</span>
+          </a>
+
+          <a href="/booking" class="btn-secondary" style="display:flex;align-items:center;justify-content:center;gap:12px;padding:16px;font-size:0.95rem;background:#27272a;border-color:#3f3f46;color:#fff;text-decoration:none;font-weight:600;border-radius:0;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><rect x="3" y="4" width="18" height="18"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <span>Забронировать слот в&nbsp;Календаре ↗</span>
+          </a>
+
+          <a href="https://max.ru/u/f9LHodD0cOJxk9sLajkZ5u_-WbQydR8lkTH6y34KqdU-QKoLzrW7FH8yJG0" target="_blank" class="btn-secondary" style="display:flex;align-items:center;justify-content:center;gap:12px;padding:16px;font-size:0.95rem;background:#18181b;border-color:#27272a;color:#d4d4d8;text-decoration:none;font-weight:600;border-radius:0;">
+            <span>Написать в&nbsp;MAX ↗</span>
+          </a>
+
+          <div style="margin-top:6px;padding-top:14px;border-top:1px solid #27272a;display:flex;justify-content:space-between;align-items:center;font-family:var(--font-mono);font-size:0.78rem;color:#a1a1aa;">
+            <span>Прямой контакт</span>
+            <span style="color:#34d399;">● Online</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER (EXACTLY AS ON HOMEPAGE) -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <strong>ИП Пузырёв Михаил Михайлович</strong> · ИНН 500177901407 · ОГРНИП 318505300123140
+      </div>
+      <ul class="footer-links">
+        <li><a href="/privacy">Политика конфиденциальности</a></li>
+        <li><a href="/terms">Пользовательское соглашение</a></li>
+        <li><a href="https://t.me/uncrn_sage" target="_blank">Telegram</a></li>
+        <li><a href="https://max.ru/u/f9LHodD0cOJxk9sLajkZ5u_-WbQydR8lkTH6y34KqdU-QKoLzrW7FH8yJG0" target="_blank">MAX</a></li>
+        <li><a href="/booking">Забронировать слот</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="/js/main.js?v=2.8"></script>
+</body>
+</html>
