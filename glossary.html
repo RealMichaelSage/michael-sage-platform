@@ -559,9 +559,17 @@
       opacity: 1;
       transform: translateY(0);
     }
+
+    /* STRICTLY DISABLE GENERIC PAGE SCROLLSPY ON GLOSSARY - ONLY ALPHABET RAIL ALLOWED */
+    .page-scrollspy {
+      display: none !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
   </style>
 </head>
-<body>
+<body class="glossary-page">
 
   <!-- HEADER NAVIGATION -->
   <header class="nav">
@@ -606,7 +614,7 @@
 
   <main>
     <!-- HERO SECTION -->
-    <section id="hero" class="glossary-frame glossary-hero-section" data-nav-title="AI Глоссарий">
+    <section id="hero" class="glossary-frame glossary-hero-section">
       <div class="hero-badge">
         <span class="dot"></span>
         БАЗА ЗНАНИЙ // АРХИТЕКТУРА & ИНЖИНИРИНГ
@@ -653,7 +661,7 @@
     </section>
 
     <!-- MAIN GLOSSARY CONTENT -->
-    <section id="terms" class="glossary-frame glossary-content-section" data-nav-title="250+ терминов">
+    <section id="terms" class="glossary-frame glossary-content-section">
       <div id="noResults" style="display: none; padding: 48px 0; text-align: center; color: var(--gray);">
         <div style="font-size: 2.5rem; margin-bottom: 12px;">🔍</div>
         <h3>Термины не найдены</h3>
@@ -675,7 +683,7 @@
   </main>
 
   <!-- DIRECT MESSENGER CONTACT & BOOKING SECTION -->
-  <section id="contact" class="form-section" data-nav-title="Связь">
+  <section id="contact" class="form-section">
     <div class="form-inner" style="align-items:center;">
       <div class="form-left" style="max-width:540px;">
         <div class="section-tag" style="color:#a1a1aa;">СВЯЗЬ & БРОНИРОВАНИЕ</div>
@@ -1036,9 +1044,12 @@ function initScrollSpy() {
       renderTerms();
       scrollToHashTerm();
       window.addEventListener('hashchange', scrollToHashTerm);
+      // Explicitly purge generic page-scrollspy so only the alphabet rail remains
+      const stray = document.querySelector('.page-scrollspy');
+      if (stray) stray.remove();
     });
   </script>
   <script src="/js/auth.js?v=1.4"></script>
-  <script src="/js/main.js?v=2.8"></script>
+  <script src="/js/main.js?v=2.9"></script>
 </body>
 </html>

@@ -617,6 +617,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // DYNAMIC DESKTOP SECTION SCROLLSPY & DYNAMIC LOGO BADGE
   // ══════════════════════════════════════════════════════════════════
   function initPageScrollspy() {
+    // If the page has an alphabet rail or dedicated glossary scrollspy, disable generic page scrollspy
+    if (document.getElementById('glossaryAlphabetNav') || 
+        document.querySelector('.glossary-scrollspy') || 
+        document.body.classList.contains('glossary-page') || 
+        window.location.pathname.includes('glossary')) {
+      const existing = document.querySelector('.page-scrollspy');
+      if (existing) existing.remove();
+      return;
+    }
+
     const rawSections = Array.from(document.querySelectorAll('section[id], header[id]')).filter(sec => {
       return sec.id && !sec.classList.contains('mobile-menu') && sec.offsetHeight > 100;
     });
