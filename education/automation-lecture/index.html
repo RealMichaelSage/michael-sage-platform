@@ -1548,10 +1548,11 @@
 
         .big-qr-card {
             background: #FFFFFF;
-            border: var(--thick-border);
-            box-shadow: var(--hard-shadow-lg);
+            border: 4px solid #000000;
+            outline: 3px solid var(--pop-yellow);
+            box-shadow: 14px 14px 0px var(--pop-pink), 15px 15px 0px 4px #000000;
             border-radius: 0;
-            padding: 24px 28px;
+            padding: 26px 30px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -1565,8 +1566,9 @@
         }
 
         .big-qr-card:hover {
-            transform: rotate(0deg) scale(1.02);
-            box-shadow: 16px 16px 0px #000000;
+            transform: rotate(-0.5deg) scale(1.02);
+            box-shadow: 18px 18px 0px var(--pop-cyan), 19px 19px 0px 4px #000000;
+            outline-color: var(--pop-green);
         }
 
         .big-qr-badge {
@@ -1574,14 +1576,14 @@
             color: #000000;
             font-family: 'Outfit', sans-serif;
             font-weight: 900;
-            font-size: 0.85rem;
-            padding: 4px 12px;
-            border: 2px solid #000000;
+            font-size: 0.88rem;
+            padding: 5px 14px;
+            border: 2.5px solid #000000;
             border-radius: 0;
-            box-shadow: 2px 2px 0px #000000;
+            box-shadow: 3px 3px 0px #000000;
             text-transform: uppercase;
             letter-spacing: 0.04em;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
             display: inline-block;
         }
 
@@ -1589,11 +1591,11 @@
             background: #FFFFFF;
             border: 3.5px solid #000000;
             padding: 14px;
-            box-shadow: 6px 6px 0px #000000;
+            box-shadow: 5px 5px 0px var(--pop-yellow), 6px 6px 0px 2px #000000;
             display: inline-flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
         }
 
         .big-qr-box img, .big-qr-box canvas {
@@ -1605,9 +1607,13 @@
         .big-qr-url {
             font-family: 'Outfit', sans-serif;
             font-weight: 900;
-            font-size: 1.12rem;
+            font-size: 1.15rem;
             color: #000000;
-            margin-bottom: 8px;
+            background: #F3F4F6;
+            padding: 4px 12px;
+            border: 2px solid #000000;
+            box-shadow: 2px 2px 0px #000000;
+            margin-bottom: 10px;
             letter-spacing: -0.01em;
             word-break: break-all;
         }
@@ -1654,7 +1660,8 @@
         .big-qr-card {
                 padding: 16px 14px !important;
                 transform: none !important;
-                box-shadow: 5px 5px 0px #000000 !important;
+                outline: 2.5px solid var(--pop-yellow) !important;
+                box-shadow: 7px 7px 0px var(--pop-pink), 8px 8px 0px 2px #000000 !important;
                 max-width: 320px !important;
             }
             .big-qr-box {
