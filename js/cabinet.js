@@ -208,7 +208,7 @@ function renderClubLessons() {
             </div>
           </div>
           <div>
-            <a href="https://t.me/c/3802053746/82" target="_blank" class="btn-secondary" style="padding:9px 18px; font-size:0.82rem; background:#ffffff; font-weight:600; text-decoration:none;">Тема чата в Telegram ↗</a>
+            <a href="https://t.me/c/3802053746/82" target="_blank" class="btn-secondary" style="padding:9px 18px; font-size:0.82rem; background:#ffffff; font-weight:600; text-decoration:none;">Перейти в Telegram-чат клуба ↗</a>
           </div>
         </div>
       `;
