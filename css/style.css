@@ -2129,11 +2129,19 @@ main > .section:first-child {
 .lightbox-meta {
   margin-top: 14px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   width: 100%;
   max-width: 840px;
   gap: 16px;
+}
+
+.lightbox-caption-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  text-align: left;
 }
 
 .lightbox-caption {
@@ -2141,7 +2149,6 @@ main > .section:first-child {
   font-family: var(--mono);
   font-size: 0.85rem;
   text-align: left;
-  flex: 1;
   line-height: 1.4;
 }
 
@@ -2156,14 +2163,16 @@ main > .section:first-child {
   border-radius: 0;
   border: 1px solid rgba(255, 255, 255, 0.35);
   white-space: nowrap;
+  flex-shrink: 0;
+  align-self: flex-start;
 }
 
 .lightbox-hint {
   font-family: var(--mono);
   font-size: 0.74rem;
   color: rgba(255, 255, 255, 0.7);
-  margin-top: 8px;
-  text-align: center;
+  text-align: left;
+  margin: 0;
 }
 
 .lightbox-close {

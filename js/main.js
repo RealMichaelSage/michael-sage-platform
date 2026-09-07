@@ -404,10 +404,12 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
           
           <div class="lightbox-meta">
-            <div class="lightbox-caption"></div>
+            <div class="lightbox-caption-group">
+              <div class="lightbox-caption"></div>
+              <div class="lightbox-hint">Нажмите на фото или клавиши ← → для переключения</div>
+            </div>
             <div class="lightbox-counter">1 / 1</div>
           </div>
-          <div class="lightbox-hint">Нажмите на фото или клавиши ← → для переключения</div>
         </div>
       `;
       document.body.appendChild(lightbox);
