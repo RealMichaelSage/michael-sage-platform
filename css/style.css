@@ -28,6 +28,7 @@
   --green: #10b981;
   --green-dark: #059669;
   --green-bg: #ecfdf5;
+  --emerald: #10b981;
   --cyan: #06b6d4;
   --red: #ef4444;
 }
@@ -2145,23 +2146,23 @@ main > .section:first-child {
 }
 
 .lightbox-counter {
-  color: var(--emerald);
+  color: #ffffff;
   font-family: var(--mono);
-  font-size: 0.8rem;
+  font-size: 0.84rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
-  background: rgba(255, 255, 255, 0.08);
-  padding: 4px 10px;
+  letter-spacing: 0.06em;
+  background: rgba(255, 255, 255, 0.16);
+  padding: 5px 12px;
   border-radius: 0;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.35);
   white-space: nowrap;
 }
 
 .lightbox-hint {
   font-family: var(--mono);
-  font-size: 0.72rem;
-  color: rgba(255, 255, 255, 0.45);
-  margin-top: 6px;
+  font-size: 0.74rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 8px;
   text-align: center;
 }
 
