@@ -31,6 +31,14 @@
   --emerald: #10b981;
   --cyan: #06b6d4;
   --red: #ef4444;
+
+  /* Card Standard Design Tokens (Reference: Image 4) */
+  --card-bg: #ffffff;
+  --card-border: 1px solid var(--border);
+  --card-border-color: var(--border);
+  --card-radius: 0px;
+  --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  --card-shadow-hover: 0 12px 32px rgba(0, 0, 0, 0.07);
 }
 
 html {
@@ -1075,23 +1083,25 @@ main > .section:first-child {
 
 .feature-card {
   padding: clamp(32px, 3.2vw, 40px) clamp(24px, 2.5vw, 32px);
-  background: var(--bg);
-  border: 1px solid var(--border);
+  background: var(--card-bg, #ffffff);
+  border: var(--card-border, 1px solid var(--border));
+  border-radius: var(--card-radius, 0) !important;
+  box-shadow: var(--card-shadow, 0 4px 20px rgba(0, 0, 0, 0.04));
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   gap: 12px;
   height: 100%;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.25s ease,
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.2s ease,
               background 0.2s ease;
 }
 
 .feature-card:hover {
-  border-color: var(--black);
-  transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
+  border-color: var(--border);
+  transform: translateY(-3px);
+  box-shadow: var(--card-shadow-hover, 0 12px 32px rgba(0, 0, 0, 0.07));
 }
 
 .card-num {
@@ -1227,11 +1237,15 @@ main > .section:first-child {
   padding: 40px 32px;
   display: flex;
   flex-direction: column;
-  background: #ffffff;
-  border: 1px solid var(--border);
+  background: var(--card-bg, #ffffff);
+  border: var(--card-border, 1px solid var(--border));
+  border-radius: var(--card-radius, 0) !important;
+  box-shadow: var(--card-shadow, 0 4px 20px rgba(0, 0, 0, 0.04));
   position: relative;
   height: 100%;
-  transition: all 0.2s ease;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.2s ease;
 }
 
 .price-card.featured {
@@ -3010,15 +3024,10 @@ main > .section:first-child {
   }
 }
 
-/* Premium Card Micro-interactions */
-.price-card {
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.25s ease;
-}
 .price-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.08);
+  transform: translateY(-3px);
+  box-shadow: var(--card-shadow-hover, 0 12px 32px rgba(0, 0, 0, 0.07));
+  border-color: var(--border);
 }
 
 .project-card {
@@ -4792,7 +4801,38 @@ input[type="reset"],
 .matrix-table-card {
   background: #ffffff;
   border: 1px solid var(--border);
+  border-radius: 0 !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+/* ══════════════ UNIFIED SWISS STARK CARD STANDARD ══════════════ */
+/* Reference: Design System Card Standard (Image 4) */
+.stark-card {
+  background: var(--card-bg, #ffffff) !important;
+  border: var(--card-border, 1px solid var(--border)) !important;
+  border-radius: var(--card-radius, 0) !important;
+  box-shadow: var(--card-shadow, 0 4px 20px rgba(0, 0, 0, 0.04)) !important;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.2s ease !important;
+}
+
+.stark-card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: var(--card-shadow-hover, 0 12px 32px rgba(0, 0, 0, 0.07)) !important;
+  border-color: var(--border) !important;
+}
+
+.stark-card.featured {
+  background: var(--black) !important;
+  color: #ffffff !important;
+  border: 1px solid var(--border-dark) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+.stark-card.featured:hover {
+  border-color: var(--border-dark) !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25) !important;
 }
 
 .table-responsive {
@@ -5198,20 +5238,24 @@ input[type="reset"],
   gap: 20px;
 }
 .roadmap-card {
-  background: #ffffff;
-  border: 1px solid var(--border);
+  background: var(--card-bg, #ffffff);
+  border: var(--card-border, 1px solid var(--border));
+  border-radius: var(--card-radius, 0) !important;
+  box-shadow: var(--card-shadow, 0 4px 20px rgba(0, 0, 0, 0.04));
   padding: 28px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: all 0.25s ease;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.2s ease;
   cursor: pointer;
   position: relative;
 }
 .roadmap-card:hover, .roadmap-card.active {
-  border-color: var(--black);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
-  transform: translateY(-2px);
+  border-color: var(--border);
+  box-shadow: var(--card-shadow-hover, 0 12px 32px rgba(0, 0, 0, 0.07));
+  transform: translateY(-3px);
 }
 .roadmap-card-top {
   display: flex;

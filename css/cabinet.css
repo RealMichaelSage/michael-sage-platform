@@ -529,20 +529,20 @@
 .cabinet-card {
   background: #ffffff;
   border: 1px solid var(--border);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
   padding: 28px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
   position: relative;
   box-sizing: border-box;
   border-radius: 0 !important;
 }
 
 .cabinet-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.04);
-  border-color: #09090b;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.07);
 }
 
 .cabinet-card-tag {

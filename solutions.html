@@ -362,20 +362,24 @@
     .sol-card {
       background: #ffffff;
       border: 1px solid var(--border);
+      border-radius: 0 !important;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
       padding: 24px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                  box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 0.2s ease;
     }
     .sol-card:hover {
-      border-color: #09090b;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-      transform: translateY(-2px);
+      border-color: var(--border);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.07);
+      transform: translateY(-3px);
     }
     .sol-card.featured {
-      border: 2px solid #09090b;
-      background: #fafafa;
+      border: 1px solid var(--border);
+      background: #ffffff;
     }
 
     .sol-card-top {
