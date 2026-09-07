@@ -576,29 +576,22 @@
     <section id="tab-members" class="cabinet-tab-pane" data-section="members" style="display:none;">
       <div class="section-header-row">
         <div>
-          <div class="section-tag">РЕЗИДЕНТЫ СООБЩЕСТВА &amp; НАСТАВНИЧЕСТВО</div>
-          <h2 class="section-title">Резиденты Клуба &amp; Ученики</h2>
-          <p class="section-subtitle">Каталог резидентов закрытого сообщества SAGE Neuro Family и участников личного наставничества.</p>
+          <div class="section-tag">СООБЩЕСТВО SAGE NEURO FAMILY</div>
+          <h2 class="section-title">Резиденты Клуба</h2>
+          <p class="section-subtitle">Каталог резидентов закрытого сообщества SAGE Neuro Family, компетенции и контакты для нетворкинга.</p>
         </div>
         <div id="members-search-wrapper" style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
           <input type="text" id="members-search-input" placeholder="🔍 Поиск резидента или компетенции..." oninput="filterMembersList()" style="padding:10px 16px; font-family:var(--font); font-size:0.88rem; border:1px solid var(--border); border-radius:0 !important; width:280px; outline:none; background:#ffffff;">
         </div>
       </div>
 
-      <!-- Filter Categories -->
-      <div id="members-filter-wrapper" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px;">
-        <button class="member-filter-btn active" onclick="setMemberRoleFilter('all', this)">Все резиденты</button>
-        <button class="member-filter-btn" onclick="setMemberRoleFilter('club_member', this)">💎 Резиденты SAGE Neuro Family</button>
-        <button class="member-filter-btn" onclick="setMemberRoleFilter('student', this)">🎓 Ученики Наставничества</button>
-      </div>
-
       <!-- Members Grid Container -->
-      <div id="members-grid-container" class="cabinet-grid"></div>
+      <div id="members-grid-container" class="cabinet-grid residents-networking-grid members-grid"></div>
 
       <!-- Privacy Notice Footer -->
-      <div style="margin-top:32px; padding:16px 20px; background:#f8fafc; border:1px solid var(--border); border-left:3px solid #09090b; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+      <div id="members-privacy-footer" style="margin-top:32px; padding:16px 20px; background:#f8fafc; border:1px solid var(--border); border-left:3px solid #09090b; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
         <div style="font-size:0.88rem; color:#52525b;">
-          🔒 <strong>Управление видимостью:</strong> Вы можете скрыть свой профиль из этого каталога в любой момент в настройках.
+          🔒 <strong>Принцип взаимной видимости:</strong> вы видите профили резидентов клуба, пока включена видимость вашей собственной карточки.
         </div>
         <button onclick="switchCabinetTab('profile')" class="btn-secondary" style="padding:6px 14px; font-size:0.78rem; font-family:var(--mono); cursor:pointer;">
           Настройки приватности ⚙
@@ -673,7 +666,7 @@
                 <input type="checkbox" id="inp-is-private" name="is_private" class="privacy-checkbox" onchange="livePreviewProfile()">
                 <span>Отображать мою карточку в каталоге резидентов сообщества</span>
               </label>
-              <div class="form-hint" style="font-size:0.75rem; color:#71717a; margin-top:4px; margin-left:24px;">Если снято, ваш профиль будет скрыт от других участников в общем списке.</div>
+              <div class="form-hint" style="font-size:0.75rem; color:#71717a; margin-top:4px; margin-left:24px;">Правило взаимности: если отключено, ваша карточка скрывается из каталога, а просмотр других участников блокируется.</div>
             </div>
 
             <button type="submit" id="btn-save-profile" class="btn-primary profile-save-btn" style="padding:12px 24px; font-weight:700; font-family:var(--mono); cursor:pointer;">Сохранить изменения 💾</button>

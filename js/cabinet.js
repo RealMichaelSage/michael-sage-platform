@@ -499,9 +499,6 @@ function updateCabinetProfile() {
       if (user.role === 'club_member') {
         roleEl.innerText = '💎 Резидент Клуба';
         roleEl.className = 'badge-role club';
-      } else if (user.role === 'student') {
-        roleEl.innerText = '🎓 Ученик Наставничества';
-        roleEl.className = 'badge-role';
       } else {
         roleEl.innerText = 'Участник платформы';
         roleEl.className = 'badge-role';
@@ -659,6 +656,7 @@ async function handleProfileSave(event) {
 
     updateCabinetProfile();
     livePreviewProfile();
+    networkingMembersCache = [];
 
     if (btn) {
       btn.innerText = '✓ Сохранено!';
@@ -682,10 +680,92 @@ async function handleProfileSave(event) {
   }
 }
 
-// ── 7. MEMBERS DIRECTORY ─────────────────────────────────────────────────────
+// ── 7. MEMBERS DIRECTORY & RECIPROCAL PRIVACY ────────────────────────────────
 async function loadMembersDirectory() {
   const container = document.getElementById('members-grid-container');
+  const searchWrapper = document.getElementById('members-search-wrapper');
+  const privacyFooter = document.getElementById('members-privacy-footer');
   if (!container) return;
+
+  const user = typeof Auth !== 'undefined' ? Auth.getUser() : null;
+  const hasAccess = typeof Auth !== 'undefined' && Auth.hasClubAccess ? Auth.hasClubAccess() : false;
+
+  // Case 1: Not logged in
+  if (!user) {
+    if (searchWrapper) searchWrapper.style.display = 'none';
+    if (privacyFooter) privacyFooter.style.display = 'none';
+    container.innerHTML = `
+      <div style="grid-column:1/-1; background:#ffffff; border:2px solid #09090b; padding:48px 24px; text-align:center;">
+        <div style="font-size:2.4rem; margin-bottom:12px;">👥</div>
+        <h3 style="font-size:1.3rem; font-weight:800; margin-bottom:10px;">Каталог Резидентов Клуба</h3>
+        <p style="color:#52525b; font-size:0.92rem; line-height:1.55; max-width:500px; margin:0 auto 20px auto;">
+          База контактов и закрытый нетворкинг доступны резидентам сообщества SAGE Neuro Family. Войдите через Telegram, чтобы открыть каталог.
+        </p>
+        <button onclick="if(typeof Auth!=='undefined') Auth.openLoginModal()" class="btn-primary" style="padding:12px 24px; font-size:0.86rem; cursor:pointer;">
+          Войти через Telegram ↗
+        </button>
+      </div>
+    `;
+    const countBadge = document.getElementById('members-count-badge');
+    if (countBadge) countBadge.innerText = '0';
+    return;
+  }
+
+  // Case 2: Logged in, but NOT a club resident
+  if (!hasAccess) {
+    if (searchWrapper) searchWrapper.style.display = 'none';
+    if (privacyFooter) privacyFooter.style.display = 'none';
+    container.innerHTML = `
+      <div style="grid-column:1/-1; background:#ffffff; border:2px solid #09090b; padding:48px 24px; text-align:center;">
+        <div style="font-size:2.4rem; margin-bottom:12px;">💎</div>
+        <h3 style="font-size:1.3rem; font-weight:800; margin-bottom:10px;">Доступно только Резидентам Клуба</h3>
+        <p style="color:#52525b; font-size:0.92rem; line-height:1.55; max-width:520px; margin:0 auto 20px auto;">
+          Каталог участников и закрытый нетворкинг открыты только резидентам SAGE Neuro Family. Оформите подписку на закрытый клуб, чтобы войти в сообщество.
+        </p>
+        <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+          <a href="https://web.tribute.tg/s/O6I" target="_blank" class="btn-primary" style="padding:12px 24px; font-size:0.86rem; text-decoration:none; display:inline-flex; align-items:center;">
+            Вступить в Клуб (1 900 ₽) ↗
+          </a>
+          <button onclick="switchCabinetTab('club')" class="btn-secondary" style="padding:12px 24px; font-size:0.86rem; cursor:pointer;">
+            Подробнее о Клубе ℹ
+          </button>
+        </div>
+      </div>
+    `;
+    const countBadge = document.getElementById('members-count-badge');
+    if (countBadge) countBadge.innerText = '0';
+    return;
+  }
+
+  // Case 3: Logged in resident, but VISIBILITY IS TURNED OFF (Reciprocity: cannot see others if private)
+  if (user.is_private === true) {
+    if (searchWrapper) searchWrapper.style.display = 'none';
+    if (privacyFooter) privacyFooter.style.display = 'none';
+    container.innerHTML = `
+      <div style="grid-column:1/-1; background:#ffffff; border:2px solid #09090b; padding:48px 24px; text-align:center;">
+        <div style="font-size:2.4rem; margin-bottom:12px;">🔒</div>
+        <h3 style="font-size:1.3rem; font-weight:800; margin-bottom:10px;">Видимость вашего профиля отключена</h3>
+        <p style="color:#52525b; font-size:0.92rem; line-height:1.55; max-width:540px; margin:0 auto 24px auto;">
+          В сообществе действует строгое правило взаимности: если вы скрываете свой профиль из каталога, вы также не видите других резидентов. Чтобы открыть каталог и обмениваться контактами, включите видимость профиля.
+        </p>
+        <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+          <button onclick="enableProfileVisibility()" class="btn-primary" style="padding:12px 24px; font-size:0.86rem; font-family:var(--mono); cursor:pointer;">
+            Включить видимость и открыть каталог 👁
+          </button>
+          <button onclick="switchCabinetTab('profile')" class="btn-secondary" style="padding:12px 24px; font-size:0.86rem; font-family:var(--mono); cursor:pointer;">
+            Настройки профиля ⚙
+          </button>
+        </div>
+      </div>
+    `;
+    const countBadge = document.getElementById('members-count-badge');
+    if (countBadge) countBadge.innerText = '0';
+    return;
+  }
+
+  // Case 4: Visibility IS active (is_private !== true)
+  if (searchWrapper) searchWrapper.style.display = 'flex';
+  if (privacyFooter) privacyFooter.style.display = 'flex';
 
   if (networkingMembersCache.length > 0) {
     renderMembersDirectory(networkingMembersCache);
@@ -708,7 +788,7 @@ async function loadMembersDirectory() {
   if (!members || members.length === 0) {
     members = [
       {
-        id: 'member-01',
+        id: 'founder-sage',
         first_name: 'Михаил',
         last_name: 'Пузырёв',
         username: 'Michael_Sage',
@@ -716,7 +796,8 @@ async function loadMembersDirectory() {
         bio: 'AI-архитектор, основатель сообщества SAGE Neuro Family. Проектирование мультиагентных сред, Antigravity SDK и автоматизация бизнеса.',
         channel_url: 'https://t.me/uncrn_sage',
         website_url: 'https://a-sage.ru',
-        photo_url: '/img/mikhail_hero.jpg'
+        photo_url: '/img/mikhail_hero.jpg',
+        is_private: false
       }
     ];
   }
@@ -728,6 +809,25 @@ async function loadMembersDirectory() {
   renderMembersDirectory(members);
 }
 
+async function enableProfileVisibility() {
+  const user = typeof Auth !== 'undefined' ? Auth.getUser() : null;
+  if (!user) return;
+
+  if (typeof Auth !== 'undefined' && Auth.updateUserProfile) {
+    await Auth.updateUserProfile({ is_private: false });
+  } else {
+    user.is_private = false;
+    localStorage.setItem('asage_user', JSON.stringify(user));
+  }
+
+  const privCheckbox = document.getElementById('inp-is-private');
+  if (privCheckbox) privCheckbox.checked = true;
+
+  networkingMembersCache = [];
+  loadMembersDirectory();
+}
+window.enableProfileVisibility = enableProfileVisibility;
+
 function renderMembersDirectory(members) {
   const container = document.getElementById('members-grid-container');
   if (!container) return;
@@ -735,11 +835,6 @@ function renderMembersDirectory(members) {
   const q = (document.getElementById('members-search-input')?.value || '').toLowerCase().trim();
   
   const filtered = (members || []).filter(m => {
-    // Role filter
-    if (activeMemberRoleFilter === 'club_member' && m.role !== 'club_member') return false;
-    if (activeMemberRoleFilter === 'student' && m.role !== 'student') return false;
-
-    // Search query
     if (!q) return true;
     const name = `${m.first_name || ''} ${m.last_name || ''}`.toLowerCase();
     const handle = (m.username || '').toLowerCase();
@@ -747,16 +842,19 @@ function renderMembersDirectory(members) {
     return name.includes(q) || handle.includes(q) || bio.includes(q);
   });
 
+  const countBadge = document.getElementById('members-count-badge');
+  if (countBadge) countBadge.innerText = (members || []).length;
+
   if (filtered.length === 0) {
     container.innerHTML = `
       <div style="grid-column:1/-1; background:#ffffff; border:1px solid var(--border); padding:48px 24px; text-align:center;">
         <div style="font-size:2rem; margin-bottom:12px;">👥</div>
         <h3 style="font-size:1.2rem; font-weight:700; margin-bottom:8px;">Резиденты не найдены</h3>
         <p style="color:var(--gray); font-size:0.9rem; max-width:400px; margin:0 auto 16px auto;">
-          Попробуйте изменить поисковый запрос или выбрать другой фильтр.
+          Попробуйте изменить поисковый запрос.
         </p>
-        <button onclick="document.getElementById('members-search-input').value=''; setMemberRoleFilter('all');" class="btn-secondary" style="padding:8px 16px; font-size:0.8rem;">
-          Сбросить фильтры
+        <button onclick="document.getElementById('members-search-input').value=''; renderMembersDirectory(networkingMembersCache);" class="btn-secondary" style="padding:8px 16px; font-size:0.8rem; cursor:pointer;">
+          Сбросить поиск
         </button>
       </div>
     `;
@@ -766,10 +864,10 @@ function renderMembersDirectory(members) {
   let html = '';
   filtered.forEach(m => {
     const name = `${m.first_name || ''} ${m.last_name || ''}`.trim() || (m.username ? '@' + m.username : 'Резидент Клуба');
-    let roleBadge = '<span class="badge-role club" style="font-size:0.68rem; padding:2px 6px;">💎 Резидент</span>';
-    if (m.role === 'student') {
-      roleBadge = '<span class="badge-role" style="font-size:0.68rem; padding:2px 6px; background:#eff6ff; color:#1d4ed8; border-color:#bfdbfe;">🎓 Ученик</span>';
-    }
+    const isMikhail = (m.username && m.username.toLowerCase() === 'michael_sage') || m.telegram_id == 439634804 || m.telegram_id == 88472911;
+    const roleBadge = isMikhail
+      ? '<span class="badge-role club" style="font-size:0.68rem; padding:2px 6px; background:#09090b; color:#ffffff;">👑 Основатель</span>'
+      : '<span class="badge-role club" style="font-size:0.68rem; padding:2px 6px;">💎 Резидент</span>';
 
     const avatar = m.photo_url
       ? `<img src="${m.photo_url}" alt="${name}" class="member-avatar">`
@@ -818,14 +916,6 @@ function filterMembersList() {
 }
 
 function setMemberRoleFilter(role, btn = null) {
-  activeMemberRoleFilter = role;
-  document.querySelectorAll('.member-filter-btn').forEach(b => b.classList.remove('active'));
-  if (btn) {
-    btn.classList.add('active');
-  } else {
-    const defaultBtn = document.querySelector(`.member-filter-btn[onclick*="'${role}'"]`);
-    if (defaultBtn) defaultBtn.classList.add('active');
-  }
   renderMembersDirectory(networkingMembersCache);
 }
 
