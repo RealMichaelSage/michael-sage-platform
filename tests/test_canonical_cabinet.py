@@ -138,13 +138,13 @@ class TestCanonicalCabinet(unittest.TestCase):
         self.assertIn("Промпт-дизайн и создание ассистентов", text)
 
     def test_05_solutions_showcase_two_real_products_only(self):
-        """Showcase must contain exactly Sagemeet and SAGE VPN, with unglued tags."""
+        """Showcase must contain 4 real solutions (Sagemeet, SAGE VPN, Finmodel, Tax Calc), with unglued tags."""
         self.page.click(".cabinet-tab-btn[data-tab='solutions']")
         pane = self.page.locator("#tab-solutions")
         self.assertTrue(pane.is_visible())
 
         cards = pane.locator(".cabinet-card")
-        self.assertEqual(cards.count(), 2)
+        self.assertEqual(cards.count(), 4)
 
         # Sagemeet
         sagemeet_card = cards.nth(0)
@@ -156,6 +156,16 @@ class TestCanonicalCabinet(unittest.TestCase):
         vpn_card = cards.nth(1)
         self.assertIn("SAGE VPN", vpn_card.inner_text())
         self.assertIn("Michael_Sage_bot", vpn_card.inner_html())
+
+        # Finmodel
+        finmodel_card = cards.nth(2)
+        self.assertIn("Финмодель", finmodel_card.inner_text())
+        self.assertIn("calculator-finmodel", finmodel_card.inner_html())
+
+        # Tax Calc
+        tax_card = cards.nth(3)
+        self.assertIn("Калькулятор Налогов", tax_card.inner_text())
+        self.assertIn("calculator-tax", tax_card.inner_html())
 
         # No synthetic 10 items
         self.assertNotIn("Voice Transcriber Bot // Whisper", pane.inner_text())
