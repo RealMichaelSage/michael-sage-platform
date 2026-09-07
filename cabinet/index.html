@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Личный Кабинет Платформы | Михаил Пузырёв</title>
-  <meta name="description" content="Личный кабинет платформы Михаила Пузырёва: доступ к Базе Знаний (промпты, глоссарий, калькуляторы), практическим курсам и материалам Закрытого Клуба.">
+  <meta name="description" content="Личный кабинет платформы Михаила Пузырёва: персональный командный центр (Cockpit), витрина готовых ИИ-решений, библиотека и материалы Закрытого Клуба.">
   <meta name="author" content="Михаил Пузырёв">
   <meta name="robots" content="noindex, nofollow">
 
@@ -14,7 +14,7 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Личный Кабинет — Платформа Михаила Пузырёва">
-  <meta property="og:description" content="База Знаний, видео-уроки по Vibe Coding и материалы Закрытого Клуба.">
+  <meta property="og:description" content="Командный центр, витрина готовых ИИ-решений и материалы Закрытого Клуба.">
   <meta property="og:url" content="https://a-sage.ru/cabinet">
   <meta property="og:site_name" content="Михаил Пузырёв — AI Архитектура & Внедрение">
   <meta property="og:image" content="https://a-sage.ru/img/og-preview.png">
@@ -30,6 +30,7 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="/css/style.css?v=3.0">
+  <link rel="stylesheet" href="/css/cabinet.css?v=3.1">
 
   <!-- Yandex.Metrika -->
   <script type="text/javascript">
@@ -47,526 +48,10 @@
     });
   </script>
   <noscript><div><img src="https://mc.yandex.ru/watch/101414837" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-
-  <style>
-    /* Cabinet Specific Styles (Swiss Stark) */
-    .cabinet-page-frame {
-      max-width: 1440px;
-      margin: 0 auto;
-      border-left: 1px solid var(--border);
-      border-right: 1px solid var(--border);
-      background: var(--bg);
-      min-height: calc(100vh - 70px);
-    }
-    .cabinet-header-block {
-      padding: 100px 40px 32px;
-      border-bottom: 1px solid var(--border);
-      background: #ffffff;
-    }
-    .cabinet-profile-card {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 32px;
-    }
-    .cabinet-profile-main {
-      display: flex;
-      align-items: flex-start;
-      gap: 24px;
-      flex: 1 1 auto;
-      min-width: 0;
-    }
-    .cabinet-avatar-container {
-      flex-shrink: 0;
-    }
-    .cabinet-avatar {
-      width: 76px;
-      height: 76px;
-      border-radius: 0;
-      object-fit: cover;
-      border: 2px solid #18181b;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-      background: #f4f4f5;
-    }
-    .cabinet-avatar-placeholder {
-      width: 76px;
-      height: 76px;
-      border-radius: 0;
-      background: #18181b;
-      color: #ffffff;
-      font-size: 28px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--mono);
-      border: 2px solid #18181b;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-    }
-    .cabinet-profile-content {
-      flex: 1;
-      min-width: 0;
-    }
-    .cabinet-profile-title-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 8px;
-    }
-    .cabinet-profile-title-row h1 {
-      font-size: 1.75rem;
-      font-weight: 800;
-      margin: 0;
-      letter-spacing: -0.02em;
-      line-height: 1.2;
-    }
-    .cabinet-username-tag {
-      font-family: var(--mono);
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--gray);
-    }
-    .cabinet-user-bio {
-      color: #52525b;
-      font-size: 0.92rem;
-      line-height: 1.5;
-      margin-bottom: 12px;
-      max-width: 720px;
-    }
-    .cabinet-user-chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-    }
-    .cabinet-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      font-weight: 500;
-      padding: 4px 10px;
-      border-radius: 0;
-      text-decoration: none;
-      transition: all 0.15s ease;
-    }
-    .cabinet-chip-email {
-      background: #f4f4f5;
-      color: #3f3f46;
-      border: 1px solid #e4e4e7;
-    }
-    .cabinet-chip-channel {
-      background: #f0f9ff;
-      color: #0284c7;
-      border: 1px solid #bae6fd;
-    }
-    .cabinet-chip-channel:hover {
-      background: #e0f2fe;
-      border-color: #7dd3fc;
-    }
-    .cabinet-chip-website {
-      background: #ecfdf5;
-      color: #059669;
-      border: 1px solid #a7f3d0;
-    }
-    .cabinet-chip-website:hover {
-      background: #d1fae5;
-      border-color: #6ee7b7;
-    }
-    .cabinet-profile-actions {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 12px;
-      flex-shrink: 0;
-    }
-    .cabinet-actions-buttons {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-    .cabinet-edit-btn {
-      padding: 10px 18px;
-      font-size: 0.85rem;
-      font-family: var(--mono);
-      font-weight: 700;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      white-space: nowrap;
-    }
-    .cabinet-logout-btn {
-      padding: 10px 16px;
-      font-size: 0.82rem;
-      font-family: var(--mono);
-      font-weight: 600;
-      white-space: nowrap;
-      cursor: pointer;
-    }
-    .cabinet-profile-stats {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-    .stat-pill {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      color: #71717a;
-      background: #fafafa;
-      border: 1px solid #e4e4e7;
-      padding: 3px 8px;
-      border-radius: 0;
-    }
-    .stat-pill-label {
-      color: #a1a1aa;
-    }
-    .stat-pill-val {
-      font-weight: 600;
-      color: #27272a;
-    }
-    .stat-pill-val.online-status {
-      color: #16a34a;
-    }
-
-    @media (max-width: 960px) {
-      .cabinet-profile-card {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .cabinet-profile-actions {
-        align-items: flex-start;
-        padding-top: 16px;
-        border-top: 1px solid #f4f4f5;
-      }
-      .cabinet-actions-buttons {
-        justify-content: flex-start;
-      }
-      .cabinet-profile-stats {
-        justify-content: flex-start;
-      }
-    }
-    .badge-role {
-      display: inline-flex;
-      align-items: center;
-      padding: 4px 10px;
-      background: #f4f4f5;
-      border: 1px solid #e4e4e7;
-      border-radius: 0;
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: var(--black);
-    }
-    .badge-role.club {
-      background: #18181b;
-      border-color: #18181b;
-      color: #ffffff;
-    }
-
-    /* Cabinet Tab Navigation (Framed Buttons as in Knowledge Base) */
-    .cabinet-tabs-bar {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      border-bottom: 1px solid var(--border);
-      background: #fafafa;
-      padding: 18px 40px;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-    .cabinet-tabs-bar::-webkit-scrollbar {
-      display: none;
-    }
-    .cabinet-tab-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 9px 18px;
-      font-family: var(--mono);
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: #52525b;
-      background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: 0;
-      cursor: pointer;
-      transition: all 0.15s ease;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .cabinet-tab-btn:hover {
-      color: var(--black);
-      background: #f4f4f5;
-      border-color: #a1a1aa;
-      transform: translateY(-1px);
-    }
-    .cabinet-tab-btn.active {
-      color: #ffffff !important;
-      background: #09090b !important;
-      border-color: #09090b !important;
-      font-weight: 800;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-      transform: translateY(-1px);
-    }
-    .cabinet-tab-badge {
-      display: inline-flex;
-      align-items: center;
-      height: 18px;
-      padding: 0 6px;
-      background: #f4f4f5;
-      border: 1px solid #e4e4e7;
-      border-radius: 0;
-      font-size: 0.68rem;
-      font-weight: 700;
-      font-family: var(--mono);
-      color: #18181b;
-      transition: all 0.15s ease;
-    }
-    .cabinet-tab-btn.active .cabinet-tab-badge {
-      background: #27272a;
-      color: #ffffff;
-      border-color: #3f3f46;
-    }
-    .cabinet-tab-badge.pro {
-      background: #18181b;
-      color: #ffffff;
-      border-color: #18181b;
-    }
-    .cabinet-tab-btn.active .cabinet-tab-badge.pro {
-      background: #ffffff;
-      color: #09090b;
-      border-color: #ffffff;
-    }
-
-    /* Member Directory Filter & Cards */
-    .member-filter-btn {
-      padding: 7px 16px;
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      background: #ffffff;
-      color: #71717a;
-      border: 1px solid #e4e4e7;
-      border-radius: 0;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-    .member-filter-btn:hover {
-      color: #09090b;
-      border-color: #09090b;
-      background: #f8fafc;
-    }
-    .member-filter-btn.active {
-      background: #09090b;
-      color: #ffffff;
-      border-color: #09090b;
-    }
-    .member-card {
-      background: #ffffff;
-      border: 1px solid var(--border);
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-    }
-    .member-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 24px rgba(0,0,0,0.04);
-      border-color: #09090b;
-    }
-    .member-header {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 14px;
-    }
-    .member-avatar {
-      width: 52px;
-      height: 52px;
-      border-radius: 0;
-      object-fit: cover;
-      border: 1px solid #18181b;
-      background: #f4f4f5;
-      flex-shrink: 0;
-    }
-    .member-avatar-placeholder {
-      width: 52px;
-      height: 52px;
-      border-radius: 0;
-      background: #18181b;
-      color: #ffffff;
-      font-size: 20px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--mono);
-      border: 1px solid #18181b;
-      flex-shrink: 0;
-    }
-    .member-name {
-      font-size: 1.15rem;
-      font-weight: 800;
-      margin: 0 0 4px 0;
-      color: #09090b;
-      line-height: 1.2;
-    }
-    .member-bio {
-      font-size: 0.88rem;
-      color: #52525b;
-      line-height: 1.5;
-      margin-bottom: 16px;
-      flex-grow: 1;
-      min-height: 40px;
-    }
-    .member-actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      border-top: 1px solid #f4f4f5;
-      padding-top: 14px;
-      margin-top: auto;
-    }
-
-    /* Tab Content Area */
-    .cabinet-tab-pane {
-      display: none;
-      padding: 40px;
-    }
-    .cabinet-tab-pane.active {
-      display: block;
-    }
-
-    /* Card Grids */
-    .cabinet-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 24px;
-      margin-top: 24px;
-    }
-    .cabinet-card {
-      background: #ffffff;
-      border: 1px solid var(--border);
-      padding: 28px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      position: relative;
-    }
-    .cabinet-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 24px rgba(0,0,0,0.04);
-    }
-    .cabinet-card-tag {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--gray);
-      margin-bottom: 12px;
-      text-transform: uppercase;
-    }
-    .cabinet-card h3 {
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin: 0 0 12px 0;
-      line-height: 1.35;
-    }
-    .cabinet-card p {
-      color: var(--gray);
-      font-size: 0.95rem;
-      line-height: 1.5;
-      margin-bottom: 20px;
-      flex-grow: 1;
-    }
-    .cabinet-card-actions {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-top: 1px solid #f4f4f5;
-      padding-top: 16px;
-      margin-top: auto;
-    }
-
-    /* Auth Banner for Unauthenticated Users */
-    .cabinet-auth-banner {
-      background: #ffffff;
-      border: 1px solid var(--border);
-      padding: 40px;
-      text-align: center;
-      margin: 32px 0;
-    }
-    .cabinet-auth-banner h2 {
-      font-size: 1.6rem;
-      font-weight: 800;
-      margin-bottom: 12px;
-    }
-    .cabinet-auth-banner p {
-      color: var(--gray);
-      max-width: 600px;
-      margin: 0 auto 24px auto;
-      font-size: 1rem;
-      line-height: 1.6;
-    }
-
-    /* Course Lesson Item */
-    .lesson-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 20px;
-      background: #ffffff;
-      border: 1px solid var(--border);
-      margin-bottom: 12px;
-      transition: all 0.2s ease;
-      text-decoration: none;
-      color: inherit;
-    }
-    .lesson-item:hover {
-      background: #f8fafc;
-      border-color: #000000;
-      transform: translateX(4px);
-    }
-    .lesson-title-wrap {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    .lesson-num {
-      font-family: var(--mono);
-      font-weight: 700;
-      font-size: 0.85rem;
-      color: var(--gray);
-    }
-
-    @media (max-width: 768px) {
-      .cabinet-header-block { padding: 90px 20px 24px; }
-      .cabinet-tabs-bar { padding: 0 10px; }
-      .cabinet-tab-btn { padding: 14px 16px; font-size: 0.75rem; }
-      .cabinet-tab-pane { padding: 24px 20px; }
-      .cabinet-grid { grid-template-columns: 1fr; }
-    }
-  </style>
 </head>
-<body>
+<body class="page-cabinet">
 
-  <!-- HEADER NAVIGATION (FLAT SINGLE LEVEL) -->
+  <!-- Universal Header -->
   <header class="nav">
     <div class="nav-inner">
       <a href="/" class="nav-logo">
@@ -576,10 +61,10 @@
 
       <ul class="nav-links">
         <li><a href="/mentoring"><span class="nav-link-text">Наставничество 1-на-1</span></a></li>
-        <li><a href="/automation"><span class="nav-link-text">Внедрение & Разработка</span></a></li>
+        <li><a href="/automation"><span class="nav-link-text">Внедрение &amp; Разработка</span></a></li>
         <li><a href="/corporate"><span class="nav-link-text">Компаниям</span></a></li>
         <li><a href="/club/"><span class="nav-link-text">Клуб</span></a></li>
-        <li><a href="/about"><span class="nav-link-text">Обо&nbsp;мне & Кейсы</span></a></li>
+        <li><a href="/about"><span class="nav-link-text">Обо&nbsp;мне &amp; Кейсы</span></a></li>
         <li><a href="/base"><span class="nav-link-text">База</span></a></li>
       </ul>
 
@@ -594,1482 +79,352 @@
     </div>
   </header>
 
-    <!-- MOBILE MENU -->
-  <div class="mobile-menu">
-    <a href="/">Главная</a>
-    <a href="/mentoring">Наставничество 1-на-1</a>
-    <a href="/automation">Внедрение & Разработка</a>
-    <a href="/corporate">Компаниям</a>
-    <a href="/club/">Клуб</a>
-    <a href="/about">Обо мне & Кейсы</a>
-    <a href="/base">База</a>
-    <a href="/cabinet/">Личный Кабинет</a>
-    <a href="/booking" class="m-cta">Забронировать слот ↗</a>
-  </div>
-
-  <!-- MAIN CABINET WRAPPER -->
+  <!-- Cabinet Main Frame (Constrained 1440px) -->
   <main class="cabinet-page-frame">
 
-    <!-- USER PROFILE HERO BLOCK -->
-    <section class="cabinet-header-block">
-      <div id="profile-container-logged-in" style="display:none;">
-        <div class="cabinet-profile-card">
-          <div class="cabinet-profile-main">
-            <div id="user-avatar-wrap" class="cabinet-avatar-container"></div>
-            <div class="cabinet-profile-content">
-              <div class="cabinet-profile-title-row">
-                <h1 id="user-display-name">Пользователь</h1>
-                <div class="cabinet-user-badges">
-                  <span id="user-role-badge" class="badge-role">Участник платформы</span>
-                  <span id="user-username-badge" class="cabinet-username-tag">@username</span>
-                </div>
+    <!-- Header / Profile Cockpit Block -->
+    <div class="cabinet-header-block">
+      <div class="cabinet-profile-card">
+        <div class="cabinet-avatar-container">
+          <img src="/img/mikhail_hero.jpg" alt="Аватар" class="cabinet-avatar" id="cabinet-user-avatar" width="76" height="76">
+        </div>
+        <div class="cabinet-profile-content">
+          <div class="cabinet-profile-title-row">
+            <h1 class="cabinet-user-name" id="cabinet-display-name">Гость Платформы</h1>
+            <span class="badge-role cabinet-sub-status" id="cabinet-sub-badge">
+              Гость Платформы <a href="https://web.tribute.tg/s/O6I" target="_blank" class="btn-tribute-cta">Вступить в Клуб (1 900 ₽) ↗</a>
+            </span>
+          </div>
+          <div class="cabinet-user-handle" id="cabinet-tg-handle">@guest_user</div>
+        </div>
+        <div class="cabinet-header-actions">
+          <button class="btn-secondary" onclick="switchCabinetTab('profile')">Настроить профиль ⚙</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Horizontal Engineering Tab Bar -->
+    <div class="cabinet-tabs-bar">
+      <button class="cabinet-tab-btn active" data-tab="dashboard" onclick="switchCabinetTab('dashboard', this)">
+        ⚡ Дашборд
+      </button>
+      <button class="cabinet-tab-btn" data-tab="library" onclick="switchCabinetTab('library', this)">
+        📂 Моя Библиотека <span class="cabinet-tab-badge" id="tab-badge-library">0</span>
+      </button>
+      <button class="cabinet-tab-btn" data-tab="store" onclick="switchCabinetTab('store', this)">
+        🛍️ Витрина Решений <span class="cabinet-tab-badge">10</span>
+      </button>
+      <button class="cabinet-tab-btn" data-tab="community" onclick="switchCabinetTab('community', this)">
+        💎 Клубный Хаб <span class="cabinet-tab-badge pro">PRO</span>
+      </button>
+      <button class="cabinet-tab-btn" data-tab="profile" onclick="switchCabinetTab('profile', this)">
+        👤 Профиль &amp; Настройки
+      </button>
+    </div>
+
+    <!-- 1. TAB: DASHBOARD (⚡ ДАШБОРД / COCKPIT) -->
+    <div id="tab-dashboard" class="cabinet-tab-pane active" data-section="dashboard">
+      <!-- Mastermind Live Widget -->
+      <div class="mastermind-widget cabinet-countdown-widget" id="mastermind-live-widget">
+        <div class="mastermind-widget-header">
+          <span class="badge-role club">🔴 ЖИВОЙ МАСТЕРМАЙНД // ЧЕТВЕРГ 19:00 МСК</span>
+          <span class="session-format">SAGE Neuro Family • Закрытый эфир</span>
+        </div>
+        <h2 class="mastermind-title">Вайбкодинг сложных MCP-серверов в Antigravity &amp; Claude Code</h2>
+        <p class="mastermind-desc">Практический разбор архитектуры автономных агентных систем, синхронизация баз данных и деплой микросервисов в реальном времени со спикером Михаилом Пузырёвым.</p>
+        
+        <div class="mastermind-timer-box">
+          <div class="timer-meta-label">До начала онлайн-созвона:</div>
+          <div class="countdown-timer" id="countdown-timer-display" data-countdown="--">-- д --:--:--</div>
+        </div>
+
+        <div class="mastermind-actions-row">
+          <a href="https://t.me/uncrn_sage" target="_blank" class="btn-primary btn-mastermind-join">Войти в созвон (Zoom / Telegram) ↗</a>
+          <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Мастермайнд+SAGE+Neuro+Family&amp;details=Закрытый+практический+созвон+по+Vibe+Coding&amp;location=Telegram+Video" target="_blank" rel="noopener" class="btn-secondary" data-action="add-calendar">Добавить в календарь (Google / .ics) 📅</a>
+        </div>
+      </div>
+
+      <!-- Quick Actions Grid -->
+      <div class="section-title-wrap">
+        <h3 class="section-heading">Быстрый запуск</h3>
+        <span class="section-subtitle">// Инструменты и доступные модули</span>
+      </div>
+      <div class="quick-actions-grid cabinet-shortcuts-grid">
+        <div class="quick-action-card shortcut-card" onclick="switchCabinetTab('library')">
+          <div class="quick-action-icon">📂</div>
+          <h4 class="quick-action-title">Моя библиотека</h4>
+          <p class="quick-action-desc">Ваши купленные и открытые материалы по подписке с кодом и видео.</p>
+          <span class="quick-action-link">Перейти ↗</span>
+        </div>
+        <div class="quick-action-card shortcut-card" onclick="switchCabinetTab('store')">
+          <div class="quick-action-icon">🛍️</div>
+          <h4 class="quick-action-title">Витрина решений</h4>
+          <p class="quick-action-desc">Магазин готовых ИИ-агентов, ботов и практических гайдов.</p>
+          <span class="quick-action-link">Каталог ↗</span>
+        </div>
+        <div class="quick-action-card shortcut-card" onclick="switchCabinetTab('community')">
+          <div class="quick-action-icon">💬</div>
+          <h4 class="quick-action-title">Закрытый чат Клуба</h4>
+          <p class="quick-action-desc">Нетворкинг с фаундерами, разработчиками и поддержка Михаила.</p>
+          <span class="quick-action-link">Открыть ↗</span>
+        </div>
+        <div class="quick-action-card shortcut-card" onclick="switchCabinetTab('community')">
+          <div class="quick-action-icon">💡</div>
+          <h4 class="quick-action-title">Вопрос на разбор</h4>
+          <p class="quick-action-desc">Отправьте свой код или проект на персональный разбор в эфире.</p>
+          <span class="quick-action-link">Отправить ↗</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. TAB: MY LIBRARY (📂 МОЯ БИБЛИОТЕКА) -->
+    <div id="tab-library" class="cabinet-tab-pane" data-section="library" style="display:none;">
+      <div class="section-title-wrap">
+        <h2 class="section-heading">Моя Библиотека</h2>
+        <span class="section-subtitle">// Цифровые решения, исходный код и записи мастер-классов</span>
+      </div>
+      <div id="library-content-container">
+        <!-- Populated by renderLibrary() -->
+      </div>
+    </div>
+
+    <!-- 3. TAB: SOLUTIONS STORE (🛍️ ВИТРИНА РЕШЕНИЙ) -->
+    <div id="tab-store" class="cabinet-tab-pane" data-section="store" style="display:none;">
+      <div class="section-title-wrap">
+        <h2 class="section-heading">Витрина Решений &amp; Гайдов</h2>
+        <span class="section-subtitle">// Готовые ИИ-агенты, промпты и шаблоны с деплоем за 15 минут</span>
+      </div>
+
+      <div class="store-filters-bar">
+        <div class="store-chips-wrap">
+          <button class="category-chip filter-chip active" data-filter="all" onclick="setStoreCategoryFilter('all', this)">Все решения</button>
+          <button class="category-chip filter-chip" data-filter="bot" onclick="setStoreCategoryFilter('bot', this)">🤖 Боты &amp; Агенты</button>
+          <button class="category-chip filter-chip" data-filter="vibe" onclick="setStoreCategoryFilter('vibe', this)">⚡ Vibe Coding</button>
+          <button class="category-chip filter-chip" data-filter="guide" onclick="setStoreCategoryFilter('guide', this)">📚 Гайды &amp; Эфиры</button>
+        </div>
+        <div class="store-search-wrap">
+          <input type="text" id="store-search-input" class="store-search-input" placeholder="Поиск по технологиям (Python, Whisper, Docker)..." oninput="renderStore()">
+        </div>
+      </div>
+
+      <div id="store-grid-container" class="store-grid">
+        <!-- Populated by renderStore() -->
+      </div>
+
+      <div id="store-empty-state" class="store-empty-state empty-search-msg" style="display:none;">
+        <div class="empty-icon">🔍</div>
+        <h3>Ничего не найдено</h3>
+        <p>По вашему запросу решений не найдено. Попробуйте изменить ключевые слова или сбросить категорию.</p>
+        <button class="btn-secondary" onclick="document.getElementById('store-search-input').value=''; setStoreCategoryFilter('all');">Сбросить фильтры</button>
+      </div>
+    </div>
+
+    <!-- 4. TAB: CLUB HUB (💎 КЛУБНЫЙ ХАБ) -->
+    <div id="tab-community" class="cabinet-tab-pane" data-section="community" style="display:none;">
+      <div class="section-title-wrap">
+        <h2 class="section-heading">Закрытый Клуб SAGE Neuro Family</h2>
+        <span class="section-subtitle">// Сообщество практиков Vibe Coding, регулярные мастермайнды и нетворкинг</span>
+      </div>
+
+      <!-- Schedule -->
+      <div class="mastermind-schedule club-schedule-calendar" id="club-schedule">
+        <div class="schedule-header">
+          <span class="badge-role club">РЕГУЛЯРНЫЙ ГРАФИК</span>
+          <h3>Расписание созвонов (четверг 19:00 МСК и воскресенье 16:00 МСК)</h3>
+        </div>
+        <div class="club-schedule-grid">
+          <div class="schedule-item">
+            <div class="schedule-day">Каждый Четверг • 19:00 МСК</div>
+            <div class="schedule-topic"><strong>Технический воркшоп:</strong> разбор кода, деплой ботов, написание MCP-серверов и работа с Antigravity SDK.</div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-day">Каждое Воскресенье • 16:00 МСК</div>
+            <div class="schedule-topic"><strong>Мастермайнд &amp; Разборы:</strong> аудит проектов резидентов, обратная связь от Михаила Пузырёва и Q&amp;A.</div>
+          </div>
+        </div>
+        <div class="schedule-actions">
+          <a href="https://t.me/uncrn_sage" id="club-chat-btn" target="_blank" class="btn-primary">Вход в закрытый чат Telegram ↗</a>
+          <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Мастермайнды+SAGE+Neuro+Family&amp;details=Регулярные+созвоны+в+четверг+19:00+и+воскресенье+16:00+МСК&amp;location=Telegram+Video" target="_blank" rel="noopener" class="btn-secondary">Добавить расписание в календарь 📅</a>
+        </div>
+      </div>
+
+      <!-- Archive -->
+      <div class="mastermind-archive" id="club-archive">
+        <div class="archive-header-row">
+          <div>
+            <h3>Архив мастермайндов &amp; Воркшопов</h3>
+            <span class="archive-subtitle">Записи прошедших созвонов с прикрепленным кодом</span>
+          </div>
+          <div class="archive-search-wrap">
+            <input type="text" id="archive-search-inp" placeholder="Поиск по архиву (MCP, боты, агенты)..." oninput="filterArchiveMasterminds()">
+          </div>
+        </div>
+        <div class="archive-list-grid">
+          <div class="archive-card mastermind-item">
+            <span class="badge-role">ЭФИР #24</span>
+            <h4>Вайбкодинг сложных MCP-серверов в Antigravity</h4>
+            <p class="archive-card-desc">Создание автономного сервера инструментов с интеграцией Supabase и Drizzle ORM.</p>
+            <button class="btn-secondary" onclick="openInAppViewer('mastermind-mcp-deepdive-01')">Смотреть запись ↗</button>
+          </div>
+          <div class="archive-card mastermind-item">
+            <span class="badge-role">ЭФИР #23</span>
+            <h4>Архитектура Vibe Coding в Claude Code</h4>
+            <p class="archive-card-desc">Настройка мультиагентной среды, кастомные скиллы и интеграция API Groq.</p>
+            <button class="btn-secondary" onclick="openInAppViewer('vibe-coding-antigravity-setup-guide')">Смотреть запись ↗</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Networking Directory -->
+      <div class="community-directory-block">
+        <div class="directory-header-row">
+          <div>
+            <h3>Каталог резидентов Клуба</h3>
+            <span class="directory-subtitle">Контакты, экспертиза и проекты участников сообщества</span>
+          </div>
+        </div>
+        <div id="members-directory-grid" class="residents-networking-grid members-grid">
+          <!-- Populated by loadNetworkingMembers() -->
+        </div>
+      </div>
+
+      <!-- Q&A Form -->
+      <div class="qa-form-block">
+        <div class="qa-header">
+          <h3>Задать вопрос / Отправить проект на разбор</h3>
+          <p>Опишите ваш кейс или проблему с кодом — Михаил разберет её на ближайшем живом мастермайнде.</p>
+        </div>
+        <form id="qa-review-form" class="club-qa-form" onsubmit="handleQASubmit(event)">
+          <div class="form-group">
+            <label class="form-label">Тема вопроса или название проекта:</label>
+            <input type="text" class="form-control" placeholder="Например: Ошибка при деплое Telethon-парсера" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Подробное описание вопроса или ссылка на репозиторий:</label>
+            <textarea class="form-control" rows="4" placeholder="Опишите, в чем сложность, стек технологий или прикрепите ссылку на код..." required></textarea>
+          </div>
+          <button type="submit" class="btn-primary">Отправить вопрос на разбор ↗</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- 5. TAB: PROFILE & SETTINGS (👤 ПРОФИЛЬ) -->
+    <div id="tab-profile" class="cabinet-tab-pane" data-section="profile" style="display:none;">
+      <div class="section-title-wrap">
+        <h2 class="section-heading">Профиль &amp; Управление Подпиской</h2>
+        <span class="section-subtitle">// Ваши персональные данные, настройки приватности и аккаунт Tribute</span>
+      </div>
+
+      <div class="profile-layout-grid">
+        <div class="profile-form-col">
+          <form id="profile-edit-form" class="profile-form" onsubmit="handleProfileSave(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="inp-first-name">Имя:</label>
+                <input type="text" id="inp-first-name" name="first_name" class="form-control" placeholder="Имя">
               </div>
-              <div id="user-bio-wrap" class="cabinet-user-bio"></div>
-              <div id="user-extra-details" class="cabinet-user-chips"></div>
+              <div class="form-group">
+                <label class="form-label" for="inp-last-name">Фамилия:</label>
+                <input type="text" id="inp-last-name" name="last_name" class="form-control" placeholder="Фамилия">
+              </div>
             </div>
-          </div>
-          <div class="cabinet-profile-actions">
-            <div class="cabinet-actions-buttons">
-              <a href="/profile" class="btn-primary cabinet-edit-btn">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                <span>Настроить профиль</span>
-              </a>
+
+            <div class="form-group">
+              <label class="form-label" for="inp-tg-username">Telegram Username:</label>
+              <input type="text" id="inp-tg-username" name="username" class="form-control" placeholder="@username">
             </div>
-            <div class="cabinet-profile-stats">
-              <div class="stat-pill"><span class="stat-pill-label">ID:</span> <span id="user-id-val" class="stat-pill-val">—</span></div>
-              <div class="stat-pill"><span class="stat-pill-label">Сессия:</span> <span class="stat-pill-val online-status">● Активна</span></div>
+
+            <div class="form-group">
+              <label class="form-label" for="inp-bio">О себе &amp; Компетенции:</label>
+              <textarea id="inp-bio" name="bio" class="form-control" rows="3" placeholder="Чем вы занимаетесь, ваш стек и проекты..."></textarea>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <!-- GUEST / UNLOGGED STATE -->
-      <div id="profile-container-guest">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;">
-          <div>
-            <div style="display:inline-block; padding:3px 10px; background:#f4f4f5; font-family:var(--mono); font-size:0.75rem; font-weight:700; margin-bottom:8px; border:1px solid #e4e4e7;">
-              // ПЛАТФОРМА & БАЗА ЗНАНИЙ
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="inp-channel">Telegram-канал / Блог:</label>
+                <input type="text" id="inp-channel" name="channel_url" class="form-control" placeholder="https://t.me/...">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="inp-website">Сайт / Портфолио:</label>
+                <input type="text" id="inp-website" name="website_url" class="form-control" placeholder="https://...">
+              </div>
             </div>
-            <h1 style="font-size:1.8rem; font-weight:800; margin:0 0 6px 0; letter-spacing:-0.02em;">
-              Личный Кабинет Платформы
-            </h1>
-            <p style="color:var(--gray); margin:0; font-size:0.95rem;">
-              База Знаний, открытые видео-уроки по Vibe Coding и материалы Закрытого Клуба.
-            </p>
-          </div>
-          <div>
-            <button onclick="Auth.openModal()" class="nav-auth-btn" style="height:44px; padding:0 22px; font-size:0.92rem; background:#ffffff; color:#09090b; border:1px solid #09090b; box-shadow:0 4px 14px rgba(0,0,0,0.06);">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-              <span>Войти через Telegram</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- TAB NAVIGATION -->
-    <nav class="cabinet-tabs-bar" role="tablist">
-      <button class="cabinet-tab-btn active" data-tab="knowledge" onclick="switchCabinetTab('knowledge', this)">
-        <span>📚 База Знаний</span>
-      </button>
-      <button class="cabinet-tab-btn" data-tab="education" onclick="switchCabinetTab('education', this)">
-        <span>🎓 Записи & Мастер-классы</span>
-        <span class="cabinet-tab-badge">6 мастер-классов</span>
-      </button>
-      <button class="cabinet-tab-btn" data-tab="club" onclick="switchCabinetTab('club', this)">
-        <span>💎 Закрытый Клуб</span>
-        <span class="cabinet-tab-badge pro">PRO</span>
-      </button>
-      <button class="cabinet-tab-btn" data-tab="members" onclick="switchCabinetTab('members', this)">
-        <span>👥 Участники Клуба</span>
-        <span id="members-count-badge" class="cabinet-tab-badge">1</span>
-      </button>
-      <button class="cabinet-tab-btn" data-tab="favorites" onclick="switchCabinetTab('favorites', this)">
-        <span>⭐ Мое Избранное</span>
-        <span id="fav-counter-badge" class="cabinet-tab-badge">0</span>
-      </button>
-    </nav>
-
-    <!-- ═════════════════════════════════════════════════════════════ -->
-    <!-- TAB 1: KNOWLEDGE BASE -->
-    <!-- ═════════════════════════════════════════════════════════════ -->
-    <section id="tab-knowledge" class="cabinet-tab-pane active">
-      <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px; margin-bottom:16px;">
-        <div>
-          <div style="font-family:var(--mono); font-size:0.8rem; font-weight:700; color:var(--gray); margin-bottom:4px;">
-            // ЕДИНЫЙ ЦЕНТР ЗНАНИЙ И ИНСТРУМЕНТОВ
-          </div>
-          <h2 style="font-size:1.6rem; font-weight:800; margin:0;">База Знаний Платформы</h2>
-        </div>
-      </div>
-
-      <div class="cabinet-grid">
-        <!-- Card 1: Research White Paper (NEWEST) -->
-        <div class="cabinet-card featured-res-card" style="border: 2px solid #09090b; background: #fafafa;">
-          <div class="cabinet-card-tag" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
-            <span style="background:#10b981; color:#ffffff; font-weight:700; padding:2px 6px; font-size:0.68rem; font-family:var(--mono);">ПРАКТИЧЕСКИЙ ГАЙД // ROI</span>
-            <span style="color:#09090b; font-weight:700; background:#dcfce7; border:1px solid #86efac; padding:2px 6px; font-size:0.68rem; font-family:var(--mono);">НОВОЕ 2026</span>
-          </div>
-          <h3>Как внедрить ИИ-агентов в бизнес: Пошаговый план, окупаемость (ROI) и безопасность</h3>
-          <p>
-            Практическое руководство для предпринимателей: как автоматизировать рутину компании с помощью автономных ИИ-агентов, расчет окупаемости (McKinsey $2.6–4.4T), где нужен детерминированный SQL/1С, а где LLM, защита данных и 4-этапный план внедрения.
-          </p>
-          <div class="cabinet-card-actions">
-            <a href="/base/research-agentic-processes/" class="btn-primary" style="padding:8px 16px; font-size:0.8rem; background:#09090b; color:#ffffff;">Читать руководство ↗</a>
-          </div>
-        </div>
-
-        <!-- Card 2: AI Business Automation Atlas -->
-        <div class="cabinet-card">
-          <div class="cabinet-card-tag" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
-            <span>ИИ-АВТОМАТИЗАЦИЯ ДЛЯ БИЗНЕСА</span>
-            <span style="color:#ffffff; font-weight:700; background:#10b981; padding:2px 6px; font-size:0.68rem; font-family:var(--mono);">ГОТОВЫЕ СЦЕНАРИИ</span>
-          </div>
-          <h3>ИИ-Автоматизация для Бизнеса</h3>
-          <p>
-            Полная интерактивная карта внедрения цифрового персонала и AI-агентов по 8 бизнес-контурам. Пошаговые инженерные гайды, архитектура со стрелочками и готовые промпты для Antigravity.
-          </p>
-          <div class="cabinet-card-actions">
-            <a href="/solutions" class="btn-primary" style="padding:8px 16px; font-size:0.8rem; background:#09090b; color:#ffffff;">Каталог решений & Гайды ↗</a>
-          </div>
-        </div>
-
-        <!-- Card 3: Google One Guide -->
-        <div class="cabinet-card">
-          <div class="cabinet-card-tag">ПОШАГОВЫЙ ГАЙД 2026</div>
-          <h3>Оплата Google One AI Premium из РФ</h3>
-          <p>
-            Пошаговое руководство: безналоговый штат Delaware (0% tax), генератор адресов, выпуск карт с US BIN и активация Gemini Advanced 2 TB без блокировок.
-          </p>
-          <div class="cabinet-card-actions">
-            <a href="/google-one-guide" class="btn-primary" style="padding:8px 16px; font-size:0.8rem;">Читать гайд ↗</a>
-          </div>
-        </div>
-
-        <!-- Card 4: Lighting Guide -->
-        <div class="cabinet-card">
-          <div class="cabinet-card-tag" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
-            <span style="color:#8b5cf6;">// БЛОК 04 · СВЕТ & КИНЕМАТОГРАФИЯ</span>
-            <span style="color:#09090b; font-weight:700; background:#ede9fe; border:1px solid #ddd6fe; padding:2px 6px; font-size:0.68rem; font-family:var(--mono);">20 СХЕМ СВЕТА</span>
-          </div>
-          <h3>Шпаргалка по свету для фото & видео</h3>
-          <p>
-            20 видов профессионального освещения: Golden Hour, Blue Hour, Low-Key, Soft Ambient, Rim Light, Spotlight, Neon Cyberpunk, Cinematic Chiaroscuro с промптами для реалистичной глубины без «эффекта нейросети».
-          </p>
-          <div class="cabinet-card-actions">
-            <button type="button" onclick="openLightingGuideModal()" class="btn-primary" style="padding:8px 16px; font-size:0.8rem; width:100%; justify-content:center;">
-              💡 Открыть шпаргалку по свету ↗
-            </button>
-          </div>
-        </div>
-
-        <!-- Card 5: Camera Angles Guide -->
-        <div class="cabinet-card">
-          <div class="cabinet-card-tag" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
-            <span style="color:#f59e0b;">// БЛОК 05 · НЕЙРОФОТО & ПРОМПТЫ</span>
-            <span style="color:#09090b; font-weight:700; background:#fef3c7; border:1px solid #fde68a; padding:2px 6px; font-size:0.68rem; font-family:var(--mono);">20 СХЕМ</span>
-          </div>
-          <h3>Гид по ракурсам съемки (20 схем)</h3>
-          <p>
-            Фундаментальная визуальная шпаргалка по всем ракурсам: Full Face, 3/4 View, Low Angle, High Angle, Bird's Eye, Worm's Eye, Dutch Angle, POV и Macro с готовыми копируемыми промптами для Midjourney, SD, Flux и DALL-E 3.
-          </p>
-          <div class="cabinet-card-actions">
-            <button type="button" onclick="openAnglesGuideModal()" class="btn-primary" style="padding:8px 16px; font-size:0.8rem; width:100%; justify-content:center;">
-              📸 Открыть шпаргалку по ракурсам ↗
-            </button>
-          </div>
-        </div>
-
-        <!-- Card 6: SAGE VPN -->
-        <div class="cabinet-card">
-          <div class="cabinet-card-tag" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
-            <span>ИНФРАСТРУКТУРА // VPN</span>
-            <span style="color:#09090b; font-weight:700; background:#f4f4f5; border:1px solid #e4e4e7; padding:2px 6px; font-size:0.68rem; font-family:var(--mono);">🔒 ACCESS ONLY</span>
-          </div>
-          <h3>SAGE VPN (Michael_Sage_bot)</h3>
-          <div style="font-family:var(--mono); font-size:0.75rem; color:#18181b; background:#f4f4f5; border:1px solid #e4e4e7; padding:6px 10px; margin-bottom:12px; font-weight:600; display:inline-flex; align-items:center; gap:6px;">
-            <span>🔒</span> Только для подписчиков канала и резидентов клуба
-          </div>
-          <p>
-            Высокоскоростной защищенный VPN на базе современных протоколов (VLESS, Shadowsocks, WireGuard). Доступ предоставляется только подписчикам Telegram-канала и резидентам закрытого клуба. Управление подпиской, генерация ключей и мгновенное подключение для iOS, Android, macOS и Windows через Telegram-бота <strong>@Michael_Sage_bot</strong>.
-          </p>
-          <div class="cabinet-card-actions">
-            <a href="https://t.me/Michael_Sage_bot" target="_blank" class="btn-primary" style="padding:8px 16px; font-size:0.8rem;">Подключить VPN ↗</a>
-          </div>
-        </div>
-
-        <!-- Card 7: Finmodel Calc -->
-        <div class="cabinet-card">
-          <div class="cabinet-card-tag">ФИНАНСОВЫЙ ИНСТРУМЕНТ</div>
-          <h3>Калькулятор Финмодели & Инвестиций</h3>
-          <p>
-            Моделирование кассовых разрывов, расчет Unit-экономики, оценка размера инвестиционного раунда и доходности инвестора (IRR/MOIC) по FAST Standard.
-          </p>
-          <div class="cabinet-card-actions">
-            <a href="/calculator-finmodel" class="btn-primary" style="padding:8px 16px; font-size:0.8rem;">Запустить расчет ↗</a>
-          </div>
-        </div>
-
-        <!-- Card 8: Tax Calc -->
-        <div class="cabinet-card">
-          <div class="cabinet-card-tag">НАЛОГОВЫЙ ИНСТРУМЕНТ</div>
-          <h3>Калькулятор Налогов и Наценки</h3>
-          <p>
-            Расчет чистой маржи, наценки «сверху» и прибыли «внутри» с учетом УСН 6%, УСН 15%, НДС 5%/7%/20% и эквайринга без кассовых разрывов.
-          </p>
-          <div class="cabinet-card-actions">
-            <a href="/calculator-tax" class="btn-primary" style="padding:8px 16px; font-size:0.8rem;">Рассчитать налоги ↗</a>
-          </div>
-        </div>
-
-        <!-- Card 9: Prompts -->
-        <div class="cabinet-card">
-          <div class="cabinet-card-tag">БАЗА ПРОМПТОВ</div>
-          <h3>Библиотека Системных Промптов</h3>
-          <p>
-            37 ролевых промптов по когнитивному стандарту <strong>GRACEF</strong> для ChatGPT, Claude 3.7, Gemini и DeepSeek. Маркетинг, продажи, IT, юриспруденция и финансы.
-          </p>
-          <div class="cabinet-card-actions">
-            <a href="/prompts" class="btn-primary" style="padding:8px 16px; font-size:0.8rem;">Открыть каталог ↗</a>
-          </div>
-        </div>
-
-        <!-- Card 10: Glossary -->
-        <div class="cabinet-card">
-          <div class="cabinet-card-tag">AI-ГЛОССАРИЙ</div>
-          <h3>AI-Глоссарий & Энциклопедия</h3>
-          <p>
-            Фундаментальный справочник по ключевым понятиям искусственного интеллекта, LLM, RAG-архитектурам, MCP-серверам и автономным агентам с удобным поиском от А до Я.
-          </p>
-          <div class="cabinet-card-actions">
-            <a href="/glossary" class="btn-primary" style="padding:8px 16px; font-size:0.8rem;">Изучить глоссарий ↗</a>
-          </div>
-        </div>
-
-        <!-- Card 11: All Base Materials -->
-        <div class="cabinet-card">
-          <div class="cabinet-card-tag">СВОДНЫЙ РЕЕСТР</div>
-          <h3>Архив & База Знаний</h3>
-          <p>
-            Все материалы, презентации, аналитические исследования и методологии платформы в едином структурированном каталоге.
-          </p>
-          <div class="cabinet-card-actions">
-            <a href="/base" class="btn-secondary" style="padding:8px 16px; font-size:0.8rem;">Все материалы ↗</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═════════════════════════════════════════════════════════════ -->
-    <!-- TAB 2: EDUCATION / CLUB LESSONS -->
-    <!-- ═════════════════════════════════════════════════════════════ -->
-    <section id="tab-education" class="cabinet-tab-pane">
-      <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px; margin-bottom:24px;">
-        <div>
-          <div style="font-family:var(--mono); font-size:0.8rem; font-weight:700; color:var(--gray); margin-bottom:4px;">
-            // ЗАКРЫТЫЕ МАТЕРИАЛЫ КЛУБА • 6 МАСТЕР-КЛАССОВ
-          </div>
-          <h2 style="font-size:1.6rem; font-weight:800; margin:0; letter-spacing:-0.02em;">
-            Записи & Мастер-классы SAGE Neuro Family
-          </h2>
-          <p style="color:var(--gray); margin-top:6px; max-width:780px; font-size:0.95rem;">
-            Эксклюзивный архив видеозаписей, практических воркшопов и закрытых туториалов из закрытого Telegram-чата сообщества. Доступно для резидентов клуба по подписке.
-          </p>
-        </div>
-        <div id="club-lessons-status-pill"></div>
-      </div>
-
-      <!-- Dynamic Access Notice Banner -->
-      <div id="club-lessons-access-banner"></div>
-
-      <!-- Grid of Club Lessons -->
-      <div class="club-lessons-grid" id="club-lessons-grid"></div>
-    </section>
-
-    <!-- ═════════════════════════════════════════════════════════════ -->
-    <!-- TAB 3: CLUB -->
-    <!-- ═════════════════════════════════════════════════════════════ -->
-    <section id="tab-club" class="cabinet-tab-pane">
-      <div style="margin-bottom:24px;">
-        <div style="font-family:var(--mono); font-size:0.8rem; font-weight:700; color:var(--gray); margin-bottom:4px;">
-          // ЗАКРЫТОЕ СООБЩЕСТВО ПРАКТИКОВ
-        </div>
-        <h2 style="font-size:1.6rem; font-weight:800; margin:0;">Закрытый Клуб Михаила Пузырёва</h2>
-        <p style="color:var(--gray); margin-top:6px;">
-          Прямой доступ к исходникам ботов, еженедельным мастермайнам по Vibe Coding и закрытому чату фаундеров и разработчиков.
-        </p>
-      </div>
-
-      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:24px; margin-bottom:32px;">
-        <!-- Club Status Card (Stark Black Pro Card) -->
-        <div style="background:#09090b; color:#ffffff; border:1px solid #18181b; padding:32px; display:flex; flex-direction:column; justify-content:space-between; position:relative;">
-          <div>
-            <div style="display:inline-block; padding:4px 10px; background:#18181b; border:1px solid #27272a; border-radius:0; font-family:var(--mono); font-size:0.75rem; font-weight:700; color:#a1a1aa; margin-bottom:16px;">
-              // РЕЗИДЕНТСТВО В КЛУБЕ
+            <div class="form-group checkbox-group">
+              <label class="checkbox-label" for="inp-is-private">
+                <input type="checkbox" id="inp-is-private" name="is_private" class="privacy-checkbox">
+                <span>Отображать мою карточку в каталоге резидентов сообщества</span>
+              </label>
+              <div class="form-hint">Если отключено, ваш профиль будет скрыт от других участников в общем списке.</div>
             </div>
-            <h3 style="font-size:1.5rem; font-weight:800; color:#ffffff; margin:0 0 12px 0; letter-spacing:-0.02em;">Доступ в Закрытый Чат & Базу PRO</h3>
-            <p style="color:#a1a1aa; font-size:0.95rem; line-height:1.6; margin-bottom:24px;">
-              Оформите подписку через Tribute, чтобы получить мгновенную ссылку на закрытый Telegram-чат сообщества и базу исходников.
-            </p>
-            <ul style="color:#d4d4d8; font-size:0.9rem; line-height:1.8; margin-bottom:24px; padding-left:20px;">
-              <li>Еженедельные живые мастермайнды и код-ревью</li>
-              <li>Исходные коды Telegram-ботов и MCP-серверов</li>
-              <li>Закрытая база промптов уровня PRO</li>
-              <li>Прямое общение с Михаилом Пузырёвым и резидентами</li>
-            </ul>
+
+            <button type="submit" id="btn-save-profile" class="btn-primary profile-save-btn">Сохранить изменения 💾</button>
+          </form>
+
+          <!-- Tribute Card -->
+          <div class="tribute-subscription-card">
+            <div class="tribute-header">
+              <span class="badge-role club">ПОДПИСКА TRIBUTE.TG</span>
+              <h3>Управление рекуррентной подпиской Клуба</h3>
+            </div>
+            <p class="tribute-desc">Тариф: 1 900 ₽ (первый месяц), далее 1 500 ₽/мес. Автоматическое продление и управление привязанными картами осуществляется через официальный сервис Tribute в Telegram.</p>
+            <a href="https://web.tribute.tg/s/O6I" target="_blank" class="btn-secondary btn-tribute-manage">Управление подпиской в Tribute ↗</a>
           </div>
-          <div>
-            <a href="https://web.tribute.tg/s/O6I" target="_blank" class="btn-primary" style="background:#ffffff; color:#09090b; border-color:#ffffff; width:100%; text-align:center; padding:14px; font-weight:700; font-family:var(--mono);">
-              Вступить в Клуб (1 500 ₽/мес) ↗
-            </a>
-            <div style="text-align:center; font-family:var(--mono); font-size:0.75rem; color:#71717a; margin-top:10px;">
-              Оплата через Tribute (карты РФ и зарубежные)
+        </div>
+
+        <!-- Live Preview -->
+        <div class="profile-preview-col">
+          <div class="preview-sticky-box">
+            <div class="preview-label">Live Preview Карточки Нетворкинга:</div>
+            <div class="profile-live-preview-card" id="profile-preview-card">
+              <div class="preview-card-header">
+                <div class="member-avatar-placeholder">U</div>
+                <div class="preview-card-info">
+                  <h4 class="preview-name" id="preview-user-name">Имя Фамилия</h4>
+                  <span class="preview-handle" id="preview-user-handle">@username</span>
+                </div>
+                <span class="badge-role club">РЕЗИДЕНТ</span>
+              </div>
+              <p class="preview-bio" id="preview-user-bio">Описание вашего опыта и проектов...</p>
+              <div class="preview-privacy-status" id="preview-user-privacy">🌐 Отображается в каталоге резидентов</div>
             </div>
           </div>
         </div>
-
-        <!-- Mastermind Schedule -->
-        <div style="background:#ffffff; border:1px solid var(--border); padding:32px;">
-          <div style="font-family:var(--mono); font-size:0.75rem; font-weight:700; color:var(--gray); margin-bottom:12px;">
-            // РАСПИСАНИЕ МАСТЕРМАЙНДОВ
-          </div>
-          <h3 style="font-size:1.3rem; font-weight:800; margin:0 0 16px 0;">Ближайшие встречи Клуба</h3>
-
-          <div style="border-left:2px solid #18181b; padding-left:16px; margin-bottom:20px;">
-            <div style="font-family:var(--mono); font-size:0.8rem; font-weight:700; color:var(--gray);">КАЖДЫЙ ЧЕТВЕРГ • 19:00 МСК</div>
-            <strong style="font-size:1.05rem; display:block; margin:4px 0;">Живой разбор кода & Архитектуры AI-агентов</strong>
-            <div style="font-size:0.85rem; color:var(--gray);">Онлайн-встреча в Telegram Video Chat: разбор проектов участников, решение сложных интеграций.</div>
-          </div>
-
-          <div style="border-left:2px solid #a1a1aa; padding-left:16px;">
-            <div style="font-family:var(--mono); font-size:0.8rem; font-weight:700; color:var(--gray);">ВОСКРЕСЕНЬЕ • 12:00 МСК</div>
-            <strong style="font-size:1.05rem; display:block; margin:4px 0;">Венчурный дайджест & Тренды AI</strong>
-            <div style="font-size:0.85rem; color:var(--gray);">Анализ новых моделей, релизов инструментов и точек монетизации для стартапов.</div>
-          </div>
-        </div>
       </div>
-    </section>
-
-    <!-- ═════════════════════════════════════════════════════════════ -->
-    <!-- TAB 4: MEMBERS DIRECTORY -->
-    <!-- ═════════════════════════════════════════════════════════════ -->
-    <section id="tab-members" class="cabinet-tab-pane">
-      <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px; margin-bottom:24px;">
-        <div>
-          <div style="font-family:var(--mono); font-size:0.8rem; font-weight:700; color:var(--gray); margin-bottom:4px;">
-            // РЕЗИДЕНТЫ СООБЩЕСТВА & НАСТАВНИЧЕСТВО
-          </div>
-          <h2 style="font-size:1.6rem; font-weight:800; margin:0;">Резиденты Клуба & Ученики</h2>
-          <p style="color:var(--gray); margin-top:6px; font-size:0.95rem;">
-            Каталог резидентов закрытого чата SAGE Neuro Family и участников личного наставничества.
-          </p>
-        </div>
-        <div id="members-search-wrapper" style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
-          <input type="text" id="members-search-input" placeholder="🔍 Поиск резидента или компетенции..." oninput="filterMembersList()" style="padding:9px 16px; font-family:var(--font); font-size:0.9rem; border:1px solid var(--border); border-radius:0; width:280px; outline:none; background:#ffffff;">
-        </div>
-      </div>
-
-      <!-- Filter Categories -->
-      <div id="members-filter-wrapper" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px;">
-        <button class="member-filter-btn active" onclick="setMemberRoleFilter('all', this)">Все резиденты</button>
-        <button class="member-filter-btn" onclick="setMemberRoleFilter('club_member', this)">💎 Резиденты SAGE Neuro Family</button>
-        <button class="member-filter-btn" onclick="setMemberRoleFilter('student', this)">🎓 Ученики Наставничества</button>
-      </div>
-
-      <!-- Members Grid Container -->
-      <div id="members-grid-container" class="cabinet-grid">
-        <!-- Rendered dynamically via JS -->
-      </div>
-
-      <!-- Privacy Notice Footer -->
-      <div style="margin-top:32px; padding:16px 20px; background:#f8fafc; border:1px solid var(--border); border-left:3px solid #09090b; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-        <div style="font-size:0.88rem; color:#52525b;">
-          🔒 <strong>Управление видимостью:</strong> Вы можете скрыть свой профиль из этого каталога в любой момент в настройках.
-        </div>
-        <a href="/profile" class="btn-secondary" style="padding:6px 14px; font-size:0.78rem; font-family:var(--mono);">
-          Настройки приватности ⚙
-        </a>
-      </div>
-    </section>
-
-    <!-- ═════════════════════════════════════════════════════════════ -->
-    <!-- TAB 5: FAVORITES -->
-    <!-- ═════════════════════════════════════════════════════════════ -->
-    <section id="tab-favorites" class="cabinet-tab-pane">
-      <div style="margin-bottom:24px;">
-        <div style="font-family:var(--mono); font-size:0.8rem; font-weight:700; color:var(--gray); margin-bottom:4px;">
-          // ПЕРСОНАЛЬНЫЕ ЗАКЛАДКИ
-        </div>
-        <h2 style="font-size:1.6rem; font-weight:800; margin:0;">Мое Избранное</h2>
-        <p style="color:var(--gray); margin-top:6px;">
-          Здесь сохраняются промпты, термины глоссария и статьи, которые вы отметили звездочкой на сайте.
-        </p>
-      </div>
-
-      <div id="favorites-list-container">
-        <!-- Rendered dynamically via JS -->
-      </div>
-    </section>
+    </div>
 
   </main>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-container">
-      <div class="footer-col">
-        <div class="footer-logo">Михаил Пузырёв</div>
-        <p class="footer-desc">
-          AI-архитектура, скоростная разработка и внедрение автономных систем.
-        </p>
+  <!-- In-App Viewer Modal -->
+  <div id="in-app-viewer-modal" class="in-app-viewer-overlay" style="display:none;">
+    <div class="in-app-viewer-dialog">
+      <div class="in-app-dialog-header">
+        <div class="in-app-title-block">
+          <span class="badge-role club in-app-badge" id="viewer-badge">[ РЕШЕНИЕ ]</span>
+          <h2 id="viewer-title" class="in-app-title">Название решения</h2>
+          <p id="viewer-desc" class="in-app-desc">Краткое описание...</p>
+        </div>
+        <button class="in-app-close-btn viewer-close-btn" data-close-viewer onclick="closeInAppViewer()" aria-label="Закрыть">✕</button>
       </div>
-      <div class="footer-col">
-        <div class="footer-title">Разделы</div>
-        <ul class="footer-links">
-          <li><a href="/mentoring">Наставничество 1-на-1</a></li>
-          <li><a href="/automation">Внедрение & Разработка</a></li>
-          <li><a href="/club">Закрытый Клуб</a></li>
-          <li><a href="/prompts">Библиотека промптов</a></li>
-          <li><a href="/glossary">AI-Глоссарий</a></li>
-        </ul>
+
+      <div class="in-app-subtabs-bar">
+        <button class="in-app-subtab-btn active" data-subtab="video" onclick="switchViewerSubtab('video')">🎬 Видео-разбор</button>
+        <button class="in-app-subtab-btn" data-subtab="code" onclick="switchViewerSubtab('code')">💻 Исходный код &amp; ZIP</button>
+        <button class="in-app-subtab-btn" data-subtab="prompts" onclick="switchViewerSubtab('prompts')">📝 Системные промпты</button>
+        <button class="in-app-subtab-btn" data-subtab="checklist" onclick="switchViewerSubtab('checklist')">✅ Чеклист запуска</button>
       </div>
-      <div class="footer-col">
-        <div class="footer-title">Контакты</div>
-        <ul class="footer-links">
-          <li><a href="https://t.me/Michael_Sage" target="_blank">Telegram: @Michael_Sage</a></li>
-          <li><a href="https://t.me/uncrn_sage" target="_blank">Канал: @uncrn_sage</a></li>
-          <li><a href="mailto:i@michaelpuzyrev.ru">i@michaelpuzyrev.ru</a></li>
-          <li><a href="/booking">Забронировать слот ↗</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <div class="footer-title">Юридическая информация</div>
-        <ul class="footer-links">
-          <li><a href="/privacy">Политика конфиденциальности</a></li>
-          <li><a href="/terms">Пользовательское соглашение</a></li>
-          <li><span style="font-family:var(--mono); font-size:0.8rem; color:#71717a;">ИП Пузырёв М.М. ИНН 500177901407</span></li>
-        </ul>
+
+      <div class="in-app-dialog-body">
+        <div id="viewer-pane-video" class="in-app-subtab-pane" data-pane="video"></div>
+        <div id="viewer-pane-code" class="in-app-subtab-pane" data-pane="code" style="display:none;"></div>
+        <div id="viewer-pane-prompts" class="in-app-subtab-pane" data-pane="prompts" style="display:none;"></div>
+        <div id="viewer-pane-checklist" class="in-app-subtab-pane" data-pane="checklist" style="display:none;"></div>
       </div>
     </div>
-    <div class="footer-bottom">
-      <div>© 2026 Михаил Пузырёв. Все права защищены.</div>
-      <div>ИП Пузырёв М.М. · ОГРНИП 318505300123140 · Москва</div>
-    </div>
-  </footer>
+  </div>
 
   <!-- Scripts -->
   <script src="/js/auth.js?v=1.4"></script>
-  <script src="/js/main.js?v=2.8"></script>
-
-  <script>
-    // Tab Switching Logic with Persistence & URL Sync
-    function switchCabinetTab(tabId, btnElem) {
-      if (!tabId) tabId = 'knowledge';
-
-      document.querySelectorAll('.cabinet-tab-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.cabinet-tab-pane').forEach(p => p.classList.remove('active'));
-
-      const activeBtn = btnElem || document.querySelector(`.cabinet-tab-btn[data-tab="${tabId}"]`);
-      if (activeBtn) activeBtn.classList.add('active');
-
-      const targetPane = document.getElementById('tab-' + tabId);
-      if (targetPane) targetPane.classList.add('active');
-
-      // 1. Save active tab to localStorage so page reloads stay on this tab
-      try {
-        localStorage.setItem('asage_cabinet_tab', tabId);
-      } catch (e) {}
-
-      // 2. Keep URL in sync with query parameter (?tab=...) without reload
-      try {
-        const url = new URL(window.location.href);
-        if (url.searchParams.get('tab') !== tabId) {
-          url.searchParams.set('tab', tabId);
-          window.history.replaceState({ tab: tabId }, '', url.pathname + '?' + url.searchParams.toString() + window.location.hash);
-        }
-      } catch (e) {}
-
-      if (tabId === 'members') {
-        loadMembersDirectory();
-      } else if (tabId === 'favorites') {
-        renderFavorites();
-      } else if (tabId === 'education') {
-        renderClubLessons();
-      }
-
-      if (typeof window.trackMetrikaEvent === 'function') {
-        window.trackMetrikaEvent('cabinet_tab_switch', { tab: tabId });
-      }
-    }
-
-    // Members Directory Logic
-    let allMembersCache = [];
-    let currentRoleFilter = 'all';
-
-    async function loadMembersDirectory() {
-      const container = document.getElementById('members-grid-container');
-      const searchWrapper = document.getElementById('members-search-wrapper');
-      const filterWrapper = document.getElementById('members-filter-wrapper');
-      const countBadge = document.getElementById('members-count-badge');
-
-      allMembersCache = await Auth.fetchMembersDirectory();
-      if (countBadge) countBadge.innerText = allMembersCache.length;
-
-      // Access Check: Only Club Residents (SAGE Neuro Family) and 1-on-1 Students have access to the catalog
-      if (!Auth.hasClubAccess()) {
-        if (searchWrapper) searchWrapper.style.display = 'none';
-        if (filterWrapper) filterWrapper.style.display = 'none';
-
-        if (container) {
-          const isGuest = !Auth.isLoggedIn();
-          container.innerHTML = `
-            <div style="grid-column:1/-1; background:#ffffff; border:1px solid var(--border); padding:64px 28px; text-align:center;">
-              <div style="font-family:var(--mono); font-size:0.78rem; font-weight:700; color:var(--gray); margin-bottom:10px; letter-spacing:0.04em;">
-                // ЗАКРЫТЫЙ КАТАЛОГ РЕЗИДЕНТОВ
-              </div>
-              <h3 style="font-size:1.6rem; font-weight:800; margin-bottom:12px; color:var(--black); letter-spacing:-0.02em;">
-                Каталог открыт для участников Закрытого Клуба
-              </h3>
-              <p style="color:var(--gray); font-size:0.95rem; line-height:1.6; max-width:620px; margin:0 auto 28px auto;">
-                Каталог резидентов, база навыков и прямые контакты для нетворкинга доступны участникам закрытого чата <strong>SAGE Neuro Family</strong> и ученикам программы личного наставничества 1-на-1.
-              </p>
-              <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
-                ${isGuest ? `
-                  <button onclick="Auth.openModal()" class="btn-primary" style="padding:12px 24px; font-size:0.85rem;">
-                    Войти через Telegram ↗
-                  </button>
-                ` : `
-                  <button onclick="switchCabinetTab('club', document.querySelectorAll('.cabinet-tab-btn')[2])" class="btn-primary" style="padding:12px 24px; font-size:0.85rem;">
-                    Вступить в Закрытый Клуб [PRO] ↗
-                  </button>
-                `}
-                <a href="/booking" target="_blank" class="btn-secondary" style="padding:12px 24px; font-size:0.85rem;">
-                  Наставничество 1-на-1 ↗
-                </a>
-              </div>
-            </div>
-          `;
-        }
-        return;
-      }
-
-      // If authorized with club access:
-      if (searchWrapper) searchWrapper.style.display = 'flex';
-      if (filterWrapper) filterWrapper.style.display = 'flex';
-
-      filterMembersList();
-    }
-
-    function setMemberRoleFilter(role, btnElem) {
-      currentRoleFilter = role;
-      document.querySelectorAll('.member-filter-btn').forEach(b => b.classList.remove('active'));
-      if (btnElem) btnElem.classList.add('active');
-      filterMembersList();
-    }
-
-    function filterMembersList() {
-      const searchInput = document.getElementById('members-search-input');
-      const query = (searchInput ? searchInput.value : '').toLowerCase().trim();
-
-      let filtered = allMembersCache.filter(m => {
-        if (currentRoleFilter !== 'all') {
-          if (currentRoleFilter === 'club_member' && m.role !== 'club_member') return false;
-          if (currentRoleFilter === 'student' && m.role !== 'student') return false;
-        }
-        if (!query) return true;
-        const name = (m.first_name + ' ' + (m.last_name || '')).toLowerCase();
-        const username = (m.username || '').toLowerCase();
-        const bio = (m.bio || '').toLowerCase();
-        return name.includes(query) || username.includes(query) || bio.includes(query);
-      });
-
-      renderMembersDirectory(filtered);
-    }
-
-    function renderMembersDirectory(members) {
-      const container = document.getElementById('members-grid-container');
-      if (!container) return;
-
-      if (!members || members.length === 0) {
-        container.innerHTML = `
-          <div style="grid-column:1/-1; background:#ffffff; border:1px solid var(--border); padding:48px 24px; text-align:center;">
-            <div style="font-size:2rem; margin-bottom:12px;">👥</div>
-            <h3 style="font-size:1.25rem; font-weight:700; margin-bottom:8px;">Резиденты не найдены</h3>
-            <p style="color:var(--gray); font-size:0.9rem; max-width:400px; margin:0 auto 16px auto;">
-              Попробуйте изменить поисковый запрос или выбрать другой фильтр.
-            </p>
-            <button onclick="document.getElementById('members-search-input').value=''; setMemberRoleFilter('all', document.querySelectorAll('.member-filter-btn')[0]);" class="btn-secondary" style="padding:6px 14px; font-size:0.8rem;">
-              Сбросить фильтры
-            </button>
-          </div>
-        `;
-        return;
-      }
-
-      let html = '';
-      members.forEach(m => {
-        const name = (m.first_name + ' ' + (m.last_name || '')).trim() || (m.username ? '@' + m.username : 'Резидент Клуба');
-        let roleBadge = '<span class="badge-role club" style="font-size:0.68rem; padding:2px 6px;">💎 Резидент</span>';
-        if (m.role === 'student') {
-          roleBadge = '<span class="badge-role" style="font-size:0.68rem; padding:2px 6px; background:#eff6ff; color:#1d4ed8; border-color:#bfdbfe;">🎓 Ученик</span>';
-        }
-
-        const avatar = m.photo_url
-          ? `<img src="${m.photo_url}" alt="${name}" class="member-avatar">`
-          : `<div class="member-avatar-placeholder">${name.charAt(0).toUpperCase()}</div>`;
-
-        let linksHtml = '';
-        if (m.username) {
-          linksHtml += `<a href="https://t.me/${m.username}" target="_blank" class="cabinet-chip cabinet-chip-email" style="font-size:0.75rem;">💬 @${m.username} ↗</a>`;
-        }
-        if (m.channel_url) {
-          const chHref = m.channel_url.startsWith('http') ? m.channel_url : (m.channel_url.startsWith('@') ? `https://t.me/${m.channel_url.slice(1)}` : `https://t.me/${m.channel_url}`);
-          linksHtml += `<a href="${chHref}" target="_blank" class="cabinet-chip cabinet-chip-channel" style="font-size:0.75rem;">📢 Канал ↗</a>`;
-        }
-        if (m.website_url) {
-          const webHref = m.website_url.startsWith('http') ? m.website_url : `https://${m.website_url}`;
-          linksHtml += `<a href="${webHref}" target="_blank" class="cabinet-chip cabinet-chip-website" style="font-size:0.75rem;">🌐 Сайт ↗</a>`;
-        }
-
-        html += `
-          <div class="member-card">
-            <div>
-              <div class="member-header">
-                ${avatar}
-                <div>
-                  <h3 class="member-name">${name}</h3>
-                  <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-                    ${roleBadge}
-                    ${m.username ? `<span style="font-family:var(--mono); font-size:0.75rem; color:var(--gray);">@${m.username}</span>` : ''}
-                  </div>
-                </div>
-              </div>
-              <div class="member-bio">${m.bio || 'Резидент сообщества Михаила Пузырёва (SAGE Neuro Family).'}</div>
-            </div>
-            <div class="member-actions">
-              ${linksHtml || '<span style="font-family:var(--mono); font-size:0.72rem; color:#a1a1aa;">Контакты не указаны</span>'}
-            </div>
-          </div>
-        `;
-      });
-
-      container.innerHTML = html;
-    }
-
-    // Profile Display Update
-    function updateCabinetProfile() {
-      const user = Auth.getUser();
-      const loggedInContainer = document.getElementById('profile-container-logged-in');
-      const guestContainer = document.getElementById('profile-container-guest');
-
-      if (user) {
-        if (loggedInContainer) loggedInContainer.style.display = 'block';
-        if (guestContainer) guestContainer.style.display = 'none';
-
-        const displayName = (user.first_name + ' ' + (user.last_name || '')).trim() || user.username || 'Пользователь';
-        const nameEl = document.getElementById('user-display-name');
-        if (nameEl) nameEl.innerText = displayName;
-        
-        const usernameEl = document.getElementById('user-username-badge');
-        if (usernameEl) {
-          usernameEl.innerText = user.username ? '@' + user.username : '';
-          usernameEl.style.display = user.username ? 'inline-block' : 'none';
-        }
-
-        const idValEl = document.getElementById('user-id-val');
-        if (idValEl) {
-          idValEl.innerText = user.telegram_id || (user.id ? String(user.id).slice(0, 8) : '—');
-        }
-
-        const roleEl = document.getElementById('user-role-badge');
-        if (roleEl) {
-          if (user.role === 'club_member') {
-            roleEl.innerText = '💎 Резидент Клуба';
-            roleEl.className = 'badge-role club';
-          } else if (user.role === 'student') {
-            roleEl.innerText = '🎓 Ученик Наставничества';
-            roleEl.className = 'badge-role';
-          } else {
-            roleEl.innerText = 'Участник платформы';
-            roleEl.className = 'badge-role';
-          }
-        }
-
-        const avatarWrap = document.getElementById('user-avatar-wrap');
-        if (avatarWrap) {
-          avatarWrap.innerHTML = user.photo_url
-            ? `<img src="${user.photo_url}" alt="${displayName}" class="cabinet-avatar">`
-            : `<div class="cabinet-avatar-placeholder">${displayName.charAt(0).toUpperCase()}</div>`;
-        }
-
-        const bioWrap = document.getElementById('user-bio-wrap');
-        if (bioWrap) {
-          if (user.bio && user.bio.trim()) {
-            bioWrap.innerText = user.bio;
-            bioWrap.style.display = 'block';
-            bioWrap.style.fontStyle = 'normal';
-            bioWrap.style.color = '#52525b';
-          } else {
-            bioWrap.innerText = 'Нажмите «Настроить профиль», чтобы добавить описание деятельности и контакты.';
-            bioWrap.style.display = 'block';
-            bioWrap.style.fontStyle = 'italic';
-            bioWrap.style.color = '#a1a1aa';
-          }
-        }
-
-        const extraDetails = document.getElementById('user-extra-details');
-        if (extraDetails) {
-          let detailsHtml = '';
-          if (user.email) {
-            detailsHtml += `<span class="cabinet-chip cabinet-chip-email">✉ ${user.email}</span>`;
-          }
-          if (user.channel_url) {
-            const chHref = user.channel_url.startsWith('http') ? user.channel_url : (user.channel_url.startsWith('@') ? `https://t.me/${user.channel_url.slice(1)}` : `https://t.me/${user.channel_url}`);
-            detailsHtml += `<a href="${chHref}" target="_blank" class="cabinet-chip cabinet-chip-channel">📢 ${user.channel_url} ↗</a>`;
-          }
-          if (user.website_url) {
-            const webHref = user.website_url.startsWith('http') ? user.website_url : `https://${user.website_url}`;
-            detailsHtml += `<a href="${webHref}" target="_blank" class="cabinet-chip cabinet-chip-website">🌐 ${user.website_url} ↗</a>`;
-          }
-          extraDetails.innerHTML = detailsHtml;
-        }
-      } else {
-        if (loggedInContainer) loggedInContainer.style.display = 'none';
-        if (guestContainer) guestContainer.style.display = 'block';
-      }
-
-      // Update favorites counter badge
-      const favs = Auth.getFavorites();
-      const badge = document.getElementById('fav-counter-badge');
-      if (badge) badge.innerText = favs.length;
-    }
-
-    // Render Favorites in Tab 5
-    function renderFavorites() {
-      const container = document.getElementById('favorites-list-container');
-      if (!container) return;
-
-      const favs = Auth.getFavorites();
-      const badge = document.getElementById('fav-counter-badge');
-      if (badge) badge.innerText = favs.length;
-
-      if (favs.length === 0) {
-        container.innerHTML = `
-          <div style="background:#ffffff; border:1px solid var(--border); padding:40px; text-align:center;">
-            <div style="font-size:2rem; margin-bottom:12px;">⭐</div>
-            <h3 style="font-size:1.2rem; font-weight:700; margin-bottom:8px;">У вас пока нет сохраненных материалов</h3>
-            <p style="color:var(--gray); max-width:450px; margin:0 auto 20px auto; font-size:0.9rem;">
-              Перейдите в базу знаний, записи мастер-классов или библиотеку промптов и нажимайте кнопку «⭐ В избранное», чтобы нужные материалы всегда были под рукой.
-            </p>
-            <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
-              <button onclick="switchCabinetTab('education', document.querySelectorAll('.cabinet-tab-btn')[1])" class="btn-primary" style="padding:10px 20px;">Открыть мастер-классы ↗</button>
-              <a href="/prompts" class="btn-secondary" style="padding:10px 20px; background:#ffffff; text-decoration:none;">Библиотека промптов ↗</a>
-            </div>
-          </div>
-        `;
-        return;
-      }
-
-      let html = '<div class="cabinet-grid">';
-      favs.forEach(f => {
-        let link = '/prompts';
-        let typeLabel = 'ПРОМПТ';
-        let actionBtn = `<a href="${link}" class="btn-primary" style="padding:6px 14px; font-size:0.75rem; text-decoration:none;">Открыть ↗</a>`;
-
-        if (f.item_type === 'glossary') {
-          link = '/glossary#' + f.item_id;
-          typeLabel = 'ТЕРМИН ГЛОССАРИЯ';
-          actionBtn = `<a href="${link}" class="btn-primary" style="padding:6px 14px; font-size:0.75rem; text-decoration:none;">Открыть ↗</a>`;
-        } else if (f.item_type === 'guide') {
-          link = '/google-one-guide';
-          typeLabel = 'РУКОВОДСТВО';
-          actionBtn = `<a href="${link}" class="btn-primary" style="padding:6px 14px; font-size:0.75rem; text-decoration:none;">Открыть ↗</a>`;
-        } else if (f.item_type === 'lesson' || f.item_type === 'club_lesson') {
-          typeLabel = '🎓 ЗАПИСЬ // SAGE FAMILY';
-          actionBtn = `<button onclick="openClubLessonFromFav('${f.item_id}')" class="btn-primary" style="padding:6px 14px; font-size:0.75rem; cursor:pointer; display:inline-flex; align-items:center; gap:4px;"><span>▶</span> Смотреть запись</button>`;
-        }
-
-        html += `
-          <div class="cabinet-card">
-            <div class="cabinet-card-tag">${typeLabel}</div>
-            <h3>${f.item_title || f.item_id}</h3>
-            <p style="font-size:0.85rem; color:var(--gray);">
-              ${f.item_meta && f.item_meta.desc ? f.item_meta.desc : 'Сохранено в избранное'}
-            </p>
-            <div class="cabinet-card-actions">
-              ${actionBtn}
-              <button onclick="removeFavorite('${f.item_type}', '${f.item_id}')" class="btn-secondary" style="padding:6px 10px; font-size:0.75rem; border:none; color:#ef4444; cursor:pointer;">
-                ✕ Удалить
-              </button>
-            </div>
-          </div>
-        `;
-      });
-      html += '</div>';
-      container.innerHTML = html;
-    }
-
-    function removeFavorite(type, id) {
-      Auth.toggleFavorite(type, id, '');
-      renderFavorites();
-      renderClubLessons();
-    }
-
-    function openClubLessonFromFav(lessonId) {
-      const tabBtns = document.querySelectorAll('.cabinet-tab-btn');
-      if (tabBtns && tabBtns[1]) {
-        switchCabinetTab('education', tabBtns[1]);
-      }
-      setTimeout(() => {
-        openClubVideo(lessonId);
-      }, 150);
-    }
-
-    // ═════════════════════════════════════════════════════════════
-    // SAGE NEURO FAMILY // CLUB LESSONS DATA & RENDERING
-    // ═════════════════════════════════════════════════════════════
-    const CLUB_LESSONS_DATA = [
-      {
-        id: 'lesson-969',
-        title: 'SKILLS: Навыки в нейронных сетях. Настраиваем агентов',
-        badge: 'МАСТЕР-КЛАСС // КЛУБ',
-        type: 'video',
-        platform: 'Kinescope',
-        videoUrl: 'https://kinescope.io/ooYCG6pSQoMx28ikQiXbCp/pliG4cRv',
-        embedUrl: 'https://kinescope.io/embed/ooYCG6pSQoMx28ikQiXbCp',
-        cover: '/assets/club-lessons/lesson_media_969.jpg',
-        date: '22 июня 2026',
-        duration: '1ч 45мин',
-        description: 'Архитектура кастомных навыков (skills) для LLM-агентов. Как проектировать системные промпты, связывать инструменты через MCP и исключать галлюцинации моделей в проде.',
-        topics: ['AI-Агенты', 'Промпт-инжиниринг', 'MCP-серверы', 'Контекст']
-      },
-      {
-        id: 'lesson-764',
-        title: 'Как создавать сайты с помощью нейросетей. Обзор Stitch',
-        badge: 'ВИДЕО-УРОК // STITCH',
-        type: 'video',
-        platform: 'Kinescope',
-        videoUrl: 'https://kinescope.io/6caXdYNxSMZWduyUB6ChQM/pljpPBB6',
-        embedUrl: 'https://kinescope.io/embed/6caXdYNxSMZWduyUB6ChQM',
-        cover: '/assets/club-lessons/lesson_media_764.jpg',
-        date: '29 апреля 2026',
-        duration: '1ч 12мин',
-        description: 'Пошаговый пайплайн генерации веб-интерфейсов и адаптивных дизайн-систем через Google Stitch MCP. Экспорт чистого Tailwind/HTML и быстрая посадка на хостинг.',
-        topics: ['Google Stitch', 'Vibe Coding', 'UI/UX', 'Tailwind']
-      },
-      {
-        id: 'lesson-619',
-        title: 'Как создавать нейро-фотосессии: FLOW. Разбор инструмента',
-        badge: 'МАСТЕР-КЛАСС // FLOW',
-        type: 'video',
-        platform: 'Kinescope',
-        videoUrl: 'https://kinescope.io/qNU4ub4VBQCmSHLhpeGSt9/plOoNiik',
-        embedUrl: 'https://kinescope.io/embed/qNU4ub4VBQCmSHLhpeGSt9',
-        cover: '/assets/club-lessons/lesson_media_619.jpg',
-        date: '6 апреля 2026',
-        duration: '54 мин',
-        description: 'Полноценный разбор генератора FLOW для создания реалистичных коммерческих фотосессий, лукбуков для брендов и сохранения внешности моделей.',
-        topics: ['FLOW', 'Нейрофото', 'Face Lock', 'Промпты']
-      },
-      {
-        id: 'lesson-615',
-        title: 'NotebookLM: Полный разбор всех возможностей',
-        badge: 'ВИДЕО-УРОК // NOTEBOOKLM',
-        type: 'video',
-        platform: 'Kinescope',
-        videoUrl: 'https://kinescope.io/snmkLPhNSqQQqWhMhCsSFF/pld6Hc5o',
-        embedUrl: 'https://kinescope.io/embed/snmkLPhNSqQQqWhMhCsSFF',
-        cover: '/assets/club-lessons/lesson_media_615.jpg',
-        date: '6 апреля 2026',
-        duration: '1ч 20мин',
-        description: 'Глубокое погружение в Google NotebookLM: работа с базой знаний из сотен документов, генерация глубоких аудио-подкастов и извлечение инсайтов из PDF.',
-        topics: ['NotebookLM', 'База Знаний', 'RAG', 'Аудио-обзоры']
-      },
-      {
-        id: 'lesson-546',
-        title: 'Мастер-класс «Создание Нейро-Подкастов»',
-        badge: 'МАСТЕР-КЛАСС // ПОДКАСТЫ',
-        type: 'video',
-        platform: 'VK Video',
-        videoUrl: 'https://vk.com/video708436546_456239175?list=ln-OazFwvzG9xkf9G1n2A',
-        embedUrl: 'https://vk.com/video_ext.php?oid=708436546&id=456239175&hash=44ba6d5be9fb7a75&hd=2',
-        cover: '/assets/club-lessons/lesson_media_546.jpg',
-        date: '25 марта 2026',
-        duration: '1ч 35мин',
-        description: 'Полный цикл производства аудио и видео-подкастов с помощью генеративных нейросетей: от сценария и структуры выпуска до клонирования голоса и сведения.',
-        topics: ['Подкасты', 'Голосовые модели', 'Сценарии', 'ElevenLabs']
-      },
-      {
-        id: 'lesson-332',
-        title: 'Мастер-класс «Промпт-дизайн и создание ассистентов»',
-        badge: 'МАСТЕР-КЛАСС // АССИСТЕНТЫ',
-        type: 'video',
-        platform: 'Kinescope',
-        videoUrl: 'https://kinescope.io/0uEaDKVHDdqLmAj7krZ4Jd/plO41fqw',
-        embedUrl: 'https://kinescope.io/embed/0uEaDKVHDdqLmAj7krZ4Jd',
-        cover: '/assets/club-lessons/lesson_media_332.jpg',
-        date: '1 марта 2026',
-        duration: '1ч 40мин',
-        description: 'Системный фреймворк создания надёжных промптов, ролевых моделей (GRACEF) и проектирования контекстных окон для цифровых ассистентов бизнеса.',
-        topics: ['Промпт-дизайн', 'GRACEF', 'Ассистенты', 'Системный промпт']
-      }
-    ];
-
-    function renderClubLessons() {
-      const grid = document.getElementById('club-lessons-grid');
-      const banner = document.getElementById('club-lessons-access-banner');
-      const pill = document.getElementById('club-lessons-status-pill');
-      if (!grid) return;
-
-      const hasAccess = Auth.hasClubAccess();
-
-      // Render Status Pill
-      if (pill) {
-        if (hasAccess) {
-          pill.innerHTML = `<span class="badge-role" style="background:#ecfdf5; color:#047857; border-color:#a7f3d0; font-weight:700;">💎 ДОСТУП РЕЗИДЕНТА АКТИВЕН</span>`;
-        } else {
-          pill.innerHTML = `<span class="badge-role" style="background:#fef2f2; color:#dc2626; border-color:#fecaca; font-weight:700;">🔒 ДОСТУП ЗАКРЫТ</span>`;
-        }
-      }
-
-      // Render Banner
-      if (banner) {
-        if (hasAccess) {
-          banner.innerHTML = `
-            <div class="club-access-status-banner unlocked">
-              <div class="banner-info">
-                <div class="banner-icon">💎</div>
-                <div class="banner-text">
-                  <strong>Доступ резидента сообщества активен // SAGE Neuro Family</strong>
-                  <span>Вам открыт неограниченный просмотр всех закрытых записей и мастер-классов.</span>
-                </div>
-              </div>
-              <div>
-                <a href="https://t.me/c/3802053746/82" target="_blank" class="btn-secondary" style="padding:9px 18px; font-size:0.82rem; background:#ffffff; font-weight:600; text-decoration:none;">Тема чата в Telegram ↗</a>
-              </div>
-            </div>
-          `;
-        } else {
-          banner.innerHTML = `
-            <div class="club-access-status-banner locked">
-              <div class="banner-info">
-                <div class="banner-icon">🔒</div>
-                <div class="banner-text">
-                  <strong>Материалы доступны только резидентам клуба SAGE Neuro Family</strong>
-                  <span>Эксклюзивные записи живых воркшопов и закрытые туториалы доступны участникам клуба по подписке (1 500 ₽/мес).</span>
-                </div>
-              </div>
-              <div>
-                <button onclick="switchCabinetTab('club', document.querySelectorAll('.cabinet-tab-btn')[2])" class="btn-primary" style="background:#ffffff; color:#09090b; border-color:#ffffff; padding:11px 20px; font-size:0.84rem; font-weight:700; font-family:var(--mono);">
-                  Вступить в Клуб (1 500 ₽/мес) ↗
-                </button>
-              </div>
-            </div>
-          `;
-        }
-      }
-
-      // Render Cards Grid
-      let html = '';
-      CLUB_LESSONS_DATA.forEach(l => {
-        const isFav = Auth.isFavorite('lesson', l.id);
-        const topicsHtml = l.topics.map(t => `<span class="club-lesson-topic-chip">${t}</span>`).join('');
-        
-        let actionBtnHtml = '';
-        if (hasAccess) {
-          if (l.type === 'video') {
-            actionBtnHtml = `<button onclick="openClubVideo('${l.id}')" class="btn-primary" style="padding:9px 16px; font-size:0.82rem; width:100%; text-align:center; justify-content:center; cursor:pointer; display:inline-flex; align-items:center; gap:6px;"><span>▶</span> Смотреть запись онлайн</button>`;
-          } else if (l.type === 'doc') {
-            actionBtnHtml = `<a href="${l.docUrl}" target="_blank" class="btn-primary" style="padding:9px 16px; font-size:0.82rem; width:100%; text-align:center; justify-content:center; text-decoration:none;">📄 Открыть туториал (Google Docs) ↗</a>`;
-          }
-        } else {
-          actionBtnHtml = `<button onclick="promptJoinClub('${l.title.replace(/'/g, "\\'")}')" class="btn-secondary" style="padding:9px 14px; font-size:0.82rem; width:100%; text-align:center; justify-content:center; background:#fafafa; color:#52525b; border:1px dashed #d4d4d8; cursor:pointer; font-weight:600;">🔒 Доступно в SAGE Neuro Family ↗</button>`;
-        }
-
-        const lockBadgeHtml = !hasAccess ? `<div class="club-lesson-lock-overlay">🔒 Для резидентов</div>` : '';
-
-        html += `
-          <div class="club-lesson-card" id="card-${l.id}">
-            <div class="club-lesson-cover-wrap">
-              <img src="${l.cover}" alt="${l.title}" loading="lazy">
-              <div class="club-lesson-badge-overlay">${l.badge}</div>
-              ${lockBadgeHtml}
-              <button class="club-lesson-fav-btn-float ${isFav ? 'active' : ''}" 
-                      onclick="toggleClubLessonFavorite(event, '${l.id}')" 
-                      title="${isFav ? 'Удалить из избранного' : 'Добавить в избранное'}" 
-                      aria-label="В избранное">
-                ${isFav ? '⭐' : '☆'}
-              </button>
-            </div>
-            <div class="club-lesson-body">
-              <div class="club-lesson-meta">
-                <span>🗓 ${l.date}</span>
-                <span>⏱ ${l.duration}</span>
-              </div>
-              <h3 class="club-lesson-title">${l.title}</h3>
-              <p class="club-lesson-desc">${l.description}</p>
-              <div class="club-lesson-topics">
-                ${topicsHtml}
-              </div>
-            </div>
-            <div class="club-lesson-footer">
-              <div style="display:flex; gap:8px; width:100%; align-items:center;">
-                <div style="flex:1;">
-                  ${actionBtnHtml}
-                </div>
-                <button class="club-lesson-fav-btn ${isFav ? 'active' : ''}" 
-                        onclick="toggleClubLessonFavorite(event, '${l.id}')" 
-                        title="${isFav ? 'Удалить из избранного' : 'Добавить в избранное'}" 
-                        aria-label="В избранное">
-                  ${isFav ? '⭐' : '☆'}
-                </button>
-              </div>
-            </div>
-          </div>
-        `;
-      });
-
-      grid.innerHTML = html;
-    }
-
-    function toggleClubLessonFavorite(e, lessonId) {
-      if (e) {
-        e.stopPropagation();
-        e.preventDefault();
-      }
-      const lesson = CLUB_LESSONS_DATA.find(l => l.id === lessonId);
-      if (!lesson) return;
-
-      const added = Auth.toggleFavorite('lesson', lessonId, lesson.title, {
-        desc: lesson.description,
-        badge: lesson.badge,
-        date: lesson.date,
-        duration: lesson.duration,
-        cover: lesson.cover
-      });
-
-      renderClubLessons();
-      renderFavorites();
-
-      if (typeof Auth.showToast === 'function') {
-        Auth.showToast(added ? `⭐ «${lesson.title}» добавлен в Избранное!` : `Урок «${lesson.title}» удален из Избранного`, 'success');
-      }
-    }
-
-    function updateModalFavBtn(lessonId) {
-      const btn = document.getElementById('modal-fav-btn');
-      if (!btn) return;
-      const isFav = Auth.isFavorite('lesson', lessonId);
-      btn.style.background = isFav ? 'rgba(251, 191, 36, 0.15)' : 'rgba(255,255,255,0.08)';
-      btn.style.color = isFav ? '#fbbf24' : '#ffffff';
-      btn.style.borderColor = isFav ? '#fbbf24' : 'rgba(255,255,255,0.2)';
-      btn.innerHTML = isFav ? '⭐ В избранном' : '☆ В избранное';
-    }
-
-    function promptJoinClub(lessonTitle) {
-      if (!Auth.isLoggedIn()) {
-        Auth.openModal();
-        return;
-      }
-      switchCabinetTab('club', document.querySelectorAll('.cabinet-tab-btn')[2]);
-      window.scrollTo({ top: 350, behavior: 'smooth' });
-    }
-
-    // Video Player In-Modal System
-    let currentVideoLessonId = null;
-
-    function openClubVideo(lessonId) {
-      if (!Auth.hasClubAccess()) {
-        promptJoinClub('Запись закрытого воркшопа');
-        return;
-      }
-
-      const lesson = CLUB_LESSONS_DATA.find(l => l.id === lessonId);
-      if (!lesson || !lesson.embedUrl) return;
-      currentVideoLessonId = lessonId;
-
-      const isFav = Auth.isFavorite('lesson', lessonId);
-
-      const existing = document.getElementById('club-video-modal');
-      if (existing) existing.remove();
-
-      const videoLessons = CLUB_LESSONS_DATA.filter(l => l.type === 'video' && l.embedUrl);
-      const currentIdx = videoLessons.findIndex(l => l.id === lessonId);
-      const prevLesson = currentIdx > 0 ? videoLessons[currentIdx - 1] : null;
-      const nextLesson = currentIdx < videoLessons.length - 1 ? videoLessons[currentIdx + 1] : null;
-
-      const modal = document.createElement('div');
-      modal.id = 'club-video-modal';
-      modal.className = 'guide-modal-overlay';
-      modal.onclick = (e) => { if (e.target === modal) closeClubVideoModal(); };
-
-      const topicsHtml = (lesson.topics || []).map(t => `<span class="club-lesson-topic-chip" style="background:#27272a; border-color:#3f3f46; color:#d4d4d8;">${t}</span>`).join('');
-
-      modal.innerHTML = `
-        <div class="guide-modal-content" style="max-width:980px; width:100%; background:#09090b; border:1px solid #27272a;">
-          <div class="guide-modal-header" style="background:#18181b; border-bottom:1px solid #27272a; padding:16px 20px;">
-            <div style="display:flex; flex-direction:column; gap:4px; max-width:75%;">
-              <div style="font-family:var(--mono); font-size:0.72rem; color:#10b981; font-weight:700; letter-spacing:0.04em;">
-                ${lesson.badge || 'ВИДЕО-УРОК // SAGE NEURO FAMILY'} · ${lesson.duration}
-              </div>
-              <h3 style="margin:0; font-size:1.15rem; color:#ffffff; line-height:1.3;">
-                ${lesson.title}
-              </h3>
-            </div>
-            <div style="display:flex; align-items:center; gap:10px;">
-              <button id="modal-fav-btn" 
-                      onclick="toggleClubLessonFavorite(event, '${lesson.id}'); updateModalFavBtn('${lesson.id}');"
-                      style="background:${isFav ? 'rgba(251, 191, 36, 0.15)' : 'rgba(255,255,255,0.08)'}; color:${isFav ? '#fbbf24' : '#ffffff'}; border:1px solid ${isFav ? '#fbbf24' : 'rgba(255,255,255,0.2)'}; padding:6px 12px; font-family:var(--mono); font-size:0.75rem; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:5px; border-radius:2px;">
-                ${isFav ? '⭐ В избранном' : '☆ В избранное'}
-              </button>
-              <button class="guide-modal-close-btn" onclick="closeClubVideoModal()" aria-label="Закрыть плеер">✕</button>
-            </div>
-          </div>
-
-          <div style="position:relative; width:100%; padding-top:56.25%; background:#000000;">
-            <iframe 
-              id="club-video-iframe" 
-              src="${lesson.embedUrl}" 
-              style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;" 
-              allow="autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer" 
-              allowfullscreen>
-            </iframe>
-          </div>
-
-          <div style="padding:20px 24px; background:#121215; border-top:1px solid #27272a; color:#e4e4e7;">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:20px; flex-wrap:wrap; margin-bottom:16px;">
-              <div style="max-width:680px;">
-                <div style="font-size:0.92rem; line-height:1.6; color:#a1a1aa; margin-bottom:12px;">
-                  ${lesson.description}
-                </div>
-                <div class="club-lesson-topics" style="display:flex; gap:6px; flex-wrap:wrap;">
-                  ${topicsHtml}
-                </div>
-              </div>
-              <div style="display:flex; flex-direction:column; gap:8px; align-items:flex-end;">
-                <div style="font-family:var(--mono); font-size:0.75rem; color:#71717a;">
-                  📅 Запись от ${lesson.date}
-                </div>
-                ${lesson.videoUrl ? `<a href="${lesson.videoUrl}" target="_blank" style="font-family:var(--mono); font-size:0.75rem; color:#a1a1aa; text-decoration:underline;">Внешняя ссылка ↗</a>` : ''}
-              </div>
-            </div>
-
-            <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid #27272a; padding-top:14px; margin-top:14px; gap:12px;">
-              <div>
-                ${prevLesson ? `
-                  <button onclick="openClubVideo('${prevLesson.id}')" class="btn-secondary" style="padding:8px 14px; font-size:0.8rem; background:#18181b; color:#ffffff; border:1px solid #3f3f46; cursor:pointer;">
-                    ← Предыдущий урок
-                  </button>
-                ` : `<span style="font-family:var(--mono); font-size:0.75rem; color:#52525b;">Первый урок</span>`}
-              </div>
-              <div style="font-family:var(--mono); font-size:0.75rem; color:#71717a;">
-                Урок ${currentIdx + 1} из ${videoLessons.length}
-              </div>
-              <div>
-                ${nextLesson ? `
-                  <button onclick="openClubVideo('${nextLesson.id}')" class="btn-primary" style="padding:8px 14px; font-size:0.8rem; background:#ffffff; color:#09090b; border:1px solid #ffffff; cursor:pointer;">
-                    Следующий урок →
-                  </button>
-                ` : `<span style="font-family:var(--mono); font-size:0.75rem; color:#52525b;">Последний урок</span>`}
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-
-      document.body.appendChild(modal);
-      document.body.style.overflow = 'hidden';
-
-      if (typeof window.trackMetrikaEvent === 'function') {
-        window.trackMetrikaEvent('watch_club_video_player', { lesson_id: lessonId, title: lesson.title });
-      }
-    }
-
-    function closeClubVideoModal() {
-      const modal = document.getElementById('club-video-modal');
-      if (modal) {
-        const iframe = modal.querySelector('iframe');
-        if (iframe) iframe.src = '';
-        modal.remove();
-        document.body.style.overflow = '';
-      }
-    }
-
-    // Guide Modals
-    function openAnglesGuideModal() {
-      const existing = document.getElementById('guide-angles-modal');
-      if (existing) existing.remove();
-
-      const modal = document.createElement('div');
-      modal.id = 'guide-angles-modal';
-      modal.className = 'guide-modal-overlay';
-      modal.onclick = (e) => { if (e.target === modal) closeGuideModal('guide-angles-modal'); };
-
-      modal.innerHTML = `
-        <div class="guide-modal-content">
-          <div class="guide-modal-header">
-            <h3>📸 Полный гид по ракурсам (20 схем)</h3>
-            <button class="guide-modal-close-btn" onclick="closeGuideModal('guide-angles-modal')">✕</button>
-          </div>
-          <div class="guide-modal-body">
-            <div style="font-family:var(--mono); font-size:0.8rem; font-weight:700; color:var(--gray); margin-bottom:12px;">// 1. ГОРИЗОНТАЛЬНЫЕ РАКУРСЫ (ПОВОРОТ ОБЪЕКТА)</div>
-            
-            <div class="guide-item-row">
-              <div class="guide-item-info">
-                <strong>Анфас (Full Face) — Прямой взгляд, идеальная симметрия</strong>
-                <div class="guide-prompt-code">front view, looking at camera, symmetrical face</div>
-              </div>
-              <button class="guide-copy-btn" onclick="copyGuidePrompt('front view, looking at camera, symmetrical face', this)">Копировать</button>
-            </div>
-
-            <div class="guide-item-row">
-              <div class="guide-item-info">
-                <strong>Три четверти (3/4 View) — Поворот на 45°, объем и глубина</strong>
-                <div class="guide-prompt-code">three-quarter view, 45 degree turn, depth of field</div>
-              </div>
-              <button class="guide-copy-btn" onclick="copyGuidePrompt('three-quarter view, 45 degree turn, depth of field', this)">Копировать</button>
-            </div>
-
-            <div class="guide-item-row">
-              <div class="guide-item-info">
-                <strong>Профиль (Profile) — Строго боком, акцент на силуэте</strong>
-                <div class="guide-prompt-code">side view, profile shot, silhouette focus</div>
-              </div>
-              <button class="guide-copy-btn" onclick="copyGuidePrompt('side view, profile shot, silhouette focus', this)">Копировать</button>
-            </div>
-
-            <div class="guide-item-row">
-              <div class="guide-item-info">
-                <strong>Полуанфас (Semi-profile) — Между 3/4 и профилем, скулы</strong>
-                <div class="guide-prompt-code">semi-profile, subtle head turn, highlighting cheekbones</div>
-              </div>
-              <button class="guide-copy-btn" onclick="copyGuidePrompt('semi-profile, subtle head turn, highlighting cheekbones', this)">Копировать</button>
-            </div>
-
-            <div class="guide-item-row">
-              <div class="guide-item-info">
-                <strong>Со спины (Back View) — Загадочность и эффект присутствия</strong>
-                <div class="guide-prompt-code">view from behind, back to camera, mysterious mood</div>
-              </div>
-              <button class="guide-copy-btn" onclick="copyGuidePrompt('view from behind, back to camera, mysterious mood', this)">Копировать</button>
-            </div>
-
-            <div style="font-family:var(--mono); font-size:0.8rem; font-weight:700; color:var(--gray); margin:20px 0 12px 0;">// 2. ВЕРТИКАЛЬНЫЕ РАКУРСЫ (ТОЧКА СЪЕМКИ)</div>
-
-            <div class="guide-item-row">
-              <div class="guide-item-info">
-                <strong>Уровень глаз (Eye Level) — Нейтрально и естественно</strong>
-                <div class="guide-prompt-code">eye-level shot, natural perspective, direct gaze</div>
-              </div>
-              <button class="guide-copy-btn" onclick="copyGuidePrompt('eye-level shot, natural perspective, direct gaze', this)">Копировать</button>
-            </div>
-
-            <div class="guide-item-row">
-              <div class="guide-item-info">
-                <strong>Нижний ракурс (Low Angle) — Властный, монументальный ракурс снизу</strong>
-                <div class="guide-prompt-code">low angle shot, looking up at person, heroic perspective</div>
-              </div>
-              <button class="guide-copy-btn" onclick="copyGuidePrompt('low angle shot, looking up at person, heroic perspective', this)">Копировать</button>
-            </div>
-
-            <div class="guide-item-row">
-              <div class="guide-item-info">
-                <strong>Верхний ракурс (High Angle) — Взгляд сверху, уязвимость</strong>
-                <div class="guide-prompt-code">high angle shot, looking down at subject, emotional vulnerability</div>
-              </div>
-              <button class="guide-copy-btn" onclick="copyGuidePrompt('high angle shot, looking down at subject, emotional vulnerability', this)">Копировать</button>
-            </div>
-
-            <div class="guide-item-row">
-              <div class="guide-item-info">
-                <strong>Птичий полет (Bird\'s Eye) — Вид строго сверху (Top-down)</strong>
-                <div class="guide-prompt-code">bird\'s eye view, top-down perspective, high altitude shot</div>
-              </div>
-              <button class="guide-copy-btn" onclick="copyGuidePrompt('bird\\'s eye view, top-down perspective, high altitude shot', this)">Копировать</button>
-            </div>
-
-            <div class="guide-item-row">
-              <div class="guide-item-info">
-                <strong>Лягушачий ракурс (Worm\'s Eye) — Экстремальный ракурс от самой земли</strong>
-                <div class="guide-prompt-code">worm\'s eye view, ground level photography, extreme perspective</div>
-              </div>
-              <button class="guide-copy-btn" onclick="copyGuidePrompt('worm\\'s eye view, ground level photography, extreme perspective', this)">Копировать</button>
-            </div>
-
-            <div style="font-family:var(--mono); font-size:0.8rem; font-weight:700; color:var(--gray); margin:20px 0 12px 0;">// 3. КРЕАТИВ & КИНЕМАТОГРАФИЧНОСТЬ</div>
-
-            <div class="guide-item-row">
-              <div class="guide-item-info">
-                <strong>Голландский угол (Dutch Angle) — Заваленный горизонт, динамика</strong>
-                <div class="guide-prompt-code">dutch angle shot, tilted horizon, cinematic tension</div>
-              </div>
-              <button class="guide-copy-btn" onclick="copyGuidePrompt('dutch angle shot, tilted horizon, cinematic tension', this)">Копировать</button>
-            </div>
-
-            <div class="guide-item-row">
-              <div class="guide-item-info">
-                <strong>Субъективный ракурс (POV) — Вид от первого лица</strong>
-                <div class="guide-prompt-code">first person point of view, POV shot, immersive perspective</div>
-              </div>
-              <button class="guide-copy-btn" onclick="copyGuidePrompt('first person point of view, POV shot, immersive perspective', this)">Копировать</button>
-            </div>
-
-            <div class="guide-item-row">
-              <div class="guide-item-info">
-                <strong>Овершолдер (Over-the-shoulder) — Взгляд через плечо собеседника</strong>
-                <div class="guide-prompt-code">over-the-shoulder shot, conversation framing, blurred foreground shoulder</div>
-              </div>
-              <button class="guide-copy-btn" onclick="copyGuidePrompt('over-the-shoulder shot, conversation framing, blurred foreground shoulder', this)">Копировать</button>
-            </div>
-
-            <div class="guide-item-row">
-              <div class="guide-item-info">
-                <strong>Макро (Macro) — Сверхкрупный план детали</strong>
-                <div class="guide-prompt-code">extreme close-up, macro shot of an eye, hyper-detailed texture</div>
-              </div>
-              <button class="guide-copy-btn" onclick="copyGuidePrompt('extreme close-up, macro shot of an eye, hyper-detailed texture', this)">Копировать</button>
-            </div>
-          </div>
-        </div>
-      `;
-      document.body.appendChild(modal);
-    }
-
-    function openLightingGuideModal() {
-      const existing = document.getElementById('guide-lighting-modal');
-      if (existing) existing.remove();
-
-      const modal = document.createElement('div');
-      modal.id = 'guide-lighting-modal';
-      modal.className = 'guide-modal-overlay';
-      modal.onclick = (e) => { if (e.target === modal) closeGuideModal('guide-lighting-modal'); };
-
-      const lightingSchemes = [
-        { name: '🌅 Golden Hour', desc: 'Тёплые золотистые оттенки, мягкие длинные тени, закатный вайб', prompt: 'golden hour lighting, warm golden tones, soft long shadows, cinematic sunset atmosphere' },
-        { name: '🌌 Blue Hour', desc: 'Холодный синий свет, рассветная или сумеречная атмосфера', prompt: 'blue hour lighting, cool deep blue tones, subtle shadows, dawn atmosphere' },
-        { name: '☁️ Overcast Light', desc: 'Мягкий рассеянный свет без резких теней, естественные цвета', prompt: 'overcast diffused lighting, soft even illumination, natural neutral colors' },
-        { name: '✨ Diffused Light', desc: 'Равномерный мягкий свет, идеален для студийных портретов', prompt: 'diffused studio lighting, soft flattering light, gentle falloff' },
-        { name: '🌇 Backlighting & Rim Light', desc: 'Источник света позади объекта, создаёт сияющий контур', prompt: 'strong backlighting, rim light, glowing silhouette edge, cinematic halo' },
-        { name: '🌿 Soft Ambient Light', desc: 'Нежное рассеянное освещение интерьера, уют и глубина', prompt: 'soft ambient light, cozy room illumination, natural gentle shadows' },
-        { name: '🖤 Low-Key Lighting', desc: 'Тёмный контрастный свет, глубокие тени и драматизм', prompt: 'dramatic low-key lighting, deep dark shadows, high contrast, moody chiaroscuro' },
-        { name: '🤍 High-Key Lighting', desc: 'Яркое, светлое с минимумом теней — чистота и свежесть', prompt: 'high-key lighting, bright airy scene, minimal soft shadows, pure clean look' },
-        { name: '🏠 Window Light', desc: 'Естественный свет из окна, мягкие блики и текстура кожи', prompt: 'natural window light, soft directional sunlight, organic shadow gradient' },
-        { name: '🌳 Dappled Light', desc: 'Солнечные блики и пятна сквозь листву — динамика и игра света', prompt: 'dappled sunlight filtering through foliage, organic light patterns, textured shadows' },
-        { name: '💡 Spotlight', desc: 'Фокус жесткого света на одном объекте, максимальная драма', prompt: 'intense direct spotlight, sharp dramatic focal beam, heavy contrast falloff' },
-        { name: '🌆 Twilight Light', desc: 'Мягкий свет вечерних сумерек, кинематографичность', prompt: 'twilight evening light, dusky cinematic ambient, rich deep sky tones' },
-        { name: '🕯 Candlelight', desc: 'Тёплый мерцающий свет свечей, интимность и золотой оттенок', prompt: 'warm flickering candlelight, intimate golden glow, soft penumbra shadows' },
-        { name: '🎇 Neon Light', desc: 'Яркие неоновые огни, футуристичный киберпанк / ночной город', prompt: 'vibrant neon lighting, dual color cyan and magenta reflections, cyberpunk city night' },
-        { name: '🌕 Moonlight', desc: 'Холодный серебристый ночной свет, магия луны', prompt: 'ethereal cool moonlight, silvery highlights, deep midnight shadows' },
-        { name: '🚦 Street Light', desc: 'Желтоватое свечение уличных фонарей, городской вайб', prompt: 'warm sodium street lamp lighting, nighttime urban atmosphere, wet asphalt reflections' },
-        { name: '🔁 Bounced Light', desc: 'Отражённый свет от поверхностей, естественный fill-свет', prompt: 'bounced indirect illumination, soft ambient bounce, natural fill light' },
-        { name: '🌞 Lens Flare', desc: 'Анаморфотные солнечные блики в объективе, реализм', prompt: 'cinematic anamorphic lens flare, bright sun streak, photographic optical realism' },
-        { name: '🎥 Studio 3-Point Light', desc: 'Трехточечный студийный свет (Key, Fill, Backlight)', prompt: 'professional 3-point studio lighting, balanced key and fill light, crisp rim highlight' },
-        { name: '🔲 Pattern Light (Gobo)', desc: 'Свет с узорами через жалюзи или решётку, графичность', prompt: 'gobo patterned light, window blind shadows projected onto subject, graphic depth' }
-      ];
-
-      let rowsHtml = lightingSchemes.map(s => `
-        <div class="guide-item-row">
-          <div class="guide-item-info">
-            <strong>${s.name} — ${s.desc}</strong>
-            <div class="guide-prompt-code">${s.prompt}</div>
-          </div>
-          <button class="guide-copy-btn" onclick="copyGuidePrompt('${s.prompt.replace(/'/g, "\\'")}', this)">Копировать</button>
-        </div>
-      `).join('');
-
-      modal.innerHTML = `
-        <div class="guide-modal-content">
-          <div class="guide-modal-header">
-            <h3>💡 Шпаргалка по свету (20 схем освещения)</h3>
-            <button class="guide-modal-close-btn" onclick="closeGuideModal('guide-lighting-modal')">✕</button>
-          </div>
-          <div class="guide-modal-body">
-            <div style="font-family:var(--mono); font-size:0.8rem; font-weight:700; color:var(--gray); margin-bottom:12px;">// 20 КИНЕМАТОГРАФИЧЕСКИХ СХЕМ СВЕТА ДЛЯ MIDJOURNEY, FLUX & DALL-E</div>
-            ${rowsHtml}
-          </div>
-        </div>
-      `;
-      document.body.appendChild(modal);
-    }
-
-    function closeGuideModal(id) {
-      const m = document.getElementById(id);
-      if (m) m.remove();
-    }
-
-    function copyGuidePrompt(text, btn) {
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(text).then(() => {
-          const orig = btn.innerText;
-          btn.innerText = '✓ Скопировано';
-          btn.style.background = '#10b981';
-          btn.style.borderColor = '#10b981';
-          btn.style.color = '#fff';
-          setTimeout(() => {
-            btn.innerText = orig;
-            btn.style.background = '';
-            btn.style.borderColor = '';
-            btn.style.color = '';
-          }, 1500);
-        }).catch(() => {
-          prompt('Скопируйте промпт:', text);
-        });
-      } else {
-        prompt('Скопируйте промпт:', text);
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', async () => {
-      updateCabinetProfile();
-      loadMembersDirectory();
-      renderFavorites();
-      renderClubLessons();
-
-      // Determine initial active tab: URL query param -> URL hash -> localStorage -> default 'knowledge'
-      const urlParams = new URLSearchParams(window.location.search);
-      const urlTab = urlParams.get('tab');
-      const hashTab = window.location.hash ? window.location.hash.replace('#tab-', '').replace('#', '') : null;
-      const savedTab = localStorage.getItem('asage_cabinet_tab');
-
-      const validTabs = ['knowledge', 'education', 'club', 'members', 'favorites'];
-      let activeTab = 'knowledge';
-
-      if (urlTab && validTabs.includes(urlTab)) {
-        activeTab = urlTab;
-      } else if (hashTab && validTabs.includes(hashTab)) {
-        activeTab = hashTab;
-      } else if (savedTab && validTabs.includes(savedTab)) {
-        activeTab = savedTab;
-      }
-
-      switchCabinetTab(activeTab);
-
-      if (Auth.isLoggedIn()) {
-        await Auth.fetchFreshUserProfile();
-        updateCabinetProfile();
-        renderClubLessons();
-      }
-    });
-
-    window.addEventListener('popstate', (e) => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const tab = urlParams.get('tab') || 'knowledge';
-      const validTabs = ['knowledge', 'education', 'club', 'members', 'favorites'];
-      if (validTabs.includes(tab)) {
-        switchCabinetTab(tab);
-      }
-    });
-
-    window.addEventListener('asage_auth_changed', () => {
-      updateCabinetProfile();
-      loadMembersDirectory();
-      renderFavorites();
-      renderClubLessons();
-    });
-
-    window.addEventListener('asage_favorites_changed', () => {
-      renderFavorites();
-    });
-  </script>
-
+  <script src="/js/cabinet.js?v=3.0"></script>
 </body>
 </html>
