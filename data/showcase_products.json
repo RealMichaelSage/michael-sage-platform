@@ -1,0 +1,403 @@
+[
+  {
+    "id": "telegram-voice-transcriber-bot",
+    "title": "Telegram Voice Transcriber Bot // Whisper & aiogram 3",
+    "category": "bot",
+    "badge": "ХИТ ПРОДАЖ",
+    "description": "Автономный микросервисный Telegram-бот для мгновенной транскрибации голосовых сообщений и видео-кружочков через Groq Whisper API со скоростью 220x реалтайма.",
+    "price_rub": 2990,
+    "is_free_for_club": true,
+    "tech_stack": [
+      "Python 3.11",
+      "aiogram 3",
+      "Groq Whisper API",
+      "Docker",
+      "FFmpeg",
+      "Redis"
+    ],
+    "cover_image": "/assets/club-lessons/lesson_media_546.jpg",
+    "content": {
+      "video_embed_url": "https://vk.com/video_ext.php?oid=708436546&id=456239175&hash=44ba6d5be9fb7a75&hd=2",
+      "download_zip_url": "/downloads/bots/telegram-voice-transcriber-v2.zip",
+      "github_url": "https://github.com/mikhail-sage/telegram-voice-transcriber-bot",
+      "prompts": [
+        {
+          "title": "Системный промпт пост-обработки и структурирования транскриптов",
+          "body": "Ты — профессиональный стенографист и аналитик коммуникаций. Тебе передан сырой транскрипт аудиосообщения из Telegram. Твоя задача:\n1. Исправить грамматические и пунктуационные ошибки, сохранив оригинальный смысл и терминологию автора.\n2. Разбить сплошной текст на логические абзацы.\n3. Сформировать краткое резюме (Executive Summary) в 1-2 предложениях.\n4. Выделить ключевые тезисы буллетами.\n5. Если в сообщении есть поручения или договоренности, оформить их отдельным блоком 'Action Items' с указанием ответственных и дедлайнов (если они упомянуты)."
+        },
+        {
+          "title": "Промпт суммаризации встреч и аудио-созвонов",
+          "body": "Проанализируй стенограмму рабочего созвона. Выдели:\n- Обсуждаемый контекст и статус проектов;\n- Принятые решения (Key Decisions);\n- Зафиксированные разногласия и открытые вопросы;\n- Список задач (Tasks & Owners) в формате Markdown-таблицы: [Задача | Ответственный | Срок]. Не добавляй неподтвержденные выводы."
+        }
+      ],
+      "checklist": [
+        "1. Создать Telegram-бота через @BotFather, включить инлайн-режим и скопировать BOT_TOKEN",
+        "2. Зарегистрироваться в Groq Console (console.groq.com) и сгенерировать бесплатный ключ GROQ_API_KEY",
+        "3. Склонировать репозиторий или распаковать ZIP-архив telegram-voice-transcriber-v2.zip",
+        "4. Скопировать конфигурационный файл .env.example в .env и заполнить BOT_TOKEN, GROQ_API_KEY и REDIS_URL",
+        "5. Проверить наличие системного пакета ffmpeg для конвертации OGG/Opus аудиопотоков в WAV",
+        "6. Запустить production-контейнер командой 'docker compose up -d --build' и протестировать отправку голосового"
+      ]
+    }
+  },
+  {
+    "id": "ai-lead-scraper-crm-enricher",
+    "title": "AI Lead Scraper & CRM Enricher // Telethon & Bitrix24",
+    "category": "bot",
+    "badge": "B2B AUTOMATION",
+    "description": "Интеллектуальный парсер профильных Telegram-чатов с LLM-квалификацией лидов по ICP и автоматическим обогащением карточек сделок в Bitrix24 CRM.",
+    "price_rub": 2990,
+    "is_free_for_club": true,
+    "tech_stack": [
+      "Python 3.11",
+      "Telethon",
+      "OpenAI / Claude API",
+      "Bitrix24 REST API",
+      "PostgreSQL",
+      "Docker"
+    ],
+    "cover_image": "/assets/club-lessons/lesson_media_83.jpg",
+    "content": {
+      "video_embed_url": "https://kinescope.io/embed/ooYCG6pSQoMx28ikQiXbCp",
+      "download_zip_url": "/downloads/bots/ai-lead-scraper-bitrix24.zip",
+      "github_url": "https://github.com/mikhail-sage/ai-lead-scraper-crm-enricher",
+      "prompts": [
+        {
+          "title": "Промпт скоринга и валидации лида по B2B ICP",
+          "body": "Ты — AI SDR (Sales Development Representative) для агентства заказной разработки и внедрения ИИ-агентов. Оцени сообщение из профильного Telegram-чата предпринимателей по следующим критериям:\n1. Наличие прямой потребности (ищет подрядчика, внедрение LLM, автоматизацию CRM, разработку MVP).\n2. Бюджетная категория (Enterprise, SMB, стартап с инвестициями, микробизнес).\n3. Срочность запроса (горит, в течение месяца, просто исследует рынок).\nВерни строгий JSON: {\"is_qualified\": boolean, \"score_10\": int, \"icp_match\": string, \"detected_budget\": string, \"suggested_opener\": string, \"reasoning\": string}."
+        },
+        {
+          "title": "Промпт подготовки персонального первого касания (Warm Outreach)",
+          "body": "На основе профиля автора и текста его сообщения в чате сгенерируй персонализированное первое касание в Telegram. Тон: партнерский, экспертный, без навязчивых продаж. Сделай отсылку к его конкретному вопросу и предложи показать релевантный кейс (1-2 абзаца)."
+        }
+      ],
+      "checklist": [
+        "1. Получить Telegram API ID и API Hash на my.telegram.org для клиентской сессии Telethon",
+        "2. Создать входящий вебхук в Bitrix24 (раздел 'Разработчикам' ➔ 'Входящий вебхук' с правами crm)",
+        "3. Сконфигурировать список целевых Telegram-чатов и ключевых слов в config.yaml",
+        "4. Настроить системный промпт скоринга в .env с указанием минимального порога квалификации (SCORE_THRESHOLD=7)",
+        "5. Проинициализировать базу данных SQLite/PostgreSQL для дедупликации обработанных сообщений",
+        "6. Запустить фоновый сервис 'python main.py' или 'docker compose up -d' и проверить создание тестовой сделки в CRM"
+      ]
+    }
+  },
+  {
+    "id": "google-stitch-web-engine",
+    "title": "Google Stitch AI Web Design Engine // Tailwind & HTML",
+    "category": "skill",
+    "badge": "VIBE CODING",
+    "description": "Паттерн генерации премиальных интерфейсов через Google Stitch MCP. Экспорт валидного семантического кода в стандарте Swiss Stark Brutalism.",
+    "price_rub": 2490,
+    "is_free_for_club": true,
+    "tech_stack": [
+      "Google Stitch MCP",
+      "Tailwind CSS v4",
+      "HTML5",
+      "JavaScript ES6+",
+      "Vibes UI 3.0"
+    ],
+    "cover_image": "/assets/club-lessons/lesson_media_764.jpg",
+    "content": {
+      "video_embed_url": "https://kinescope.io/embed/6caXdYNxSMZWduyUB6ChQM",
+      "download_zip_url": "/downloads/skills/google-stitch-design-engine.zip",
+      "github_url": "https://github.com/mikhail-sage/google-stitch-web-engine",
+      "prompts": [
+        {
+          "title": "Stitch Meta-Prompt для генерации дизайн-системы DESIGN.md",
+          "body": "Ты — ведущий UI/UX архитектор в стиле Swiss Stark Brutalism. Сгенерируй спецификацию DESIGN.md для Google Stitch:\n- Цветовые токены: строго Canvas #ffffff, Dark #09090b, Gray Borders #e4e4e7, Background Panels #fafafa. Полный запрет цветных градиентов и фиолетовых оттенков.\n- Геометрия: СТРОГО border-radius: 0px !important на всех элементах без исключений (кнопки, инпуты, карточки, аватары).\n- Типографика: Space Grotesk для заголовков (-0.02em letter-spacing), JetBrains Mono для технической мета-информации и бейджей.\n- Сетка: Container max-width 1440px с боковыми границами 1px solid var(--border)."
+        },
+        {
+          "title": "Промпт конвертации Stitch Screen в адаптивный Tailwind-компонент",
+          "body": "Возьми JSON-декларацию экрана из Google Stitch get_screen и трансформируй её в чистый, валидный HTML5-компонент с классами Tailwind CSS v4. Обеспечь адаптивность для мобильных устройств (375px), планшетов (768px) и десктопов (1440px). Проверь отсутствие сторонних CSS-библиотек."
+        }
+      ],
+      "checklist": [
+        "1. Установить и настроить Google Stitch MCP сервер в конфигурационном файле Claude Code / Cursor / Antigravity",
+        "2. Загрузить спецификацию DESIGN.md с помощью инструмента upload_design_md",
+        "3. Сгенерировать базовый экран страницы через команду generate_screen_from_text с привязкой к созданной дизайн-системе",
+        "4. Провести итеративную доработку адаптивных состояний (mobile drawer, table layouts) через edit_screens",
+        "5. Экспортировать готовый HTML/Tailwind код и протестировать рендеринг в браузере",
+        "6. Проверить верстку на строгое соответствие правилу border-radius: 0px через computed styles"
+      ]
+    }
+  },
+  {
+    "id": "antigravity-autonomous-workflow",
+    "title": "Antigravity Autonomous Agent Workflow // MCP & Python",
+    "category": "skill",
+    "badge": "PRO-АРХИТЕКТУРА",
+    "description": "Архитектурный фреймворк запуска автономных ИИ-агентов с 2M контекстом, MCP-серверами, персистентной памятью и протоколами верификации.",
+    "price_rub": 2990,
+    "is_free_for_club": true,
+    "tech_stack": [
+      "Google Antigravity SDK",
+      "Python 3.12",
+      "FastMCP",
+      "SQLite Vector",
+      "Gemini 1.5/2.0 Flash"
+    ],
+    "cover_image": "/assets/club-lessons/lesson_media_969.jpg",
+    "content": {
+      "video_embed_url": "https://kinescope.io/embed/ooYCG6pSQoMx28ikQiXbCp",
+      "download_zip_url": "/downloads/skills/antigravity-agent-workflow.zip",
+      "github_url": "https://github.com/mikhail-sage/antigravity-autonomous-workflow",
+      "prompts": [
+        {
+          "title": "Системный протокол оркестратора агентов BRIEFING.md",
+          "body": "Ты — Главный Архитектор мультиагентной системы. Твоя ответственность — декомпозиция бизнес-задач на атомарные подзадачи для специализированных суб-агентов.\nПравила работы:\n1. Перед началом каждого шага обновляй файл BRIEFING.md с текущим контекстом и зависимостями.\n2. Никогда не доверяй непроверенным результатам суб-агентов: запускай валидационные тесты.\n3. Сохраняй промежуточные артефакты в изолированные папки агентов (.agents/worker_id/).\n4. При превышении бюджета ошибок останавливай цикл и запрашивай подтверждение у оператора."
+        },
+        {
+          "title": "Промпт Handoff Protocol для передачи контекста между агентами",
+          "body": "Составь самодостаточный отчет handoff.md по стандарту 5 компонентов: 1. Observation (факты, логи, точные строки); 2. Logic Chain (причинно-следственные связи); 3. Caveats (допущения и ограничения); 4. Conclusion (готовый вывод); 5. Verification Method (конкретная консольная команда проверки)."
+        }
+      ],
+      "checklist": [
+        "1. Установить Google Antigravity SDK и зависимости: pip install google-antigravity-sdk mcp fastmcp",
+        "2. Сконфигурировать файл окружения .env с ключами GEMINI_API_KEY и MCP_SERVERS_CONFIG",
+        "3. Настроить MCP-серверы доступа к локальной файловой системе, SQLite и браузерной автоматизации",
+        "4. Инициализировать шаблон BRIEFING.md и progress.md в рабочей директории агента",
+        "5. Запустить тестовый прогон агента в режиме 'dry-run' для проверки прав доступа и лимитов токенов",
+        "6. Развернуть оркестратор в production-окружении с логированием в structured JSON-формате"
+      ]
+    }
+  },
+  {
+    "id": "gracef-37-b2b-prompts-pack",
+    "title": "37 B2B GRACEF System Prompts Pack // Prompt-Forge v2.0",
+    "category": "prompt",
+    "badge": "ХИТ ПРОДАЖ",
+    "description": "Полная библиотека из 37 калиброванных системных инструкций для Claude, ChatGPT и DeepSeek. Маркетинг, B2B-продажи, финансы, трекинг и юриспруденция.",
+    "price_rub": 1990,
+    "is_free_for_club": true,
+    "tech_stack": [
+      "GRACEF Framework",
+      "Prompt-Forge v2.0",
+      "Claude 3.5 Sonnet",
+      "GPT-4o",
+      "DeepSeek-V3"
+    ],
+    "cover_image": "/assets/club-lessons/lesson_media_332.jpg",
+    "content": {
+      "video_embed_url": "https://kinescope.io/embed/0uEaDKVHDdqLmAj7krZ4Jd",
+      "download_zip_url": "/downloads/prompts/gracef-37-prompts-pack.zip",
+      "github_url": "https://github.com/mikhail-sage/gracef-b2b-prompts",
+      "prompts": [
+        {
+          "title": "GRACEF Мастер-Шаблон системной инструкции",
+          "body": "[GOAL]: Четкая цель работы агента и измеримый KPI.\n[ROLE]: Идентичность эксперта мирового уровня с 15+ годами практики.\n[AUDIENCE]: Целевая аудитория (B2B фаундеры, C-level руководители, инвесторы).\n[CONTEXT]: Входные данные, технологический стек, доступные ресурсы и ограничения.\n[EXECUTION]: Пошаговый алгоритм выполнения задачи от анализа до финального артефакта.\n[FORMAT]: Точный формат ответа (JSON, Markdown-таблица, исполнительный документ) без общих вводных фраз."
+        },
+        {
+          "title": "B2B Sales Director: Квалификация по методологии SPIN",
+          "body": "Ты — коммерческий директор B2B SaaS компании с чеком от 500 000 ₽. Проанализируй транскрипт встречи с клиентом по методологии SPIN:\n1. Situation: Текущий технологический стек и процесс работы клиента.\n2. Problem: Скрытые боли, узкие места и ручные операции.\n3. Implication: Финансовые и операционные последствия нерешения проблем в горизонте года.\n4. Need-payoff: Ценность внедрения нашего решения. Сформируй коммерческое предложение из 3 пакетов."
+        },
+        {
+          "title": "Venture Financial Analyst: Системный промпт стресс-тестирования финмоделей",
+          "body": "Ты — венчурный аналитик фонда Tier-1. Проведи аудит финансовой модели стартапа: проверь LTV/CAC ratio, когортный отток Churn Rate, динамику Burn Rate и Runway. Выдели 5 ключевых рисков кассового разрыва и предложи меры оптимизации Opex."
+        }
+      ],
+      "checklist": [
+        "1. Скачать архив gracef-37-prompts-pack.zip с исходными файлами в форматах .md и .json",
+        "2. Выбрать необходимую профессиональную роль в каталоге (Sales, Marketing, Finance, Dev, Legal)",
+        "3. Скопировать текст промпта в раздел 'System Prompt' (в Claude Projects, ChatGPT Custom GPTs или API payload)",
+        "4. Заполнить переменные окружения в квадратных скобках [COMPANY_NAME], [TARGET_AUDIENCE], [OFFER]",
+        "5. Провести калибровочный диалог из 3 тестовых запросов и зафиксировать финальную версию инструкций"
+      ]
+    }
+  },
+  {
+    "id": "midjourney-flux-cinematic-pack",
+    "title": "Midjourney & Flux 20 Cinematic Lighting & Angles Pack",
+    "category": "prompt",
+    "badge": "ШАБЛОН",
+    "description": "20 готовых световых схем и 20 кинематографических ракурсов камеры для коммерческих нейрофотосессий, лукбуков и продуктового визуала.",
+    "price_rub": 1990,
+    "is_free_for_club": true,
+    "tech_stack": [
+      "Midjourney v6.1",
+      "FLUX.1 [dev]",
+      "ComfyUI",
+      "Prompt Engineering"
+    ],
+    "cover_image": "/assets/club-lessons/lesson_media_619.jpg",
+    "content": {
+      "video_embed_url": "https://kinescope.io/embed/qNU4ub4VBQCmSHLhpeGSt9",
+      "download_zip_url": "/downloads/prompts/cinematic-lighting-angles-pack.zip",
+      "github_url": "https://github.com/mikhail-sage/flux-cinematic-prompts",
+      "prompts": [
+        {
+          "title": "Световая схема: Rembrandt + Subtle Cyberpunk Rim Light",
+          "body": "Commercial studio portrait of a confident tech entrepreneur, subtle cinematic rim lighting with soft cyan and warm amber contrast, Rembrandt lighting triangle on cheek, 85mm portrait lens, f/1.8 aperture, Hasselblad H6D-100c medium format texture, hyper-realistic skin pores, volumetric haze, raw style --ar 16:9 --style raw --v 6.1"
+        },
+        {
+          "title": "Операторский ракурс: Dutch Angle High-Fashion 85mm f/1.4",
+          "body": "Dynamic low-angle Dutch tilt shot, architectural minimalism background, harsh directional sunlight through brutalist concrete structures, sharp shadows, high-end editorial fashion photography, shot on 35mm film, Kodak Portra 400 grain, high contrast, muted earth tone palette --ar 3:4 --v 6.1"
+        }
+      ],
+      "checklist": [
+        "1. Распаковать архив с промптами и превью-рендерами cinematic-lighting-angles-pack.zip",
+        "2. Выбрать схему освещения в зависимости от задачи (Студийный портрет, Лукбук, Предметная съемка)",
+        "3. Настроить веса параметров стилизации (--stylize 250, --chaos 10 для вариативности)",
+        "4. Для генератора FLUX.1 настроить семплер Euler a, шаг 28-30 и CFG Scale 3.5 в ComfyUI",
+        "5. Сохранить удачные зерна генерации (seed) для воспроизводимости серии кадров одного персонажа"
+      ]
+    }
+  },
+  {
+    "id": "google-one-ai-premium-guide",
+    "title": "Google One AI Premium (Gemini Advanced 2TB) Activation Guide",
+    "category": "guide",
+    "badge": "PRO-ГАЙД",
+    "description": "Пошаговое практическое руководство по настройке американского платежного профиля, обходу антифрода OR_CCCHS_01 и оплате Gemini Advanced 2TB из РФ в 2026.",
+    "price_rub": 1990,
+    "is_free_for_club": true,
+    "tech_stack": [
+      "Google Payments",
+      "Delaware 0% Tax",
+      "Gemini Advanced 1M Context",
+      "Virtual Cards",
+      "Anti-Fraud Bypass"
+    ],
+    "cover_image": "/assets/club-lessons/lesson_media_615.jpg",
+    "content": {
+      "video_embed_url": "https://kinescope.io/embed/snmkLPhNSqQQqWhMhCsSFF",
+      "download_zip_url": "/downloads/guides/google-one-ai-premium-guide.zip",
+      "github_url": "https://github.com/mikhail-sage/google-one-ai-guide",
+      "prompts": [
+        {
+          "title": "Промпт проверки настроек профиля и антифрод-параметров аккаунта",
+          "body": "Ты — специалист по информационной безопасности и Google Risk Management. Проверь конфигурацию аккаунта Google на наличие критических маркеров подозрительности:\n1. Наличие русских телефонных номеров +7 в 2FA.\n2. Несоответствие языка аккаунта (должен быть English US).\n3. Наличие старого платежного профиля Russia RU.\n4. Корректность адреса безналогового штата Delaware (Wilmington, DE 19801).\nВыдай вердикт готовности аккаунта к привязке международной карты."
+        },
+        {
+          "title": "Инструкция Gemini Advanced в Google Workspace (Docs/Sheets)",
+          "body": "Используй системный контекст для интеграции Gemini в Google Docs. Промпт: 'Выступи в роли бизнес-редактора: проанализируй текст коммерческого предложения, устрани канцеляризмы, сократи объем на 30% с усилением оффера и выдели сильные выгоды для лица, принимающего решения'."
+        }
+      ],
+      "checklist": [
+        "1. Установить в Google Account язык English (US) и удалить вторичные региональные языки",
+        "2. В myaccount.google.com отвязать номера телефонов +7 и настроить 2FA через Google Authenticator",
+        "3. В pay.google.com закрыть старый рублевый платежный профиль (Close Payments Profile)",
+        "4. Создать новый платежный профиль США с безналоговым адресом Delaware (Wilmington, DE 19801, 0% Tax)",
+        "5. Выпустить международную виртуальную карту с US BIN (или карту банка СНГ) и пополнить баланс на $25",
+        "6. Привязать карту, активировать подписку Google One AI Premium ($19.99/мес или Free Trial) и проверить доступ к Gemini Advanced"
+      ]
+    }
+  },
+  {
+    "id": "production-rag-notebooklm-guide",
+    "title": "Production RAG & NotebookLM Corporate Knowledge Base Guide",
+    "category": "guide",
+    "badge": "ПРАКТИКА",
+    "description": "Методология сборки корпоративной базы знаний второго мозга на базе Google NotebookLM и локального RAG-пайплайна для быстрого онбординга команды.",
+    "price_rub": 2490,
+    "is_free_for_club": true,
+    "tech_stack": [
+      "Google NotebookLM",
+      "RAG Pipeline",
+      "Vector Embeddings",
+      "Audio Overviews",
+      "Markdown / PDF"
+    ],
+    "cover_image": "/assets/club-lessons/lesson_media_615.jpg",
+    "content": {
+      "video_embed_url": "https://kinescope.io/embed/snmkLPhNSqQQqWhMhCsSFF",
+      "download_zip_url": "/downloads/guides/corporate-rag-notebooklm.zip",
+      "github_url": "https://github.com/mikhail-sage/corporate-rag-notebooklm",
+      "prompts": [
+        {
+          "title": "Промпт кластеризации корпоративных регламентов и инструкций",
+          "body": "Ты — Knowledge Management Architect. Проанализируй массив корпоративной документации компании:\n1. Сгруппируй разрозненные регламенты по функциональным доменам (Onboarding, Sales, Tech Specs, Customer Support).\n2. Устрани дублирующиеся и устаревшие инструкции.\n3. Сформируй иерархическое оглавление для загрузки в NotebookLM в качестве проверенных источников (Sources).\n4. Сгенерируй мета-описание каждого документа с ключевыми поисковыми тегами."
+        },
+        {
+          "title": "Промпт генерации Q&A датасетов для фактчекинга ответов модели",
+          "body": "На основе прикрепленного регламента составь 15 каверзных вопросов с эталонными ответами и точными цитатами из первоисточника. Этот датасет будет использоваться для автоматической оценки галлюцинаций LLM при внедрении корпоративного ассистента."
+        }
+      ],
+      "checklist": [
+        "1. Провести аудит корпоративных файлов: перевести документацию из разрозненных чатов в чистый Markdown/PDF",
+        "2. Создать специализированный блокнот в Google NotebookLM под каждый функциональный отдел компании",
+        "3. Загрузить до 50 проверенных источников (до 500 000 слов на блокнот) без потери цитируемости",
+        "4. Сгенерировать синтетический Audio Overview (глубокий подкаст-разбор) для быстрого онбординга новых сотрудников",
+        "5. Настроить шаринг блокнота с правами 'Viewer' для линейных специалистов",
+        "6. Протестировать извлечение перекрестных фактов через встроенный чат с проверкой ссылок на страницы"
+      ]
+    }
+  },
+  {
+    "id": "fast-saas-finmodel-calculator",
+    "title": "FAST Standard SaaS Finmodel & Unit-Economics Calculator 5.0 Pro",
+    "category": "calc",
+    "badge": "ШАБЛОН",
+    "description": "Институциональная 5-летняя венчурная финансовая модель с расчетом 28 метрик Unit-экономики (LTV, CAC, Payback, Churn), 3 сценариями и авто-экспортом в Excel.",
+    "price_rub": 2990,
+    "is_free_for_club": true,
+    "tech_stack": [
+      "Excel / Google Sheets",
+      "JavaScript ES6+",
+      "Chart.js",
+      "SheetJS (XLSX)",
+      "FAST Standard"
+    ],
+    "cover_image": "/assets/club-lessons/lesson_media_137.jpg",
+    "content": {
+      "video_embed_url": "https://kinescope.io/embed/0uEaDKVHDdqLmAj7krZ4Jd",
+      "download_zip_url": "/downloads/calcs/venture-finmodel-5.0-pro.zip",
+      "github_url": "https://github.com/mikhail-sage/saas-finmodel-calculator",
+      "prompts": [
+        {
+          "title": "Промпт аудита допущений финмодели и поиска скрытых костов",
+          "body": "Ты — финансовый директор венчурного фонда. Проанализируй входные допущения финансовой модели B2B SaaS:\n- Оцени реалистичность стоимости привлечения платящего пользователя (CAC) по каналам;\n- Проверь структуру постоянных расходов (Fixed Opex) на предмет неучтенных налогов с ФОТ (43% в РФ) и эквайринговых комиссий (2.5-3.5%);\n- Проверь адекватность конверсии из лида в оплату с учетом цикла сделки в 45-60 дней;\nВыдай список узких мест модели и предложения по корректировке сценариев."
+        },
+        {
+          "title": "Промпт стресс-тестирования когортного оттока (Cohort Retention Stress Test)",
+          "body": "Смоделируй ухудшение ключевых метрик на 20%: увеличение месячного Churn Rate с 3% до 6% и падение органического притока. Рассчитай влияние на кассовый разрыв (Cash Out Date) и определи минимально необходимый объем инвест-раунда для достижения точки безубыточности (Break-even)."
+        }
+      ],
+      "checklist": [
+        "1. Скачать готовый шаблон финансовой модели venture-finmodel-5.0-pro.xlsx и открыть в Excel или Google Sheets",
+        "2. Заполнить базовые параметры на листе 'Inputs': валюта, налоговый режим, начальный остаток денежных средств",
+        "3. Скорректировать воронку Unit-экономики: стоимость клика, конверсии шагов C1/C2, средний чек и регулярность покупок",
+        "4. Заполнить штатное расписание и фонд оплаты труда с учетом налогов и страховых взносов",
+        "5. Проверить автоматические расчеты отчетов P&L (доходы и расходы) и Cash Flow (движение денежных средств)",
+        "6. Переключить сценарии (Консервативный / Базовый / Оптимистичный) и экспортировать инвесторский дашборд"
+      ]
+    }
+  },
+  {
+    "id": "ai-roi-dev-cost-calculator",
+    "title": "AI ROI & Codebase Development Cost Calculator",
+    "category": "calc",
+    "badge": "ИНСТРУМЕНТ",
+    "description": "Интерактивная модель расчета окупаемости внедрения ИИ-ассистентов в команду разработки и экономии бюджета при переходе на Vibe Coding.",
+    "price_rub": 1990,
+    "is_free_for_club": true,
+    "tech_stack": [
+      "JavaScript",
+      "HTML5 / CSS3",
+      "Vibes UI 3.0",
+      "Economic Modeling"
+    ],
+    "cover_image": "/assets/club-lessons/lesson_media_393.jpg",
+    "content": {
+      "video_embed_url": "https://kinescope.io/embed/6caXdYNxSMZWduyUB6ChQM",
+      "download_zip_url": "/downloads/calcs/ai-roi-calculator-template.zip",
+      "github_url": "https://github.com/mikhail-sage/ai-roi-calculator",
+      "prompts": [
+        {
+          "title": "Промпт оценки трудозатрат и когнитивной нагрузки команды инженеров",
+          "body": "Ты — VP of Engineering технологической компании. Оцени потенциал автоматизации рутинных задач разработки с помощью LLM-ассистентов (Cursor, Claude Code, GitHub Copilot):\n1. Написание unit- и e2e-тестов (ожидаемое ускорение: 3x-4x);\n2. Генерация бойлерплейта и CRUD API (ускорение: 5x);\n3. Рефакторинг и исправление lint-ошибок (ускорение: 2.5x);\n4. Составление архитектурной документации и спецификаций (ускорение: 3x).\nСформируй расчет высвобождаемых человеко-часов в месяц на команду из 5 инженеров."
+        },
+        {
+          "title": "Промпт расчета срока окупаемости подписок Claude/ChatGPT Team",
+          "body": "Рассчитай чистую экономию фонда оплаты труда при покупке 10 подписок Claude Team ($30/мес/чел = $300/мес) при средней ставке senior-разработчика 2 500 ₽/час. Рассчитай точку окупаемости (ROI в процентах и срок возврата инвестиций в днях)."
+        }
+      ],
+      "checklist": [
+        "1. Ввести количество инженеров в штате и их среднюю ставку за рабочий час",
+        "2. Указать долю рутинных задач в спринте (бойлерплейт, покрытие тестами, рефакторинг)",
+        "3. Выбрать используемый инструментарий (Cursor Pro, Claude Code, GitHub Copilot, ChatGPT Plus)",
+        "4. Ознакомиться с расчетной экономией человеко-часов и снижением совокупной стоимости владения (TCO)",
+        "5. Выгрузить PDF-отчет с экономическим обоснованием для финансового директора"
+      ]
+    }
+  }
+]
