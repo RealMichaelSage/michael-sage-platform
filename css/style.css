@@ -1076,16 +1076,22 @@ main > .section:first-child {
 .feature-card {
   padding: clamp(32px, 3.2vw, 40px) clamp(24px, 2.5vw, 32px);
   background: var(--bg);
+  border: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   gap: 12px;
   height: 100%;
-  transition: background 0.2s;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.25s ease,
+              background 0.2s ease;
 }
 
 .feature-card:hover {
-  background: var(--bg-gray);
+  border-color: var(--black);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
 }
 
 .card-num {
@@ -3005,17 +3011,6 @@ main > .section:first-child {
 }
 
 /* Premium Card Micro-interactions */
-.feature-card {
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.25s ease;
-}
-.feature-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
-  border-color: #a1a1aa;
-}
-
 .price-card {
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
               box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
