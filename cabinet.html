@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Личный Кабинет Платформы | Михаил Пузырёв</title>
-  <meta name="description" content="Личный кабинет платформы Михаила Пузырёва: персональный командный центр (Cockpit), витрина готовых ИИ-решений, библиотека и материалы Закрытого Клуба.">
+  <meta name="description" content="Личный кабинет платформы Михаила Пузырёва: База Знаний (промпты, глоссарий, калькуляторы), видео-уроки по Vibe Coding, витрина решений и материалы Закрытого Клуба.">
   <meta name="author" content="Михаил Пузырёв">
   <meta name="robots" content="noindex, nofollow">
 
@@ -14,7 +14,7 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Личный Кабинет — Платформа Михаила Пузырёва">
-  <meta property="og:description" content="Командный центр, витрина готовых ИИ-решений и материалы Закрытого Клуба.">
+  <meta property="og:description" content="База Знаний, видео-уроки по Vibe Coding, витрина решений и материалы Закрытого Клуба.">
   <meta property="og:url" content="https://a-sage.ru/cabinet">
   <meta property="og:site_name" content="Михаил Пузырёв — AI Архитектура & Внедрение">
   <meta property="og:image" content="https://a-sage.ru/img/og-preview.png">
@@ -29,8 +29,8 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="/css/style.css?v=3.0">
-  <link rel="stylesheet" href="/css/cabinet.css?v=3.1">
+  <link rel="stylesheet" href="/css/style.css?v=3.2">
+  <link rel="stylesheet" href="/css/cabinet.css?v=3.2">
 
   <!-- Yandex.Metrika -->
   <script type="text/javascript">
@@ -79,352 +79,655 @@
     </div>
   </header>
 
+  <!-- Mobile Menu -->
+  <div class="mobile-menu">
+    <a href="/">Главная</a>
+    <a href="/mentoring">Наставничество 1-на-1</a>
+    <a href="/automation">Внедрение &amp; Разработка</a>
+    <a href="/corporate">Компаниям</a>
+    <a href="/club/">Клуб</a>
+    <a href="/about">Обо мне &amp; Кейсы</a>
+    <a href="/base">База</a>
+    <a href="/cabinet/">Личный Кабинет</a>
+    <a href="/booking" class="m-cta">Забронировать слот ↗</a>
+  </div>
+
   <!-- Cabinet Main Frame (Constrained 1440px) -->
   <main class="cabinet-page-frame">
 
     <!-- Header / Profile Cockpit Block -->
-    <div class="cabinet-header-block">
-      <div class="cabinet-profile-card">
-        <div class="cabinet-avatar-container">
-          <img src="/img/mikhail_hero.jpg" alt="Аватар" class="cabinet-avatar" id="cabinet-user-avatar" width="76" height="76">
-        </div>
-        <div class="cabinet-profile-content">
-          <div class="cabinet-profile-title-row">
-            <h1 class="cabinet-user-name" id="cabinet-display-name">Гость Платформы</h1>
-            <span class="badge-role cabinet-sub-status" id="cabinet-sub-badge">
-              Гость Платформы <a href="https://web.tribute.tg/s/O6I" target="_blank" class="btn-tribute-cta">Вступить в Клуб (1 900 ₽) ↗</a>
-            </span>
+    <section class="cabinet-header-block">
+      <!-- LOGGED-IN STATE -->
+      <div id="profile-container-logged-in" style="display:none;">
+        <div class="cabinet-profile-card">
+          <div class="cabinet-profile-main">
+            <div id="user-avatar-wrap" class="cabinet-avatar-container">
+              <img src="/img/mikhail_hero.jpg" alt="Аватар" class="cabinet-avatar" id="cabinet-user-avatar" width="76" height="76">
+            </div>
+            <div class="cabinet-profile-content">
+              <div class="cabinet-profile-title-row">
+                <h1 id="user-display-name" class="cabinet-user-name">Пользователь</h1>
+                <div class="cabinet-user-badges" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                  <span id="user-role-badge" class="badge-role cabinet-sub-status">Участник платформы</span>
+                  <span id="user-username-badge" class="cabinet-username-tag cabinet-user-handle">@username</span>
+                </div>
+              </div>
+              <div id="user-bio-wrap" class="cabinet-user-bio"></div>
+              <div id="user-extra-details" class="cabinet-user-chips"></div>
+            </div>
           </div>
-          <div class="cabinet-user-handle" id="cabinet-tg-handle">@guest_user</div>
-        </div>
-        <div class="cabinet-header-actions">
-          <button class="btn-secondary" onclick="switchCabinetTab('profile')">Настроить профиль ⚙</button>
+          <div class="cabinet-profile-actions">
+            <div class="cabinet-actions-buttons">
+              <button onclick="switchCabinetTab('profile')" class="btn-primary cabinet-edit-btn">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                <span>Настроить профиль</span>
+              </button>
+            </div>
+            <div class="cabinet-profile-stats">
+              <div class="stat-pill"><span class="stat-pill-label">ID:</span> <span id="user-id-val" class="stat-pill-val">—</span></div>
+              <div class="stat-pill"><span class="stat-pill-label">Сессия:</span> <span class="stat-pill-val online-status">● Активна</span></div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Horizontal Engineering Tab Bar -->
-    <div class="cabinet-tabs-bar">
-      <button class="cabinet-tab-btn active" data-tab="dashboard" onclick="switchCabinetTab('dashboard', this)">
-        ⚡ Дашборд
+      <!-- GUEST / UNLOGGED STATE -->
+      <div id="profile-container-guest">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;">
+          <div>
+            <div style="display:inline-block; padding:3px 10px; background:#f4f4f5; font-family:var(--mono); font-size:0.75rem; font-weight:700; margin-bottom:8px; border:1px solid #e4e4e7;">
+              // ПЛАТФОРМА &amp; БАЗА ЗНАНИЙ
+            </div>
+            <h1 style="font-size:1.8rem; font-weight:800; margin:0 0 6px 0; letter-spacing:-0.02em;">
+              Личный Кабинет Платформы
+            </h1>
+            <p style="color:var(--gray); margin:0; font-size:0.95rem;">
+              База Знаний, видео-уроки по Vibe Coding, витрина решений и материалы Закрытого Клуба.
+            </p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+            <a href="https://web.tribute.tg/s/O6I" target="_blank" class="btn-primary" style="padding:11px 20px; font-size:0.85rem; font-weight:700; text-decoration:none;">
+              Вступить в Клуб (1 900 ₽) ↗
+            </a>
+            <button onclick="Auth.openModal()" class="nav-auth-btn" style="height:44px; padding:0 22px; font-size:0.92rem; background:#ffffff; color:#09090b; border:1px solid #09090b; box-shadow:0 4px 14px rgba(0,0,0,0.06); cursor:pointer;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <span>Войти через Telegram</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Horizontal Engineering Tab Bar (Sticky at top: 68px) -->
+    <nav class="cabinet-tabs-bar" role="tablist">
+      <button class="cabinet-tab-btn active" data-tab="knowledge" onclick="switchCabinetTab('knowledge', this)">
+        <span>📚 База Знаний</span>
       </button>
-      <button class="cabinet-tab-btn" data-tab="library" onclick="switchCabinetTab('library', this)">
-        📂 Моя Библиотека <span class="cabinet-tab-badge" id="tab-badge-library">0</span>
+      <button class="cabinet-tab-btn" data-tab="education" onclick="switchCabinetTab('education', this)">
+        <span>🎬 Записи &amp; Уроки</span>
+        <span class="cabinet-tab-badge">6</span>
       </button>
-      <button class="cabinet-tab-btn" data-tab="store" onclick="switchCabinetTab('store', this)">
-        🛍️ Витрина Решений <span class="cabinet-tab-badge">10</span>
+      <button class="cabinet-tab-btn" data-tab="solutions" onclick="switchCabinetTab('solutions', this)">
+        <span>🛍️ Витрина решений</span>
+        <span class="cabinet-tab-badge">2</span>
       </button>
-      <button class="cabinet-tab-btn" data-tab="community" onclick="switchCabinetTab('community', this)">
-        💎 Клубный Хаб <span class="cabinet-tab-badge pro">PRO</span>
+      <button class="cabinet-tab-btn" data-tab="club" onclick="switchCabinetTab('club', this)">
+        <span>💎 Закрытый Клуб</span>
+        <span class="cabinet-tab-badge pro">PRO</span>
+      </button>
+      <button class="cabinet-tab-btn" data-tab="members" onclick="switchCabinetTab('members', this)">
+        <span>👥 Резиденты</span>
+        <span id="members-count-badge" class="cabinet-tab-badge">0</span>
+      </button>
+      <button class="cabinet-tab-btn" data-tab="favorites" onclick="switchCabinetTab('favorites', this)">
+        <span>⭐ Избранное</span>
+        <span id="fav-counter-badge" class="cabinet-tab-badge">0</span>
       </button>
       <button class="cabinet-tab-btn" data-tab="profile" onclick="switchCabinetTab('profile', this)">
-        👤 Профиль &amp; Настройки
+        <span>👤 Профиль</span>
       </button>
-    </div>
+    </nav>
 
-    <!-- 1. TAB: DASHBOARD (⚡ ДАШБОРД / COCKPIT) -->
-    <div id="tab-dashboard" class="cabinet-tab-pane active" data-section="dashboard">
-      <!-- Mastermind Live Widget -->
-      <div class="mastermind-widget cabinet-countdown-widget" id="mastermind-live-widget">
-        <div class="mastermind-widget-header">
-          <span class="badge-role club">🔴 ЖИВОЙ МАСТЕРМАЙНД // ЧЕТВЕРГ 19:00 МСК</span>
-          <span class="session-format">SAGE Neuro Family • Закрытый эфир</span>
+    <!-- ═════════════════════════════════════════════════════════════ -->
+    <!-- TAB 1: KNOWLEDGE BASE (📚 БАЗА ЗНАНИЙ) -->
+    <!-- ═════════════════════════════════════════════════════════════ -->
+    <section id="tab-knowledge" class="cabinet-tab-pane active" data-section="knowledge">
+      <div class="section-header-row">
+        <div>
+          <div class="section-tag">ЕДИНЫЙ ЦЕНТР ЗНАНИЙ, ИНСТРУМЕНТОВ И МАТЕРИАЛОВ</div>
+          <h2 class="section-title">База Знаний Платформы</h2>
+          <p class="section-subtitle">Практические гайды, расчетные калькуляторы, библиотеки системных промптов и справочники.</p>
         </div>
-        <h2 class="mastermind-title">Вайбкодинг сложных MCP-серверов в Antigravity &amp; Claude Code</h2>
-        <p class="mastermind-desc">Практический разбор архитектуры автономных агентных систем, синхронизация баз данных и деплой микросервисов в реальном времени со спикером Михаилом Пузырёвым.</p>
+      </div>
+
+      <div class="cabinet-grid">
+        <!-- Card 1: Research White Paper -->
+        <div class="cabinet-card featured-res-card" style="border: 2px solid #09090b; background: #fafafa;">
+          <div class="cabinet-card-tag" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+            <span style="background:#10b981; color:#ffffff; font-weight:700; padding:2px 8px; font-size:0.68rem; font-family:var(--mono);">ПРАКТИЧЕСКИЙ ГАЙД // ROI</span>
+            <span style="color:#09090b; font-weight:700; background:#dcfce7; border:1px solid #86efac; padding:2px 8px; font-size:0.68rem; font-family:var(--mono);">НОВОЕ 2026</span>
+          </div>
+          <h3>Как внедрить ИИ-агентов в бизнес: Пошаговый план, окупаемость (ROI) и безопасность</h3>
+          <p>
+            Практическое руководство для предпринимателей: как автоматизировать рутину компании с помощью автономных ИИ-агентов, расчет окупаемости (McKinsey .6–4.4T), где нужен детерминированный SQL/1С, а где LLM, защита данных и 4-этапный план внедрения.
+          </p>
+          <div class="cabinet-card-actions">
+            <a href="/base/research-agentic-processes/" class="btn-primary" style="padding:9px 18px; font-size:0.82rem; background:#09090b; color:#ffffff;">Читать руководство ↗</a>
+          </div>
+        </div>
+
+        <!-- Card 2: AI Business Automation Atlas -->
+        <div class="cabinet-card">
+          <div class="cabinet-card-tag" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+            <span>ИИ-АВТОМАТИЗАЦИЯ ДЛЯ БИЗНЕСА</span>
+            <span style="color:#ffffff; font-weight:700; background:#10b981; padding:2px 8px; font-size:0.68rem; font-family:var(--mono);">ГОТОВЫЕ СЦЕНАРИИ</span>
+          </div>
+          <h3>ИИ-Автоматизация для Бизнеса</h3>
+          <p>
+            Полная интерактивная карта внедрения цифрового персонала и AI-агентов по 8 бизнес-контурам. Пошаговые инженерные гайды, архитектура со стрелочками и готовые промпты для Antigravity.
+          </p>
+          <div class="cabinet-card-actions">
+            <a href="/solutions" class="btn-primary" style="padding:9px 18px; font-size:0.82rem;">Каталог решений &amp; Гайды ↗</a>
+          </div>
+        </div>
+
+        <!-- Card 3: Google One Guide -->
+        <div class="cabinet-card">
+          <div class="cabinet-card-tag">ПОШАГОВЫЙ ГАЙД 2026</div>
+          <h3>Оплата Google One AI Premium 2TB из РФ</h3>
+          <p>
+            Пошаговое руководство: безналоговый штат Delaware (0% tax), генератор адресов, выпуск карт с US BIN и активация Gemini Advanced 2 TB без блокировок.
+          </p>
+          <div class="cabinet-card-actions">
+            <a href="/google-one-guide" class="btn-primary" style="padding:9px 18px; font-size:0.82rem;">Читать гайд ↗</a>
+          </div>
+        </div>
+
+        <!-- Card 4: Lighting Guide (Modal) -->
+        <div class="cabinet-card">
+          <div class="cabinet-card-tag" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+            <span style="color:#8b5cf6;">// БЛОК 04 · СВЕТ &amp; КИНЕМАТОГРАФИЯ</span>
+            <span style="color:#09090b; font-weight:700; background:#ede9fe; border:1px solid #ddd6fe; padding:2px 8px; font-size:0.68rem; font-family:var(--mono);">20 СХЕМ СВЕТА</span>
+          </div>
+          <h3>Шпаргалка по свету для фото &amp; видео</h3>
+          <p>
+            20 видов профессионального освещения: Golden Hour, Blue Hour, Low-Key, Soft Ambient, Rim Light, Spotlight, Neon Cyberpunk, Cinematic Chiaroscuro с промптами для реалистичной глубины без «эффекта нейросети».
+          </p>
+          <div class="cabinet-card-actions">
+            <button type="button" onclick="openLightingGuideModal()" class="btn-primary" style="padding:9px 18px; font-size:0.82rem; width:100%; justify-content:center; cursor:pointer;">
+              💡 Открыть шпаргалку по свету ↗
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 5: Camera Angles Guide (Modal) -->
+        <div class="cabinet-card">
+          <div class="cabinet-card-tag" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+            <span style="color:#f59e0b;">// БЛОК 05 · НЕЙРОФОТО &amp; ПРОМПТЫ</span>
+            <span style="color:#09090b; font-weight:700; background:#fef3c7; border:1px solid #fde68a; padding:2px 8px; font-size:0.68rem; font-family:var(--mono);">20 СХЕМ</span>
+          </div>
+          <h3>Гид по ракурсам съемки (20 схем)</h3>
+          <p>
+            Фундаментальная визуальная шпаргалка по всем ракурсам: Full Face, 3/4 View, Low Angle, High Angle, Bird's Eye, Worm's Eye, Dutch Angle, POV и Macro с готовыми копируемыми промптами для Midjourney, SD, Flux и DALL-E 3.
+          </p>
+          <div class="cabinet-card-actions">
+            <button type="button" onclick="openAnglesGuideModal()" class="btn-primary" style="padding:9px 18px; font-size:0.82rem; width:100%; justify-content:center; cursor:pointer;">
+              📸 Открыть шпаргалку по ракурсам ↗
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 6: Finmodel Calc -->
+        <div class="cabinet-card">
+          <div class="cabinet-card-tag">ФИНАНСОВЫЙ ИНСТРУМЕНТ</div>
+          <h3>Калькулятор Финмодели &amp; Инвестиций</h3>
+          <p>
+            Моделирование кассовых разрывов, расчет Unit-экономики, оценка размера инвестиционного раунда и доходности инвестора (IRR/MOIC) по FAST Standard.
+          </p>
+          <div class="cabinet-card-actions">
+            <a href="/calculator-finmodel" class="btn-primary" style="padding:9px 18px; font-size:0.82rem;">Запустить расчет ↗</a>
+          </div>
+        </div>
+
+        <!-- Card 7: Tax Calc -->
+        <div class="cabinet-card">
+          <div class="cabinet-card-tag">НАЛОГОВЫЙ ИНСТРУМЕНТ</div>
+          <h3>Калькулятор Налогов и Наценки</h3>
+          <p>
+            Расчет чистой маржи, наценки «сверху» и прибыли «внутри» с учетом УСН 6%, УСН 15%, НДС 5%/7%/20% и эквайринга без кассовых разрывов.
+          </p>
+          <div class="cabinet-card-actions">
+            <a href="/calculator-tax" class="btn-primary" style="padding:9px 18px; font-size:0.82rem;">Рассчитать налоги ↗</a>
+          </div>
+        </div>
+
+        <!-- Card 8: Prompts -->
+        <div class="cabinet-card">
+          <div class="cabinet-card-tag">БАЗА ПРОМПТОВ</div>
+          <h3>Библиотека Системных Промптов</h3>
+          <p>
+            37 ролевых промптов по когнитивному стандарту <strong>GRACEF</strong> для ChatGPT, Claude 3.7, Gemini и DeepSeek. Маркетинг, продажи, IT, юриспруденция и финансы.
+          </p>
+          <div class="cabinet-card-actions">
+            <a href="/prompts" class="btn-primary" style="padding:9px 18px; font-size:0.82rem;">Открыть каталог ↗</a>
+          </div>
+        </div>
+
+        <!-- Card 9: Glossary -->
+        <div class="cabinet-card">
+          <div class="cabinet-card-tag">AI-ГЛОССАРИЙ</div>
+          <h3>AI-Глоссарий &amp; Энциклопедия</h3>
+          <p>
+            Фундаментальный справочник по ключевым понятиям искусственного интеллекта, LLM, RAG-архитектурам, MCP-серверам и автономным агентам с удобным поиском от А до Я.
+          </p>
+          <div class="cabinet-card-actions">
+            <a href="/glossary" class="btn-primary" style="padding:9px 18px; font-size:0.82rem;">Изучить глоссарий ↗</a>
+          </div>
+        </div>
+
+        <!-- Card 10: All Base Materials -->
+        <div class="cabinet-card">
+          <div class="cabinet-card-tag">СВОДНЫЙ РЕЕСТР</div>
+          <h3>Архив &amp; База Знаний</h3>
+          <p>
+            Все материалы, презентации, аналитические исследования и методологии платформы в едином структурированном каталоге.
+          </p>
+          <div class="cabinet-card-actions">
+            <a href="/base" class="btn-secondary" style="padding:9px 18px; font-size:0.82rem;">Все материалы ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═════════════════════════════════════════════════════════════ -->
+    <!-- TAB 2: EDUCATION / CLUB LESSONS (🎬 ЗАПИСИ & УРОКИ) -->
+    <!-- ═════════════════════════════════════════════════════════════ -->
+    <section id="tab-education" class="cabinet-tab-pane" data-section="education" style="display:none;">
+      <div class="section-header-row">
+        <div>
+          <div class="section-tag">ЗАКРЫТЫЕ МАТЕРИАЛЫ КЛУБА • 6 МАСТЕР-КЛАССОВ</div>
+          <h2 class="section-title">Записи &amp; Мастер-классы SAGE Neuro Family</h2>
+          <p class="section-subtitle">Эксклюзивный архив видеозаписей, практических воркшопов и закрытых туториалов для резидентов клуба.</p>
+        </div>
+        <div id="club-lessons-status-pill"></div>
+      </div>
+
+      <!-- Access Status Banner -->
+      <div id="club-lessons-access-banner" style="margin-bottom:28px;"></div>
+
+      <!-- Lessons Grid (Rendered via renderClubLessons()) -->
+      <div id="club-lessons-grid" class="cabinet-grid"></div>
+    </section>
+
+    <!-- ═════════════════════════════════════════════════════════════ -->
+    <!-- TAB 3: SOLUTIONS SHOWCASE (🛍️ ВИТРИНА РЕШЕНИЙ - 2 ПРОДУКТА) -->
+    <!-- ═════════════════════════════════════════════════════════════ -->
+    <section id="tab-solutions" class="cabinet-tab-pane" data-section="solutions" style="display:none;">
+      <div class="section-header-row">
+        <div>
+          <div class="section-tag">ВИТРИНА РЕШЕНИЙ &amp; СЕРВИСОВ</div>
+          <h2 class="section-title">Флагманские решения и сервисы</h2>
+          <p class="section-subtitle">Действующие прикладные сервисы и инфраструктурные решения Михаила Пузырёва, готовые к использованию в бизнесе.</p>
+        </div>
+        <div>
+          <span class="badge-role" style="background:#f4f4f5; color:#09090b; border:1px solid #e4e4e7; font-weight:700;">
+            2 РЕШЕНИЯ В ПРОДАКШЕНЕ
+          </span>
+        </div>
+      </div>
+
+      <div class="cabinet-grid" style="grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));">
         
-        <div class="mastermind-timer-box">
-          <div class="timer-meta-label">До начала онлайн-созвона:</div>
-          <div class="countdown-timer" id="countdown-timer-display" data-countdown="--">-- д --:--:--</div>
-        </div>
-
-        <div class="mastermind-actions-row">
-          <a href="https://t.me/uncrn_sage" target="_blank" class="btn-primary btn-mastermind-join">Войти в созвон (Zoom / Telegram) ↗</a>
-          <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Мастермайнд+SAGE+Neuro+Family&amp;details=Закрытый+практический+созвон+по+Vibe+Coding&amp;location=Telegram+Video" target="_blank" rel="noopener" class="btn-secondary" data-action="add-calendar">Добавить в календарь (Google / .ics) 📅</a>
-        </div>
-      </div>
-
-      <!-- Quick Actions Grid -->
-      <div class="section-title-wrap">
-        <h3 class="section-heading">Быстрый запуск</h3>
-        <span class="section-subtitle">// Инструменты и доступные модули</span>
-      </div>
-      <div class="quick-actions-grid cabinet-shortcuts-grid">
-        <div class="quick-action-card shortcut-card" onclick="switchCabinetTab('library')">
-          <div class="quick-action-icon">📂</div>
-          <h4 class="quick-action-title">Моя библиотека</h4>
-          <p class="quick-action-desc">Ваши купленные и открытые материалы по подписке с кодом и видео.</p>
-          <span class="quick-action-link">Перейти ↗</span>
-        </div>
-        <div class="quick-action-card shortcut-card" onclick="switchCabinetTab('store')">
-          <div class="quick-action-icon">🛍️</div>
-          <h4 class="quick-action-title">Витрина решений</h4>
-          <p class="quick-action-desc">Магазин готовых ИИ-агентов, ботов и практических гайдов.</p>
-          <span class="quick-action-link">Каталог ↗</span>
-        </div>
-        <div class="quick-action-card shortcut-card" onclick="switchCabinetTab('community')">
-          <div class="quick-action-icon">💬</div>
-          <h4 class="quick-action-title">Закрытый чат Клуба</h4>
-          <p class="quick-action-desc">Нетворкинг с фаундерами, разработчиками и поддержка Михаила.</p>
-          <span class="quick-action-link">Открыть ↗</span>
-        </div>
-        <div class="quick-action-card shortcut-card" onclick="switchCabinetTab('community')">
-          <div class="quick-action-icon">💡</div>
-          <h4 class="quick-action-title">Вопрос на разбор</h4>
-          <p class="quick-action-desc">Отправьте свой код или проект на персональный разбор в эфире.</p>
-          <span class="quick-action-link">Отправить ↗</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- 2. TAB: MY LIBRARY (📂 МОЯ БИБЛИОТЕКА) -->
-    <div id="tab-library" class="cabinet-tab-pane" data-section="library" style="display:none;">
-      <div class="section-title-wrap">
-        <h2 class="section-heading">Моя Библиотека</h2>
-        <span class="section-subtitle">// Цифровые решения, исходный код и записи мастер-классов</span>
-      </div>
-      <div id="library-content-container">
-        <!-- Populated by renderLibrary() -->
-      </div>
-    </div>
-
-    <!-- 3. TAB: SOLUTIONS STORE (🛍️ ВИТРИНА РЕШЕНИЙ) -->
-    <div id="tab-store" class="cabinet-tab-pane" data-section="store" style="display:none;">
-      <div class="section-title-wrap">
-        <h2 class="section-heading">Витрина Решений &amp; Гайдов</h2>
-        <span class="section-subtitle">// Готовые ИИ-агенты, промпты и шаблоны с деплоем за 15 минут</span>
-      </div>
-
-      <div class="store-filters-bar">
-        <div class="store-chips-wrap">
-          <button class="category-chip filter-chip active" data-filter="all" onclick="setStoreCategoryFilter('all', this)">Все решения</button>
-          <button class="category-chip filter-chip" data-filter="bot" onclick="setStoreCategoryFilter('bot', this)">🤖 Боты &amp; Агенты</button>
-          <button class="category-chip filter-chip" data-filter="vibe" onclick="setStoreCategoryFilter('vibe', this)">⚡ Vibe Coding</button>
-          <button class="category-chip filter-chip" data-filter="guide" onclick="setStoreCategoryFilter('guide', this)">📚 Гайды &amp; Эфиры</button>
-        </div>
-        <div class="store-search-wrap">
-          <input type="text" id="store-search-input" class="store-search-input" placeholder="Поиск по технологиям (Python, Whisper, Docker)..." oninput="renderStore()">
-        </div>
-      </div>
-
-      <div id="store-grid-container" class="store-grid">
-        <!-- Populated by renderStore() -->
-      </div>
-
-      <div id="store-empty-state" class="store-empty-state empty-search-msg" style="display:none;">
-        <div class="empty-icon">🔍</div>
-        <h3>Ничего не найдено</h3>
-        <p>По вашему запросу решений не найдено. Попробуйте изменить ключевые слова или сбросить категорию.</p>
-        <button class="btn-secondary" onclick="document.getElementById('store-search-input').value=''; setStoreCategoryFilter('all');">Сбросить фильтры</button>
-      </div>
-    </div>
-
-    <!-- 4. TAB: CLUB HUB (💎 КЛУБНЫЙ ХАБ) -->
-    <div id="tab-community" class="cabinet-tab-pane" data-section="community" style="display:none;">
-      <div class="section-title-wrap">
-        <h2 class="section-heading">Закрытый Клуб SAGE Neuro Family</h2>
-        <span class="section-subtitle">// Сообщество практиков Vibe Coding, регулярные мастермайнды и нетворкинг</span>
-      </div>
-
-      <!-- Schedule -->
-      <div class="mastermind-schedule club-schedule-calendar" id="club-schedule">
-        <div class="schedule-header">
-          <span class="badge-role club">РЕГУЛЯРНЫЙ ГРАФИК</span>
-          <h3>Расписание созвонов (четверг 19:00 МСК и воскресенье 16:00 МСК)</h3>
-        </div>
-        <div class="club-schedule-grid">
-          <div class="schedule-item">
-            <div class="schedule-day">Каждый Четверг • 19:00 МСК</div>
-            <div class="schedule-topic"><strong>Технический воркшоп:</strong> разбор кода, деплой ботов, написание MCP-серверов и работа с Antigravity SDK.</div>
-          </div>
-          <div class="schedule-item">
-            <div class="schedule-day">Каждое Воскресенье • 16:00 МСК</div>
-            <div class="schedule-topic"><strong>Мастермайнд &amp; Разборы:</strong> аудит проектов резидентов, обратная связь от Михаила Пузырёва и Q&amp;A.</div>
-          </div>
-        </div>
-        <div class="schedule-actions">
-          <a href="https://t.me/uncrn_sage" id="club-chat-btn" target="_blank" class="btn-primary">Вход в закрытый чат Telegram ↗</a>
-          <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Мастермайнды+SAGE+Neuro+Family&amp;details=Регулярные+созвоны+в+четверг+19:00+и+воскресенье+16:00+МСК&amp;location=Telegram+Video" target="_blank" rel="noopener" class="btn-secondary">Добавить расписание в календарь 📅</a>
-        </div>
-      </div>
-
-      <!-- Archive -->
-      <div class="mastermind-archive" id="club-archive">
-        <div class="archive-header-row">
+        <!-- Solution 1: Sagemeet -->
+        <div class="cabinet-card" style="border: 2px solid #09090b; background: #ffffff;">
           <div>
-            <h3>Архив мастермайндов &amp; Воркшопов</h3>
-            <span class="archive-subtitle">Записи прошедших созвонов с прикрепленным кодом</span>
+            <div class="cabinet-card-tag" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+              <span style="color:#09090b; font-weight:700; background:#f4f4f5; border:1px solid #e4e4e7; padding:2px 8px; font-size:0.7rem; font-family:var(--mono);">AI SAAS // СОЗВОНЫ &amp; АССИСТЕНТ</span>
+              <span style="background:#10b981; color:#ffffff; font-weight:700; padding:2px 8px; font-size:0.68rem; font-family:var(--mono);">В ПРОДАКШЕНЕ</span>
+            </div>
+            <h3 style="font-size:1.35rem; font-weight:800; margin:6px 0 10px 0; letter-spacing:-0.01em;">
+              Sagemeet — Автономный ИИ-ассистент встреч и созвонов
+            </h3>
+            <p style="color:var(--gray); font-size:0.92rem; line-height:1.55; margin-bottom:14px;">
+              Автоматическая расшифровка и синхронный анализ встреч со скоростью 220x реалтайма (Groq Whisper). Мгновенно выделяет ключевые договоренности (Action Items), готовит драфты Follow-Up писем, ставит задачи в CRM и синхронизирует слоты в календарях.
+            </p>
+            <div class="card-tech-stack">
+              <span class="tech-tag">Groq Whisper API</span>
+              <span class="tech-tag">Python 3.11</span>
+              <span class="tech-tag">FastAPI</span>
+              <span class="tech-tag">PostgreSQL</span>
+              <span class="tech-tag">Telegram Bot</span>
+              <span class="tech-tag">Google Calendar API</span>
+            </div>
           </div>
-          <div class="archive-search-wrap">
-            <input type="text" id="archive-search-inp" placeholder="Поиск по архиву (MCP, боты, агенты)..." oninput="filterArchiveMasterminds()">
+          <div class="cabinet-card-actions" style="gap:10px; flex-wrap:wrap;">
+            <a href="https://meet.aisage.ru/" target="_blank" class="btn-primary" style="padding:10px 18px; font-size:0.84rem; flex:1; text-align:center; justify-content:center;">
+              Попробовать Sagemeet ↗
+            </a>
+            <a href="https://t.me/SageMeetBot" target="_blank" class="btn-secondary" style="padding:10px 18px; font-size:0.84rem; text-align:center; justify-content:center;">
+              Бот @SageMeetBot ↗
+            </a>
           </div>
         </div>
-        <div class="archive-list-grid">
-          <div class="archive-card mastermind-item">
-            <span class="badge-role">ЭФИР #24</span>
-            <h4>Вайбкодинг сложных MCP-серверов в Antigravity</h4>
-            <p class="archive-card-desc">Создание автономного сервера инструментов с интеграцией Supabase и Drizzle ORM.</p>
-            <button class="btn-secondary" onclick="openInAppViewer('mastermind-mcp-deepdive-01')">Смотреть запись ↗</button>
-          </div>
-          <div class="archive-card mastermind-item">
-            <span class="badge-role">ЭФИР #23</span>
-            <h4>Архитектура Vibe Coding в Claude Code</h4>
-            <p class="archive-card-desc">Настройка мультиагентной среды, кастомные скиллы и интеграция API Groq.</p>
-            <button class="btn-secondary" onclick="openInAppViewer('vibe-coding-antigravity-setup-guide')">Смотреть запись ↗</button>
-          </div>
-        </div>
-      </div>
 
-      <!-- Networking Directory -->
-      <div class="community-directory-block">
-        <div class="directory-header-row">
+        <!-- Solution 2: SAGE VPN -->
+        <div class="cabinet-card" style="border: 2px solid #09090b; background: #ffffff;">
           <div>
-            <h3>Каталог резидентов Клуба</h3>
-            <span class="directory-subtitle">Контакты, экспертиза и проекты участников сообщества</span>
+            <div class="cabinet-card-tag" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+              <span style="color:#09090b; font-weight:700; background:#f4f4f5; border:1px solid #e4e4e7; padding:2px 8px; font-size:0.7rem; font-family:var(--mono);">ИНФРАСТРУКТУРА // БЕЗОПАСНОСТЬ</span>
+              <span style="background:#18181b; color:#ffffff; font-weight:700; padding:2px 8px; font-size:0.68rem; font-family:var(--mono);">🔒 ACCESS ONLY</span>
+            </div>
+            <h3 style="font-size:1.35rem; font-weight:800; margin:6px 0 10px 0; letter-spacing:-0.01em;">
+              SAGE VPN — Защищенный скоростной приватный VPN
+            </h3>
+            <p style="color:var(--gray); font-size:0.92rem; line-height:1.55; margin-bottom:14px;">
+              Высокоскоростной приватный VPN на базе современных протоколов нового поколения (VLESS Reality, Shadowsocks 2022, WireGuard) без замедлений и цензурных блокировок. Мгновенная генерация ключей и профилей для iOS, Android, macOS и Windows через официального Telegram-бота. Доступен резидентам Закрытого Клуба и подписчикам канала.
+            </p>
+            <div class="card-tech-stack">
+              <span class="tech-tag">VLESS Reality</span>
+              <span class="tech-tag">Shadowsocks 2022</span>
+              <span class="tech-tag">WireGuard</span>
+              <span class="tech-tag">Telegram Bot API</span>
+              <span class="tech-tag">Xray Core</span>
+            </div>
+          </div>
+          <div class="cabinet-card-actions" style="gap:10px; flex-wrap:wrap;">
+            <a href="https://t.me/Michael_Sage_bot" target="_blank" class="btn-primary" style="padding:10px 18px; font-size:0.84rem; flex:1; text-align:center; justify-content:center;">
+              Подключить VPN в @Michael_Sage_bot ↗
+            </a>
           </div>
         </div>
-        <div id="members-directory-grid" class="residents-networking-grid members-grid">
-          <!-- Populated by loadNetworkingMembers() -->
+
+      </div>
+    </section>
+
+    <!-- ═════════════════════════════════════════════════════════════ -->
+    <!-- TAB 4: CLUB HUB (💎 ЗАКРЫТЫЙ КЛУБ) -->
+    <!-- ═════════════════════════════════════════════════════════════ -->
+    <section id="tab-club" class="cabinet-tab-pane" data-section="club" style="display:none;">
+      <div class="section-header-row">
+        <div>
+          <div class="section-tag">ЗАКРЫТОЕ СООБЩЕСТВО ПРАКТИКОВ</div>
+          <h2 class="section-title">Закрытый Клуб SAGE Neuro Family</h2>
+          <p class="section-subtitle">Прямой доступ к закрытому чату, мастермайнам по Vibe Coding и нетворкингу с фаундерами и разработчиками.</p>
         </div>
       </div>
 
-      <!-- Q&A Form -->
-      <div class="qa-form-block">
-        <div class="qa-header">
-          <h3>Задать вопрос / Отправить проект на разбор</h3>
-          <p>Опишите ваш кейс или проблему с кодом — Михаил разберет её на ближайшем живом мастермайнде.</p>
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap:24px; margin-bottom:32px;">
+        <!-- Club Status Card (Stark Black Pro Card) -->
+        <div style="background:#09090b; color:#ffffff; border:1px solid #18181b; padding:32px; display:flex; flex-direction:column; justify-content:space-between; position:relative;">
+          <div>
+            <div style="display:inline-block; padding:4px 10px; background:#18181b; border:1px solid #27272a; border-radius:0; font-family:var(--mono); font-size:0.75rem; font-weight:700; color:#a1a1aa; margin-bottom:16px;">
+              // РЕЗИДЕНТСТВО В КЛУБЕ
+            </div>
+            <h3 style="font-size:1.5rem; font-weight:800; color:#ffffff; margin:0 0 12px 0; letter-spacing:-0.02em;">Доступ в Закрытый Чат &amp; Базу PRO</h3>
+            <p style="color:#a1a1aa; font-size:0.95rem; line-height:1.6; margin-bottom:24px;">
+              Оформите подписку через Tribute, чтобы получить мгновенную ссылку на закрытый Telegram-чат сообщества и базу закрытых мастер-классов.
+            </p>
+            <ul style="color:#d4d4d8; font-size:0.9rem; line-height:1.8; margin-bottom:24px; padding-left:20px;">
+              <li>Еженедельные живые мастермайнды и код-ревью</li>
+              <li>Исходные коды Telegram-ботов и MCP-серверов</li>
+              <li>Закрытый архив 6 видео-уроков и мастер-классов</li>
+              <li>Прямое общение с Михаилом Пузырёвым и резидентами</li>
+            </ul>
+          </div>
+          <div>
+            <a href="https://web.tribute.tg/s/O6I" target="_blank" class="btn-primary" style="background:#ffffff; color:#09090b; border-color:#ffffff; width:100%; text-align:center; padding:14px; font-weight:700; font-family:var(--mono); display:block; text-decoration:none;">
+              Вступить в Клуб (1 900 ₽) ↗
+            </a>
+            <div style="text-align:center; font-family:var(--mono); font-size:0.75rem; color:#71717a; margin-top:10px;">
+              1 900 ₽ первый месяц, далее 1 500 ₽/мес · Tribute (карты РФ и мира)
+            </div>
+          </div>
         </div>
-        <form id="qa-review-form" class="club-qa-form" onsubmit="handleQASubmit(event)">
-          <div class="form-group">
-            <label class="form-label">Тема вопроса или название проекта:</label>
-            <input type="text" class="form-control" placeholder="Например: Ошибка при деплое Telethon-парсера" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Подробное описание вопроса или ссылка на репозиторий:</label>
-            <textarea class="form-control" rows="4" placeholder="Опишите, в чем сложность, стек технологий или прикрепите ссылку на код..." required></textarea>
-          </div>
-          <button type="submit" class="btn-primary">Отправить вопрос на разбор ↗</button>
-        </form>
-      </div>
-    </div>
 
-    <!-- 5. TAB: PROFILE & SETTINGS (👤 ПРОФИЛЬ) -->
-    <div id="tab-profile" class="cabinet-tab-pane" data-section="profile" style="display:none;">
-      <div class="section-title-wrap">
-        <h2 class="section-heading">Профиль &amp; Управление Подпиской</h2>
-        <span class="section-subtitle">// Ваши персональные данные, настройки приватности и аккаунт Tribute</span>
+        <!-- Mastermind Schedule -->
+        <div style="background:#ffffff; border:1px solid var(--border); padding:32px; display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="font-family:var(--mono); font-size:0.75rem; font-weight:700; color:var(--gray); margin-bottom:12px;">
+              // РАСПИСАНИЕ СОЗВОНОВ
+            </div>
+            <h3 style="font-size:1.3rem; font-weight:800; margin:0 0 20px 0;">Ближайшие встречи Клуба</h3>
+
+            <div style="border-left:3px solid #18181b; padding-left:16px; margin-bottom:24px;">
+              <div style="font-family:var(--mono); font-size:0.8rem; font-weight:700; color:var(--gray);">КАЖДЫЙ ЧЕТВЕРГ • 19:00 МСК</div>
+              <strong style="font-size:1.05rem; display:block; margin:6px 0 4px 0;">Живой разбор кода &amp; Архитектуры AI-агентов</strong>
+              <div style="font-size:0.88rem; color:var(--gray); line-height:1.5;">Онлайн-воркшоп в Telegram Video Chat: разбор проектов участников, решение сложных интеграций с Antigravity.</div>
+            </div>
+
+            <div style="border-left:3px solid #a1a1aa; padding-left:16px; margin-bottom:24px;">
+              <div style="font-family:var(--mono); font-size:0.8rem; font-weight:700; color:var(--gray);">КАЖДОЕ ВОСКРЕСЕНЬЕ • 12:00 МСК</div>
+              <strong style="font-size:1.05rem; display:block; margin:6px 0 4px 0;">Венчурный дайджест &amp; Тренды AI</strong>
+              <div style="font-size:0.88rem; color:var(--gray); line-height:1.5;">Анализ новых моделей, релизов инструментов и точек коммерческой монетизации для фаундеров.</div>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <a href="https://t.me/uncrn_sage" target="_blank" class="btn-primary" style="padding:10px 18px; font-size:0.84rem; flex:1; text-align:center; justify-content:center;">
+              Канал сообщества @uncrn_sage ↗
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═════════════════════════════════════════════════════════════ -->
+    <!-- TAB 5: MEMBERS DIRECTORY (👥 РЕЗИДЕНТЫ) -->
+    <!-- ═════════════════════════════════════════════════════════════ -->
+    <section id="tab-members" class="cabinet-tab-pane" data-section="members" style="display:none;">
+      <div class="section-header-row">
+        <div>
+          <div class="section-tag">РЕЗИДЕНТЫ СООБЩЕСТВА &amp; НАСТАВНИЧЕСТВО</div>
+          <h2 class="section-title">Резиденты Клуба &amp; Ученики</h2>
+          <p class="section-subtitle">Каталог резидентов закрытого сообщества SAGE Neuro Family и участников личного наставничества.</p>
+        </div>
+        <div id="members-search-wrapper" style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+          <input type="text" id="members-search-input" placeholder="🔍 Поиск резидента или компетенции..." oninput="filterMembersList()" style="padding:10px 16px; font-family:var(--font); font-size:0.88rem; border:1px solid var(--border); border-radius:0 !important; width:280px; outline:none; background:#ffffff;">
+        </div>
       </div>
 
-      <div class="profile-layout-grid">
+      <!-- Filter Categories -->
+      <div id="members-filter-wrapper" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px;">
+        <button class="member-filter-btn active" onclick="setMemberRoleFilter('all', this)">Все резиденты</button>
+        <button class="member-filter-btn" onclick="setMemberRoleFilter('club_member', this)">💎 Резиденты SAGE Neuro Family</button>
+        <button class="member-filter-btn" onclick="setMemberRoleFilter('student', this)">🎓 Ученики Наставничества</button>
+      </div>
+
+      <!-- Members Grid Container -->
+      <div id="members-grid-container" class="cabinet-grid"></div>
+
+      <!-- Privacy Notice Footer -->
+      <div style="margin-top:32px; padding:16px 20px; background:#f8fafc; border:1px solid var(--border); border-left:3px solid #09090b; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+        <div style="font-size:0.88rem; color:#52525b;">
+          🔒 <strong>Управление видимостью:</strong> Вы можете скрыть свой профиль из этого каталога в любой момент в настройках.
+        </div>
+        <button onclick="switchCabinetTab('profile')" class="btn-secondary" style="padding:6px 14px; font-size:0.78rem; font-family:var(--mono); cursor:pointer;">
+          Настройки приватности ⚙
+        </button>
+      </div>
+    </section>
+
+    <!-- ═════════════════════════════════════════════════════════════ -->
+    <!-- TAB 6: FAVORITES (⭐ МОЕ ИЗБРАННОЕ) -->
+    <!-- ═════════════════════════════════════════════════════════════ -->
+    <section id="tab-favorites" class="cabinet-tab-pane" data-section="favorites" style="display:none;">
+      <div class="section-header-row">
+        <div>
+          <div class="section-tag">ПЕРСОНАЛЬНЫЕ ЗАКЛАДКИ</div>
+          <h2 class="section-title">Мое Избранное</h2>
+          <p class="section-subtitle">Здесь сохраняются видео-уроки, промпты и термины глоссария, которые вы отметили звездочкой.</p>
+        </div>
+      </div>
+
+      <div id="favorites-list-container"></div>
+    </section>
+
+    <!-- ═════════════════════════════════════════════════════════════ -->
+    <!-- TAB 7: PROFILE & SETTINGS (👤 ПРОФИЛЬ & НАСТРОЙКИ) -->
+    <!-- ═════════════════════════════════════════════════════════════ -->
+    <section id="tab-profile" class="cabinet-tab-pane" data-section="profile" style="display:none;">
+      <div class="section-header-row">
+        <div>
+          <div class="section-tag">ВАШИ ПЕРСОНАЛЬНЫЕ ДАННЫЕ И НАСТРОЙКИ</div>
+          <h2 class="section-title">Профиль &amp; Управление Подпиской</h2>
+          <p class="section-subtitle">Настройки визитки в каталоге резидентов, приватность и аккаунт Tribute.</p>
+        </div>
+      </div>
+
+      <div class="profile-layout-grid" style="display:grid; grid-template-columns: 1.4fr 1fr; gap:36px; align-items:flex-start;">
         <div class="profile-form-col">
-          <form id="profile-edit-form" class="profile-form" onsubmit="handleProfileSave(event)">
-            <div class="form-row">
+          <form id="profile-edit-form" class="profile-form" onsubmit="handleProfileSave(event)" style="background:#ffffff; border:1px solid var(--border); padding:32px;">
+            <div class="form-row" style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-bottom:16px;">
               <div class="form-group">
-                <label class="form-label" for="inp-first-name">Имя:</label>
-                <input type="text" id="inp-first-name" name="first_name" class="form-control" placeholder="Имя">
+                <label class="form-label" for="inp-first-name" style="font-family:var(--mono); font-size:0.75rem; font-weight:700; display:block; margin-bottom:6px;">Имя:</label>
+                <input type="text" id="inp-first-name" name="first_name" class="form-control" placeholder="Имя" oninput="livePreviewProfile()" style="width:100%; padding:10px 14px; border:1px solid var(--border); border-radius:0 !important; font-family:var(--font);">
               </div>
               <div class="form-group">
-                <label class="form-label" for="inp-last-name">Фамилия:</label>
-                <input type="text" id="inp-last-name" name="last_name" class="form-control" placeholder="Фамилия">
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="inp-tg-username">Telegram Username:</label>
-              <input type="text" id="inp-tg-username" name="username" class="form-control" placeholder="@username">
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="inp-bio">О себе &amp; Компетенции:</label>
-              <textarea id="inp-bio" name="bio" class="form-control" rows="3" placeholder="Чем вы занимаетесь, ваш стек и проекты..."></textarea>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label" for="inp-channel">Telegram-канал / Блог:</label>
-                <input type="text" id="inp-channel" name="channel_url" class="form-control" placeholder="https://t.me/...">
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="inp-website">Сайт / Портфолио:</label>
-                <input type="text" id="inp-website" name="website_url" class="form-control" placeholder="https://...">
+                <label class="form-label" for="inp-last-name" style="font-family:var(--mono); font-size:0.75rem; font-weight:700; display:block; margin-bottom:6px;">Фамилия:</label>
+                <input type="text" id="inp-last-name" name="last_name" class="form-control" placeholder="Фамилия" oninput="livePreviewProfile()" style="width:100%; padding:10px 14px; border:1px solid var(--border); border-radius:0 !important; font-family:var(--font);">
               </div>
             </div>
 
-            <div class="form-group checkbox-group">
-              <label class="checkbox-label" for="inp-is-private">
-                <input type="checkbox" id="inp-is-private" name="is_private" class="privacy-checkbox">
+            <div class="form-group" style="margin-bottom:16px;">
+              <label class="form-label" for="inp-tg-username" style="font-family:var(--mono); font-size:0.75rem; font-weight:700; display:block; margin-bottom:6px;">Telegram Username:</label>
+              <input type="text" id="inp-tg-username" name="username" class="form-control" placeholder="@username" oninput="livePreviewProfile()" style="width:100%; padding:10px 14px; border:1px solid var(--border); border-radius:0 !important; font-family:var(--font);">
+            </div>
+
+            <div class="form-group" style="margin-bottom:16px;">
+              <label class="form-label" for="inp-bio" style="font-family:var(--mono); font-size:0.75rem; font-weight:700; display:block; margin-bottom:6px;">О себе &amp; Компетенции:</label>
+              <textarea id="inp-bio" name="bio" class="form-control" rows="3" placeholder="Чем вы занимаетесь, ваш стек технологий и проекты..." oninput="livePreviewProfile()" style="width:100%; padding:10px 14px; border:1px solid var(--border); border-radius:0 !important; font-family:var(--font);"></textarea>
+            </div>
+
+            <div class="form-row" style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-bottom:20px;">
+              <div class="form-group">
+                <label class="form-label" for="inp-channel" style="font-family:var(--mono); font-size:0.75rem; font-weight:700; display:block; margin-bottom:6px;">Telegram-канал / Блог:</label>
+                <input type="text" id="inp-channel" name="channel_url" class="form-control" placeholder="https://t.me/..." style="width:100%; padding:10px 14px; border:1px solid var(--border); border-radius:0 !important; font-family:var(--font);">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="inp-website" style="font-family:var(--mono); font-size:0.75rem; font-weight:700; display:block; margin-bottom:6px;">Сайт / Портфолио:</label>
+                <input type="text" id="inp-website" name="website_url" class="form-control" placeholder="https://..." style="width:100%; padding:10px 14px; border:1px solid var(--border); border-radius:0 !important; font-family:var(--font);">
+              </div>
+            </div>
+
+            <div class="form-group checkbox-group" style="margin-bottom:24px; padding:12px; background:#f8fafc; border:1px solid #e4e4e7;">
+              <label class="checkbox-label" for="inp-is-private" style="display:flex; align-items:center; gap:10px; cursor:pointer; font-size:0.88rem; font-weight:600;">
+                <input type="checkbox" id="inp-is-private" name="is_private" class="privacy-checkbox" onchange="livePreviewProfile()">
                 <span>Отображать мою карточку в каталоге резидентов сообщества</span>
               </label>
-              <div class="form-hint">Если отключено, ваш профиль будет скрыт от других участников в общем списке.</div>
+              <div class="form-hint" style="font-size:0.75rem; color:#71717a; margin-top:4px; margin-left:24px;">Если снято, ваш профиль будет скрыт от других участников в общем списке.</div>
             </div>
 
-            <button type="submit" id="btn-save-profile" class="btn-primary profile-save-btn">Сохранить изменения 💾</button>
+            <button type="submit" id="btn-save-profile" class="btn-primary profile-save-btn" style="padding:12px 24px; font-weight:700; font-family:var(--mono); cursor:pointer;">Сохранить изменения 💾</button>
           </form>
 
           <!-- Tribute Card -->
-          <div class="tribute-subscription-card">
-            <div class="tribute-header">
-              <span class="badge-role club">ПОДПИСКА TRIBUTE.TG</span>
-              <h3>Управление рекуррентной подпиской Клуба</h3>
+          <div class="tribute-subscription-card" style="background:#ffffff; border:1px solid var(--border); padding:28px; margin-top:24px;">
+            <div class="tribute-header" style="margin-bottom:12px;">
+              <span class="badge-role club" style="font-size:0.72rem;">ПОДПИСКА TRIBUTE.TG</span>
+              <h3 style="margin:8px 0 0 0; font-size:1.15rem;">Управление подпиской Клуба</h3>
             </div>
-            <p class="tribute-desc">Тариф: 1 900 ₽ (первый месяц), далее 1 500 ₽/мес. Автоматическое продление и управление привязанными картами осуществляется через официальный сервис Tribute в Telegram.</p>
-            <a href="https://web.tribute.tg/s/O6I" target="_blank" class="btn-secondary btn-tribute-manage">Управление подпиской в Tribute ↗</a>
+            <p style="font-size:0.88rem; color:#52525b; line-height:1.55; margin-bottom:16px;">
+              Тариф: 1 900 ₽ (первый месяц), далее 1 500 ₽/мес. Автоматическое продление и управление привязанными картами осуществляется через официальный сервис Tribute в Telegram.
+            </p>
+            <a href="https://web.tribute.tg/s/O6I" target="_blank" class="btn-secondary" style="padding:9px 18px; font-size:0.82rem; font-family:var(--mono); text-decoration:none;">
+              Управление подпиской в Tribute ↗
+            </a>
           </div>
         </div>
 
         <!-- Live Preview -->
-        <div class="profile-preview-col">
-          <div class="preview-sticky-box">
-            <div class="preview-label">Live Preview Карточки Нетворкинга:</div>
-            <div class="profile-live-preview-card" id="profile-preview-card">
-              <div class="preview-card-header">
-                <div class="member-avatar-placeholder">U</div>
-                <div class="preview-card-info">
-                  <h4 class="preview-name" id="preview-user-name">Имя Фамилия</h4>
-                  <span class="preview-handle" id="preview-user-handle">@username</span>
+        <div class="profile-preview-col" style="position:sticky; top:130px;">
+          <div style="font-family:var(--mono); font-size:0.75rem; font-weight:700; color:var(--gray); margin-bottom:8px;">
+            // LIVE PREVIEW ВАШЕЙ КАРТОЧКИ:
+          </div>
+          <div class="member-card" id="profile-preview-card" style="background:#ffffff; border:2px solid #09090b; padding:24px;">
+            <div>
+              <div class="member-header">
+                <div class="member-avatar-placeholder" id="preview-avatar-placeholder">U</div>
+                <div>
+                  <h3 class="member-name" id="preview-user-name">Имя Фамилия</h3>
+                  <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                    <span class="badge-role club" id="preview-role-badge" style="font-size:0.68rem; padding:2px 6px;">💎 Резидент</span>
+                    <span id="preview-user-handle" style="font-family:var(--mono); font-size:0.75rem; color:var(--gray);">@username</span>
+                  </div>
                 </div>
-                <span class="badge-role club">РЕЗИДЕНТ</span>
               </div>
-              <p class="preview-bio" id="preview-user-bio">Описание вашего опыта и проектов...</p>
-              <div class="preview-privacy-status" id="preview-user-privacy">🌐 Отображается в каталоге резидентов</div>
+              <div class="member-bio" id="preview-user-bio">Описание деятельности и стек технологий...</div>
+            </div>
+            <div class="member-actions" id="preview-user-privacy" style="font-family:var(--mono); font-size:0.75rem; color:#059669;">
+              🌐 Отображается в каталоге резидентов
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
   </main>
 
-  <!-- In-App Viewer Modal -->
-  <div id="in-app-viewer-modal" class="in-app-viewer-overlay" style="display:none;">
-    <div class="in-app-viewer-dialog">
-      <div class="in-app-dialog-header">
-        <div class="in-app-title-block">
-          <span class="badge-role club in-app-badge" id="viewer-badge">[ РЕШЕНИЕ ]</span>
-          <h2 id="viewer-title" class="in-app-title">Название решения</h2>
-          <p id="viewer-desc" class="in-app-desc">Краткое описание...</p>
+  <!-- Video Player Modal -->
+  <div id="club-video-modal" class="guide-modal-overlay" style="display:none;" onclick="if(event.target===this)closeClubVideoModal()">
+    <div class="guide-modal-content" style="max-width:980px; width:100%; background:#09090b; border:1px solid #27272a;">
+      <div class="guide-modal-header" style="background:#18181b; border-bottom:1px solid #27272a; padding:16px 20px;">
+        <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+          <span class="badge-role club" id="club-modal-badge" style="font-size:0.7rem;">МАСТЕР-КЛАСС</span>
+          <h3 id="club-modal-title" style="margin:0; font-size:1.1rem; color:#ffffff; font-weight:700;">Название урока</h3>
         </div>
-        <button class="in-app-close-btn viewer-close-btn" data-close-viewer onclick="closeInAppViewer()" aria-label="Закрыть">✕</button>
+        <button class="guide-modal-close-btn" onclick="closeClubVideoModal()" aria-label="Закрыть плеер" style="color:#ffffff; cursor:pointer;">✕</button>
       </div>
-
-      <div class="in-app-subtabs-bar">
-        <button class="in-app-subtab-btn active" data-subtab="video" onclick="switchViewerSubtab('video')">🎬 Видео-разбор</button>
-        <button class="in-app-subtab-btn" data-subtab="code" onclick="switchViewerSubtab('code')">💻 Исходный код &amp; ZIP</button>
-        <button class="in-app-subtab-btn" data-subtab="prompts" onclick="switchViewerSubtab('prompts')">📝 Системные промпты</button>
-        <button class="in-app-subtab-btn" data-subtab="checklist" onclick="switchViewerSubtab('checklist')">✅ Чеклист запуска</button>
-      </div>
-
-      <div class="in-app-dialog-body">
-        <div id="viewer-pane-video" class="in-app-subtab-pane" data-pane="video"></div>
-        <div id="viewer-pane-code" class="in-app-subtab-pane" data-pane="code" style="display:none;"></div>
-        <div id="viewer-pane-prompts" class="in-app-subtab-pane" data-pane="prompts" style="display:none;"></div>
-        <div id="viewer-pane-checklist" class="in-app-subtab-pane" data-pane="checklist" style="display:none;"></div>
+      <div class="guide-modal-body" style="padding:0; background:#000000;">
+        <div style="position:relative; padding-top:56.25%; width:100%; background:#000000;">
+          <iframe id="club-modal-iframe" src="" style="position:absolute; top:0; left:0; width:100%; height:100%; border:none;" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowfullscreen></iframe>
+        </div>
       </div>
     </div>
   </div>
 
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-col">
+        <div class="footer-logo">Михаил Пузырёв</div>
+        <p class="footer-desc">
+          AI-архитектура, скоростная разработка и внедрение автономных систем.
+        </p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-title">Разделы</div>
+        <ul class="footer-links">
+          <li><a href="/mentoring">Наставничество 1-на-1</a></li>
+          <li><a href="/automation">Внедрение &amp; Разработка</a></li>
+          <li><a href="/club/">Закрытый Клуб</a></li>
+          <li><a href="/prompts">Библиотека промптов</a></li>
+          <li><a href="/glossary">AI-Глоссарий</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-title">Контакты</div>
+        <ul class="footer-links">
+          <li><a href="https://t.me/Michael_Sage" target="_blank">Telegram: @Michael_Sage</a></li>
+          <li><a href="https://t.me/uncrn_sage" target="_blank">Канал: @uncrn_sage</a></li>
+          <li><a href="mailto:i@michaelpuzyrev.ru">i@michaelpuzyrev.ru</a></li>
+          <li><a href="/booking">Забронировать слот ↗</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-title">Юридическая информация</div>
+        <ul class="footer-links">
+          <li><a href="/privacy">Политика конфиденциальности</a></li>
+          <li><a href="/terms">Пользовательское соглашение</a></li>
+          <li><span style="font-family:var(--mono); font-size:0.8rem; color:#71717a;">ИП Пузырёв М.М. ИНН 500177901407</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 Михаил Пузырёв. Все права защищены.</div>
+      <div>ИП Пузырёв М.М. · ОГРНИП 318505300123140 · Москва</div>
+    </div>
+  </footer>
+
   <!-- Scripts -->
   <script src="/js/auth.js?v=1.4"></script>
-  <script src="/js/cabinet.js?v=3.0"></script>
+  <script src="/js/main.js?v=2.8"></script>
+  <script src="/js/cabinet.js?v=3.2"></script>
 </body>
 </html>

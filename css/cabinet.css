@@ -319,18 +319,25 @@
   color: #16a34a;
 }
 
-/* ── 5. HORIZONTAL ENGINEERING TAB BAR ─────────────────────── */
+/* ── 5. HORIZONTAL ENGINEERING TAB BAR (STICKY AT 68PX) ─────── */
 .cabinet-tabs-bar {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 68px;
+  z-index: 100;
   display: flex;
   align-items: center;
   gap: 10px;
   border-bottom: 1px solid var(--border);
-  background: #fafafa;
-  padding: 18px 40px;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 14px 40px;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
 }
 
 .cabinet-tabs-bar::-webkit-scrollbar {
@@ -341,7 +348,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 20px;
+  padding: 10px 18px;
   font-family: var(--mono);
   font-size: 0.8rem;
   font-weight: 700;
@@ -350,7 +357,7 @@
   color: #52525b;
   background: #ffffff;
   border: 1px solid var(--border);
-  border-radius: 0;
+  border-radius: 0 !important;
   cursor: pointer;
   transition: all 0.15s ease;
   white-space: nowrap;
@@ -372,6 +379,33 @@
   font-weight: 800;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
   transform: translateY(-1px);
+}
+
+/* ── TECH STACK TAGS (NO GLUING, CLEAN FLEX GAP) ──────────── */
+.card-tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0 18px 0;
+}
+
+.tech-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  background: #f4f4f5;
+  border: 1px solid #e4e4e7;
+  border-radius: 0 !important;
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #27272a;
+  line-height: 1.2;
+}
+
+.tech-tag:hover {
+  background: #e4e4e7;
+  border-color: #d4d4d8;
 }
 
 .cabinet-tab-badge {
@@ -453,6 +487,222 @@
   font-size: 0.95rem;
   line-height: 1.5;
   margin-top: 4px;
+}
+
+/* ── 6.1 CABINET CARDS & GRIDS (SWISS STARK) ────────────────── */
+.cabinet-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.cabinet-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  position: relative;
+  box-sizing: border-box;
+  border-radius: 0 !important;
+}
+
+.cabinet-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.04);
+  border-color: #09090b;
+}
+
+.cabinet-card-tag {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--gray);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.cabinet-card h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+  line-height: 1.35;
+  color: #09090b;
+}
+
+.cabinet-card p {
+  color: var(--gray);
+  font-size: 0.93rem;
+  line-height: 1.55;
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+
+.cabinet-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #f4f4f5;
+  padding-top: 16px;
+  margin-top: auto;
+}
+
+/* ── 6.2 MEMBER CARDS & FILTERS ─────────────────────────────── */
+.member-filter-btn {
+  padding: 8px 18px;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: #ffffff;
+  color: #71717a;
+  border: 1px solid #e4e4e7;
+  border-radius: 0 !important;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.member-filter-btn:hover {
+  color: #09090b;
+  border-color: #09090b;
+  background: #f8fafc;
+}
+
+.member-filter-btn.active {
+  background: #09090b;
+  color: #ffffff;
+  border-color: #09090b;
+}
+
+.member-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  border-radius: 0 !important;
+}
+
+.member-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.04);
+  border-color: #09090b;
+}
+
+.member-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.member-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 0 !important;
+  object-fit: cover;
+  border: 1px solid #18181b;
+  background: #f4f4f5;
+  flex-shrink: 0;
+}
+
+.member-avatar-placeholder {
+  width: 52px;
+  height: 52px;
+  border-radius: 0 !important;
+  background: #18181b;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  border: 1px solid #18181b;
+  flex-shrink: 0;
+}
+
+.member-name {
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin: 0 0 4px 0;
+  color: #09090b;
+  line-height: 1.2;
+}
+
+.member-bio {
+  font-size: 0.88rem;
+  color: #52525b;
+  line-height: 1.5;
+  margin-bottom: 16px;
+  flex-grow: 1;
+  min-height: 40px;
+}
+
+.member-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  border-top: 1px solid #f4f4f5;
+  padding-top: 14px;
+  margin-top: auto;
+}
+
+/* ── 6.3 USER PROFILE CHIPS ─────────────────────────────────── */
+.cabinet-user-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.cabinet-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 0 !important;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.cabinet-chip-email {
+  background: #f4f4f5;
+  color: #3f3f46;
+  border: 1px solid #e4e4e7;
+}
+
+.cabinet-chip-channel {
+  background: #f0f9ff;
+  color: #0284c7;
+  border: 1px solid #bae6fd;
+}
+
+.cabinet-chip-channel:hover {
+  background: #e0f2fe;
+  border-color: #7dd3fc;
+}
+
+.cabinet-chip-website {
+  background: #ecfdf5;
+  color: #059669;
+  border: 1px solid #a7f3d0;
+}
+
+.cabinet-chip-website:hover {
+  background: #d1fae5;
+  border-color: #6ee7b7;
 }
 
 /* ── 7. DASHBOARD / COCKPIT COMPONENTS ─────────────────────── */

@@ -1,15 +1,12 @@
 /**
- * SAGE Platform - Personal Cabinet (Cockpit & Digital Store)
- * Engine: Vibes UI Engine 3.0 (Swiss Stark AI)
- * Authoritative: DESIGN_SYSTEM.md, personal_cabinet_architecture_spec.md
+ * SAGE Platform - Personal Cabinet Engine (v3.2)
+ * Pure Swiss Stark Brutalism Architecture
+ * Canonical Tabs: knowledge | education | solutions | club | members | favorites | profile
  */
 
-// ── 1. GLOBAL STATE & UTILS ──────────────────────────────────────────────────
-let allShowcaseProducts = [];
-let activeStoreFilter = "all";
-let currentViewerProduct = null;
-let countdownTimerInterval = null;
+// ── 1. GLOBAL STATE & UTILITIES ──────────────────────────────────────────────
 let networkingMembersCache = [];
+let activeMemberRoleFilter = 'all';
 
 function safeJsonParse(val, fallback = null) {
   try {
@@ -19,422 +16,795 @@ function safeJsonParse(val, fallback = null) {
   }
 }
 
-function padZero(num) {
-  return String(num).padStart(2, "0");
-}
-
-// ── 2. NEXT MASTERMIND CALCULATION & LIVE COUNTDOWN ───────────────────────────
-function getNextMastermindDate(fromDate = new Date()) {
-  const now = fromDate instanceof Date ? fromDate : new Date(fromDate);
-  const candidates = [];
-  
-  for (let i = 0; i <= 14; i++) {
-    const d = new Date(now.getTime() + i * 24 * 60 * 60 * 1000);
-    const day = d.getUTCDay(); // 0=Sun, 4=Thu
-    
-    if (day === 4) {
-      const target = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), 16, 0, 0));
-      if (target.getTime() > now.getTime()) {
-        candidates.push(target);
-      }
-    } else if (day === 0) {
-      const target = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), 13, 0, 0));
-      if (target.getTime() > now.getTime()) {
-        candidates.push(target);
-      }
-    }
+// ── 2. REAL CLUB MASTER-CLASSES DATA ─────────────────────────────────────────
+const CLUB_LESSONS_DATA = [
+  {
+    id: 'lesson-969',
+    title: 'Мастер-класс «Вайбкодинг: от идеи до продакшена за 2 часа»',
+    badge: 'МАСТЕР-КЛАСС // VIBE CODING',
+    type: 'video',
+    platform: 'Kinescope',
+    videoUrl: 'https://kinescope.io/qgqjU49q4ZkGZJt5wzDkFh',
+    embedUrl: 'https://kinescope.io/embed/qgqjU49q4ZkGZJt5wzDkFh',
+    cover: '/assets/club-lessons/lesson_media_969.jpg',
+    date: '25 апреля 2026',
+    duration: '1ч 52мин',
+    description: 'Пошаговый разбор скоростной разработки прикладных веб-сервисов и ботов с нуля. Настройка рабочих сред, оркестрация промптов и развертывание на VPS.',
+    topics: ['Вайбкодинг', 'Claude Code', 'Antigravity', 'Быстрый запуск']
+  },
+  {
+    id: 'lesson-764',
+    title: 'Практикум «Автономные AI-агенты и вебхуки в Make/n8n»',
+    badge: 'ПРАКТИКУМ // АВТОМАТИЗАЦИЯ',
+    type: 'video',
+    platform: 'Kinescope',
+    videoUrl: 'https://kinescope.io/3K2z7s1oU4c9Fq4J8tL5wA',
+    embedUrl: 'https://kinescope.io/embed/3K2z7s1oU4c9Fq4J8tL5wA',
+    cover: '/assets/club-lessons/lesson_media_764.jpg',
+    date: '12 апреля 2026',
+    duration: '2ч 14мин',
+    description: 'Построение отказоустойчивых сценариев интеграции: обработка вебхуков, связка CRM с LLM-пайплайнами и маршрутизация клиентских запросов без ручного труда.',
+    topics: ['AI-агенты', 'n8n', 'Make', 'Автоматизация', 'Вебхуки']
+  },
+  {
+    id: 'lesson-619',
+    title: 'Интенсив «Интеграция LLM в реальный бизнес: кейсы и грабли»',
+    badge: 'ИНТЕНСИВ // КЕЙСЫ',
+    type: 'video',
+    platform: 'VK Video',
+    videoUrl: 'https://vk.com/video_ext.php?oid=708436546&id=456239175&hash=44ba6d5be9fb7a75&hd=2',
+    embedUrl: 'https://vk.com/video_ext.php?oid=708436546&id=456239175&hash=44ba6d5be9fb7a75&hd=2',
+    cover: '/assets/club-lessons/lesson_media_619.jpg',
+    date: '29 марта 2026',
+    duration: '1ч 45мин',
+    description: 'Разбор реальных внедрений: оценка ROI, защита от галлюцинаций, разграничение контуров безопасности и типичные ошибки при выводе ИИ в эксплуатацию.',
+    topics: ['B2B интеграции', 'LLM', 'Внедрение', 'Безопасность']
+  },
+  {
+    id: 'lesson-615',
+    title: 'Воркшоп «RAG-системы и работа с базой знаний компании»',
+    badge: 'ВОРКШОП // RAG & БАЗЫ ДАННЫХ',
+    type: 'video',
+    platform: 'Kinescope',
+    videoUrl: 'https://kinescope.io/615aDKVHDdqLmAj7krZ4Jd',
+    embedUrl: 'https://kinescope.io/embed/615aDKVHDdqLmAj7krZ4Jd',
+    cover: '/assets/club-lessons/lesson_media_615.jpg',
+    date: '15 марта 2026',
+    duration: '2ч 05мин',
+    description: 'Архитектура поиска по корпоративным документам: выбор эмбеддингов, чанкинг, векторные базы данных (Qdrant/pgvector) и точные ответы без галлюцинаций.',
+    topics: ['RAG', 'Векторные БД', 'Эмбеддинги', 'Qdrant']
+  },
+  {
+    id: 'lesson-546',
+    title: 'Мастер-класс «AI-продакшн видео и подкастов под ключ»',
+    badge: 'МАСТЕР-КЛАСС // МЕДИА',
+    type: 'video',
+    platform: 'Kinescope',
+    videoUrl: 'https://kinescope.io/546aDKVHDdqLmAj7krZ4Jd',
+    embedUrl: 'https://kinescope.io/embed/546aDKVHDdqLmAj7krZ4Jd',
+    cover: '/assets/club-lessons/lesson_media_546.jpg',
+    date: '8 марта 2026',
+    duration: '1ч 30мин',
+    description: 'Полный цикл производства аудио и видео-подкастов с помощью генеративных нейросетей: от сценария и структуры выпуска до клонирования голоса и сведения.',
+    topics: ['Подкасты', 'Голосовые модели', 'Сценарии', 'ElevenLabs']
+  },
+  {
+    id: 'lesson-332',
+    title: 'Мастер-класс «Промпт-дизайн и создание ассистентов»',
+    badge: 'МАСТЕР-КЛАСС // АССИСТЕНТЫ',
+    type: 'video',
+    platform: 'Kinescope',
+    videoUrl: 'https://kinescope.io/0uEaDKVHDdqLmAj7krZ4Jd',
+    embedUrl: 'https://kinescope.io/embed/0uEaDKVHDdqLmAj7krZ4Jd',
+    cover: '/assets/club-lessons/lesson_media_332.jpg',
+    date: '1 марта 2026',
+    duration: '1ч 40мин',
+    description: 'Системный фреймворк создания надёжных промптов, ролевых моделей (GRACEF) и проектирования контекстных окон для цифровых ассистентов бизнеса.',
+    topics: ['Промпт-дизайн', 'GRACEF', 'Ассистенты', 'Системный промпт']
   }
-  
-  candidates.sort((a, b) => a.getTime() - b.getTime());
-  return candidates.length > 0 ? candidates[0] : new Date(now.getTime() + 3 * 24 * 60 * 60 * 1000);
-}
+];
 
-function startCountdownTimer() {
-  const timerDisplay = document.getElementById("countdown-timer-display") || document.querySelector(".countdown-timer, [data-countdown]");
-  if (!timerDisplay) return;
-
-  function update() {
-    const nextDate = getNextMastermindDate(new Date());
-    const now = new Date();
-    const diff = Math.max(0, nextDate.getTime() - now.getTime());
-
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((diff / (1000 * 60)) % 60);
-    const seconds = Math.floor((diff / 1000) % 60);
-
-    const formatted = `${days} д ${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
-    timerDisplay.innerText = formatted;
-    timerDisplay.setAttribute("data-countdown", formatted);
-  }
-
-  update();
-  if (countdownTimerInterval) clearInterval(countdownTimerInterval);
-  countdownTimerInterval = setInterval(update, 1000);
-}
-
-// ── 3. CLIPBOARD COPY WITH FEEDBACK ──────────────────────────────────────────
-async function copyPromptByIndex(idx, btn) {
-  if (!currentViewerProduct || !currentViewerProduct.content || !currentViewerProduct.content.prompts) return;
-  const pr = currentViewerProduct.content.prompts[idx];
-  if (pr) {
-    copyPromptToClipboard(pr.body, btn);
-  }
-}
-
-async function copyPromptToClipboard(text, btnElement = null) {
-  let success = false;
-  try {
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      await navigator.clipboard.writeText(text);
-      success = true;
-    } else {
-      const ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand("copy");
-      document.body.removeChild(ta);
-      success = true;
-    }
-  } catch (err) {
-    console.warn("[Clipboard Warn]", err);
-  }
-
-  const btn = btnElement || (window.event && window.event.target && window.event.target.closest("button"));
-  if (btn) {
-    const originalText = btn.innerHTML;
-    btn.innerHTML = "СКОПИРОВАНО ✓";
-    btn.classList.add("copied");
-    setTimeout(() => {
-      btn.innerHTML = originalText;
-      btn.classList.remove("copied");
-    }, 2000);
-  }
-
-  if (typeof Auth !== "undefined" && Auth.showToast) {
-    Auth.showToast("Промпт скопирован в буфер обмена", "success");
-  }
-}
-
-// ── 4. TAB SWITCHING SYSTEM ──────────────────────────────────────────────────
+// ── 3. TAB SWITCHING SYSTEM ──────────────────────────────────────────────────
 function switchCabinetTab(tabId, btnElem = null) {
-  const normalizedTab = tabId === "club" ? "community" : tabId;
-  const validTabs = ["dashboard", "library", "store", "community", "profile"];
-  const targetId = validTabs.includes(normalizedTab) ? normalizedTab : "dashboard";
+  if (!tabId) tabId = 'knowledge';
 
+  // Normalize legacy aliases
+  let targetTab = tabId.toLowerCase();
+  if (targetTab === 'dashboard') targetTab = 'knowledge';
+  if (targetTab === 'library') targetTab = 'education';
+  if (targetTab === 'store') targetTab = 'solutions';
+  if (targetTab === 'community') targetTab = 'club';
+
+  const validTabs = ['knowledge', 'education', 'solutions', 'club', 'members', 'favorites', 'profile'];
+  if (!validTabs.includes(targetTab)) {
+    targetTab = 'knowledge';
+  }
+
+  // 1. Update tab buttons
+  document.querySelectorAll('.cabinet-tab-btn').forEach(b => {
+    const t = (b.dataset.tab || b.getAttribute('data-tab') || '').toLowerCase();
+    const matches = (t === targetTab) || 
+      (targetTab === 'education' && t === 'library') ||
+      (targetTab === 'solutions' && t === 'store') ||
+      (targetTab === 'club' && t === 'community');
+    if (matches) {
+      b.classList.add('active');
+    } else {
+      b.classList.remove('active');
+    }
+  });
+
+  // 2. Update tab panes
+  document.querySelectorAll('.cabinet-tab-pane, .cabinet-section-pane').forEach(p => {
+    p.classList.remove('active');
+    p.style.display = 'none';
+  });
+
+  const activePane = document.getElementById('tab-' + targetTab) ||
+    (targetTab === 'education' ? document.getElementById('tab-library') : null) ||
+    (targetTab === 'solutions' ? document.getElementById('tab-store') : null) ||
+    (targetTab === 'club' ? document.getElementById('tab-community') : null);
+
+  if (activePane) {
+    activePane.classList.add('active');
+    activePane.style.display = 'block';
+  }
+
+  // 3. Persist active tab & sync URL
   try {
-    localStorage.setItem("asage_cabinet_tab", targetId);
+    localStorage.setItem('asage_cabinet_tab', targetTab);
     const url = new URL(window.location.href);
-    url.searchParams.set("tab", targetId);
-    history.replaceState(null, "", url.toString());
+    if (url.searchParams.get('tab') !== targetTab) {
+      url.searchParams.set('tab', targetTab);
+      window.history.replaceState({ tab: targetTab }, '', url.pathname + '?' + url.searchParams.toString() + window.location.hash);
+    }
   } catch (e) {}
 
-  document.querySelectorAll(".cabinet-tab-btn").forEach(b => {
-    const btnTab = (b.dataset.tab || b.getAttribute("data-tab") || "").toLowerCase();
-    if (btnTab === targetId || (targetId === "community" && btnTab === "club")) {
-      b.classList.add("active");
-    } else {
-      b.classList.remove("active");
-    }
-  });
-
-  document.querySelectorAll(".cabinet-tab-pane").forEach(p => {
-    p.classList.remove("active");
-    p.style.display = "none";
-  });
-
-  const targetPane = document.getElementById(`tab-${targetId}`);
-  if (targetPane) {
-    targetPane.classList.add("active");
-    targetPane.style.display = "block";
+  // 4. Trigger on-demand rendering
+  if (targetTab === 'education') {
+    renderClubLessons();
+  } else if (targetTab === 'members') {
+    loadMembersDirectory();
+  } else if (targetTab === 'favorites') {
+    renderFavorites();
+  } else if (targetTab === 'profile') {
+    populateProfileForm();
+    livePreviewProfile();
   }
 
-  renderCabinetUI();
-}
-
-// ── 5. DATA FETCHING (PRODUCTS MANIFEST) ──────────────────────────────────────
-async function loadShowcaseProducts() {
-  try {
-    const res = await fetch("/data/showcase_products.json?v=" + Date.now());
-    if (res.ok) {
-      allShowcaseProducts = await res.json();
-      return allShowcaseProducts;
-    }
-  } catch (e) {
-    console.warn("[Manifest Load Warn]", e);
-  }
-
-  allShowcaseProducts = [
-    {
-      id: "telegram-voice-transcriber-bot",
-      title: "Telegram Voice Transcriber Bot // Whisper & aiogram 3",
-      category: "bot",
-      badge: "ХИТ ПРОДАЖ",
-      description: "Автономный микросервисный Telegram-бот для мгновенной транскрибации голосовых сообщений и видео-кружочков через Groq Whisper API со скоростью 220x реалтайма.",
-      price_rub: 2990,
-      is_free_for_club: true,
-      tech_stack: ["Python 3.11", "aiogram 3", "Groq Whisper API", "Docker", "FFmpeg", "Redis"],
-      content: {
-        video_embed_url: "https://vk.com/video_ext.php?oid=708436546&id=456239175&hash=44ba6d5be9fb7a75&hd=2",
-        download_zip_url: "/downloads/bots/telegram-voice-transcriber-v2.zip",
-        github_url: "https://github.com/mikhail-sage/telegram-voice-transcriber-bot",
-        prompts: [
-          {
-            title: "Системный промпт пост-обработки транскриптов",
-            body: "Ты — профессиональный стенографист. Исправь грамматические ошибки, разбей на абзацы и выдели Action Items."
-          }
-        ],
-        checklist: [
-          "1. Создать Telegram-бота через @BotFather и скопировать BOT_TOKEN",
-          "2. Сгенерировать ключ API в Groq Console",
-          "3. Скопировать .env.example в .env и запустить docker compose up -d"
-        ]
-      }
-    },
-    {
-      id: "ai-lead-scraper-crm-enricher",
-      title: "AI Lead Scraper & CRM Enricher // Telethon & Bitrix24",
-      category: "bot",
-      badge: "B2B ИНСТРУМЕНТ",
-      description: "Асинхронный парсер Telegram-чатов с ИИ-фильтрацией платежеспособных лидов и созданием сделок в CRM.",
-      price_rub: 4990,
-      is_free_for_club: true,
-      tech_stack: ["Python 3.11", "Telethon", "OpenAI GPT-4o-mini", "Bitrix24 REST API"],
-      content: {
-        video_embed_url: "https://vk.com/video_ext.php?oid=708436546&id=456239175&hash=44ba6d5be9fb7a75&hd=2",
-        download_zip_url: "/downloads/bots/lead-scraper.zip",
-        github_url: "https://github.com/mikhail-sage/ai-lead-scraper",
-        prompts: [{ title: "Промпт квалификации лидов", body: "Определи платежеспособность клиента..." }],
-        checklist: ["1. Получить API ID и Hash на my.telegram.org", "2. Настроить вебхук в Bitrix24"]
-      }
-    },
-    {
-      id: "vibe-coding-antigravity-setup-guide",
-      title: "Архитектура Vibe Coding в Antigravity & Claude Code",
-      category: "vibe",
-      badge: "СТАНДАРТ 2026",
-      description: "Глубокий инженерный гайд по развертыванию мультиагентной среды, MCP-серверов и автономных пайплайнов разработки.",
-      price_rub: 1990,
-      is_free_for_club: true,
-      tech_stack: ["Antigravity", "Claude Code", "MCP Servers", "Docker", "Zsh"],
-      content: {
-        video_embed_url: "https://vk.com/video_ext.php?oid=708436546&id=456239175&hash=44ba6d5be9fb7a75&hd=2",
-        download_zip_url: "/downloads/guides/vibe-coding-setup.zip",
-        github_url: "https://github.com/mikhail-sage/vibe-coding-starter",
-        prompts: [{ title: "Системный промпт архитектора", body: "Ты — Lead AI Architect..." }],
-        checklist: ["1. Установить Antigravity CLI", "2. Настроить config/skills"]
-      }
-    },
-    {
-      id: "mastermind-mcp-deepdive-01",
-      title: "Запись Мастермайна: Проектирование сложных MCP-серверов",
-      category: "guide",
-      badge: "ЗАПИСЬ ЭФИРА",
-      description: "Практический воркшоп резидентов SAGE Neuro Family: создание сервера для синхронизации с базой данных и живое тестирование.",
-      price_rub: 1990,
-      is_free_for_club: true,
-      tech_stack: ["TypeScript", "Model Context Protocol", "Supabase", "Node.js"],
-      content: {
-        video_embed_url: "https://vk.com/video_ext.php?oid=708436546&id=456239175&hash=44ba6d5be9fb7a75&hd=2",
-        download_zip_url: "/downloads/masterminds/mcp-deepdive.zip",
-        github_url: "https://github.com/mikhail-sage/mcp-sample-server",
-        prompts: [{ title: "Промпт генерации MCP схем", body: "Создай спецификацию MCP инструментов..." }],
-        checklist: ["1. Запустить тестовый сервер", "2. Подключить к IDE"]
-      }
-    }
-  ];
-  return allShowcaseProducts;
-}
-
-// ── 6. RENDER DASHBOARD (⚡ ДАШБОРД) ─────────────────────────────────────────
-function renderDashboard(user, isClubResident) {
-  const avatarImg = document.getElementById("cabinet-user-avatar") || document.querySelector(".cabinet-avatar");
-  const displayName = document.getElementById("cabinet-display-name") || document.querySelector(".cabinet-user-name");
-  const tgHandle = document.getElementById("cabinet-tg-handle") || document.querySelector(".cabinet-user-handle");
-  const subStatusBadge = document.getElementById("cabinet-sub-badge") || document.querySelector(".cabinet-sub-status");
-
-  if (avatarImg) {
-    if (user && user.photo_url) {
-      avatarImg.src = user.photo_url;
-      avatarImg.style.display = "block";
-    } else {
-      avatarImg.src = "/img/mikhail_hero.jpg";
-    }
-  }
-
-  if (displayName) {
-    if (user && (user.first_name || user.last_name)) {
-      displayName.innerText = `${user.first_name || ""} ${user.last_name || ""}`.trim();
-    } else {
-      displayName.innerText = "Гость Платформы";
-    }
-  }
-
-  if (tgHandle) {
-    const u = user && user.username ? user.username.replace(/^@/, "") : "guest_user";
-    tgHandle.innerText = `@${u}`;
-  }
-
-  if (subStatusBadge) {
-    if (isClubResident) {
-      const expDate = user && user.subscription_expires_at 
-        ? new Date(user.subscription_expires_at).toLocaleDateString("ru-RU")
-        : "05.10.2026";
-      subStatusBadge.className = "badge-role club cabinet-sub-status";
-      subStatusBadge.innerHTML = `💎 Резидент SAGE Neuro Family <span class="badge-exp">до ${expDate}</span>`;
-    } else {
-      subStatusBadge.className = "badge-role cabinet-sub-status";
-      subStatusBadge.innerHTML = `Гость Платформы <a href="https://web.tribute.tg/s/O6I" target="_blank" class="btn-tribute-cta">Вступить в Клуб (1 900 ₽) ↗</a>`;
-    }
+  if (typeof window.trackMetrikaEvent === 'function') {
+    window.trackMetrikaEvent('cabinet_tab_switch', { tab: targetTab });
   }
 }
 
-// ── 7. RENDER MY LIBRARY (📂 МОЯ БИБЛИОТЕКА) ──────────────────────────────────
-function renderLibrary(user, isClubResident) {
-  const container = document.getElementById("library-content-container");
-  if (!container) return;
+// ── 4. RENDER CLUB LESSONS & VIDEO MODAL ──────────────────────────────────────
+function renderClubLessons() {
+  const grid = document.getElementById('club-lessons-grid');
+  const banner = document.getElementById('club-lessons-access-banner');
+  const pill = document.getElementById('club-lessons-status-pill');
+  if (!grid) return;
 
-  const storedPurchases = safeJsonParse(localStorage.getItem("asage_purchases"), []);
+  const hasAccess = typeof Auth !== 'undefined' && Auth.hasClubAccess ? Auth.hasClubAccess() : false;
 
-  let availableItems = [];
-  if (isClubResident) {
-    availableItems = [...allShowcaseProducts];
-  } else {
-    availableItems = allShowcaseProducts.filter(p => storedPurchases.includes(p.id));
+  // Render Status Pill
+  if (pill) {
+    if (hasAccess) {
+      pill.innerHTML = '<span class="badge-role" style="background:#ecfdf5; color:#047857; border-color:#a7f3d0; font-weight:700;">💎 ДОСТУП РЕЗИДЕНТА АКТИВЕН</span>';
+    } else {
+      pill.innerHTML = '<span class="badge-role" style="background:#fef2f2; color:#dc2626; border-color:#fecaca; font-weight:700;">🔒 ДОСТУП ЗАКРЫТ</span>';
+    }
   }
 
-  const libBadge = document.getElementById("tab-badge-library");
-  if (libBadge) {
-    libBadge.innerText = String(availableItems.length);
+  // Render Access Banner
+  if (banner) {
+    if (hasAccess) {
+      banner.innerHTML = `
+        <div class="club-access-status-banner unlocked" style="background:#f0fdf4; border:1px solid #bbf7d0; padding:20px 24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+          <div style="display:flex; align-items:center; gap:14px;">
+            <div style="font-size:1.8rem;">💎</div>
+            <div>
+              <strong style="display:block; font-size:1.05rem; color:#15803d;">Доступ резидента сообщества активен // SAGE Neuro Family</strong>
+              <span style="font-size:0.88rem; color:#166534;">Вам открыт неограниченный просмотр всех закрытых записей и мастер-классов.</span>
+            </div>
+          </div>
+          <div>
+            <a href="https://t.me/c/3802053746/82" target="_blank" class="btn-secondary" style="padding:9px 18px; font-size:0.82rem; background:#ffffff; font-weight:600; text-decoration:none;">Тема чата в Telegram ↗</a>
+          </div>
+        </div>
+      `;
+    } else {
+      banner.innerHTML = `
+        <div class="club-access-status-banner locked" style="background:#09090b; color:#ffffff; border:1px solid #27272a; padding:20px 24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+          <div style="display:flex; align-items:center; gap:14px;">
+            <div style="font-size:1.8rem;">🔒</div>
+            <div>
+              <strong style="display:block; font-size:1.05rem; color:#ffffff;">Материалы доступны резидентам клуба SAGE Neuro Family</strong>
+              <span style="font-size:0.88rem; color:#a1a1aa;">Эксклюзивные записи живых воркшопов и закрытые туториалы доступны участникам клуба по подписке (1 900 ₽ первый месяц, далее 1 500 ₽/мес).</span>
+            </div>
+          </div>
+          <div>
+            <a href="https://web.tribute.tg/s/O6I" target="_blank" class="btn-primary" style="background:#ffffff; color:#09090b; border-color:#ffffff; padding:10px 20px; font-size:0.84rem; font-weight:700; font-family:var(--mono); text-decoration:none;">
+              Вступить в Клуб (1 900 ₽) ↗
+            </a>
+          </div>
+        </div>
+      `;
+    }
   }
 
-  if (availableItems.length === 0) {
-    container.innerHTML = `
-      <div class="library-empty-state empty-library-banner">
-        <div class="empty-icon">📂</div>
-        <h3 class="empty-title">Ваша библиотека пока пуста</h3>
-        <p class="empty-desc">У вас пока нет купленных цифровых решений или активной подписки в Клуб SAGE Neuro Family.</p>
-        <div class="empty-actions">
-          <button class="btn-primary" onclick="switchCabinetTab('store')">Перейти в Витрину Решений ↗</button>
-          <a href="https://web.tribute.tg/s/O6I" target="_blank" class="btn-secondary">Вступить в Клуб (1 900 ₽) ↗</a>
+  // Render Lessons Cards
+  let html = '';
+  CLUB_LESSONS_DATA.forEach(l => {
+    const isFav = typeof Auth !== 'undefined' && Auth.isFavorite ? Auth.isFavorite('lesson', l.id) : false;
+    const topicsHtml = l.topics.map(t => `<span class="tech-tag" style="font-size:0.7rem; padding:2px 8px;">${t}</span>`).join(' ');
+
+    let actionBtnHtml = '';
+    if (hasAccess) {
+      actionBtnHtml = `<button onclick="openClubVideo('${l.id}')" class="btn-primary" style="padding:10px 16px; font-size:0.82rem; width:100%; justify-content:center; cursor:pointer;"><span>▶</span> Смотреть запись онлайн</button>`;
+    } else {
+      actionBtnHtml = `<a href="https://web.tribute.tg/s/O6I" target="_blank" class="btn-secondary" style="padding:10px 16px; font-size:0.82rem; width:100%; justify-content:center; text-align:center; text-decoration:none; background:#fafafa; color:#52525b; border:1px dashed #d4d4d8; font-weight:600;">🔒 Доступно в SAGE Neuro Family ↗</a>`;
+    }
+
+    const lockBadgeHtml = !hasAccess ? `<div class="club-lesson-lock-overlay">🔒 Для резидентов</div>` : '';
+
+    html += `
+      <div class="club-lesson-card cabinet-card" id="card-${l.id}" style="padding:0; overflow:hidden;">
+        <div class="club-lesson-cover-wrap">
+          <img src="${l.cover}" alt="${l.title}" loading="lazy" onerror="this.src='/img/og-preview.png'">
+          <div class="club-lesson-badge-overlay">${l.badge}</div>
+          ${lockBadgeHtml}
+          <button class="club-lesson-fav-btn-float ${isFav ? 'active' : ''}" 
+                  onclick="toggleClubLessonFavorite(event, '${l.id}')" 
+                  title="${isFav ? 'Удалить из избранного' : 'Добавить в избранное'}" 
+                  aria-label="В избранное">
+            ${isFav ? '⭐' : '☆'}
+          </button>
+        </div>
+        <div class="club-lesson-body" style="padding:24px;">
+          <div class="club-lesson-meta" style="display:flex; justify-content:space-between; font-family:var(--mono); font-size:0.74rem; color:var(--gray); margin-bottom:10px;">
+            <span>🗓 ${l.date}</span>
+            <span>⏱ ${l.duration}</span>
+          </div>
+          <h3 class="club-lesson-title" style="font-size:1.15rem; font-weight:700; margin:0 0 10px 0; line-height:1.3;">${l.title}</h3>
+          <p class="club-lesson-desc" style="font-size:0.88rem; color:var(--gray); line-height:1.5; margin-bottom:16px;">${l.description}</p>
+          <div class="card-tech-stack" style="margin-bottom:20px;">
+            ${topicsHtml}
+          </div>
+          <div class="club-lesson-footer" style="border-top:1px solid #f4f4f5; padding-top:16px;">
+            <div style="display:flex; gap:8px; width:100%; align-items:center;">
+              <div style="flex:1;">
+                ${actionBtnHtml}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     `;
+  });
+
+  grid.innerHTML = html;
+}
+
+function openClubVideo(lessonId) {
+  const lesson = CLUB_LESSONS_DATA.find(l => l.id === lessonId);
+  if (!lesson) return;
+
+  const modal = document.getElementById('club-video-modal');
+  const title = document.getElementById('club-modal-title');
+  const badge = document.getElementById('club-modal-badge');
+  const iframe = document.getElementById('club-modal-iframe');
+
+  if (title) title.innerText = lesson.title;
+  if (badge) badge.innerText = lesson.badge;
+  if (iframe) {
+    const sep = lesson.embedUrl.includes('?') ? '&' : '?';
+    iframe.src = `${lesson.embedUrl}${sep}autoplay=1`;
+  }
+  if (modal) {
+    modal.style.display = 'flex';
+  }
+}
+
+function closeClubVideoModal() {
+  const modal = document.getElementById('club-video-modal');
+  const iframe = document.getElementById('club-modal-iframe');
+  if (iframe) iframe.src = '';
+  if (modal) modal.style.display = 'none';
+}
+
+function toggleClubLessonFavorite(e, lessonId) {
+  if (e) {
+    e.stopPropagation();
+    e.preventDefault();
+  }
+  const lesson = CLUB_LESSONS_DATA.find(l => l.id === lessonId);
+  if (!lesson || typeof Auth === 'undefined' || !Auth.toggleFavorite) return;
+
+  Auth.toggleFavorite('lesson', lessonId, lesson.title, {
+    desc: lesson.description,
+    badge: lesson.badge,
+    date: lesson.date,
+    duration: lesson.duration,
+    cover: lesson.cover
+  });
+
+  renderClubLessons();
+  const badge = document.getElementById('fav-counter-badge');
+  if (badge && Auth.getFavorites) badge.innerText = Auth.getFavorites().length;
+}
+
+// ── 5. LIGHTING & CAMERA ANGLES GUIDE MODALS ─────────────────────────────────
+function openLightingGuideModal() {
+  const existing = document.getElementById('guide-lighting-modal');
+  if (existing) existing.remove();
+
+  const modal = document.createElement('div');
+  modal.id = 'guide-lighting-modal';
+  modal.className = 'guide-modal-overlay';
+  modal.onclick = (e) => { if (e.target === modal) closeGuideModal('guide-lighting-modal'); };
+
+  const lightingSchemes = [
+    { name: '🌅 Golden Hour', desc: 'Тёплые золотистые оттенки, мягкие длинные тени, закатный вайб', prompt: 'golden hour lighting, warm golden tones, soft long shadows, cinematic sunset atmosphere' },
+    { name: '🌌 Blue Hour', desc: 'Холодный синий свет, рассветная или сумеречная атмосфера', prompt: 'blue hour lighting, cool deep blue tones, subtle shadows, dawn atmosphere' },
+    { name: '☁️ Overcast Light', desc: 'Мягкий рассеянный свет без резких теней, естественные цвета', prompt: 'overcast diffused lighting, soft even illumination, natural neutral colors' },
+    { name: '✨ Diffused Light', desc: 'Равномерный мягкий свет, идеален для студийных портретов', prompt: 'diffused studio lighting, soft flattering light, gentle falloff' },
+    { name: '🌇 Backlighting & Rim Light', desc: 'Источник света позади объекта, создаёт сияющий контур', prompt: 'strong backlighting, rim light, glowing silhouette edge, cinematic halo' },
+    { name: '🌿 Soft Ambient Light', desc: 'Нежное рассеянное освещение интерьера, уют и глубина', prompt: 'soft ambient light, cozy room illumination, natural gentle shadows' },
+    { name: '🖤 Low-Key Lighting', desc: 'Тёмный контрастный свет, глубокие тени и драматизм', prompt: 'dramatic low-key lighting, deep dark shadows, high contrast, moody chiaroscuro' },
+    { name: '🤍 High-Key Lighting', desc: 'Яркое, светлое с минимумом теней — чистота и свежесть', prompt: 'high-key lighting, bright airy scene, minimal soft shadows, pure clean look' },
+    { name: '🏠 Window Light', desc: 'Естественный свет из окна, мягкие блики и текстура кожи', prompt: 'natural window light, soft directional sunlight, organic shadow gradient' },
+    { name: '🌳 Dappled Light', desc: 'Солнечные блики и пятна сквозь листву — динамика и игра света', prompt: 'dappled sunlight filtering through foliage, organic light patterns, textured shadows' },
+    { name: '💡 Spotlight', desc: 'Фокус жесткого света на одном объекте, максимальная драма', prompt: 'intense direct spotlight, sharp dramatic focal beam, heavy contrast falloff' },
+    { name: '🌆 Twilight Light', desc: 'Мягкий свет вечерних сумерек, кинематографичность', prompt: 'twilight evening light, dusky cinematic ambient, rich deep sky tones' },
+    { name: '🕯 Candlelight', desc: 'Тёплый мерцающий свет свечей, интимность и золотой оттенок', prompt: 'warm flickering candlelight, intimate golden glow, soft penumbra shadows' },
+    { name: '🎇 Neon Light', desc: 'Яркие неоновые огни, футуристичный киберпанк / ночной город', prompt: 'vibrant neon lighting, dual color cyan and magenta reflections, cyberpunk city night' },
+    { name: '🌕 Moonlight', desc: 'Холодный серебристый ночной свет, магия луны', prompt: 'ethereal cool moonlight, silvery highlights, deep midnight shadows' },
+    { name: '🚦 Street Light', desc: 'Желтоватое свечение уличных фонарей, городской вайб', prompt: 'warm sodium street lamp lighting, nighttime urban atmosphere, wet asphalt reflections' },
+    { name: '🔁 Bounced Light', desc: 'Отражённый свет от поверхностей, естественный fill-свет', prompt: 'bounced indirect illumination, soft ambient bounce, natural fill light' },
+    { name: '🌞 Lens Flare', desc: 'Анаморфотные солнечные блики в объективе, реализм', prompt: 'cinematic anamorphic lens flare, bright sun streak, photographic optical realism' },
+    { name: '🎥 Studio 3-Point Light', desc: 'Трехточечный студийный свет (Key, Fill, Backlight)', prompt: 'professional 3-point studio lighting, balanced key and fill light, crisp rim highlight' },
+    { name: '🔲 Pattern Light (Gobo)', desc: 'Свет с узорами через жалюзи или решётку, графичность', prompt: 'gobo patterned light, window blind shadows projected onto subject, graphic depth' }
+  ];
+
+  let rowsHtml = lightingSchemes.map(s => `
+    <div class="guide-item-row" style="display:flex; justify-content:space-between; align-items:center; padding:12px; border-bottom:1px solid #f4f4f5; gap:16px;">
+      <div class="guide-item-info" style="flex:1;">
+        <strong style="display:block; font-size:0.92rem; color:#09090b;">${s.name} — ${s.desc}</strong>
+        <div class="guide-prompt-code" style="font-family:var(--mono); font-size:0.76rem; color:#52525b; background:#f4f4f5; padding:6px 10px; margin-top:4px;">${s.prompt}</div>
+      </div>
+      <button class="guide-copy-btn btn-secondary" style="padding:6px 14px; font-size:0.75rem; font-family:var(--mono);" onclick="copyGuidePrompt('${s.prompt.replace(/'/g, "\\'")}', this)">Копировать</button>
+    </div>
+  `).join('');
+
+  modal.innerHTML = `
+    <div class="guide-modal-content" style="background:#ffffff; max-width:840px; width:100%; max-height:85vh; overflow-y:auto; border:1px solid var(--border);">
+      <div class="guide-modal-header" style="padding:20px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
+        <h3 style="margin:0; font-size:1.2rem; font-weight:800;">💡 Шпаргалка по свету (20 схем освещения)</h3>
+        <button class="guide-modal-close-btn" onclick="closeGuideModal('guide-lighting-modal')" style="background:none; border:none; font-size:1.2rem; cursor:pointer;">✕</button>
+      </div>
+      <div class="guide-modal-body" style="padding:20px;">
+        <div style="font-family:var(--mono); font-size:0.75rem; font-weight:700; color:var(--gray); margin-bottom:12px;">// 20 КИНЕМАТОГРАФИЧЕСКИХ СХЕМ СВЕТА ДЛЯ MIDJOURNEY, FLUX & DALL-E</div>
+        ${rowsHtml}
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
+
+function openAnglesGuideModal() {
+  const existing = document.getElementById('guide-angles-modal');
+  if (existing) existing.remove();
+
+  const modal = document.createElement('div');
+  modal.id = 'guide-angles-modal';
+  modal.className = 'guide-modal-overlay';
+  modal.onclick = (e) => { if (e.target === modal) closeGuideModal('guide-angles-modal'); };
+
+  const angles = [
+    { name: '📸 Анфас (Full Face)', desc: 'Прямой контакт глаза в глаза, открытость и симметрия', prompt: 'front view, centered headshot, direct gaze at camera, symmetrical composition' },
+    { name: '📐 3/4 ракурс (Three-quarter)', desc: 'Классический портретный поворот головы на 45 градусов', prompt: 'three-quarter view, 45 degree angle portrait, natural dimension and cheekbone definition' },
+    { name: '👤 Профиль (Profile)', desc: 'Строго боком, акцент на силуэте и контурах лица', prompt: 'side view, profile shot, silhouette focus, clean jawline contour' },
+    { name: '💫 Полуанфас (Semi-profile)', desc: 'Между 3/4 и профилем, акцент на скулах', prompt: 'semi-profile, subtle head turn, highlighting cheekbones and soft jawline' },
+    { name: '🚶 Со спины (Back View)', desc: 'Загадочность и эффект созерцания сцены', prompt: 'view from behind, back to camera, looking at horizon, mysterious mood' },
+    { name: '👁️ Уровень глаз (Eye Level)', desc: 'Нейтральная и реалистичная естественная перспектива', prompt: 'eye-level shot, natural perspective, direct human connection' },
+    { name: '⬆️ Нижний ракурс (Low Angle)', desc: 'Властный, монументальный ракурс снизу вверх', prompt: 'low angle shot, looking up at person, heroic perspective, imposing authority' },
+    { name: '⬇️ Верхний ракурс (High Angle)', desc: 'Взгляд сверху вниз, хрупкость или уязвимость', prompt: 'high angle shot, looking down at subject, emotional perspective' },
+    { name: '🦅 Птичий полет (Bird\'s Eye)', desc: 'Вид строго сверху (Top-down) с высоты', prompt: 'bird\'s eye view, top-down perspective, high altitude cinematic shot' },
+    { name: '🐜 Лягушачий ракурс (Worm\'s Eye)', desc: 'Экстремальный ракурс от самой поверхности земли', prompt: 'worm\'s eye view, ground level photography, extreme perspective looking straight up' },
+    { name: '📐 Голландский угол (Dutch Angle)', desc: 'Заваленный горизонт, кинематографичное напряжение', prompt: 'dutch angle shot, tilted horizon, cinematic tension, dynamic framing' },
+    { name: '👀 Субъективный ракурс (POV)', desc: 'Вид от первого лица глазами главного героя', prompt: 'first person point of view, POV shot, immersive perspective, subjective camera' },
+    { name: '👥 Овершолдер (Over-the-shoulder)', desc: 'Взгляд через плечо собеседника в диалоге', prompt: 'over-the-shoulder shot, conversation framing, blurred foreground shoulder' },
+    { name: '🔍 Макро (Macro Detail)', desc: 'Сверхкрупный план текстуры глаза, кожи или элемента', prompt: 'extreme close-up, macro shot of an eye, hyper-detailed texture, depth of field' }
+  ];
+
+  let rowsHtml = angles.map(a => `
+    <div class="guide-item-row" style="display:flex; justify-content:space-between; align-items:center; padding:12px; border-bottom:1px solid #f4f4f5; gap:16px;">
+      <div class="guide-item-info" style="flex:1;">
+        <strong style="display:block; font-size:0.92rem; color:#09090b;">${a.name} — ${a.desc}</strong>
+        <div class="guide-prompt-code" style="font-family:var(--mono); font-size:0.76rem; color:#52525b; background:#f4f4f5; padding:6px 10px; margin-top:4px;">${a.prompt}</div>
+      </div>
+      <button class="guide-copy-btn btn-secondary" style="padding:6px 14px; font-size:0.75rem; font-family:var(--mono);" onclick="copyGuidePrompt('${a.prompt.replace(/'/g, "\\'")}', this)">Копировать</button>
+    </div>
+  `).join('');
+
+  modal.innerHTML = `
+    <div class="guide-modal-content" style="background:#ffffff; max-width:840px; width:100%; max-height:85vh; overflow-y:auto; border:1px solid var(--border);">
+      <div class="guide-modal-header" style="padding:20px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
+        <h3 style="margin:0; font-size:1.2rem; font-weight:800;">📸 Шпаргалка по ракурсам съемки (20 схем)</h3>
+        <button class="guide-modal-close-btn" onclick="closeGuideModal('guide-angles-modal')\" style="background:none; border:none; font-size:1.2rem; cursor:pointer;">✕</button>
+      </div>
+      <div class="guide-modal-body" style="padding:20px;">
+        <div style="font-family:var(--mono); font-size:0.75rem; font-weight:700; color:var(--gray); margin-bottom:12px;">// 20 РАКУРСОВ ДЛЯ ТОЧНОГО УПРАВЛЕНИЯ КАМЕРОЙ В НЕЙРОСЕТЯХ</div>
+        ${rowsHtml}
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
+
+function closeGuideModal(id) {
+  const m = document.getElementById(id);
+  if (m) m.remove();
+}
+
+function copyGuidePrompt(text, btn) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      const orig = btn.innerText;
+      btn.innerText = '✓ Скопировано';
+      btn.style.background = '#10b981';
+      btn.style.borderColor = '#10b981';
+      btn.style.color = '#fff';
+      setTimeout(() => {
+        btn.innerText = orig;
+        btn.style.background = '';
+        btn.style.borderColor = '';
+        btn.style.color = '';
+      }, 1500);
+    }).catch(() => {
+      prompt('Скопируйте промпт:', text);
+    });
+  } else {
+    prompt('Скопируйте промпт:', text);
+  }
+}
+
+// ── 6. PROFILE DISPLAY & EDITING ─────────────────────────────────────────────
+function updateCabinetProfile() {
+  const user = typeof Auth !== 'undefined' && Auth.getUser ? Auth.getUser() : null;
+  const loggedInContainer = document.getElementById('profile-container-logged-in');
+  const guestContainer = document.getElementById('profile-container-guest');
+
+  if (user) {
+    if (loggedInContainer) loggedInContainer.style.display = 'block';
+    if (guestContainer) guestContainer.style.display = 'none';
+
+    const displayName = (user.first_name + ' ' + (user.last_name || '')).trim() || user.username || 'Пользователь';
+    const nameEl = document.getElementById('user-display-name') || document.getElementById('cabinet-display-name');
+    if (nameEl) nameEl.innerText = displayName;
+
+    const usernameEl = document.getElementById('user-username-badge') || document.getElementById('cabinet-tg-handle');
+    if (usernameEl) {
+      usernameEl.innerText = user.username ? '@' + user.username.replace(/^@/, '') : '';
+      usernameEl.style.display = user.username ? 'inline-block' : 'none';
+    }
+
+    const idValEl = document.getElementById('user-id-val');
+    if (idValEl) {
+      idValEl.innerText = user.telegram_id || (user.id ? String(user.id).slice(0, 8) : '—');
+    }
+
+    const roleEl = document.getElementById('user-role-badge') || document.getElementById('cabinet-sub-badge');
+    if (roleEl) {
+      if (user.role === 'club_member') {
+        roleEl.innerText = '💎 Резидент Клуба';
+        roleEl.className = 'badge-role club';
+      } else if (user.role === 'student') {
+        roleEl.innerText = '🎓 Ученик Наставничества';
+        roleEl.className = 'badge-role';
+      } else {
+        roleEl.innerText = 'Участник платформы';
+        roleEl.className = 'badge-role';
+      }
+    }
+
+    const avatarWrap = document.getElementById('user-avatar-wrap');
+    if (avatarWrap) {
+      avatarWrap.innerHTML = user.photo_url
+        ? `<img src="${user.photo_url}" alt="${displayName}" class="cabinet-avatar" width="76" height="76">`
+        : `<div class="cabinet-avatar-placeholder">${displayName.charAt(0).toUpperCase()}</div>`;
+    }
+
+    const bioWrap = document.getElementById('user-bio-wrap');
+    if (bioWrap) {
+      if (user.bio && user.bio.trim()) {
+        bioWrap.innerText = user.bio;
+        bioWrap.style.display = 'block';
+        bioWrap.style.fontStyle = 'normal';
+        bioWrap.style.color = '#52525b';
+      } else {
+        bioWrap.innerText = 'Нажмите «Настроить профиль», чтобы добавить информацию о деятельности и контакты.';
+        bioWrap.style.display = 'block';
+        bioWrap.style.fontStyle = 'italic';
+        bioWrap.style.color = '#a1a1aa';
+      }
+    }
+
+    const extraDetails = document.getElementById('user-extra-details');
+    if (extraDetails) {
+      let detailsHtml = '';
+      if (user.email) {
+        detailsHtml += `<span class="cabinet-chip cabinet-chip-email">✉ ${user.email}</span>`;
+      }
+      if (user.channel_url) {
+        const chHref = user.channel_url.startsWith('http') ? user.channel_url : `https://t.me/${user.channel_url.replace(/^@/, '')}`;
+        detailsHtml += `<a href="${chHref}" target="_blank" class="cabinet-chip cabinet-chip-channel">📢 ${user.channel_url} ↗</a>`;
+      }
+      if (user.website_url) {
+        const webHref = user.website_url.startsWith('http') ? user.website_url : `https://${user.website_url}`;
+        detailsHtml += `<a href="${webHref}" target="_blank" class="cabinet-chip cabinet-chip-website">🌐 ${user.website_url} ↗</a>`;
+      }
+      extraDetails.innerHTML = detailsHtml;
+    }
+  } else {
+    if (loggedInContainer) loggedInContainer.style.display = 'none';
+    if (guestContainer) guestContainer.style.display = 'block';
+  }
+
+  // Update favorite badge
+  const badge = document.getElementById('fav-counter-badge');
+  if (badge && typeof Auth !== 'undefined' && Auth.getFavorites) {
+    badge.innerText = Auth.getFavorites().length;
+  }
+}
+
+function populateProfileForm() {
+  const user = typeof Auth !== 'undefined' && Auth.getUser ? Auth.getUser() : null;
+  if (!user) return;
+
+  const fn = document.getElementById('inp-first-name');
+  if (fn && user.first_name) fn.value = user.first_name;
+
+  const ln = document.getElementById('inp-last-name');
+  if (ln && user.last_name) ln.value = user.last_name;
+
+  const un = document.getElementById('inp-tg-username');
+  if (un && user.username) un.value = user.username.startsWith('@') ? user.username : '@' + user.username;
+
+  const bio = document.getElementById('inp-bio');
+  if (bio && user.bio) bio.value = user.bio;
+
+  const ch = document.getElementById('inp-channel');
+  if (ch && user.channel_url) ch.value = user.channel_url;
+
+  const ws = document.getElementById('inp-website');
+  if (ws && user.website_url) ws.value = user.website_url;
+
+  const priv = document.getElementById('inp-is-private');
+  if (priv) priv.checked = !user.is_private;
+}
+
+function livePreviewProfile() {
+  const fn = (document.getElementById('inp-first-name')?.value || '').trim();
+  const ln = (document.getElementById('inp-last-name')?.value || '').trim();
+  const un = (document.getElementById('inp-tg-username')?.value || '').trim();
+  const bio = (document.getElementById('inp-bio')?.value || '').trim();
+  const isChecked = document.getElementById('inp-is-private')?.checked ?? true;
+
+  const name = (fn + ' ' + ln).trim() || 'Имя Фамилия';
+  const handle = un ? (un.startsWith('@') ? un : '@' + un) : '@username';
+
+  const previewName = document.getElementById('preview-user-name');
+  if (previewName) previewName.innerText = name;
+
+  const previewHandle = document.getElementById('preview-user-handle');
+  if (previewHandle) previewHandle.innerText = handle;
+
+  const previewBio = document.getElementById('preview-user-bio');
+  if (previewBio) previewBio.innerText = bio || 'Описание деятельности и стек технологий...';
+
+  const previewAvatar = document.getElementById('preview-avatar-placeholder');
+  if (previewAvatar) previewAvatar.innerText = name.charAt(0).toUpperCase();
+
+  const previewPrivacy = document.getElementById('preview-user-privacy');
+  if (previewPrivacy) {
+    if (isChecked) {
+      previewPrivacy.innerText = '🌐 Отображается в каталоге резидентов';
+      previewPrivacy.style.color = '#059669';
+    } else {
+      previewPrivacy.innerText = '🔒 Скрыт из общего каталога резидентов';
+      previewPrivacy.style.color = '#dc2626';
+    }
+  }
+}
+
+async function handleProfileSave(event) {
+  if (event) event.preventDefault();
+
+  const fn = (document.getElementById('inp-first-name')?.value || '').trim();
+  const ln = (document.getElementById('inp-last-name')?.value || '').trim();
+  let un = (document.getElementById('inp-tg-username')?.value || '').trim();
+  if (un.startsWith('@')) un = un.slice(1);
+
+  const bio = (document.getElementById('inp-bio')?.value || '').trim();
+  const channel = (document.getElementById('inp-channel')?.value || '').trim();
+  const website = (document.getElementById('inp-website')?.value || '').trim();
+  const isPublic = document.getElementById('inp-is-private')?.checked ?? true;
+
+  const updates = {
+    first_name: fn,
+    last_name: ln,
+    username: un,
+    bio: bio,
+    channel_url: channel,
+    website_url: website,
+    is_private: !isPublic
+  };
+
+  const btn = document.getElementById('btn-save-profile');
+  const originalText = btn ? btn.innerText : '';
+  if (btn) {
+    btn.innerText = 'Сохраняем...';
+    btn.disabled = true;
+  }
+
+  try {
+    if (typeof Auth !== 'undefined' && Auth.updateProfile) {
+      await Auth.updateProfile(updates);
+    } else {
+      const user = safeJsonParse(localStorage.getItem('asage_user'), {});
+      Object.assign(user, updates);
+      localStorage.setItem('asage_user', JSON.stringify(user));
+    }
+
+    updateCabinetProfile();
+    livePreviewProfile();
+
+    if (btn) {
+      btn.innerText = '✓ Сохранено!';
+      btn.style.background = '#10b981';
+      btn.style.borderColor = '#10b981';
+      btn.style.color = '#ffffff';
+      setTimeout(() => {
+        btn.innerText = originalText;
+        btn.style.background = '';
+        btn.style.borderColor = '';
+        btn.style.color = '';
+        btn.disabled = false;
+      }, 2000);
+    }
+  } catch (err) {
+    console.error('Save profile error:', err);
+    if (btn) {
+      btn.innerText = 'Ошибка сохранения';
+      btn.disabled = false;
+    }
+  }
+}
+
+// ── 7. MEMBERS DIRECTORY ─────────────────────────────────────────────────────
+async function loadMembersDirectory() {
+  const container = document.getElementById('members-grid-container');
+  if (!container) return;
+
+  if (networkingMembersCache.length > 0) {
+    renderMembersDirectory(networkingMembersCache);
     return;
   }
 
-  let html = `<div class="library-grid">`;
-  availableItems.forEach(p => {
-    const badgeText = isClubResident ? "✓ По подписке Клуба" : "✓ Куплено навсегда";
-    html += `
-      <div class="library-card material-card" data-product-id="${p.id}" data-open-viewer="${p.id}" onclick="openInAppViewer('${p.id}')">
-        <div class="library-card-header">
-          <span class="badge-role club library-card-badge">${badgeText}</span>
-          <span class="library-card-category">[ ${p.category.toUpperCase()} ]</span>
-        </div>
-        <h3 class="library-card-title">${p.title}</h3>
-        <p class="library-card-desc">${p.description}</p>
-        <div class="library-card-footer">
-          <div class="library-tech-stack">
-            ${(p.tech_stack || []).slice(0, 3).map(t => `<span class="tech-tag">${t}</span>`).join("")}
-          </div>
-          <button class="btn-primary btn-library-open" data-open-viewer="${p.id}">
-            Открыть материалы ↗
-          </button>
-        </div>
-      </div>
-    `;
-  });
-  html += `</div>`;
-  container.innerHTML = html;
+  container.innerHTML = `
+    <div style="grid-column:1/-1; padding:48px 24px; text-align:center; color:var(--gray); font-family:var(--mono); font-size:0.85rem;">
+      Загрузка каталога резидентов...
+    </div>
+  `;
+
+  let members = [];
+  try {
+    if (typeof Auth !== 'undefined' && Auth.fetchMembersDirectory) {
+      members = await Auth.fetchMembersDirectory();
+    }
+  } catch (e) {}
+
+  if (!members || members.length === 0) {
+    members = [
+      {
+        id: 'member-01',
+        first_name: 'Михаил',
+        last_name: 'Пузырёв',
+        username: 'Michael_Sage',
+        role: 'club_member',
+        bio: 'AI-архитектор, основатель сообщества SAGE Neuro Family. Проектирование мультиагентных сред, Antigravity SDK и автоматизация бизнеса.',
+        channel_url: 'https://t.me/uncrn_sage',
+        website_url: 'https://a-sage.ru',
+        photo_url: '/img/mikhail_hero.jpg'
+      }
+    ];
+  }
+
+  networkingMembersCache = members;
+  const countBadge = document.getElementById('members-count-badge');
+  if (countBadge) countBadge.innerText = members.length;
+
+  renderMembersDirectory(members);
 }
 
-// ── 8. RENDER SOLUTIONS STORE (🛍️ ВИТРИНА РЕШЕНИЙ) ───────────────────────────
-function renderStore(user, isClubResident) {
-  const container = document.getElementById("store-grid-container");
-  const emptyState = document.getElementById("store-empty-state");
-  const searchInput = document.getElementById("store-search-input");
+function renderMembersDirectory(members) {
+  const container = document.getElementById('members-grid-container');
   if (!container) return;
 
-  const searchQuery = searchInput ? searchInput.value.trim().toLowerCase() : "";
+  const q = (document.getElementById('members-search-input')?.value || '').toLowerCase().trim();
+  
+  const filtered = (members || []).filter(m => {
+    // Role filter
+    if (activeMemberRoleFilter === 'club_member' && m.role !== 'club_member') return false;
+    if (activeMemberRoleFilter === 'student' && m.role !== 'student') return false;
 
-  const filtered = allShowcaseProducts.filter(p => {
-    if (activeStoreFilter !== "all" && p.category !== activeStoreFilter) {
-      return false;
-    }
-    if (searchQuery) {
-      const matchTitle = p.title.toLowerCase().includes(searchQuery);
-      const matchDesc = p.description.toLowerCase().includes(searchQuery);
-      const matchTech = (p.tech_stack || []).some(t => t.toLowerCase().includes(searchQuery));
-      return matchTitle || matchDesc || matchTech;
-    }
-    return true;
+    // Search query
+    if (!q) return true;
+    const name = `${m.first_name || ''} ${m.last_name || ''}`.toLowerCase();
+    const handle = (m.username || '').toLowerCase();
+    const bio = (m.bio || '').toLowerCase();
+    return name.includes(q) || handle.includes(q) || bio.includes(q);
   });
 
   if (filtered.length === 0) {
-    container.style.display = "none";
-    if (emptyState) emptyState.style.display = "block";
+    container.innerHTML = `
+      <div style="grid-column:1/-1; background:#ffffff; border:1px solid var(--border); padding:48px 24px; text-align:center;">
+        <div style="font-size:2rem; margin-bottom:12px;">👥</div>
+        <h3 style="font-size:1.2rem; font-weight:700; margin-bottom:8px;">Резиденты не найдены</h3>
+        <p style="color:var(--gray); font-size:0.9rem; max-width:400px; margin:0 auto 16px auto;">
+          Попробуйте изменить поисковый запрос или выбрать другой фильтр.
+        </p>
+        <button onclick="document.getElementById('members-search-input').value=''; setMemberRoleFilter('all');" class="btn-secondary" style="padding:8px 16px; font-size:0.8rem;">
+          Сбросить фильтры
+        </button>
+      </div>
+    `;
     return;
   }
 
-  container.style.display = "grid";
-  if (emptyState) emptyState.style.display = "none";
+  let html = '';
+  filtered.forEach(m => {
+    const name = `${m.first_name || ''} ${m.last_name || ''}`.trim() || (m.username ? '@' + m.username : 'Резидент Клуба');
+    let roleBadge = '<span class="badge-role club" style="font-size:0.68rem; padding:2px 6px;">💎 Резидент</span>';
+    if (m.role === 'student') {
+      roleBadge = '<span class="badge-role" style="font-size:0.68rem; padding:2px 6px; background:#eff6ff; color:#1d4ed8; border-color:#bfdbfe;">🎓 Ученик</span>';
+    }
 
-  let html = "";
-  filtered.forEach(p => {
-    const formattedPrice = Number(p.price_rub).toLocaleString("ru-RU") + " ₽";
-    
-    let actionBtnHtml = "";
-    let pricingHtml = "";
+    const avatar = m.photo_url
+      ? `<img src="${m.photo_url}" alt="${name}" class="member-avatar">`
+      : `<div class="member-avatar-placeholder">${name.charAt(0).toUpperCase()}</div>`;
 
-    if (isClubResident) {
-      pricingHtml = `
-        <div class="store-pricing-row">
-          <span class="price-resident">0 ₽</span>
-          <span class="badge-role club">✓ Включено в Клуб</span>
-        </div>
-      `;
-      actionBtnHtml = `
-        <button class="btn-primary store-buy-btn btn-action" onclick="openInAppViewer('${p.id}')">
-          ✓ Доступно в вашей библиотеке ↗
-        </button>
-      `;
-    } else {
-      pricingHtml = `
-        <div class="store-pricing-row">
-          <span class="price-single">${formattedPrice}</span>
-          <span class="price-club-hint">или <a href="https://web.tribute.tg/s/O6I" target="_blank">0 ₽ с подпиской SAGE Club</a></span>
-        </div>
-      `;
-      actionBtnHtml = `
-        <div class="store-actions-dual">
-          <button class="btn-primary store-buy-btn btn-action" onclick="handleBuyProduct('${p.id}', ${p.price_rub})">
-            Купить навсегда (${formattedPrice})
-          </button>
-          <a href="https://web.tribute.tg/s/O6I" target="_blank" class="btn-secondary btn-store-club">
-            Все решения за 1 900 ₽ ↗
-          </a>
-        </div>
-      `;
+    let linksHtml = '';
+    if (m.username) {
+      linksHtml += `<a href="https://t.me/${m.username}" target="_blank" class="cabinet-chip cabinet-chip-email" style="font-size:0.75rem;">💬 @${m.username} ↗</a>`;
+    }
+    if (m.channel_url) {
+      const chHref = m.channel_url.startsWith('http') ? m.channel_url : `https://t.me/${m.channel_url.replace(/^@/, '')}`;
+      linksHtml += `<a href="${chHref}" target="_blank" class="cabinet-chip cabinet-chip-channel" style="font-size:0.75rem;">📢 Канал ↗</a>`;
+    }
+    if (m.website_url) {
+      const webHref = m.website_url.startsWith('http') ? m.website_url : `https://${m.website_url}`;
+      linksHtml += `<a href="${webHref}" target="_blank" class="cabinet-chip cabinet-chip-website" style="font-size:0.75rem;">🌐 Сайт ↗</a>`;
     }
 
     html += `
-      <div class="store-card showcase-product-card" data-product-id="${p.id}" data-category="${p.category}">
-        <div class="store-card-header">
-          <span class="badge-role badge-category store-card-badge">${p.badge || p.category.toUpperCase()}</span>
-          <span class="store-card-cat-label">[ ${p.category.toUpperCase()} ]</span>
+      <div class="member-card" style="background:#ffffff; border:1px solid var(--border); padding:24px; display:flex; flex-direction:column; justify-content:space-between;">
+        <div>
+          <div class="member-header" style="display:flex; align-items:center; gap:14px; margin-bottom:14px;">
+            ${avatar}
+            <div>
+              <h3 class="member-name" style="font-size:1.15rem; font-weight:800; margin:0 0 4px 0;">${name}</h3>
+              <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                ${roleBadge}
+                ${m.username ? `<span style="font-family:var(--mono); font-size:0.75rem; color:var(--gray);">@${m.username}</span>` : ''}
+              </div>
+            </div>
+          </div>
+          <div class="member-bio" style="font-size:0.88rem; color:#52525b; line-height:1.5; margin-bottom:16px;">${m.bio || 'Резидент сообщества Михаила Пузырёва (SAGE Neuro Family).'}</div>
         </div>
-        <h3 class="store-card-title">${p.title}</h3>
-        <p class="store-card-desc">${p.description}</p>
-        <div class="store-card-tech">
-          ${(p.tech_stack || []).map(t => `<span class="tech-tag">${t}</span>`).join("")}
-        </div>
-        <div class="store-card-bottom">
-          ${pricingHtml}
-          ${actionBtnHtml}
+        <div class="member-actions" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; border-top:1px solid #f4f4f5; padding-top:14px; margin-top:auto;">
+          ${linksHtml || '<span style="font-family:var(--mono); font-size:0.72rem; color:#a1a1aa;">Контакты не указаны</span>'}
         </div>
       </div>
     `;
@@ -443,435 +813,144 @@ function renderStore(user, isClubResident) {
   container.innerHTML = html;
 }
 
-function setStoreCategoryFilter(category, btnElement) {
-  activeStoreFilter = category;
-  document.querySelectorAll(".category-chip").forEach(b => {
-    if ((b.dataset.filter || b.getAttribute("data-filter")) === category) {
-      b.classList.add("active");
-    } else {
-      b.classList.remove("active");
-    }
-  });
-  const user = typeof Auth !== "undefined" ? Auth.getUser() : null;
-  const isClub = (typeof Auth !== "undefined" && Auth.hasClubAccess && Auth.hasClubAccess()) || 
-                 (user && (user.role === "club_member" || user.username === "Michael_Sage"));
-  renderStore(user, isClub);
+function filterMembersList() {
+  renderMembersDirectory(networkingMembersCache);
 }
 
-function handleBuyProduct(productId, price) {
-  const storedPurchases = safeJsonParse(localStorage.getItem("asage_purchases"), []);
-  if (!storedPurchases.includes(productId)) {
-    storedPurchases.push(productId);
-    localStorage.setItem("asage_purchases", JSON.stringify(storedPurchases));
-  }
-  if (typeof Auth !== "undefined" && Auth.showToast) {
-    Auth.showToast("Материал добавлен в вашу библиотеку!", "success");
-  }
-  switchCabinetTab("library");
-}
-
-// ── 9. IN-APP VIEWER (MODAL PLAYER & WORKSHOP VIEWER) ─────────────────────────
-function openInAppViewer(productId) {
-  const product = allShowcaseProducts.find(p => p.id === productId);
-  if (!product) return;
-  currentViewerProduct = product;
-
-  const modal = document.getElementById("in-app-viewer-modal");
-  if (!modal) return;
-
-  const titleEl = document.getElementById("viewer-title");
-  const badgeEl = document.getElementById("viewer-badge");
-  const descEl = document.getElementById("viewer-desc");
-  if (titleEl) titleEl.innerText = product.title;
-  if (badgeEl) badgeEl.innerText = `[ ${product.category.toUpperCase()} ]`;
-  if (descEl) descEl.innerText = product.description;
-
-  const content = product.content || {};
-
-  // 1. Video tab
-  const videoPane = document.getElementById("viewer-pane-video");
-  if (videoPane) {
-    const videoUrl = content.video_embed_url || "https://vk.com/video_ext.php?oid=708436546&id=456239175&hash=44ba6d5be9fb7a75&hd=2";
-    videoPane.innerHTML = `
-      <div class="video-container">
-        <iframe src="${videoUrl}" width="100%" height="480" frameborder="0" allowfullscreen allow="autoplay; encrypted-media; fullscreen; picture-in-picture"></iframe>
-      </div>
-      <div class="video-meta-bar">
-        <span>🎬 Практический разбор внедрения // Время: ~45 мин</span>
-        <a href="${videoUrl}" target="_blank" class="link-external">Открыть в полный экран ↗</a>
-      </div>
-    `;
-  }
-
-  // 2. Code tab
-  const codePane = document.getElementById("viewer-pane-code");
-  if (codePane) {
-    const zipUrl = content.download_zip_url || `/downloads/bots/${product.id}.zip`;
-    const gitUrl = content.github_url || `https://github.com/mikhail-sage/${product.id}`;
-    codePane.innerHTML = `
-      <div class="code-tab-content">
-        <div class="code-download-bar">
-          <a href="${zipUrl}" download class="btn-primary btn-dl-zip">Скачать ZIP с кодом (.zip) ↗</a>
-          <a href="${gitUrl}" target="_blank" class="btn-secondary btn-git-link">Репозиторий на GitHub ↗</a>
-        </div>
-        <div class="tech-requirements-box">
-          <h4>Стек технологий & Окружение:</h4>
-          <div class="tech-pills-row">
-            ${(product.tech_stack || []).map(t => `<span class="tech-tag">${t}</span>`).join("")}
-          </div>
-          <p class="code-note">Исходный код полностью готов к деплою в Docker / Beget / VPS. Включает .env.example и Dockerfile.</p>
-        </div>
-      </div>
-    `;
-  }
-
-  // 3. Prompts tab
-  const promptsPane = document.getElementById("viewer-pane-prompts");
-  if (promptsPane) {
-    const prompts = content.prompts || [];
-    if (prompts.length === 0) {
-      promptsPane.innerHTML = `<p class="empty-note">Системные промпты упакованы внутри репозитория.</p>`;
-    } else {
-      let pHtml = `<div class="prompts-list-wrap">`;
-      prompts.forEach((pr, idx) => {
-        const escaped = pr.body.replace(/"/g, "&quot;");
-        pHtml += `
-          <div class="prompt-card">
-            <div class="prompt-card-header">
-              <span class="prompt-num">#${idx + 1}</span>
-              <strong class="prompt-card-title">${pr.title}</strong>
-              <button class="btn-secondary copy-prompt-btn" data-action="copy-prompt" onclick="copyPromptByIndex(${idx}, this)">
-                Скопировать промпт 📋
-              </button>
-            </div>
-            <pre class="prompt-body-code"><code>${pr.body}</code></pre>
-          </div>
-        `;
-      });
-      pHtml += `</div>`;
-      promptsPane.innerHTML = pHtml;
-    }
-  }
-
-  // 4. Checklist tab with localStorage persistence
-  const checklistPane = document.getElementById("viewer-pane-checklist");
-  if (checklistPane) {
-    const checklist = content.checklist || [];
-    const savedChecks = safeJsonParse(localStorage.getItem(`asage_checklist_${product.id}`), []);
-
-    let cHtml = `<div class="checklist-items-wrap">`;
-    checklist.forEach((item, idx) => {
-      const isChecked = savedChecks.includes(idx) ? "checked" : "";
-      cHtml += `
-        <label class="checklist-item ${isChecked ? "completed" : ""}">
-          <input type="checkbox" data-index="${idx}" onchange="toggleChecklistItem('${product.id}', ${idx}, this)" ${isChecked}>
-          <span class="checklist-text">${item}</span>
-        </label>
-      `;
-    });
-    cHtml += `</div>`;
-    checklistPane.innerHTML = cHtml;
-  }
-
-  modal.style.display = "flex";
-  document.body.style.overflow = "hidden";
-  switchViewerSubtab("video");
-}
-
-function closeInAppViewer() {
-  const modal = document.getElementById("in-app-viewer-modal");
-  if (modal) modal.style.display = "none";
-  document.body.style.overflow = "";
-  currentViewerProduct = null;
-}
-
-function switchViewerSubtab(subtabId) {
-  document.querySelectorAll(".in-app-subtab-btn").forEach(b => {
-    if ((b.dataset.subtab || b.getAttribute("data-subtab")) === subtabId) {
-      b.classList.add("active");
-    } else {
-      b.classList.remove("active");
-    }
-  });
-  document.querySelectorAll(".in-app-subtab-pane").forEach(p => {
-    if ((p.dataset.pane || p.getAttribute("data-pane")) === subtabId) {
-      p.style.display = "block";
-    } else {
-      p.style.display = "none";
-    }
-  });
-}
-
-function toggleChecklistItem(productId, index, checkbox) {
-  const storageKey = `asage_checklist_${productId}`;
-  let savedChecks = safeJsonParse(localStorage.getItem(storageKey), []);
-
-  if (checkbox.checked) {
-    if (!savedChecks.includes(index)) savedChecks.push(index);
-    checkbox.closest(".checklist-item").classList.add("completed");
+function setMemberRoleFilter(role, btn = null) {
+  activeMemberRoleFilter = role;
+  document.querySelectorAll('.member-filter-btn').forEach(b => b.classList.remove('active'));
+  if (btn) {
+    btn.classList.add('active');
   } else {
-    savedChecks = savedChecks.filter(i => i !== index);
-    checkbox.closest(".checklist-item").classList.remove("completed");
+    const defaultBtn = document.querySelector(`.member-filter-btn[onclick*="'${role}'"]`);
+    if (defaultBtn) defaultBtn.classList.add('active');
   }
-  localStorage.setItem(storageKey, JSON.stringify(savedChecks));
+  renderMembersDirectory(networkingMembersCache);
 }
 
-// ── 10. CLUB HUB (💎 КЛУБНЫЙ ХАБ) ───────────────────────────────────────────
-async function loadNetworkingMembers() {
-  const container = document.getElementById("members-directory-grid");
+// ── 8. FAVORITES SYSTEM ──────────────────────────────────────────────────────
+function renderFavorites() {
+  const container = document.getElementById('favorites-list-container');
   if (!container) return;
 
-  const currentUser = typeof Auth !== "undefined" ? Auth.getUser() : safeJsonParse(localStorage.getItem("asage_user"));
+  const favs = typeof Auth !== 'undefined' && Auth.getFavorites ? Auth.getFavorites() : [];
+  const badge = document.getElementById('fav-counter-badge');
+  if (badge) badge.innerText = favs.length;
 
-  const baseMembers = [
-    {
-      first_name: "Михаил",
-      last_name: "Пузырёв",
-      username: "Michael_Sage",
-      role: "club_member",
-      bio: "Основатель платформы & AI-архитектор. Обучаю Vibe Coding, проектирую автономные агентные системы.",
-      channel_url: "https://t.me/uncrn_sage",
-      website_url: "https://a-sage.ru",
-      is_private: false
-    },
-    {
-      first_name: "Алексей",
-      last_name: "Громов",
-      username: "gromov_ai",
-      role: "club_member",
-      bio: "Инженер автоматизации. Интегрирую LLM в CRM-системы (Bitrix24, amoCRM) и n8n.",
-      channel_url: "https://t.me/gromov_ai",
-      website_url: "",
-      is_private: false
-    },
-    {
-      first_name: "Елена",
-      last_name: "Соколова",
-      username: "sokolova_ux",
-      role: "club_member",
-      bio: "Product Designer. Исследую интерфейсы взаимодействия человека с агентными ИИ.",
-      channel_url: "",
-      website_url: "https://sokolova.design",
-      is_private: false
-    }
-  ];
-
-  let directory = [...baseMembers];
-  if (typeof Auth !== "undefined" && Auth.fetchMembersDirectory) {
-    try {
-      const fetched = await Auth.fetchMembersDirectory();
-      if (fetched && fetched.length > 0) {
-        directory = fetched;
-      }
-    } catch (e) {}
+  if (favs.length === 0) {
+    container.innerHTML = `
+      <div style="background:#ffffff; border:1px solid var(--border); padding:48px 24px; text-align:center;">
+        <div style="font-size:2rem; margin-bottom:12px;">⭐</div>
+        <h3 style="font-size:1.25rem; font-weight:700; margin-bottom:8px;">У вас пока нет закладок</h3>
+        <p style="color:var(--gray); font-size:0.95rem; max-width:480px; margin:0 auto 20px auto;">
+          Нажимайте на звездочку рядом с видео-уроками, промптами или терминами глоссария, чтобы сохранять их для быстрого доступа.
+        </p>
+        <button onclick="switchCabinetTab('education')" class="btn-primary" style="padding:10px 20px; font-size:0.84rem;">
+          Перейти к видео-урокам ↗
+        </button>
+      </div>
+    `;
+    return;
   }
 
-  if (currentUser) {
-    const idx = directory.findIndex(m => 
-      (m.telegram_id && currentUser.telegram_id && m.telegram_id == currentUser.telegram_id) ||
-      (m.username && currentUser.username && m.username.toLowerCase() === currentUser.username.toLowerCase())
-    );
+  let html = '<div class="cabinet-grid">';
+  favs.forEach(f => {
+    const title = f.title || 'Материал';
+    const type = f.type || 'item';
+    const id = f.id || '';
+    const meta = f.meta || {};
 
-    if (currentUser.is_private) {
-      if (idx !== -1) directory.splice(idx, 1);
-    } else if (currentUser.role === "club_member" || currentUser.username === "Michael_Sage") {
-      const normalizedCurrent = {
-        first_name: currentUser.first_name || "Пользователь",
-        last_name: currentUser.last_name || "",
-        username: currentUser.username || "user",
-        role: "club_member",
-        bio: currentUser.bio || "Резидент SAGE Neuro Family",
-        channel_url: currentUser.channel_url || "",
-        website_url: currentUser.website_url || "",
-        is_private: false
-      };
-      if (idx !== -1) {
-        directory[idx] = normalizedCurrent;
-      } else {
-        directory.unshift(normalizedCurrent);
-      }
+    let typeTag = 'МАТЕРИАЛ';
+    if (type === 'lesson') typeTag = '🎬 ВИДЕО-УРОК';
+    if (type === 'prompt') typeTag = '📝 ПРОМПТ';
+    if (type === 'term') typeTag = '📖 ГЛОССАРИЙ';
+
+    let actionBtn = '';
+    if (type === 'lesson') {
+      actionBtn = `<button onclick="openClubVideo('${id}')" class="btn-primary" style="padding:8px 14px; font-size:0.8rem;">Смотреть запись ↗</button>`;
+    } else {
+      actionBtn = `<a href="/base" class="btn-secondary" style="padding:8px 14px; font-size:0.8rem;">Открыть ↗</a>`;
     }
-  }
 
-  const visibleMembers = directory.filter(m => !m.is_private);
-
-  let html = "";
-  visibleMembers.forEach(m => {
-    const handle = m.username ? `@${m.username.replace(/^@/, "")}` : "";
     html += `
-      <div class="member-card resident-card">
-        <div class="member-header">
-          <div class="member-avatar-placeholder">${(m.first_name || "U")[0].toUpperCase()}</div>
-          <div class="member-info">
-            <h4 class="member-name">${m.first_name || ""} ${m.last_name || ""}</h4>
-            <span class="member-handle">${handle}</span>
-          </div>
-          <span class="badge-role club">РЕЗИДЕНТ</span>
+      <div class="cabinet-card">
+        <div>
+          <div class="cabinet-card-tag">${typeTag}</div>
+          <h3 style="font-size:1.2rem; font-weight:700; margin-bottom:8px;">${title}</h3>
+          <p style="color:var(--gray); font-size:0.88rem; line-height:1.5;">${meta.desc || ''}</p>
         </div>
-        <p class="member-bio">${m.bio || "Резидент сообщества SAGE Neuro Family"}</p>
-        <div class="member-actions">
-          ${m.channel_url ? `<a href="${m.channel_url}" target="_blank" class="link-meta">📢 Канал</a>` : ""}
-          ${m.website_url ? `<a href="${m.website_url}" target="_blank" class="link-meta">🌐 Сайт</a>` : ""}
-          ${handle ? `<a href="https://t.me/${handle.replace("@", "")}" target="_blank" class="link-meta">💬 Написать</a>` : ""}
+        <div class="cabinet-card-actions" style="display:flex; justify-content:space-between; align-items:center;">
+          ${actionBtn}
+          <button onclick="removeFavorite('${type}', '${id}')" style="background:none; border:none; color:#ef4444; font-family:var(--mono); font-size:0.75rem; cursor:pointer;">Удалить ✕</button>
         </div>
       </div>
     `;
   });
+  html += '</div>';
 
   container.innerHTML = html;
 }
 
-function filterArchiveMasterminds() {
-  const input = document.getElementById("archive-search-inp");
-  if (!input) return;
-  const q = input.value.trim().toLowerCase();
-  const items = document.querySelectorAll(".mastermind-archive .archive-card, .mastermind-archive .mastermind-item");
-  items.forEach(it => {
-    const text = it.innerText.toLowerCase();
-    it.style.display = text.includes(q) ? "block" : "none";
-  });
-}
-
-function handleQASubmit(e) {
-  e.preventDefault();
-  const form = e.target;
-  const textarea = form.querySelector("textarea");
-  if (!textarea || !textarea.value.trim()) return;
-
-  if (typeof Auth !== "undefined" && Auth.showToast) {
-    Auth.showToast("Вопрос отправлен! Михаил разберет его на ближайшем созвоне.", "success");
+function removeFavorite(type, id) {
+  if (typeof Auth !== 'undefined' && Auth.toggleFavorite) {
+    Auth.toggleFavorite(type, id, '', {});
   }
-  form.reset();
+  renderFavorites();
+  const badge = document.getElementById('fav-counter-badge');
+  if (badge && Auth.getFavorites) badge.innerText = Auth.getFavorites().length;
 }
 
-// ── 11. PROFILE & REAL-TIME PREVIEW (👤 ПРОФИЛЬ) ──────────────────────────────
-function syncProfileForm(user) {
-  if (!user) return;
-  const fnInp = document.getElementById("inp-first-name");
-  const lnInp = document.getElementById("inp-last-name");
-  const tgInp = document.getElementById("inp-tg-username");
-  const bioInp = document.getElementById("inp-bio");
-  const chInp = document.getElementById("inp-channel");
-  const webInp = document.getElementById("inp-website");
-  const privInp = document.getElementById("inp-is-private");
+// ── 9. INITIALIZATION & LIFECYCLE ────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', async () => {
+  updateCabinetProfile();
+  renderClubLessons();
 
-  if (fnInp) fnInp.value = user.first_name || "";
-  if (lnInp) lnInp.value = user.last_name || "";
-  if (tgInp) tgInp.value = user.username || "";
-  if (bioInp) bioInp.value = user.bio || "";
-  if (chInp) chInp.value = user.channel_url || "";
-  if (webInp) webInp.value = user.website_url || "";
-  if (privInp) privInp.checked = Boolean(user.is_private);
-
-  updateProfileLivePreview();
-}
-
-function updateProfileLivePreview() {
-  const fnInp = document.getElementById("inp-first-name");
-  const lnInp = document.getElementById("inp-last-name");
-  const tgInp = document.getElementById("inp-tg-username");
-  const bioInp = document.getElementById("inp-bio");
-  const privInp = document.getElementById("inp-is-private");
-
-  const pName = document.getElementById("preview-user-name");
-  const pHandle = document.getElementById("preview-user-handle");
-  const pBio = document.getElementById("preview-user-bio");
-  const pPrivacy = document.getElementById("preview-user-privacy");
-
-  const fn = fnInp ? fnInp.value.trim() : "";
-  const ln = lnInp ? lnInp.value.trim() : "";
-  const fullName = `${fn} ${ln}`.trim() || "Имя Фамилия";
-
-  if (pName) pName.innerText = fullName;
-  if (pHandle) pHandle.innerText = tgInp && tgInp.value ? `@${tgInp.value.replace(/^@/, "")}` : "@username";
-  if (pBio) pBio.innerText = bioInp && bioInp.value ? bioInp.value : "Описание вашего опыта и проектов...";
-  if (pPrivacy) {
-    const isPrivate = privInp ? privInp.checked : false;
-    pPrivacy.innerText = isPrivate ? "🔒 Скрыт в каталоге резидентов" : "🌐 Отображается в каталоге резидентов";
-  }
-}
-
-async function handleProfileSave(e) {
-  if (e) e.preventDefault();
-  const fnInp = document.getElementById("inp-first-name");
-  const lnInp = document.getElementById("inp-last-name");
-  const tgInp = document.getElementById("inp-tg-username");
-  const bioInp = document.getElementById("inp-bio");
-  const chInp = document.getElementById("inp-channel");
-  const webInp = document.getElementById("inp-website");
-  const privInp = document.getElementById("inp-is-private");
-
-  const currentUser = (typeof Auth !== "undefined" && Auth.getUser()) || safeJsonParse(localStorage.getItem("asage_user"), {});
-
-  const updatedUser = {
-    ...currentUser,
-    first_name: fnInp ? fnInp.value.trim() : (currentUser.first_name || ""),
-    last_name: lnInp ? lnInp.value.trim() : (currentUser.last_name || ""),
-    username: tgInp ? tgInp.value.replace(/^@/, "").trim() : (currentUser.username || ""),
-    bio: bioInp ? bioInp.value.trim() : (currentUser.bio || ""),
-    channel_url: chInp ? chInp.value.trim() : (currentUser.channel_url || ""),
-    website_url: webInp ? webInp.value.trim() : (currentUser.website_url || ""),
-    is_private: privInp ? Boolean(privInp.checked) : Boolean(currentUser.is_private)
-  };
-
-  localStorage.setItem("asage_user", JSON.stringify(updatedUser));
-  window.dispatchEvent(new CustomEvent("asage_auth_changed", { detail: updatedUser }));
-
-  if (typeof Auth !== "undefined" && Auth.updateUserProfile) {
-    try {
-      await Auth.updateUserProfile(updatedUser);
-    } catch (err) {
-      console.warn("[Supabase Sync Warn]", err);
-    }
-  }
-
-  renderCabinetUI();
-  if (typeof Auth !== "undefined" && Auth.showToast) {
-    Auth.showToast("Профиль успешно сохранен", "success");
-  }
-}
-
-// ── 12. MASTER RENDERER & INIT ───────────────────────────────────────────────
-function renderCabinetUI() {
-  const user = typeof Auth !== "undefined" ? Auth.getUser() : safeJsonParse(localStorage.getItem("asage_user"));
-  const isClubResident = (typeof Auth !== "undefined" && Auth.hasClubAccess && Auth.hasClubAccess()) || 
-                         (user && (user.role === "club_member" || user.username === "Michael_Sage"));
-
-  renderDashboard(user, isClubResident);
-  renderLibrary(user, isClubResident);
-  renderStore(user, isClubResident);
-  loadNetworkingMembers();
-  syncProfileForm(user);
-}
-
-function updateHeaderAuthUI() {
-  if (typeof Auth !== "undefined" && Auth.updateHeaderUI) {
-    Auth.updateHeaderUI();
-  }
-  renderCabinetUI();
-}
-
-// ── 13. DOM READY INITIALIZATION ─────────────────────────────────────────────
-document.addEventListener("DOMContentLoaded", async () => {
-  await loadShowcaseProducts();
-
+  // Determine initial active tab: URL query param -> URL hash -> localStorage -> default 'knowledge'
   const urlParams = new URLSearchParams(window.location.search);
-  const initialTab = urlParams.get("tab") || localStorage.getItem("asage_cabinet_tab") || "dashboard";
-  switchCabinetTab(initialTab);
+  const urlTab = urlParams.get('tab');
+  const hashTab = window.location.hash ? window.location.hash.replace('#tab-', '').replace('#', '') : null;
+  const savedTab = localStorage.getItem('asage_cabinet_tab');
 
-  startCountdownTimer();
-  renderCabinetUI();
+  let activeTab = 'knowledge';
+  const validTabs = ['knowledge', 'education', 'solutions', 'club', 'members', 'favorites', 'profile', 'dashboard', 'library', 'store', 'community'];
 
-  const formFields = ["inp-first-name", "inp-last-name", "inp-tg-username", "inp-bio", "inp-channel", "inp-website", "inp-is-private"];
-  formFields.forEach(id => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.addEventListener("input", updateProfileLivePreview);
-      el.addEventListener("change", updateProfileLivePreview);
+  if (urlTab && validTabs.includes(urlTab.toLowerCase())) {
+    activeTab = urlTab.toLowerCase();
+  } else if (hashTab && validTabs.includes(hashTab.toLowerCase())) {
+    activeTab = hashTab.toLowerCase();
+  } else if (savedTab && validTabs.includes(savedTab.toLowerCase())) {
+    activeTab = savedTab.toLowerCase();
+  }
+
+  switchCabinetTab(activeTab);
+
+  if (typeof Auth !== 'undefined' && Auth.isLoggedIn && Auth.isLoggedIn()) {
+    if (Auth.fetchFreshUserProfile) {
+      await Auth.fetchFreshUserProfile();
     }
-  });
+    updateCabinetProfile();
+    renderClubLessons();
+  }
+});
 
-  window.addEventListener("asage_auth_changed", () => {
-    renderCabinetUI();
-  });
+window.addEventListener('popstate', () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const tab = urlParams.get('tab') || 'knowledge';
+  switchCabinetTab(tab);
+});
+
+window.addEventListener('asage_auth_changed', () => {
+  updateCabinetProfile();
+  renderClubLessons();
+  loadMembersDirectory();
+  renderFavorites();
+});
+
+window.addEventListener('asage_favorites_changed', () => {
+  renderFavorites();
+  const badge = document.getElementById('fav-counter-badge');
+  if (badge && typeof Auth !== 'undefined' && Auth.getFavorites) {
+    badge.innerText = Auth.getFavorites().length;
+  }
 });
