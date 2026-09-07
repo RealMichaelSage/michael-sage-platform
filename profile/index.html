@@ -345,7 +345,7 @@
           <h2 id="preview-name-text" class="preview-name">Пользователь</h2>
           
           <div class="preview-badges">
-            <span id="preview-role-text" class="preview-badge-role">Участник платформы</span>
+            <span id="preview-role-text" class="preview-badge-role">Пользователь</span>
             <span id="preview-username-text" style="font-family:var(--mono); font-size:0.8rem; color:var(--gray);">@username</span>
           </div>
 
@@ -624,15 +624,29 @@
       // Role
       const roleEl = document.getElementById('preview-role-text');
       if (roleEl) {
-        if (user.role === 'club_member') {
+        const tgId = Number(user.telegram_id || 0);
+        const uname = (user.username || '').toLowerCase();
+        const isMikhail = uname === 'michael_sage' || uname === 'uncrn_sage' || tgId === 439634804 || tgId === 88472911 || user.role === 'founder';
+        const isClub = isMikhail || user.role === 'club_member' || (typeof Auth !== 'undefined' && Auth.hasClubAccess && Auth.hasClubAccess());
+
+        if (isMikhail) {
+          roleEl.innerText = '👑 Основатель';
+          roleEl.className = 'preview-badge-role';
+          roleEl.style.background = '#09090b';
+          roleEl.style.borderColor = '#09090b';
+          roleEl.style.color = '#ffffff';
+        } else if (isClub) {
           roleEl.innerText = '💎 Резидент Клуба';
           roleEl.className = 'preview-badge-role';
           roleEl.style.background = '#18181b';
           roleEl.style.borderColor = '#18181b';
           roleEl.style.color = '#ffffff';
         } else {
-          roleEl.innerText = 'Участник платформы';
+          roleEl.innerText = 'Пользователь';
           roleEl.className = 'preview-badge-role';
+          roleEl.style.background = '#f4f4f5';
+          roleEl.style.borderColor = '#e4e4e7';
+          roleEl.style.color = '#52525b';
         }
       }
 

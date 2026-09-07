@@ -11,7 +11,17 @@ const Auth = {
   getUser() {
     try {
       const stored = localStorage.getItem('asage_user');
-      return stored ? JSON.parse(stored) : null;
+      if (!stored) return null;
+      const user = JSON.parse(stored);
+      if (user) {
+        const tgId = Number(user.telegram_id || 0);
+        const uname = (user.username || '').toLowerCase();
+        if (uname === 'michael_sage' || uname === 'uncrn_sage' || tgId === 439634804 || tgId === 88472911) {
+          user.role = 'founder';
+          user.is_founder = true;
+        }
+      }
+      return user;
     } catch (e) {
       return null;
     }

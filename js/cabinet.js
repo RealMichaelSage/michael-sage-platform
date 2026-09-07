@@ -496,12 +496,29 @@ function updateCabinetProfile() {
 
     const roleEl = document.getElementById('user-role-badge') || document.getElementById('cabinet-sub-badge');
     if (roleEl) {
-      if (user.role === 'club_member') {
+      const tgId = Number(user.telegram_id || 0);
+      const uname = (user.username || '').toLowerCase();
+      const isMikhail = uname === 'michael_sage' || uname === 'uncrn_sage' || tgId === 439634804 || tgId === 88472911 || user.role === 'founder';
+      const isClub = isMikhail || user.role === 'club_member' || (typeof Auth !== 'undefined' && Auth.hasClubAccess && Auth.hasClubAccess());
+
+      if (isMikhail) {
+        roleEl.innerText = '👑 Основатель';
+        roleEl.className = 'badge-role club';
+        roleEl.style.background = '#09090b';
+        roleEl.style.color = '#ffffff';
+        roleEl.style.borderColor = '#09090b';
+      } else if (isClub) {
         roleEl.innerText = '💎 Резидент Клуба';
         roleEl.className = 'badge-role club';
+        roleEl.style.background = '';
+        roleEl.style.color = '';
+        roleEl.style.borderColor = '';
       } else {
-        roleEl.innerText = 'Участник платформы';
+        roleEl.innerText = 'Пользователь';
         roleEl.className = 'badge-role';
+        roleEl.style.background = '#f4f4f5';
+        roleEl.style.color = '#52525b';
+        roleEl.style.borderColor = '#e4e4e7';
       }
     }
 
