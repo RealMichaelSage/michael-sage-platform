@@ -61,14 +61,14 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4, .hero-title, .section-title, .card-title, .form-title {
-  text-wrap: wrap;
+h1, h2, h3, h4, h5, h6, .hero-title, .section-title, .card-title, .form-title, .roadmap-card-heading, .sol-card-title, .price-name {
+  text-wrap: balance;
   overflow-wrap: break-word;
   word-break: normal;
 }
 
-p, .hero-sub, .section-sub, .card-desc, .feature-desc {
-  text-wrap: wrap;
+p, li, .hero-sub, .section-sub, .card-desc, .feature-desc, .roadmap-card-text, .sol-card-desc, .price-period {
+  text-wrap: pretty;
   overflow-wrap: break-word;
 }
 
