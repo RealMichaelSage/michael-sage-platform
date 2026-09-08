@@ -501,6 +501,19 @@ function updateCabinetProfile() {
     const isMikhail = uname === 'michael_sage' || uname === 'uncrn_sage' || tgId === 439634804 || tgId === 88472911 || user.role === 'founder';
     const isClub = isMikhail || user.role === 'club_member' || (typeof Auth !== 'undefined' && Auth.hasClubAccess && Auth.hasClubAccess());
 
+    // ── Update SAGE NEURO FAMILY Subscription Block (Profile Tab) ──
+    const subActiveEl = document.getElementById('subscription-status-active');
+    const subInactiveEl = document.getElementById('subscription-status-inactive');
+    if (subActiveEl && subInactiveEl) {
+      if (isClub) {
+        subActiveEl.style.display = 'block';
+        subInactiveEl.style.display = 'none';
+      } else {
+        subActiveEl.style.display = 'none';
+        subInactiveEl.style.display = 'block';
+      }
+    }
+
     const roleEl = document.getElementById('user-role-badge') || document.getElementById('cabinet-sub-badge');
     if (roleEl) {
       if (isMikhail) {
@@ -643,6 +656,13 @@ function updateCabinetProfile() {
     document.body.classList.remove('user-logged-in');
     if (loggedInContainer) loggedInContainer.style.display = 'none';
     if (guestContainer) guestContainer.style.display = 'block';
+
+    const subActiveEl = document.getElementById('subscription-status-active');
+    const subInactiveEl = document.getElementById('subscription-status-inactive');
+    if (subActiveEl && subInactiveEl) {
+      subActiveEl.style.display = 'none';
+      subInactiveEl.style.display = 'block';
+    }
   }
 
   // Update favorite badge

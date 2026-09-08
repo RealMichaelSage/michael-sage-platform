@@ -556,7 +556,7 @@
             </div>
             <h3 style="font-size:1.5rem; font-weight:800; color:#ffffff; margin:0 0 12px 0; letter-spacing:-0.02em;">Доступ в&nbsp;Закрытый Чат &amp;&nbsp;Базу PRO</h3>
             <p style="color:#a1a1aa; font-size:0.95rem; line-height:1.6; margin-bottom:24px;">
-              Оформите подписку через Tribute, чтобы получить мгновенную ссылку на&nbsp;закрытый Telegram-чат сообщества и&nbsp;базу закрытых мастер-классов.
+              Оформите подписку на&nbsp;SAGE NEURO FAMILY, чтобы получить мгновенную ссылку на&nbsp;закрытый Telegram-чат сообщества и&nbsp;базу закрытых мастер-классов.
             </p>
             <ul style="color:#d4d4d8; font-size:0.9rem; line-height:1.8; margin-bottom:24px; padding-left:20px;">
               <li>Еженедельные живые мастермайнды и&nbsp;код-ревью</li>
@@ -570,7 +570,7 @@
               Вступить в&nbsp;Клуб (1 900 ₽) ↗
             </a>
             <div style="text-align:center; font-family:var(--mono); font-size:0.75rem; color:#71717a; margin-top:10px;">
-              1 900 ₽ первый месяц, далее 1 500 ₽/мес · Tribute (карты РФ и&nbsp;мира)
+              1 900 ₽ первый месяц, далее 1 500 ₽/мес · Карты РФ и&nbsp;мира · <a href="/offer" target="_blank" style="color:#a1a1aa; text-decoration:underline;">Оферта</a>
             </div>
           </div>
         </div>
@@ -657,7 +657,7 @@
         <div>
           <div class="section-tag">ВАШИ ПЕРСОНАЛЬНЫЕ ДАННЫЕ И&nbsp;НАСТРОЙКИ</div>
           <h2 class="section-title">Профиль &amp;&nbsp;Управление Подпиской</h2>
-          <p class="section-subtitle">Настройки визитки в&nbsp;каталоге резидентов, приватность и&nbsp;аккаунт Tribute.</p>
+          <p class="section-subtitle">Настройки визитки в&nbsp;каталоге резидентов, приватность и&nbsp;подписка SAGE NEURO FAMILY.</p>
         </div>
       </div>
 
@@ -707,18 +707,70 @@
             <button type="submit" id="btn-save-profile" class="btn-primary profile-save-btn" style="padding:12px 24px; font-weight:700; font-family:var(--mono); cursor:pointer;">Сохранить изменения 💾</button>
           </form>
 
-          <!-- Tribute Card -->
-          <div class="tribute-subscription-card" style="background:#ffffff; border:1px solid var(--border); padding:28px; margin-top:24px;">
-            <div class="tribute-header" style="margin-bottom:12px;">
-              <span class="badge-role club" style="font-size:0.72rem;">ПОДПИСКА TRIBUTE.TG</span>
-              <h3 style="margin:8px 0 0 0; font-size:1.15rem;">Управление подпиской Клуба</h3>
+          <!-- SAGE NEURO FAMILY Subscription Management & Offer Block -->
+          <div id="cabinet-subscription-block" class="tribute-subscription-card" style="background:#ffffff; border:1px solid var(--border); padding:28px; margin-top:24px;">
+            <!-- STATE A: ACTIVE SUBSCRIBER -->
+            <div id="subscription-status-active" style="display:none;">
+              <div class="tribute-header" style="margin-bottom:12px;">
+                <span class="badge-role club" style="font-size:0.72rem;">💎 КЛУБ SAGE NEURO FAMILY</span>
+                <h3 style="margin:8px 0 0 0; font-size:1.15rem; font-weight:800;">Управление подпиской SAGE NEURO FAMILY</h3>
+              </div>
+              <p style="font-size:0.88rem; color:#52525b; line-height:1.55; margin-bottom:16px;">
+                Тариф: 1 900 ₽ (первый месяц), далее 1 500 ₽/мес. Автоматическое продление и&nbsp;управление привязанными картами осуществляется в&nbsp;защищенном биллинге. Вы можете в&nbsp;любой момент изменить платёжный метод или&nbsp;приостановить подписку в&nbsp;1 клик.
+              </p>
+              <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+                <a href="https://web.tribute.tg/s/O6I" target="_blank" class="btn-secondary" style="padding:9px 18px; font-size:0.82rem; font-family:var(--mono); text-decoration:none; font-weight:700;">
+                  Управление подпиской ↗
+                </a>
+                <a href="/offer" target="_blank" style="font-family:var(--mono); font-size:0.76rem; color:#71717a; text-decoration:underline;">
+                  Оферта клуба SAGE NEURO FAMILY ↗
+                </a>
+              </div>
             </div>
-            <p style="font-size:0.88rem; color:#52525b; line-height:1.55; margin-bottom:16px;">
-              Тариф: 1 900 ₽ (первый месяц), далее 1 500 ₽/мес. Автоматическое продление и&nbsp;управление привязанными картами осуществляется через официальный сервис Tribute в&nbsp;Telegram.
-            </p>
-            <a href="https://web.tribute.tg/s/O6I" target="_blank" class="btn-secondary" style="padding:9px 18px; font-size:0.82rem; font-family:var(--mono); text-decoration:none;">
-              Управление подпиской в&nbsp;Tribute ↗
-            </a>
+
+            <!-- STATE B: NON-SUBSCRIBER OFFER -->
+            <div id="subscription-status-inactive">
+              <div class="tribute-header" style="margin-bottom:12px;">
+                <span class="badge-role club" style="font-size:0.72rem; background:#10b981; border-color:#10b981; color:#ffffff;">💎 ЗАКРЫТЫЙ КЛУБ</span>
+                <h3 style="margin:8px 0 0 0; font-size:1.25rem; font-weight:800; letter-spacing:-0.01em;">Подписка на&nbsp;SAGE NEURO FAMILY</h3>
+              </div>
+              <p style="font-size:0.9rem; color:#3f3f46; line-height:1.55; margin-bottom:16px; font-weight:500;">
+                Закрытое сообщество предпринимателей и&nbsp;инженеров по&nbsp;внедрению ИИ-агентов, автоматизации бизнес-процессов и&nbsp;Vibe Coding.
+              </p>
+
+              <!-- Value Proposition / What they get -->
+              <div style="background:#fafafa; border:1px solid #e4e4e7; padding:16px 18px; margin-bottom:18px;">
+                <div style="font-family:var(--mono); font-size:0.72rem; font-weight:700; color:#71717a; text-transform:uppercase; margin-bottom:10px; letter-spacing:0.04em;">
+                  // ЧТО&nbsp;ВЫ ПОЛУЧАЕТЕ С&nbsp;ПОДПИСКОЙ:
+                </div>
+                <ul style="margin:0; padding-left:18px; font-size:0.85rem; line-height:1.65; color:#27272a; display:flex; flex-direction:column; gap:6px;">
+                  <li><strong>База Знаний PRO:</strong> закрытые инженерные гайды, архитектуры AI-агентов и&nbsp;библиотека системных промптов GRACEF.</li>
+                  <li><strong>Все видео-уроки и&nbsp;воркшопы:</strong> 6+ часов практических записей (Vibe Coding, RAG-системы, LLM в&nbsp;бизнесе).</li>
+                  <li><strong>Закрытый Telegram-чат резидентов:</strong> сильный нетворкинг, обмен кейсами и&nbsp;прямой контакт с&nbsp;Михаилом Пузырёвым.</li>
+                  <li><strong>Еженедельные онлайн-мастермайнда:</strong> живые разборы проектов участников, архитектуры и&nbsp;кода по&nbsp;четвергам.</li>
+                  <li><strong>Специальные условия:</strong> закрытый доступ к&nbsp;софту платформы (Sagemeet, SAGE VPN) и&nbsp;скидки на&nbsp;продукты.</li>
+                </ul>
+              </div>
+
+              <div style="display:flex; flex-direction:column; gap:10px;">
+                <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+                  <div style="font-family:var(--mono); font-size:0.85rem; font-weight:700; color:#09090b;">
+                    1 900 ₽ первый месяц <span style="font-weight:400; color:#71717a;">(далее 1 500 ₽/мес)</span>
+                  </div>
+                  <a href="/offer" target="_blank" style="font-family:var(--mono); font-size:0.75rem; color:#71717a; text-decoration:underline;">
+                    Оферта клуба SAGE NEURO FAMILY ↗
+                  </a>
+                </div>
+
+                <a href="https://web.tribute.tg/s/O6I" target="_blank" class="btn-primary" style="padding:12px 20px; font-size:0.85rem; font-family:var(--mono); font-weight:700; text-align:center; text-decoration:none; display:inline-flex; align-items:center; justify-content:center; gap:8px;">
+                  <span>Вступить в&nbsp;Клуб (1 900 ₽)</span> ↗
+                </a>
+
+                <div style="font-size:0.75rem; color:#71717a; line-height:1.4;">
+                  Безопасная оплата картами РФ и&nbsp;мира. Отмена подписки в&nbsp;1 клик в&nbsp;любой момент без&nbsp;скрытых платежей.
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
