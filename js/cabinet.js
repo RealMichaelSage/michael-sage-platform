@@ -89,19 +89,6 @@ const CLUB_LESSONS_DATA = [
     topics: ['Подкасты', 'Голосовые модели', 'Сценарии', 'ElevenLabs']
   },
   {
-    id: 'lesson-393',
-    title: 'Туториал «Как делать подкасты» (Документ & Чеклисты)',
-    badge: 'ИНСТРУКЦИЯ // ДОКУМЕНТ',
-    type: 'doc',
-    platform: 'Google Docs',
-    docUrl: 'https://docs.google.com/document/d/1GaFTye_FK8_rmQEv-lT4igF6o6tTJZyKf3LWIaD8PGA/edit?tab=t.vu8r95x1iq3u#heading=h.i8gzl06n893l',
-    cover: '/assets/club-lessons/lesson_media_393.jpg',
-    date: '9 марта 2026',
-    duration: 'Мануал • 15 стр.',
-    description: 'Пошаговый инженерный документ с шаблонами сценариев, чеклистом контроля качества аудио, правилами монтажа и таймкодами для автоматизации.',
-    topics: ['Google Docs', 'Инструкция', 'Пайплайн', 'Чеклисты']
-  },
-  {
     id: 'lesson-332',
     title: 'Мастер-класс «Промпт-дизайн и создание ассистентов»',
     badge: 'МАСТЕР-КЛАСС // АССИСТЕНТЫ',
@@ -114,20 +101,6 @@ const CLUB_LESSONS_DATA = [
     duration: '1ч 40мин',
     description: 'Системный фреймворк создания надёжных промптов, ролевых моделей (GRACEF) и проектирования контекстных окон для цифровых ассистентов бизнеса.',
     topics: ['Промпт-дизайн', 'GRACEF', 'Ассистенты', 'Системный промпт']
-  },
-  {
-    id: 'lesson-83',
-    title: 'Мастер-класс «Как создавать нейро-фотосессии»',
-    badge: 'МАСТЕР-КЛАСС // НЕЙРОФОТО',
-    type: 'video',
-    platform: 'Kinescope',
-    videoUrl: 'https://kinescope.io/pQrVubsiwzmXJSRgkZRxoM',
-    embedUrl: 'https://kinescope.io/embed/pQrVubsiwzmXJSRgkZRxoM',
-    cover: '/assets/club-lessons/lesson_media_83.jpg',
-    date: '9 февраля 2026',
-    duration: '1ч 50мин',
-    description: 'Фундаментальный вебинар по сохранению консистентности лица персонажа (Face Consistency), контролю поз и созданию серийных коммерческих фото.',
-    topics: ['Нейрофото', 'Kinescope', 'Консистентность', 'Коммерция']
   }
 ];
 
