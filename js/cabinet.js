@@ -479,6 +479,8 @@ function updateCabinetProfile() {
     if (loggedInContainer) loggedInContainer.style.display = 'block';
     if (guestContainer) guestContainer.style.display = 'none';
 
+    document.body.classList.add('user-logged-in');
+
     const displayName = (user.first_name + ' ' + (user.last_name || '')).trim() || user.username || 'Пользователь';
     const nameEl = document.getElementById('user-display-name') || document.getElementById('cabinet-display-name');
     if (nameEl) nameEl.innerText = displayName;
@@ -494,13 +496,13 @@ function updateCabinetProfile() {
       idValEl.innerText = user.telegram_id || (user.id ? String(user.id).slice(0, 8) : '—');
     }
 
+    const tgId = Number(user.telegram_id || 0);
+    const uname = (user.username || '').toLowerCase();
+    const isMikhail = uname === 'michael_sage' || uname === 'uncrn_sage' || tgId === 439634804 || tgId === 88472911 || user.role === 'founder';
+    const isClub = isMikhail || user.role === 'club_member' || (typeof Auth !== 'undefined' && Auth.hasClubAccess && Auth.hasClubAccess());
+
     const roleEl = document.getElementById('user-role-badge') || document.getElementById('cabinet-sub-badge');
     if (roleEl) {
-      const tgId = Number(user.telegram_id || 0);
-      const uname = (user.username || '').toLowerCase();
-      const isMikhail = uname === 'michael_sage' || uname === 'uncrn_sage' || tgId === 439634804 || tgId === 88472911 || user.role === 'founder';
-      const isClub = isMikhail || user.role === 'club_member' || (typeof Auth !== 'undefined' && Auth.hasClubAccess && Auth.hasClubAccess());
-
       if (isMikhail) {
         roleEl.innerText = '👑 Основатель';
         roleEl.className = 'badge-role club';
@@ -560,7 +562,85 @@ function updateCabinetProfile() {
       }
       extraDetails.innerHTML = detailsHtml;
     }
+
+    // ── Update Left Dock Cockpit Elements ──
+    const dockName = document.getElementById('dock-display-name');
+    if (dockName) dockName.innerText = displayName;
+
+    const dockUsername = document.getElementById('dock-username-badge');
+    if (dockUsername) {
+      dockUsername.innerText = user.username ? '@' + user.username.replace(/^@/, '') : '';
+      dockUsername.style.display = user.username ? 'inline-block' : 'none';
+    }
+
+    const dockIdVal = document.getElementById('dock-user-id-val');
+    if (dockIdVal) {
+      dockIdVal.innerText = user.telegram_id || (user.id ? String(user.id).slice(0, 8) : '—');
+    }
+
+    const dockRole = document.getElementById('dock-role-badge');
+    if (dockRole) {
+      if (isMikhail) {
+        dockRole.innerText = '👑 Основатель';
+        dockRole.className = 'badge-role club';
+        dockRole.style.background = '#09090b';
+        dockRole.style.color = '#ffffff';
+        dockRole.style.borderColor = '#09090b';
+      } else if (isClub) {
+        dockRole.innerText = '💎 Резидент Клуба';
+        dockRole.className = 'badge-role club';
+        dockRole.style.background = '';
+        dockRole.style.color = '';
+        dockRole.style.borderColor = '';
+      } else {
+        dockRole.innerText = 'Пользователь';
+        dockRole.className = 'badge-role';
+        dockRole.style.background = '#f4f4f5';
+        dockRole.style.color = '#52525b';
+        dockRole.style.borderColor = '#e4e4e7';
+      }
+    }
+
+    const dockAvatarWrap = document.getElementById('dock-avatar-wrap');
+    if (dockAvatarWrap) {
+      dockAvatarWrap.innerHTML = user.photo_url
+        ? `<img src="${user.photo_url}" alt="${displayName}" class="dock-avatar" width="52" height="52">`
+        : `<div class="dock-avatar-placeholder">${displayName.charAt(0).toUpperCase()}</div>`;
+    }
+
+    const dockBioWrap = document.getElementById('dock-bio-wrap');
+    if (dockBioWrap) {
+      if (user.bio && user.bio.trim()) {
+        dockBioWrap.innerText = user.bio;
+        dockBioWrap.style.display = 'block';
+        dockBioWrap.style.fontStyle = 'normal';
+        dockBioWrap.style.color = '#52525b';
+      } else {
+        dockBioWrap.innerText = 'Нажмите «Настроить профиль», чтобы добавить информацию.';
+        dockBioWrap.style.display = 'block';
+        dockBioWrap.style.fontStyle = 'italic';
+        dockBioWrap.style.color = '#a1a1aa';
+      }
+    }
+
+    const dockExtraDetails = document.getElementById('dock-extra-details');
+    if (dockExtraDetails) {
+      let dockDetailsHtml = '';
+      if (user.email) {
+        dockDetailsHtml += `<span class="cabinet-chip cabinet-chip-email" title="${user.email}">✉ ${user.email}</span>`;
+      }
+      if (user.channel_url) {
+        const chHref = user.channel_url.startsWith('http') ? user.channel_url : `https://t.me/${user.channel_url.replace(/^@/, '')}`;
+        dockDetailsHtml += `<a href="${chHref}" target="_blank" class="cabinet-chip cabinet-chip-channel" title="${user.channel_url}">📢 ${user.channel_url} ↗</a>`;
+      }
+      if (user.website_url) {
+        const webHref = user.website_url.startsWith('http') ? user.website_url : `https://${user.website_url}`;
+        dockDetailsHtml += `<a href="${webHref}" target="_blank" class="cabinet-chip cabinet-chip-website" title="${user.website_url}">🌐 ${user.website_url} ↗</a>`;
+      }
+      dockExtraDetails.innerHTML = dockDetailsHtml;
+    }
   } else {
+    document.body.classList.remove('user-logged-in');
     if (loggedInContainer) loggedInContainer.style.display = 'none';
     if (guestContainer) guestContainer.style.display = 'block';
   }
@@ -630,6 +710,26 @@ function livePreviewProfile() {
       previewPrivacy.style.color = '#dc2626';
     }
   }
+
+  // Live preview for Left Dock
+  const dockName = document.getElementById('dock-display-name');
+  if (dockName) dockName.innerText = name;
+
+  const dockHandle = document.getElementById('dock-username-badge');
+  if (dockHandle) {
+    dockHandle.innerText = un ? (un.startsWith('@') ? un : '@' + un) : '';
+    dockHandle.style.display = un ? 'inline-block' : 'none';
+  }
+
+  const dockBio = document.getElementById('dock-bio-wrap');
+  if (dockBio) {
+    dockBio.innerText = bio || 'Описание деятельности и стек технологий...';
+    dockBio.style.fontStyle = bio ? 'normal' : 'italic';
+    dockBio.style.color = bio ? '#52525b' : '#a1a1aa';
+  }
+
+  const dockAvatarPlaceholder = document.querySelector('#dock-avatar-wrap .dock-avatar-placeholder');
+  if (dockAvatarPlaceholder) dockAvatarPlaceholder.innerText = name.charAt(0).toUpperCase();
 }
 
 async function handleProfileSave(event) {

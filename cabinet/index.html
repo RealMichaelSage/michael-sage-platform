@@ -92,66 +92,106 @@
     <a href="/booking" class="m-cta">Забронировать слот ↗</a>
   </div>
 
-  <!-- Cabinet Main Frame (Constrained 1440px / Extended on >=1680px) -->
-  <main class="cabinet-page-frame">
-    <div class="cabinet-layout-grid">
+  <!-- Fixed Left Dock Profile Cockpit (Visible on Widescreens in Left Empty Field) -->
+  <aside id="cabinet-left-dock" class="cabinet-left-dock" aria-label="Профиль пользователя">
+    <div class="dock-profile-card">
+      <div class="dock-avatar-row">
+        <div id="dock-avatar-wrap" class="dock-avatar-wrap">
+          <img src="/img/mikhail_hero.jpg" alt="Аватар" class="dock-avatar" id="dock-user-avatar" width="52" height="52">
+        </div>
+        <div class="dock-status-wrap">
+          <span id="dock-role-badge" class="badge-role">Пользователь</span>
+          <span class="dock-session-status"><span class="status-dot"></span>Онлайн</span>
+        </div>
+      </div>
+      
+      <div class="dock-user-identity">
+        <div id="dock-display-name" class="dock-user-name">Пользователь</div>
+        <div id="dock-username-badge" class="dock-user-handle">@username</div>
+      </div>
 
-      <!-- ── ЛЕВЫЙ САЙДБАР (ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ / ВХОД) ── -->
-      <aside class="cabinet-sidebar-col" id="cabinet-sidebar">
-        <!-- LOGGED-IN STATE -->
-        <div id="profile-container-logged-in" style="display:none;">
-          <div class="sidebar-profile-card">
-            <div class="sidebar-profile-top">
-              <div id="user-avatar-wrap" class="cabinet-avatar-container">
-                <img src="/img/mikhail_hero.jpg" alt="Аватар" class="cabinet-avatar" id="cabinet-user-avatar" width="76" height="76">
-              </div>
-              <div class="sidebar-profile-identity">
+      <div id="dock-bio-wrap" class="dock-user-bio"></div>
+
+      <div id="dock-extra-details" class="dock-user-chips"></div>
+
+      <div class="dock-action-row">
+        <button type="button" onclick="switchCabinetTab('profile')" class="dock-edit-btn">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          <span>Настроить профиль</span>
+        </button>
+      </div>
+
+      <div class="dock-meta-footer">
+        <div class="dock-stat-pill"><span class="dock-stat-label">ID:</span> <span id="dock-user-id-val" class="dock-stat-val">—</span></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Cabinet Main Frame (Constrained 1440px) -->
+  <main class="cabinet-page-frame">
+
+    <!-- Header / Profile Cockpit Block -->
+    <section class="cabinet-header-block">
+      <!-- LOGGED-IN STATE -->
+      <div id="profile-container-logged-in" style="display:none;">
+        <div class="cabinet-profile-card">
+          <div class="cabinet-profile-main">
+            <div id="user-avatar-wrap" class="cabinet-avatar-container">
+              <img src="/img/mikhail_hero.jpg" alt="Аватар" class="cabinet-avatar" id="cabinet-user-avatar" width="76" height="76">
+            </div>
+            <div class="cabinet-profile-content">
+              <div class="cabinet-profile-title-row">
                 <h1 id="user-display-name" class="cabinet-user-name">Пользователь</h1>
-                <div class="sidebar-badges-wrap">
+                <div class="cabinet-user-badges" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                   <span id="user-role-badge" class="badge-role cabinet-sub-status">Пользователь</span>
                   <span id="user-username-badge" class="cabinet-username-tag cabinet-user-handle">@username</span>
                 </div>
               </div>
+              <div id="user-bio-wrap" class="cabinet-user-bio"></div>
+              <div id="user-extra-details" class="cabinet-user-chips"></div>
             </div>
-
-            <div id="user-bio-wrap" class="sidebar-user-bio cabinet-user-bio"></div>
-            <div id="user-extra-details" class="sidebar-user-chips cabinet-user-chips"></div>
-
-            <div class="sidebar-meta-block">
-              <div class="stat-pill"><span class="stat-pill-label">ID:</span> <span id="user-id-val" class="stat-pill-val">—</span></div>
-              <div class="stat-pill"><span class="stat-pill-label">Сессия:</span> <span class="stat-pill-val online-status">● Активна</span></div>
-            </div>
-
-            <div class="sidebar-action-wrap">
-              <button onclick="switchCabinetTab('profile')" class="btn-primary cabinet-edit-btn" style="width:100%; justify-content:center;">
+          </div>
+          <div class="cabinet-profile-actions">
+            <div class="cabinet-actions-buttons">
+              <button onclick="switchCabinetTab('profile')" class="btn-primary cabinet-edit-btn">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                 <span>Настроить профиль</span>
               </button>
             </div>
-          </div>
-        </div>
-
-        <!-- GUEST / UNLOGGED STATE -->
-        <div id="profile-container-guest">
-          <div class="sidebar-guest-card">
-            <div class="sidebar-guest-tag">// ПЛАТФОРМА</div>
-            <h2 class="sidebar-guest-title">Личный Кабинет</h2>
-            <p class="sidebar-guest-desc">База Знаний, видео-уроки по&nbsp;Vibe Coding, витрина решений и&nbsp;материалы Закрытого Клуба.</p>
-            <div class="sidebar-guest-actions">
-              <button onclick="Auth.openModal()" class="btn-primary sidebar-auth-btn" style="width:100%; justify-content:center;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                <span>Войти через Telegram</span>
-              </button>
-              <a href="https://web.tribute.tg/s/O6I" target="_blank" class="sidebar-club-btn">
-                Вступить в&nbsp;Клуб (1 900 ₽) ↗
-              </a>
+            <div class="cabinet-profile-stats">
+              <div class="stat-pill"><span class="stat-pill-label">ID:</span> <span id="user-id-val" class="stat-pill-val">—</span></div>
+              <div class="stat-pill"><span class="stat-pill-label">Сессия:</span> <span class="stat-pill-val online-status">● Активна</span></div>
             </div>
           </div>
         </div>
-      </aside>
+      </div>
 
-      <!-- ── ПРАВАЯ ОСНОВНАЯ ЗОНА (ТАБЫ + СОДЕРЖИМОЕ) ── -->
-      <div class="cabinet-main-col">
+      <!-- GUEST / UNLOGGED STATE -->
+      <div id="profile-container-guest">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;">
+          <div>
+            <div style="display:inline-block; padding:3px 10px; background:#f4f4f5; font-family:var(--mono); font-size:0.75rem; font-weight:700; margin-bottom:8px; border:1px solid #e4e4e7;">
+              // ПЛАТФОРМА &amp;&nbsp;БАЗА ЗНАНИЙ
+            </div>
+            <h1 style="font-size:1.8rem; font-weight:800; margin:0 0 6px 0; letter-spacing:-0.02em;">
+              Личный Кабинет Платформы
+            </h1>
+            <p style="color:var(--gray); margin:0; font-size:0.95rem;">
+              База Знаний, видео-уроки по&nbsp;Vibe Coding, витрина решений и&nbsp;материалы Закрытого Клуба.
+            </p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+            <a href="https://web.tribute.tg/s/O6I" target="_blank" class="btn-primary" style="padding:11px 20px; font-size:0.85rem; font-weight:700; text-decoration:none;">
+              Вступить в&nbsp;Клуб (1 900 ₽) ↗
+            </a>
+            <button onclick="Auth.openModal()" class="nav-auth-btn" style="height:44px; padding:0 22px; font-size:0.92rem; background:#ffffff; color:#09090b; border:1px solid #09090b; box-shadow:0 4px 14px rgba(0,0,0,0.06); cursor:pointer;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <span>Войти через Telegram</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- Horizontal Engineering Tab Bar (Sticky at top: 68px) -->
     <nav class="cabinet-tabs-bar" role="tablist">
@@ -709,8 +749,6 @@
       </div>
     </section>
 
-      </div> <!-- /.cabinet-main-col -->
-    </div> <!-- /.cabinet-layout-grid -->
   </main>
 
   <!-- Video Player Modal -->

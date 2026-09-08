@@ -56,247 +56,23 @@
   box-sizing: border-box;
 }
 
-/* ── 3. CABINET CONTAINER FRAME & FLUID EXPANSION ─────────── */
+/* ── 3. CABINET CONTAINER FRAME ────────────────────────────── */
 .cabinet-page-frame {
   max-width: 1440px;
   margin: 0 auto;
   border-left: 1px solid var(--border);
   border-right: 1px solid var(--border);
   background: var(--bg);
-  min-height: calc(100vh - 68px);
-  padding-top: 68px;
+  min-height: calc(100vh - 70px);
   position: relative;
   box-sizing: border-box;
 }
 
-@media (min-width: 1680px) {
-  .cabinet-page-frame {
-    max-width: 1680px;
-  }
-}
-
-@media (min-width: 1900px) {
-  .cabinet-page-frame {
-    max-width: 1780px;
-  }
-}
-
-/* ── 4. TWO-COLUMN CABINET LAYOUT GRID ──────────────────────── */
-.cabinet-layout-grid {
-  display: grid;
-  grid-template-columns: 290px minmax(0, 1fr);
-  align-items: stretch;
-  min-height: calc(100vh - 68px);
-}
-
-@media (min-width: 1680px) {
-  .cabinet-layout-grid {
-    grid-template-columns: 320px minmax(0, 1fr);
-  }
-}
-
-/* ── 4.1 LEFT SIDEBAR COLUMN (PROFILE COCKPIT) ─────────────── */
-.cabinet-sidebar-col {
-  border-right: 1px solid var(--border);
-  background: #ffffff;
-  padding: 32px 24px;
-}
-
-@media (min-width: 1025px) {
-  .cabinet-sidebar-col {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 68px;
-    height: calc(100vh - 68px);
-    overflow-y: auto;
-    scrollbar-width: none;
-  }
-  .cabinet-sidebar-col::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-/* Profile Card Inside Left Sidebar */
-.sidebar-profile-card {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.sidebar-profile-top {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  align-items: flex-start;
-}
-
-.sidebar-avatar-wrap {
-  flex-shrink: 0;
-}
-
-.sidebar-profile-identity {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  width: 100%;
-}
-
-.sidebar-profile-identity h1,
-.cabinet-user-name {
-  font-size: 1.35rem;
-  font-weight: 800;
-  margin: 0;
-  letter-spacing: -0.02em;
-  line-height: 1.25;
-  color: var(--black);
-  text-wrap: balance;
-}
-
-.sidebar-badges-wrap {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.sidebar-user-bio,
-.cabinet-user-bio {
-  color: #52525b;
-  font-size: 0.88rem;
-  line-height: 1.5;
-  word-break: break-word;
-  text-wrap: pretty;
-}
-
-.sidebar-user-chips,
-.cabinet-user-chips {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: 100%;
-}
-
-.sidebar-user-chips .cabinet-chip {
-  width: 100%;
-  justify-content: flex-start;
-}
-
-.sidebar-meta-block {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding-top: 14px;
-  border-top: 1px solid var(--border);
-  margin-top: 4px;
-}
-
-.sidebar-meta-block .stat-pill {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  padding: 6px 10px;
-}
-
-.sidebar-action-wrap {
-  margin-top: 6px;
-}
-
-/* Guest State Inside Left Sidebar */
-.sidebar-guest-card {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.sidebar-guest-tag {
-  display: inline-block;
-  padding: 3px 8px;
-  background: #f4f4f5;
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  font-weight: 700;
-  border: 1px solid #e4e4e7;
-  align-self: flex-start;
-}
-
-.sidebar-guest-title {
-  font-size: 1.3rem;
-  font-weight: 800;
-  margin: 0;
-  letter-spacing: -0.02em;
-  line-height: 1.25;
-  color: var(--black);
-  text-wrap: balance;
-}
-
-.sidebar-guest-desc {
-  color: var(--gray);
-  margin: 0;
-  font-size: 0.88rem;
-  line-height: 1.5;
-  text-wrap: pretty;
-}
-
-.sidebar-guest-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 8px;
-}
-
-.sidebar-auth-btn {
-  height: 42px;
-  padding: 0 16px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  font-family: var(--mono);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background: #09090b;
-  color: #ffffff;
-  border: 1px solid #09090b;
-  cursor: pointer;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.06);
-  transition: all 0.15s ease;
-}
-
-.sidebar-auth-btn:hover {
-  background: #27272a;
-  border-color: #27272a;
-}
-
-.sidebar-club-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 16px;
-  font-size: 0.82rem;
-  font-weight: 700;
-  font-family: var(--mono);
-  text-decoration: none;
-  background: #f4f4f5;
-  color: #09090b;
-  border: 1px solid #e4e4e7;
-  transition: all 0.15s ease;
-}
-
-.sidebar-club-btn:hover {
-  background: #e4e4e7;
-}
-
-/* ── 4.2 RIGHT MAIN COLUMN (TABS + PANES) ─────────────────────── */
-.cabinet-main-col {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  background: var(--bg);
-}
-
-/* Backward compatibility for profile cards */
+/* ── 4. HEADER & PROFILE COCKPIT BLOCK ─────────────────────── */
 .cabinet-header-block {
-  display: none;
+  padding: 100px 40px 32px;
+  border-bottom: 1px solid var(--border);
+  background: #ffffff;
 }
 
 .cabinet-profile-card {
@@ -543,6 +319,242 @@
   color: #16a34a;
 }
 
+/* ── 4.1 LEFT DOCK PROFILE (FIXED IN LEFT EMPTY GUTTER) ───────── */
+.cabinet-left-dock {
+  display: none;
+}
+
+@media (min-width: 1780px) {
+  body.user-logged-in .cabinet-left-dock {
+    display: block;
+    position: fixed;
+    top: 84px;
+    right: calc(50vw + 720px + 14px);
+    width: clamp(200px, calc(50vw - 720px - 28px), 226px);
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+    scrollbar-width: none;
+    z-index: 95;
+    background: #ffffff;
+    border: 1px solid var(--border);
+    padding: 16px 14px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  }
+
+  body.user-logged-in .cabinet-left-dock::-webkit-scrollbar {
+    display: none;
+  }
+
+  body.user-logged-in .cabinet-header-block {
+    display: none !important;
+  }
+
+  body.user-logged-in .cabinet-page-frame {
+    padding-top: 68px;
+  }
+}
+
+.dock-profile-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dock-avatar-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dock-avatar-wrap {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+}
+
+.dock-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 0 !important;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  display: block;
+}
+
+.dock-avatar-placeholder {
+  width: 52px;
+  height: 52px;
+  background: #09090b;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 1.25rem;
+  font-weight: 800;
+  border: 1px solid #09090b;
+}
+
+.dock-status-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.dock-status-wrap .badge-role {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 6px;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  border: 1px solid #e4e4e7;
+  background: #f4f4f5;
+  color: #52525b;
+  border-radius: 0 !important;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 140px;
+}
+
+.dock-status-wrap .badge-role.club {
+  background: #09090b;
+  color: #ffffff;
+  border-color: #09090b;
+}
+
+.dock-session-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #10b981;
+}
+
+.dock-session-status .status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  display: inline-block;
+}
+
+.dock-user-identity {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px;
+}
+
+.dock-user-name {
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--black);
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  word-break: break-word;
+  text-wrap: balance;
+}
+
+.dock-user-handle {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: #71717a;
+  font-weight: 600;
+  word-break: break-all;
+}
+
+.dock-user-bio {
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: #52525b;
+  word-break: break-word;
+  text-wrap: pretty;
+  max-height: 110px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.dock-user-bio::-webkit-scrollbar {
+  display: none;
+}
+
+.dock-user-chips {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dock-user-chips .cabinet-chip {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 0.7rem;
+  padding: 4px 8px;
+  justify-content: flex-start;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dock-action-row {
+  margin-top: 2px;
+}
+
+.dock-edit-btn {
+  width: 100%;
+  height: 34px;
+  padding: 0 10px;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #09090b;
+  background: #f4f4f5;
+  border: 1px solid #e4e4e7;
+  border-radius: 0 !important;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.dock-edit-btn:hover {
+  background: #09090b;
+  color: #ffffff;
+  border-color: #09090b;
+}
+
+.dock-meta-footer {
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+}
+
+.dock-stat-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: #71717a;
+}
+
+.dock-stat-label {
+  color: #a1a1aa;
+}
+
+.dock-stat-val {
+  font-weight: 700;
+  color: #09090b;
+}
+
 /* ── 5. HORIZONTAL ENGINEERING TAB BAR (STICKY AT 68PX) ─────── */
 .cabinet-tabs-bar {
   position: -webkit-sticky;
@@ -551,12 +563,12 @@
   z-index: 100;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
   border-bottom: 1px solid var(--border);
   background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  padding: 12px 18px;
+  padding: 14px 40px;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
@@ -572,13 +584,13 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
-  padding: 8px 10px;
+  gap: 8px;
+  padding: 10px 18px;
   font-family: var(--mono);
-  font-size: 0.73rem;
+  font-size: 0.8rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
   color: #52525b;
   background: #ffffff;
   border: 1px solid var(--border);
@@ -590,19 +602,31 @@
   user-select: none;
 }
 
-/* Widescreen evenly distributed tabs */
-@media (min-width: 1720px) {
+/* Evenly distribute tabs across the full container width on desktop */
+@media (min-width: 1100px) {
   .cabinet-tabs-bar {
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
-    gap: 10px;
-    padding: 14px 28px;
+    gap: 8px;
   }
   .cabinet-tab-btn {
     width: 100%;
     justify-content: center;
+    padding: 10px 4px;
+    font-size: 0.74rem;
+    gap: 6px;
+  }
+}
+
+@media (min-width: 1320px) {
+  .cabinet-tabs-bar {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .cabinet-tab-btn {
     padding: 10px 6px;
     font-size: 0.76rem;
+    gap: 6px;
   }
 }
 
@@ -3006,63 +3030,6 @@ textarea.form-control {
 }
 
 /* ── 14. MOBILE & RESPONSIVE BREAKPOINTS ───────────────────── */
-@media (max-width: 1024px) {
-  .cabinet-layout-grid {
-    grid-template-columns: 1fr;
-    min-height: auto;
-  }
-
-  .cabinet-sidebar-col {
-    position: static;
-    height: auto;
-    max-height: none;
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-    padding: 24px 20px;
-  }
-
-  .sidebar-profile-card {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    gap: 20px;
-  }
-
-  .sidebar-profile-top {
-    flex-direction: row;
-    align-items: center;
-    gap: 16px;
-    width: 100%;
-  }
-
-  .sidebar-user-chips {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  .sidebar-user-chips .cabinet-chip {
-    width: auto;
-  }
-
-  .sidebar-meta-block {
-    flex-direction: row;
-    width: 100%;
-    flex-wrap: wrap;
-  }
-
-  .sidebar-meta-block .stat-pill {
-    width: auto;
-  }
-
-  .sidebar-action-wrap {
-    width: 100%;
-  }
-
-  .sidebar-action-wrap .cabinet-edit-btn {
-    width: auto;
-  }
-}
-
 @media (max-width: 1200px) {
   .quick-actions-grid {
     grid-template-columns: repeat(2, 1fr);
