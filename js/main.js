@@ -47,18 +47,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // FAQ Accordion
-  const faqItems = document.querySelectorAll('.faq-item');
-  faqItems.forEach(item => {
-    const question = item.querySelector('.faq-q');
-    if (question) {
-      question.addEventListener('click', () => {
-        const isOpen = item.classList.contains('open');
-        faqItems.forEach(other => other.classList.remove('open'));
-        if (!isOpen) {
-          item.classList.add('open');
-        }
-      });
+  // FAQ Accordion (Universal Delegation)
+  document.addEventListener('click', (e) => {
+    const question = e.target.closest('.faq-q');
+    if (!question) return;
+    const item = question.closest('.faq-item');
+    if (!item) return;
+
+    const list = item.closest('.faq-list') || document;
+    const isOpen = item.classList.contains('open');
+
+    // Close other items in the same container
+    list.querySelectorAll('.faq-item').forEach(other => {
+      if (other !== item) other.classList.remove('open');
+    });
+
+    if (!isOpen) {
+      item.classList.add('open');
+    } else {
+      item.classList.remove('open');
     }
   });
 

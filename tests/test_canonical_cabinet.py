@@ -99,7 +99,7 @@ class TestCanonicalCabinet(unittest.TestCase):
         pane = self.page.locator("#tab-knowledge")
         self.assertTrue(pane.is_visible())
 
-        text = pane.inner_text()
+        text = pane.inner_text().replace('\xa0', ' ')
         self.assertIn("Как внедрить ИИ-агентов в бизнес", text)
         self.assertIn("ИИ-Автоматизация для Бизнеса", text)
         self.assertIn("Google One", text)
