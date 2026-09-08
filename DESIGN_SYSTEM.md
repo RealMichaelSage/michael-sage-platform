@@ -205,6 +205,48 @@
 - Активная кнопка таба: Нижняя полоса `border-bottom: 2px solid #09090b`, цвет текста `#09090b`, фон `#ffffff`
 - Неактивная кнопка: `color: var(--gray)`, фон прозрачный
 
+### 4.5. Компонент FAQ (Аккордеон Частых Вопросов)
+> 📐 **СТАНДАРТ ЧИСТЫХ ГОРИЗОНТАЛЬНЫХ РАЗДЕЛИТЕЛЕЙ (Zero Box / Flat Line Accordion):**
+> Раздел FAQ на всех страницах платформы оформляется в минималистичном реестровом стиле без внешней замкнутой рамки и без боковых рамок вокруг вопросов.
+
+1. **Архитектура и Изоляция:**
+   - Секция FAQ обязана быть корневым потомком `<main>`:
+     ```html
+     <section id="faq" class="section section-border section-pad" data-nav-title="Вопросы">
+       <div class="section-tag">ЧАСТЫЕ ВОПРОСЫ</div>
+       <h2 class="section-title">...</h2>
+       <div class="faq-list">
+         <div class="faq-item">
+           <button class="faq-q" type="button">
+             <span>1. Текст вопроса?</span>
+             <span class="faq-icon">+</span>
+           </button>
+           <div class="faq-a">
+             <div class="faq-a-inner">
+               Ответ с выделением ключевых акцентов и неразрывными предлогами.
+             </div>
+           </div>
+         </div>
+       </div>
+     </section>
+     ```
+   - ❌ **Категорически запрещено** вкладывать секцию FAQ внутрь соседних секций (например, кейсов или тарифов).
+
+2. **Стилистика и разделители:**
+   - ❌ **СТРОГО ЗАПРЕЩЕНА** внешняя замкнутая рамка у `.faq-list` (`border-left`, `border-right`, `border-bottom`).
+   - ❌ **СТРОГО ЗАПРЕЩЕНЫ** 4-сторонние рамки-плашки у каждого элемента `.faq-item`.
+   - **Только сквозные горизонтальные линии:**
+     - `.faq-list`: `border-top: 1px solid var(--border); border-left: none; border-right: none; border-bottom: none;`
+     - `.faq-item`: `border-bottom: 1px solid var(--border); border-left: none; border-right: none; background: transparent;`
+     - `.faq-item:last-child`: гарантированный `border-bottom: 1px solid var(--border);` (линия внизу никогда не прерывается и не стирается).
+   - **Выравнивание и отступы:**
+     - `.faq-q`: `padding: 24px 0;` (вопрос выравнивается строго по левому краю заголовка секции).
+     - `.faq-a-inner`: `padding: 0 0 24px 0;`.
+   - **Иконка-переключатель:**
+     - Размер `26px × 26px`, `border: 1px solid var(--border)`, `border-radius: 0`, `font-family: var(--mono)`.
+     - При раскрытии (`.open`): `transform: rotate(45deg); background: var(--black); color: #ffffff; border-color: var(--black);`.
+   - **Анимация:** плавное раскрытие через CSS Grid (`grid-template-rows: 0fr` → `1fr`).
+
 ---
 
 ## 5. 📏 Сетка и Адаптивность (Layout & Breakpoints)
