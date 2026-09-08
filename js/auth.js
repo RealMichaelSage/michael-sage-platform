@@ -270,7 +270,7 @@ const Auth = {
       return true;
     }
     // Resident of SAGE Neuro Family chat or Student of Mentorship
-    if (user.role === 'club_member' || user.role === 'student') {
+    if (user.role === 'club_member' || user.role === 'resident' || user.role === 'student' || user.club_member === true) {
       return true;
     }
     return false;

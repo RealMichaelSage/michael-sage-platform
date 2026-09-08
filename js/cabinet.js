@@ -20,73 +20,86 @@ function safeJsonParse(val, fallback = null) {
 const CLUB_LESSONS_DATA = [
   {
     id: 'lesson-969',
-    title: 'Мастер-класс «Вайбкодинг: от идеи до продакшена за 2 часа»',
-    badge: 'МАСТЕР-КЛАСС // VIBE CODING',
+    title: 'SKILLS: Навыки в нейронных сетях. Настраиваем агентов',
+    badge: 'МАСТЕР-КЛАСС // КЛУБ',
     type: 'video',
     platform: 'Kinescope',
-    videoUrl: 'https://kinescope.io/qgqjU49q4ZkGZJt5wzDkFh',
-    embedUrl: 'https://kinescope.io/embed/qgqjU49q4ZkGZJt5wzDkFh',
+    videoUrl: 'https://kinescope.io/ooYCG6pSQoMx28ikQiXbCp/pliG4cRv',
+    embedUrl: 'https://kinescope.io/embed/ooYCG6pSQoMx28ikQiXbCp',
     cover: '/assets/club-lessons/lesson_media_969.jpg',
-    date: '25 апреля 2026',
-    duration: '1ч 52мин',
-    description: 'Пошаговый разбор скоростной разработки прикладных веб-сервисов и ботов с нуля. Настройка рабочих сред, оркестрация промптов и развертывание на VPS.',
-    topics: ['Вайбкодинг', 'Claude Code', 'Antigravity', 'Быстрый запуск']
+    date: '22 июня 2026',
+    duration: '1ч 45мин',
+    description: 'Архитектура кастомных навыков (skills) для LLM-агентов. Как проектировать системные промпты, связывать инструменты через MCP и исключать галлюцинации моделей в проде.',
+    topics: ['AI-Агенты', 'Промпт-инжиниринг', 'MCP-серверы', 'Контекст']
   },
   {
     id: 'lesson-764',
-    title: 'Практикум «Автономные AI-агенты и вебхуки в Make/n8n»',
-    badge: 'ПРАКТИКУМ // АВТОМАТИЗАЦИЯ',
+    title: 'Как создавать сайты с помощью нейросетей. Обзор Stitch',
+    badge: 'ВИДЕО-УРОК // STITCH',
     type: 'video',
     platform: 'Kinescope',
-    videoUrl: 'https://kinescope.io/3K2z7s1oU4c9Fq4J8tL5wA',
-    embedUrl: 'https://kinescope.io/embed/3K2z7s1oU4c9Fq4J8tL5wA',
+    videoUrl: 'https://kinescope.io/6caXdYNxSMZWduyUB6ChQM/pljpPBB6',
+    embedUrl: 'https://kinescope.io/embed/6caXdYNxSMZWduyUB6ChQM',
     cover: '/assets/club-lessons/lesson_media_764.jpg',
-    date: '12 апреля 2026',
-    duration: '2ч 14мин',
-    description: 'Построение отказоустойчивых сценариев интеграции: обработка вебхуков, связка CRM с LLM-пайплайнами и маршрутизация клиентских запросов без ручного труда.',
-    topics: ['AI-агенты', 'n8n', 'Make', 'Автоматизация', 'Вебхуки']
+    date: '29 апреля 2026',
+    duration: '1ч 12мин',
+    description: 'Пошаговый пайплайн генерации веб-интерфейсов и адаптивных дизайн-систем через Google Stitch MCP. Экспорт чистого Tailwind/HTML и быстрая посадка на хостинг.',
+    topics: ['Google Stitch', 'Vibe Coding', 'UI/UX', 'Tailwind']
   },
   {
     id: 'lesson-619',
-    title: 'Интенсив «Интеграция LLM в реальный бизнес: кейсы и грабли»',
-    badge: 'ИНТЕНСИВ // КЕЙСЫ',
+    title: 'Как создавать нейро-фотосессии: FLOW. Разбор инструмента',
+    badge: 'МАСТЕР-КЛАСС // FLOW',
     type: 'video',
-    platform: 'VK Video',
-    videoUrl: 'https://vk.com/video_ext.php?oid=708436546&id=456239175&hash=44ba6d5be9fb7a75&hd=2',
-    embedUrl: 'https://vk.com/video_ext.php?oid=708436546&id=456239175&hash=44ba6d5be9fb7a75&hd=2',
+    platform: 'Kinescope',
+    videoUrl: 'https://kinescope.io/qNU4ub4VBQCmSHLhpeGSt9/plOoNiik',
+    embedUrl: 'https://kinescope.io/embed/qNU4ub4VBQCmSHLhpeGSt9',
     cover: '/assets/club-lessons/lesson_media_619.jpg',
-    date: '29 марта 2026',
-    duration: '1ч 45мин',
-    description: 'Разбор реальных внедрений: оценка ROI, защита от галлюцинаций, разграничение контуров безопасности и типичные ошибки при выводе ИИ в эксплуатацию.',
-    topics: ['B2B интеграции', 'LLM', 'Внедрение', 'Безопасность']
+    date: '6 апреля 2026',
+    duration: '54 мин',
+    description: 'Полноценный разбор генератора FLOW для создания реалистичных коммерческих фотосессий, лукбуков для брендов и сохранения внешности моделей.',
+    topics: ['FLOW', 'Нейрофото', 'Face Lock', 'Промпты']
   },
   {
     id: 'lesson-615',
-    title: 'Воркшоп «RAG-системы и работа с базой знаний компании»',
-    badge: 'ВОРКШОП // RAG & БАЗЫ ДАННЫХ',
+    title: 'NotebookLM: Полный разбор всех возможностей',
+    badge: 'ВИДЕО-УРОК // NOTEBOOKLM',
     type: 'video',
     platform: 'Kinescope',
-    videoUrl: 'https://kinescope.io/615aDKVHDdqLmAj7krZ4Jd',
-    embedUrl: 'https://kinescope.io/embed/615aDKVHDdqLmAj7krZ4Jd',
+    videoUrl: 'https://kinescope.io/snmkLPhNSqQQqWhMhCsSFF/pld6Hc5o',
+    embedUrl: 'https://kinescope.io/embed/snmkLPhNSqQQqWhMhCsSFF',
     cover: '/assets/club-lessons/lesson_media_615.jpg',
-    date: '15 марта 2026',
-    duration: '2ч 05мин',
-    description: 'Архитектура поиска по корпоративным документам: выбор эмбеддингов, чанкинг, векторные базы данных (Qdrant/pgvector) и точные ответы без галлюцинаций.',
-    topics: ['RAG', 'Векторные БД', 'Эмбеддинги', 'Qdrant']
+    date: '6 апреля 2026',
+    duration: '1ч 20мин',
+    description: 'Глубокое погружение в Google NotebookLM: работа с базой знаний из сотен документов, генерация глубоких аудио-подкастов и извлечение инсайтов из PDF.',
+    topics: ['NotebookLM', 'База Знаний', 'RAG', 'Аудио-обзоры']
   },
   {
     id: 'lesson-546',
-    title: 'Мастер-класс «AI-продакшн видео и подкастов под ключ»',
-    badge: 'МАСТЕР-КЛАСС // МЕДИА',
+    title: 'Мастер-класс «Создание Нейро-Подкастов»',
+    badge: 'МАСТЕР-КЛАСС // ПОДКАСТЫ',
     type: 'video',
-    platform: 'Kinescope',
-    videoUrl: 'https://kinescope.io/546aDKVHDdqLmAj7krZ4Jd',
-    embedUrl: 'https://kinescope.io/embed/546aDKVHDdqLmAj7krZ4Jd',
+    platform: 'VK Video',
+    videoUrl: 'https://vk.com/video708436546_456239175?list=ln-OazFwvzG9xkf9G1n2A',
+    embedUrl: 'https://vk.com/video_ext.php?oid=708436546&id=456239175&hash=44ba6d5be9fb7a75&hd=2',
     cover: '/assets/club-lessons/lesson_media_546.jpg',
-    date: '8 марта 2026',
-    duration: '1ч 30мин',
+    date: '25 марта 2026',
+    duration: '1ч 35мин',
     description: 'Полный цикл производства аудио и видео-подкастов с помощью генеративных нейросетей: от сценария и структуры выпуска до клонирования голоса и сведения.',
     topics: ['Подкасты', 'Голосовые модели', 'Сценарии', 'ElevenLabs']
+  },
+  {
+    id: 'lesson-393',
+    title: 'Туториал «Как делать подкасты» (Документ & Чеклисты)',
+    badge: 'ИНСТРУКЦИЯ // ДОКУМЕНТ',
+    type: 'doc',
+    platform: 'Google Docs',
+    docUrl: 'https://docs.google.com/document/d/1GaFTye_FK8_rmQEv-lT4igF6o6tTJZyKf3LWIaD8PGA/edit?tab=t.vu8r95x1iq3u#heading=h.i8gzl06n893l',
+    cover: '/assets/club-lessons/lesson_media_393.jpg',
+    date: '9 марта 2026',
+    duration: 'Мануал • 15 стр.',
+    description: 'Пошаговый инженерный документ с шаблонами сценариев, чеклистом контроля качества аудио, правилами монтажа и таймкодами для автоматизации.',
+    topics: ['Google Docs', 'Инструкция', 'Пайплайн', 'Чеклисты']
   },
   {
     id: 'lesson-332',
@@ -94,13 +107,27 @@ const CLUB_LESSONS_DATA = [
     badge: 'МАСТЕР-КЛАСС // АССИСТЕНТЫ',
     type: 'video',
     platform: 'Kinescope',
-    videoUrl: 'https://kinescope.io/0uEaDKVHDdqLmAj7krZ4Jd',
-    embedUrl: 'https://kinescope.io/embed/0uEaDKVHDdqLmAj7krZ4Jd',
+    videoUrl: 'https://kinescope.io/0uEaDKVHDdqLmAj7krZ4Jd/plO41fqw',
+    embedUrl: 'https://kinescope.io/0uEaDKVHDdqLmAj7krZ4Jd/plO41fqw',
     cover: '/assets/club-lessons/lesson_media_332.jpg',
     date: '1 марта 2026',
     duration: '1ч 40мин',
     description: 'Системный фреймворк создания надёжных промптов, ролевых моделей (GRACEF) и проектирования контекстных окон для цифровых ассистентов бизнеса.',
     topics: ['Промпт-дизайн', 'GRACEF', 'Ассистенты', 'Системный промпт']
+  },
+  {
+    id: 'lesson-83',
+    title: 'Мастер-класс «Как создавать нейро-фотосессии»',
+    badge: 'МАСТЕР-КЛАСС // НЕЙРОФОТО',
+    type: 'video',
+    platform: 'Kinescope',
+    videoUrl: 'https://kinescope.io/pQrVubsiwzmXJSRgkZRxoM',
+    embedUrl: 'https://kinescope.io/embed/pQrVubsiwzmXJSRgkZRxoM',
+    cover: '/assets/club-lessons/lesson_media_83.jpg',
+    date: '9 февраля 2026',
+    duration: '1ч 50мин',
+    description: 'Фундаментальный вебинар по сохранению консистентности лица персонажа (Face Consistency), контролю поз и созданию серийных коммерческих фото.',
+    topics: ['Нейрофото', 'Kinescope', 'Консистентность', 'Коммерция']
   }
 ];
 
@@ -231,7 +258,11 @@ function renderClubLessons() {
 
     let actionBtnHtml = '';
     if (hasAccess) {
-      actionBtnHtml = `<button onclick="openClubVideo('${l.id}')" class="btn-primary" style="padding:10px 16px; font-size:0.82rem; width:100%; justify-content:center; cursor:pointer;"><span>▶</span> Смотреть запись онлайн</button>`;
+      if (l.type === 'doc') {
+        actionBtnHtml = `<a href="${l.docUrl}" target="_blank" class="btn-primary" style="padding:10px 16px; font-size:0.82rem; width:100%; justify-content:center; text-align:center; text-decoration:none; display:inline-flex; align-items:center; gap:8px;"><span>📄</span> Открыть туториал (${l.platform}) ↗</a>`;
+      } else {
+        actionBtnHtml = `<button onclick="openClubVideo('${l.id}')" class="btn-primary" style="padding:10px 16px; font-size:0.82rem; width:100%; justify-content:center; cursor:pointer; display:inline-flex; align-items:center; gap:8px;"><span>▶</span> Смотреть запись онлайн</button>`;
+      }
     } else {
       actionBtnHtml = `<a href="https://web.tribute.tg/s/O6I" target="_blank" class="btn-secondary" style="padding:10px 16px; font-size:0.82rem; width:100%; justify-content:center; text-align:center; text-decoration:none; background:#fafafa; color:#52525b; border:1px dashed #d4d4d8; font-weight:600;">🔒 Доступно в SAGE Neuro Family ↗</a>`;
     }
@@ -284,10 +315,21 @@ function openClubVideo(lessonId) {
   const title = document.getElementById('club-modal-title');
   const badge = document.getElementById('club-modal-badge');
   const iframe = document.getElementById('club-modal-iframe');
+  const extLink = document.getElementById('club-modal-ext-link');
 
   if (title) title.innerText = lesson.title;
   if (badge) badge.innerText = lesson.badge;
-  if (iframe) {
+  if (extLink) {
+    if (lesson.videoUrl) {
+      extLink.href = lesson.videoUrl;
+      extLink.style.display = 'inline-flex';
+      extLink.innerText = `Открыть в ${lesson.platform || 'плеере'} ↗`;
+    } else {
+      extLink.style.display = 'none';
+    }
+  }
+
+  if (iframe && lesson.embedUrl) {
     const sep = lesson.embedUrl.includes('?') ? '&' : '?';
     iframe.src = `${lesson.embedUrl}${sep}autoplay=1`;
   }
