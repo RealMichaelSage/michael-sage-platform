@@ -2006,12 +2006,23 @@ main > .section:first-child {
   text-overflow: ellipsis;
 }
 
+.speaking-format-feats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 32px;
+  margin-bottom: 28px;
+}
+
 @media (max-width: 768px) {
   .speaking-slide-card {
     width: 260px;
   }
   .speaking-slide-card img {
     height: 180px;
+  }
+  .speaking-format-feats {
+    grid-template-columns: 1fr;
+    gap: 14px;
   }
 }
 
