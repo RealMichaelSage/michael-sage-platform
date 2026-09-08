@@ -186,33 +186,24 @@ function renderClubLessons() {
 
   const hasAccess = typeof Auth !== 'undefined' && Auth.hasClubAccess ? Auth.hasClubAccess() : false;
 
-  // Render Status Pill
+  // Render Status Pill (Only for non-residents)
   if (pill) {
     if (hasAccess) {
-      pill.innerHTML = '<span class="badge-role" style="background:#ecfdf5; color:#047857; border-color:#a7f3d0; font-weight:700;">💎 ДОСТУП РЕЗИДЕНТА АКТИВЕН</span>';
+      pill.innerHTML = '';
+      pill.style.display = 'none';
     } else {
       pill.innerHTML = '<span class="badge-role" style="background:#fef2f2; color:#dc2626; border-color:#fecaca; font-weight:700;">🔒 ДОСТУП ЗАКРЫТ</span>';
+      pill.style.display = 'block';
     }
   }
 
-  // Render Access Banner
+  // Render Access Banner (Only for non-residents)
   if (banner) {
     if (hasAccess) {
-      banner.innerHTML = `
-        <div class="club-access-status-banner unlocked" style="background:#f0fdf4; border:1px solid #bbf7d0; padding:20px 24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
-          <div style="display:flex; align-items:center; gap:14px;">
-            <div style="font-size:1.8rem;">💎</div>
-            <div>
-              <strong style="display:block; font-size:1.05rem; color:#15803d;">Доступ резидента сообщества активен // SAGE Neuro Family</strong>
-              <span style="font-size:0.88rem; color:#166534;">Вам открыт неограниченный просмотр всех закрытых записей и мастер-классов.</span>
-            </div>
-          </div>
-          <div>
-            <a href="https://t.me/c/3802053746/82" target="_blank" class="btn-secondary" style="padding:9px 18px; font-size:0.82rem; background:#ffffff; font-weight:600; text-decoration:none;">Перейти в Telegram-чат клуба ↗</a>
-          </div>
-        </div>
-      `;
+      banner.innerHTML = '';
+      banner.style.display = 'none';
     } else {
+      banner.style.display = 'block';
       banner.innerHTML = `
         <div class="club-access-status-banner locked" style="background:#09090b; color:#ffffff; border:1px solid #27272a; padding:20px 24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
           <div style="display:flex; align-items:center; gap:14px;">
@@ -567,13 +558,19 @@ function updateCabinetProfile() {
       }
       if (user.channel_url) {
         const chHref = user.channel_url.startsWith('http') ? user.channel_url : `https://t.me/${user.channel_url.replace(/^@/, '')}`;
-        detailsHtml += `<a href="${chHref}" target="_blank" class="cabinet-chip cabinet-chip-channel">📢 ${user.channel_url} ↗</a>`;
+        detailsHtml += `<a href="${chHref}" target="_blank" class="cabinet-chip cabinet-chip-channel" title="${user.channel_url}">📢 Телеграм-канал ↗</a>`;
       }
       if (user.website_url) {
         const webHref = user.website_url.startsWith('http') ? user.website_url : `https://${user.website_url}`;
-        detailsHtml += `<a href="${webHref}" target="_blank" class="cabinet-chip cabinet-chip-website">🌐 ${user.website_url} ↗</a>`;
+        detailsHtml += `<a href="${webHref}" target="_blank" class="cabinet-chip cabinet-chip-website" title="${user.website_url}">🌐 Сайт ↗</a>`;
       }
       extraDetails.innerHTML = detailsHtml;
+    }
+
+    // Toggle header access status badge
+    const headerAccessStatus = document.getElementById('user-access-status');
+    if (headerAccessStatus) {
+      headerAccessStatus.style.display = isClub ? 'inline-block' : 'none';
     }
 
     // ── Update Left Dock Cockpit Elements ──
@@ -614,6 +611,11 @@ function updateCabinetProfile() {
       }
     }
 
+    const dockAccessStatus = document.getElementById('dock-access-status');
+    if (dockAccessStatus) {
+      dockAccessStatus.style.display = isClub ? 'block' : 'none';
+    }
+
     const dockAvatarWrap = document.getElementById('dock-avatar-wrap');
     if (dockAvatarWrap) {
       dockAvatarWrap.innerHTML = user.photo_url
@@ -644,14 +646,17 @@ function updateCabinetProfile() {
       }
       if (user.channel_url) {
         const chHref = user.channel_url.startsWith('http') ? user.channel_url : `https://t.me/${user.channel_url.replace(/^@/, '')}`;
-        dockDetailsHtml += `<a href="${chHref}" target="_blank" class="cabinet-chip cabinet-chip-channel" title="${user.channel_url}">📢 ${user.channel_url} ↗</a>`;
+        dockDetailsHtml += `<a href="${chHref}" target="_blank" class="cabinet-chip cabinet-chip-channel" title="${user.channel_url}">📢 Телеграм-канал ↗</a>`;
       }
       if (user.website_url) {
         const webHref = user.website_url.startsWith('http') ? user.website_url : `https://${user.website_url}`;
-        dockDetailsHtml += `<a href="${webHref}" target="_blank" class="cabinet-chip cabinet-chip-website" title="${user.website_url}">🌐 ${user.website_url} ↗</a>`;
+        dockDetailsHtml += `<a href="${webHref}" target="_blank" class="cabinet-chip cabinet-chip-website" title="${user.website_url}">🌐 Сайт ↗</a>`;
       }
       dockExtraDetails.innerHTML = dockDetailsHtml;
     }
+
+    // Sync live preview with current profile state
+    livePreviewProfile();
   } else {
     document.body.classList.remove('user-logged-in');
     if (loggedInContainer) loggedInContainer.style.display = 'none';
@@ -699,13 +704,20 @@ function populateProfileForm() {
 }
 
 function livePreviewProfile() {
-  const fn = (document.getElementById('inp-first-name')?.value || '').trim();
-  const ln = (document.getElementById('inp-last-name')?.value || '').trim();
-  const un = (document.getElementById('inp-tg-username')?.value || '').trim();
-  const bio = (document.getElementById('inp-bio')?.value || '').trim();
-  const isChecked = document.getElementById('inp-is-private')?.checked ?? true;
+  const user = typeof Auth !== 'undefined' && Auth.getUser ? Auth.getUser() : null;
 
-  const name = (fn + ' ' + ln).trim() || 'Имя Фамилия';
+  const fnInput = document.getElementById('inp-first-name')?.value;
+  const lnInput = document.getElementById('inp-last-name')?.value;
+  const unInput = document.getElementById('inp-tg-username')?.value;
+  const bioInput = document.getElementById('inp-bio')?.value;
+  const isChecked = document.getElementById('inp-is-private')?.checked ?? (user ? !user.is_private : true);
+
+  const fn = (fnInput !== undefined && fnInput.trim() !== '') ? fnInput.trim() : (user?.first_name || '');
+  const ln = (lnInput !== undefined && lnInput.trim() !== '') ? lnInput.trim() : (user?.last_name || '');
+  const un = (unInput !== undefined && unInput.trim() !== '') ? unInput.trim() : (user?.username || '');
+  const bio = (bioInput !== undefined && bioInput.trim() !== '') ? bioInput.trim() : (user?.bio || '');
+
+  const name = (fn + ' ' + ln).trim() || user?.username || 'Имя Фамилия';
   const handle = un ? (un.startsWith('@') ? un : '@' + un) : '@username';
 
   const previewName = document.getElementById('preview-user-name');
@@ -717,8 +729,46 @@ function livePreviewProfile() {
   const previewBio = document.getElementById('preview-user-bio');
   if (previewBio) previewBio.innerText = bio || 'Описание деятельности и стек технологий...';
 
-  const previewAvatar = document.getElementById('preview-avatar-placeholder');
-  if (previewAvatar) previewAvatar.innerText = name.charAt(0).toUpperCase();
+  // Live preview avatar photo or initial
+  const previewAvatarWrap = document.getElementById('preview-avatar-wrap');
+  if (previewAvatarWrap) {
+    if (user && user.photo_url) {
+      previewAvatarWrap.innerHTML = `<img src="${user.photo_url}" alt="${name}" class="member-avatar" style="width:52px; height:52px; object-fit:cover; border-radius:0 !important; border:1px solid #18181b; display:block;">`;
+    } else {
+      previewAvatarWrap.innerHTML = `<div class="member-avatar-placeholder" id="preview-avatar-placeholder">${name.charAt(0).toUpperCase()}</div>`;
+    }
+  } else {
+    const previewAvatar = document.getElementById('preview-avatar-placeholder');
+    if (previewAvatar) previewAvatar.innerText = name.charAt(0).toUpperCase();
+  }
+
+  // Update role badge in preview card
+  const previewRoleBadge = document.getElementById('preview-role-badge');
+  if (previewRoleBadge) {
+    const tgId = Number(user?.telegram_id || 0);
+    const uname = (user?.username || '').toLowerCase();
+    const isMikhail = uname === 'michael_sage' || uname === 'uncrn_sage' || tgId === 439634804 || tgId === 88472911 || user?.role === 'founder';
+    const isClub = isMikhail || user?.role === 'club_member' || (typeof Auth !== 'undefined' && Auth.hasClubAccess && Auth.hasClubAccess());
+    if (isMikhail) {
+      previewRoleBadge.innerText = '👑 Основатель';
+      previewRoleBadge.className = 'badge-role club';
+      previewRoleBadge.style.background = '#09090b';
+      previewRoleBadge.style.color = '#ffffff';
+      previewRoleBadge.style.borderColor = '#09090b';
+    } else if (isClub) {
+      previewRoleBadge.innerText = '💎 Резидент';
+      previewRoleBadge.className = 'badge-role club';
+      previewRoleBadge.style.background = '';
+      previewRoleBadge.style.color = '';
+      previewRoleBadge.style.borderColor = '';
+    } else {
+      previewRoleBadge.innerText = 'Пользователь';
+      previewRoleBadge.className = 'badge-role';
+      previewRoleBadge.style.background = '#f4f4f5';
+      previewRoleBadge.style.color = '#52525b';
+      previewRoleBadge.style.borderColor = '#e4e4e7';
+    }
+  }
 
   const previewPrivacy = document.getElementById('preview-user-privacy');
   if (previewPrivacy) {
@@ -1133,11 +1183,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   updateCabinetProfile();
   renderClubLessons();
 
-  // Determine initial active tab: URL query param -> URL hash -> localStorage -> default 'knowledge'
+  // Determine initial active tab: URL query param -> URL hash -> default 'knowledge'
   const urlParams = new URLSearchParams(window.location.search);
   const urlTab = urlParams.get('tab');
   const hashTab = window.location.hash ? window.location.hash.replace('#tab-', '').replace('#', '') : null;
-  const savedTab = localStorage.getItem('asage_cabinet_tab');
 
   let activeTab = 'knowledge';
   const validTabs = ['knowledge', 'education', 'solutions', 'club', 'members', 'favorites', 'profile', 'dashboard', 'library', 'store', 'community'];
@@ -1146,8 +1195,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     activeTab = urlTab.toLowerCase();
   } else if (hashTab && validTabs.includes(hashTab.toLowerCase())) {
     activeTab = hashTab.toLowerCase();
-  } else if (savedTab && validTabs.includes(savedTab.toLowerCase())) {
-    activeTab = savedTab.toLowerCase();
   }
 
   switchCabinetTab(activeTab);

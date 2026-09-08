@@ -61,7 +61,7 @@ def main():
         assert "База Знаний PRO" in inactive_text
         assert "Все видео-уроки и воркшопы" in inactive_text
         assert "Закрытый Telegram-чат резидентов" in inactive_text
-        assert "Еженедельные онлайн-мастермайнда" in inactive_text
+        assert "Еженедельные онлайн-мастермайнда" not in inactive_text
         assert "Специальные условия" in inactive_text
 
         # Verify button text DOES NOT contain "Tribute"

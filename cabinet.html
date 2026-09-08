@@ -104,6 +104,7 @@
           <span class="dock-session-status"><span class="status-dot"></span>Онлайн</span>
         </div>
       </div>
+      <div id="dock-access-status" class="dock-access-status" style="display:none; background:#ecfdf5; border:1px solid #a7f3d0; color:#047857; font-family:var(--mono); font-size:0.68rem; font-weight:700; padding:5px 8px; text-align:center; letter-spacing:0.02em;">💎 ДОСТУП РЕЗИДЕНТА АКТИВЕН</div>
       
       <div class="dock-user-identity">
         <div id="dock-display-name" class="dock-user-name">Пользователь</div>
@@ -144,6 +145,7 @@
                 <h1 id="user-display-name" class="cabinet-user-name">Пользователь</h1>
                 <div class="cabinet-user-badges" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                   <span id="user-role-badge" class="badge-role cabinet-sub-status">Пользователь</span>
+                  <span id="user-access-status" class="badge-role" style="display:none; background:#ecfdf5; color:#047857; border-color:#a7f3d0; font-weight:700;">💎 ДОСТУП РЕЗИДЕНТА АКТИВЕН</span>
                   <span id="user-username-badge" class="cabinet-username-tag cabinet-user-handle">@username</span>
                 </div>
               </div>
@@ -747,7 +749,6 @@
                   <li><strong>База Знаний PRO:</strong> закрытые инженерные гайды, архитектуры AI-агентов и&nbsp;библиотека системных промптов GRACEF.</li>
                   <li><strong>Все видео-уроки и&nbsp;воркшопы:</strong> 6+ часов практических записей (Vibe Coding, RAG-системы, LLM в&nbsp;бизнесе).</li>
                   <li><strong>Закрытый Telegram-чат резидентов:</strong> сильный нетворкинг, обмен кейсами и&nbsp;прямой контакт с&nbsp;Михаилом Пузырёвым.</li>
-                  <li><strong>Еженедельные онлайн-мастермайнда:</strong> живые разборы проектов участников, архитектуры и&nbsp;кода по&nbsp;четвергам.</li>
                   <li><strong>Специальные условия:</strong> закрытый доступ к&nbsp;софту платформы (Sagemeet, SAGE VPN) и&nbsp;скидки на&nbsp;продукты.</li>
                 </ul>
               </div>
@@ -782,7 +783,9 @@
           <div class="member-card" id="profile-preview-card" style="background:#ffffff; border:2px solid #09090b; padding:24px;">
             <div>
               <div class="member-header">
-                <div class="member-avatar-placeholder" id="preview-avatar-placeholder">U</div>
+                <div id="preview-avatar-wrap">
+                  <div class="member-avatar-placeholder" id="preview-avatar-placeholder">U</div>
+                </div>
                 <div>
                   <h3 class="member-name" id="preview-user-name">Имя Фамилия</h3>
                   <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">

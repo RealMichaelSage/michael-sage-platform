@@ -19,6 +19,9 @@ const Auth = {
         if (uname === 'michael_sage' || uname === 'uncrn_sage' || tgId === 439634804 || tgId === 88472911) {
           user.role = 'founder';
           user.is_founder = true;
+          if (!user.bio || !user.bio.trim()) {
+            user.bio = 'Просто обучаю людей упрощать жизнь и бизнес с помощью нейросетей';
+          }
         }
       }
       return user;
@@ -749,7 +752,7 @@ const Auth = {
               <div class="nav-user-dropdown-name">${displayName}</div>
               <div class="nav-user-dropdown-sub">${usernameDisplay}</div>
             </div>
-            <a href="/cabinet" class="nav-user-dropdown-item">
+            <a href="/cabinet?tab=knowledge" class="nav-user-dropdown-item">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
               <span>Личный Кабинет</span>
             </a>
