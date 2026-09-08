@@ -1360,6 +1360,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 // --- 8. Professional Institutional Excel Export Generator (SheetJS) ---
   function exportToExcel() {
+    if (typeof Auth !== 'undefined' && !Auth.isChannelSubscriber()) {
+      Auth.openChannelGateModal({
+        title: 'Венчурная Финмодель 5.0 (Выгрузка в Excel)',
+        onVerified: () => exportToExcel()
+      });
+      return;
+    }
     if (!activeCalculationResult) return;
     const res = activeCalculationResult;
 

@@ -2554,5 +2554,21 @@
                 : 'translate(-50%, -50%) scale(1)';
         });
     </script>
+    <script src="/js/auth.js?v=1.6"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof Auth !== 'undefined' && !Auth.isChannelSubscriber()) {
+                document.body.classList.add('asage-page-gated');
+                Auth.openChannelGateModal({
+                    title: 'Лекция: Vibe Coding и ИИ-Автоматизация',
+                    preventClose: true,
+                    returnUrl: '/cabinet/',
+                    onVerified: () => {
+                        document.body.classList.remove('asage-page-gated');
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>

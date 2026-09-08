@@ -698,6 +698,14 @@
     }
 
     function copyInvoiceText(btn) {
+      if (typeof Auth !== 'undefined' && !Auth.isChannelSubscriber()) {
+        Auth.openChannelGateModal({
+          title: 'Калькулятор Налогов и Наценки',
+          onVerified: () => copyInvoiceText(btn)
+        });
+        return;
+      }
+
       const base = formatNumber(state.amount);
       const total = document.getElementById('resTotalAmount').innerText;
       const tax = document.getElementById('resTaxAmount').innerText;

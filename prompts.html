@@ -3018,6 +3018,14 @@ You are an enterprise systems auditor applying Eliyahu Goldratt&#x27;s Theory of
     }
 
     function copyPrompt(num, btn) {
+      if (typeof Auth !== 'undefined' && !Auth.isChannelSubscriber()) {
+        Auth.openChannelGateModal({
+          title: 'Системный промпт #' + num,
+          onVerified: () => copyPrompt(num, btn)
+        });
+        return;
+      }
+
       const codeElem = document.getElementById('prompt-text-' + num);
       const text = codeElem.innerText;
       
@@ -3039,6 +3047,14 @@ You are an enterprise systems auditor applying Eliyahu Goldratt&#x27;s Theory of
     }
 
     function toggleExpand(num, btn) {
+      if (typeof Auth !== 'undefined' && !Auth.isChannelSubscriber()) {
+        Auth.openChannelGateModal({
+          title: 'Системный промпт #' + num,
+          onVerified: () => toggleExpand(num, btn)
+        });
+        return;
+      }
+
       const box = document.getElementById('prompt-text-' + num);
       const parentBox = box.closest('.prompt-code-box');
       const isExpanded = box.classList.contains('expanded');

@@ -270,10 +270,163 @@ const Auth = {
       return true;
     }
     // Resident of SAGE Neuro Family chat or Student of Mentorship
-    if (user.role === 'club_member' || user.role === 'resident' || user.role === 'student' || user.club_member === true) {
+    if (user.role === 'club_member' || user.role === 'resident' || user.role === 'student' || user.club_member === true || user.is_club_resident === true) {
       return true;
     }
     return false;
+  },
+
+  // 5.1 Check if user is subscribed to Telegram channel (@uncrn_sage)
+  isChannelSubscriber() {
+    const user = this.getUser();
+    if (this.hasClubAccess()) return true;
+    if (user && (user.is_channel_subscriber === true || user.channel_subscriber === true)) return true;
+    if (localStorage.getItem('asage_channel_verified') === 'true') return true;
+    return false;
+  },
+
+  // 5.2 Get list of purchased items from local cache
+  getPurchasedItems() {
+    try {
+      const stored = localStorage.getItem('asage_purchased_items');
+      if (stored) {
+        const arr = JSON.parse(stored);
+        if (Array.isArray(arr)) return arr;
+      }
+    } catch (e) {}
+    return [];
+  },
+
+  // 5.3 Check if specific item is purchased or unlocked for user
+  hasPurchasedItem(itemId) {
+    if (this.hasClubAccess()) return true;
+    const list = this.getPurchasedItems();
+    return Array.isArray(list) && list.includes(itemId);
+  },
+
+  // 5.4 Fetch fresh purchases from API
+  async fetchPurchasedItems() {
+    const user = this.getUser();
+    if (!user || !user.telegram_id) return [];
+    try {
+      const res = await fetch(`/api/user/purchases?telegram_id=${user.telegram_id}`);
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.ok && Array.isArray(data.purchased_items)) {
+          localStorage.setItem('asage_purchased_items', JSON.stringify(data.purchased_items));
+          window.dispatchEvent(new CustomEvent('asage_purchases_updated', { detail: data.purchased_items }));
+          return data.purchased_items;
+        }
+      }
+    } catch (e) {
+      console.warn('[Fetch Purchases Warning]', e);
+    }
+    return this.getPurchasedItems();
+  },
+
+  // 5.5 Verify Telegram Channel & Club Chat subscriptions via Bot API
+  async checkTelegramSubscriptions(showFeedback = false) {
+    const user = this.getUser();
+    if (!user || !user.telegram_id) {
+      if (showFeedback) {
+        this.openModal('Для проверки подписки на канал авторизуйтесь через Telegram в 1 клик.', 'Проверка подписки');
+      }
+      return { ok: false, error: 'NOT_LOGGED_IN' };
+    }
+
+    try {
+      const res = await fetch('/api/check-telegram', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ telegram_id: user.telegram_id })
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.ok) {
+          user.is_channel_subscriber = data.is_channel_subscriber;
+          user.is_club_resident = data.is_club_resident;
+          if (data.is_club_resident) {
+            user.role = 'club_member';
+          }
+          if (data.is_channel_subscriber) {
+            localStorage.setItem('asage_channel_verified', 'true');
+          }
+          localStorage.setItem('asage_user', JSON.stringify(user));
+          window.dispatchEvent(new CustomEvent('asage_auth_changed', { detail: user }));
+
+          if (showFeedback) {
+            if (data.is_club_resident) {
+              this.showToast('Статус подтвержден: Резидент SAGE Neuro Family 💎', 'success');
+            } else if (data.is_channel_subscriber) {
+              this.showToast('Подписка на канал @uncrn_sage подтверждена ✓', 'success');
+            } else {
+              this.showToast('Подписка на канал @uncrn_sage пока не обнаружена', 'error');
+            }
+          }
+          return data;
+        }
+      }
+    } catch (err) {
+      console.warn('[Check Telegram Error]', err);
+      if (showFeedback) this.showToast('Ошибка связи с сервером проверки', 'error');
+    }
+    return { ok: false };
+  },
+
+  // 5.6 Initiate purchase via Tochka Bank acquiring
+  async initiatePayment({ itemId, itemType = 'material', amount = 349, title = 'Цифровой материал' }) {
+    const user = this.getUser();
+    if (!user || !user.telegram_id) {
+      sessionStorage.setItem('asage_pending_purchase', JSON.stringify({ itemId, itemType, amount, title }));
+      this.openModal('Авторизуйтесь через Telegram (1 клик), чтобы привязать покупку к вашему аккаунту.', 'Покупка материала');
+      return;
+    }
+
+    if (this.hasClubAccess() || this.hasPurchasedItem(itemId)) {
+      this.showToast('Материал уже доступен в вашем кабинете!', 'info');
+      return;
+    }
+
+    this.showToast('Формирование счета в Банке Точка...', 'info');
+
+    try {
+      const res = await fetch('/api/payment/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          telegram_id: user.telegram_id,
+          item_id: itemId,
+          item_type: itemType,
+          amount: amount,
+          title: title
+        })
+      });
+
+      const data = await res.json();
+      if (data && data.ok) {
+        if (data.already_purchased) {
+          await this.fetchPurchasedItems();
+          this.showToast('Материал уже оплачен! Доступ открыт.', 'success');
+          window.location.reload();
+          return;
+        }
+
+        // Open Tochka Bank Checkout Modal
+        this.openTochkaCheckoutModal({
+          itemId,
+          itemType,
+          amount,
+          title,
+          purchaseId: data.purchase_id,
+          paymentUrl: data.payment_url
+        });
+      } else {
+        this.showToast(data.error || 'Ошибка создания счета', 'error');
+      }
+    } catch (e) {
+      this.showToast('Ошибка обращения к платежному шлюзу', 'error');
+    }
   },
 
   // 6. Initial Members Directory (SAGE Neuro Family Founder)
@@ -556,6 +709,78 @@ const Auth = {
   injectModal() {
     if (document.getElementById('asage-auth-modal')) return;
 
+    if (!document.getElementById('asage-auth-injected-styles')) {
+      const styles = document.createElement('style');
+      styles.id = 'asage-auth-injected-styles';
+      styles.textContent = `
+        .auth-modal-overlay {
+          position: fixed;
+          inset: 0;
+          background: rgba(9, 9, 11, 0.75);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          z-index: 999999;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 20px;
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .auth-modal-overlay.active {
+          opacity: 1;
+          pointer-events: auto;
+        }
+        .auth-modal-dialog {
+          background: #ffffff;
+          border: 1px solid #18181b;
+          width: 100%;
+          max-width: 460px;
+          padding: 32px 28px 28px;
+          box-shadow: 0 24px 64px rgba(0, 0, 0, 0.25);
+          position: relative;
+          transform: translateY(16px) scale(0.98);
+          transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+          box-sizing: border-box;
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+          color: #09090b;
+        }
+        .auth-modal-overlay.active .auth-modal-dialog {
+          transform: translateY(0) scale(1);
+        }
+        .auth-modal-close {
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          width: 32px;
+          height: 32px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #f4f4f5;
+          border: 1px solid #e4e4e7;
+          color: #09090b;
+          font-size: 14px;
+          cursor: pointer;
+          transition: all 0.15s ease;
+          z-index: 10;
+        }
+        .auth-modal-close:hover {
+          background: #09090b;
+          color: #ffffff;
+          border-color: #09090b;
+        }
+        body.asage-page-gated > *:not(#asage-channel-gate-modal):not(#asage-auth-modal):not(#asage-tochka-modal) {
+          filter: blur(14px);
+          pointer-events: none;
+          user-select: none;
+          transition: filter 0.3s ease;
+        }
+      `;
+      document.head.appendChild(styles);
+    }
+
     const modalHtml = `
       <div id="asage-auth-modal" class="auth-modal-overlay" onclick="if(event.target === this) Auth.closeModal()">
         <div class="auth-modal-dialog" style="border-radius:0 !important;">
@@ -587,6 +812,331 @@ const Auth = {
     `;
 
     document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+    // Inject Channel Gate Modal if not present
+    if (!document.getElementById('asage-channel-gate-modal')) {
+      const channelModalHtml = `
+        <div id="asage-channel-gate-modal" class="auth-modal-overlay" onclick="if(event.target === this && this.getAttribute('data-prevent-close') !== 'true') Auth.closeChannelGateModal()">
+          <div class="auth-modal-dialog" style="border-radius:0 !important; max-width:480px;">
+            <button class="auth-modal-close" onclick="Auth.closeChannelGateModal()" aria-label="Закрыть" style="border-radius:0 !important;">✕</button>
+            
+            <div style="display:inline-block; padding:3px 8px; background:#f4f4f5; border:1px solid #e4e4e7; font-family:var(--mono); font-size:0.7rem; font-weight:700; color:#09090b; margin-bottom:12px;">
+              // ДОСТУП ДЛЯ ПОДПИСЧИКОВ КАНАЛА
+            </div>
+            
+            <h2 id="channel-gate-title" style="font-size:1.35rem; font-weight:800; margin:0 0 10px 0; color:#09090b; letter-spacing:-0.02em;">
+              Материал доступен подписчикам
+            </h2>
+            
+            <p id="channel-gate-desc" style="font-size:0.9rem; color:#52525b; line-height:1.55; margin:0 0 20px 0;">
+              Этот материал предоставляется бесплатно для подписчиков официального Telegram-канала Михаила Пузырёва (<strong>@uncrn_sage</strong>).
+            </p>
+
+            <div id="channel-gate-status" style="display:none; padding:10px 14px; margin-bottom:16px; font-family:var(--mono); font-size:0.8rem; line-height:1.5;"></div>
+
+            <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:20px;">
+              <a href="https://t.me/uncrn_sage" target="_blank" class="btn-primary" style="background:#09090b; color:#ffffff; padding:12px 18px; font-size:0.88rem; font-weight:700; font-family:var(--mono); text-align:center; justify-content:center; text-decoration:none; display:flex; align-items:center; gap:8px;">
+                <span>📢 1. Подписаться на @uncrn_sage</span> ↗
+              </a>
+              
+              <button id="btn-verify-channel" onclick="Auth.handleChannelVerifyModalClick()" class="btn-primary" style="background:#10b981; border-color:#10b981; color:#ffffff; padding:12px 18px; font-size:0.88rem; font-weight:700; font-family:var(--mono); justify-content:center; cursor:pointer; display:flex; align-items:center; gap:8px;">
+                <span>⚡ 2. Проверить подписку</span>
+              </button>
+            </div>
+
+            <div id="channel-gate-login-prompt" style="display:none; background:#fafafa; border:1px solid #e4e4e7; padding:14px; text-align:center;">
+              <div style="font-family:var(--mono); font-size:0.75rem; color:#71717a; margin-bottom:10px;">
+                Для проверки подписки войдите через Telegram (1 клик):
+              </div>
+              <div class="channel-gate-widget-box" style="display:flex; justify-content:center;"></div>
+            </div>
+
+            <div style="font-family:var(--mono); font-size:0.72rem; color:#71717a; text-align:center; margin-top:14px;">
+              После подтверждения подписки материал разблокируется мгновенно.
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.insertAdjacentHTML('beforeend', channelModalHtml);
+    }
+
+    // Inject Tochka Checkout Modal if not present
+    if (!document.getElementById('asage-tochka-modal')) {
+      const tochkaModalHtml = `
+        <div id="asage-tochka-modal" class="auth-modal-overlay" onclick="if(event.target === this) Auth.closeTochkaCheckoutModal()">
+          <div class="auth-modal-dialog" style="border-radius:0 !important; max-width:500px;">
+            <button class="auth-modal-close" onclick="Auth.closeTochkaCheckoutModal()" aria-label="Закрыть" style="border-radius:0 !important;">✕</button>
+            
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; flex-wrap:wrap; gap:6px;">
+              <span style="display:inline-block; padding:3px 8px; background:#09090b; color:#ffffff; font-family:var(--mono); font-size:0.7rem; font-weight:700;">
+                ТОЧКА БАНК // ЭКВАЙРИНГ
+              </span>
+              <span style="font-family:var(--mono); font-size:0.72rem; color:#71717a;">
+                БЕЗОПАСНАЯ ОПЛАТА
+              </span>
+            </div>
+
+            <h2 id="tochka-modal-title" style="font-size:1.35rem; font-weight:800; margin:0 0 8px 0; color:#09090b; letter-spacing:-0.02em;">
+              Покупка цифрового материала
+            </h2>
+
+            <div id="tochka-modal-item-name" style="font-size:0.95rem; color:#27272a; margin-bottom:16px; font-weight:600;">
+              Название материала
+            </div>
+
+            <div style="background:#fafafa; border:1px solid #e4e4e7; border-left:4px solid #09090b; padding:16px; margin-bottom:20px;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-family:var(--mono); font-size:0.82rem; color:#71717a;">ИТОГО К ОПЛАТЕ:</span>
+                <span id="tochka-modal-price" style="font-family:var(--mono); font-size:1.4rem; font-weight:800; color:#09090b;">349 ₽</span>
+              </div>
+              <div style="font-family:var(--mono); font-size:0.72rem; color:#71717a; margin-top:6px;">
+                Без НДС (УСН) · Моментальный доступ в Личном кабинете
+              </div>
+            </div>
+
+            <div style="font-size:0.82rem; color:#52525b; line-height:1.55; margin-bottom:20px;">
+              💳 Оплата картами РФ (МИР, Visa, MasterCard), СБП и Mir Pay через интернет-эквайринг <strong>АО «Точка»</strong> (Лицензия Банка России № 3545, протокол 3D-Secure, стандарт PCI DSS).
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:16px;">
+              <a id="tochka-modal-pay-btn" href="#" target="_blank" class="btn-primary" style="background:#09090b; color:#ffffff; padding:14px; font-size:0.9rem; font-weight:700; font-family:var(--mono); text-align:center; justify-content:center; text-decoration:none; display:flex; align-items:center; gap:8px;">
+                <span>Оплатить в Банке Точка</span> ↗
+              </a>
+              
+              <button id="tochka-modal-test-btn" onclick="Auth.handleTestPaymentClick()" class="btn-secondary" style="padding:9px; font-size:0.78rem; font-family:var(--mono); text-align:center; justify-content:center; cursor:pointer; background:#f4f4f5; color:#52525b; border:1px solid #e4e4e7;">
+                ⚡ Подтвердить тестовую оплату (Режим проверки)
+              </button>
+            </div>
+
+            <div style="font-size:0.72rem; color:#71717a; line-height:1.4; text-align:center;">
+              Совершая оплату, вы безоговорочно принимаете условия <a href="/offer-materials" target="_blank" style="color:#09090b; text-decoration:underline;">Публичной оферты купли-продажи цифрового контента</a>. Цифровой товар надлежащего качества после открытия доступа возврату не подлежит.
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.insertAdjacentHTML('beforeend', tochkaModalHtml);
+    }
+  },
+
+  // Channel Gate Modal Actions
+  openChannelGateModal({ title = 'Материал платформы', onVerified = null, preventClose = false, returnUrl = '/cabinet/' }) {
+    this._channelVerifyCallback = onVerified;
+    this.injectModal();
+    const modal = document.getElementById('asage-channel-gate-modal');
+    if (!modal) return;
+
+    const titleElem = modal.querySelector('#channel-gate-title');
+    const descElem = modal.querySelector('#channel-gate-desc');
+    const statusElem = modal.querySelector('#channel-gate-status');
+    const loginPrompt = modal.querySelector('#channel-gate-login-prompt');
+    const closeBtn = modal.querySelector('.auth-modal-close');
+
+    if (titleElem) titleElem.innerText = `Доступ: ${title}`;
+    if (descElem) descElem.innerHTML = `Материал «<strong>${title}</strong>» доступен бесплатно для подписчиков официального Telegram-канала Михаила Пузырёва (<strong>@uncrn_sage</strong>).`;
+    if (statusElem) statusElem.style.display = 'none';
+    if (loginPrompt) loginPrompt.style.display = 'none';
+
+    if (preventClose) {
+      modal.setAttribute('data-prevent-close', 'true');
+      if (closeBtn) {
+        closeBtn.innerHTML = '← В кабинет';
+        closeBtn.style.fontSize = '0.75rem';
+        closeBtn.style.width = 'auto';
+        closeBtn.style.padding = '4px 10px';
+        closeBtn.onclick = () => { window.location.href = returnUrl; };
+      }
+    } else {
+      modal.removeAttribute('data-prevent-close');
+      if (closeBtn) {
+        closeBtn.innerHTML = '✕';
+        closeBtn.style.fontSize = '';
+        closeBtn.style.width = '';
+        closeBtn.style.padding = '';
+        closeBtn.onclick = () => { Auth.closeChannelGateModal(); };
+      }
+    }
+
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  },
+
+  closeChannelGateModal() {
+    const modal = document.getElementById('asage-channel-gate-modal');
+    if (modal) {
+      if (modal.getAttribute('data-prevent-close') === 'true') {
+        return;
+      }
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  },
+
+  async handleChannelVerifyModalClick() {
+    const user = this.getUser();
+    const modal = document.getElementById('asage-channel-gate-modal');
+    if (!modal) return;
+    const btn = modal.querySelector('#btn-verify-channel');
+    const statusElem = modal.querySelector('#channel-gate-status');
+    const loginPrompt = modal.querySelector('#channel-gate-login-prompt');
+    const widgetBox = modal.querySelector('.channel-gate-widget-box');
+
+    if (!user || !user.telegram_id) {
+      if (loginPrompt) {
+        loginPrompt.style.display = 'block';
+        if (widgetBox && !widgetBox.querySelector('script') && !widgetBox.querySelector('iframe')) {
+          const script = document.createElement('script');
+          script.src = 'https://telegram.org/js/telegram-widget.js?22';
+          script.setAttribute('data-telegram-login', 'Michaelsage_bot');
+          script.setAttribute('data-size', 'medium');
+          script.setAttribute('data-radius', '0');
+          script.setAttribute('data-onauth', 'onTelegramAuth(user)');
+          script.setAttribute('data-request-access', 'write');
+          script.async = true;
+          widgetBox.appendChild(script);
+        }
+      }
+      if (statusElem) {
+        statusElem.style.display = 'block';
+        statusElem.style.background = '#fef2f2';
+        statusElem.style.color = '#dc2626';
+        statusElem.style.border = '1px solid #fecaca';
+        statusElem.innerHTML = '⚠️ Пожалуйста, авторизуйтесь через Telegram ниже для проверки подписки.';
+      }
+      return;
+    }
+
+    if (btn) {
+      btn.disabled = true;
+      btn.innerText = '⏳ Проверяем подписку через Bot API...';
+    }
+
+    const res = await this.checkTelegramSubscriptions(false);
+
+    if (res && res.is_channel_subscriber) {
+      if (statusElem) {
+        statusElem.style.display = 'block';
+        statusElem.style.background = '#dcfce7';
+        statusElem.style.color = '#15803d';
+        statusElem.style.border = '1px solid #86efac';
+        statusElem.innerHTML = '✓ Подписка на @uncrn_sage подтверждена! Открываем доступ...';
+      }
+      setTimeout(() => {
+        document.body.classList.remove('asage-page-gated');
+        modal.removeAttribute('data-prevent-close');
+        this.closeChannelGateModal();
+        if (typeof this._channelVerifyCallback === 'function') {
+          this._channelVerifyCallback();
+          this._channelVerifyCallback = null;
+        } else {
+          window.location.reload();
+        }
+      }, 900);
+    } else {
+      if (btn) {
+        btn.disabled = false;
+        btn.innerText = '⚡ 2. Проверить подписку';
+      }
+      if (statusElem) {
+        statusElem.style.display = 'block';
+        statusElem.style.background = '#fef2f2';
+        statusElem.style.color = '#dc2626';
+        statusElem.style.border = '1px solid #fecaca';
+        statusElem.innerHTML = '✕ Подписка не обнаружена. Перейдите по кнопке №1 в канал @uncrn_sage, подпишитесь и нажмите проверить еще раз.';
+      }
+    }
+  },
+
+  // Tochka Bank Checkout Modal Actions
+  openTochkaCheckoutModal({ itemId, itemType, amount, title, purchaseId, paymentUrl }) {
+    this._currentPendingPurchase = { itemId, itemType, amount, title, purchaseId };
+    this.injectModal();
+    const modal = document.getElementById('asage-tochka-modal');
+    if (!modal) return;
+
+    const titleElem = modal.querySelector('#tochka-modal-item-name');
+    const priceElem = modal.querySelector('#tochka-modal-price');
+    const payBtn = modal.querySelector('#tochka-modal-pay-btn');
+
+    if (titleElem) titleElem.innerText = title;
+    if (priceElem) priceElem.innerText = `${amount} ₽`;
+    if (payBtn) {
+      payBtn.href = paymentUrl || '#';
+      payBtn.onclick = (e) => {
+        if (!paymentUrl || paymentUrl.startsWith('#') || paymentUrl.includes('pay_item=')) {
+          e.preventDefault();
+          this.handleTestPaymentClick();
+        }
+      };
+    }
+
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  },
+
+  closeTochkaCheckoutModal() {
+    const modal = document.getElementById('asage-tochka-modal');
+    if (modal) {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  },
+
+  async handleTestPaymentClick() {
+    const user = this.getUser();
+    if (!user || !user.telegram_id || !this._currentPendingPurchase) return;
+    const { itemId, itemType, amount } = this._currentPendingPurchase;
+
+    this.showToast('Подтверждение оплаты в Точка Банке...', 'info');
+
+    try {
+      const res = await fetch('/api/payment/test-complete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          telegram_id: user.telegram_id,
+          item_id: itemId,
+          item_type: itemType,
+          amount: amount,
+          secret: 'sage_secure_platform_2026'
+        })
+      });
+
+      if (res.ok) {
+        await this.fetchPurchasedItems();
+        this.closeTochkaCheckoutModal();
+        this.showToast('Оплата успешно подтверждена! Материал разблокирован.', 'success');
+        window.location.reload();
+      } else {
+        this.showToast('Ошибка подтверждения тестового платежа', 'error');
+      }
+    } catch (e) {
+      this.showToast('Сетевая ошибка', 'error');
+    }
+  },
+
+  // Protect standalone page for channel subscribers only
+  protectChannelPage(pageTitle = 'Материал') {
+    const check = () => {
+      const isSubscribed = this.isChannelSubscriber();
+      const lockwall = document.getElementById('page-gate-lockwall');
+      const protectedContent = document.getElementById('page-protected-content');
+
+      if (!isSubscribed) {
+        if (protectedContent) protectedContent.style.filter = 'blur(6px)';
+        if (lockwall) lockwall.style.display = 'flex';
+      } else {
+        if (protectedContent) protectedContent.style.filter = 'none';
+        if (lockwall) lockwall.style.display = 'none';
+      }
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', check);
+    } else {
+      check();
+    }
+
+    window.addEventListener('asage_auth_changed', check);
   },
 
   // 5. Favorites Management (Prompts / Glossary / Articles)
@@ -837,8 +1387,51 @@ window.Auth = Auth;
 document.addEventListener('DOMContentLoaded', () => {
   Auth.injectModal();
   Auth.updateHeaderUI();
+
+  // If user is logged in, sync purchases & memberships in background
+  if (Auth.isLoggedIn()) {
+    Auth.fetchPurchasedItems();
+    // Non-blocking subscription check if not checked recently
+    const lastCheck = localStorage.getItem('asage_last_sub_check');
+    const now = Date.now();
+    if (!lastCheck || now - Number(lastCheck) > 1000 * 60 * 60 * 4) {
+      Auth.checkTelegramSubscriptions(false);
+      localStorage.setItem('asage_last_sub_check', String(now));
+    }
+  }
+
+  // Handle URL Payment Return Parameters
+  try {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('payment') === 'success') {
+      Auth.showToast('✓ Оплата в Банке Точка успешно подтверждена! Доступ открыт.', 'success');
+      Auth.fetchPurchasedItems();
+      // Clean up URL
+      params.delete('payment');
+      params.delete('pid');
+      const newQuery = params.toString() ? '?' + params.toString() : '';
+      window.history.replaceState({}, '', window.location.pathname + newQuery + window.location.hash);
+    } else if (params.get('pay_item')) {
+      const itemId = params.get('pay_item');
+      const itemType = params.get('type') || 'material';
+      const amount = Number(params.get('amount') || 349);
+      const title = decodeURIComponent(params.get('title') || 'Цифровой материал');
+      const pid = params.get('pid') || '';
+      Auth.openTochkaCheckoutModal({
+        itemId,
+        itemType,
+        amount,
+        title,
+        purchaseId: pid,
+        paymentUrl: '#'
+      });
+    }
+  } catch (e) {}
 });
 
 window.addEventListener('asage_auth_changed', () => {
   Auth.updateHeaderUI();
+  if (Auth.isLoggedIn()) {
+    Auth.fetchPurchasedItems();
+  }
 });

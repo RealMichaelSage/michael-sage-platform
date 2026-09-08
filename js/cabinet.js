@@ -229,18 +229,30 @@ function renderClubLessons() {
     const isFav = typeof Auth !== 'undefined' && Auth.isFavorite ? Auth.isFavorite('lesson', l.id) : false;
     const topicsHtml = l.topics.map(t => `<span class="tech-tag" style="font-size:0.7rem; padding:2px 8px;">${t}</span>`).join(' ');
 
+    const isPurchased = typeof Auth !== 'undefined' && Auth.hasPurchasedItem ? Auth.hasPurchasedItem(l.id) : false;
+    const isUnlocked = hasAccess || isPurchased;
+
     let actionBtnHtml = '';
-    if (hasAccess) {
+    if (isUnlocked) {
       if (l.type === 'doc') {
         actionBtnHtml = `<a href="${l.docUrl}" target="_blank" class="btn-primary" style="padding:10px 16px; font-size:0.82rem; width:100%; justify-content:center; text-align:center; text-decoration:none; display:inline-flex; align-items:center; gap:8px;"><span>📄</span> Открыть туториал (${l.platform}) ↗</a>`;
       } else {
-        actionBtnHtml = `<button onclick="openClubVideo('${l.id}')" class="btn-primary" style="padding:10px 16px; font-size:0.82rem; width:100%; justify-content:center; cursor:pointer; display:inline-flex; align-items:center; gap:8px;"><span>▶</span> Смотреть запись онлайн</button>`;
+        actionBtnHtml = `<button onclick="openClubVideo('${l.id}')" class="btn-primary" style="padding:10px 16px; font-size:0.82rem; width:100%; justify-content:center; cursor:pointer; display:inline-flex; align-items:center; gap:8px;"><span>▶</span> Смотреть мастер-класс</button>`;
       }
     } else {
-      actionBtnHtml = `<a href="https://web.tribute.tg/s/O6I" target="_blank" class="btn-secondary" style="padding:10px 16px; font-size:0.82rem; width:100%; justify-content:center; text-align:center; text-decoration:none; background:#fafafa; color:#52525b; border:1px dashed #d4d4d8; font-weight:600;">🔒 Доступно в SAGE Neuro Family ↗</a>`;
+      actionBtnHtml = `
+        <div style="display:flex; flex-direction:column; gap:8px; width:100%;">
+          <button onclick="Auth.initiatePayment({ itemId: '${l.id}', itemType: 'video', amount: 349, title: '${encodeURIComponent(l.title)}' })" class="btn-primary" style="padding:10px 14px; font-size:0.82rem; width:100%; justify-content:center; cursor:pointer; background:#09090b; color:#ffffff; font-weight:700; font-family:var(--mono); display:flex; align-items:center; gap:6px;">
+            <span>💳 Купить за 349 ₽</span> ↗
+          </button>
+          <a href="https://web.tribute.tg/s/O6I" target="_blank" class="btn-secondary" style="padding:9px 14px; font-size:0.82rem; width:100%; justify-content:center; text-align:center; text-decoration:none; background:#fafafa; color:#52525b; border:1px solid #d4d4d8; font-weight:600; display:inline-flex; align-items:center; gap:6px;">
+            <span>💎 Вступить в Клуб (все уроки)</span> ↗
+          </a>
+        </div>
+      `;
     }
 
-    const lockBadgeHtml = !hasAccess ? `<div class="club-lesson-lock-overlay">🔒 Для резидентов</div>` : '';
+    const lockBadgeHtml = !isUnlocked ? `<div class="club-lesson-lock-overlay">🔒 349 ₽ // Клуб</div>` : '';
 
     html += `
       <div class="club-lesson-card cabinet-card" id="card-${l.id}" style="padding:0; overflow:hidden;">
@@ -341,6 +353,14 @@ function toggleClubLessonFavorite(e, lessonId) {
 
 // ── 5. LIGHTING & CAMERA ANGLES GUIDE MODALS ─────────────────────────────────
 function openLightingGuideModal() {
+  if (typeof Auth !== 'undefined' && !Auth.isChannelSubscriber()) {
+    Auth.openChannelGateModal({
+      title: 'Шпаргалка по свету (20 схем)',
+      onVerified: () => openLightingGuideModal()
+    });
+    return;
+  }
+
   const existing = document.getElementById('guide-lighting-modal');
   if (existing) existing.remove();
 
@@ -398,6 +418,14 @@ function openLightingGuideModal() {
 }
 
 function openAnglesGuideModal() {
+  if (typeof Auth !== 'undefined' && !Auth.isChannelSubscriber()) {
+    Auth.openChannelGateModal({
+      title: 'Гид по ракурсам съемки (20 схем)',
+      onVerified: () => openAnglesGuideModal()
+    });
+    return;
+  }
+
   const existing = document.getElementById('guide-angles-modal');
   if (existing) existing.remove();
 
