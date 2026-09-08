@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Энциклопедия &&nbsp;Глоссарий по&nbsp;AI (250+ Терминов) — Михаил Пузырёв</title>
+  <title>Энциклопедия &&nbsp;Глоссарий по&nbsp;AI (120+ Терминов) — Михаил Пузырёв</title>
   <meta name="description" content="Полный алфавитный глоссарий и интерактивная энциклопедия по Искусственному Интеллекту: Токены, Харнессы, Трансформеры, MCP, RAG, Vibe Coding, DPO, GRPO, рассуждающие модели и GEO.">
   <meta name="robots" content="index, follow">
   <!-- Favicon Suite -->
@@ -16,14 +16,14 @@
   <link rel="canonical" href="https://a-sage.ru/glossary">
 
   <!-- OpenGraph -->
-  <meta property="og:title" content="Энциклопедия & Глоссарий по AI (250+ Терминов) — Михаил Пузырёв">
+  <meta property="og:title" content="Энциклопедия & Глоссарий по AI (120+ Терминов) — Михаил Пузырёв">
   <meta property="og:description" content="Алфавитный интерактивный справочник по ИИ: от математики трансформеров до автономных агентов и Vibe Coding.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://a-sage.ru/glossary">
   <meta property="og:image" content="https://a-sage.ru/img/mikhail_about.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="AI-Глоссарий — Михаил Пузырёв">
-  <meta name="twitter:description" content="250+ терминов современного искусственного интеллекта по алфавиту с кодом и бизнес-кейсами.">
+  <meta name="twitter:description" content="120+ терминов современного искусственного интеллекта по алфавиту с кодом и бизнес-кейсами.">
   <meta name="twitter:image" content="https://a-sage.ru/img/mikhail_about.jpg">
 
   <!-- Fonts -->
@@ -38,7 +38,7 @@
     "@type": "DefinedTermSet",
     "@id": "https://a-sage.ru/glossary#terms",
     "name": "Интерактивная Энциклопедия & Глоссарий по Искусственному Интеллекту и Vibe Coding",
-    "description": "Алфавитный справочник из 250+ ключевых понятий искусственного интеллекта, нейросетевых архитектур, AI-агентов и скоростной разработки.",
+    "description": "Алфавитный справочник из 120+ ключевых понятий искусственного интеллекта, нейросетевых архитектур, AI-агентов и скоростной разработки.",
     "url": "https://a-sage.ru/glossary",
     "inLanguage": "ru-RU",
     "author": {
@@ -1041,6 +1041,8 @@ function initScrollSpy() {
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+      const tc = document.getElementById('totalCount');
+      if (tc && typeof allTerms !== 'undefined') tc.innerText = allTerms.length;
       renderTerms();
       scrollToHashTerm();
       window.addEventListener('hashchange', scrollToHashTerm);

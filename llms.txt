@@ -61,7 +61,7 @@
 - Хаб калькуляторов и финмоделей: https://a-sage.ru/calculators
 - Венчурная финмодель 5.0 Pro (28 метрик, DCF, IRR, FAST Standard): https://a-sage.ru/calculator-finmodel
 - Калькулятор налогов УСН и НДС (налог сверху/внутри): https://a-sage.ru/calculator-tax
-- AI-Глоссарий (250+ терминов): https://a-sage.ru/glossary
+- AI-Глоссарий (120+ терминов): https://a-sage.ru/glossary
 - Библиотека системных промптов (37 ролей, фреймворк GRACEF): https://a-sage.ru/prompts
 - Оплата Google One & Gemini Advanced из РФ: https://a-sage.ru/google-one-guide (Markdown: https://a-sage.ru/google-one-guide.md)
 
