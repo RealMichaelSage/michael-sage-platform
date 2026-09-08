@@ -698,7 +698,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
-      const extraPad = barHeight > 0 ? 16 : 14;
+      // Only add breathing room when scrolling to unpadded sub-blocks (like contour cards) under a secondary toolbar.
+      // Standard sections (.section, .hero, .form-section) already have generous internal padding (64px+)
+      // and their top borders must align flush under the sticky navbar/toolbar without exposing the previous section.
+      const isFullSection = targetSec && (
+        targetSec.tagName.toLowerCase() === 'section' ||
+        targetSec.classList.contains('section') ||
+        targetSec.classList.contains('hero') ||
+        targetSec.classList.contains('form-section') ||
+        targetSec.classList.contains('section-border')
+      );
+      const extraPad = (barHeight > 0 && !isFullSection) ? 16 : 0;
       return navHeight + confHeight + barHeight + extraPad;
     }
 
@@ -728,7 +738,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
           const totalOffset = getStickyHeaderOffset(targetSec);
           const elementPosition = targetSec.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - totalOffset;
+          const offsetPosition = Math.round(elementPosition + window.pageYOffset - totalOffset);
 
           window.scrollTo({
             top: Math.max(0, offsetPosition),
