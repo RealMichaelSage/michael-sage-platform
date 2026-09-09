@@ -826,6 +826,11 @@ const server = http.createServer(async (req, res) => {
       let paymentUrl = '';
       let operationId = '';
       const targetReturnPage = itemType === 'solution' ? 'solutions' : 'cabinet';
+      let returnBaseUrl = `https://a-sage.ru/${targetReturnPage}`;
+      if (body.return_url && typeof body.return_url === 'string' && body.return_url.startsWith('https://a-sage.ru')) {
+        returnBaseUrl = body.return_url.replace(/\/+$/, '');
+      }
+      const sep = returnBaseUrl.includes('?') ? '&' : '?';
 
       // If Tochka Bank API token is configured, request payment session
       if (CONFIG.TOCHKA_JWT_TOKEN && CONFIG.TOCHKA_CUSTOMER_CODE) {
@@ -838,8 +843,8 @@ const server = http.createServer(async (req, res) => {
               amount: Number(amount.toFixed(2)),
               purpose: `Оплата доступа: ${title.slice(0, 100)} (a-sage.ru)`,
               paymentMode: ['sbp', 'card'],
-              redirectUrl: `https://a-sage.ru/${targetReturnPage}/?payment=success&item_id=${encodeURIComponent(itemId)}&pid=${purchaseId}`,
-              failRedirectUrl: `https://a-sage.ru/${targetReturnPage}/?payment=failed&item_id=${encodeURIComponent(itemId)}`,
+              redirectUrl: `${returnBaseUrl}${sep}payment=success&item_id=${encodeURIComponent(itemId)}&pid=${purchaseId}`,
+              failRedirectUrl: `${returnBaseUrl}${sep}payment=failed&item_id=${encodeURIComponent(itemId)}`,
               preAuthorization: false,
               ttl: 10080,
               paymentLinkId: purchaseId,
@@ -963,7 +968,7 @@ const server = http.createServer(async (req, res) => {
               telegram_id: tgId,
               item_type: 'solution',
               item_id: itemId || 'solution-01',
-              amount: opData.amount || 249,
+              amount: opData.amount || (itemId === 'solution-01' ? 10 : 249),
               currency: 'RUB',
               payment_id: pid || opData.paymentLinkId || targetOpId,
               operation_id: targetOpId,

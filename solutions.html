@@ -1884,10 +1884,11 @@
             `;
           }
         } else {
+          const price = (solId === 'solution-01') ? 10 : 249;
           actions.innerHTML = `
             <div style="display:flex; align-items:center; justify-content:space-between; width:100%; gap:8px; flex-wrap:wrap;">
-              <button onclick="Auth.initiatePayment({ itemId: '${solId}', itemType: 'solution', amount: 249, title: '${encodeURIComponent(title)}' })" class="btn-sol-link btn-sol-primary" style="padding:8px 12px; font-size:0.78rem; cursor:pointer; background:#09090b; color:#ffffff; flex:1; justify-content:center; text-align:center;">
-                Купить 249 ₽ ↗
+              <button onclick="Auth.initiatePayment({ itemId: '${solId}', itemType: 'solution', amount: ${price}, title: '${encodeURIComponent(title)}' })" class="btn-sol-link btn-sol-primary" style="padding:8px 12px; font-size:0.78rem; cursor:pointer; background:#09090b; color:#ffffff; flex:1; justify-content:center; text-align:center;">
+                Купить ${price} ₽ ↗
               </button>
               <a href="https://web.tribute.tg/s/O6I" target="_blank" class="btn-sol-link" style="padding:8px 12px; font-size:0.78rem; border:1px solid #18181b; color:#09090b; background:#ffffff; text-decoration:none; flex:1; justify-content:center; text-align:center;">
                 💎 В Клуб ↗

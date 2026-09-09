@@ -543,6 +543,10 @@ const Auth = {
 
     // If user specifically purchased this item in DB
     if (user && this.hasPurchasedItem(itemId)) {
+      if (itemId === 'solution-01') {
+        window.location.href = '/solutions/lead-scraping-engine';
+        return;
+      }
       this.showToast('Материал уже оплачен! Переходим в кабинет...', 'info');
       window.location.href = `/cabinet/?item_id=${encodeURIComponent(itemId)}`;
       return;
@@ -561,6 +565,7 @@ const Auth = {
           item_type: itemType,
           amount: amount,
           title: cleanTitle,
+          return_url: window.location.href.split('?')[0],
           client_name: user ? `${user.first_name || ''} ${user.last_name || ''}`.trim() : 'Покупатель',
           client_email: (user && user.email) ? user.email : 'i@michaelpuzyrev.ru'
         })
@@ -571,6 +576,10 @@ const Auth = {
         if (data.already_purchased) {
           await this.fetchPurchasedItems();
           this.showToast('Материал уже оплачен! Доступ открыт.', 'success');
+          if (itemId === 'solution-01') {
+            window.location.href = '/solutions/lead-scraping-engine';
+            return;
+          }
           window.location.href = `/cabinet/?item_id=${encodeURIComponent(itemId)}`;
           return;
         }
@@ -873,12 +882,12 @@ const Auth = {
   },
 
   openResidentGuide(guideUrl, guideTitle = '') {
-    if (this.hasClubAccess()) {
+    if (this.hasClubAccess() || this.hasPurchasedItem('solution-01')) {
       window.location.href = guideUrl;
     } else {
       this.openModal(
-        'Данный гайд доступен только в личном кабинете для резидентов клуба.',
-        'Доступен только в личном кабинете'
+        'Данный гайд доступен резидентам клуба или после оплаты решения.',
+        'Доступ ограничен'
       );
     }
   },
