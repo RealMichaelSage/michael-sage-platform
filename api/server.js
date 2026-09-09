@@ -135,22 +135,6 @@ const SEED_USERS = {
     is_channel_subscriber: true,
     is_private: false,
     show_telegram_contact: false
-  },
-  "8489288884": {
-    id: "2577ad93-bcbb-45cb-9435-527e758f0311",
-    telegram_id: 8489288884,
-    username: "Imichaelsage",
-    first_name: "Michael Sage",
-    last_name: "Sage",
-    photo_url: "/img/avatars/8489288884.jpg",
-    bio: "Сделаю самое большое СМИ по психологии и подкаст проезд СДВГ. И всё это с помощью нейросетей.",
-    channel_url: "@adhdpodcast",
-    website_url: "https://aipsy.press/",
-    role: "club_member",
-    is_club_resident: true,
-    is_channel_subscriber: true,
-    is_private: false,
-    show_telegram_contact: false
   }
 };
 
@@ -250,21 +234,18 @@ function upsertLocalUser(userData) {
   const uname = (userData.username || existing.username || '').replace(/^@/, '').toLowerCase();
 
   const isFounder = (tgId === '439634804' || tgId === '88472911' || ['michael_sage', 'uncrn_sage'].includes(uname));
-  const isClubKnown = (uname === 'imichaelsage' || tgId === '8489288884' || userData.is_club_resident === true || existing.is_club_resident === true || userData.role === 'club_member' || existing.role === 'club_member');
 
   let role = 'member';
   if (isFounder) {
     role = 'founder';
-  } else if (isClubKnown) {
-    role = 'club_member';
-  } else if (userData.role) {
+  } else if (userData.role !== undefined) {
     role = userData.role;
   } else if (existing.role) {
     role = existing.role;
   }
 
-  const isResident = isFounder || isClubKnown;
-  const isChannel = isFounder || isClubKnown || userData.is_channel_subscriber === true || existing.is_channel_subscriber === true;
+  const isResident = isFounder || role === 'club_member' || userData.is_club_resident === true;
+  const isChannel = isFounder || isResident || userData.is_channel_subscriber === true || existing.is_channel_subscriber === true;
 
   const showTg = typeof userData.show_telegram_contact !== 'undefined'
     ? Boolean(userData.show_telegram_contact)
@@ -567,16 +548,13 @@ const server = http.createServer(async (req, res) => {
       // Founder bypass
       const isFounder = (effTgId === 439634804 || effTgId === 88472911 || unameClean === 'michael_sage' || unameClean === 'uncrn_sage');
 
-      // Known Resident whitelist (Imichaelsage, etc.)
-      const isKnownResident = (unameClean === 'imichaelsage' || effTgId === 8489288884 || (existingLocal && (existingLocal.role === 'club_member' || existingLocal.is_club_resident === true)));
-
-      let isChannelSubscriber = isFounder || isKnownResident || (existingLocal ? existingLocal.is_channel_subscriber : false);
-      let isClubResident = isFounder || isKnownResident || (existingLocal ? existingLocal.is_club_resident : false);
+      let isChannelSubscriber = isFounder || (existingLocal ? Boolean(existingLocal.is_channel_subscriber) : false);
+      let isClubResident = isFounder;
       let statusChannel = isFounder ? 'creator' : (isChannelSubscriber ? 'member' : 'unknown');
-      let statusClub = isFounder ? 'creator' : (isClubResident ? 'member' : 'unknown');
+      let statusClub = isFounder ? 'creator' : 'unknown';
 
-      // Live Telegram query if not already verified
-      if (!isFounder && !isKnownResident && CONFIG.TELEGRAM_BOT_TOKEN && effTgId) {
+      // Live Telegram query
+      if (!isFounder && CONFIG.TELEGRAM_BOT_TOKEN && effTgId) {
         // Check Channel
         if (CONFIG.TELEGRAM_CHANNEL_USERNAME) {
           const chRes = await checkTelegramChatMember(CONFIG.TELEGRAM_CHANNEL_USERNAME, effTgId);
@@ -592,11 +570,23 @@ const server = http.createServer(async (req, res) => {
           if (clubRes.ok) {
             isClubResident = clubRes.isMember;
             statusClub = clubRes.status;
+          } else {
+            // Telegram returned error or status (user left, kicked, not found)
+            if (clubRes.status === 'left' || clubRes.status === 'kicked') {
+              isClubResident = false;
+              statusClub = clubRes.status;
+            } else if (clubRes.error && (clubRes.error.toLowerCase().includes('user not found') || clubRes.error.toLowerCase().includes('participant_id_invalid'))) {
+              isClubResident = false;
+              statusClub = 'not_participant';
+            } else {
+              isClubResident = false;
+              statusClub = clubRes.error || 'unknown';
+            }
           }
         }
       }
 
-      const userRole = isFounder ? 'founder' : (isClubResident ? 'club_member' : (existingLocal ? existingLocal.role : 'member'));
+      const userRole = isFounder ? 'founder' : (isClubResident ? 'club_member' : 'member');
 
       // Persist in Local Store
       if (effTgId) {
@@ -637,6 +627,28 @@ const server = http.createServer(async (req, res) => {
         status_club: statusClub,
         checked_at: new Date().toISOString()
       });
+    }
+
+    // ── 1.1 TELEGRAM BOT WEBHOOK (POST /api/telegram/webhook) ──
+    if (pathname === '/api/telegram/webhook' && req.method === 'POST') {
+      const body = await parseBody(req);
+      if (body && body.chat_member) {
+        const cm = body.chat_member;
+        const targetUser = cm.new_chat_member?.user || cm.from;
+        const newStatus = cm.new_chat_member?.status;
+        const isNowMember = ['creator', 'administrator', 'member', 'restricted'].includes(newStatus);
+        const tgId = targetUser?.id;
+        if (tgId && tgId !== 439634804 && tgId !== 88472911) {
+          console.log(`[Telegram Webhook] User ${tgId} status in chat ${cm.chat?.id} changed to: ${newStatus} (isMember: ${isNowMember})`);
+          upsertLocalUser({
+            telegram_id: tgId,
+            role: isNowMember ? 'club_member' : 'member',
+            is_club_resident: isNowMember,
+            telegram_checked_at: new Date().toISOString()
+          });
+        }
+      }
+      return sendJson(res, 200, { ok: true });
     }
 
     // ── 2. USER PROFILE SYNC (POST /api/user/sync) ──

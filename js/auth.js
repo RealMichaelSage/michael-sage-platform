@@ -22,10 +22,6 @@ const Auth = {
           if (!user.bio || !user.bio.trim()) {
             user.bio = 'Просто обучаю людей упрощать жизнь и бизнес с помощью нейросетей';
           }
-        } else if (uname === 'imichaelsage' || tgId === 8489288884) {
-          user.role = 'club_member';
-          user.is_club_resident = true;
-          user.is_channel_subscriber = true;
         }
       }
       return user;
@@ -46,11 +42,9 @@ const Auth = {
       const tgId = Number(tgUser.id);
       const uname = (tgUser.username || '').replace(/^@/, '').toLowerCase();
       const isFounder = (uname === 'michael_sage' || uname === 'uncrn_sage' || tgId === 439634804 || tgId === 88472911);
-      const isKnownResident = (uname === 'imichaelsage' || tgId === 8489288884);
-
-      let isClubResident = isFounder || isKnownResident;
-      let isChannelSubscriber = isFounder || isKnownResident;
-      let userRole = isFounder ? 'founder' : (isClubResident ? 'club_member' : 'member');
+      let isClubResident = isFounder;
+      let isChannelSubscriber = isFounder;
+      let userRole = isFounder ? 'founder' : 'member';
 
       // 1. Immediately verify Telegram club/channel status via Backend API
       try {
@@ -62,13 +56,14 @@ const Auth = {
         if (checkRes.ok) {
           const checkData = await checkRes.json();
           if (checkData && checkData.ok) {
-            if (checkData.is_club_resident) {
-              isClubResident = true;
-              userRole = isFounder ? 'founder' : 'club_member';
-            }
+            isClubResident = isFounder || Boolean(checkData.is_club_resident);
+            userRole = isFounder ? 'founder' : (isClubResident ? 'club_member' : 'member');
             if (checkData.is_channel_subscriber) {
               isChannelSubscriber = true;
               localStorage.setItem('asage_channel_verified', 'true');
+            } else {
+              isChannelSubscriber = isFounder;
+              localStorage.removeItem('asage_channel_verified');
             }
           }
         }
@@ -188,7 +183,6 @@ const Auth = {
       const tgId = Number(tgUser.id);
       const uname = (tgUser.username || '').replace(/^@/, '').toLowerCase();
       const isFounder = (uname === 'michael_sage' || uname === 'uncrn_sage' || tgId === 439634804 || tgId === 88472911);
-      const isKnownResident = (uname === 'imichaelsage' || tgId === 8489288884);
 
       const fallbackUser = {
         id: 'tg_' + tgUser.id,
@@ -202,9 +196,9 @@ const Auth = {
         channel_url: '',
         website_url: '',
         is_private: false,
-        role: isFounder ? 'founder' : (isKnownResident ? 'club_member' : 'member'),
-        is_club_resident: isFounder || isKnownResident,
-        is_channel_subscriber: isFounder || isKnownResident,
+        role: isFounder ? 'founder' : 'member',
+        is_club_resident: isFounder,
+        is_channel_subscriber: isFounder,
         is_founder: isFounder
       };
       localStorage.setItem('asage_user', JSON.stringify(fallbackUser));
@@ -338,11 +332,8 @@ const Auth = {
           const lData = await localRes.json();
           if (lData && lData.ok && lData.user) {
             const dbUser = lData.user;
-            const uname = (dbUser.username || user.username || '').replace(/^@/, '').toLowerCase();
-            const tgId = Number(dbUser.telegram_id || user.telegram_id || 0);
-            const isKnownResident = (uname === 'imichaelsage' || tgId === 8489288884);
-            const isResident = isKnownResident || dbUser.is_club_resident === true || dbUser.role === 'club_member';
-            const role = isKnownResident ? 'club_member' : (dbUser.role || user.role);
+            const isResident = dbUser.is_club_resident === true || dbUser.role === 'club_member';
+            const role = dbUser.role || (isResident ? 'club_member' : 'member');
 
             const freshUser = {
               ...user,
@@ -382,11 +373,8 @@ const Auth = {
         const data = await res.json();
         if (data && data.length > 0) {
           const dbUser = data[0];
-          const uname = (dbUser.username || user.username || '').replace(/^@/, '').toLowerCase();
-          const tgId = Number(dbUser.telegram_id || user.telegram_id || 0);
-          const isKnownResident = (uname === 'imichaelsage' || tgId === 8489288884);
-          const isResident = isKnownResident || dbUser.is_club_resident === true || dbUser.role === 'club_member';
-          const role = isKnownResident ? 'club_member' : (dbUser.role || user.role);
+          const isResident = dbUser.is_club_resident === true || dbUser.role === 'club_member';
+          const role = dbUser.role || (isResident ? 'club_member' : 'member');
 
           const freshUser = {
             ...user,
@@ -425,10 +413,6 @@ const Auth = {
     if (uname === 'michael_sage' || uname === 'uncrn_sage' || tgId === 439634804 || tgId === 88472911) {
       return true;
     }
-    // Resident whitelist (Imichaelsage, etc.)
-    if (uname === 'imichaelsage' || tgId === 8489288884) {
-      return true;
-    }
     // Resident of SAGE Neuro Family chat or Student of Mentorship
     if (user.role === 'club_member' || user.role === 'resident' || user.role === 'student' || user.club_member === true || user.is_club_resident === true) {
       return true;
@@ -443,6 +427,18 @@ const Auth = {
     if (user && (user.is_channel_subscriber === true || user.channel_subscriber === true)) return true;
     if (localStorage.getItem('asage_channel_verified') === 'true') return true;
     return false;
+  },
+
+  // 5.2 Set user role explicitly
+  setUserRole(role) {
+    const user = this.getUser();
+    if (!user) return;
+    user.role = role;
+    if (role === 'club_member') {
+      user.is_club_resident = true;
+    }
+    localStorage.setItem('asage_user', JSON.stringify(user));
+    window.dispatchEvent(new CustomEvent('asage_auth_changed', { detail: user }));
   },
 
   // 5.2 Get list of purchased items from local cache
@@ -507,13 +503,21 @@ const Auth = {
       if (res.ok) {
         const data = await res.json();
         if (data && data.ok) {
-          user.is_channel_subscriber = data.is_channel_subscriber;
-          user.is_club_resident = data.is_club_resident;
-          if (data.is_club_resident) {
+          const uname = (user.username || '').replace(/^@/, '').toLowerCase();
+          const isFounder = uname === 'michael_sage' || uname === 'uncrn_sage' || user.telegram_id === 439634804 || user.telegram_id === 88472911;
+          user.is_channel_subscriber = isFounder || Boolean(data.is_channel_subscriber);
+          user.is_club_resident = isFounder || Boolean(data.is_club_resident);
+          if (isFounder) {
+            user.role = 'founder';
+          } else if (data.is_club_resident) {
             user.role = 'club_member';
+          } else {
+            user.role = 'member';
           }
-          if (data.is_channel_subscriber) {
+          if (user.is_channel_subscriber) {
             localStorage.setItem('asage_channel_verified', 'true');
+          } else {
+            localStorage.removeItem('asage_channel_verified');
           }
           localStorage.setItem('asage_user', JSON.stringify(user));
           window.dispatchEvent(new CustomEvent('asage_auth_changed', { detail: user }));
