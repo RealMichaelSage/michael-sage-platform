@@ -374,32 +374,32 @@ const Auth = {
     return { ok: false };
   },
 
-  // 5.6 Initiate purchase via Tochka Bank acquiring
+  // 5.6 Initiate purchase via Tochka Bank acquiring (Direct redirect to payment form)
   async initiatePayment({ itemId, itemType = 'material', amount = 349, title = 'Цифровой материал' }) {
     const user = this.getUser();
-    if (!user || !user.telegram_id) {
-      sessionStorage.setItem('asage_pending_purchase', JSON.stringify({ itemId, itemType, amount, title }));
-      this.openModal('Авторизуйтесь через Telegram (1 клик), чтобы привязать покупку к вашему аккаунту.', 'Покупка материала');
+
+    // If user specifically purchased this item in DB
+    if (user && this.hasPurchasedItem(itemId)) {
+      this.showToast('Материал уже оплачен! Переходим в кабинет...', 'info');
+      window.location.href = `/cabinet/?item_id=${encodeURIComponent(itemId)}`;
       return;
     }
 
-    if (this.hasClubAccess() || this.hasPurchasedItem(itemId)) {
-      this.showToast('Материал уже доступен в вашем кабинете!', 'info');
-      return;
-    }
-
-    this.showToast('Формирование счета в Банке Точка...', 'info');
+    const cleanTitle = decodeURIComponent(title || 'Цифровой материал');
+    this.showToast('Перенаправление на форму оплаты Точка Банка...', 'info');
 
     try {
       const res = await fetch('/api/payment/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          telegram_id: user.telegram_id,
+          telegram_id: user ? user.telegram_id : 0,
           item_id: itemId,
           item_type: itemType,
           amount: amount,
-          title: title
+          title: cleanTitle,
+          client_name: user ? `${user.first_name || ''} ${user.last_name || ''}`.trim() : 'Покупатель',
+          client_email: (user && user.email) ? user.email : 'i@michaelpuzyrev.ru'
         })
       });
 
@@ -408,24 +408,48 @@ const Auth = {
         if (data.already_purchased) {
           await this.fetchPurchasedItems();
           this.showToast('Материал уже оплачен! Доступ открыт.', 'success');
-          window.location.reload();
+          window.location.href = `/cabinet/?item_id=${encodeURIComponent(itemId)}`;
           return;
         }
 
-        // Open Tochka Bank Checkout Modal
-        this.openTochkaCheckoutModal({
-          itemId,
-          itemType,
-          amount,
-          title,
-          purchaseId: data.purchase_id,
-          paymentUrl: data.payment_url
-        });
+        if (data.payment_url) {
+          // DIRECT REDIRECT TO TOCHKA BANK SECURE PAYMENT FORM
+          window.location.href = data.payment_url;
+          return;
+        }
+
+        this.showToast('Не удалось получить ссылку на оплату', 'error');
       } else {
         this.showToast(data.error || 'Ошибка создания счета', 'error');
       }
     } catch (e) {
       this.showToast('Ошибка обращения к платежному шлюзу', 'error');
+    }
+  },
+
+  // 5.7 Switch to another account / test customer (for testing without another physical Telegram)
+  switchAccount(telegramId = 999123456, username = 'test_guest', firstName = 'Тестовый', lastName = 'Покупатель') {
+    const testUser = {
+      id: 'tg_' + telegramId,
+      telegram_id: Number(telegramId),
+      first_name: firstName,
+      last_name: lastName,
+      username: username,
+      photo_url: '',
+      email: '',
+      bio: 'Тестовый аккаунт для проверки покупок',
+      role: 'member',
+      is_private: false,
+      auth_date: Math.floor(Date.now() / 1000)
+    };
+    localStorage.setItem('asage_user', JSON.stringify(testUser));
+    localStorage.removeItem('asage_user_purchases');
+    window.dispatchEvent(new CustomEvent('asage_auth_changed', { detail: testUser }));
+    this.showToast(`Вошли как @${username} (ID: ${telegramId})`, 'success');
+    if (window.location.pathname.includes('cabinet') || window.location.pathname.includes('profile')) {
+      window.location.reload();
+    } else {
+      this.updateHeaderUI();
     }
   },
 
@@ -580,7 +604,10 @@ const Auth = {
   // 6. Logout
   logout() {
     localStorage.removeItem('asage_user');
+    localStorage.removeItem('asage_user_purchases');
+    sessionStorage.removeItem('asage_pending_purchase');
     window.dispatchEvent(new CustomEvent('asage_auth_changed', { detail: null }));
+    window.dispatchEvent(new CustomEvent('asage_purchases_updated', { detail: [] }));
     if (window.location.pathname.includes('cabinet') || window.location.pathname.includes('profile')) {
       window.location.reload();
     } else {

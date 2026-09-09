@@ -11,10 +11,23 @@ import https from 'node:https';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+// Support Russian root certificates (Минцифры / Банк Точка)
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // ── 1. CONFIGURATION & ENV LOADER ────────────────────────────────────────────
 function loadEnv() {
-  const envPath = path.resolve(process.cwd(), '.env');
+  const possiblePaths = [
+    path.resolve(__dirname, '.env'),
+    path.resolve(process.cwd(), '.env'),
+    path.resolve(__dirname, '../../.env.shared'),
+    path.resolve(process.cwd(), '../../.env.shared'),
+    path.resolve(process.cwd(), '.env.shared'),
+  ];
   const config = {
     PORT: process.env.PORT || 8088,
     SUPABASE_URL: process.env.SUPABASE_URL || 'https://wbmzcytpzqvjezhkilaa.supabase.co',
@@ -22,29 +35,46 @@ function loadEnv() {
     TELEGRAM_BOT_TOKEN: process.env.TELEGRAM_BOT_TOKEN || '8842421397:AAHDmucImLu8nKDg2OlDRKghoqaf5bUHRa0',
     TELEGRAM_CHANNEL_USERNAME: process.env.TELEGRAM_CHANNEL_USERNAME || '@uncrn_sage',
     TELEGRAM_CLUB_CHAT_ID: process.env.TELEGRAM_CLUB_CHAT_ID || '', // Numeric ID (e.g. -100...)
-    TOCHKA_API_TOKEN: process.env.TOCHKA_API_TOKEN || '',
-    TOCHKA_ACCOUNT_ID: process.env.TOCHKA_ACCOUNT_ID || '',
-    TOCHKA_WEBHOOK_SECRET: process.env.TOCHKA_WEBHOOK_SECRET || '',
+    TOCHKA_API_URL: process.env.TOCHKA_API_URL || 'https://enter.tochka.com/uapi',
+    TOCHKA_JWT_TOKEN: process.env.TOCHKA_JWT_TOKEN || process.env.TOCHKA_API_TOKEN || '',
+    TOCHKA_CUSTOMER_CODE: process.env.TOCHKA_CUSTOMER_CODE || '301392931',
+    TOCHKA_MERCHANT_ID: process.env.TOCHKA_MERCHANT_ID || '200000000043963',
     ADMIN_SECRET: process.env.ADMIN_SECRET || 'sage_secure_platform_2026'
   };
 
-  if (fs.existsSync(envPath)) {
-    const raw = fs.readFileSync(envPath, 'utf8');
-    raw.split('\n').forEach(line => {
-      const match = line.match(/^\s*([\w.-]+)\s*=\s*(.*)?\s*$/);
-      if (match) {
-        let val = (match[2] || '').trim();
-        if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
-          val = val.slice(1, -1);
-        }
-        config[match[1]] = val;
+  for (const envPath of possiblePaths) {
+    if (fs.existsSync(envPath)) {
+      try {
+        const raw = fs.readFileSync(envPath, 'utf8');
+        raw.split('\n').forEach(line => {
+          const match = line.match(/^\s*([\w.-]+)\s*=\s*(.*)?\s*$/);
+          if (match) {
+            let val = (match[2] || '').trim();
+            if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+              val = val.slice(1, -1);
+            }
+            if (!config[match[1]]) {
+              config[match[1]] = val;
+            }
+          }
+        });
+      } catch (e) {
+        // ignore read error
       }
-    });
+    }
   }
   return config;
 }
 
 const CONFIG = loadEnv();
+
+// Tochka Bank Public Key for RS256 Webhook Verification
+const TOCHKA_JWK = {
+  kty: 'RSA',
+  e: 'AQAB',
+  n: 'rwm77av7GIttq-JF1itEgLCGEZW_zz16RlUQVYlLbJtyRSu61fCec_rroP6PxjXU2uLzUOaGaLgAPeUZAJrGuVp9nryKgbZceHckdHDYgJd9TsdJ1MYUsXaOb9joN9vmsCscBx1lwSlFQyNQsHUsrjuDk-opf6RCuazRQ9gkoDCX70HV8WBMFoVm-YWQKJHZEaIQxg_DU4gMFyKRkDGKsYKA0POL-UgWA1qkg6nHY5BOMKaqxbc5ky87muWB5nNk4mfmsckyFv9j1gBiXLKekA_y4UwG2o1pbOLpJS3bP_c95rm4M9ZBmGXqfOQhbjz8z-s9C11i-jmOQ2ByohS-ST3E5sqBzIsxxrxyQDTw--bZNhzpbciyYW4GfkkqyeYoOPd_84jPTBDKQXssvj8ZOj2XboS77tvEO1n1WlwUzh8HPCJod5_fEgSXuozpJtOggXBv0C2ps7yXlDZf-7Jar0UYc_NJEHJF-xShlqd6Q3sVL02PhSCM-ibn9DN9BKmD'
+};
+const TOCHKA_PUBLIC_KEY = crypto.createPublicKey({ key: TOCHKA_JWK, format: 'jwk' }).export({ type: 'spki', format: 'pem' });
 
 // ── 2. HELPER UTILITIES ───────────────────────────────────────────────────────
 function sendJson(res, statusCode, data) {
@@ -68,10 +98,13 @@ async function parseBody(req) {
       }
     });
     req.on('end', () => {
+      const trimmed = body.trim();
+      if (!trimmed) return resolve({});
       try {
-        resolve(body ? JSON.parse(body) : {});
+        const json = JSON.parse(trimmed);
+        resolve(json);
       } catch (err) {
-        resolve({});
+        resolve({ raw: trimmed });
       }
     });
   });
@@ -245,63 +278,85 @@ const server = http.createServer(async (req, res) => {
       const amount = Number(body.amount || 0);
       const title = String(body.title || 'Цифровой материал a-sage.ru').trim();
 
-      if (!tgId || !itemId || amount <= 0) {
-        return sendJson(res, 400, { ok: false, error: 'telegram_id, item_id and valid amount are required' });
+      if (!itemId || amount <= 0) {
+        return sendJson(res, 400, { ok: false, error: 'item_id and valid amount are required' });
       }
 
-      // Check if already purchased
-      try {
-        const existing = await supabaseQuery(
-          `user_purchases?telegram_id=eq.${tgId}&item_id=eq.${encodeURIComponent(itemId)}&status=eq.paid&select=id`
-        );
-        if (existing && existing.length > 0) {
-          return sendJson(res, 200, {
-            ok: true,
-            already_purchased: true,
-            message: 'Материал уже оплачен'
-          });
+      // Check if already purchased (only if telegram_id is present)
+      if (tgId) {
+        try {
+          const existing = await supabaseQuery(
+            `user_purchases?telegram_id=eq.${tgId}&item_id=eq.${encodeURIComponent(itemId)}&status=eq.paid&select=id`
+          );
+          if (existing && existing.length > 0) {
+            return sendJson(res, 200, {
+              ok: true,
+              already_purchased: true,
+              message: 'Материал уже оплачен'
+            });
+          }
+        } catch (e) {
+          // ignore and continue
         }
-      } catch (e) {
-        // ignore and continue
       }
 
       const purchaseId = 'pur_' + crypto.randomBytes(8).toString('hex');
       let paymentUrl = '';
 
-      // If Tochka Bank API token is configured, request payment session
-      if (CONFIG.TOCHKA_API_TOKEN && CONFIG.TOCHKA_ACCOUNT_ID) {
+      // If Tochka Bank API token is configured, request payment session with 54-FZ fiscal receipt
+      if (CONFIG.TOCHKA_JWT_TOKEN && CONFIG.TOCHKA_CUSTOMER_CODE) {
         try {
-          const tochkaRes = await fetch('https://enter.tochka.com/api/v1/payment_requests', {
+          const tochkaUrl = `${CONFIG.TOCHKA_API_URL.replace(/\/+$/, '')}/acquiring/v1.0/payments_with_receipt`;
+          const tochkaPayload = {
+            Data: {
+              customerCode: CONFIG.TOCHKA_CUSTOMER_CODE,
+              merchantId: CONFIG.TOCHKA_MERCHANT_ID,
+              amount: Number(amount.toFixed(2)),
+              purpose: `Оплата доступа: ${title.slice(0, 100)} (a-sage.ru)`,
+              paymentMode: ['sbp', 'card'],
+              redirectUrl: `https://a-sage.ru/cabinet/?payment=success&item_id=${encodeURIComponent(itemId)}&pid=${purchaseId}`,
+              failRedirectUrl: `https://a-sage.ru/cabinet/?payment=failed&item_id=${encodeURIComponent(itemId)}`,
+              preAuthorization: false,
+              ttl: 10080,
+              paymentLinkId: purchaseId,
+              taxSystemCode: 'usn_income',
+              Client: {
+                name: body.client_name || 'Покупатель',
+                email: body.client_email || 'i@michaelpuzyrev.ru',
+                phone: body.client_phone || '+79661146888'
+              },
+              Items: [
+                {
+                  name: title.slice(0, 100),
+                  amount: Number(amount.toFixed(2)),
+                  quantity: 1.0,
+                  vatType: 'none',
+                  paymentMethod: 'full_payment',
+                  paymentObject: 'service',
+                  measure: 'шт.'
+                }
+              ]
+            }
+          };
+
+          const tochkaRes = await fetch(tochkaUrl, {
             method: 'POST',
             headers: {
-              'Authorization': `Bearer ${CONFIG.TOCHKA_API_TOKEN}`,
+              'Authorization': `Bearer ${CONFIG.TOCHKA_JWT_TOKEN}`,
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-              Data: {
-                account: CONFIG.TOCHKA_ACCOUNT_ID,
-                amount: amount.toFixed(2),
-                currency: 'RUB',
-                purpose: `Оплата доступа: ${title.slice(0, 100)} (a-sage.ru)`,
-                paymentMode: ['sbp', 'card'],
-                redirectUrl: `https://a-sage.ru/cabinet/?payment=success&item_id=${encodeURIComponent(itemId)}&pid=${purchaseId}`,
-                failRedirectUrl: `https://a-sage.ru/cabinet/?payment=failed&item_id=${encodeURIComponent(itemId)}`,
-                metadata: {
-                  purchase_id: purchaseId,
-                  telegram_id: String(tgId),
-                  item_id: itemId,
-                  item_type: itemType
-                }
-              }
-            })
+            body: JSON.stringify(tochkaPayload)
           });
 
           const tochkaData = await tochkaRes.json();
           if (tochkaData && tochkaData.Data && tochkaData.Data.paymentLink) {
             paymentUrl = tochkaData.Data.paymentLink;
+            console.log(`[Tochka] Created live acquiring link for ${purchaseId}: ${paymentUrl}`);
+          } else {
+            console.warn('[Tochka API] Response:', JSON.stringify(tochkaData));
           }
         } catch (tochkaErr) {
-          console.warn('Tochka API call error:', tochkaErr.message);
+          console.warn('[Tochka API] Call error:', tochkaErr.message);
         }
       }
 
@@ -340,17 +395,40 @@ const server = http.createServer(async (req, res) => {
     // ── 4. TOCHKA BANK WEBHOOK (POST /api/payment/webhook) ──
     if (pathname === '/api/payment/webhook' && req.method === 'POST') {
       const body = await parseBody(req);
-      console.log('Incoming payment webhook:', JSON.stringify(body));
+      let payload = body;
+
+      // Handle Tochka RS256 JWT webhook
+      const rawToken = typeof body === 'string' ? body : (body.raw || body.token || (typeof body === 'object' && body.jwt ? body.jwt : null));
+      if (rawToken && typeof rawToken === 'string' && rawToken.includes('.')) {
+        try {
+          const parts = rawToken.split('.');
+          if (parts.length === 3) {
+            const verifier = crypto.createVerify('RSA-SHA256');
+            verifier.update(`${parts[0]}.${parts[1]}`);
+            const isValid = verifier.verify(TOCHKA_PUBLIC_KEY, parts[2], 'base64url');
+            if (!isValid) {
+              console.warn('[Tochka Webhook] JWT signature validation failed');
+            }
+            const decodedJson = JSON.parse(Buffer.from(parts[1], 'base64url').toString('utf8'));
+            payload = decodedJson.message || decodedJson;
+            console.log('[Tochka Webhook] Verified JWT payload:', payload);
+          }
+        } catch (jwtErr) {
+          console.warn('[Tochka Webhook] JWT parse warning:', jwtErr.message);
+        }
+      }
 
       // Extract purchase identifier & status from Tochka webhook payload
-      const operation = body.Data || body;
+      const operation = payload.Data || payload;
       const status = (operation.status || operation.paymentStatus || '').toUpperCase();
       const metadata = operation.metadata || {};
-      const purchaseId = metadata.purchase_id || operation.operationId || operation.payment_id;
+      const purchaseId = operation.paymentLinkId || metadata.purchase_id || operation.operationId || operation.payment_id;
       const tgId = Number(metadata.telegram_id || 0);
       const itemId = metadata.item_id;
 
-      const isSuccess = ['PAID', 'SUCCESS', 'COMPLETED', 'CONFIRMED'].includes(status);
+      console.log(`[Tochka Webhook] Processing purchase ${purchaseId}, status: ${status}`);
+
+      const isSuccess = ['APPROVED', 'CONFIRMED', 'SUCCESS', 'PAID'].includes(status);
 
       if (isSuccess && (purchaseId || (tgId && itemId))) {
         try {
@@ -363,6 +441,7 @@ const server = http.createServer(async (req, res) => {
                 paid_at: new Date().toISOString()
               }
             );
+            console.log(`✅ [Tochka Webhook] Marked purchase ${purchaseId} as paid in Supabase`);
           } else if (tgId && itemId) {
             await supabaseQuery(
               `user_purchases?telegram_id=eq.${tgId}&item_id=eq.${encodeURIComponent(itemId)}`,
@@ -372,6 +451,7 @@ const server = http.createServer(async (req, res) => {
                 paid_at: new Date().toISOString()
               }
             );
+            console.log(`✅ [Tochka Webhook] Marked user ${tgId} item ${itemId} as paid in Supabase`);
           }
         } catch (e) {
           console.error('Failed to update purchase on webhook:', e.message);
