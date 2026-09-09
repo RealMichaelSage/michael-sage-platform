@@ -231,8 +231,8 @@ const Auth = {
         telegram_id: user.telegram_id,
         first_name: profileData.first_name !== undefined ? profileData.first_name.trim() : user.first_name,
         last_name: profileData.last_name !== undefined ? profileData.last_name.trim() : (user.last_name || ''),
-        username: user.username || '',
-        photo_url: user.photo_url || '',
+        username: profileData.username !== undefined ? profileData.username.trim() : (user.username || ''),
+        photo_url: profileData.photo_url !== undefined ? profileData.photo_url : (user.photo_url || ''),
         email: profileData.email !== undefined ? profileData.email.trim() : (user.email || ''),
         bio: profileData.bio !== undefined ? profileData.bio.trim() : (user.bio || ''),
         channel_url: profileData.channel_url !== undefined ? profileData.channel_url.trim() : (user.channel_url || ''),
@@ -316,6 +316,10 @@ const Auth = {
       this.showToast('Данные сохранены локально', 'success');
       return { success: true, user: fallbackUser };
     }
+  },
+
+  async updateProfile(profileData) {
+    return this.updateUserProfile(profileData);
   },
 
   // 4. Fetch fresh profile data from Backend / Supabase
@@ -675,18 +679,19 @@ const Auth = {
     if (currentUser && currentUser.telegram_id) {
       const isMikhail = (currentUser.username && currentUser.username.toLowerCase() === 'michael_sage') ||
                         currentUser.telegram_id == 439634804 ||
-                        currentUser.telegram_id == 88472911;
+                        currentUser.telegram_id == 88472911 ||
+                        currentUser.role === 'founder';
 
-      const userRole = isMikhail ? 'club_member' : (currentUser.role || 'member');
+      const userRole = isMikhail ? 'founder' : (currentUser.role || 'member');
       const normalizedUser = { ...currentUser, role: userRole };
 
       // Only add to club directory if resident or student and not private
-      if (!normalizedUser.is_private && (normalizedUser.role === 'club_member' || normalizedUser.role === 'student')) {
+      if (!normalizedUser.is_private && (normalizedUser.role === 'founder' || normalizedUser.role === 'club_member' || normalizedUser.role === 'student' || normalizedUser.is_club_resident === true)) {
         // Check existing index
         const idx = list.findIndex(m => {
           if (m.telegram_id && m.telegram_id == normalizedUser.telegram_id) return true;
           if (m.username && normalizedUser.username && m.username.toLowerCase() === normalizedUser.username.toLowerCase()) return true;
-          if (isMikhail && (m.username === 'Michael_Sage' || m.telegram_id == 439634804 || m.telegram_id == 88472911)) return true;
+          if (isMikhail && (m.username === 'Michael_Sage' || m.telegram_id == 439634804 || m.telegram_id == 88472911 || m.role === 'founder')) return true;
           return false;
         });
 
@@ -700,16 +705,16 @@ const Auth = {
         const idx = list.findIndex(m => {
           if (m.telegram_id && m.telegram_id == normalizedUser.telegram_id) return true;
           if (m.username && normalizedUser.username && m.username.toLowerCase() === normalizedUser.username.toLowerCase()) return true;
-          if (isMikhail && (m.username === 'Michael_Sage' || m.telegram_id == 439634804 || m.telegram_id == 88472911)) return true;
+          if (isMikhail && (m.username === 'Michael_Sage' || m.telegram_id == 439634804 || m.telegram_id == 88472911 || m.role === 'founder')) return true;
           return false;
         });
         if (idx !== -1) list.splice(idx, 1);
       }
     }
 
-    // Filter list: only keep club_member and student (residents of SAGE Neuro Family chat & students)
-    const validRoles = ['club_member', 'student'];
-    list = list.filter(m => validRoles.includes(m.role) && m.is_private !== true);
+    // Filter list: keep founder, club_member, student or anyone with is_club_resident === true
+    const validRoles = ['founder', 'club_member', 'student'];
+    list = list.filter(m => (validRoles.includes(m.role) || m.is_club_resident === true) && m.is_private !== true);
 
     // Strict Deduplication Pass
     const seenMap = new Map();
@@ -717,13 +722,24 @@ const Auth = {
     for (const item of list) {
       const uname = (item.username || '').toLowerCase();
       const tgId = item.telegram_id ? String(item.telegram_id) : '';
-      const isMikhail = uname === 'michael_sage' || tgId === '439634804' || tgId === '88472911';
+      const isMikhail = uname === 'michael_sage' || tgId === '439634804' || tgId === '88472911' || item.role === 'founder';
 
       const dedupKey = isMikhail ? 'founder_mikhail_sage' : (uname ? 'u:' + uname : 'id:' + tgId);
       if (!seenMap.has(dedupKey)) {
         seenMap.set(dedupKey, true);
         result.push(item);
       }
+    }
+
+    // Ensure founder Mikhail is always pinned at the top if present
+    const mikhailIdx = result.findIndex(m => {
+      const uname = (m.username || '').toLowerCase();
+      const tgId = String(m.telegram_id || '');
+      return uname === 'michael_sage' || tgId === '439634804' || tgId === '88472911' || m.role === 'founder';
+    });
+    if (mikhailIdx > 0) {
+      const [mikhailItem] = result.splice(mikhailIdx, 1);
+      result.unshift(mikhailItem);
     }
 
     return result;

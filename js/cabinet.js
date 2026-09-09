@@ -557,7 +557,7 @@ function updateCabinetProfile() {
         roleEl.style.color = '#ffffff';
         roleEl.style.borderColor = '#09090b';
       } else if (isClub) {
-        roleEl.innerText = '💎 Резидент Клуба';
+        roleEl.innerText = '💎 Резидент';
         roleEl.className = 'badge-role club';
         roleEl.style.background = '';
         roleEl.style.color = '';
@@ -640,7 +640,7 @@ function updateCabinetProfile() {
         dockRole.style.color = '#ffffff';
         dockRole.style.borderColor = '#09090b';
       } else if (isClub) {
-        dockRole.innerText = '💎 Резидент Клуба';
+        dockRole.innerText = '💎 Резидент';
         dockRole.className = 'badge-role club';
         dockRole.style.background = '';
         dockRole.style.color = '';
@@ -858,10 +858,12 @@ async function handleProfileSave(event) {
   const website = (document.getElementById('inp-website')?.value || '').trim();
   const isPublic = document.getElementById('inp-is-private')?.checked ?? true;
 
+  const currentUser = typeof Auth !== 'undefined' ? Auth.getUser() : safeJsonParse(localStorage.getItem('asage_user'), {});
   const updates = {
     first_name: fn,
     last_name: ln,
-    username: un,
+    username: un || currentUser?.username || '',
+    photo_url: currentUser?.photo_url || '',
     bio: bio,
     channel_url: channel,
     website_url: website,
@@ -876,8 +878,9 @@ async function handleProfileSave(event) {
   }
 
   try {
-    if (typeof Auth !== 'undefined' && Auth.updateProfile) {
-      await Auth.updateProfile(updates);
+    if (typeof Auth !== 'undefined' && (Auth.updateUserProfile || Auth.updateProfile)) {
+      const saveFn = Auth.updateUserProfile || Auth.updateProfile;
+      await saveFn.call(Auth, updates);
     } else {
       const user = safeJsonParse(localStorage.getItem('asage_user'), {});
       Object.assign(user, updates);
@@ -1129,7 +1132,7 @@ function renderMembersDirectory(members) {
               </div>
             </div>
           </div>
-          <div class="member-bio" style="font-size:0.88rem; color:#52525b; line-height:1.5; margin-bottom:16px;">${m.bio || 'Резидент сообщества Михаила Пузырёва (SAGE Neuro Family).'}</div>
+          <div class="member-bio" style="font-size:0.88rem; color:#52525b; line-height:1.5; margin-bottom:16px;">${m.bio || 'Резидент клуба SAGE Neuro Family'}</div>
         </div>
         <div class="member-actions" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; border-top:1px solid #f4f4f5; padding-top:14px; margin-top:auto;">
           ${linksHtml || '<span style="font-family:var(--mono); font-size:0.72rem; color:#a1a1aa;">Контакты не указаны</span>'}

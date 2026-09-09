@@ -109,27 +109,45 @@ const SEED_USERS = {
     telegram_id: 439634804,
     username: "Michael_Sage",
     first_name: "Михаил Пузырёв",
+    last_name: "",
+    photo_url: "https://t.me/i/userpic/320/PrUiL11Yw4J67b_l7lQvMcwExm8HfSbyJ5BnGLS7hUo.jpg",
+    bio: "Просто обучаю людей упрощать жизнь и бизнес с помощью нейросетей",
+    channel_url: "@uncrn_sage",
+    website_url: "https://a-sage.ru",
     role: "founder",
     is_club_resident: true,
-    is_channel_subscriber: true
+    is_channel_subscriber: true,
+    is_private: false
   },
   "88472911": {
     id: "5afb3918-11cb-4a6c-9ebd-1baf50fea9f6",
     telegram_id: 88472911,
     username: "Michael_Sage",
     first_name: "Михаил",
+    last_name: "Пузырёв",
+    photo_url: "/img/mikhail_hero.jpg",
+    bio: "AI-архитектор, основатель сообщества SAGE Neuro Family. Проектирование мультиагентных сред, Antigravity SDK и автоматизация бизнеса.",
+    channel_url: "https://t.me/uncrn_sage",
+    website_url: "https://a-sage.ru",
     role: "founder",
     is_club_resident: true,
-    is_channel_subscriber: true
+    is_channel_subscriber: true,
+    is_private: false
   },
   "8489288884": {
     id: "2577ad93-bcbb-45cb-9435-527e758f0311",
     telegram_id: 8489288884,
     username: "Imichaelsage",
-    first_name: "Michael",
+    first_name: "Michael Sage",
+    last_name: "Sage",
+    photo_url: "/img/avatars/8489288884.jpg",
+    bio: "Сделаю самое большое СМИ по психологии и подкаст проезд СДВГ. И всё это с помощью нейросетей.",
+    channel_url: "@adhdpodcast",
+    website_url: "https://aipsy.press/",
     role: "club_member",
     is_club_resident: true,
-    is_channel_subscriber: true
+    is_channel_subscriber: true,
+    is_private: false
   }
 };
 
@@ -168,6 +186,57 @@ function getLocalUser(tgId, username) {
   }
   return null;
 }
+
+async function fetchTelegramAvatar(tgId) {
+  if (!CONFIG.TELEGRAM_BOT_TOKEN || !tgId) return null;
+  try {
+    const res = await fetch(`https://api.telegram.org/bot${CONFIG.TELEGRAM_BOT_TOKEN}/getUserProfilePhotos?user_id=${tgId}&limit=1`);
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (data && data.ok && data.result && data.result.photos && data.result.photos.length > 0) {
+      const photoSizes = data.result.photos[0];
+      const largest = photoSizes[photoSizes.length - 1];
+      if (largest && largest.file_id) {
+        const fRes = await fetch(`https://api.telegram.org/bot${CONFIG.TELEGRAM_BOT_TOKEN}/getFile?file_id=${largest.file_id}`);
+        if (fRes.ok) {
+          const fData = await fRes.json();
+          if (fData && fData.ok && fData.result && fData.result.file_path) {
+            const imgRes = await fetch(`https://api.telegram.org/file/bot${CONFIG.TELEGRAM_BOT_TOKEN}/${fData.result.file_path}`);
+            if (imgRes.ok) {
+              const buf = Buffer.from(await imgRes.arrayBuffer());
+              const avatarsDir = path.resolve('/var/www/a-sage.ru/img/avatars');
+              if (!fs.existsSync(avatarsDir)) {
+                fs.mkdirSync(avatarsDir, { recursive: true });
+              }
+              const filename = `${tgId}.jpg`;
+              fs.writeFileSync(path.resolve(avatarsDir, filename), buf);
+              return `/img/avatars/${filename}`;
+            }
+          }
+        }
+      }
+    }
+  } catch (e) {
+    console.warn('[Telegram Avatar Fetch Warning]:', e.message);
+  }
+  return null;
+}
+
+function syncFromPostgresOnStartup() {
+  if (!pgPool) return;
+  pgPool.query('SELECT * FROM platform_users').then(res => {
+    if (res && res.rows && res.rows.length > 0) {
+      const current = loadLocalUsers();
+      for (const row of res.rows) {
+        const tg = String(row.telegram_id);
+        current[tg] = { ...current[tg], ...row };
+      }
+      saveLocalUsers(current);
+      console.log(`[PostgreSQL] Synced ${res.rows.length} users into fast cache`);
+    }
+  }).catch(err => console.warn('[PostgreSQL Startup Load Warning]:', err.message));
+}
+syncFromPostgresOnStartup();
 
 function upsertLocalUser(userData) {
   const users = loadLocalUsers();
@@ -506,6 +575,16 @@ const server = http.createServer(async (req, res) => {
         return sendJson(res, 400, { ok: false, error: 'telegram_id is required' });
       }
 
+      if (!body.photo_url) {
+        const existing = getLocalUser(tgId);
+        if (existing && existing.photo_url) {
+          body.photo_url = existing.photo_url;
+        } else {
+          const fetchedAvatar = await fetchTelegramAvatar(tgId);
+          if (fetchedAvatar) body.photo_url = fetchedAvatar;
+        }
+      }
+
       const savedUser = upsertLocalUser(body);
 
       // Async sync to Supabase (safe from 402)
@@ -602,6 +681,14 @@ const server = http.createServer(async (req, res) => {
       const residents = Object.values(users).filter(u => 
         (u.role === 'club_member' || u.role === 'founder' || u.is_club_resident === true) && !u.is_private
       );
+      // Ensure founder is sorted first
+      residents.sort((a, b) => {
+        const aIsFounder = a.role === 'founder' || a.telegram_id == 439634804 || a.telegram_id == 88472911;
+        const bIsFounder = b.role === 'founder' || b.telegram_id == 439634804 || b.telegram_id == 88472911;
+        if (aIsFounder && !bIsFounder) return -1;
+        if (!aIsFounder && bIsFounder) return 1;
+        return 0;
+      });
       return sendJson(res, 200, { ok: true, residents });
     }
 

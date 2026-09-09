@@ -415,9 +415,8 @@
   color: #52525b;
   border-radius: 0 !important;
   white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  max-width: 140px;
+  width: fit-content;
+  max-width: none;
 }
 
 .dock-status-wrap .badge-role.club {
