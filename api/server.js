@@ -117,7 +117,8 @@ const SEED_USERS = {
     role: "founder",
     is_club_resident: true,
     is_channel_subscriber: true,
-    is_private: false
+    is_private: false,
+    show_telegram_contact: false
   },
   "88472911": {
     id: "5afb3918-11cb-4a6c-9ebd-1baf50fea9f6",
@@ -132,7 +133,8 @@ const SEED_USERS = {
     role: "founder",
     is_club_resident: true,
     is_channel_subscriber: true,
-    is_private: false
+    is_private: false,
+    show_telegram_contact: false
   },
   "8489288884": {
     id: "2577ad93-bcbb-45cb-9435-527e758f0311",
@@ -147,7 +149,8 @@ const SEED_USERS = {
     role: "club_member",
     is_club_resident: true,
     is_channel_subscriber: true,
-    is_private: false
+    is_private: false,
+    show_telegram_contact: false
   }
 };
 
@@ -263,6 +266,10 @@ function upsertLocalUser(userData) {
   const isResident = isFounder || isClubKnown;
   const isChannel = isFounder || isClubKnown || userData.is_channel_subscriber === true || existing.is_channel_subscriber === true;
 
+  const showTg = typeof userData.show_telegram_contact !== 'undefined'
+    ? Boolean(userData.show_telegram_contact)
+    : Boolean(existing.show_telegram_contact || false);
+
   const updated = {
     ...existing,
     ...userData,
@@ -271,6 +278,7 @@ function upsertLocalUser(userData) {
     role,
     is_club_resident: isResident,
     is_channel_subscriber: isChannel,
+    show_telegram_contact: showTg,
     updated_at: new Date().toISOString()
   };
 
@@ -279,8 +287,8 @@ function upsertLocalUser(userData) {
 
   if (pgPool) {
     pgPool.query(`
-      INSERT INTO platform_users (telegram_id, first_name, last_name, username, photo_url, role, is_club_resident, is_channel_subscriber, email, bio, channel_url, website_url, is_private, last_login_at, updated_at)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, now(), now())
+      INSERT INTO platform_users (telegram_id, first_name, last_name, username, photo_url, role, is_club_resident, is_channel_subscriber, email, bio, channel_url, website_url, is_private, show_telegram_contact, last_login_at, updated_at)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, now(), now())
       ON CONFLICT (telegram_id) DO UPDATE SET
         first_name = COALESCE(NULLIF(EXCLUDED.first_name, ''), platform_users.first_name),
         last_name = COALESCE(NULLIF(EXCLUDED.last_name, ''), platform_users.last_name),
@@ -294,6 +302,7 @@ function upsertLocalUser(userData) {
         channel_url = COALESCE(NULLIF(EXCLUDED.channel_url, ''), platform_users.channel_url),
         website_url = COALESCE(NULLIF(EXCLUDED.website_url, ''), platform_users.website_url),
         is_private = EXCLUDED.is_private,
+        show_telegram_contact = EXCLUDED.show_telegram_contact,
         updated_at = now()
     `, [
       updated.telegram_id,
@@ -308,7 +317,8 @@ function upsertLocalUser(userData) {
       updated.bio || '',
       updated.channel_url || '',
       updated.website_url || '',
-      Boolean(updated.is_private)
+      Boolean(updated.is_private),
+      Boolean(updated.show_telegram_contact)
     ]).catch(err => console.warn('[PostgreSQL Upsert Warning]:', err.message));
   }
 
@@ -599,6 +609,7 @@ const server = http.createServer(async (req, res) => {
         channel_url: body.channel_url || '',
         website_url: body.website_url || '',
         is_private: Boolean(body.is_private),
+        show_telegram_contact: Boolean(savedUser.show_telegram_contact),
         role: savedUser.role,
         is_club_resident: savedUser.is_club_resident,
         is_channel_subscriber: savedUser.is_channel_subscriber,
@@ -689,7 +700,26 @@ const server = http.createServer(async (req, res) => {
         if (!aIsFounder && bIsFounder) return 1;
         return 0;
       });
-      return sendJson(res, 200, { ok: true, residents });
+
+      const sanitizedResidents = residents.map(u => {
+        const canShowTg = Boolean(u.show_telegram_contact);
+        return {
+          id: u.id,
+          first_name: u.first_name || '',
+          last_name: u.last_name || '',
+          username: canShowTg ? (u.username || '') : '',
+          photo_url: u.photo_url || '',
+          role: u.role,
+          bio: u.bio || '',
+          channel_url: u.channel_url || '',
+          website_url: u.website_url || '',
+          is_club_resident: Boolean(u.is_club_resident),
+          show_telegram_contact: canShowTg,
+          telegram_id: u.telegram_id
+        };
+      });
+
+      return sendJson(res, 200, { ok: true, residents: sanitizedResidents });
     }
 
     // ── 6. CREATE PAYMENT REQUEST (POST /api/payment/create) ──

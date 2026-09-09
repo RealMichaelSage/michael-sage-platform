@@ -698,12 +698,20 @@
               </div>
             </div>
 
-            <div class="form-group checkbox-group" style="margin-bottom:24px; padding:12px; background:#f8fafc; border:1px solid #e4e4e7;">
+            <div class="form-group checkbox-group" style="margin-bottom:14px; padding:12px; background:#f8fafc; border:1px solid #e4e4e7;">
               <label class="checkbox-label" for="inp-is-private" style="display:flex; align-items:center; gap:10px; cursor:pointer; font-size:0.88rem; font-weight:600;">
                 <input type="checkbox" id="inp-is-private" name="is_private" class="privacy-checkbox" onchange="livePreviewProfile()">
                 <span>Отображать мою карточку в&nbsp;каталоге резидентов сообщества</span>
               </label>
               <div class="form-hint" style="font-size:0.75rem; color:#71717a; margin-top:4px; margin-left:24px;">Правило взаимности: если отключено, ваша карточка скрывается из&nbsp;каталога, а&nbsp;просмотр других участников блокируется.</div>
+            </div>
+
+            <div class="form-group checkbox-group" style="margin-bottom:24px; padding:12px; background:#f8fafc; border:1px solid #e4e4e7;">
+              <label class="checkbox-label" for="inp-show-telegram" style="display:flex; align-items:center; gap:10px; cursor:pointer; font-size:0.88rem; font-weight:600;">
+                <input type="checkbox" id="inp-show-telegram" name="show_telegram_contact" class="privacy-checkbox" onchange="livePreviewProfile()">
+                <span>Показывать прямую ссылку на&nbsp;мой личный Telegram</span>
+              </label>
+              <div class="form-hint" style="font-size:0.75rem; color:#71717a; margin-top:4px; margin-left:24px;">Если выключено (по&nbsp;умолчанию), ваш логин Telegram и&nbsp;кнопка связи в&nbsp;личку скрыты от&nbsp;других участников. Отображаются только ваши публичные ссылки (канал, сайт) и&nbsp;описание.</div>
             </div>
 
             <button type="submit" id="btn-save-profile" class="btn-primary profile-save-btn" style="padding:12px 24px; font-weight:700; font-family:var(--mono); cursor:pointer;">Сохранить изменения 💾</button>

@@ -744,6 +744,9 @@ function populateProfileForm() {
 
   const priv = document.getElementById('inp-is-private');
   if (priv) priv.checked = !user.is_private;
+
+  const showTg = document.getElementById('inp-show-telegram');
+  if (showTg) showTg.checked = Boolean(user.show_telegram_contact);
 }
 
 function livePreviewProfile() {
@@ -754,6 +757,7 @@ function livePreviewProfile() {
   const unInput = document.getElementById('inp-tg-username')?.value;
   const bioInput = document.getElementById('inp-bio')?.value;
   const isChecked = document.getElementById('inp-is-private')?.checked ?? (user ? !user.is_private : true);
+  const showTgChecked = document.getElementById('inp-show-telegram')?.checked ?? Boolean(user?.show_telegram_contact);
 
   const fn = (fnInput !== undefined && fnInput.trim() !== '') ? fnInput.trim() : (user?.first_name || '');
   const ln = (lnInput !== undefined && lnInput.trim() !== '') ? lnInput.trim() : (user?.last_name || '');
@@ -815,13 +819,10 @@ function livePreviewProfile() {
 
   const previewPrivacy = document.getElementById('preview-user-privacy');
   if (previewPrivacy) {
-    if (isChecked) {
-      previewPrivacy.innerText = '🌐 Отображается в каталоге резидентов';
-      previewPrivacy.style.color = '#059669';
-    } else {
-      previewPrivacy.innerText = '🔒 Скрыт из общего каталога резидентов';
-      previewPrivacy.style.color = '#dc2626';
-    }
+    const privText = isChecked ? '🌐 В каталоге' : '🔒 Скрыт из каталога';
+    const tgText = showTgChecked ? '💬 Telegram открыт' : '🛡️ Telegram скрыт';
+    previewPrivacy.innerText = `${privText} • ${tgText}`;
+    previewPrivacy.style.color = isChecked ? '#059669' : '#dc2626';
   }
 
   // Live preview for Left Dock
@@ -857,6 +858,7 @@ async function handleProfileSave(event) {
   const channel = (document.getElementById('inp-channel')?.value || '').trim();
   const website = (document.getElementById('inp-website')?.value || '').trim();
   const isPublic = document.getElementById('inp-is-private')?.checked ?? true;
+  const showTgContact = document.getElementById('inp-show-telegram')?.checked ?? false;
 
   const currentUser = typeof Auth !== 'undefined' ? Auth.getUser() : safeJsonParse(localStorage.getItem('asage_user'), {});
   const updates = {
@@ -867,7 +869,8 @@ async function handleProfileSave(event) {
     bio: bio,
     channel_url: channel,
     website_url: website,
-    is_private: !isPublic
+    is_private: !isPublic,
+    show_telegram_contact: showTgContact
   };
 
   const btn = document.getElementById('btn-save-profile');
@@ -1096,7 +1099,7 @@ function renderMembersDirectory(members) {
 
   let html = '';
   filtered.forEach(m => {
-    const name = `${m.first_name || ''} ${m.last_name || ''}`.trim() || (m.username ? '@' + m.username : 'Резидент Клуба');
+    const name = `${m.first_name || ''} ${m.last_name || ''}`.trim() || (m.show_telegram_contact && m.username ? '@' + m.username : 'Резидент Клуба');
     const isMikhail = (m.username && m.username.toLowerCase() === 'michael_sage') || m.telegram_id == 439634804 || m.telegram_id == 88472911;
     const roleBadge = isMikhail
       ? '<span class="badge-role club" style="font-size:0.68rem; padding:2px 6px; background:#09090b; color:#ffffff;">👑 Основатель</span>'
@@ -1107,7 +1110,7 @@ function renderMembersDirectory(members) {
       : `<div class="member-avatar-placeholder">${name.charAt(0).toUpperCase()}</div>`;
 
     let linksHtml = '';
-    if (m.username) {
+    if (m.show_telegram_contact && m.username) {
       linksHtml += `<a href="https://t.me/${m.username}" target="_blank" class="cabinet-chip cabinet-chip-email" style="font-size:0.75rem;">💬 @${m.username} ↗</a>`;
     }
     if (m.channel_url) {
@@ -1128,7 +1131,6 @@ function renderMembersDirectory(members) {
               <h3 class="member-name" style="font-size:1.15rem; font-weight:800; margin:0 0 4px 0;">${name}</h3>
               <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                 ${roleBadge}
-                ${m.username ? `<span style="font-family:var(--mono); font-size:0.75rem; color:var(--gray);">@${m.username}</span>` : ''}
               </div>
             </div>
           </div>

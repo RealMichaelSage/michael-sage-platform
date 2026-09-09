@@ -472,6 +472,18 @@
               </label>
             </div>
 
+            <div style="background:#f8fafc; border:1px solid #e4e4e7; padding:20px; margin-bottom:16px;">
+              <label style="display:flex; align-items:flex-start; gap:12px; cursor:pointer; font-size:0.92rem; color:var(--black);">
+                <input type="checkbox" id="inp-show-telegram" style="width:18px; height:18px; margin-top:2px; accent-color:#09090b; cursor:pointer;" onchange="updateLivePreview()">
+                <div>
+                  <strong style="display:block; margin-bottom:3px;">Показывать прямую ссылку на&nbsp;мой личный Telegram</strong>
+                  <span style="font-size:0.82rem; color:var(--gray); line-height:1.4; display:block;">
+                    Если выключено (по&nbsp;умолчанию), ваш логин Telegram и&nbsp;кнопка связи в&nbsp;личку скрыты от&nbsp;других участников сообщества. Отображаются только ваши публичные ссылки (канал, сайт) и&nbsp;описание.
+                  </span>
+                </div>
+              </label>
+            </div>
+
             <!-- Action buttons -->
             <div class="profile-actions-bar">
               <div style="display:flex; align-items:center; gap:12px;">
@@ -599,6 +611,8 @@
       document.getElementById('inp-channel').value = user.channel_url || '';
       document.getElementById('inp-website').value = user.website_url || '';
       document.getElementById('inp-is-private').checked = Boolean(user.is_private);
+      const tgToggle = document.getElementById('inp-show-telegram');
+      if (tgToggle) tgToggle.checked = Boolean(user.show_telegram_contact);
     }
 
     function updateLivePreview() {
@@ -722,7 +736,8 @@
         bio: document.getElementById('inp-bio').value,
         channel_url: document.getElementById('inp-channel').value,
         website_url: document.getElementById('inp-website').value,
-        is_private: document.getElementById('inp-is-private').checked
+        is_private: document.getElementById('inp-is-private').checked,
+        show_telegram_contact: document.getElementById('inp-show-telegram')?.checked ?? false
       };
 
       const res = await Auth.updateUserProfile(formData);

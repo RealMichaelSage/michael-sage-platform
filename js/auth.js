@@ -227,6 +227,7 @@ const Auth = {
 
     try {
       const isPrivateVal = profileData.is_private !== undefined ? Boolean(profileData.is_private) : Boolean(user.is_private);
+      const showTgVal = profileData.show_telegram_contact !== undefined ? Boolean(profileData.show_telegram_contact) : Boolean(user.show_telegram_contact || false);
       const payload = {
         telegram_id: user.telegram_id,
         first_name: profileData.first_name !== undefined ? profileData.first_name.trim() : user.first_name,
@@ -238,6 +239,7 @@ const Auth = {
         channel_url: profileData.channel_url !== undefined ? profileData.channel_url.trim() : (user.channel_url || ''),
         website_url: profileData.website_url !== undefined ? profileData.website_url.trim() : (user.website_url || ''),
         is_private: isPrivateVal,
+        show_telegram_contact: showTgVal,
         role: user.role,
         is_club_resident: user.is_club_resident,
         is_channel_subscriber: user.is_channel_subscriber,
@@ -286,6 +288,7 @@ const Auth = {
         channel_url: payload.channel_url,
         website_url: payload.website_url,
         is_private: payload.is_private,
+        show_telegram_contact: payload.show_telegram_contact,
         id: dbUser ? dbUser.id : user.id,
         role: dbUser ? dbUser.role : user.role
       };
