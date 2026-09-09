@@ -459,6 +459,35 @@ async function checkTelegramChatMember(chatIdOrUsername, userId) {
   }
 }
 
+// ── 4.1 TOCHKA BANK ACQUIRING VERIFIER ────────────────────────────────────────
+async function tochkaVerifyPayment(operationId) {
+  if (!CONFIG.TOCHKA_JWT_TOKEN || !operationId) return null;
+  const cleanOpId = String(operationId).trim();
+  if (cleanOpId.length < 32) return null;
+
+  try {
+    const url = `${CONFIG.TOCHKA_API_URL.replace(/\/+$/, '')}/acquiring/v1.0/payments/${encodeURIComponent(cleanOpId)}`;
+    const res = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${CONFIG.TOCHKA_JWT_TOKEN}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    if (!res.ok) {
+      return null;
+    }
+    const json = await res.json();
+    const ops = json?.Data?.Operation;
+    if (Array.isArray(ops) && ops.length > 0) {
+      return ops[0];
+    }
+  } catch (e) {
+    console.warn(`[Tochka Verify Error] ${cleanOpId}:`, e.message);
+  }
+  return null;
+}
+
 // ── 5. SERVER & ROUTING ───────────────────────────────────────────────────────
 const server = http.createServer(async (req, res) => {
   const reqUrl = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
@@ -660,6 +689,25 @@ const server = http.createServer(async (req, res) => {
         return sendJson(res, 400, { ok: false, error: 'telegram_id is required' });
       }
 
+      // Auto-reconcile pending purchases for this user against Tochka Bank
+      const allLocal = loadLocalPurchases();
+      const userPending = allLocal.filter(p => Number(p.telegram_id) === tgId && p.status === 'pending' && p.operation_id);
+      let localUpdated = false;
+      for (const p of userPending) {
+        try {
+          const opData = await tochkaVerifyPayment(p.operation_id);
+          if (opData && ['APPROVED', 'CONFIRMED', 'SUCCESS', 'PAID'].includes((opData.status || '').toUpperCase())) {
+            p.status = 'paid';
+            p.paid_at = opData.paidAt || new Date().toISOString();
+            localUpdated = true;
+            console.log(`[AutoReconcile] Verified & marked paid: ${p.payment_id} (${p.item_id}) for user ${tgId}`);
+          }
+        } catch (e) {}
+      }
+      if (localUpdated) {
+        saveLocalPurchases(allLocal);
+      }
+
       const localPurchases = getLocalUserPurchases(tgId);
       let purchasedItems = localPurchases.map(p => p.item_id);
       let allPurchases = [...localPurchases];
@@ -749,6 +797,8 @@ const server = http.createServer(async (req, res) => {
 
       const purchaseId = 'pur_' + crypto.randomBytes(8).toString('hex');
       let paymentUrl = '';
+      let operationId = '';
+      const targetReturnPage = itemType === 'solution' ? 'solutions' : 'cabinet';
 
       // If Tochka Bank API token is configured, request payment session
       if (CONFIG.TOCHKA_JWT_TOKEN && CONFIG.TOCHKA_CUSTOMER_CODE) {
@@ -761,8 +811,8 @@ const server = http.createServer(async (req, res) => {
               amount: Number(amount.toFixed(2)),
               purpose: `Оплата доступа: ${title.slice(0, 100)} (a-sage.ru)`,
               paymentMode: ['sbp', 'card'],
-              redirectUrl: `https://a-sage.ru/cabinet/?payment=success&item_id=${encodeURIComponent(itemId)}&pid=${purchaseId}`,
-              failRedirectUrl: `https://a-sage.ru/cabinet/?payment=failed&item_id=${encodeURIComponent(itemId)}`,
+              redirectUrl: `https://a-sage.ru/${targetReturnPage}/?payment=success&item_id=${encodeURIComponent(itemId)}&pid=${purchaseId}`,
+              failRedirectUrl: `https://a-sage.ru/${targetReturnPage}/?payment=failed&item_id=${encodeURIComponent(itemId)}`,
               preAuthorization: false,
               ttl: 10080,
               paymentLinkId: purchaseId,
@@ -798,7 +848,11 @@ const server = http.createServer(async (req, res) => {
           const tochkaData = await tochkaRes.json();
           if (tochkaData && tochkaData.Data && tochkaData.Data.paymentLink) {
             paymentUrl = tochkaData.Data.paymentLink;
-            console.log(`[Tochka] Created live acquiring link for ${purchaseId}: ${paymentUrl}`);
+            try {
+              const u = new URL(paymentUrl);
+              operationId = u.searchParams.get('uuid') || '';
+            } catch (e) {}
+            console.log(`[Tochka] Created live acquiring link for ${purchaseId} (uuid: ${operationId}): ${paymentUrl}`);
           } else {
             console.warn('[Tochka API] Response:', JSON.stringify(tochkaData));
           }
@@ -808,7 +862,7 @@ const server = http.createServer(async (req, res) => {
       }
 
       if (!paymentUrl) {
-        paymentUrl = `https://a-sage.ru/cabinet/?pay_item=${encodeURIComponent(itemId)}&type=${encodeURIComponent(itemType)}&amount=${amount}&pid=${purchaseId}&title=${encodeURIComponent(title)}`;
+        paymentUrl = `https://a-sage.ru/${targetReturnPage}/?pay_item=${encodeURIComponent(itemId)}&type=${encodeURIComponent(itemType)}&amount=${amount}&pid=${purchaseId}&title=${encodeURIComponent(title)}`;
       }
 
       const pendingRecord = {
@@ -819,6 +873,7 @@ const server = http.createServer(async (req, res) => {
         amount: amount,
         currency: 'RUB',
         payment_id: purchaseId,
+        operation_id: operationId,
         status: 'pending',
         payment_url: paymentUrl,
         created_at: new Date().toISOString()
@@ -834,10 +889,84 @@ const server = http.createServer(async (req, res) => {
       return sendJson(res, 200, {
         ok: true,
         purchase_id: purchaseId,
+        operation_id: operationId,
         payment_url: paymentUrl,
         amount: amount,
         item_id: itemId,
         title: title
+      });
+    }
+
+    // ── 6.5 VERIFY PAYMENT STATUS (GET /api/payment/verify) ──
+    if (pathname === '/api/payment/verify' && req.method === 'GET') {
+      const pid = (reqUrl.searchParams.get('pid') || '').trim();
+      const opId = (reqUrl.searchParams.get('op') || '').trim();
+      const itemId = (reqUrl.searchParams.get('item_id') || '').trim();
+      const tgId = Number(reqUrl.searchParams.get('telegram_id') || 0);
+
+      const purchases = loadLocalPurchases();
+      let purchase = purchases.find(p => 
+        (pid && p.payment_id === pid) || 
+        (opId && p.operation_id === opId) ||
+        (tgId && itemId && Number(p.telegram_id) === tgId && p.item_id === itemId)
+      );
+
+      // If already paid
+      if (purchase && purchase.status === 'paid') {
+        if (tgId && (!purchase.telegram_id || purchase.telegram_id === 0)) {
+          purchase.telegram_id = tgId;
+          saveLocalPurchases(purchases);
+        }
+        return sendJson(res, 200, {
+          ok: true,
+          status: 'paid',
+          item_id: purchase.item_id,
+          purchase_id: purchase.payment_id
+        });
+      }
+
+      // Check Tochka Bank API
+      const targetOpId = opId || (purchase ? purchase.operation_id : null);
+      if (targetOpId) {
+        const opData = await tochkaVerifyPayment(targetOpId);
+        if (opData && ['APPROVED', 'CONFIRMED', 'SUCCESS', 'PAID'].includes((opData.status || '').toUpperCase())) {
+          if (purchase) {
+            purchase.status = 'paid';
+            purchase.paid_at = opData.paidAt || new Date().toISOString();
+            if (tgId && (!purchase.telegram_id || purchase.telegram_id === 0)) {
+              purchase.telegram_id = tgId;
+            }
+          } else {
+            purchase = {
+              id: crypto.randomUUID(),
+              telegram_id: tgId,
+              item_type: 'solution',
+              item_id: itemId || 'solution-01',
+              amount: opData.amount || 249,
+              currency: 'RUB',
+              payment_id: pid || opData.paymentLinkId || targetOpId,
+              operation_id: targetOpId,
+              status: 'paid',
+              created_at: opData.createdAt || new Date().toISOString(),
+              paid_at: opData.paidAt || new Date().toISOString()
+            };
+            purchases.push(purchase);
+          }
+          saveLocalPurchases(purchases);
+
+          return sendJson(res, 200, {
+            ok: true,
+            status: 'paid',
+            item_id: purchase.item_id,
+            purchase_id: purchase.payment_id
+          });
+        }
+      }
+
+      return sendJson(res, 200, {
+        ok: true,
+        status: purchase ? purchase.status : 'pending',
+        item_id: purchase ? purchase.item_id : itemId
       });
     }
 
@@ -997,6 +1126,38 @@ const server = http.createServer(async (req, res) => {
     return sendJson(res, 500, { ok: false, error: globalErr.message });
   }
 });
+
+// ── 11. BACKGROUND TOCHKA ACQUIRING RECONCILER (Runs every 15s) ─────────────
+setInterval(async () => {
+  try {
+    const purchases = loadLocalPurchases();
+    const now = Date.now();
+    const pending = purchases.filter(p => {
+      if (p.status !== 'pending' || !p.operation_id) return false;
+      const created = new Date(p.created_at).getTime();
+      return (now - created) < 24 * 60 * 60 * 1000; // last 24h
+    });
+
+    if (pending.length === 0) return;
+
+    let updatedAny = false;
+    for (const p of pending) {
+      const opData = await tochkaVerifyPayment(p.operation_id);
+      if (opData && ['APPROVED', 'CONFIRMED', 'SUCCESS', 'PAID'].includes((opData.status || '').toUpperCase())) {
+        p.status = 'paid';
+        p.paid_at = opData.paidAt || new Date().toISOString();
+        updatedAny = true;
+        console.log(`[Background Reconciler] Auto-verified order ${p.payment_id} (${p.item_id}) for user ${p.telegram_id}`);
+      }
+    }
+
+    if (updatedAny) {
+      saveLocalPurchases(purchases);
+    }
+  } catch (err) {
+    console.warn('[Background Reconciler Notice]:', err.message);
+  }
+}, 15000);
 
 server.listen(CONFIG.PORT, () => {
   console.log(`[SAGE API] Server listening on port ${CONFIG.PORT}`);

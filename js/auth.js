@@ -1618,17 +1618,64 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Handle URL Payment Return Parameters
+  // Handle URL Payment Return Parameters with active Tochka verification
   try {
     const params = new URLSearchParams(window.location.search);
-    if (params.get('payment') === 'success') {
-      Auth.showToast('✓ Оплата в Банке Точка успешно подтверждена! Доступ открыт.', 'success');
-      Auth.fetchPurchasedItems();
-      // Clean up URL
-      params.delete('payment');
-      params.delete('pid');
-      const newQuery = params.toString() ? '?' + params.toString() : '';
-      window.history.replaceState({}, '', window.location.pathname + newQuery + window.location.hash);
+    const isPaymentSuccess = params.get('payment') === 'success';
+    const pid = params.get('pid');
+    const itemId = params.get('item_id');
+    const opId = params.get('op');
+
+    if (isPaymentSuccess || pid || opId) {
+      const user = Auth.getUser();
+      const tgId = user ? user.telegram_id : 0;
+      Auth.showToast('Проверяем оплату в Банке Точка...', 'info');
+
+      const query = new URLSearchParams({
+        pid: pid || '',
+        op: opId || '',
+        item_id: itemId || '',
+        telegram_id: String(tgId)
+      });
+
+      fetch(`/api/payment/verify?${query.toString()}`)
+        .then(r => r.json())
+        .then(async data => {
+          if (data && data.ok && data.status === 'paid') {
+            await Auth.fetchPurchasedItems();
+            Auth.showToast('✓ Оплата подтверждена! Доступ к материалу открыт.', 'success');
+
+            // Dispatch updates
+            window.dispatchEvent(new CustomEvent('asage_purchases_updated', { detail: [data.item_id || itemId] }));
+
+            // Clean up URL
+            params.delete('payment');
+            params.delete('pid');
+            params.delete('item_id');
+            params.delete('op');
+            const newQuery = params.toString() ? '?' + params.toString() : '';
+            window.history.replaceState({}, '', window.location.pathname + newQuery + window.location.hash);
+
+            // Highlight purchased card on solutions page
+            if (itemId) {
+              setTimeout(() => {
+                const card = document.querySelector(`[data-sol-id="${itemId}"]`);
+                if (card) {
+                  card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                  card.style.transition = 'box-shadow 0.4s ease';
+                  card.style.boxShadow = '0 0 0 2px #09090b, 0 8px 30px rgba(0,0,0,0.12)';
+                  setTimeout(() => { card.style.boxShadow = ''; }, 3000);
+                }
+              }, 500);
+            }
+          } else {
+            await Auth.fetchPurchasedItems();
+          }
+        })
+        .catch(e => {
+          console.warn('[Payment Verify Error]', e);
+          Auth.fetchPurchasedItems();
+        });
     } else if (params.get('pay_item')) {
       const itemId = params.get('pay_item');
       const itemType = params.get('type') || 'material';
