@@ -996,7 +996,7 @@ const server = http.createServer(async (req, res) => {
               telegram_id: tgId,
               item_type: 'solution',
               item_id: itemId || 'solution-01',
-              amount: opData.amount || (itemId === 'solution-01' ? 10 : 249),
+              amount: opData.amount || (itemId === 'solution-01' ? 149 : 249),
               currency: 'RUB',
               payment_id: pid || opData.paymentLinkId || targetOpId,
               operation_id: targetOpId,

@@ -1884,7 +1884,7 @@
             `;
           }
         } else {
-          const price = (solId === 'solution-01') ? 10 : 249;
+          const price = (solId === 'solution-01') ? 149 : 249;
           actions.innerHTML = `
             <div style="display:flex; align-items:center; justify-content:space-between; width:100%; gap:8px; flex-wrap:wrap;">
               <button onclick="Auth.initiatePayment({ itemId: '${solId}', itemType: 'solution', amount: ${price}, title: '${encodeURIComponent(title)}' })" class="btn-sol-link btn-sol-primary" style="padding:8px 12px; font-size:0.78rem; cursor:pointer; background:#09090b; color:#ffffff; flex:1; justify-content:center; text-align:center;">
