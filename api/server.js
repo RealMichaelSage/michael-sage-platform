@@ -43,7 +43,8 @@ function loadEnv() {
     TOCHKA_JWT_TOKEN: process.env.TOCHKA_JWT_TOKEN || process.env.TOCHKA_API_TOKEN || '',
     TOCHKA_CUSTOMER_CODE: process.env.TOCHKA_CUSTOMER_CODE || '301392931',
     TOCHKA_MERCHANT_ID: process.env.TOCHKA_MERCHANT_ID || '200000000043963',
-    ADMIN_SECRET: process.env.ADMIN_SECRET || 'sage_secure_platform_2026'
+    ADMIN_SECRET: process.env.ADMIN_SECRET || 'sage_secure_platform_2026',
+    DATABASE_URL: process.env.DATABASE_URL || ''
   };
 
   for (const envPath of possiblePaths) {
@@ -71,6 +72,19 @@ function loadEnv() {
 }
 
 const CONFIG = loadEnv();
+
+// Initialize PostgreSQL connection pool if configured
+let pgPool = null;
+if (CONFIG.DATABASE_URL) {
+  try {
+    const { default: pg } = await import('pg');
+    pgPool = new pg.Pool({ connectionString: CONFIG.DATABASE_URL });
+    pgPool.on('error', (err) => console.warn('[Postgres Pool Warning]', err.message));
+    console.log('[PostgreSQL] Connected to local database');
+  } catch (e) {
+    console.warn('[PostgreSQL Init Notice]:', e.message);
+  }
+}
 
 // Tochka Bank Public Key for RS256 Webhook Verification
 const TOCHKA_JWK = {
@@ -193,6 +207,42 @@ function upsertLocalUser(userData) {
 
   users[tgId] = updated;
   saveLocalUsers(users);
+
+  if (pgPool) {
+    pgPool.query(`
+      INSERT INTO platform_users (telegram_id, first_name, last_name, username, photo_url, role, is_club_resident, is_channel_subscriber, email, bio, channel_url, website_url, is_private, last_login_at, updated_at)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, now(), now())
+      ON CONFLICT (telegram_id) DO UPDATE SET
+        first_name = COALESCE(NULLIF(EXCLUDED.first_name, ''), platform_users.first_name),
+        last_name = COALESCE(NULLIF(EXCLUDED.last_name, ''), platform_users.last_name),
+        username = COALESCE(NULLIF(EXCLUDED.username, ''), platform_users.username),
+        photo_url = COALESCE(NULLIF(EXCLUDED.photo_url, ''), platform_users.photo_url),
+        role = EXCLUDED.role,
+        is_club_resident = EXCLUDED.is_club_resident,
+        is_channel_subscriber = EXCLUDED.is_channel_subscriber,
+        email = COALESCE(NULLIF(EXCLUDED.email, ''), platform_users.email),
+        bio = COALESCE(NULLIF(EXCLUDED.bio, ''), platform_users.bio),
+        channel_url = COALESCE(NULLIF(EXCLUDED.channel_url, ''), platform_users.channel_url),
+        website_url = COALESCE(NULLIF(EXCLUDED.website_url, ''), platform_users.website_url),
+        is_private = EXCLUDED.is_private,
+        updated_at = now()
+    `, [
+      updated.telegram_id,
+      updated.first_name || '',
+      updated.last_name || '',
+      updated.username || '',
+      updated.photo_url || '',
+      updated.role,
+      Boolean(updated.is_club_resident),
+      Boolean(updated.is_channel_subscriber),
+      updated.email || '',
+      updated.bio || '',
+      updated.channel_url || '',
+      updated.website_url || '',
+      Boolean(updated.is_private)
+    ]).catch(err => console.warn('[PostgreSQL Upsert Warning]:', err.message));
+  }
+
   return updated;
 }
 
@@ -231,6 +281,23 @@ function addLocalPurchase(purchase) {
     list.push(purchase);
   }
   saveLocalPurchases(list);
+
+  if (pgPool) {
+    pgPool.query(`
+      INSERT INTO user_purchases (telegram_id, item_type, item_id, amount, currency, payment_id, status, payment_url, created_at, paid_at)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, now(), $9)
+    `, [
+      Number(purchase.telegram_id),
+      purchase.item_type,
+      purchase.item_id,
+      Number(purchase.amount || 0),
+      purchase.currency || 'RUB',
+      purchase.payment_id,
+      purchase.status,
+      purchase.payment_url || '',
+      purchase.status === 'paid' ? new Date() : null
+    ]).catch(err => console.warn('[PostgreSQL Purchase Insert Warning]:', err.message));
+  }
 }
 
 // ── 3. HELPER UTILITIES ───────────────────────────────────────────────────────
