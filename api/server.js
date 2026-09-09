@@ -632,6 +632,9 @@ const server = http.createServer(async (req, res) => {
     // ── 1.1 TELEGRAM BOT WEBHOOK (POST /api/telegram/webhook) ──
     if (pathname === '/api/telegram/webhook' && req.method === 'POST') {
       const body = await parseBody(req);
+      console.log('[Telegram Webhook Received]:', JSON.stringify(body));
+
+      // Handle chat_member update (user joined, left, kicked)
       if (body && body.chat_member) {
         const cm = body.chat_member;
         const targetUser = cm.new_chat_member?.user || cm.from;
@@ -648,6 +651,19 @@ const server = http.createServer(async (req, res) => {
           });
         }
       }
+
+      // Handle my_chat_member update (bot added/removed as admin in a chat)
+      if (body && body.my_chat_member) {
+        const mcm = body.my_chat_member;
+        console.log(`[Telegram Webhook] Bot membership updated in chat ${mcm.chat?.id} (${mcm.chat?.title}): status=${mcm.new_chat_member?.status}`);
+      }
+
+      // Handle message (e.g. commands sent in chat)
+      if (body && body.message) {
+        const msg = body.message;
+        console.log(`[Telegram Webhook] Message received from user ${msg.from?.id} in chat ${msg.chat?.id} (${msg.chat?.title}): ${msg.text}`);
+      }
+
       return sendJson(res, 200, { ok: true });
     }
 
