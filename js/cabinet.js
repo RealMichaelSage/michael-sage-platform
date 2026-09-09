@@ -1246,6 +1246,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (Auth.fetchFreshUserProfile) {
       await Auth.fetchFreshUserProfile();
     }
+    // Perform silent background Telegram membership verification to auto-update resident status
+    if (Auth.checkTelegramSubscriptions) {
+      Auth.checkTelegramSubscriptions(false).then(() => {
+        updateCabinetProfile();
+        renderClubLessons();
+      }).catch(() => {});
+    }
     updateCabinetProfile();
     renderClubLessons();
   }

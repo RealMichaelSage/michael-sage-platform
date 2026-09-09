@@ -939,6 +939,31 @@ function trackMetrikaEvent(goalName, customParams = {}) {
 
 // Global click delegation for all buttons, links, and interactive triggers
 function initUniversalAnalytics() {
+  // Auto-capture UTM parameters from Content Factory
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const utmSource = urlParams.get('utm_source');
+    const utmCampaign = urlParams.get('utm_campaign');
+    const utmContent = urlParams.get('utm_content');
+
+    if (utmSource || utmCampaign) {
+      const utmData = {
+        utm_source: utmSource || '',
+        utm_campaign: utmCampaign || '',
+        utm_content: utmContent || '',
+        page_url: window.location.href,
+        timestamp: Date.now()
+      };
+      sessionStorage.setItem('sage_utm_session', JSON.stringify(utmData));
+
+      fetch('/api/analytics/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(utmData)
+      }).catch(() => {});
+    }
+  } catch (e) {}
+
   document.addEventListener('click', (e) => {
     const clickable = e.target.closest('a, button, .copy-chip, .btn-primary, .btn-secondary, .btn-guide, .nav-cta, .m-cta, .prompt-code-btn, .prompt-card-expand, .filter-chip, .prompts-tag-chip, .scrollspy-link, .faq-q, .faq-toggle');
     if (!clickable) return;

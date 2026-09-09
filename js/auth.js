@@ -15,13 +15,17 @@ const Auth = {
       const user = JSON.parse(stored);
       if (user) {
         const tgId = Number(user.telegram_id || 0);
-        const uname = (user.username || '').toLowerCase();
+        const uname = (user.username || '').replace(/^@/, '').toLowerCase();
         if (uname === 'michael_sage' || uname === 'uncrn_sage' || tgId === 439634804 || tgId === 88472911) {
           user.role = 'founder';
           user.is_founder = true;
           if (!user.bio || !user.bio.trim()) {
             user.bio = 'Просто обучаю людей упрощать жизнь и бизнес с помощью нейросетей';
           }
+        } else if (uname === 'imichaelsage' || tgId === 8489288884) {
+          user.role = 'club_member';
+          user.is_club_resident = true;
+          user.is_channel_subscriber = true;
         }
       }
       return user;
@@ -39,49 +43,120 @@ const Auth = {
     if (!tgUser || !tgUser.id) return null;
 
     try {
-      // Upsert user into Supabase platform_users
-      const payload = {
-        telegram_id: tgUser.id,
-        first_name: tgUser.first_name || '',
-        last_name: tgUser.last_name || '',
-        username: tgUser.username || '',
-        photo_url: tgUser.photo_url || '',
-        last_login_at: new Date().toISOString()
-      };
+      const tgId = Number(tgUser.id);
+      const uname = (tgUser.username || '').replace(/^@/, '').toLowerCase();
+      const isFounder = (uname === 'michael_sage' || uname === 'uncrn_sage' || tgId === 439634804 || tgId === 88472911);
+      const isKnownResident = (uname === 'imichaelsage' || tgId === 8489288884);
 
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/platform_users`, {
-        method: 'POST',
-        headers: {
-          'apikey': SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-          'Content-Type': 'application/json',
-          'Prefer': 'resolution=merge-duplicates,return=representation'
-        },
-        body: JSON.stringify(payload)
-      });
+      let isClubResident = isFounder || isKnownResident;
+      let isChannelSubscriber = isFounder || isKnownResident;
+      let userRole = isFounder ? 'founder' : (isClubResident ? 'club_member' : 'member');
 
-      let dbUser = null;
-      if (res.ok) {
-        const data = await res.json();
-        if (data && data.length > 0) {
-          dbUser = data[0];
+      // 1. Immediately verify Telegram club/channel status via Backend API
+      try {
+        const checkRes = await fetch('/api/check-telegram', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ telegram_id: tgId, username: tgUser.username || '' })
+        });
+        if (checkRes.ok) {
+          const checkData = await checkRes.json();
+          if (checkData && checkData.ok) {
+            if (checkData.is_club_resident) {
+              isClubResident = true;
+              userRole = isFounder ? 'founder' : 'club_member';
+            }
+            if (checkData.is_channel_subscriber) {
+              isChannelSubscriber = true;
+              localStorage.setItem('asage_channel_verified', 'true');
+            }
+          }
         }
+      } catch (checkErr) {
+        console.warn('[Check Telegram API Warning during login]', checkErr);
+      }
+
+      // 2. Sync to Backend resilient local store (/api/user/sync)
+      let backendUser = null;
+      try {
+        const syncRes = await fetch('/api/user/sync', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            telegram_id: tgId,
+            first_name: tgUser.first_name || '',
+            last_name: tgUser.last_name || '',
+            username: tgUser.username || '',
+            photo_url: tgUser.photo_url || '',
+            role: userRole,
+            is_club_resident: isClubResident,
+            is_channel_subscriber: isChannelSubscriber,
+            last_login_at: new Date().toISOString()
+          })
+        });
+        if (syncRes.ok) {
+          const syncData = await syncRes.json();
+          if (syncData && syncData.ok && syncData.user) {
+            backendUser = syncData.user;
+          }
+        }
+      } catch (syncErr) {
+        console.warn('[User Sync API Warning during login]', syncErr);
+      }
+
+      // 3. Non-blocking attempt to Supabase (safe if 402 quota error occurs)
+      let dbUser = null;
+      try {
+        const payload = {
+          telegram_id: tgId,
+          first_name: tgUser.first_name || '',
+          last_name: tgUser.last_name || '',
+          username: tgUser.username || '',
+          photo_url: tgUser.photo_url || '',
+          role: userRole,
+          is_club_resident: isClubResident,
+          is_channel_subscriber: isChannelSubscriber,
+          last_login_at: new Date().toISOString()
+        };
+
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/platform_users`, {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+            'Content-Type': 'application/json',
+            'Prefer': 'resolution=merge-duplicates,return=representation'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.length > 0) {
+            dbUser = data[0];
+          }
+        }
+      } catch (sbErr) {
+        console.warn('[Supabase Sync Warning during login]', sbErr);
       }
 
       const sessionUser = {
-        id: dbUser ? dbUser.id : 'tg_' + tgUser.id,
-        telegram_id: tgUser.id,
-        first_name: (dbUser && dbUser.first_name) ? dbUser.first_name : (tgUser.first_name || 'Гость'),
-        last_name: (dbUser && dbUser.last_name !== undefined) ? dbUser.last_name : (tgUser.last_name || ''),
-        username: tgUser.username || '',
-        photo_url: tgUser.photo_url || '',
-        email: dbUser && dbUser.email ? dbUser.email : '',
-        bio: dbUser && dbUser.bio ? dbUser.bio : '',
-        channel_url: dbUser && dbUser.channel_url ? dbUser.channel_url : '',
-        website_url: dbUser && dbUser.website_url ? dbUser.website_url : '',
-        is_private: dbUser ? Boolean(dbUser.is_private) : false,
-        role: dbUser ? dbUser.role : 'member',
-        auth_date: tgUser.auth_date
+        id: (backendUser && backendUser.id) ? backendUser.id : (dbUser ? dbUser.id : 'tg_' + tgUser.id),
+        telegram_id: tgId,
+        first_name: (backendUser && backendUser.first_name) ? backendUser.first_name : ((dbUser && dbUser.first_name) ? dbUser.first_name : (tgUser.first_name || 'Гость')),
+        last_name: (backendUser && backendUser.last_name !== undefined) ? backendUser.last_name : ((dbUser && dbUser.last_name !== undefined) ? dbUser.last_name : (tgUser.last_name || '')),
+        username: tgUser.username || (backendUser ? backendUser.username : ''),
+        photo_url: tgUser.photo_url || (backendUser ? backendUser.photo_url : ''),
+        email: (backendUser && backendUser.email) ? backendUser.email : (dbUser && dbUser.email ? dbUser.email : ''),
+        bio: (backendUser && backendUser.bio) ? backendUser.bio : (dbUser && dbUser.bio ? dbUser.bio : (isFounder ? 'Просто обучаю людей упрощать жизнь и бизнес с помощью нейросетей' : '')),
+        channel_url: (backendUser && backendUser.channel_url) ? backendUser.channel_url : (dbUser && dbUser.channel_url ? dbUser.channel_url : ''),
+        website_url: (backendUser && backendUser.website_url) ? backendUser.website_url : (dbUser && dbUser.website_url ? dbUser.website_url : ''),
+        is_private: backendUser ? Boolean(backendUser.is_private) : (dbUser ? Boolean(dbUser.is_private) : false),
+        role: (backendUser && backendUser.role) ? backendUser.role : (dbUser ? dbUser.role : userRole),
+        is_club_resident: isClubResident,
+        is_channel_subscriber: isChannelSubscriber,
+        is_founder: isFounder,
+        auth_date: tgUser.auth_date || Math.floor(Date.now() / 1000)
       };
 
       localStorage.setItem('asage_user', JSON.stringify(sessionUser));
@@ -95,7 +170,7 @@ const Auth = {
       // Track analytics
       if (typeof window.trackMetrikaEvent === 'function') {
         window.trackMetrikaEvent('telegram_login_success', {
-          telegram_id: tgUser.id,
+          telegram_id: tgId,
           username: tgUser.username || 'no_username'
         });
       }
@@ -110,6 +185,11 @@ const Auth = {
       return sessionUser;
     } catch (err) {
       console.warn('[Auth Error]', err);
+      const tgId = Number(tgUser.id);
+      const uname = (tgUser.username || '').replace(/^@/, '').toLowerCase();
+      const isFounder = (uname === 'michael_sage' || uname === 'uncrn_sage' || tgId === 439634804 || tgId === 88472911);
+      const isKnownResident = (uname === 'imichaelsage' || tgId === 8489288884);
+
       const fallbackUser = {
         id: 'tg_' + tgUser.id,
         telegram_id: tgUser.id,
@@ -118,11 +198,14 @@ const Auth = {
         username: tgUser.username || '',
         photo_url: tgUser.photo_url || '',
         email: '',
-        bio: '',
+        bio: isFounder ? 'Просто обучаю людей упрощать жизнь и бизнес с помощью нейросетей' : '',
         channel_url: '',
         website_url: '',
         is_private: false,
-        role: 'member'
+        role: isFounder ? 'founder' : (isKnownResident ? 'club_member' : 'member'),
+        is_club_resident: isFounder || isKnownResident,
+        is_channel_subscriber: isFounder || isKnownResident,
+        is_founder: isFounder
       };
       localStorage.setItem('asage_user', JSON.stringify(fallbackUser));
       this.closeModal();
@@ -134,7 +217,7 @@ const Auth = {
     }
   },
 
-  // 3. Update User Profile in Supabase & LocalStorage
+  // 3. Update User Profile in Backend & Supabase & LocalStorage
   async updateUserProfile(profileData) {
     const user = this.getUser();
     if (!user || !user.telegram_id) {
@@ -155,24 +238,43 @@ const Auth = {
         channel_url: profileData.channel_url !== undefined ? profileData.channel_url.trim() : (user.channel_url || ''),
         website_url: profileData.website_url !== undefined ? profileData.website_url.trim() : (user.website_url || ''),
         is_private: isPrivateVal,
+        role: user.role,
+        is_club_resident: user.is_club_resident,
+        is_channel_subscriber: user.is_channel_subscriber,
         updated_at: new Date().toISOString()
       };
 
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/platform_users`, {
-        method: 'POST',
-        headers: {
-          'apikey': SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-          'Content-Type': 'application/json',
-          'Prefer': 'resolution=merge-duplicates,return=representation'
-        },
-        body: JSON.stringify(payload)
-      });
+      // 1. Sync to local backend resilient store
+      try {
+        await fetch('/api/user/sync', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+      } catch (syncErr) {
+        console.warn('[Local Sync Warning on Profile Update]:', syncErr);
+      }
 
+      // 2. Non-blocking attempt to Supabase
       let dbUser = null;
-      if (res.ok) {
-        const data = await res.json();
-        if (data && data.length > 0) dbUser = data[0];
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/platform_users`, {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+            'Content-Type': 'application/json',
+            'Prefer': 'resolution=merge-duplicates,return=representation'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.length > 0) dbUser = data[0];
+        }
+      } catch (sbErr) {
+        console.warn('[Supabase Direct Sync Warning]:', sbErr);
       }
 
       const updatedSessionUser = {
@@ -216,12 +318,51 @@ const Auth = {
     }
   },
 
-  // 4. Fetch fresh profile data from Supabase
+  // 4. Fetch fresh profile data from Backend / Supabase
   async fetchFreshUserProfile() {
     const user = this.getUser();
     if (!user || !user.telegram_id) return null;
 
     try {
+      // 1. Try local backend first (fast and immune to Supabase 402)
+      try {
+        const localRes = await fetch(`/api/user/profile?telegram_id=${user.telegram_id}`);
+        if (localRes.ok) {
+          const lData = await localRes.json();
+          if (lData && lData.ok && lData.user) {
+            const dbUser = lData.user;
+            const uname = (dbUser.username || user.username || '').replace(/^@/, '').toLowerCase();
+            const tgId = Number(dbUser.telegram_id || user.telegram_id || 0);
+            const isKnownResident = (uname === 'imichaelsage' || tgId === 8489288884);
+            const isResident = isKnownResident || dbUser.is_club_resident === true || dbUser.role === 'club_member';
+            const role = isKnownResident ? 'club_member' : (dbUser.role || user.role);
+
+            const freshUser = {
+              ...user,
+              first_name: dbUser.first_name || user.first_name,
+              last_name: dbUser.last_name !== undefined ? dbUser.last_name : user.last_name,
+              username: dbUser.username || user.username,
+              photo_url: dbUser.photo_url || user.photo_url,
+              role: role,
+              is_club_resident: isResident,
+              is_channel_subscriber: dbUser.is_channel_subscriber !== undefined ? Boolean(dbUser.is_channel_subscriber) : user.is_channel_subscriber,
+              email: dbUser.email || user.email || '',
+              bio: dbUser.bio || user.bio || '',
+              channel_url: dbUser.channel_url || user.channel_url || '',
+              website_url: dbUser.website_url || user.website_url || '',
+              is_private: dbUser.is_private !== undefined ? Boolean(dbUser.is_private) : false,
+              id: dbUser.id || user.id
+            };
+            localStorage.setItem('asage_user', JSON.stringify(freshUser));
+            window.dispatchEvent(new CustomEvent('asage_auth_changed', { detail: freshUser }));
+            return freshUser;
+          }
+        }
+      } catch (localErr) {
+        console.warn('[Local Profile API Warning]', localErr);
+      }
+
+      // 2. Fallback attempt to Supabase
       const res = await fetch(`${SUPABASE_URL}/rest/v1/platform_users?telegram_id=eq.${user.telegram_id}`, {
         method: 'GET',
         headers: {
@@ -234,13 +375,21 @@ const Auth = {
         const data = await res.json();
         if (data && data.length > 0) {
           const dbUser = data[0];
+          const uname = (dbUser.username || user.username || '').replace(/^@/, '').toLowerCase();
+          const tgId = Number(dbUser.telegram_id || user.telegram_id || 0);
+          const isKnownResident = (uname === 'imichaelsage' || tgId === 8489288884);
+          const isResident = isKnownResident || dbUser.is_club_resident === true || dbUser.role === 'club_member';
+          const role = isKnownResident ? 'club_member' : (dbUser.role || user.role);
+
           const freshUser = {
             ...user,
             first_name: dbUser.first_name || user.first_name,
             last_name: dbUser.last_name !== undefined ? dbUser.last_name : user.last_name,
             username: dbUser.username || user.username,
             photo_url: dbUser.photo_url || user.photo_url,
-            role: dbUser.role || user.role,
+            role: role,
+            is_club_resident: isResident,
+            is_channel_subscriber: dbUser.is_channel_subscriber !== undefined ? Boolean(dbUser.is_channel_subscriber) : user.is_channel_subscriber,
             email: dbUser.email || '',
             bio: dbUser.bio || '',
             channel_url: dbUser.channel_url || '',
@@ -264,9 +413,13 @@ const Auth = {
     const user = this.getUser();
     if (!user) return false;
     const tgId = Number(user.telegram_id || 0);
-    const uname = (user.username || '').toLowerCase();
+    const uname = (user.username || '').replace(/^@/, '').toLowerCase();
     // Mikhail Sage is platform founder and has full access
     if (uname === 'michael_sage' || uname === 'uncrn_sage' || tgId === 439634804 || tgId === 88472911) {
+      return true;
+    }
+    // Resident whitelist (Imichaelsage, etc.)
+    if (uname === 'imichaelsage' || tgId === 8489288884) {
       return true;
     }
     // Resident of SAGE Neuro Family chat or Student of Mentorship
@@ -338,7 +491,10 @@ const Auth = {
       const res = await fetch('/api/check-telegram', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ telegram_id: user.telegram_id })
+        body: JSON.stringify({ 
+          telegram_id: user.telegram_id,
+          username: user.username || ''
+        })
       });
 
       if (res.ok) {
@@ -472,22 +628,38 @@ const Auth = {
     ];
   },
 
-  // 7. Fetch Public Members Directory from Supabase + Strict Deduplication
+  // 7. Fetch Public Members Directory from Backend / Supabase + Strict Deduplication
   async fetchMembersDirectory() {
     let list = [];
     try {
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/platform_users?select=id,telegram_id,first_name,last_name,username,photo_url,role,bio,channel_url,website_url,is_private,last_login_at&order=last_login_at.desc.nullslast&limit=80`, {
-        method: 'GET',
-        headers: {
-          'apikey': SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+      // 1. Try local backend first (resilient and instant)
+      try {
+        const apiRes = await fetch('/api/residents');
+        if (apiRes.ok) {
+          const aData = await apiRes.json();
+          if (aData && aData.ok && Array.isArray(aData.residents) && aData.residents.length > 0) {
+            list = aData.residents.filter(u => u.is_private !== true);
+          }
         }
-      });
+      } catch (apiErr) {
+        console.warn('[Residents API Warning]', apiErr);
+      }
 
-      if (res.ok) {
-        const users = await res.json();
-        if (Array.isArray(users) && users.length > 0) {
-          list = users.filter(u => u.is_private !== true);
+      // 2. Fallback to Supabase if list is empty
+      if (!list || list.length === 0) {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/platform_users?select=id,telegram_id,first_name,last_name,username,photo_url,role,bio,channel_url,website_url,is_private,last_login_at&order=last_login_at.desc.nullslast&limit=80`, {
+          method: 'GET',
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+          }
+        });
+
+        if (res.ok) {
+          const users = await res.json();
+          if (Array.isArray(users) && users.length > 0) {
+            list = users.filter(u => u.is_private !== true);
+          }
         }
       }
     } catch (e) {
