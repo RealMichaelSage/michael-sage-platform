@@ -379,6 +379,36 @@ function addLocalPurchase(purchase) {
   }
 }
 
+function markPurchasePaidInStoreAndDb(purchase, paidAt = null, tgId = null) {
+  purchase.status = 'paid';
+  purchase.paid_at = paidAt || new Date().toISOString();
+  if (tgId && (!purchase.telegram_id || purchase.telegram_id === 0)) {
+    purchase.telegram_id = Number(tgId);
+  }
+
+  const list = loadLocalPurchases();
+  const idx = list.findIndex(p => p.payment_id === purchase.payment_id);
+  if (idx !== -1) {
+    list[idx] = { ...list[idx], ...purchase };
+  } else {
+    list.push(purchase);
+  }
+  saveLocalPurchases(list);
+
+  if (pgPool) {
+    pgPool.query(`
+      UPDATE user_purchases
+      SET status = 'paid', paid_at = $1, telegram_id = COALESCE(NULLIF($2, 0), telegram_id)
+      WHERE payment_id = $3 OR (item_id = $4 AND telegram_id = $2)
+    `, [
+      new Date(purchase.paid_at),
+      Number(purchase.telegram_id || tgId || 0),
+      purchase.payment_id,
+      purchase.item_id
+    ]).catch(err => console.warn('[PostgreSQL Purchase Update Warning]:', err.message));
+  }
+}
+
 // ── 3. HELPER UTILITIES ───────────────────────────────────────────────────────
 function sendJson(res, statusCode, data) {
   res.writeHead(statusCode, {
@@ -695,20 +725,14 @@ const server = http.createServer(async (req, res) => {
       // Auto-reconcile pending purchases for this user against Tochka Bank
       const allLocal = loadLocalPurchases();
       const userPending = allLocal.filter(p => Number(p.telegram_id) === tgId && p.status === 'pending' && p.operation_id);
-      let localUpdated = false;
       for (const p of userPending) {
         try {
           const opData = await tochkaVerifyPayment(p.operation_id);
           if (opData && ['APPROVED', 'CONFIRMED', 'SUCCESS', 'PAID'].includes((opData.status || '').toUpperCase())) {
-            p.status = 'paid';
-            p.paid_at = opData.paidAt || new Date().toISOString();
-            localUpdated = true;
+            markPurchasePaidInStoreAndDb(p, opData.paidAt, tgId);
             console.log(`[AutoReconcile] Verified & marked paid: ${p.payment_id} (${p.item_id}) for user ${tgId}`);
           }
         } catch (e) {}
-      }
-      if (localUpdated) {
-        saveLocalPurchases(allLocal);
       }
 
       const localPurchases = getLocalUserPurchases(tgId);
@@ -933,13 +957,7 @@ const server = http.createServer(async (req, res) => {
       if (targetOpId) {
         const opData = await tochkaVerifyPayment(targetOpId);
         if (opData && ['APPROVED', 'CONFIRMED', 'SUCCESS', 'PAID'].includes((opData.status || '').toUpperCase())) {
-          if (purchase) {
-            purchase.status = 'paid';
-            purchase.paid_at = opData.paidAt || new Date().toISOString();
-            if (tgId && (!purchase.telegram_id || purchase.telegram_id === 0)) {
-              purchase.telegram_id = tgId;
-            }
-          } else {
+          if (!purchase) {
             purchase = {
               id: crypto.randomUUID(),
               telegram_id: tgId,
@@ -949,13 +967,11 @@ const server = http.createServer(async (req, res) => {
               currency: 'RUB',
               payment_id: pid || opData.paymentLinkId || targetOpId,
               operation_id: targetOpId,
-              status: 'paid',
-              created_at: opData.createdAt || new Date().toISOString(),
-              paid_at: opData.paidAt || new Date().toISOString()
+              status: 'pending',
+              created_at: opData.createdAt || new Date().toISOString()
             };
-            purchases.push(purchase);
           }
-          saveLocalPurchases(purchases);
+          markPurchasePaidInStoreAndDb(purchase, opData.paidAt, tgId);
 
           return sendJson(res, 200, {
             ok: true,
@@ -1143,19 +1159,12 @@ setInterval(async () => {
 
     if (pending.length === 0) return;
 
-    let updatedAny = false;
     for (const p of pending) {
       const opData = await tochkaVerifyPayment(p.operation_id);
       if (opData && ['APPROVED', 'CONFIRMED', 'SUCCESS', 'PAID'].includes((opData.status || '').toUpperCase())) {
-        p.status = 'paid';
-        p.paid_at = opData.paidAt || new Date().toISOString();
-        updatedAny = true;
+        markPurchasePaidInStoreAndDb(p, opData.paidAt);
         console.log(`[Background Reconciler] Auto-verified order ${p.payment_id} (${p.item_id}) for user ${p.telegram_id}`);
       }
-    }
-
-    if (updatedAny) {
-      saveLocalPurchases(purchases);
     }
   } catch (err) {
     console.warn('[Background Reconciler Notice]:', err.message);
