@@ -884,9 +884,15 @@ const Auth = {
   },
 
   // Protect standalone page from unauthorized / guest access
-  protectPageAccess(type = 'club') {
+  protectPageAccess(type = 'club', itemId = null) {
+    if (!itemId && window.location.pathname.includes('lead-scraping-engine')) {
+      itemId = 'solution-01';
+    }
+
     const check = () => {
-      const hasAccess = this.hasClubAccess();
+      const hasClub = this.hasClubAccess();
+      const hasPurchased = itemId ? this.hasPurchasedItem(itemId) : false;
+      const hasAccess = hasClub || hasPurchased;
       const user = this.getUser();
       const lockwall = document.getElementById('page-gate-lockwall');
       const protectedContent = document.getElementById('page-protected-content');
@@ -897,8 +903,8 @@ const Auth = {
 
         if (!user) {
           this.openModal(
-            'Данный сценарий доступен только в личном кабинете для резидентов клуба.',
-            'Доступен только в личном кабинете'
+            'Данный сценарий доступен резидентам клуба или после оплаты решения.',
+            'Доступ закрыт'
           );
         }
       } else {
@@ -914,6 +920,7 @@ const Auth = {
     }
 
     window.addEventListener('asage_auth_changed', check);
+    window.addEventListener('asage_purchases_updated', check);
   },
 
   closeModal() {
