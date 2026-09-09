@@ -34,8 +34,8 @@ function loadEnv() {
   ];
   const config = {
     PORT: process.env.PORT || 8088,
-    SUPABASE_URL: process.env.SUPABASE_URL || 'https://wbmzcytpzqvjezhkilaa.supabase.co',
-    SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndibXpjeXRwenF2amV6aGtpbGFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgxODM0NjEsImV4cCI6MjA5Mzc1OTQ2MX0.a2grUbSZudE5oklTjZidebDQxGNNy9Cit0CWwBSRJfA',
+    SUPABASE_URL: process.env.SUPABASE_URL || '',
+    SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY || '',
     TELEGRAM_BOT_TOKEN: process.env.TELEGRAM_BOT_TOKEN || '8417136221:AAFu1U91WQXy_2SIyHYX1vvaP_cPxjahi7U',
     TELEGRAM_CHANNEL_USERNAME: process.env.TELEGRAM_CHANNEL_USERNAME || '@uncrn_sage',
     TELEGRAM_CLUB_CHAT_ID: process.env.TELEGRAM_CLUB_CHAT_ID || '-1002283995819', // SAGE Neuro Family chat ID
@@ -413,8 +413,11 @@ async function parseBody(req) {
   });
 }
 
-// Supabase REST client with non-crashing wrapper
+// Supabase REST client with non-crashing wrapper (optional)
 async function supabaseQuery(endpoint, method = 'GET', body = null, headers = {}) {
+  if (!CONFIG.SUPABASE_URL || !CONFIG.SUPABASE_ANON_KEY) {
+    return null;
+  }
   const url = `${CONFIG.SUPABASE_URL}/rest/v1/${endpoint}`;
   const reqHeaders = {
     'apikey': CONFIG.SUPABASE_ANON_KEY,
