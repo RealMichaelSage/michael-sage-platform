@@ -1,4 +1,4 @@
-# Как создать, настроить и оплатить Google One (AI Premium) из РФ — Пошаговое руководство 2026
+# Как оплатить Google One и Google Диск из России в 2026 году — Пошаговый гайд по подписке Gemini Advanced & AI Premium
 
 **Автор:** Михаил Пузырёв (Michael Sage)  
 **URL:** https://a-sage.ru/google-one-guide  

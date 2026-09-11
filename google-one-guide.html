@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Оплата и&nbsp;настройка Google One (AI Premium) из&nbsp;РФ 2026 | Михаил Пузырёв</title>
-  <meta name="description" content="Исчерпывающая пошаговая инструкция 2026: как создать платежный профиль США (штат Delaware 0% tax), выпустить зарубежную карту и оформить подписку Google One AI Premium (Gemini Advanced 2 TB) из России без блокировок.">
-  <meta name="keywords" content="Google One оплата из России, Gemini Advanced подписка, Google One AI Premium РФ 2026, зарубежные карты Google One, как оплатить Google One в России, Delaware платежный профиль Google, OR_CCCHS_01 ошибка Google, обход санкций Google One">
+  <title>Как&nbsp;оплатить Google One и&nbsp;Google Диск в&nbsp;России 2026: подписка Gemini Advanced &&nbsp;AI Premium | Михаил Пузырёв</title>
+  <meta name="description" content="Исчерпывающая пошаговая инструкция 2026: как оплатить Google One и Google Диск из России, оформить подписку Gemini Advanced (Google AI Premium 2 TB), создать платежный профиль США (Delaware 0% tax) и избежать блокировок.">
+  <meta name="keywords" content="как оплатить Google One, оплата Google Диск из России, Gemini Advanced подписка, Google One AI Premium РФ 2026, купить Google One, Delaware платежный профиль Google, как обойти санкции Google One, зарубежные карты Google Play">
   <meta name="author" content="Михаил Пузырёв">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 
@@ -15,8 +15,8 @@
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Как создать, настроить и оплатить Google One (AI Premium) из РФ — Гайд 2026">
-  <meta property="og:description" content="Пошаговое практическое руководство по оплате Google One & Gemini Advanced 2 TB из России. Безналоговые штаты, выпуск карт, обход ошибки OR_CCCHS_01.">
+  <meta property="og:title" content="Как оплатить Google One и Google Диск из РФ в 2026 году — Гайд по Gemini Advanced">
+  <meta property="og:description" content="Пошаговое руководство: как оплатить Google One и Google Диск из России, настроить профиль США (0% tax) и подключить подписку Gemini Advanced 2 TB без риска блокировок.">
   <meta property="og:url" content="https://a-sage.ru/google-one-guide">
   <meta property="og:site_name" content="Михаил Пузырёв — AI Архитектура & Внедрение">
   <meta property="og:locale" content="ru_RU">
@@ -165,12 +165,25 @@
     k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
     (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
-    ym(101414837, "init", {
-         clickmap:true,
-         trackLinks:true,
-         accurateTrackBounce:true,
-         webvisor:true
-    });
+    
+    try {
+      if (window.location.search.indexOf('admin=sage') !== -1) {
+        localStorage.setItem('sage_disable_metrika', 'true');
+        console.log('[Analytics] Yandex Metrika disabled for admin');
+      } else if (window.location.search.indexOf('admin=clear') !== -1) {
+        localStorage.removeItem('sage_disable_metrika');
+        console.log('[Analytics] Yandex Metrika enabled');
+      }
+    } catch(e) {}
+
+    if ((window.location.hostname === 'a-sage.ru' || window.location.hostname === 'www.a-sage.ru') && (!window.localStorage || localStorage.getItem('sage_disable_metrika') !== 'true')) {
+      ym(101414837, "init", {
+           clickmap:true,
+           trackLinks:true,
+           accurateTrackBounce:true,
+           webvisor:true
+      });
+    }
   </script>
   <noscript><div><img src="https://mc.yandex.ru/watch/101414837" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 
@@ -507,7 +520,7 @@
         ПРАКТИЧЕСКОЕ РУКОВОДСТВО 2026 // LIVE
       </div>
       <h1 class="hero-title" style="margin-top: 16px; margin-bottom: 14px; font-size: clamp(2rem, 3.8vw, 3rem);">
-        Как&nbsp;создать, настроить и&nbsp;оплатить Google One (AI Premium) из&nbsp;РФ
+        Как&nbsp;оплатить Google One и&nbsp;Google Диск из&nbsp;России в&nbsp;2026 году: пошаговый гайд по&nbsp;подписке Gemini Advanced &&nbsp;AI Premium
       </h1>
       <p class="hero-sub" style="max-width: 900px; font-size: 1.15rem; line-height: 1.6; color: #52525b;">
         Исчерпывающая инструкция по&nbsp;получению доступа к&nbsp;облаку Google One и&nbsp;флагманским нейросетям Gemini Advanced (Gemini Pro, 2 TB диска, бесшовная интеграция в&nbsp;Google Docs, Gmail и&nbsp;Google Drive) без&nbsp;риска блокировки аккаунта.

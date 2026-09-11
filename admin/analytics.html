@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Сквозная аналитика контент-завода — SAGE Control Room</title>
+  <meta name="robots" content="noindex, nofollow">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg: #09090b;
+      --surface: #121215;
+      --surface-hover: #18181c;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(245, 158, 11, 0.3);
+      --text: #f4f4f5;
+      --text-muted: #a1a1aa;
+      --accent: #f59e0b;
+      --emerald: #10b981;
+      --blue: #3b82f6;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Space Grotesk', -apple-system, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      border-radius: 0 !important;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      min-height: 100vh;
+      padding: 32px 24px;
+      line-height: 1.5;
+    }
+
+    h1, h2, h3, h4, .title, .heading {
+      text-wrap: balance;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    p, li, .desc, .text {
+      text-wrap: pretty;
+    }
+
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .brand-tag {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-tag::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+    }
+
+    .dashboard-title {
+      font-size: 32px;
+      color: #fff;
+    }
+
+    /* Timeframe Selector */
+    .time-selector {
+      display: flex;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 4px;
+      gap: 4px;
+    }
+
+    .time-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: var(--mono);
+      font-size: 13px;
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .time-btn:hover {
+      color: #fff;
+    }
+
+    .time-btn.active {
+      background: var(--surface-hover);
+      color: var(--accent);
+      border: 1px solid var(--border-accent);
+    }
+
+    /* KPI Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+
+    .kpi-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 24px;
+      position: relative;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    .kpi-label {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+    }
+
+    .kpi-value {
+      font-family: var(--mono);
+      font-size: 36px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+
+    .kpi-sub {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--emerald);
+    }
+
+    /* Funnel Banner */
+    .funnel-banner {
+      background: linear-gradient(90deg, #18181b 0%, #121215 100%);
+      border: 1px solid var(--border);
+      padding: 24px;
+      margin-bottom: 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .funnel-step {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .funnel-step-name {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .funnel-step-val {
+      font-family: var(--mono);
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .funnel-arrow {
+      color: var(--accent);
+      font-size: 20px;
+    }
+
+    /* Section Layout */
+    .section-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 28px;
+      margin-bottom: 36px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      color: #fff;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Tables */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .data-table th {
+      text-align: left;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      letter-spacing: 0.05em;
+    }
+
+    .data-table td {
+      padding: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      font-family: var(--sans);
+    }
+
+    .data-table tr:hover td {
+      background: var(--surface-hover);
+    }
+
+    .mono-cell {
+      font-family: var(--mono);
+      font-weight: 600;
+    }
+
+    .badge {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 4px 8px;
+      border: 1px solid var(--border);
+      text-transform: uppercase;
+    }
+
+    .badge-accent {
+      color: var(--accent);
+      border-color: var(--border-accent);
+      background: rgba(245, 158, 11, 0.05);
+    }
+
+    .badge-emerald {
+      color: var(--emerald);
+      border-color: rgba(16, 185, 129, 0.3);
+      background: rgba(16, 185, 129, 0.05);
+    }
+
+    /* Auth Modal */
+    #auth-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(9, 9, 11, 0.95);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .auth-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 40px;
+      max-width: 440px;
+      width: 90%;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+    }
+
+    .auth-box h2 {
+      margin-bottom: 12px;
+    }
+
+    .auth-box p {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    .auth-input {
+      width: 100%;
+      background: #000;
+      border: 1px solid var(--border);
+      color: #fff;
+      font-family: var(--mono);
+      padding: 12px 16px;
+      margin-bottom: 20px;
+    }
+
+    .auth-input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .auth-btn {
+      width: 100%;
+      background: var(--accent);
+      color: #000;
+      font-weight: 700;
+      font-family: var(--mono);
+      padding: 14px;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Auth Gate Overlay -->
+  <div id="auth-overlay">
+    <div class="auth-box">
+      <div class="brand-tag">SECURITY CLEARANCE</div>
+      <h2>Вход в&nbsp;панель сквозной аналитики</h2>
+      <p>Закрытый контур управления контент-заводом Михаила Пузырёва.</p>
+      <input type="password" id="secret-input" class="auth-input" placeholder="Введите ключ доступа (ADMIN_SECRET)..." />
+      <button class="auth-btn" onclick="authenticate()">ВОЙТИ В&nbsp;СИСТЕМУ ➔</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Header -->
+    <header class="dashboard-header">
+      <div>
+        <div class="brand-tag">SAGE // AUTONOMOUS CONTENT FACTORY</div>
+        <h1 class="dashboard-title">Сквозная аналитика контент-завода</h1>
+      </div>
+      
+      <div class="time-selector">
+        <button class="time-btn" onclick="setPeriod('day', this)">День</button>
+        <button class="time-btn" onclick="setPeriod('week', this)">Неделя</button>
+        <button class="time-btn" onclick="setPeriod('month', this)">Месяц</button>
+        <button class="time-btn" onclick="setPeriod('3months', this)">3 Месяца</button>
+        <button class="time-btn active" onclick="setPeriod('all', this)">Всё время</button>
+      </div>
+    </header>
+
+    <!-- Top KPI Cards -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Суммарный охват</div>
+        <div class="kpi-value" id="val-views">0</div>
+        <div class="kpi-sub">8 подключенных каналов</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-label">Переходы по&nbsp;UTM</div>
+        <div class="kpi-value" id="val-clicks">0</div>
+        <div class="kpi-sub" id="val-ctr">CTR: 0.0%</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-label">Лиды &&nbsp;Заявки на&nbsp;сайте</div>
+        <div class="kpi-value" id="val-leads" style="color: var(--accent);">0</div>
+        <div class="kpi-sub">Захват форм a-sage.ru</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-label">Сделки в&nbsp;Битрикс24</div>
+        <div class="kpi-value" id="val-deals">0</div>
+        <div class="kpi-sub">CRM Attribution Sync</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-label">Оплаченная выручка</div>
+        <div class="kpi-value" id="val-revenue" style="color: var(--emerald);">0 ₽</div>
+        <div class="kpi-sub">Вайбкод / Лендинги / СМИ</div>
+      </div>
+    </div>
+
+    <!-- End-to-End Funnel Banner -->
+    <div class="funnel-banner">
+      <div class="funnel-step">
+        <div class="funnel-step-name">1. Публикации &&nbsp;Охват</div>
+        <div class="funnel-step-val" id="fn-views">0</div>
+      </div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step">
+        <div class="funnel-step-name">2. Клики на&nbsp;сайт</div>
+        <div class="funnel-step-val" id="fn-clicks">0</div>
+      </div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step">
+        <div class="funnel-step-name">3. Лиды &&nbsp;Сессии</div>
+        <div class="funnel-step-val" id="fn-leads">0</div>
+      </div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step">
+        <div class="funnel-step-name">4. CRM Сделки</div>
+        <div class="funnel-step-val" id="fn-deals">0</div>
+      </div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step">
+        <div class="funnel-step-name">5. Выручка</div>
+        <div class="funnel-step-val" id="fn-rev" style="color: var(--emerald);">0 ₽</div>
+      </div>
+    </div>
+
+    <!-- Breakdown By Platform -->
+    <div class="section-box">
+      <div class="section-title">
+        <span>Эффективность каналов дистрибуции</span>
+        <span class="badge badge-accent">8 ПЛОЩАДОК</span>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Площадка</th>
+            <th>Просмотры</th>
+            <th>Клики (UTM)</th>
+            <th>Лиды CRM</th>
+            <th>Сделки</th>
+            <th>Выручка</th>
+            <th>Статус</th>
+          </tr>
+        </thead>
+        <tbody id="platforms-table-body">
+          <tr><td colspan="7" style="text-align:center; color: var(--text-muted);">Загрузка аналитики...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Breakdown By Post -->
+    <div class="section-box">
+      <div class="section-title">
+        <span>Публикации и&nbsp;конверсия в&nbsp;деньги</span>
+        <span class="badge badge-emerald">СКВОЗНАЯ АТРИБУЦИЯ</span>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Материал / Тема</th>
+            <th>Целевая услуга</th>
+            <th>Каналов</th>
+            <th>Клики</th>
+            <th>Лиды</th>
+            <th>Выручка</th>
+            <th>Дата</th>
+          </tr>
+        </thead>
+        <tbody id="posts-table-body">
+          <tr><td colspan="7" style="text-align:center; color: var(--text-muted);">Загрузка публикаций...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    let currentPeriod = 'all';
+    let adminSecret = localStorage.getItem('sage_admin_secret') || '';
+
+    function checkAuth() {
+      if (adminSecret) {
+        document.getElementById('auth-overlay').style.display = 'none';
+        loadStats();
+      } else {
+        document.getElementById('auth-overlay').style.display = 'flex';
+      }
+    }
+
+    function authenticate() {
+      const val = document.getElementById('secret-input').value.trim();
+      if (!val) return alert('Введите ключ доступа');
+      adminSecret = val;
+      localStorage.setItem('sage_admin_secret', val);
+      document.getElementById('auth-overlay').style.display = 'none';
+      loadStats();
+    }
+
+    function setPeriod(period, btn) {
+      currentPeriod = period;
+      document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      loadStats();
+    }
+
+    async function loadStats() {
+      try {
+        const resp = await fetch(`/api/analytics/content-factory/stats?period=${currentPeriod}&secret=${encodeURIComponent(adminSecret)}`);
+        const res = await resp.json();
+
+        if (!res.ok) {
+          if (res.error && res.error.includes('Unauthorized')) {
+            alert('Неверный ключ доступа. Попробуйте снова.');
+            localStorage.removeItem('sage_admin_secret');
+            adminSecret = '';
+            document.getElementById('auth-overlay').style.display = 'flex';
+            return;
+          }
+          console.error(res.error);
+          return;
+        }
+
+        renderDashboard(res.data);
+      } catch (err) {
+        console.error('Fetch error:', err);
+      }
+    }
+
+    function formatMoney(num) {
+      return new Intl.NumberFormat('ru-RU').format(num) + ' ₽';
+    }
+
+    function renderDashboard(data) {
+      const ov = data.overall || {};
+      const views = ov.total_views || 0;
+      const clicks = ov.total_clicks || 0;
+      const leads = ov.total_leads || 0;
+      const deals = ov.total_deals || 0;
+      const revenue = ov.total_revenue || 0;
+      const ctr = views > 0 ? ((clicks / views) * 100).toFixed(1) : '0.0';
+
+      document.getElementById('val-views').innerText = views.toLocaleString('ru-RU');
+      document.getElementById('val-clicks').innerText = clicks.toLocaleString('ru-RU');
+      document.getElementById('val-ctr').innerText = `CTR: ${ctr}%`;
+      document.getElementById('val-leads').innerText = leads.toLocaleString('ru-RU');
+      document.getElementById('val-deals').innerText = deals.toLocaleString('ru-RU');
+      document.getElementById('val-revenue').innerText = formatMoney(revenue);
+
+      // Funnel
+      document.getElementById('fn-views').innerText = views.toLocaleString('ru-RU');
+      document.getElementById('fn-clicks').innerText = clicks.toLocaleString('ru-RU');
+      document.getElementById('fn-leads').innerText = leads.toLocaleString('ru-RU');
+      document.getElementById('fn-deals').innerText = deals.toLocaleString('ru-RU');
+      document.getElementById('fn-rev').innerText = formatMoney(revenue);
+
+      // Platforms Table
+      const ptBody = document.getElementById('platforms-table-body');
+      ptBody.innerHTML = '';
+      const platforms = data.platforms || [];
+
+      if (platforms.length === 0) {
+        ptBody.innerHTML = `<tr><td colspan="7" style="text-align:center; color: var(--text-muted);">Нет данных за выбранный период</td></tr>`;
+      } else {
+        platforms.forEach(p => {
+          const pRev = p.revenue || 0;
+          ptBody.innerHTML += `
+            <tr>
+              <td><strong>${p.platform.toUpperCase()}</strong></td>
+              <td class="mono-cell">${(p.views || 0).toLocaleString('ru-RU')}</td>
+              <td class="mono-cell">${(p.clicks || 0).toLocaleString('ru-RU')}</td>
+              <td class="mono-cell" style="color: var(--accent);">${p.leads || 0}</td>
+              <td class="mono-cell">${p.deals || 0}</td>
+              <td class="mono-cell" style="color: var(--emerald);">${formatMoney(pRev)}</td>
+              <td><span class="badge ${pRev > 0 ? 'badge-emerald' : 'badge-accent'}">${pRev > 0 ? 'ПРОДАЖИ' : 'АКТИВЕН'}</span></td>
+            </tr>
+          `;
+        });
+      }
+
+      // Posts Table
+      const psBody = document.getElementById('posts-table-body');
+      psBody.innerHTML = '';
+      const posts = data.posts || [];
+
+      if (posts.length === 0) {
+        psBody.innerHTML = `<tr><td colspan="7" style="text-align:center; color: var(--text-muted);">Публикации не найдены</td></tr>`;
+      } else {
+        posts.forEach(post => {
+          const postRev = post.revenue || 0;
+          psBody.innerHTML += `
+            <tr>
+              <td>
+                <div style="font-weight: 600; color: #fff;">${post.title}</div>
+                <div style="font-family: var(--mono); font-size: 11px; color: var(--text-muted);">${post.utm_campaign}</div>
+              </td>
+              <td><span class="badge badge-accent">${post.primary_service.toUpperCase()}</span></td>
+              <td class="mono-cell">${post.published_platforms}</td>
+              <td class="mono-cell">${(post.clicks || 0).toLocaleString('ru-RU')}</td>
+              <td class="mono-cell" style="color: var(--accent);">${post.leads || 0}</td>
+              <td class="mono-cell" style="color: var(--emerald);">${formatMoney(postRev)}</td>
+              <td style="font-family: var(--mono); font-size: 12px; color: var(--text-muted);">${post.created_at ? post.created_at.slice(0,10) : '-'}</td>
+            </tr>
+          `;
+        });
+      }
+    }
+
+    // Auto-init on load
+    window.addEventListener('DOMContentLoaded', checkAuth);
+  </script>
+</body>
+</html>

@@ -148,7 +148,18 @@
     k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
     (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
-    if (window.location.hostname === 'a-sage.ru' || window.location.hostname === 'www.a-sage.ru') {
+    
+    try {
+      if (window.location.search.indexOf('admin=sage') !== -1) {
+        localStorage.setItem('sage_disable_metrika', 'true');
+        console.log('[Analytics] Yandex Metrika disabled for admin');
+      } else if (window.location.search.indexOf('admin=clear') !== -1) {
+        localStorage.removeItem('sage_disable_metrika');
+        console.log('[Analytics] Yandex Metrika enabled');
+      }
+    } catch(e) {}
+
+    if ((window.location.hostname === 'a-sage.ru' || window.location.hostname === 'www.a-sage.ru') && (!window.localStorage || localStorage.getItem('sage_disable_metrika') !== 'true')) {
       ym(101414837, "init", {
            clickmap:true,
            trackLinks:true,
@@ -668,6 +679,8 @@
         <strong>ИП Пузырёв Михаил Михайлович</strong> · ИНН 500177901407 · ОГРНИП 318505300123140
       </div>
       <ul class="footer-links">
+        <li><a href="/base/">База знаний</a></li>
+        <li><a href="/google-one-guide">Гайд по&nbsp;Google One</a></li>
         <li><a href="/privacy">Политика конфиденциальности</a></li>
         <li><a href="/terms">Пользовательское соглашение</a></li>
         <li><a href="/offer-materials">Оферта материалов</a></li>

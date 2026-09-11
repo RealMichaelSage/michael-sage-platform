@@ -92,12 +92,25 @@
     k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
     (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
-    ym(101414837, "init", {
-         clickmap:true,
-         trackLinks:true,
-         accurateTrackBounce:true,
-         webvisor:true
-    });
+    
+    try {
+      if (window.location.search.indexOf('admin=sage') !== -1) {
+        localStorage.setItem('sage_disable_metrika', 'true');
+        console.log('[Analytics] Yandex Metrika disabled for admin');
+      } else if (window.location.search.indexOf('admin=clear') !== -1) {
+        localStorage.removeItem('sage_disable_metrika');
+        console.log('[Analytics] Yandex Metrika enabled');
+      }
+    } catch(e) {}
+
+    if ((window.location.hostname === 'a-sage.ru' || window.location.hostname === 'www.a-sage.ru') && (!window.localStorage || localStorage.getItem('sage_disable_metrika') !== 'true')) {
+      ym(101414837, "init", {
+           clickmap:true,
+           trackLinks:true,
+           accurateTrackBounce:true,
+           webvisor:true
+      });
+    }
   </script>
   <noscript><div><img src="https://mc.yandex.ru/watch/101414837" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 
