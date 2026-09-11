@@ -1,10 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://a-sage.ru/</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://a-sage.ru/img/mikhail_hero.jpg</image:loc>
+      <image:title>Михаил Пузырёв — Главный эксперт и практик по нейросетям</image:title>
+      <image:caption>Михаил Пузырёв фото</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://a-sage.ru/img/mikhail_about.jpg</image:loc>
+      <image:title>Михаил Пузырёв</image:title>
+      <image:caption>Михаил Пузырёв: внедрение нейросетей и AI-агентов</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://a-sage.ru/solutions/</loc>
@@ -86,9 +97,29 @@
   </url>
   <url>
     <loc>https://a-sage.ru/about</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-11</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://a-sage.ru/img/mikhail_about.jpg</image:loc>
+      <image:title>Михаил Пузырёв фото</image:title>
+      <image:caption>Михаил Пузырёв — Главный эксперт и практик по нейросетям</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://a-sage.ru/img/speaking/speaking_keynote_mic.png</image:loc>
+      <image:title>Михаил Пузырёв спикер с микрофоном</image:title>
+      <image:caption>Выступление Михаила Пузырёва о прикладных нейросетях</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://a-sage.ru/img/speaking/speaking_vibecoding.jpg</image:loc>
+      <image:title>Михаил Пузырёв мастер-класс по вайбкодингу</image:title>
+      <image:caption>Михаил Пузырёв на мастер-классе по Vibe Coding</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://a-sage.ru/img/speaking/speaking_skolkovo_school.jpg</image:loc>
+      <image:title>Михаил Пузырёв Школа стартапов Сколково</image:title>
+      <image:caption>Михаил Пузырёв в Сколково</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://a-sage.ru/corporate</loc>
