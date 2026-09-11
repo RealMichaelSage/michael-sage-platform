@@ -1,6 +1,26 @@
 RewriteEngine On
 RewriteBase /
 
+# --- 301 Redirects for Legacy Tilda URLs & Phantoms ---
+RewriteRule ^work/sd/?$ /solutions/ [R=301,L]
+RewriteRule ^work/sb/?$ / [R=301,L]
+RewriteRule ^page[0-9]+\.html$ / [R=301,L]
+RewriteRule ^33333333/?$ / [R=301,L]
+RewriteRule ^mod-cursor-1/?$ / [R=301,L]
+RewriteRule ^mockup/?$ / [R=301,L]
+RewriteRule ^videomod/?$ / [R=301,L]
+RewriteRule ^savage2/?$ / [R=301,L]
+RewriteRule ^mod11/?$ / [R=301,L]
+RewriteRule ^tpost/.*$ / [R=301,L]
+RewriteRule ^tproduct/.*$ / [R=301,L]
+RewriteRule ^project/.*$ / [R=301,L]
+RewriteRule ^bjhb/?$ / [R=301,L]
+RewriteRule ^skript-peredachi-utm-metok-tilda-telegram/?$ /automation [R=301,L]
+RewriteRule ^generator_utm_metok_dlya_telegram/?$ /automation [R=301,L]
+RewriteRule ^proccalc/?$ /calculators [R=301,L]
+RewriteRule ^unitcalc/?$ /calculators [R=301,L]
+RewriteRule ^dc1/?$ /automation [R=301,L]
+
 # Rewrite requests to .html files without extension
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.html -f

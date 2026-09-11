@@ -1,5 +1,5 @@
 # Robots.txt for https://a-sage.ru/
-# Official Platform of Mikhail Puzyrev (Михаил Пузырёв)
+# Mikhail Puzyrev (Михаил Пузырёв) — Главный эксперт и практик по нейросетям
 
 User-agent: *
 Allow: /
