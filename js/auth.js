@@ -551,6 +551,10 @@ const Auth = {
         window.location.href = '/solutions/lead-scraping-engine';
         return;
       }
+      if (itemId === 'podcast-guide-v2') {
+        window.location.href = '/base/ai-podcast-guide/';
+        return;
+      }
       this.showToast('Материал уже оплачен! Переходим в кабинет...', 'info');
       window.location.href = `/cabinet/?item_id=${encodeURIComponent(itemId)}`;
       return;
@@ -582,6 +586,10 @@ const Auth = {
           this.showToast('Материал уже оплачен! Доступ открыт.', 'success');
           if (itemId === 'solution-01') {
             window.location.href = '/solutions/lead-scraping-engine';
+            return;
+          }
+          if (itemId === 'podcast-guide-v2') {
+            window.location.href = '/base/ai-podcast-guide/';
             return;
           }
           window.location.href = `/cabinet/?item_id=${encodeURIComponent(itemId)}`;
@@ -897,10 +905,20 @@ const Auth = {
   },
 
   // Protect standalone page from unauthorized / guest access
-  protectPageAccess(type = 'club', itemId = null) {
+  protectPageAccess(type = 'club', itemId = null, options = {}) {
     if (!itemId && window.location.pathname.includes('lead-scraping-engine')) {
       itemId = 'solution-01';
     }
+    if (!itemId && window.location.pathname.includes('ai-podcast-guide')) {
+      itemId = 'podcast-guide-v2';
+    }
+
+    const defaultMsg = type === 'solution'
+      ? 'Данный сценарий доступен резидентам клуба или после оплаты решения.'
+      : 'Данное руководство доступно резидентам клуба или после разовой оплаты.';
+    const modalMessage = options.message || defaultMsg;
+    const modalTitle = options.title || 'Доступ ограничен';
+    const autoModal = typeof options.autoModal === 'boolean' ? options.autoModal : false;
 
     const check = () => {
       const hasClub = this.hasClubAccess();
@@ -909,20 +927,23 @@ const Auth = {
       const user = this.getUser();
       const lockwall = document.getElementById('page-gate-lockwall');
       const protectedContent = document.getElementById('page-protected-content');
+      const scrollspyRail = document.querySelector('.scrollspy-rail') || document.querySelector('.guide-scrollspy-rail');
 
       if (!hasAccess) {
         if (protectedContent) protectedContent.style.display = 'none';
         if (lockwall) lockwall.style.display = 'block';
+        if (scrollspyRail) scrollspyRail.style.display = 'none';
 
-        if (!user) {
-          this.openModal(
-            'Данный сценарий доступен резидентам клуба или после оплаты решения.',
-            'Доступ закрыт'
-          );
+        if (!user && autoModal) {
+          if (!sessionStorage.getItem('asage_gate_modal_shown_' + itemId)) {
+            sessionStorage.setItem('asage_gate_modal_shown_' + itemId, '1');
+            this.openModal(modalMessage, modalTitle);
+          }
         }
       } else {
         if (protectedContent) protectedContent.style.display = 'block';
         if (lockwall) lockwall.style.display = 'none';
+        if (scrollspyRail) scrollspyRail.style.display = '';
       }
     };
 

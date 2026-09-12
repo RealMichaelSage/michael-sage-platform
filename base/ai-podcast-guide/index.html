@@ -547,9 +547,12 @@
         </ol>
       </nav>
 
-      <div class="hero-badge">
-        <span class="dot"></span>
-        МЕТОДОЛОГИЯ SAGE DIGITAL // ПРАКТИЧЕСКИЙ КОНВЕЙЕР V2.0
+      <div class="hero-badge" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+        <div style="display:inline-flex; align-items:center; gap:8px;">
+          <span class="dot"></span>
+          <span>МЕТОДОЛОГИЯ SAGE DIGITAL // ПРАКТИЧЕСКИЙ КОНВЕЙЕР V2.0</span>
+        </div>
+        <span style="font-family:var(--mono); font-size:0.74rem; color:#dc2626; background:#fef2f2; border:1px solid #fecaca; padding:2px 10px; font-weight:700;">🔒 КЛУБ / 490 ₽</span>
       </div>
 
       <h1 class="hero-title" style="margin-top: 16px; margin-bottom: 14px; font-size: clamp(2rem, 3.8vw, 3.2rem); font-weight: 800; letter-spacing: -0.03em;">
@@ -561,14 +564,43 @@
       </p>
 
       <div class="guide-meta-bar">
+        <div class="guide-meta-item">Доступ: <strong style="color:#dc2626;">🔒 Резидентам или&nbsp;490 ₽</strong></div>
         <div class="guide-meta-item">Автор: <strong>Михаил Пузырёв</strong> (SAGE Digital)</div>
         <div class="guide-meta-item">Время чтения: <strong>14 мин</strong></div>
         <div class="guide-meta-item">Стек: <strong>Gemini, NotebookLM, CapCut, Mave, TG</strong></div>
         <div class="guide-meta-item">Канал: <a href="https://t.me/uncrn_sage" target="_blank" style="color:#10b981; font-weight:700; text-decoration:none;">@uncrn_sage ↗</a></div>
-        <div class="guide-meta-item">Версия: <strong>2.0 Pro (2026)</strong></div>
       </div>
     </section>
 
+    <!-- GATE LOCKWALL FOR NON-RESIDENTS -->
+    <div id="page-gate-lockwall" style="display:none; padding: clamp(40px, 6vw, 80px) clamp(20px, 4.5vw, 64px); background: #fafafa; border-bottom: 1px solid var(--border); text-align: center;">
+      <div style="max-width: 680px; margin: 0 auto; background: #ffffff; border: 2px solid #09090b; padding: clamp(32px, 5vw, 48px); box-shadow: 0 12px 32px rgba(0,0,0,0.06); border-radius: 0 !important;">
+        <div style="display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 0.78rem; font-weight: 700; color: #dc2626; background: #fef2f2; border: 1px solid #fecaca; padding: 4px 12px; margin-bottom: 20px; text-transform: uppercase;">
+          🔒 ЗАКРЫТЫЙ МАТЕРИАЛ ДЛЯ&nbsp;РЕЗИДЕНТОВ
+        </div>
+        <h2 style="font-size: clamp(1.4rem, 2.5vw, 1.9rem); font-weight: 800; color: #09090b; margin: 0 0 14px 0; line-height: 1.25; text-wrap: balance;">
+          Полное руководство и&nbsp;промпты доступны только резидентам клуба
+        </h2>
+        <p style="font-size: 1rem; color: #52525b; line-height: 1.6; margin: 0 0 28px 0; text-wrap: pretty;">
+          Пошаговая методология V2.0, готовые инженерные промпты для&nbsp;Gemini Deep Research и&nbsp;NotebookLM Audio, таблица точных звуковых настроек CapCut Desktop и&nbsp;шаблоны дистрибуции доступны авторизованным резидентам сообщества <strong>SAGE Neuro Family</strong> бесплатно или&nbsp;при&nbsp;разовой покупке доступа.
+        </p>
+        <div style="display: flex; flex-direction: column; gap: 12px; justify-content: center; align-items: stretch; max-width: 440px; margin: 0 auto;">
+          <button onclick="Auth.initiatePayment({ itemId: 'podcast-guide-v2', itemType: 'material', amount: 490, title: 'Руководство: AI-подкаст «Глубокое погружение» V2.0' })" class="btn-primary" style="padding: 14px 24px; font-weight: 700; font-size: 0.98rem; text-decoration: none; cursor: pointer; justify-content: center; display: inline-flex; align-items: center; gap: 8px; background: #09090b; color: #ffffff; border-radius: 0 !important;">
+            Купить руководство за&nbsp;490&nbsp;₽ ↗
+          </button>
+          <button onclick="Auth.openModal('Войдите через Telegram для доступа к руководству', 'Доступ резидентов')" class="btn-secondary" style="padding: 12px 24px; font-weight: 600; font-size: 0.9rem; text-decoration: none; cursor: pointer; justify-content: center; display: inline-flex; align-items: center; gap: 8px; background: #ffffff; color: #09090b; border: 1px solid var(--border); border-radius: 0 !important;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-2.02 1.28-5.7 3.77-.54.37-1.03.55-1.47.54-.48-.01-1.4-.27-2.09-.49-.84-.27-1.51-.42-1.45-.89.03-.25.38-.51 1.07-.78 4.19-1.82 6.98-3.03 8.37-3.61 3.98-1.66 4.81-1.95 5.35-1.96.12 0 .39.03.56.17.14.12.18.28.2.4.01.07.01.21 0 .36z"/></svg>
+            Войти как&nbsp;резидент Клуба
+          </button>
+          <a href="/club/" class="btn-secondary" style="padding: 12px 24px; font-weight: 600; font-size: 0.88rem; text-decoration: none; justify-content: center; display: inline-flex; align-items: center; gap: 8px; background: #fafafa; color: #52525b; border: 1px solid #e4e4e7; border-radius: 0 !important;">
+            Вступить в&nbsp;Клуб Резидентов (от&nbsp;1&nbsp;900&nbsp;₽/мес) →
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROTECTED CONTENT WRAPPER -->
+    <div id="page-protected-content">
     <!-- SECTION 1: PREFACE & PHILOSOPHY -->
     <section id="intro" class="guide-page-frame guide-section-block" data-nav-title="01. Концепция">
       <div class="guide-content-wrap">
@@ -1210,6 +1242,9 @@ https://t.me/[ВашКанал]</pre>
       </div>
     </section>
 
+    </div>
+    <!-- END PROTECTED CONTENT WRAPPER -->
+
   </main>
 
   <!-- DIRECT MESSENGER CONTACT & BOOKING SECTION -->
@@ -1279,6 +1314,8 @@ https://t.me/[ВашКанал]</pre>
     ✓ Скопировано в&nbsp;буфер обмена
   </div>
 
+  <script src="/js/auth.js?v=1.4"></script>
+  <script src="/js/main.js?v=2.9"></script>
   <script>
     function copyPrompt(elementId, btn) {
       const el = document.getElementById(elementId);
@@ -1305,8 +1342,13 @@ https://t.me/[ВашКанал]</pre>
         console.error('Failed to copy text: ', err);
       });
     }
+
+    // Resident or Purchased Material Protection
+    Auth.protectPageAccess('club', 'podcast-guide-v2', {
+      message: 'Данное руководство доступно резидентам Закрытого Клуба или после разовой оплаты.',
+      title: 'Доступ резидентов',
+      autoModal: false
+    });
   </script>
-  <script src="/js/auth.js?v=1.4"></script>
-  <script src="/js/main.js?v=2.9"></script>
 </body>
 </html>
