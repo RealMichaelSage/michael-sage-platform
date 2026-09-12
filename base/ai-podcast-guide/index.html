@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Как&nbsp;создать AI-подкаст «Глубокое погружение» с&nbsp;нуля: Гайд 2026 | Михаил Пузырёв</title>
+  <meta name="description" content="Пошаговая методология SAGE Digital V2.0: от стратегии сезона на 25 эпизодов и двухголосой генерации в NotebookLM до студийного сведения в CapCut, запуска Telegram-сообщества и дистрибуции на все платформы.">
+  <meta name="keywords" content="AI подкаст, как создать подкаст с нейросетью, NotebookLM подкаст, Gemini Deep Research, аудиопересказ NotebookLM, подкаст без студии, CapCut звук подкаста, дистрибуция подкаста, Mave, Podster, Михаил Пузырёв">
+  <meta name="author" content="Михаил Пузырёв">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+  <!-- Favicon Suite -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-title" content="Михаил Пузырёв">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <!-- Canonical & Alternate -->
+  <link rel="canonical" href="https://a-sage.ru/base/ai-podcast-guide/">
+  <link rel="alternate" type="text/markdown" href="https://a-sage.ru/llms-full.txt">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Как создать AI-подкаст «Глубокое погружение» с нуля: Полная инструкция V2.0">
+  <meta property="og:description" content="Практический конвейер для экспертов и предпринимателей: стратегия на 25 эпизодов, мастер-промпты для NotebookLM и Gemini, сведение звука в CapCut и запуск Telegram-комьюнити.">
+  <meta property="og:url" content="https://a-sage.ru/base/ai-podcast-guide/">
+  <meta property="og:site_name" content="Михаил Пузырёв — AI Архитектура & Внедрение">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:image" content="https://a-sage.ru/img/og-preview.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Как создать AI-подкаст «Глубокое погружение» с нуля: Гайд 2026 | Михаил Пузырёв">
+  <meta name="twitter:description" content="Практическое руководство по созданию AI-подкаста под ключ: от исследования ниши до Apple Podcasts и Spotify.">
+  <meta name="twitter:image" content="https://a-sage.ru/img/og-preview.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "TechArticle",
+        "@id": "https://a-sage.ru/base/ai-podcast-guide/#article",
+        "headline": "Как создать AI-подкаст «Глубокое погружение» с нуля: Пошаговая инструкция V2.0",
+        "description": "Практическое руководство по созданию подкаста с помощью искусственного интеллекта: Gemini Deep Research, NotebookLM, CapCut, Telegram и Mave.",
+        "author": {
+          "@type": "Person",
+          "name": "Михаил Пузырёв",
+          "url": "https://a-sage.ru/about"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Михаил Пузырёв",
+          "url": "https://a-sage.ru"
+        },
+        "datePublished": "2026-09-12",
+        "dateModified": "2026-09-12",
+        "inLanguage": "ru-RU",
+        "about": [
+          "AI-подкасты",
+          "NotebookLM аудиопересказ",
+          "Google Gemini Deep Research",
+          "Монтаж аудио в CapCut",
+          "Дистрибуция подкастов",
+          "Контент-стратегия Telegram"
+        ],
+        "proficiencyLevel": "Expert & Creator Practical Level"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Главная",
+            "item": "https://a-sage.ru/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "База Знаний",
+            "item": "https://a-sage.ru/base"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Создание AI-подкаста",
+            "item": "https://a-sage.ru/base/ai-podcast-guide/"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/style.css?v=3.0">
+
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();
+    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    try {
+      if (window.location.search.indexOf('admin=sage') !== -1) {
+        localStorage.setItem('sage_disable_metrika', 'true');
+        console.log('[Analytics] Yandex Metrika disabled for admin');
+      } else if (window.location.search.indexOf('admin=clear') !== -1) {
+        localStorage.removeItem('sage_disable_metrika');
+        console.log('[Analytics] Yandex Metrika enabled');
+      }
+    } catch(e) {}
+
+    if ((window.location.hostname === 'a-sage.ru' || window.location.hostname === 'www.a-sage.ru') && (!window.localStorage || localStorage.getItem('sage_disable_metrika') !== 'true')) {
+      ym(101414837, "init", {
+           clickmap:true,
+           trackLinks:true,
+           accurateTrackBounce:true,
+           webvisor:true
+      });
+    }
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/101414837" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+
+  <style>
+    .guide-page-frame {
+      max-width: 1440px;
+      margin: 0 auto;
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      box-sizing: border-box;
+      background: #ffffff;
+    }
+    .guide-hero {
+      padding-top: 116px;
+      padding-bottom: 40px;
+      padding-left: clamp(20px, 4.5vw, 64px);
+      padding-right: clamp(20px, 4.5vw, 64px);
+      border-bottom: 1px solid var(--border);
+      background: #ffffff;
+    }
+    .guide-section-block {
+      padding: 48px clamp(20px, 4.5vw, 64px) 56px;
+      border-bottom: 1px solid var(--border);
+    }
+    .guide-content-wrap {
+      max-width: 980px;
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: #27272a;
+    }
+    .guide-content-wrap h1 {
+      text-wrap: balance;
+    }
+    .guide-content-wrap h2 {
+      font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: #09090b;
+      margin: 0 0 20px 0;
+      text-wrap: balance;
+    }
+    .guide-content-wrap h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #09090b;
+      margin: 32px 0 14px 0;
+      text-wrap: balance;
+    }
+    .guide-content-wrap h4 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #09090b;
+      margin: 24px 0 10px 0;
+      text-wrap: balance;
+    }
+    .guide-content-wrap p {
+      margin-bottom: 20px;
+      text-wrap: pretty;
+    }
+    .guide-content-wrap ul, .guide-content-wrap ol {
+      margin-bottom: 24px;
+      padding-left: 24px;
+    }
+    .guide-content-wrap li {
+      margin-bottom: 10px;
+      text-wrap: pretty;
+    }
+
+    .guide-meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid #e4e4e7;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: #52525b;
+    }
+    .guide-meta-item strong {
+      color: #09090b;
+    }
+
+    /* Cards Grid */
+    .feature-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin: 28px 0 32px;
+    }
+    .feature-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 22px 20px;
+      border-radius: 0 !important;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .feature-card:hover {
+      border-color: #09090b;
+      transform: translateY(-2px);
+    }
+    .feature-card-num {
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: #10b981;
+      margin-bottom: 8px;
+    }
+    .feature-card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #09090b;
+      margin-bottom: 8px;
+      line-height: 1.35;
+      text-wrap: balance;
+    }
+    .feature-card-desc {
+      font-size: 0.88rem;
+      line-height: 1.55;
+      color: #52525b;
+      margin: 0;
+      text-wrap: pretty;
+    }
+
+    /* Callout Boxes */
+    .callout-box {
+      padding: 24px;
+      background: #fafafa;
+      border-left: 4px solid #09090b;
+      margin: 28px 0;
+      border-radius: 0 !important;
+    }
+    .callout-box.callout-emerald {
+      background: #f0fdf4;
+      border-left-color: #10b981;
+    }
+    .callout-box.callout-warning {
+      background: #fef2f2;
+      border-left-color: #ef4444;
+    }
+    .callout-title {
+      font-weight: 700;
+      font-size: 1rem;
+      color: #09090b;
+      margin-bottom: 8px;
+    }
+
+    /* Tables */
+    .table-scroll-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: 28px 0;
+      border: 1px solid var(--border);
+    }
+    .research-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      text-align: left;
+      min-width: 680px;
+    }
+    .research-table th {
+      background: #09090b;
+      color: #ffffff;
+      padding: 14px 16px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      border-radius: 0 !important;
+    }
+    .research-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      color: #3f3f46;
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    .research-table tr:nth-child(even) td {
+      background: #fafafa;
+    }
+
+    /* Copy-Paste Prompt Box */
+    .prompt-box-wrapper {
+      border: 1px solid var(--border);
+      background: #fafafa;
+      margin: 28px 0 32px;
+      border-radius: 0 !important;
+    }
+    .prompt-box-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 18px;
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .prompt-box-header-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #09090b;
+    }
+    .prompt-box-header-sub {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: #71717a;
+      margin-top: 2px;
+    }
+    .btn-copy-prompt {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #09090b;
+      color: #ffffff;
+      border: 1px solid #09090b;
+      padding: 7px 14px;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 0 !important;
+      transition: all 0.2s ease;
+    }
+    .btn-copy-prompt:hover {
+      background: #27272a;
+      border-color: #27272a;
+    }
+    .btn-copy-prompt.copied {
+      background: #10b981;
+      border-color: #10b981;
+      color: #000000;
+    }
+    .prompt-code-box {
+      margin: 0;
+      padding: 20px 18px;
+      font-family: var(--mono);
+      font-size: 0.84rem;
+      line-height: 1.65;
+      color: #18181b;
+      background: #ffffff;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      border-radius: 0 !important;
+    }
+
+    /* Term link to AI Glossary */
+    .term-link {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1.5px dashed #10b981;
+      padding-bottom: 1px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .term-link:hover {
+      color: #059669;
+      border-bottom-style: solid;
+      background: rgba(16, 185, 129, 0.08);
+      border-radius: 2px;
+    }
+
+    /* CapCut Settings Card */
+    .capcut-settings-card {
+      background: #09090b;
+      border: 1px solid #27272a;
+      padding: 28px;
+      color: #ffffff;
+      margin: 28px 0;
+      border-radius: 0 !important;
+    }
+    .capcut-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+    @media (max-width: 768px) {
+      .capcut-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+    }
+    .capcut-item {
+      background: #18181b;
+      border: 1px solid #27272a;
+      padding: 18px 16px;
+      border-radius: 0 !important;
+    }
+    .capcut-item-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #10b981;
+      margin-bottom: 6px;
+      font-family: var(--mono);
+    }
+    .capcut-item-val {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+    .capcut-item-desc {
+      font-size: 0.84rem;
+      color: #a1a1aa;
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    /* Author Callout */
+    .author-banner-box {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      background: #f4f4f5;
+      border: 1px solid var(--border);
+      padding: 24px;
+      margin: 32px 0;
+      border-radius: 0 !important;
+    }
+    @media (max-width: 640px) {
+      .author-banner-box {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+    }
+    .author-sticker-img {
+      width: 76px;
+      height: 76px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    /* Toast */
+    .toast-msg-box {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #09090b;
+      color: #ffffff;
+      padding: 12px 20px;
+      border: 1px solid #27272a;
+      border-radius: 0 !important;
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.25s ease;
+      pointer-events: none;
+    }
+    .toast-msg-box.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER NAVIGATION -->
+  <header class=nav>
+    <div class=nav-inner>
+      <a href="/" class="nav-logo">
+        <strong>Михаил Пузыр<span class="accent-yo">ё</span>в</strong>
+        <span class="nav-logo-badge">AI-ПОДКАСТЫ</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="/mentoring"><span class="nav-link-text">Наставничество 1-на-1</span></a></li>
+        <li><a href="/automation"><span class="nav-link-text">Внедрение &amp;&nbsp;Разработка</span></a></li>
+        <li><a href="/corporate"><span class="nav-link-text">Компаниям</span></a></li>
+        <li><a href="/club/"><span class="nav-link-text">Клуб</span></a></li>
+        <li><a href="/about"><span class="nav-link-text">Обо&nbsp;мне &amp;&nbsp;Кейсы</span></a></li>
+        <li><a href="/base" class="active"><span class="nav-link-text">База</span></a></li>
+      </ul>
+
+      <div class="nav-right">
+        <a href="/booking" class="nav-cta">Забронировать слот ↗</a>
+        <button class="nav-burger" aria-label="Открыть меню">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu">
+    <a href="/">Главная</a>
+    <a href="/mentoring">Наставничество 1-на-1</a>
+    <a href="/automation">Внедрение &amp;&nbsp;Разработка</a>
+    <a href="/corporate">Компаниям</a>
+    <a href="/club/">Клуб</a>
+    <a href="/about">Обо мне &amp;&nbsp;Кейсы</a>
+    <a href="/base">База</a>
+    <a href="/cabinet/">Личный Кабинет</a>
+    <a href="/booking" class="m-cta">Забронировать слот ↗</a>
+  </div>
+
+  <main>
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="guide-page-frame guide-hero" data-nav-title="AI-Подкасты">
+      <!-- Breadcrumbs -->
+      <nav aria-label="Хлебные крошки" style="margin-bottom: 20px;">
+        <ol style="list-style:none; padding:0; margin:0; display:flex; flex-wrap:wrap; gap:8px; font-family:var(--mono); font-size:0.8rem; color:#71717a;">
+          <li><a href="/" style="color:#71717a; text-decoration:none;">Главная</a></li>
+          <li>/</li>
+          <li><a href="/base" style="color:#71717a; text-decoration:none;">База Знаний</a></li>
+          <li>/</li>
+          <li style="color:#09090b; font-weight:600;">Создание AI-подкаста «Глубокое погружение»</li>
+        </ol>
+      </nav>
+
+      <div class="hero-badge">
+        <span class="dot"></span>
+        МЕТОДОЛОГИЯ SAGE DIGITAL // ПРАКТИЧЕСКИЙ КОНВЕЙЕР V2.0
+      </div>
+
+      <h1 class="hero-title" style="margin-top: 16px; margin-bottom: 14px; font-size: clamp(2rem, 3.8vw, 3.2rem); font-weight: 800; letter-spacing: -0.03em;">
+        Как&nbsp;создать AI-подкаст «Глубокое погружение» с&nbsp;нуля
+      </h1>
+
+      <p class="hero-sub" style="max-width: 940px; font-size: 1.14rem; line-height: 1.65; color: #52525b; margin-bottom: 0;">
+        Полноценная система превращения экспертных идей в&nbsp;высокобюджетное двухголосое аудио-шоу без&nbsp;студии, звукорежиссёров и&nbsp;сложного монтажа. От&nbsp;глубокого исследования ниши в&nbsp;<a href="/glossary#term-google-gemini" class="term-link" target="_blank" title="Открыть определение в Глоссарии">Gemini Deep Research</a> и&nbsp;генерации диалога в&nbsp;NotebookLM до&nbsp;сведения звука в&nbsp;CapCut и&nbsp;построения сообщества в&nbsp;Telegram.
+      </p>
+
+      <div class="guide-meta-bar">
+        <div class="guide-meta-item">Автор: <strong>Михаил Пузырёв</strong> (SAGE Digital)</div>
+        <div class="guide-meta-item">Время чтения: <strong>14 мин</strong></div>
+        <div class="guide-meta-item">Стек: <strong>Gemini, NotebookLM, CapCut, Mave, TG</strong></div>
+        <div class="guide-meta-item">Канал: <a href="https://t.me/uncrn_sage" target="_blank" style="color:#10b981; font-weight:700; text-decoration:none;">@uncrn_sage ↗</a></div>
+        <div class="guide-meta-item">Версия: <strong>2.0 Pro (2026)</strong></div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: PREFACE & PHILOSOPHY -->
+    <section id="intro" class="guide-page-frame guide-section-block" data-nav-title="01. Концепция">
+      <div class="guide-content-wrap">
+        <div class="section-tag">// РАЗДЕЛ 01 · ПРЕДИСЛОВИЕ И&nbsp;ФИЛОСОФИЯ</div>
+        <h2>Зачем эксперту и&nbsp;бизнесу собственный AI-подкаст</h2>
+
+        <div class="author-banner-box">
+          <img src="/img/podcast-guide/avatar_sticker.png" alt="Михаил Пузырёв стикер" class="author-sticker-img">
+          <div>
+            <div style="font-weight:700; font-size:1.02rem; color:#09090b; margin-bottom:4px;">
+              Идея формата ©&nbsp;«Глубокое погружение» принадлежит мне — Михаилу [SAGE] Пузырёву
+            </div>
+            <div style="font-size:0.9rem; color:#52525b; line-height:1.5;">
+              Мои мысли часто рождаются в&nbsp;неформальном потоке. Я&nbsp;просто наговариваю идеи, гипотезы и&nbsp;смыслы голосом, а&nbsp;современный <a href="/glossary#term-large-language-model" class="term-link" target="_blank" title="Открыть определение в Глоссарии">AI-стек</a> структурирует их&nbsp;в&nbsp;живой, плотный и&nbsp;кинематографичный контент. Следить за&nbsp;моими экспериментами можно в&nbsp;Telegram: <a href="https://t.me/uncrn_sage" target="_blank" style="color:#09090b; font-weight:700; text-decoration:underline;">@uncrn_sage</a>.
+            </div>
+          </div>
+        </div>
+
+        <p>
+          Подкасты — один из&nbsp;самых глубоких и&nbsp;вовлекающих медиа-форматов. Слушатель проводит с&nbsp;вами от&nbsp;15 до&nbsp;40 минут в&nbsp;наушниках во&nbsp;время пробежки, в&nbsp;автомобиле или&nbsp;самолете. Это формирует предельный уровень доверия к&nbsp;личному бренду или&nbsp;компании.
+        </p>
+
+        <p>
+          Однако традиционный процесс производства подкастов чудовищно перегружен барьерами: недели на&nbsp;исследование источников, дорогие авторы сценариев, аренда звукоизолированной студии, найм звукорежиссёров и&nbsp;боязнь микрофона.
+        </p>
+
+        <div class="callout-box callout-emerald">
+          <div class="callout-title">💡 Суть революции AI-подкастинга</div>
+          <p style="margin:0; font-size:0.95rem; color:#27272a;">
+            Эта инструкция превращает сложный медиа-проект в&nbsp;<strong>воспроизводимый конвейер</strong>. Сфокусировавшись на&nbsp;экосистеме Google (Gemini Deep Research + NotebookLM) и&nbsp;простом монтаже в&nbsp;CapCut, вы&nbsp;создаете сезон из&nbsp;25 выпусков студийного качества за&nbsp;считанные дни, сохраняя 100% контроль над&nbsp;экспертной ценностью.
+          </p>
+        </div>
+
+        <h3>Что&nbsp;дает этот конвейер на&nbsp;практике:</h3>
+        <div class="feature-cards-grid">
+          <div class="feature-card">
+            <div class="feature-card-num">01 // СТРАТЕГИЯ</div>
+            <div class="feature-card-title">Сезон на&nbsp;25 эпизодов</div>
+            <p class="feature-card-desc">AI исследует нишу глубже живого ресерчера и&nbsp;выстраивает логическую арку от&nbsp;азов до&nbsp;сложных инсайтов с&nbsp;хуками и&nbsp;тезисами.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card-num">02 // ПАЙПЛАЙН</div>
+            <div class="feature-card-title">Сценарии и&nbsp;Аудио за&nbsp;минуты</div>
+            <p class="feature-card-desc">Точные промпты трансформируют ваши тезисы в&nbsp;живой диалог двух экспертов без&nbsp;покупки микрофонов и&nbsp;аренды студий.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card-num">03 // ЗВУК</div>
+            <div class="feature-card-title">Студийный звук в&nbsp;CapCut</div>
+            <p class="feature-card-desc">Пошаговый алгоритм нормализации громкости (+5 дБ голос, -3 дБ джингл) дает дорогой звук без&nbsp;звукорежиссера.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card-num">04 // УПАКОВКА</div>
+            <div class="feature-card-title">Telegram-Хаб и&nbsp;Комьюнити</div>
+            <p class="feature-card-desc">Полноценная система удержания слушателей: закрепленное оглавление, бот-транскрибатор и&nbsp;посты-переходы между частями.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card-num">05 // ДИСТРИБУЦИЯ</div>
+            <div class="feature-card-title">Выход на&nbsp;все стриминги</div>
+            <p class="feature-card-desc">Единая RSS-лента для&nbsp;Яндекс.Музыки, Apple Podcasts, Spotify, Литрес и&nbsp;Звука с&nbsp;автоматической синхронизацией.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card-num">06 // МАСШТАБ</div>
+            <div class="feature-card-title">Превращение в&nbsp;книгу</div>
+            <p class="feature-card-desc">Материалы сезона компилируются в&nbsp;твердый переплет или&nbsp;электронную книгу через Ridero / ЛитРес Самиздат в&nbsp;1 клик.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: STACK & TOOLS -->
+    <section id="stack" class="guide-page-frame guide-section-block" data-nav-title="02. Стек">
+      <div class="guide-content-wrap">
+        <div class="section-tag">// РАЗДЕЛ 02 · ЭТАП 0: ПОДГОТОВКА И&nbsp;ИНСТРУМЕНТЫ</div>
+        <h2>Стек инструментов для&nbsp;производственного цикла</h2>
+
+        <p>
+          Для&nbsp;сборки подкаста не&nbsp;нужны десятки разрозненных утилит. Весь конвейер опирается на&nbsp;проверенный минималистичный набор инструментов:
+        </p>
+
+        <div class="table-scroll-wrapper">
+          <table class="research-table">
+            <thead>
+              <tr>
+                <th>Инструмент</th>
+                <th>Роль в&nbsp;конвейере</th>
+                <th>Тариф / Доступ</th>
+                <th>Ссылка</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Google Gemini</strong></td>
+                <td>Глубокие отраслевые исследования (Deep Research), концепция и&nbsp;планирование сезона</td>
+                <td>Advanced (Google One AI Premium) · VPN</td>
+                <td><a href="https://gemini.google.com/" target="_blank" style="color:#09090b; font-weight:600;">gemini.google.com ↗</a></td>
+              </tr>
+              <tr>
+                <td><strong>NotebookLM</strong></td>
+                <td>Генерация живого двухголосого аудиопересказа (Audio Overview) с&nbsp;натуральной интонацией</td>
+                <td>Бесплатно в&nbsp;экосистеме Google · VPN</td>
+                <td><a href="https://notebooklm.google.com/" target="_blank" style="color:#09090b; font-weight:600;">notebooklm.google.com ↗</a></td>
+              </tr>
+              <tr>
+                <td><strong>Google Drive</strong></td>
+                <td>Единое структурированное хранилище исследований, сценариев и&nbsp;мастер-файлов аудио</td>
+                <td>Входит в&nbsp;Google One (от&nbsp;2 ТБ)</td>
+                <td><a href="https://drive.google.com" target="_blank" style="color:#09090b; font-weight:600;">drive.google.com ↗</a></td>
+              </tr>
+              <tr>
+                <td><strong>Canva</strong></td>
+                <td>Создание обложек подкаста (1400×1400 px), тизеров для&nbsp;соцсетей и&nbsp;баннеров</td>
+                <td>Free / Pro · VPN</td>
+                <td><a href="https://www.canva.com" target="_blank" style="color:#09090b; font-weight:600;">canva.com ↗</a></td>
+              </tr>
+              <tr>
+                <td><strong>CapCut Desktop</strong></td>
+                <td>Сведение звука, наложение джинглов, нормализация громкости и&nbsp;экспорт дорожки</td>
+                <td>Бесплатно для&nbsp;macOS / Windows</td>
+                <td><a href="https://www.capcut.com" target="_blank" style="color:#09090b; font-weight:600;">capcut.com ↗</a></td>
+              </tr>
+              <tr>
+                <td><strong>Mave / Podster</strong></td>
+                <td>Подкаст-хостинг: хранение эпизодов, аналитика прослушиваний и&nbsp;генерация RSS</td>
+                <td>Mave.digital (Free) / Podster.fm</td>
+                <td><a href="https://app.mave.digital/" target="_blank" style="color:#09090b; font-weight:600;">app.mave.digital ↗</a></td>
+              </tr>
+              <tr>
+                <td><strong>Telegram + TLDR Bot</strong></td>
+                <td>Канал проекта, чат для&nbsp;слушателей и&nbsp;авто-транскрибация через @TLDRVoiceBot</td>
+                <td>Free / Telegram Premium</td>
+                <td><a href="https://t.me/TLDRVoiceBot" target="_blank" style="color:#09090b; font-weight:600;">@TLDRVoiceBot ↗</a></td>
+              </tr>
+              <tr>
+                <td><strong>1pay.finance</strong></td>
+                <td>Оплата зарубежных сервисов и&nbsp;подписок (Google One, Canva, Telegram) из&nbsp;РФ</td>
+                <td>Виртуальные карты и&nbsp;инвойсы</td>
+                <td><a href="https://www.1pay.finance/" target="_blank" style="color:#09090b; font-weight:600;">1pay.finance ↗</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout-box">
+          <div class="callout-title">📌 Рекомендация автора по&nbsp;подпискам:</div>
+          <ul style="margin:0; padding-left:20px; font-size:0.95rem;">
+            <li><strong>Google One (AI Premium):</strong> единая связка — хранилище 2 ТБ, неограниченный доступ к&nbsp;Gemini 2.5/3 Pro с&nbsp;режимом Deep Research и&nbsp;интеграция в&nbsp;Docs. (См.&nbsp;мой <a href="/google-one-guide" style="color:#09090b; font-weight:700; text-decoration:underline;">гайд по&nbsp;оплате Google One в&nbsp;РФ</a>).</li>
+            <li><strong>Telegram Premium:</strong> ускоренная загрузка объемных аудиофайлов и&nbsp;расширенные возможности оформления канала.</li>
+            <li><strong>CapCut ПК-версия:</strong> именно десктопная версия дает точный контроль над&nbsp;децибелами и&nbsp;точками затухания Fade.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: STRATEGY & SEASON PLANNING -->
+    <section id="strategy" class="guide-page-frame guide-section-block" data-nav-title="03. Стратегия">
+      <div class="guide-content-wrap">
+        <div class="section-tag">// РАЗДЕЛ 03 · ЭТАП 1: КОНЦЕПЦИЯ И&nbsp;СТРАТЕГИЯ</div>
+        <h2>Фундамент подкаста: от&nbsp;голосовой идеи до&nbsp;25 эпизодов</h2>
+
+        <p>
+          Самая частая ошибка начинающих авторов — сесть писать сценарий без&nbsp;общей архитектуры. Сезон должен слушаться как&nbsp;захватывающий сериал. Для&nbsp;этого мы&nbsp;проходим три четких шага.
+        </p>
+
+        <h3>Шаг 1: Определение идеи и&nbsp;ЦА (Голосовой наговор)</h3>
+        <p>
+          Не&nbsp;пытайтесь сразу писать идеальный текст. Откройте диктофон или&nbsp;чат с&nbsp;самим собой в&nbsp;Telegram и&nbsp;наговорите 3–5 минут ответов на&nbsp;вопросы:
+        </p>
+        <ul>
+          <li><strong>О&nbsp;чем я&nbsp;хочу говорить?</strong> Какая тема меня по-настоящему драйвит и&nbsp;где мой практический опыт?</li>
+          <li><strong>Для&nbsp;кого этот подкаст?</strong> Кто&nbsp;мой идеальный слушатель (предприниматель, техлид, маркетолог, родитель)? Что&nbsp;у&nbsp;него болит?</li>
+          <li><strong>Какую проблему решает подкаст?</strong> Чему слушатель научится и&nbsp;какой измеримый результат получит?</li>
+          <li><strong>Какие 3–5 ключевых тем</strong> обязаны прозвучать в&nbsp;сезоне?</li>
+        </ul>
+
+        <h3>Шаг 2: Глубокое исследование темы через Gemini Deep Research</h3>
+        <p>
+          Превращаем ваши голосовые тезисы в&nbsp;фундаментальный академический отчет с&nbsp;фактами, цифрами и&nbsp;контекстом. Вставьте следующий <a href="/glossary#term-prompt" class="term-link" target="_blank" title="Открыть определение в Глоссарии">системный промпт</a> в&nbsp;Gemini:
+        </p>
+
+        <!-- PROMPT 1: DEEP RESEARCH -->
+        <div class="prompt-box-wrapper">
+          <div class="prompt-box-header">
+            <div>
+              <div class="prompt-box-header-title">Промпт 1: Глубокое исследование темы (Gemini Deep Research)</div>
+              <div class="prompt-box-header-sub">Формирует фундаментальный исследовательский документ на&nbsp;10 разделов</div>
+            </div>
+            <button class="btn-copy-prompt" onclick="copyPrompt('prompt-research-text', this)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span>Скопировать промпт ⎘</span>
+            </button>
+          </div>
+          <pre class="prompt-code-box" id="prompt-research-text">Ты — исследователь мирового класса. Твоя задача — провести всестороннее, глубокое и объективное исследование на тему: "[ЗДЕСЬ ВАША ГЛАВНАЯ ТЕМА ПОДКАСТА И ОТВЕТЫ НА ВОПРОСЫ ИЗ ШАГА 1]".
+
+Проанализируй и синтезируй информацию из авторитетных академических, научных и отраслевых источников. Предоставь результат в виде структурированного отчета. Мне нужен глубокий анализ, а не поверхностные выводы.
+
+Структура отчета:
+1. Общее резюме: Краткая выжимка (2-3 абзаца) всего исследования.
+2. Введение и актуальность: Почему эта тема важна именно сейчас?
+3. Исторический контекст: Как развивалась тема?
+4. Ключевые аспекты: Детальный разбор темы на составные части.
+5. Текущее состояние и тренды: Что происходит в этой области прямо сейчас?
+6. Проблемы и вызовы: С какими трудностями сталкивается развитие темы?
+7. Будущие перспективы: Прогноз развития на 3-5 лет.
+8. Практическое применение: Как это влияет на бизнес, науку, общество?
+9. Заключение: Ключевые инсайты.
+10. Список источников: 5-10 наиболее авторитетных источников.</pre>
+        </div>
+
+        <p>
+          <strong>Результат Шага 2:</strong> У&nbsp;вас на&nbsp;руках появляется монолитный документ на&nbsp;15–25 страниц. Сохраните его на&nbsp;Google Диске в&nbsp;папке подкаста — это фундамент сезона.
+        </p>
+
+        <h3>Шаг 3: Разработка сетки сезона на&nbsp;25 эпизодов (Gemini Canvas)</h3>
+        <p>
+          Теперь разбиваем общее исследование на&nbsp;25 логически связанных глав. Откройте новый чат в&nbsp;Gemini, переключитесь в&nbsp;режим <strong>Canvas</strong>, прикрепите документ из&nbsp;Шага 2 и&nbsp;запустите промпт продюсера:
+        </p>
+
+        <!-- PROMPT 2: SEASON STRUCTURE -->
+        <div class="prompt-box-wrapper">
+          <div class="prompt-box-header">
+            <div>
+              <div class="prompt-box-header-title">Промпт 2: Сетка сезона на&nbsp;25 эпизодов (Gemini Canvas)</div>
+              <div class="prompt-box-header-sub">Генерирует хуки, описания, тезисы и&nbsp;хештеги для&nbsp;каждого выпуска</div>
+            </div>
+            <button class="btn-copy-prompt" onclick="copyPrompt('prompt-season-text', this)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span>Скопировать промпт ⎘</span>
+            </button>
+          </div>
+          <pre class="prompt-code-box" id="prompt-season-text">Ты — опытный продюсер подкастов. Я хочу на основе прикрепленного файла создать полноценный сезон подкаста из 25 эпизодов.
+
+Целевая аудитория: [Опишите вашу ЦА, например: "предприниматели и фаундеры", "руководители отделов", "практикующие эксперты"].
+
+Задача:
+Проанализируй текст и раздели его на 25 логически связанных тем для эпизодов. Выстрой их в логическом порядке: от фундаментальных основ к прикладным и сложным темам.
+
+Для каждого из 25 эпизодов предоставь информацию в формате:
+Эпизод [Номер]: [Яркое и цепляющее название]
+* Хук для начала (1-2 предложения): Интригующий вопрос или смелое утверждение для удержания внимания.
+* Краткое описание (1 предложение): О чем выпуск и какую конкретную пользу получит слушатель?
+* Ключевые тезисы (2-3 предложения): Главные мысли и инсайты эпизода.
+* Хештеги (5-7 штук): Для продвижения и навигации в Telegram и соцсетях.</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: CONTENT PIPELINE & NOTEBOOKLM AUDIO -->
+    <section id="content" class="guide-page-frame guide-section-block" data-nav-title="04. Контент">
+      <div class="guide-content-wrap">
+        <div class="section-tag">// РАЗДЕЛ 04 · ЭТАП 2: СОЗДАНИЕ КОНТЕНТА И&nbsp;ГЕНЕРАЦИЯ ЗВУКА</div>
+        <h2>Генерация живого двухголосого аудио в&nbsp;NotebookLM</h2>
+
+        <p>
+          Когда структура сезона утверждена, мы&nbsp;переходим к&nbsp;созданию отдельных эпизодов. Забудьте о&nbsp;роботизированных дикторах и&nbsp;монотонных читалках текста. Мы&nbsp;используем движок <strong>Audio Overview в&nbsp;NotebookLM</strong>, который моделирует естественную беседу двух ведущих: с&nbsp;паузами, вздохами, перебиваниями и&nbsp;эмоциональными акцентами.
+        </p>
+
+        <h3>Шаг 4: Детальный ресерч для&nbsp;конкретного эпизода</h3>
+        <p>
+          Для&nbsp;каждого из&nbsp;25 выпусков генерируем глубокое фактологическое досье в&nbsp;Gemini Deep Research:
+        </p>
+
+        <!-- PROMPT 3: EPISODE RESEARCH -->
+        <div class="prompt-box-wrapper">
+          <div class="prompt-box-header">
+            <div>
+              <div class="prompt-box-header-title">Промпт 3: Исследование конкретного эпизода (Gemini)</div>
+              <div class="prompt-box-header-sub">Запускается для&nbsp;каждого из&nbsp;25 выпусков перед загрузкой в&nbsp;NotebookLM</div>
+            </div>
+            <button class="btn-copy-prompt" onclick="copyPrompt('prompt-episode-text', this)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span>Скопировать промпт ⎘</span>
+            </button>
+          </div>
+          <pre class="prompt-code-box" id="prompt-episode-text">Роль: Ты — исследователь мирового класса. Твоя задача — провести всестороннее, глубокое и объективное исследование.
+Задача: На основе информации об эпизоде ниже проведи глубокое исследование и представь результат в виде структурированного документа.
+
+--- НАЧАЛО МАТЕРИАЛА ЭПИЗОДА ---
+Эпизод [Номер]: [Название эпизода]
+Хук для начала: [Вставьте хук из Шага 3]
+Краткое описание: [Вставьте описание из Шага 3]
+Ключевые тезисы: [Вставьте тезисы из Шага 3]
+--- КОНЕЦ МАТЕРИАЛА ЭПИЗОДА ---
+
+Структура итогового исследования:
+1. Контекст и основы: Определения, предыстория и значимость вопроса.
+2. Детальный анализ ключевых тезисов: Раскрой каждый тезис через теорию, доказательную базу и цифры.
+3. Примеры и кейсы: 2-3 ярких кейса из реальной практики и 1-2 контрпримера (популярные мифы).
+4. Практическое применение: Как слушатель может внедрить знания (пошаговый алгоритм, советы).
+5. Яркие детали для диалога: 5-7 неожиданных фактов/статистики и 2-3 цитаты признанных мировых экспертов.</pre>
+        </div>
+
+        <h3>Шаг 5: Мастер-генерация аудиопересказа в&nbsp;NotebookLM</h3>
+        <p>
+          Заходим в&nbsp;<a href="https://notebooklm.google.com/" target="_blank" style="color:#09090b; font-weight:700;">NotebookLM</a>, создаем новый блокнот под&nbsp;текущий эпизод и&nbsp;загружаем туда полученный текст исследования.
+        </p>
+        <p>
+          В&nbsp;правом блоке <strong>Audio Overview (Аудиопересказ)</strong> нажимаем на&nbsp;иконку карандаша (Customize / Настроить) и&nbsp;вставляем <strong>Мастер-промпт SAGE Digital</strong>:
+        </p>
+
+        <!-- PROMPT 4: MASTER AUDIO OVERVIEW -->
+        <div class="prompt-box-wrapper">
+          <div class="prompt-box-header">
+            <div>
+              <div class="prompt-box-header-title">Промпт 4: Системный мастер-промпт для&nbsp;аудиопересказа (NotebookLM)</div>
+              <div class="prompt-box-header-sub">Задает динамику диалога двух ведущих, паузы и&nbsp;нативную интеграцию ссылки на&nbsp;Telegram</div>
+            </div>
+            <button class="btn-copy-prompt" onclick="copyPrompt('prompt-audio-text', this)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span>Скопировать промпт ⎘</span>
+            </button>
+          </div>
+          <pre class="prompt-code-box" id="prompt-audio-text">Используй предоставленные материалы. Ведущие ведут живой, экспертный диалог, фокусируясь на пользе для слушателя.
+
+### 1. Фундаментальные принципы
+* Опора на источники: Весь контент строго базируется на фактах и цифрах из прикрепленного документа.
+* Динамичный диалог: Ведущие постоянно взаимодействуют, дополняют друг друга и задают уточняющие вопросы. Избегать длинных монологов.
+* Сторителлинг: Данные из документа упаковываются в кейсы или примеры «из жизни».
+* Естественность: Включать элементы живой речи (короткие подтверждения «согласен», «именно так», «абсолютно», логические микро-паузы).
+
+### 2. Структура эпизода
+
+#### I. Вступление (Intro)
+* Мгновенный старт: Без музыки и шаблонных приветствий. Начало сразу с интригующей сути.
+* Хук: Озвучивание главной проблемы или парадокса из предоставленных материалов.
+* Интрига: Постановка острого вопроса, на который слушатель получит ответ в финале выпуска.
+
+#### II. Основная часть (Body)
+* Решение проблем: Контент строится вокруг того, как информация из документа решает конкретные задачи слушателя.
+* Элемент соавторства и ресурсы: В середине обсуждения ведущие должны органично упомянуть, что в описании к подкасту есть ссылка на их Telegram-канал, где авторы делятся дополнительными материалами, схемами и эксклюзивной информацией по теме.
+* Фирменная рубрика: Краткий разбор самого важного термина или факта из материалов.
+* Консистентность: Поддержание экспертного темпа без лишних отвлечений.
+
+#### III. Заключение (Outro)
+* Разрешение интриги: Финальный вывод и четкий ответ на вопрос, заданный во вступлении.
+* Финальный ритуал: Лаконичное резюме выпуска одной емкой фразой.
+* Призыв к действию (CTA): Благодарность за внимание. Обязательное напоминание: ведущие призывают слушателей перейти по ссылке в описании в Telegram-канал подкаста, чтобы забрать дополнительные материалы от авторов и продолжить обсуждение в комментариях.
+
+### 3. Технические параметры озвучки
+* Звук: Чистое студийное звучание без постороннего фонового шума.
+* Взаимодействие: Естественные паузы (0.3–0.5 сек) между репликами собеседников.
+* Акценты: Интонационное выделение ключевых цифр, терминов и упоминания Telegram-канала.
+
+ИНСТРУКЦИЯ: Проанализируй прикрепленный документ и создай аудиоподкаст, строго следуя этой структуре и интегрируя упоминание Telegram-канала.</pre>
+        </div>
+
+        <h3>Шаг 6: Отслушивание и&nbsp;согласование</h3>
+        <p>
+          После генерации (занимает от&nbsp;3 до&nbsp;7 минут) обязательно прослушайте дорожку:
+        </p>
+        <ol>
+          <li>Убедитесь в&nbsp;отсутствии фонетических галлюцинаций и&nbsp;артефактов в&nbsp;произношении сложных фамилий или&nbsp;терминов.</li>
+          <li>Если есть сбой — скорректируйте спорное слово в&nbsp;исходном документе (например, напишите фонетически русскими буквами) и&nbsp;перегенерируйте пересказ.</li>
+          <li>Если всё звучит чисто — скачивайте файл <code>.wav</code> / <code>.m4a</code> и&nbsp;сохраняйте в&nbsp;папку эпизода на&nbsp;Google Диске.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- SECTION 5: CAPCUT POST-PRODUCTION -->
+    <section id="capcut" class="guide-page-frame guide-section-block" data-nav-title="05. CapCut">
+      <div class="guide-content-wrap">
+        <div class="section-tag">// РАЗДЕЛ 05 · ЭТАП 3: СТУДИЙНЫЙ ПОСТПРОДАКШН В&nbsp;CAPCUT</div>
+        <h2>Монтаж и&nbsp;сведение звука: параметры студийного звучания</h2>
+
+        <p>
+          Сырой аудиофайл из&nbsp;нейросети звучит сухо. Чтобы превратить его в&nbsp;дорогой брендовый подкаст, нужно добавить фирменный джингл, нормализовать уровни и&nbsp;настроить плавные переходы Fade.
+        </p>
+
+        <div style="margin: 28px 0; border: 1px solid var(--border); background:#000;">
+          <img src="/img/podcast-guide/capcut_desktop.png" alt="Интерфейс CapCut создание проекта" style="width:100%; height:auto; display:block;">
+          <div style="padding:10px 14px; background:#fafafa; font-family:var(--mono); font-size:0.75rem; color:#71717a; border-top:1px solid var(--border);">
+            ▲ Интерфейс CapCut Desktop: создание отдельного монтажного проекта для&nbsp;каждого выпуска
+          </div>
+        </div>
+
+        <h3>Пошаговый алгоритм сведения в&nbsp;CapCut Desktop</h3>
+
+        <h4>8.1. Настройка проекта</h4>
+        <p>
+          Откройте CapCut на&nbsp;ПК и&nbsp;нажмите <strong>«+ Создать проект»</strong>. Импортируйте скачанную аудиодорожку голоса. Сразу назовите проект номером и&nbsp;названием эпизода.
+        </p>
+
+        <h4>8.2. Обработка дорожки голоса</h4>
+        <p>
+          Выделите голосовой трек на&nbsp;таймлайне. На&nbsp;правой панели настроек звука:
+        </p>
+        <ul>
+          <li>Активируйте чекбокс <strong>«Нормализация громкости» (Loudness Normalization)</strong>. Это выровняет перепады между спикерами.</li>
+          <li>Поднимите общую громкость голоса: <strong>Volume +5 дБ</strong>. Это придаст речи плотность и&nbsp;близость к&nbsp;слушателю.</li>
+          <li>По&nbsp;желанию включите <em>«Улучшить голос» (Enhance voice)</em>, если хотите сделать тембр бархатистее.</li>
+        </ul>
+
+        <h4>8.3. Подбор и&nbsp;настройка музыки (Джинглов)</h4>
+        <p>
+          Перейдите во&nbsp;вкладку <strong>«Аудио» $	o$ «Звуки»</strong> (или&nbsp;добавьте свой авторский трек). Перетащите музыку на&nbsp;нижнюю дорожку под&nbsp;голос:
+        </p>
+        <ul>
+          <li>Включите <strong>«Нормализацию громкости»</strong> на&nbsp;музыкальном треке.</li>
+          <li>Уменьшите громкость музыки до&nbsp;<strong>-3 дБ</strong> (чтобы она не&nbsp;заглушала голос).</li>
+        </ul>
+
+        <h4>8.4. Сведение Intro и&nbsp;Outro (Затухания Fade)</h4>
+        <ul>
+          <li><strong>Вступление (Intro):</strong> выделите начальный музыкальный отрезок, во&nbsp;вкладке «Затухание» установите <strong>Fade Out</strong>. Сдвиньте голос так, чтобы ведущие вступали ровно в&nbsp;момент, когда музыка уходит в&nbsp;ноль.</li>
+          <li><strong>Заключение (Outro):</strong> в&nbsp;конце выпуска поставьте музыку с&nbsp;эффектом <strong>Fade In</strong>. Голос ведущего должен закончиться в&nbsp;момент, когда музыка выходит на&nbsp;полную мощность финала.</li>
+        </ul>
+
+        <!-- CAPCUT SETTINGS SUMMARY CARD -->
+        <div class="capcut-settings-card">
+          <div style="font-family:var(--mono); font-size:0.8rem; color:#10b981; font-weight:700; margin-bottom:8px;">
+            // ЗОЛОТОЙ СТАНДАРТ ЗВУКА SAGE DIGITAL
+          </div>
+          <div style="font-size:1.3rem; font-weight:800; margin-bottom:14px;">
+            Сводная шпаргалка параметров сведения в&nbsp;CapCut
+          </div>
+          <div class="capcut-grid">
+            <div class="capcut-item">
+              <div class="capcut-item-title">ГОЛОСОВАЯ ДОРОЖКА</div>
+              <div class="capcut-item-val">+5 дБ // Нормализация: ВКЛ</div>
+              <p class="capcut-item-desc">Гарантирует четкую слышимость в&nbsp;любых наушниках и&nbsp;автомобильных динамиках на&nbsp;трассе.</p>
+            </div>
+            <div class="capcut-item">
+              <div class="capcut-item-title">МУЗЫКАЛЬНЫЙ ДЖИНГЛ</div>
+              <div class="capcut-item-val">-3 дБ // Нормализация: ВКЛ</div>
+              <p class="capcut-item-desc">Музыка создает киноатмосферу, но&nbsp;никогда не&nbsp;конфликтует с&nbsp;частотами человеческой речи.</p>
+            </div>
+            <div class="capcut-item">
+              <div class="capcut-item-title">ПЕРЕХОД НАЧАЛА (INTRO)</div>
+              <div class="capcut-item-val">Fade Out (Затухание)</div>
+              <p class="capcut-item-desc">Музыка плавно растворяется под&nbsp;первую фразу ведущего без&nbsp;резкого обрыва.</p>
+            </div>
+            <div class="capcut-item">
+              <div class="capcut-item-title">ФИНАЛ (OUTRO)</div>
+              <div class="capcut-item-val">Fade In (Нарастание)</div>
+              <p class="capcut-item-desc">Музыка подхватывает последние слова благодарности и&nbsp;ставит эффектную точку.</p>
+            </div>
+          </div>
+        </div>
+
+        <h4>8.5. Экспорт мастер-файла</h4>
+        <p>
+          Нажмите <strong>«Файл» $	o$ «Экспорт»</strong>, выберите формат аудио (MP3 или&nbsp;WAV, 320 kbps), назовите файл строго по&nbsp;номеру выпуска (например, <code>Ep01_Kak_Ustroen_Podkast.mp3</code>) и&nbsp;выгрузите в&nbsp;облако.
+        </p>
+      </div>
+    </section>
+
+    <!-- SECTION 6: PACKAGING & TELEGRAM COMMUNITY -->
+    <section id="telegram" class="guide-page-frame guide-section-block" data-nav-title="06. Telegram">
+      <div class="guide-content-wrap">
+        <div class="section-tag">// РАЗДЕЛ 06 · ЭТАП 4: УПАКОВКА И&nbsp;ЗАПУСК TELEGRAM-КОМЬЮНИТИ</div>
+        <h2>Визуальная упаковка и&nbsp;построение ядра сообщества в&nbsp;Telegram</h2>
+
+        <p>
+          Слушатель на&nbsp;стримингах обезличен: вы&nbsp;не&nbsp;видите его лица, не&nbsp;можете написать ему лично или&nbsp;продать свой продукт. Именно поэтому <strong>центром управления вашего медиа-актива становится Telegram-канал</strong>, куда подкаст переливает самую лояльную аудиторию.
+        </p>
+
+        <h3>Шаг 9: Визуальное оформление (Canva)</h3>
+        <p>
+          В&nbsp;Canva подготовьте минимальный комплект визуалов:
+        </p>
+        <ul>
+          <li><strong>Главная обложка подкаста:</strong> квадрат не&nbsp;менее 1400×1400 px (рекомендуется 3000×3000 px, до&nbsp;5 МБ, RGB, JPG/PNG). Название должно легко читаться даже на&nbsp;экране часов.</li>
+          <li><strong>Шаблоны для&nbsp;сторис и&nbsp;постов:</strong> минималистичные фоны для&nbsp;цитат и&nbsp;анонсов свежих глав.</li>
+        </ul>
+
+        <h3>Шаг 10: Архитектура и&nbsp;запуск Telegram-канала</h3>
+
+        <h4>10.1. Первичная настройка</h4>
+        <ul>
+          <li>Установите ту&nbsp;же обложку, что&nbsp;и&nbsp;на&nbsp;стриминговых платформах.</li>
+          <li>В&nbsp;описании четко укажите: о&nbsp;чем проект, график выхода и&nbsp;прямой контакт автора/бота для&nbsp;связи.</li>
+        </ul>
+
+        <h4>10.2. Первые ключевые публикации</h4>
+        <ol>
+          <li><strong>Видео-кругляшок (Приветствие):</strong> запишите живое 60-секундное видео. Представьтесь, расскажите, почему вы&nbsp;запустили подкаст, и&nbsp;<strong>открыто скажите, что&nbsp;голоса созданы нейросетью, но&nbsp;весь материал лично исследован и&nbsp;отредактирован вами</strong>. Честность вызывает колоссальное уважение аудитории.</li>
+          <li><strong>Закрепленное оглавление:</strong> пост со&nbsp;списком первых эпизодов. По&nbsp;мере выхода серий этот пост редактируется и&nbsp;обрастает гиперссылками на&nbsp;каждый эпизод.</li>
+        </ol>
+
+        <h4>10.3. Взаимодействие и&nbsp;авто-транскрибация</h4>
+        <ul>
+          <li>Обязательно включите в&nbsp;настройках канала привязанную группу для&nbsp;комментариев.</li>
+          <li>Добавьте в&nbsp;чат бота <a href="https://t.me/TLDRVoiceBot" target="_blank" style="color:#09090b; font-weight:700;">@TLDRVoiceBot</a>: он&nbsp;автоматически превращает аудиофайлы в&nbsp;лаконичные текстовые саммари и&nbsp;расшифровки для&nbsp;тех, кто&nbsp;предпочитает читать глазами.</li>
+        </ul>
+
+        <h3>Готовые копируемые шаблоны постов для&nbsp;Telegram</h3>
+
+        <!-- POST TEMPLATE 1 -->
+        <div class="prompt-box-wrapper">
+          <div class="prompt-box-header">
+            <div>
+              <div class="prompt-box-header-title">Шаблон 1: Пост релиза нового эпизода в&nbsp;Telegram</div>
+              <div class="prompt-box-header-sub">Прикрепляется к&nbsp;аудиофайлу выпуска в&nbsp;канале</div>
+            </div>
+            <button class="btn-copy-prompt" onclick="copyPrompt('post-ep-text', this)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span>Скопировать шаблон ⎘</span>
+            </button>
+          </div>
+          <pre class="prompt-code-box" id="post-ep-text">🎙 Эпизод [Номер]: [Название эпизода]
+
+[Вставьте хук и краткое описание выпуска из Шага 3. Например: «Исследуем феномен гиперфокуса — способности полностью погружаться в задачу, и его обратную сторону — выгорание»].
+
+В выпуске:
+• [Тезис 1]
+• [Тезис 2]
+• [Тезис 3]
+
+———————————————
+📝 Краткое саммари и текстовая расшифровка — в первом комментарии (спасибо @TLDRVoiceBot).
+
+Если выпуск отозвался — ставьте 🌟 и делитесь мыслями в комментариях!
+
+#[ХештегПодкаста] 🧠 Подкаст "[НазваниеПодкаста]"
+Подписаться: https://t.me/[ВашКанал]</pre>
+        </div>
+
+        <!-- POST TEMPLATE 2 -->
+        <div class="prompt-box-wrapper">
+          <div class="prompt-box-header">
+            <div>
+              <div class="prompt-box-header-title">Шаблон 2: Пост-переход между смысловыми блоками сезона</div>
+              <div class="prompt-box-header-sub">Подводит итоги завершенной части и&nbsp;анонсирует следующую главу</div>
+            </div>
+            <button class="btn-copy-prompt" onclick="copyPrompt('post-bridge-text', this)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span>Скопировать шаблон ⎘</span>
+            </button>
+          </div>
+          <pre class="prompt-code-box" id="post-bridge-text">🏁 Первая часть подкаста "[Название]" завершена! Что дальше?
+
+Привет, друзья! Мы завершили публикацию первой большой главы — "[Название части 1]". За [6] эпизодов мы заложили прочный фундамент для понимания [Главная тема].
+
+🧠 Что мы успели разобрать:
+1. [Эпизод 1: тема и ссылка]
+2. [Эпизод 2: тема и ссылка]
+3. [Эпизод 3: тема и ссылка]
+
+Спасибо всем, кто слушал и делился обратной связью! Если вы пропустили первые выпуски — сейчас идеальный момент, чтобы наверстать.
+
+———————————————
+🔥 АНОНС ВТОРОЙ ЧАСТИ: Погружаемся глубже!
+
+Теперь переходим к практике. В "Части 2. [Название второй части]" мы будем разбираться, как [Главный вызов].
+
+В ближайших выпусках:
+• [Тема следующего эпизода]
+• [Тема через один эпизод]
+
+Свежий выпуск выйдет уже в [День недели]. Не переключайтесь!
+
+#[ХештегПодкаста] #анонс
+🧠 Подкаст "[НазваниеПодкаста]"
+https://t.me/[ВашКанал]</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: DISTRIBUTION & SCALING -->
+    <section id="distribution" class="guide-page-frame guide-section-block" data-nav-title="07. Дистрибуция">
+      <div class="guide-content-wrap">
+        <div class="section-tag">// РАЗДЕЛ 07 · ЭТАПЫ 5 И&nbsp;6: ДИСТРИБУЦИЯ И&nbsp;РАЗВИТИЕ</div>
+        <h2>Выход на&nbsp;все стриминги, монетизация и&nbsp;издание книги</h2>
+
+        <h3>Шаг 11–13: Дистрибуция по&nbsp;всему миру через RSS</h3>
+        <p>
+          Вам не&nbsp;нужно вручную загружать аудио на&nbsp;десятки сайтов. Достаточно зарегистрироваться на&nbsp;подкаст-хостинге:
+        </p>
+        <ol>
+          <li>Зарегистрируйтесь на&nbsp;<strong><a href="https://app.mave.digital/" target="_blank" style="color:#09090b; font-weight:700;">Mave.digital</a></strong> (бесплатный, быстрый отечественный хостинг) или&nbsp;<strong><a href="https://podster.fm" target="_blank" style="color:#09090b; font-weight:700;">Podster.fm</a></strong>.</li>
+          <li>Создайте карточку подкаста, загрузите квадратную обложку 1400×1400 px, вставьте описание и&nbsp;опубликуйте трейлер или&nbsp;первый выпуск.</li>
+          <li>Хостинг сгенерирует для&nbsp;вас уникальную <strong>RSS-ссылку</strong>.</li>
+          <li>Эту ссылку вы&nbsp;один раз отправляете в&nbsp;кабинеты для&nbsp;авторов:
+            <ul>
+              <li><strong>Яндекс Музыка для&nbsp;авторов</strong> (<a href="https://yandex.ru/support/music/podcast-authors/" target="_blank">инструкция Яндекса</a>)</li>
+              <li><strong>Apple Podcasts Connect</strong> (<a href="https://podcastsconnect.apple.com/" target="_blank">podcastsconnect.apple.com</a>)</li>
+              <li><strong>Spotify for Podcasters</strong> (<a href="https://podcasters.spotify.com/" target="_blank">podcasters.spotify.com</a>)</li>
+              <li><strong>VK Музыка, Звук, Литрес</strong></li>
+            </ul>
+          </li>
+          <li>После прохождения быстрой модерации все новые эпизоды, загружаемые на&nbsp;хостинг, будут <strong>автоматически появляться на&nbsp;всех мировых площадках в&nbsp;течение 15 минут</strong>.</li>
+        </ol>
+
+        <h3>Шаг 14–16: Монетизация, книга и&nbsp;масштаб</h3>
+        <div class="feature-cards-grid">
+          <div class="feature-card">
+            <div class="feature-card-num">ШАГ 14 // ПРОДВИЖЕНИЕ</div>
+            <div class="feature-card-title">Вирусные шортсы и&nbsp;цитаты</div>
+            <p class="feature-card-desc">Используйте готовые хуки и&nbsp;тезисы из&nbsp;Gemini для&nbsp;нарезки коротких видео в&nbsp;Reels, YouTube Shorts и&nbsp;VK Клипы со&nbsp;ссылкой на&nbsp;полный подкаст.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card-num">ШАГ 15 // КНИГА</div>
+            <div class="feature-card-title">Издание книги на&nbsp;Ridero</div>
+            <p class="feature-card-desc">Исследования всех 25 выпусков сезона — это готовая рукопись книги на&nbsp;150–200 страниц. Отредактируйте ее&nbsp;и&nbsp;опубликуйте на&nbsp;Литрес, Ozon и&nbsp;Wildberries через Ridero.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card-num">ШАГ 16 // МОНЕТИЗАЦИЯ</div>
+            <div class="feature-card-title">Продажи и&nbsp;Консалтинг</div>
+            <p class="feature-card-desc">Каждый выпуск подкаста прогревает слушателя к&nbsp;покупке ваших консультаций, менторства или&nbsp;заказу разработки под&nbsp;ключ через призывы к&nbsp;действию.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8: AUTHOR CASES & DELEGATION -->
+    <section id="cases" class="guide-page-frame guide-section-block" data-nav-title="08. Кейсы & Контакты">
+      <div class="guide-content-wrap">
+        <div class="section-tag">// РАЗДЕЛ 08 · ЖИВЫЕ КЕЙСЫ И&nbsp;ДЕЛЕГИРОВАНИЕ</div>
+        <h2>Примеры работающих AI-подкастов Михаила Пузырёва</h2>
+
+        <p>
+          Методология ©&nbsp;«Глубокое погружение» проверена на&nbsp;собственных медиа-проектах автора. Послушайте, как&nbsp;звучит двухголосый синтез с&nbsp;натуральной эмоциональной динамикой:
+        </p>
+
+        <div class="feature-cards-grid">
+          <div class="feature-card" style="border: 1px solid #10b981; background: #f0fdf4;">
+            <div class="feature-card-num" style="color:#059669;">КЕЙС 01 // ЗДОРОВЬЕ И&nbsp;НЕЙРОБИОЛОГИЯ</div>
+            <div class="feature-card-title">Подкаст «Анатомия СДВГ»</div>
+            <p class="feature-card-desc">Глубокое исследование работы мозга, дофаминовых ловушек, гиперфокуса и&nbsp;выгорания простым человеческим языком.</p>
+            <div style="margin-top:16px;">
+              <a href="https://t.me/adhdpodcast" target="_blank" style="display:inline-flex; align-items:center; gap:6px; color:#059669; font-family:var(--mono); font-weight:700; font-size:0.85rem; text-decoration:underline;">
+                Слушать в&nbsp;Telegram @adhdpodcast ↗
+              </a>
+            </div>
+          </div>
+
+          <div class="feature-card" style="border: 1px solid #09090b; background: #fafafa;">
+            <div class="feature-card-num" style="color:#09090b;">КЕЙС 02 // ПСИХОЛОГИЯ И&nbsp;БИЗНЕС</div>
+            <div class="feature-card-title">Подкаст «Архитектура влияния»</div>
+            <p class="feature-card-desc">Психология убеждения, переговоры, социальная инженерия и&nbsp;механики скрытого управления вниманием.</p>
+            <div style="margin-top:16px;">
+              <a href="https://t.me/impact_podcast" target="_blank" style="display:inline-flex; align-items:center; gap:6px; color:#09090b; font-family:var(--mono); font-weight:700; font-size:0.85rem; text-decoration:underline;">
+                Слушать в&nbsp;Telegram @impact_podcast ↗
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout-box" style="background:#09090b; color:#fff; border-left-color:#10b981; margin-top:36px;">
+          <div class="callout-title" style="color:#fff; font-size:1.15rem;">Хотите запустить такой подкаст, но&nbsp;нет времени разбираться?</div>
+          <p style="color:#a1a1aa; font-size:0.95rem; margin-bottom:18px;">
+            Команда <strong>SAGE Digital</strong> под&nbsp;руководством Михаила Пузырёва возьмет на&nbsp;себя весь цикл под&nbsp;ключ: проведем интервью, упакуем ваши смыслы в&nbsp;исследования, сгенерируем сезон из&nbsp;25 выпусков в&nbsp;NotebookLM, сведем звук в&nbsp;CapCut и&nbsp;настроим Telegram-канал с&nbsp;ботом.
+          </p>
+          <a href="/booking" class="btn-primary" style="display:inline-block; text-decoration:none;">Забронировать встречу по&nbsp;подкасту ↗</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- DIRECT MESSENGER CONTACT & BOOKING SECTION -->
+  <section id="contact" class="form-section" data-nav-title="Связь">
+    <div class="form-inner" style="align-items:center;">
+      <div class="form-left" style="max-width:540px;">
+        <div class="section-tag" style="color:#a1a1aa;">СВЯЗЬ &&nbsp;БРОНИРОВАНИЕ</div>
+        <h2 class="form-title">Запустите свой медиа-актив<br>в&nbsp;2026 году</h2>
+        <p class="form-sub">
+          Напишите мне в&nbsp;Telegram: обсудим концепцию вашего будущего подкаста, подберем нишу и&nbsp;посчитаем сроки реализации. Отвечаю лично.
+        </p>
+        <div style="margin-top:24px;font-family:var(--mono);font-size:0.88rem;color:#a1a1aa;line-height:1.8;">
+          <div>• Канал в&nbsp;Telegram: <a href="https://t.me/uncrn_sage" target="_blank" style="color:#fff;text-decoration:underline;">@uncrn_sage</a></div>
+          <div>• Личный аккаунт: <a href="https://t.me/Michael_Sage" target="_blank" style="color:#fff;text-decoration:underline;">@Michael_Sage</a></div>
+          <div>• Email: <a href="mailto:i@michaelpuzyrev.ru" style="color:#fff;text-decoration:underline;">i@michaelpuzyrev.ru</a></div>
+          <div>• Сайт: <a href="https://a-sage.ru" style="color:#fff;text-decoration:underline;">https://a-sage.ru</a></div>
+        </div>
+      </div>
+
+      <div class="form-right" style="background:#ffffff;border:1px solid var(--border);padding:36px;border-radius:0 !important;">
+        <div style="font-size:1.15rem;font-weight:700;color:var(--black);margin-bottom:8px;">Экспресс-связь со&nbsp;мной</div>
+        <p style="font-size:0.88rem;color:#52525b;margin-bottom:20px;">
+          Самый быстрый способ получить ответ — написать мне напрямую в&nbsp;Telegram или&nbsp;выбрать удобный слот для&nbsp;видеозвонка:
+        </p>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <a href="https://t.me/Michael_Sage" target="_blank" class="btn-primary" style="text-align:center;text-decoration:none;border-radius:0 !important;">
+            Написать в&nbsp;Telegram @Michael_Sage ↗
+          </a>
+          <a href="/booking" class="btn-secondary" style="text-align:center;text-decoration:none;border:1px solid var(--border);padding:14px;border-radius:0 !important;color:#09090b;font-weight:600;">
+            Выбрать слот в&nbsp;календаре ↗
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-copy">
+        © 2026 Михаил Пузырёв (Michael Sage). Все права защищены.<br>
+        Инженерный AI-консалтинг, внедрение агентных систем и&nbsp;разработка.
+      </div>
+      <div class="footer-nav">
+        <a href="/base">База Знаний</a>
+        <a href="/glossary">AI-Глоссарий</a>
+        <a href="/prompts">Системные Промпты</a>
+        <a href="/privacy">Политика конфиденциальности</a>
+        <a href="/terms">Оферта</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification Box -->
+  <div id="toastBox" class="toast-msg-box">
+    ✓ Скопировано в&nbsp;буфер обмена
+  </div>
+
+  <script>
+    function copyPrompt(elementId, btn) {
+      const el = document.getElementById(elementId);
+      if (!el) return;
+      const text = el.innerText || el.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const originalText = btn.innerHTML;
+        btn.classList.add('copied');
+        btn.innerHTML = '<span>✓ Скопировано!</span>';
+        
+        const toast = document.getElementById('toastBox');
+        if (toast) {
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.classList.remove('show');
+          }, 2400);
+        }
+
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.innerHTML = originalText;
+        }, 2500);
+      }).catch(err => {
+        console.error('Failed to copy text: ', err);
+      });
+    }
+  </script>
+  <script src="/js/auth.js?v=1.4"></script>
+  <script src="/js/main.js?v=2.9"></script>
+</body>
+</html>
