@@ -417,142 +417,14 @@
       box-sizing: border-box;
       height: 100%;
     }
-    .guide-sticky-sidebar-wrapper {
-      position: sticky;
-      top: 84px;
-    }
-    .guide-screens-widget {
-      background: #ffffff;
-      border: 1px solid var(--border);
-      padding: 16px 14px;
-      margin-bottom: 16px;
-      border-radius: 0 !important;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.02);
-    }
-    .guide-screens-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--border);
-    }
-    .guide-screens-tag {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: #10b981;
-      letter-spacing: 0.05em;
-    }
-    .guide-screens-count {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      color: #71717a;
-    }
-
-    /* Embedded Scrollspy inside Sidebar */
-    .guide-screens-widget .page-scrollspy {
-      position: static !important;
-      transform: none !important;
-      display: flex !important;
-      flex-direction: column !important;
-      width: 100% !important;
-      right: auto !important;
-      top: auto !important;
-      z-index: 1 !important;
-      padding: 0 !important;
-      margin: 0 !important;
-      background: transparent !important;
-      border: none !important;
-      box-shadow: none !important;
-    }
-    .guide-screens-widget .scrollspy-list {
-      list-style: none !important;
-      display: flex !important;
-      flex-direction: column !important;
-      gap: 3px !important;
-      margin: 0 !important;
-      padding: 0 !important;
-      align-items: stretch !important;
-    }
-    .guide-screens-widget .scrollspy-item {
-      display: flex !important;
-      align-items: center !important;
-      justify-content: space-between !important;
-      margin: 0 !important;
-    }
-    .guide-screens-widget .scrollspy-link {
-      display: flex !important;
-      align-items: center !important;
-      justify-content: space-between !important;
-      width: 100% !important;
-      text-decoration: none !important;
-      padding: 5px 8px !important;
-      font-family: var(--mono) !important;
-      font-size: 0.75rem !important;
-      color: #52525b !important;
-      border-left: 2px solid transparent !important;
-      border-radius: 0 !important;
-      transition: all 0.2s ease !important;
-    }
-    .guide-screens-widget .scrollspy-link:hover {
-      background: #f4f4f5 !important;
-      color: #09090b !important;
-    }
-    .guide-screens-widget .scrollspy-label {
-      opacity: 0.85 !important;
-      color: inherit !important;
-      font-size: 0.75rem !important;
-      text-shadow: none !important;
-      white-space: nowrap !important;
-      overflow: hidden !important;
-      text-overflow: ellipsis !important;
-      max-width: 190px !important;
-      transform: none !important;
-    }
-    .guide-screens-widget .scrollspy-num {
-      font-size: 0.72rem !important;
-      color: #a1a1aa !important;
-      font-weight: 600 !important;
-      text-shadow: none !important;
-      margin-left: 6px !important;
-    }
-    .guide-screens-widget .scrollspy-dot {
-      width: 7px !important;
-      height: 7px !important;
-      border: 1.5px solid #a1a1aa !important;
-      background: #ffffff !important;
-      border-radius: 0 !important;
-      margin-left: 6px !important;
-      flex-shrink: 0 !important;
-    }
-    .guide-screens-widget .scrollspy-item.active .scrollspy-link {
-      border-left-color: #10b981 !important;
-      background: rgba(16, 185, 129, 0.08) !important;
-      color: #09090b !important;
-    }
-    .guide-screens-widget .scrollspy-item.active .scrollspy-label {
-      opacity: 1 !important;
-      color: #09090b !important;
-      font-weight: 700 !important;
-    }
-    .guide-screens-widget .scrollspy-item.active .scrollspy-num {
-      color: #09090b !important;
-      font-weight: 700 !important;
-    }
-    .guide-screens-widget .scrollspy-item.active .scrollspy-dot {
-      background: #10b981 !important;
-      border-color: #059669 !important;
-      box-shadow: 0 0 6px rgba(16, 185, 129, 0.6) !important;
-    }
-
     .guide-sticky-cta-card {
-      position: static;
+      position: sticky;
+      top: 88px;
       background: #09090b;
       color: #ffffff;
       border: 1px solid #27272a;
       border-left: 3px solid #10b981;
-      padding: 20px 18px;
+      padding: 24px 20px;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
       border-radius: 0 !important;
     }
@@ -1522,28 +1394,15 @@ https://t.me/[ВашКанал]</pre>
 
         <!-- GUIDE STICKY SIDEBAR -->
         <aside class="guide-sidebar-column">
-          <div class="guide-sticky-sidebar-wrapper">
-
-            <!-- INTERACTIVE SCREENS NAVIGATOR -->
-            <div class="guide-screens-widget">
-              <div class="guide-screens-header">
-                <span class="guide-screens-tag">// ЭКРАНЫ РУКОВОДСТВА</span>
-                <span class="guide-screens-count">10 РАЗДЕЛОВ</span>
-              </div>
-              <nav class="page-scrollspy" aria-label="Навигация по разделам"></nav>
-            </div>
-
-            <!-- STICKY CTA CARD -->
-            <div class="guide-sticky-cta-card">
-              <div class="guide-sticky-badge">// ПОДКАСТ ПОД&nbsp;КЛЮЧ</div>
-              <div class="guide-sticky-title">Хотите такой подкаст,<br>но&nbsp;нет времени?</div>
-              <p class="guide-sticky-desc">
-                Команда <strong>AiSAGE</strong> под&nbsp;руководством Михаила Пузырёва возьмет на&nbsp;себя весь цикл: от&nbsp;смыслов и&nbsp;генерации в&nbsp;NotebookLM до&nbsp;монтажа в&nbsp;CapCut и&nbsp;запуска Telegram-канала.
-              </p>
-              <a href="/booking" class="guide-sticky-btn">Забронировать слот ↗</a>
-              <div class="guide-sticky-subtext">Обсудим концепцию вашего сезона</div>
-            </div>
-
+          <!-- STICKY CTA CARD -->
+          <div class="guide-sticky-cta-card">
+            <div class="guide-sticky-badge">// ПОДКАСТ ПОД&nbsp;КЛЮЧ</div>
+            <div class="guide-sticky-title">Хотите такой подкаст,<br>но&nbsp;нет времени?</div>
+            <p class="guide-sticky-desc">
+              Команда <strong>AiSAGE</strong> под&nbsp;руководством Михаила Пузырёва возьмет на&nbsp;себя весь цикл: от&nbsp;смыслов и&nbsp;генерации в&nbsp;NotebookLM до&nbsp;монтажа в&nbsp;CapCut и&nbsp;запуска Telegram-канала.
+            </p>
+            <a href="/booking" class="guide-sticky-btn">Забронировать слот ↗</a>
+            <div class="guide-sticky-subtext">Обсудим концепцию вашего сезона</div>
           </div>
         </aside>
 
