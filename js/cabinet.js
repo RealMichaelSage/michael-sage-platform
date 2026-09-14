@@ -314,19 +314,9 @@ function openClubVideo(lessonId) {
   const title = document.getElementById('club-modal-title');
   const badge = document.getElementById('club-modal-badge');
   const iframe = document.getElementById('club-modal-iframe');
-  const extLink = document.getElementById('club-modal-ext-link');
 
   if (title) title.innerText = lesson.title;
   if (badge) badge.innerText = lesson.badge;
-  if (extLink) {
-    if (lesson.videoUrl) {
-      extLink.href = lesson.videoUrl;
-      extLink.style.display = 'inline-flex';
-      extLink.innerText = `Открыть в ${lesson.platform || 'плеере'} ↗`;
-    } else {
-      extLink.style.display = 'none';
-    }
-  }
 
   if (iframe && lesson.embedUrl) {
     const sep = lesson.embedUrl.includes('?') ? '&' : '?';
