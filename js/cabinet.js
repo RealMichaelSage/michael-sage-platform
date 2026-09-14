@@ -409,7 +409,7 @@ function openLightingGuideModal() {
         <button class="guide-modal-close-btn" onclick="closeGuideModal('guide-lighting-modal')" style="background:none; border:none; font-size:1.2rem; cursor:pointer;">✕</button>
       </div>
       <div class="guide-modal-body" style="padding:20px;">
-        <div style="font-family:var(--mono); font-size:0.75rem; font-weight:700; color:var(--gray); margin-bottom:12px;">// 20 КИНЕМАТОГРАФИЧЕСКИХ СХЕМ СВЕТА ДЛЯ MIDJOURNEY, FLUX & DALL-E</div>
+        <div style="font-family:var(--mono); font-size:0.75rem; font-weight:700; color:var(--gray); margin-bottom:12px;">// 20 КИНЕМАТОГРАФИЧЕСКИХ СХЕМ СВЕТА ДЛЯ NANO BANANA ОТ GOOGLE</div>
         ${rowsHtml}
       </div>
     </div>

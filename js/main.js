@@ -1234,7 +1234,7 @@ function openLightingGuideModal() {
         <button class="guide-modal-close-btn" onclick="closeGuideModal('guide-lighting-modal')" aria-label="Закрыть">✕</button>
       </div>
       <div class="guide-modal-body">
-        <div style="font-family:var(--mono, monospace); font-size:0.8rem; font-weight:700; color:var(--gray, #71717a); margin-bottom:12px;">// 20 КИНЕМАТОГРАФИЧЕСКИХ СХЕМ СВЕТА ДЛЯ MIDJOURNEY, FLUX & DALL-E</div>
+        <div style="font-family:var(--mono, monospace); font-size:0.8rem; font-weight:700; color:var(--gray, #71717a); margin-bottom:12px;">// 20 КИНЕМАТОГРАФИЧЕСКИХ СХЕМ СВЕТА ДЛЯ NANO BANANA ОТ GOOGLE</div>
         ${rowsHtml}
       </div>
     </div>

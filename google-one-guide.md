@@ -8,7 +8,7 @@
 ---
 
 ## Краткое описание (Executive Summary)
-Исчерпывающая практическая инструкция по получению доступа к облачному хранилищу Google One (2 TB) и флагманской языковой модели Gemini Advanced (Gemini Pro, контекстное окно 1M токенов, генератор изображений Imagen 3, прямая интеграция в Google Docs, Sheets и Gmail) из России в 2026 году без риска блокировки аккаунта и ошибок антифрода `OR_CCCHS_01`.
+Исчерпывающая практическая инструкция по получению доступа к облачному хранилищу Google One (2 TB) и флагманской языковой модели Gemini Advanced (Gemini, контекстное окно 1M токенов, генератор изображений Nano Banana от Google, прямая интеграция в Google Docs, Sheets и Gmail) из России в 2026 году без риска блокировки аккаунта и ошибок антифрода `OR_CCCHS_01`.
 
 ---
 
@@ -59,7 +59,7 @@
 | **Basic** | 100 GB | Gemini Flash | Нет | $1.99 / мес |
 | **Standard** | 200 GB | Gemini Flash | Нет | $2.99 / мес |
 | **Premium** | 2 TB | Gemini Flash | Нет | $9.99 / мес |
-| **Google One AI Premium** | 2 TB (семейный доступ на 5 чел.) | **Gemini Advanced (Gemini Pro, 1M контекст, Imagen 3)** | **Полная интеграция (Docs, Sheets, Gmail)** | **$19.99 / мес (1–2 мес. Free Trial)** |
+| **Google One AI Premium** | 2 TB (семейный доступ на 5 чел.) | **Gemini Advanced (Gemini, 1M контекст, Nano Banana от Google)** | **Полная интеграция (Docs, Sheets, Gmail)** | **$19.99 / мес (1–2 мес. Free Trial)** |
 | **AI Ultra / Max** | 5 TB – 30 TB | Gemini Pro + расширенные квоты API | Полная интеграция | от $49.99 / мес |
 
 ---

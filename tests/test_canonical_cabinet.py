@@ -110,8 +110,9 @@ class TestCanonicalCabinet(unittest.TestCase):
         self.assertIn("Библиотека Системных Промптов", text)
         self.assertIn("AI-Глоссарий", text)
 
-        # Modal testing
-        self.page.click("button:has-text('Открыть шпаргалку по свету')")
+        # Modal testing (verified subscriber)
+        self.page.evaluate("() => localStorage.setItem('asage_channel_verified', 'true')")
+        self.page.click("button[onclick='openLightingGuideModal()']")
         time.sleep(0.2)
         modal = self.page.locator("#guide-lighting-modal")
         self.assertTrue(modal.is_visible())
@@ -129,13 +130,13 @@ class TestCanonicalCabinet(unittest.TestCase):
         cards = self.page.locator("#club-lessons-grid .club-lesson-card")
         self.assertEqual(cards.count(), 6)
 
-        text = pane.inner_text()
-        self.assertIn("Вайбкодинг: от идеи до продакшена", text)
-        self.assertIn("Автономные AI-агенты и вебхуки", text)
-        self.assertIn("Интеграция LLM в реальный бизнес", text)
-        self.assertIn("RAG-системы", text)
-        self.assertIn("AI-продакшн видео и подкастов", text)
-        self.assertIn("Промпт-дизайн и создание ассистентов", text)
+        text = pane.inner_text().replace('\xa0', ' ')
+        self.assertIn("SKILLS: Навыки в нейронных сетях", text)
+        self.assertIn("Как создавать сайты с помощью нейросетей. Обзор Stitch", text)
+        self.assertIn("Как создавать нейро-фотосессии: FLOW", text)
+        self.assertIn("NotebookLM: Полный разбор всех возможностей", text)
+        self.assertIn("Мастер-класс «Создание Нейро-Подкастов»", text)
+        self.assertIn("Мастер-класс «Промпт-дизайн и создание ассистентов»", text)
 
     def test_05_solutions_showcase_two_real_products_only(self):
         """Showcase must contain 4 real solutions (Sagemeet, SAGE VPN, Finmodel, Tax Calc), with unglued tags."""

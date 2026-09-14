@@ -140,6 +140,12 @@
     <priority>0.85</priority>
   </url>
   <url>
+    <loc>https://a-sage.ru/vpn</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
     <loc>https://a-sage.ru/education/automation-lecture/</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>

@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAGE VPN (VPNi) — Защищенный приватный скоростной VPN | Михаил Пузырёв</title>
+  <meta name="description" content="SAGE VPN (VPNi): Высокоскоростной приватный VPN на протоколах нового поколения (VLESS Reality, Hysteria 2, WireGuard). Обход DPI-блокировок, стабильная работа с Google Gemini, NotebookLM, Claude, ChatGPT и Antigravity. Подключение через Telegram-бота @Michael_Sage_bot.">
+  <meta name="keywords" content="SAGE VPN, VPNi, VLESS Reality VPN, обход DPI, быстрый VPN для Gemini, VPN для Claude, Telegram VPN бот, приватный VPN без логов, WireGuard, Hysteria 2, Михаил Пузырёв">
+  <meta name="author" content="Михаил Пузырёв">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+  <!-- Canonical & Alternate Links -->
+  <link rel="canonical" href="https://a-sage.ru/vpn">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="SAGE VPN (VPNi) — Защищенный скоростной VPN для ИИ и приватности">
+  <meta property="og:description" content="Приватный туннель VLESS Reality и Hysteria 2. Без замедлений, без логов, гарантированный доступ к Google Gemini, NotebookLM, Claude и зарубежным сервисам.">
+  <meta property="og:url" content="https://a-sage.ru/vpn">
+  <meta property="og:site_name" content="Михаил Пузырёв — AI Архитектура & Внедрение">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:image" content="https://a-sage.ru/img/og-preview.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SAGE VPN (VPNi) — Приватный скоростной VPN нового поколения">
+  <meta name="twitter:description" content="Обход любых DPI-блокировок на протоколах VLESS Reality и Hysteria 2. Оптимизирован для AI-сервисов.">
+  <meta name="twitter:image" content="https://a-sage.ru/img/og-preview.png">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://a-sage.ru/vpn#software",
+        "name": "SAGE VPN (VPNi)",
+        "applicationCategory": "SecurityApplication",
+        "operatingSystem": "iOS, Android, macOS, Windows, Linux",
+        "description": "Высокоскоростной приватный VPN на базе протоколов VLESS Reality и Hysteria 2 для стабильного доступа к AI-сервисам и защищенного серфинга.",
+        "offers": {
+          "@type": "Offer",
+          "price": "190.00",
+          "priceCurrency": "RUB",
+          "availability": "https://schema.org/InStock"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Михаил Пузырёв",
+          "url": "https://a-sage.ru/about"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://a-sage.ru/vpn#breadcrumbs",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Главная",
+            "item": "https://a-sage.ru/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "База Знаний",
+            "item": "https://a-sage.ru/base"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "SAGE VPN",
+            "item": "https://a-sage.ru/vpn"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://a-sage.ru/vpn#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Чем VLESS Reality отличается от обычных VPN (WireGuard, OpenVPN)?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Стандартные протоколы (WireGuard, OpenVPN, IPsec) имеют узнаваемую сигнатуру пакетов и массово блокируются системами ТСПУ/DPI провайдеров. VLESS Reality маскирует трафик под стандартную зашифрованную TLS 1.3 сессию к доверенным зарубежным сайтам, делая соединение неотличимым от обычного просмотра веб-страниц."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Будут ли стабильно работать нейросети Google Gemini, NotebookLM и Claude?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Да. Серверы SAGE VPN развернуты на чистых IP-диапазонах в проверенных дата-центрах Европы (Финляндия, Испания, Нидерланды). Они оптимизированы под AI-сервисы и не вызывают бесконечных проверок Cloudflare Turnstile, reCAPTCHA или отказов в доступе."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Какие приложения нужно установить на смартфон и компьютер?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Для iOS рекомендуются Streisand, Shadowrocket или V2Box. Для Android — v2rayNG или Hiddify. Для macOS — V2RayXS, FoXray или Hiddify. Для Windows — Nekoray или Hiddify. Все приложения бесплатны и настраиваются за 30 секунд вставкой ключа из Telegram-бота."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Как получить доступ бесплатно, будучи резидентом клуба?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Все действующие резиденты закрытого клуба SAGE Neuro Family получают персональный безлимитный доступ к SAGE VPN бесплатно в рамках клубной подписки. Достаточно нажать кнопку проверки статуса в боте @Michael_Sage_bot."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Typography & Styling (Swiss Stark Architecture) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css?v=2.6">
+
+  <style>
+    :root {
+      --black: #09090b;
+      --gray: #71717a;
+      --border: #e4e4e7;
+      --bg-gray: #fafafa;
+      --green: #10b981;
+      --green-bg: #ecfdf5;
+      --green-border: #a7f3d0;
+      --blue: #2563eb;
+      --mono: 'JetBrains Mono\, monospace;
+      --sans: 'Inter\, -apple-system, BlinkMacSystemFont, 'Segoe UI\, Roboto, sans-serif;
+    }
+
+    * {
+      border-radius: 0 !important;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--sans);
+      color: var(--black);
+      background: #ffffff;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, h5, h6, .section-title, .vpn-title {
+      text-wrap: balance;
+    }
+
+    p, li, .vpn-desc, .faq-a-inner {
+      text-wrap: pretty;
+    }
+
+    .vpn-page-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      background: #ffffff;
+      min-height: 100vh;
+    }
+
+    /* Hero Section */
+    .vpn-hero {
+      padding-top: 110px;
+      padding-bottom: 50px;
+      padding-left: clamp(20px, 4.5vw, 64px);
+      padding-right: clamp(20px, 4.5vw, 64px);
+      border-bottom: 1px solid var(--border);
+      background: #ffffff;
+    }
+
+    .vpn-hero-tag {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .vpn-hero-tag::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: var(--green);
+    }
+
+    .vpn-title {
+      font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.08;
+      margin: 0 0 20px 0;
+      color: var(--black);
+    }
+
+    .vpn-lead {
+      font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+      line-height: 1.65;
+      color: #3f3f46;
+      max-width: 960px;
+      margin: 0 0 28px 0;
+    }
+
+    .vpn-badges-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+
+    .vpn-badge {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      background: #f4f4f5;
+      border: 1px solid #e4e4e7;
+      color: #18181b;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .vpn-badge.active-green {
+      background: var(--green-bg);
+      border-color: var(--green-border);
+      color: #065f46;
+    }
+
+    .vpn-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .btn-action-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--black);
+      color: #ffffff !important;
+      font-family: var(--mono);
+      font-size: 0.92rem;
+      font-weight: 700;
+      padding: 16px 28px;
+      text-decoration: none;
+      border: 1px solid var(--black);
+      transition: all 0.2s ease;
+    }
+
+    .btn-action-primary:hover {
+      background: #27272a;
+      border-color: #27272a;
+      transform: translateY(-1px);
+    }
+
+    .btn-action-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #ffffff;
+      color: var(--black) !important;
+      font-family: var(--mono);
+      font-size: 0.92rem;
+      font-weight: 700;
+      padding: 16px 28px;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: all 0.2s ease;
+    }
+
+    .btn-action-secondary:hover {
+      background: #f4f4f5;
+      border-color: #d4d4d8;
+    }
+
+    /* Content Section */
+    .vpn-section {
+      padding: 56px clamp(20px, 4.5vw, 64px);
+      border-bottom: 1px solid var(--border);
+      background: #ffffff;
+      box-sizing: border-box;
+    }
+
+    .vpn-section-tag {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--gray);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .vpn-section-title {
+      font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin: 0 0 20px 0;
+      color: var(--black);
+    }
+
+    /* Features Grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin-top: 36px;
+    }
+
+    .feature-card {
+      border: 1px solid var(--border);
+      padding: 28px;
+      background: #ffffff;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .feature-card:hover {
+      border-color: #a1a1aa;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    }
+
+    .feature-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    .feature-card-num {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--gray);
+      background: #f4f4f5;
+      padding: 2px 8px;
+      border: 1px solid #e4e4e7;
+    }
+
+    .feature-card-title {
+      font-size: 1.22rem;
+      font-weight: 700;
+      color: var(--black);
+      margin: 0 0 12px 0;
+      line-height: 1.35;
+    }
+
+    .feature-card-desc {
+      font-size: 0.95rem;
+      color: #52525b;
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    /* Comparison Table */
+    .compare-table-wrap {
+      overflow-x: auto;
+      margin: 32px 0;
+      border: 1px solid var(--border);
+    }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+      text-align: left;
+    }
+
+    .compare-table th {
+      background: #f4f4f5;
+      padding: 16px 20px;
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--black);
+      border-bottom: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .compare-table th:last-child {
+      border-right: none;
+    }
+
+    .compare-table td {
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      color: #27272a;
+      line-height: 1.5;
+    }
+
+    .compare-table td:last-child {
+      border-right: none;
+    }
+
+    .compare-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .compare-highlight {
+      background: #fafafa;
+      font-weight: 600;
+      color: var(--black);
+    }
+
+    /* Steps Block */
+    .steps-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 32px;
+    }
+
+    .step-card {
+      border: 1px solid var(--border);
+      padding: 24px;
+      background: var(--bg-gray);
+      position: relative;
+    }
+
+    .step-card-num {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--green);
+      margin-bottom: 12px;
+    }
+
+    .step-card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--black);
+      margin: 0 0 10px 0;
+    }
+
+    .step-card-desc {
+      font-size: 0.92rem;
+      color: #52525b;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Access Cards */
+    .access-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin-top: 32px;
+    }
+
+    .access-card {
+      border: 1px solid var(--border);
+      padding: 32px;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .access-card.featured {
+      border: 2px solid var(--black);
+      background: #fafafa;
+      position: relative;
+    }
+
+    .access-card-badge {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      background: var(--black);
+      color: #ffffff;
+      display: inline-block;
+      margin-bottom: 16px;
+      align-self: flex-start;
+    }
+
+    .access-card-price {
+      font-family: var(--mono);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--black);
+      margin: 16px 0;
+      letter-spacing: -0.03em;
+    }
+
+    .access-card-price span {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--gray);
+    }
+
+    .access-card-features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 24px 0;
+    }
+
+    .access-card-features li {
+      padding: 8px 0;
+      border-bottom: 1px dashed var(--border);
+      font-size: 0.92rem;
+      color: #3f3f46;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .access-card-features li::before {
+      content: "✓";
+      color: var(--green);
+      font-weight: 700;
+      font-family: var(--mono);
+    }
+
+    /* FAQ Section Accordion Standard */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 32px;
+      max-width: 980px;
+    }
+
+    .faq-item {
+      border: 1px solid var(--border);
+      background: #ffffff;
+      transition: border-color 0.2s ease;
+    }
+
+    .faq-item.open {
+      border-color: var(--black);
+    }
+
+    .faq-q {
+      width: 100%;
+      text-align: left;
+      padding: 20px 24px;
+      background: none;
+      border: none;
+      font-family: var(--sans);
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: var(--black);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      gap: 16px;
+    }
+
+    .faq-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 1.1rem;
+      color: var(--black);
+      flex-shrink: 0;
+      transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+      line-height: 1;
+    }
+
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+      background: var(--black);
+      color: #ffffff;
+      border-color: var(--black);
+    }
+
+    .faq-a {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.25s ease-out;
+    }
+
+    .faq-item.open .faq-a {
+      grid-template-rows: 1fr;
+    }
+
+    .faq-a-inner {
+      overflow: hidden;
+      padding: 0 24px 20px 24px;
+      font-size: 0.98rem;
+      line-height: 1.7;
+      color: #52525b;
+    }
+  </style>
+
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();
+    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(101414837, "init", {
+         clickmap:true,
+         trackLinks:true,
+         accurateTrackBounce:true,
+         webvisor:true
+    });
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/101414837" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+</head>
+<body>
+
+<div class="vpn-page-container">
+
+  <!-- HEADER NAVIGATION -->
+  <header class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <strong>Михаил Пузыр<span class="accent-yo">ё</span>в</strong>
+        <span class="nav-logo-badge">SAGE VPN</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="/mentoring"><span class="nav-link-text">Наставничество 1-на-1</span></a></li>
+        <li><a href="/automation"><span class="nav-link-text">Внедрение &&nbsp;Разработка</span></a></li>
+        <li><a href="/corporate"><span class="nav-link-text">Компаниям</span></a></li>
+        <li><a href="/club/"><span class="nav-link-text">Клуб</span></a></li>
+        <li><a href="/about"><span class="nav-link-text">Обо&nbsp;мне &&nbsp;Кейсы</span></a></li>
+        <li><a href="/base" class="active"><span class="nav-link-text">База</span></a></li>
+      </ul>
+
+      <div class="nav-right">
+        <a href="/booking" class="nav-cta">Забронировать слот ↗</a>
+        <button class="nav-burger" aria-label="Открыть меню">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu">
+    <a href="/">Главная</a>
+    <a href="/mentoring">Наставничество 1-на-1</a>
+    <a href="/automation">Внедрение &&nbsp;Разработка</a>
+    <a href="/corporate">Компаниям</a>
+    <a href="/club/">Клуб</a>
+    <a href="/about">Обо мне &&nbsp;Кейсы</a>
+    <a href="/base">База Знаний</a>
+    <a href="/vpn" class="active">SAGE VPN</a>
+    <a href="/google-one-guide">Гайд Google One</a>
+    <a href="/cabinet/">Личный Кабинет</a>
+    <a href="/booking" class="m-cta">Забронировать слот ↗</a>
+  </div>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="vpn-hero">
+      <div class="vpn-hero-tag">// ИНФРАСТРУКТУРА &&nbsp;КИБЕРБЕЗОПАСНОСТЬ</div>
+      <h1 class="vpn-title">SAGE VPN (VPNi): Защищенный скоростной приватный VPN</h1>
+      <p class="vpn-lead">
+        Высокоскоростной приватный туннель на&nbsp;базе протоколов нового поколения (VLESS Reality, Hysteria 2, WireGuard, Shadowsocks 2022). Разработан специально для&nbsp;бесперебойной работы с&nbsp;передовыми AI-инструментами (Google Gemini, NotebookLM, Claude, ChatGPT, Cursor, Antigravity) и&nbsp;надежного обхода любых блокировок DPI.
+      </p>
+
+      <div class="vpn-badges-bar">
+        <div class="vpn-badge active-green">● Онлайн: 99.98% Uptime</div>
+        <div class="vpn-badge">1 Gbit/s каналы связи</div>
+        <div class="vpn-badge">VLESS Reality (XTLS)</div>
+        <div class="vpn-badge">Hysteria 2 (UDP Fast)</div>
+        <div class="vpn-badge">Строгий No-Logs</div>
+        <div class="vpn-badge">Европа (Финляндия, Нидерланды)</div>
+      </div>
+
+      <div class="vpn-actions">
+        <a href="https://t.me/Michael_Sage_bot" target="_blank" class="btn-action-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-2.02 1.28-5.7 3.77-.54.37-1.03.55-1.47.54-.48-.01-1.4-.27-2.09-.49-.84-.27-1.51-.42-1.45-.89.03-.25.38-.51 1.07-.78 4.19-1.82 6.98-3.03 8.37-3.61 3.98-1.66 4.81-1.95 5.35-1.96.12 0 .39.03.56.17.14.12.18.28.2.4.01.07.01.21 0 .36z"/></svg>
+          <span>Подключить в&nbsp;Telegram (@Michael_Sage_bot) ↗</span>
+        </a>
+        <a href="/club/" class="btn-action-secondary">
+          <span>Вступить в&nbsp;Клуб Резидентов (0 ₽ доплат) ↗</span>
+        </a>
+        <a href="/google-one-guide" class="btn-action-secondary">
+          <span>Гайд: Оплата Google One ↗</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- SECTION 1: ARCHITECTURE & ADVANTAGES -->
+    <section class="vpn-section">
+      <div class="vpn-section-tag">// ПРЕИМУЩЕСТВА &&nbsp;СТЕК</div>
+      <h2 class="vpn-section-title">Почему SAGE VPN не&nbsp;блокируется и&nbsp;работает быстрее</h2>
+      <p class="vpn-desc" style="max-width:860px; color:#52525b; line-height:1.7;">
+        Большинство публичных сервисов используют устаревшие протоколы OpenVPN или&nbsp;WireGuard, чьи сигнатуры мгновенно детектируются ТСПУ/DPI операторов связи. SAGE VPN построен на&nbsp;архитектуре Xray-core и&nbsp;VLESS Reality, полностью имитирующей легитимный зашифрованный веб-трафик.
+      </p>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div>
+            <div class="feature-card-header">
+              <span class="feature-card-num">01 // ОБОЙТИ DPI</span>
+            </div>
+            <h3 class="feature-card-title">Маскировка под&nbsp;TLS 1.3</h3>
+            <p class="feature-card-desc">
+              Технология Reality перенаправляет запросы через доверенные сертификаты крупных зарубежных сайтов. Провайдер видит лишь обычное посещение CDN-серверов, без&nbsp;признаков VPN.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div>
+            <div class="feature-card-header">
+              <span class="feature-card-num">02 // AI ОПТИМИЗАЦИЯ</span>
+            </div>
+            <h3 class="feature-card-title">Без&nbsp;капч в&nbsp;Google и&nbsp;Claude</h3>
+            <p class="feature-card-desc">
+              Чистые серверные IP-адреса дата-центров Европы. Никаких бесконечных светофоров Cloudflare, отказов в&nbsp;авторизации Google Workspace или&nbsp;сбоев Gemini Deep Research.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div>
+            <div class="feature-card-header">
+              <span class="feature-card-num">03 // МАКСИМАЛЬНАЯ СКОРОСТЬ</span>
+            </div>
+            <h3 class="feature-card-title">1 Гбит/с и&nbsp;Hysteria 2 (UDP)</h3>
+            <p class="feature-card-desc">
+              Прямые магистральные каналы связи. Протокол Hysteria 2 гарантирует стабильный пинг и&nbsp;высокую пропускную способность даже на&nbsp;нестабильном мобильном 4G/LTE.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div>
+            <div class="feature-card-header">
+              <span class="feature-card-num">04 // ПРИВАТНОСТЬ</span>
+            </div>
+            <h3 class="feature-card-title">Строгая политика No-Logs</h3>
+            <p class="feature-card-desc">
+              Полный отказ от&nbsp;сохранения логов трафика, DNS-запросов и&nbsp;активности пользователей. Данные обрабатываются в&nbsp;оперативной памяти ядра сервера без&nbsp;записи на&nbsp;диск.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div>
+            <div class="feature-card-header">
+              <span class="feature-card-num">05 // КРОССПЛАТФОРМЕННОСТЬ</span>
+            </div>
+            <h3 class="feature-card-title">iOS, Android, macOS, Windows</h3>
+            <p class="feature-card-desc">
+              Подключение через проверенные открытые клиенты: Streisand, v2rayNG, Shadowrocket, Hiddify, Nekoray. Единая подписка на&nbsp;все ваши устройства.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div>
+            <div class="feature-card-header">
+              <span class="feature-card-num">06 // УПРАВЛЕНИЕ В&nbsp;TELEGRAM</span>
+            </div>
+            <h3 class="feature-card-title">Мгновенная выдача за&nbsp;30 сек</h3>
+            <p class="feature-card-desc">
+              Бот <strong>@Michael_Sage_bot</strong> генерирует ключ и&nbsp;QR-код в&nbsp;один клик. Никаких сложных инструкций: вставил ключ — получил защищенное соединение.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: COMPARISON TABLE -->
+    <section class="vpn-section">
+      <div class="vpn-section-tag">// СРАВНИТЕЛЬНЫЙ АНАЛИЗ</div>
+      <h2 class="vpn-section-title">SAGE VPN против обычных публичных сервисов</h2>
+
+      <div class="compare-table-wrap">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>Параметр</th>
+              <th style="background:#ecfdf5; color:#065f46;">SAGE VPN (VPNi)</th>
+              <th>Масс-маркет VPN</th>
+              <th>Бесплатные расширения</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Протокол маскировки</strong></td>
+              <td class="compare-highlight" style="color:#059669;">VLESS Reality, Hysteria 2</td>
+              <td>WireGuard, OpenVPN, IPsec</td>
+              <td>HTTP/HTTPS Proxy</td>
+            </tr>
+            <tr>
+              <td><strong>Устойчивость к&nbsp;блокировкам DPI</strong></td>
+              <td class="compare-highlight" style="color:#059669;">100% (Неотличим от&nbsp;HTTPS)</td>
+              <td>Массово блокируются</td>
+              <td>Блокируются за&nbsp;дни</td>
+            </tr>
+            <tr>
+              <td><strong>Доступ к&nbsp;нейросетям (Gemini, Claude)</strong></td>
+              <td class="compare-highlight" style="color:#059669;">Идеальный (чистые IP)</td>
+              <td>Частые Cloudflare Captcha</td>
+              <td>Блокировка аккаунтов</td>
+            </tr>
+            <tr>
+              <td><strong>Ширина канала и&nbsp;скорость</strong></td>
+              <td class="compare-highlight" style="color:#059669;">До&nbsp;1 Гбит/с без&nbsp;шейпинга</td>
+              <td>Ограничена нагрузкой нод</td>
+              <td>Сильные просадки и&nbsp;обрывы</td>
+            </tr>
+            <tr>
+              <td><strong>Политика логирования</strong></td>
+              <td class="compare-highlight" style="color:#059669;">Строгий No-Logs (в&nbsp;RAM)</td>
+              <td>Частичные метаданные</td>
+              <td>Перепродажа трафика рекламодателям</td>
+            </tr>
+            <tr>
+              <td><strong>Управление и&nbsp;поддержка</strong></td>
+              <td class="compare-highlight" style="color:#059669;">Telegram-бот + личная поддержка</td>
+              <td>Медленный тикет-саппорт</td>
+              <td>Отсутствует</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 3: STEP-BY-STEP SETUP -->
+    <section class="vpn-section">
+      <div class="vpn-section-tag">// ПРОСТОЕ ПОДКЛЮЧЕНИЕ</div>
+      <h2 class="vpn-section-title">Как&nbsp;подключить SAGE VPN за&nbsp;3 шага</h2>
+
+      <div class="steps-container">
+        <div class="step-card">
+          <div class="step-card-num">ШАГ 01 // ЗАПУСК БОТА</div>
+          <h3 class="step-card-title">Откройте Telegram</h3>
+          <p class="step-card-desc">
+            Перейдите в&nbsp;бота <a href="https://t.me/Michael_Sage_bot" target="_blank" style="color:var(--black); font-weight:700; text-decoration:underline;">@Michael_Sage_bot</a> и&nbsp;нажмите <code>/start</code>. Выберите тариф или&nbsp;активируйте клубный доступ.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-card-num">ШАГ 02 // ПРИЛОЖЕНИЕ</div>
+          <h3 class="step-card-title">Установите клиент</h3>
+          <p class="step-card-desc">
+            Скачайте бесплатный клиент для&nbsp;вашей системы: <strong>Streisand</strong> (iOS), <strong>v2rayNG</strong> (Android) или&nbsp;<strong>Hiddify</strong> (macOS / Windows).
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-card-num">ШАГ 03 // ИМПОРТ КЛЮЧА</div>
+          <h3 class="step-card-title">Вставьте VLESS-ключ</h3>
+          <p class="step-card-desc">
+            Скопируйте персональный ключ из&nbsp;сообщения бота, нажмите «Добавить из&nbsp;буфера» в&nbsp;приложении и&nbsp;включите туннель. Готово!
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: ACCESS & PRICING -->
+    <section class="vpn-section">
+      <div class="vpn-section-tag">// ТАРИФЫ &&nbsp;РЕЗИДЕНТСТВО</div>
+      <h2 class="vpn-section-title">Условия доступа к&nbsp;сервису</h2>
+
+      <div class="access-grid">
+        <div class="access-card featured">
+          <div>
+            <span class="access-card-badge">★ МАКСИМАЛЬНАЯ ВЫГОДА</span>
+            <h3 style="font-size:1.4rem; font-weight:800; margin:0; color:var(--black);">Резиденты SAGE Neuro Family</h3>
+            <div class="access-card-price">0 ₽ <span>/ включено в&nbsp;клуб</span></div>
+            <p style="font-size:0.92rem; color:#52525b; line-height:1.6; margin-bottom:20px;">
+              Полный безлимитный доступ к&nbsp;SAGE VPN входит во&nbsp;все клубные абонементы без&nbsp;дополнительных платежей.
+            </p>
+            <ul class="access-card-features">
+              <li>Приоритетный выделенный канал</li>
+              <li>Все серверы (Финляндия, Нидерланды)</li>
+              <li>Доступ ко&nbsp;всей закрытой Базе Знаний</li>
+              <li>Закрытые еженедельные AI-разборы</li>
+              <li>Прямая поддержка автора в&nbsp;чате</li>
+            </ul>
+          </div>
+          <a href="/club/" class="btn-action-primary" style="width:100%; justify-content:center;">
+            Вступить в&nbsp;Клуб Резидентов ↗
+          </a>
+        </div>
+
+        <div class="access-card">
+          <div>
+            <span class="access-card-badge" style="background:#f4f4f5; color:#09090b; border:1px solid #e4e4e7;">ПРЯМАЯ ПОДПИСКА</span>
+            <h3 style="font-size:1.4rem; font-weight:800; margin:0; color:var(--black);">Индивидуальный доступ</h3>
+            <div class="access-card-price">от&nbsp;190 ₽ <span>/ месяц</span></div>
+            <p style="font-size:0.92rem; color:#52525b; line-height:1.6; margin-bottom:20px;">
+              Для&nbsp;тех, кому нужен только стабильный скоростной туннель для&nbsp;работы, нейросетей и&nbsp;путешествий.
+            </p>
+            <ul class="access-card-features">
+              <li>Скорость до&nbsp;1 Гбит/с</li>
+              <li>VLESS Reality + Hysteria 2</li>
+              <li>Подключение до&nbsp;5 устройств</li>
+              <li>Оплата картами РФ и&nbsp;СБП в&nbsp;боте</li>
+              <li>Автоматическое продление</li>
+            </ul>
+          </div>
+          <a href="https://t.me/Michael_Sage_bot" target="_blank" class="btn-action-secondary" style="width:100%; justify-content:center;">
+            Подключить в&nbsp;@Michael_Sage_bot ↗
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: FAQ (ACCORDION STANDARD) -->
+    <section id="faq" class="vpn-section" data-nav-title="Вопросы">
+      <div class="vpn-section-tag">ЧАСТЫЕ ВОПРОСЫ</div>
+      <h2 class="vpn-section-title">Всё, что&nbsp;нужно знать о&nbsp;SAGE VPN</h2>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" type="button">
+            <span>1. Чем&nbsp;VLESS Reality отличается от&nbsp;обычных коммерческих VPN?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              Обычные VPN-сервисы (WireGuard, OpenVPN) используют стандартные заголовки пакетов, которые легко детектируются и&nbsp;блокируются системами DPI провайдеров. <strong>VLESS Reality</strong> полностью маскирует трафик под&nbsp;стандартное HTTPS-соединение (TLS 1.3) к&nbsp;крупным авторитетным доменам. Для&nbsp;любого сетевого фильтра ваше соединение выглядит как&nbsp;обычный просмотр легитимного зарубежного веб-сайта.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button">
+            <span>2. Будут ли&nbsp;работать нейросети Google Gemini, NotebookLM и&nbsp;Claude?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              Да, безупречно. SAGE VPN изначально проектировался для&nbsp;комфортной работы с&nbsp;нейросетями. Серверы расположены на&nbsp;чистых европейских подсетях, которые не&nbsp;внесены в&nbsp;черные списки Cloudflare и&nbsp;Google. Вы не&nbsp;будете сталкиваться с&nbsp;бесконечными капчами и&nbsp;ошибками доступа в&nbsp;<strong>Gemini Deep Research, NotebookLM, Claude и&nbsp;ChatGPT</strong>.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button">
+            <span>3. На&nbsp;каких устройствах я&nbsp;могу использовать подключение?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              SAGE VPN работает на&nbsp;любой современной операционной системе: <strong>iOS (iPhone/iPad), Android, macOS, Windows и&nbsp;Linux</strong>. Вы можете использовать один и&nbsp;тот же&nbsp;персональный ключ на&nbsp;нескольких своих личных устройствах одновременно.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button">
+            <span>4. Как&nbsp;оплатить зарубежные подписки (Google One, Gemini Advanced)?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              Для&nbsp;оплаты подписок Google One и&nbsp;Gemini Advanced требуется не&nbsp;только качественный приватный VPN, но&nbsp;и&nbsp;правильно настроенный безналоговый платежный профиль США (штат Delaware 0% Tax) с&nbsp;международной картой. Мы подготовили подробнейшую инструкцию: изучите наш <a href="/google-one-guide" style="color:var(--black); font-weight:700; text-decoration:underline;">гайд по&nbsp;оплате Google One в&nbsp;РФ</a>.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button">
+            <span>5. Ведутся ли&nbsp;логи активности пользователей?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              Категорически нет. На&nbsp;серверах активирован режим <strong>Strict No-Logs</strong>. Маршрутизатор Xray обрабатывает соединения исключительно в&nbsp;оперативной памяти без&nbsp;записи логов трафика, IP-адресов или&nbsp;истории посещенных сайтов на&nbsp;диск. Ваша приватность защищена на&nbsp;уровне архитектуры.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button">
+            <span>6. Как&nbsp;активировать VPN бесплатно, если я&nbsp;резидент клуба?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              Просто откройте бота <a href="https://t.me/Michael_Sage_bot" target="_blank" style="color:var(--black); font-weight:700; text-decoration:underline;">@Michael_Sage_bot</a> с&nbsp;того же&nbsp;Telegram-аккаунта, с&nbsp;которого вы состоите в&nbsp;клубе SAGE Neuro Family. Бот автоматически верифицирует вашу клубную подписку и&nbsp;выдаст безлимитный VIP-ключ без&nbsp;оплаты.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- DIRECT MESSENGER CONTACT & BOOKING SECTION -->
+  <section id="contact" class="form-section" data-nav-title="Связь">
+    <div class="form-inner" style="align-items:center;">
+      <div class="form-left" style="max-width:540px;">
+        <div class="section-tag" style="color:#a1a1aa;">СВЯЗЬ &&nbsp;ПОДДЕРЖКА</div>
+        <h2 class="form-title">Остались вопросы по&nbsp;настройке или&nbsp;инфраструктуре?</h2>
+        <p class="form-sub">
+          Напишите напрямую в&nbsp;Telegram. Помогу с&nbsp;настройкой клиентов, подключением AI-сервисов или&nbsp;развертыванием корпоративного шлюза безопасности.
+        </p>
+        <div style="margin-top:24px;font-family:var(--mono);font-size:0.88rem;color:#a1a1aa;line-height:1.8;">
+          <div>• Канал в&nbsp;Telegram: <a href="https://t.me/uncrn_sage" target="_blank" style="color:#fff;text-decoration:underline;">@uncrn_sage</a></div>
+          <div>• Бот VPN: <a href="https://t.me/Michael_Sage_bot" target="_blank" style="color:#fff;text-decoration:underline;">@Michael_Sage_bot</a></div>
+        </div>
+      </div>
+
+      <div class="direct-contact-card">
+        <div style="font-family:var(--mono);font-size:0.75rem;color:#34d399;font-weight:600;margin-bottom:4px;letter-spacing:0.04em;">
+          // ПРЯМАЯ СВЯЗЬ БЕЗ&nbsp;ПОСРЕДНИКОВ
+        </div>
+
+        <a href="https://t.me/Michael_Sage" target="_blank" class="btn-primary" style="display:flex;align-items:center;justify-content:center;gap:12px;padding:16px;font-size:0.95rem;background:#ffffff;border-color:#ffffff;color:#09090b;text-decoration:none;font-weight:700;border-radius:0;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-2.02 1.28-5.7 3.77-.54.37-1.03.55-1.47.54-.48-.01-1.4-.27-2.09-.49-.84-.27-1.51-.42-1.45-.89.03-.25.38-.51 1.07-.78 4.19-1.82 6.98-3.03 8.37-3.61 3.98-1.66 4.81-1.95 5.35-1.96.12 0 .39.03.56.17.14.12.18.28.2.4.01.07.01.21 0 .36z"/></svg>
+          <span>Написать в&nbsp;Telegram ↗</span>
+        </a>
+
+        <a href="/booking" class="btn-secondary" style="display:flex;align-items:center;justify-content:center;gap:12px;padding:16px;font-size:0.95rem;background:#27272a;border-color:#3f3f46;color:#fff;text-decoration:none;font-weight:600;border-radius:0;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><rect x="3" y="4" width="18" height="18"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          <span>Забронировать слот в&nbsp;Календаре ↗</span>
+        </a>
+
+        <a href="https://max.ru/u/f9LHodD0cOJxk9sLajkZ5u_-WbQydR8lkTH6y34KqdU-QKoLzrW7FH8yJG0" target="_blank" class="btn-secondary" style="display:flex;align-items:center;justify-content:center;gap:12px;padding:16px;font-size:0.95rem;background:#18181b;border-color:#27272a;color:#d4d4d8;text-decoration:none;font-weight:600;border-radius:0;">
+          <span>Написать в&nbsp;MAX ↗</span>
+        </a>
+
+        <div style="margin-top:6px;padding-top:14px;border-top:1px solid #27272a;display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:0.78rem;color:#a1a1aa;">
+          <span>Прямой контакт</span>
+          <span style="color:#34d399;">● Online</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <strong>ИП Пузырёв Михаил Михайлович</strong> · ИНН 500177901407 · ОГРНИП 318505300123140
+      </div>
+      <ul class="footer-links">
+        <li><a href="/privacy">Политика конфиденциальности</a></li>
+        <li><a href="/terms">Пользовательское соглашение</a></li>
+        <li><a href="/offer-materials">Оферта материалов</a></li>
+        <li><a href="/offer">Оферта клуба</a></li>
+        <li><a href="https://t.me/uncrn_sage" target="_blank">Telegram</a></li>
+        <li><a href="https://max.ru/u/f9LHodD0cOJxk9sLajkZ5u_-WbQydR8lkTH6y34KqdU-QKoLzrW7FH8yJG0" target="_blank">MAX</a></li>
+        <li><a href="/booking">Забронировать слот</a></li>
+      </ul>
+    </div>
+  </footer>
+</div>
+
+<script>
+  // FAQ Accordion
+  document.querySelectorAll(".faq-q").forEach(button => {
+    button.addEventListener("click", () => {
+      const item = button.closest(".faq-item");
+      const isOpen = item.classList.contains("open");
+      document.querySelectorAll(".faq-item").forEach(i => i.classList.remove("open"));
+      if (!isOpen) {
+        item.classList.add("open");
+      }
+    });
+  });
+
+  // Mobile menu toggle
+  const burger = document.querySelector(".nav-burger");
+  const mobileMenu = document.querySelector(".mobile-menu");
+  if (burger && mobileMenu) {
+    burger.addEventListener("click", () => {
+      mobileMenu.classList.toggle("active");
+    });
+  }
+</script>
+<script src="/js/auth.js?v=1.4"></script>
+<script src="/js/main.js?v=2.8"></script>
+</body>
+</html>

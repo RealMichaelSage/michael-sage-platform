@@ -239,7 +239,7 @@
 
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px;">
           <!-- Solution 1: Sagemeet -->
-          <div style="background: #ffffff; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04); padding: 28px; display: flex; flex-direction: column; justify-content: space-between;">
+          <div style="background: #ffffff; border: 2px solid #09090b; padding: 28px; display: flex; flex-direction: column; justify-content: space-between;">
             <div>
               <div style="margin-bottom: 12px;">
                 <span style="font-family: var(--mono); font-size: 0.72rem; font-weight: 700; color: #09090b; background: #f4f4f5; border: 1px solid #e4e4e7; padding: 2px 8px;">ИИ-СЕРВИС // СОЗВОНЫ &amp;&nbsp;АССИСТЕНТ</span>
@@ -264,17 +264,17 @@
           </div>
 
           <!-- Solution 2: SAGE VPN -->
-          <div style="background: #ffffff; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04); padding: 28px; display: flex; flex-direction: column; justify-content: space-between;">
+          <div style="background: #ffffff; border: 2px solid #09090b; padding: 28px; display: flex; flex-direction: column; justify-content: space-between;">
             <div>
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 6px;">
                 <span style="font-family: var(--mono); font-size: 0.72rem; font-weight: 700; color: #09090b; background: #f4f4f5; border: 1px solid #e4e4e7; padding: 2px 8px;">ИНФРАСТРУКТУРА // БЕЗОПАСНОСТЬ</span>
                 <span style="font-family: var(--mono); font-size: 0.68rem; font-weight: 700; background: #18181b; color: #ffffff; padding: 2px 8px;">🔒 ЗАКРЫТЫЙ ДОСТУП</span>
               </div>
               <h3 style="font-size: 1.3rem; font-weight: 800; margin: 0 0 10px; color: #09090b; letter-spacing: -0.01em;">
-                SAGE VPN — Защищенный скоростной приватный VPN
+                <a href="/vpn" style="color:inherit; text-decoration:underline;">SAGE VPN</a> — Защищенный скоростной приватный VPN
               </h3>
               <p style="font-size: 0.92rem; color: #52525b; line-height: 1.55; margin-bottom: 16px;">
-                Высокоскоростной приватный VPN на&nbsp;базе протоколов нового поколения (VLESS Reality, Shadowsocks 2022, WireGuard) без&nbsp;замедлений и&nbsp;блокировок. Мгновенная генерация ключей через Telegram-бота.
+                Высокоскоростной приватный <a href="/vpn" style="color:inherit; font-weight:700; text-decoration:underline;">VPN</a> на&nbsp;базе протоколов нового поколения (VLESS Reality, Shadowsocks 2022, WireGuard) без&nbsp;замедлений и&nbsp;блокировок. Мгновенная генерация ключей через Telegram-бота.
               </p>
               <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px;">
                 <span style="font-family: var(--mono); font-size: 0.72rem; background: #f4f4f5; border: 1px solid #e4e4e7; padding: 3px 8px; color: #3f3f46;">VLESS Reality</span>
@@ -283,8 +283,9 @@
                 <span style="font-family: var(--mono); font-size: 0.72rem; background: #f4f4f5; border: 1px solid #e4e4e7; padding: 3px 8px; color: #3f3f46;">Xray Core</span>
               </div>
             </div>
-            <div>
-              <a href="https://t.me/Michael_Sage_bot" target="_blank" class="btn-primary" style="padding: 10px 18px; font-size: 0.84rem; width: 100%; text-align: center; text-decoration: none; justify-content: center; display: inline-flex; align-items: center; box-sizing: border-box;">Подключить VPN в&nbsp;@Michael_Sage_bot ↗</a>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <a href="/vpn" class="btn-secondary" style="padding: 10px 14px; font-size: 0.84rem; text-align: center; text-decoration: none; justify-content: center; display: inline-flex; align-items: center;">О&nbsp;сервисе VPN ↗</a>
+              <a href="https://t.me/Michael_Sage_bot" target="_blank" class="btn-primary" style="padding: 10px 18px; font-size: 0.84rem; flex: 1; text-align: center; text-decoration: none; justify-content: center; display: inline-flex; align-items: center; box-sizing: border-box;">Подключить в&nbsp;@Michael_Sage_bot ↗</a>
             </div>
           </div>
         </div>
@@ -311,75 +312,7 @@
         </div>
       </div>
     </section>
-
-    <!-- SECTION: FAQ -->
-    <section id="faq" class="section section-border section-pad" data-nav-title="Вопросы">
-      <div class="section-tag">ЧАСТЫЕ ВОПРОСЫ</div>
-      <h2 class="section-title">Всё о&nbsp;точности расчетов, безопасности и&nbsp;финмоделях</h2>
-
-      <div class="faq-list">
-        <div class="faq-item">
-          <button class="faq-q" type="button">
-            <span>1. По&nbsp;каким стандартам и&nbsp;формулам построена «Венчурная Финмодель 5.0 Pro»?</span>
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-a">
-            <div class="faq-a-inner">
-              Финмодель разработана по&nbsp;международному стандарту <strong>FAST Standard</strong> (Financial Modelling). Включает 28 показателей Unit-экономики (CAC, LTV, Retention, Churn, Payback), динамический расчет 3 сценариев (консервативный, базовый, оптимистичный), сквозные отчеты P&L, Cash Flow, Баланс и&nbsp;расчет дисконтированного денежного потока (DCF).
-            </div>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-q" type="button">
-            <span>2. Сохраняются ли&nbsp;введенные мной финансовые показатели бизнеса на&nbsp;вашем сервере?</span>
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-a">
-            <div class="faq-a-inner">
-              <strong>Нет, ни&nbsp;в коем случае.</strong> Все расчеты происходят локально в&nbsp;вашем браузере (Client-Side JavaScript). Мы не&nbsp;собираем, не&nbsp;логируем и&nbsp;не передаем ваши финансовые цифры на&nbsp;внешние сервера. Ваша коммерческая тайна на&nbsp;100% в&nbsp;безопасности.
-            </div>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-q" type="button">
-            <span>3. Учитывает ли&nbsp;калькулятор налогов реформу 2026 года?</span>
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-a">
-            <div class="faq-a-inner">
-              <strong>Да, полностью актуализирован.</strong> Поддерживаются обновленные ставки УСН («Доходы» 6%, повышенные ставки 7% и&nbsp;9%), НДС 20%, комиссии эквайринга и&nbsp;агентские вознаграждения. Расчет суммы счета клиенту ведется по&nbsp;математически корректной формуле «сверху»: S / (1 - r), что&nbsp;исключает кассовые разрывы.
-            </div>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-q" type="button">
-            <span>4. Можно ли&nbsp;экспортировать результаты расчетов в&nbsp;Excel (.xlsx) для&nbsp;инвесторов или&nbsp;банка?</span>
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-a">
-            <div class="faq-a-inner">
-              Да, в&nbsp;калькуляторе финмодели доступна генерация структурированного файла <strong>Excel (.xlsx) в&nbsp;1 клик</strong>. Все формулы сохраняются живыми, что&nbsp;позволяет сразу отправлять файл венчурным фондам, бизнес-ангелам или&nbsp;в банк.
-            </div>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-q" type="button">
-            <span>5. Можно ли&nbsp;заказать индивидуальную финмодель под&nbsp;нестандартный бизнес?</span>
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-a">
-            <div class="faq-a-inner">
-              Да, если у&nbsp;вас сложная холдинговая структура, производство или&nbsp;специфический маркетплейс, Михаил Пузырёв проводит индивидуальное финансовое моделирование и&nbsp;аудит юнит-экономики. Забронируйте встречу через форму ниже.
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
+      
   </main>
 
   <!-- DIRECT MESSENGER CONTACT & BOOKING SECTION -->

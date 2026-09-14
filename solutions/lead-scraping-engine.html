@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Парсинг и&nbsp;AI-скоринг целевых ЛПР из&nbsp;баз данных | Михаил Пузырёв</title>
-  <meta name="description" content="Пошаговый инженерный гайд и готовый промпт для Google Antigravity: парсинг ЛПР из Telegram, 2ГИС, Яндекс Карт и HeadHunter, фильтрация через Gemini 3.6 Flash и обогащение через DaData.">
-  <meta name="keywords" content="парсинг ЛПР, B2B лидогенерация нейросети, Gemini 3.6 Flash парсинг, Antigravity автоматизация, DaData обогащение лидов, AI SDR, Telegram парсер лидов">
+  <meta name="description" content="Пошаговый инженерный гайд и готовый промпт для Google Antigravity: парсинг ЛПР из Telegram, 2ГИС, Яндекс Карт и HeadHunter, фильтрация через Gemini и обогащение через DaData.">
+  <meta name="keywords" content="парсинг ЛПР, B2B лидогенерация нейросети, Gemini парсинг, Antigravity автоматизация, DaData обогащение лидов, AI SDR, Telegram парсер лидов">
   <meta name="author" content="Михаил Пузырёв">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 
@@ -16,7 +16,7 @@
   <!-- Open Graph -->
   <meta property="og:type" content="article">
   <meta property="og:title" content="Парсинг целевых ЛПР из открытых источников и AI-скоринг — Инженерный Гайд">
-  <meta property="og:description" content="Готовая архитектура, пошаговый Roadmap и Copy-Paste промпт для развертывания B2B лидогенератора на базе Gemini 3.6 Flash и Google Antigravity.">
+  <meta property="og:description" content="Готовая архитектура, пошаговый Roadmap и Copy-Paste промпт для развертывания B2B лидогенератора на базе Gemini и Google Antigravity.">
   <meta property="og:url" content="https://a-sage.ru/solutions/lead-scraping-engine">
   <meta property="og:site_name" content="Михаил Пузырёв — AI Архитектура & Внедрение">
   <meta property="og:locale" content="ru_RU">
@@ -31,7 +31,7 @@
         "@type": "TechArticle",
         "@id": "https://a-sage.ru/solutions/lead-scraping-engine#article",
         "headline": "Парсинг целевых ЛПР из открытых источников и AI-скоринг",
-        "description": "Пошаговый инженерный гайд по созданию автономного сервиса лидогенерации на базе Gemini 3.6 Flash, Telethon, DaData и Google Antigravity.",
+        "description": "Пошаговый инженерный гайд по созданию автономного сервиса лидогенерации на базе Gemini, Telethon, DaData и Google Antigravity.",
         "author": {
           "@type": "Person",
           "name": "Михаил Пузырёв",
@@ -543,7 +543,7 @@
       </h1>
 
       <p class="solution-desc">
-        Автоматический сбор теплых баз ЛПР из&nbsp;тематических Telegram-чатов, 2ГИС, Яндекс Карт и&nbsp;HeadHunter. Интеллектуальная фильтрация спама через Gemini 3.6 Flash, автоматическое обогащение реквизитов по&nbsp;ИНН через DaData и&nbsp;моментальная доставка квалифицированных лидов в&nbsp;Telegram-чат отдела продаж.
+        Автоматический сбор теплых баз ЛПР из&nbsp;тематических Telegram-чатов, 2ГИС, Яндекс Карт и&nbsp;HeadHunter. Интеллектуальная фильтрация спама через Gemini, автоматическое обогащение реквизитов по&nbsp;ИНН через DaData и&nbsp;моментальная доставка квалифицированных лидов в&nbsp;Telegram-чат отдела продаж.
       </p>
 
       <!-- SPEC METRICS -->
@@ -554,7 +554,7 @@
         </div>
         <div class="spec-item">
           <div class="spec-label">// Базовая AI-модель</div>
-          <div class="spec-val">⚡️ Gemini 3.6 Flash</div>
+          <div class="spec-val">⚡️ Gemini</div>
         </div>
         <div class="spec-item">
           <div class="spec-label">// Экономия ресурсов</div>
@@ -611,7 +611,7 @@
           <h2 class="sec-title">Бизнес-логика пайплайна «со&nbsp;стрелочками»</h2>
           
           <p style="font-size:0.96rem; line-height:1.65; color:#52525b; margin-bottom:18px;">
-            Вся система работает в&nbsp;полностью асинхронном режиме. Парсеры извлекают сырой поток сообщений и&nbsp;карточек организаций, Gemini 3.6 Flash на&nbsp;лету отделяет реальный спрос от&nbsp;предложений услуг и&nbsp;спама, DaData подтягивает официальные данные ФНС, а&nbsp;менеджер получает готовое досье за&nbsp;60 секунд.
+            Вся система работает в&nbsp;полностью асинхронном режиме. Парсеры извлекают сырой поток сообщений и&nbsp;карточек организаций, Gemini на&nbsp;лету отделяет реальный спрос от&nbsp;предложений услуг и&nbsp;спама, DaData подтягивает официальные данные ФНС, а&nbsp;менеджер получает готовое досье за&nbsp;60 секунд.
           </p>
 
           <div class="arch-diagram-card">
@@ -620,7 +620,7 @@
         ▼ (Парсинг сырых данных через HTTP / Playwright / Telethon)
 [Сырой поток данных] (Тексты сообщений, карточки компаний, сниппеты)
         │
-        ▼ (Обработка Gemini 3.6 Flash: фильтрация спама + извлечение ЛПР)
+        ▼ (Обработка Gemini: фильтрация спама + извлечение ЛПР)
 [Структурированный лид] (ФИО, Должность, Компания, Телефон, Telegram, Боль)
         │
         ▼ (Обогащение через DaData / Checko по ИНН: выручка, штат, суды)
@@ -644,7 +644,7 @@
                 <h3 class="step-title">Настройка окружения на&nbsp;компьютере</h3>
               </div>
               <div class="step-content">
-                Убедитесь, что&nbsp;установлен Python 3.10+ и&nbsp;Git. Включите качественный VPN с&nbsp;локацией США (например, <a href="https://t.me/Michael_Sage_bot" target="_blank" style="color:#09090b; font-weight:700; text-decoration:underline;">SAGE VPN @Michael_Sage_bot</a>) для&nbsp;стабильной работы Gemini API и&nbsp;Antigravity без&nbsp;блокировок.
+                Убедитесь, что&nbsp;установлен Python 3.10+ и&nbsp;Git. Включите качественный <a href="/vpn" style="color:#09090b; font-weight:700; text-decoration:underline;">SAGE VPN</a> с&nbsp;локацией США (или&nbsp;через <a href="https://t.me/Michael_Sage_bot" target="_blank" style="color:#09090b; text-decoration:underline;">@Michael_Sage_bot</a>) для&nbsp;стабильной работы Gemini API и&nbsp;Antigravity без&nbsp;блокировок.
                 <pre>mkdir -p ~/Automations/lead_scraping_engine
 cd ~/Automations/lead_scraping_engine
 python3 -m venv venv
@@ -757,7 +757,7 @@ source venv/bin/activate</pre>
    - telegram_collector.py: использует Telethon для безопасного мониторинга публичных чатов по ключевым словам ("ищем", "нужен подрядчик", "посоветуйте", "куплю").
    - web_collector.py: парсер карточек организаций (название, категория, город, телефон, сайт, email).
 2. Модуль AI-анализа и фильтрации (ai_filter.py):
-   - Используй Gemini 3.6 Flash через официальный google-generativeai или прямой REST API.
+   - Используй Gemini через официальный google-generativeai или прямой REST API.
    - Промпт для Gemini:
      "Ты — квалификатор B2B-лидов. На входе текст сообщения/карточки.
       Задача:

@@ -134,7 +134,7 @@
       "Python 3.12",
       "FastMCP",
       "SQLite Vector",
-      "Gemini 1.5/2.0 Flash"
+      "Gemini"
     ],
     "cover_image": "/assets/club-lessons/lesson_media_969.jpg",
     "content": {
@@ -205,39 +205,38 @@
     }
   },
   {
-    "id": "midjourney-flux-cinematic-pack",
-    "title": "Midjourney & Flux 20 Cinematic Lighting & Angles Pack",
+    "id": "nano-banana-cinematic-pack",
+    "title": "Nano Banana от Google 20 Cinematic Lighting & Angles Pack",
     "category": "prompt",
     "badge": "ШАБЛОН",
     "description": "20 готовых световых схем и 20 кинематографических ракурсов камеры для коммерческих нейрофотосессий, лукбуков и продуктового визуала.",
     "price_rub": 1990,
     "is_free_for_club": true,
     "tech_stack": [
-      "Midjourney v6.1",
-      "FLUX.1 [dev]",
-      "ComfyUI",
+      "Nano Banana от Google",
+      "Gemini",
       "Prompt Engineering"
     ],
     "cover_image": "/assets/club-lessons/lesson_media_619.jpg",
     "content": {
       "video_embed_url": "https://kinescope.io/embed/qNU4ub4VBQCmSHLhpeGSt9",
       "download_zip_url": "/downloads/prompts/cinematic-lighting-angles-pack.zip",
-      "github_url": "https://github.com/mikhail-sage/flux-cinematic-prompts",
+      "github_url": "https://github.com/mikhail-sage/nano-banana-prompts",
       "prompts": [
         {
           "title": "Световая схема: Rembrandt + Subtle Cyberpunk Rim Light",
-          "body": "Commercial studio portrait of a confident tech entrepreneur, subtle cinematic rim lighting with soft cyan and warm amber contrast, Rembrandt lighting triangle on cheek, 85mm portrait lens, f/1.8 aperture, Hasselblad H6D-100c medium format texture, hyper-realistic skin pores, volumetric haze, raw style --ar 16:9 --style raw --v 6.1"
+          "body": "Commercial studio portrait of a confident tech entrepreneur, subtle cinematic rim lighting with soft cyan and warm amber contrast, Rembrandt lighting triangle on cheek, 85mm portrait lens, f/1.8 aperture, Hasselblad H6D-100c medium format texture, hyper-realistic skin pores, volumetric haze, raw style --ar 16:9"
         },
         {
           "title": "Операторский ракурс: Dutch Angle High-Fashion 85mm f/1.4",
-          "body": "Dynamic low-angle Dutch tilt shot, architectural minimalism background, harsh directional sunlight through brutalist concrete structures, sharp shadows, high-end editorial fashion photography, shot on 35mm film, Kodak Portra 400 grain, high contrast, muted earth tone palette --ar 3:4 --v 6.1"
+          "body": "Dynamic low-angle Dutch tilt shot, architectural minimalism background, harsh directional sunlight through brutalist concrete structures, sharp shadows, high-end editorial fashion photography, shot on 35mm film, Kodak Portra 400 grain, high contrast, muted earth tone palette --ar 3:4"
         }
       ],
       "checklist": [
         "1. Распаковать архив с промптами и превью-рендерами cinematic-lighting-angles-pack.zip",
         "2. Выбрать схему освещения в зависимости от задачи (Студийный портрет, Лукбук, Предметная съемка)",
-        "3. Настроить веса параметров стилизации (--stylize 250, --chaos 10 для вариативности)",
-        "4. Для генератора FLUX.1 настроить семплер Euler a, шаг 28-30 и CFG Scale 3.5 в ComfyUI",
+        "3. Настроить веса параметров стилизации для вариативности",
+        "4. Для генератора Nano Banana от Google настроить параметры композиции, освещения и стиля в Gemini",
         "5. Сохранить удачные зерна генерации (seed) для воспроизводимости серии кадров одного персонажа"
       ]
     }
