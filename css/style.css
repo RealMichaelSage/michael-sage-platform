@@ -4120,6 +4120,19 @@ input[type="reset"],
   opacity: 0;
 }
 
+.prompt-box-wrapper .prompt-code-box::after {
+  display: none !important;
+  content: none !important;
+  opacity: 0 !important;
+  height: 0 !important;
+}
+
+.prompt-box-wrapper .btn-copy-prompt {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  max-width: max-content !important;
+}
+
 .prompt-code-content {
   font-family: var(--mono);
   font-size: 0.78rem;

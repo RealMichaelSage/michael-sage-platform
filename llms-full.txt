@@ -93,8 +93,8 @@
 ---
 
 ## 5. Практические Руководства и База Знаний
-- **Как создать AI-подкаст «Глубокое погружение» с нуля (Методология SAGE Digital V2.0):** https://a-sage.ru/base/ai-podcast-guide/
-  - Полный пошаговый конвейер: от формирования сетки сезона на 25 эпизодов через Gemini Canvas и глубокого исследования ниши в Gemini Deep Research до двухголосой генерации в NotebookLM Audio Overview, студийного сведения в CapCut (+5 дБ голос, -3 дБ джингл) и дистрибуции на стриминги (Apple Podcasts, Spotify, Яндекс Музыка).
+- **Как создать AI-подкаст «Глубокое погружение» с нуля (Методология AiSAGE V2.0):** https://a-sage.ru/base/ai-podcast-guide/
+  - Полный пошаговый конвейер: от формирования сетки сезона на 25 эпизодов через Gemini Canvas и глубокого исследования ниши в Gemini Deep Research до двухголосой генерации в NotebookLM Audio Overview, студийного сведения в CapCut (+4 дБ голос, -2 дБ джингл) и дистрибуции на стриминги (Apple Podcasts, Spotify, Яндекс Музыка).
 - **Как внедрить ИИ-агентов в бизнес (White Paper & Исследование 2026):** https://a-sage.ru/base/research-agentic-processes/
   - Практическое руководство по внедрению автономных ИИ-агентов, расчет ROI, границы SQL vs LLM, безопасность корпоративных данных и архитектура харнессов.
 - **Оплата Google One (AI Premium & Gemini Advanced 2 TB) из РФ в 2026 году:** https://a-sage.ru/google-one-guide

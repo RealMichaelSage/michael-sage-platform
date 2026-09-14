@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Как&nbsp;создать AI-подкаст «Глубокое погружение» с&nbsp;нуля: Гайд 2026 | Михаил Пузырёв</title>
-  <meta name="description" content="Пошаговая методология SAGE Digital V2.0: от стратегии сезона на 25 эпизодов и двухголосой генерации в NotebookLM до студийного сведения в CapCut, запуска Telegram-сообщества и дистрибуции на все платформы.">
+  <meta name="description" content="Пошаговая методология AiSAGE V2.0: от стратегии сезона на 25 эпизодов и двухголосой генерации в NotebookLM до студийного сведения в CapCut, запуска Telegram-сообщества и дистрибуции на все платформы.">
   <meta name="keywords" content="AI подкаст, как создать подкаст с нейросетью, NotebookLM подкаст, Gemini Deep Research, аудиопересказ NotebookLM, подкаст без студии, CapCut звук подкаста, дистрибуция подкаста, Mave, Михаил Пузырёв">
   <meta name="author" content="Михаил Пузырёв">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -339,7 +339,12 @@
       color: #71717a;
       margin-top: 2px;
     }
+    .prompt-box-header .btn-copy-prompt,
     .btn-copy-prompt {
+      flex: 0 0 auto !important;
+      width: auto !important;
+      max-width: max-content !important;
+      align-self: center;
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -353,15 +358,16 @@
       cursor: pointer;
       border-radius: 0 !important;
       transition: all 0.2s ease;
+      white-space: nowrap;
     }
     .btn-copy-prompt:hover {
       background: #27272a;
       border-color: #27272a;
     }
     .btn-copy-prompt.copied {
-      background: #10b981;
-      border-color: #10b981;
-      color: #000000;
+      background: #10b981 !important;
+      border-color: #10b981 !important;
+      color: #000000 !important;
     }
     .prompt-code-box {
       margin: 0;
@@ -375,6 +381,129 @@
       white-space: pre-wrap;
       word-break: break-word;
       border-radius: 0 !important;
+      position: relative;
+    }
+    .prompt-code-box::after {
+      display: none !important;
+      content: none !important;
+      opacity: 0 !important;
+      height: 0 !important;
+    }
+
+    /* Guide 2-column layout with sticky right sidebar */
+    .guide-body-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      max-width: 1440px;
+      margin: 0 auto;
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      background: #ffffff;
+      align-items: start;
+    }
+    .guide-main-column {
+      min-width: 0;
+    }
+    .guide-main-column > .guide-section-block {
+      border-left: none !important;
+      border-right: none !important;
+      max-width: 100% !important;
+      box-sizing: border-box;
+    }
+    .guide-sidebar-column {
+      border-left: 1px solid var(--border);
+      background: #fafafa;
+      padding: 48px 24px 56px;
+      box-sizing: border-box;
+      height: 100%;
+    }
+    .guide-sticky-cta-card {
+      position: sticky;
+      top: 88px;
+      background: #09090b;
+      color: #ffffff;
+      border: 1px solid #27272a;
+      border-left: 3px solid #10b981;
+      padding: 24px 20px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      border-radius: 0 !important;
+    }
+    .guide-sticky-badge {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #10b981;
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
+    }
+    .guide-sticky-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin: 0 0 10px 0;
+      line-height: 1.3;
+      text-wrap: balance;
+    }
+    .guide-sticky-desc {
+      font-size: 0.85rem;
+      color: #a1a1aa;
+      line-height: 1.55;
+      margin: 0 0 18px 0;
+      text-wrap: pretty;
+    }
+    .guide-sticky-desc strong {
+      color: #ffffff;
+    }
+    .guide-sticky-btn {
+      display: flex !important;
+      width: 100% !important;
+      justify-content: center !important;
+      text-align: center;
+      background: #ffffff !important;
+      color: #09090b !important;
+      font-weight: 700 !important;
+      font-size: 0.88rem !important;
+      padding: 12px 16px !important;
+      text-decoration: none;
+      border: 1px solid #ffffff !important;
+      border-radius: 0 !important;
+      transition: all 0.2s ease;
+      box-sizing: border-box;
+    }
+    .guide-sticky-btn:hover {
+      background: #10b981 !important;
+      color: #000000 !important;
+      border-color: #10b981 !important;
+    }
+    .guide-sticky-subtext {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: #71717a;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 1179px) {
+      .guide-body-grid {
+        display: block;
+      }
+      .guide-sidebar-column {
+        border-left: none;
+        border-top: 1px solid var(--border);
+        background: #ffffff;
+        padding: 32px clamp(20px, 4.5vw, 64px);
+        height: auto;
+      }
+      .guide-sticky-cta-card {
+        position: static;
+        max-width: 640px;
+        margin: 0 auto;
+      }
+    }
+
+    /* Hide floating scrollspy rail because right sidebar has sticky card */
+    .page-scrollspy {
+      display: none !important;
     }
 
     /* Term link to AI Glossary */
@@ -550,7 +679,7 @@
       <div class="hero-badge" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
         <div style="display:inline-flex; align-items:center; gap:8px;">
           <span class="dot"></span>
-          <span>МЕТОДОЛОГИЯ SAGE DIGITAL // ПРАКТИЧЕСКИЙ КОНВЕЙЕР V2.0</span>
+          <span>МЕТОДОЛОГИЯ AiSAGE // ПРАКТИЧЕСКИЙ КОНВЕЙЕР V2.0</span>
         </div>
         <span style="font-family:var(--mono); font-size:0.74rem; color:#dc2626; background:#fef2f2; border:1px solid #fecaca; padding:2px 10px; font-weight:700;">🔒 КЛУБ / 490 ₽</span>
       </div>
@@ -565,7 +694,7 @@
 
       <div class="guide-meta-bar">
         <div class="guide-meta-item">Доступ: <strong style="color:#dc2626;">🔒 Резидентам или&nbsp;490 ₽</strong></div>
-        <div class="guide-meta-item">Автор: <strong>Михаил Пузырёв</strong> (SAGE Digital)</div>
+        <div class="guide-meta-item">Автор: <strong>Михаил Пузырёв</strong> (AiSAGE)</div>
         <div class="guide-meta-item">Время чтения: <strong>14 мин</strong></div>
         <div class="guide-meta-item">Стек: <strong>Gemini, NotebookLM, CapCut, Mave, TG</strong></div>
         <div class="guide-meta-item">Канал: <a href="https://t.me/uncrn_sage" target="_blank" style="color:#10b981; font-weight:700; text-decoration:none;">@uncrn_sage ↗</a></div>
@@ -601,27 +730,18 @@
 
     <!-- PROTECTED CONTENT WRAPPER -->
     <div id="page-protected-content">
-    <!-- SECTION 1: PREFACE & PHILOSOPHY -->
-    <section id="intro" class="guide-page-frame guide-section-block" data-nav-title="01. Концепция">
-      <div class="guide-content-wrap">
-        <div class="section-tag">// РАЗДЕЛ 01 · ПРЕДИСЛОВИЕ И&nbsp;ФИЛОСОФИЯ</div>
-        <h2>Зачем эксперту и&nbsp;бизнесу собственный AI-подкаст</h2>
+      <div class="guide-page-frame guide-body-grid">
+        <div class="guide-main-column">
 
-        <div class="author-banner-box">
-          <img src="/img/podcast-guide/avatar_sticker.png" alt="Михаил Пузырёв стикер" class="author-sticker-img">
-          <div>
-            <div style="font-weight:700; font-size:1.02rem; color:#09090b; margin-bottom:4px;">
-              Идея формата ©&nbsp;«Глубокое погружение» принадлежит мне — Михаилу [SAGE] Пузырёву
-            </div>
-            <div style="font-size:0.9rem; color:#52525b; line-height:1.5;">
-              Мои мысли часто рождаются в&nbsp;неформальном потоке. Я&nbsp;просто наговариваю идеи, гипотезы и&nbsp;смыслы голосом, а&nbsp;современный <a href="/glossary#term-large-language-model" class="term-link" target="_blank" title="Открыть определение в Глоссарии">AI-стек</a> структурирует их&nbsp;в&nbsp;живой, плотный и&nbsp;кинематографичный контент. Следить за&nbsp;моими экспериментами можно в&nbsp;Telegram: <a href="https://t.me/uncrn_sage" target="_blank" style="color:#09090b; font-weight:700; text-decoration:underline;">@uncrn_sage</a>.
-            </div>
-          </div>
-        </div>
+        <!-- SECTION 1: PREFACE & PHILOSOPHY -->
+        <section id="intro" class="guide-section-block" data-nav-title="01. Концепция">
+          <div class="guide-content-wrap">
+            <div class="section-tag">// РАЗДЕЛ 01 · ПРЕДИСЛОВИЕ И&nbsp;ФИЛОСОФИЯ</div>
+            <h2>Зачем эксперту и&nbsp;бизнесу собственный AI-подкаст</h2>
 
-        <p>
-          Подкасты — один из&nbsp;самых глубоких и&nbsp;вовлекающих медиа-форматов. Слушатель проводит с&nbsp;вами от&nbsp;15 до&nbsp;40 минут в&nbsp;наушниках во&nbsp;время пробежки, в&nbsp;автомобиле или&nbsp;самолете. Это формирует предельный уровень доверия к&nbsp;личному бренду или&nbsp;компании.
-        </p>
+            <p>
+              Подкасты — один из&nbsp;самых глубоких и&nbsp;вовлекающих медиа-форматов. Слушатель проводит с&nbsp;вами от&nbsp;15 до&nbsp;40 минут в&nbsp;наушниках во&nbsp;время пробежки, в&nbsp;автомобиле или&nbsp;самолете. Это формирует предельный уровень доверия к&nbsp;личному бренду или&nbsp;компании.
+            </p>
 
         <p>
           Однако традиционный процесс производства подкастов чудовищно перегружен барьерами: недели на&nbsp;исследование источников, дорогие авторы сценариев, аренда звукоизолированной студии, найм звукорежиссёров и&nbsp;боязнь микрофона.
@@ -649,7 +769,7 @@
           <div class="feature-card">
             <div class="feature-card-num">03 // ЗВУК</div>
             <div class="feature-card-title">Студийный звук в&nbsp;CapCut</div>
-            <p class="feature-card-desc">Пошаговый алгоритм нормализации громкости (+5 дБ голос, -3 дБ джингл) дает дорогой звук без&nbsp;звукорежиссера.</p>
+            <p class="feature-card-desc">Пошаговый алгоритм нормализации громкости (+4 дБ голос, -2 дБ джингл) дает дорогой звук без&nbsp;звукорежиссера.</p>
           </div>
           <div class="feature-card">
             <div class="feature-card-num">04 // УПАКОВКА</div>
@@ -671,7 +791,7 @@
     </section>
 
     <!-- SECTION 2: STACK & TOOLS -->
-    <section id="stack" class="guide-page-frame guide-section-block" data-nav-title="02. Стек">
+    <section id="stack" class="guide-section-block" data-nav-title="02. Стек">
       <div class="guide-content-wrap">
         <div class="section-tag">// РАЗДЕЛ 02 · ЭТАП 0: ПОДГОТОВКА И&nbsp;ИНСТРУМЕНТЫ</div>
         <h2>Стек инструментов для&nbsp;производственного цикла</h2>
@@ -750,7 +870,7 @@
     </section>
 
     <!-- SECTION 3: STRATEGY & SEASON PLANNING -->
-    <section id="strategy" class="guide-page-frame guide-section-block" data-nav-title="03. Стратегия">
+    <section id="strategy" class="guide-section-block" data-nav-title="03. Стратегия">
       <div class="guide-content-wrap">
         <div class="section-tag">// РАЗДЕЛ 03 · ЭТАП 1: КОНЦЕПЦИЯ И&nbsp;СТРАТЕГИЯ</div>
         <h2>Фундамент подкаста: от&nbsp;голосовой идеи до&nbsp;25 эпизодов</h2>
@@ -865,7 +985,7 @@
     </section>
 
     <!-- SECTION 4: CONTENT PIPELINE & NOTEBOOKLM AUDIO -->
-    <section id="content" class="guide-page-frame guide-section-block" data-nav-title="04. Контент">
+    <section id="content" class="guide-section-block" data-nav-title="04. Контент">
       <div class="guide-content-wrap">
         <div class="section-tag">// РАЗДЕЛ 04 · ЭТАП 2: СОЗДАНИЕ КОНТЕНТА И&nbsp;ГЕНЕРАЦИЯ ЗВУКА</div>
         <h2>Генерация живого двухголосого аудио в&nbsp;NotebookLM</h2>
@@ -979,7 +1099,7 @@
     </section>
 
     <!-- SECTION 5: CAPCUT POST-PRODUCTION -->
-    <section id="capcut" class="guide-page-frame guide-section-block" data-nav-title="05. CapCut">
+    <section id="capcut" class="guide-section-block" data-nav-title="05. CapCut">
       <div class="guide-content-wrap">
         <div class="section-tag">// РАЗДЕЛ 05 · ЭТАП 3: СТУДИЙНЫЙ ПОСТПРОДАКШН В&nbsp;CAPCUT</div>
         <h2>Монтаж и&nbsp;сведение звука: параметры студийного звучания</h2>
@@ -1008,17 +1128,17 @@
         </p>
         <ul>
           <li>Активируйте чекбокс <strong>«Нормализация громкости» (Loudness Normalization)</strong>. Это выровняет перепады между спикерами.</li>
-          <li>Поднимите общую громкость голоса: <strong>Volume +5 дБ</strong>. Это придаст речи плотность и&nbsp;близость к&nbsp;слушателю.</li>
+          <li>Поднимите общую громкость голоса: <strong>Volume +4 дБ</strong>. Это придаст речи плотность и&nbsp;близость к&nbsp;слушателю.</li>
           <li>По&nbsp;желанию включите <em>«Улучшить голос» (Enhance voice)</em>, если хотите сделать тембр бархатистее.</li>
         </ul>
 
         <h4>8.3. Подбор и&nbsp;настройка музыки (Джинглов)</h4>
         <p>
-          Перейдите во&nbsp;вкладку <strong>«Аудио» $	o$ «Звуки»</strong> (или&nbsp;добавьте свой авторский трек). Перетащите музыку на&nbsp;нижнюю дорожку под&nbsp;голос:
+          Перейдите во&nbsp;вкладку <strong>«Аудио» → «Звуки»</strong> (или&nbsp;добавьте свой авторский трек). Перетащите музыку на&nbsp;нижнюю дорожку под&nbsp;голос:
         </p>
         <ul>
           <li>Включите <strong>«Нормализацию громкости»</strong> на&nbsp;музыкальном треке.</li>
-          <li>Уменьшите громкость музыки до&nbsp;<strong>-3 дБ</strong> (чтобы она не&nbsp;заглушала голос).</li>
+          <li>Уменьшите громкость музыки до&nbsp;<strong>-2 дБ</strong> (чтобы она не&nbsp;заглушала голос).</li>
         </ul>
 
         <h4>8.4. Сведение Intro и&nbsp;Outro (Затухания Fade)</h4>
@@ -1030,7 +1150,7 @@
         <!-- CAPCUT SETTINGS SUMMARY CARD -->
         <div class="capcut-settings-card">
           <div style="font-family:var(--mono); font-size:0.8rem; color:#10b981; font-weight:700; margin-bottom:8px;">
-            // ЗОЛОТОЙ СТАНДАРТ ЗВУКА SAGE DIGITAL
+            // ЗОЛОТОЙ СТАНДАРТ ЗВУКА AiSAGE
           </div>
           <div style="font-size:1.3rem; font-weight:800; margin-bottom:14px;">
             Сводная шпаргалка параметров сведения в&nbsp;CapCut
@@ -1038,12 +1158,12 @@
           <div class="capcut-grid">
             <div class="capcut-item">
               <div class="capcut-item-title">ГОЛОСОВАЯ ДОРОЖКА</div>
-              <div class="capcut-item-val">+5 дБ // Нормализация: ВКЛ</div>
+              <div class="capcut-item-val">+4 дБ // Нормализация: ВКЛ</div>
               <p class="capcut-item-desc">Гарантирует четкую слышимость в&nbsp;любых наушниках и&nbsp;автомобильных динамиках на&nbsp;трассе.</p>
             </div>
             <div class="capcut-item">
               <div class="capcut-item-title">МУЗЫКАЛЬНЫЙ ДЖИНГЛ</div>
-              <div class="capcut-item-val">-3 дБ // Нормализация: ВКЛ</div>
+              <div class="capcut-item-val">-2 дБ // Нормализация: ВКЛ</div>
               <p class="capcut-item-desc">Музыка создает киноатмосферу, но&nbsp;никогда не&nbsp;конфликтует с&nbsp;частотами человеческой речи.</p>
             </div>
             <div class="capcut-item">
@@ -1061,13 +1181,13 @@
 
         <h4>8.5. Экспорт мастер-файла</h4>
         <p>
-          Нажмите <strong>«Файл» $	o$ «Экспорт»</strong>, выберите формат аудио (MP3 или&nbsp;WAV, 320 kbps), назовите файл строго по&nbsp;номеру выпуска (например, <code>Ep01_Kak_Ustroen_Podkast.mp3</code>) и&nbsp;выгрузите в&nbsp;облако.
+          Нажмите <strong>«Файл» → «Экспорт»</strong>, выберите формат аудио (MP3 или&nbsp;WAV, 320 kbps), назовите файл строго по&nbsp;номеру выпуска (например, <code>Ep01_Kak_Ustroen_Podkast.mp3</code>) и&nbsp;выгрузите в&nbsp;облако.
         </p>
       </div>
     </section>
 
     <!-- SECTION 6: PACKAGING & TELEGRAM COMMUNITY -->
-    <section id="telegram" class="guide-page-frame guide-section-block" data-nav-title="06. Telegram">
+    <section id="telegram" class="guide-section-block" data-nav-title="06. Telegram">
       <div class="guide-content-wrap">
         <div class="section-tag">// РАЗДЕЛ 06 · ЭТАП 4: УПАКОВКА И&nbsp;ЗАПУСК TELEGRAM-КОМЬЮНИТИ</div>
         <h2>Визуальная упаковка и&nbsp;построение ядра сообщества в&nbsp;Telegram</h2>
@@ -1192,7 +1312,7 @@ https://t.me/[ВашКанал]</pre>
     </section>
 
     <!-- SECTION 7: DISTRIBUTION & SCALING -->
-    <section id="distribution" class="guide-page-frame guide-section-block" data-nav-title="07. Дистрибуция">
+    <section id="distribution" class="guide-section-block" data-nav-title="07. Дистрибуция">
       <div class="guide-content-wrap">
         <div class="section-tag">// РАЗДЕЛ 07 · ЭТАПЫ 5 И&nbsp;6: ДИСТРИБУЦИЯ И&nbsp;РАЗВИТИЕ</div>
         <h2>Выход на&nbsp;все стриминги, монетизация и&nbsp;издание книги</h2>
@@ -1238,7 +1358,7 @@ https://t.me/[ВашКанал]</pre>
     </section>
 
     <!-- SECTION 8: AUTHOR CASES & DELEGATION -->
-    <section id="cases" class="guide-page-frame guide-section-block" data-nav-title="08. Кейсы & Контакты">
+    <section id="cases" class="guide-section-block" data-nav-title="08. Кейсы">
       <div class="guide-content-wrap">
         <div class="section-tag">// РАЗДЕЛ 08 · ЖИВЫЕ КЕЙСЫ И&nbsp;ДЕЛЕГИРОВАНИЕ</div>
         <h2>Примеры работающих AI-подкастов Михаила Пузырёва</h2>
@@ -1270,17 +1390,27 @@ https://t.me/[ВашКанал]</pre>
             </div>
           </div>
         </div>
-
-        <div class="callout-box" style="background:#09090b; color:#fff; border-left-color:#10b981; margin-top:36px;">
-          <div class="callout-title" style="color:#fff; font-size:1.15rem;">Хотите запустить такой подкаст, но&nbsp;нет времени разбираться?</div>
-          <p style="color:#a1a1aa; font-size:0.95rem; margin-bottom:18px;">
-            Команда <strong>SAGE Digital</strong> под&nbsp;руководством Михаила Пузырёва возьмет на&nbsp;себя весь цикл под&nbsp;ключ: проведем интервью, упакуем ваши смыслы в&nbsp;исследования, сгенерируем сезон из&nbsp;25 выпусков в&nbsp;NotebookLM, сведем звук в&nbsp;CapCut и&nbsp;настроим Telegram-канал с&nbsp;ботом.
-          </p>
-          <a href="/booking" class="btn-primary" style="display:inline-block; text-decoration:none;">Забронировать встречу по&nbsp;подкасту ↗</a>
-        </div>
       </div>
     </section>
 
+        </div>
+        <!-- END GUIDE MAIN COLUMN -->
+
+        <!-- GUIDE STICKY SIDEBAR -->
+        <aside class="guide-sidebar-column">
+          <div class="guide-sticky-cta-card">
+            <div class="guide-sticky-badge">// ПОДКАСТ ПОД&nbsp;КЛЮЧ</div>
+            <div class="guide-sticky-title">Хотите такой подкаст,<br>но&nbsp;нет времени?</div>
+            <p class="guide-sticky-desc">
+              Команда <strong>AiSAGE</strong> под&nbsp;руководством Михаила Пузырёва возьмет на&nbsp;себя весь цикл: от&nbsp;смыслов и&nbsp;генерации в&nbsp;NotebookLM до&nbsp;монтажа в&nbsp;CapCut и&nbsp;запуска Telegram-канала.
+            </p>
+            <a href="/booking" class="guide-sticky-btn">Забронировать слот ↗</a>
+            <div class="guide-sticky-subtext">Обсудим концепцию вашего сезона</div>
+          </div>
+        </aside>
+
+      </div>
+      <!-- END GUIDE BODY GRID -->
     </div>
     <!-- END PROTECTED CONTENT WRAPPER -->
 
