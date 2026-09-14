@@ -19,6 +19,20 @@ function safeJsonParse(val, fallback = null) {
 // ── 2. REAL CLUB MASTER-CLASSES DATA ─────────────────────────────────────────
 const CLUB_LESSONS_DATA = [
   {
+    id: 'lesson-codex-deepseek',
+    title: 'DeepSeek + Codex OpenAI: Связка века для вайбкодинга. Разбор и практика',
+    badge: 'МАСТЕР-КЛАСС // CODEX + DEEPSEEK',
+    type: 'video',
+    platform: 'Kinescope',
+    videoUrl: 'https://kinescope.io/egi47oLSuVjrzjZAxZ1hAb/plFB4qSL',
+    embedUrl: 'https://kinescope.io/embed/egi47oLSuVjrzjZAxZ1hAb',
+    cover: '/assets/club-lessons/lesson_media_codex_deepseek.jpg',
+    date: '14 сентября 2026',
+    duration: '14 мин',
+    description: 'Пошаговый разбор и живая практика: как подключить китайский мотор DeepSeek с окном 1M токенов к OpenAI Codex (CLI, Desktop, VS Code), настроить нативный Responses API, разделить сессии и кодить в 50 раз дешевле.',
+    topics: ['DeepSeek', 'OpenAI Codex', 'Вайбкодинг', 'API-интеграция', 'CLI']
+  },
+  {
     id: 'lesson-969',
     title: 'SKILLS: Навыки в нейронных сетях. Настраиваем агентов',
     badge: 'МАСТЕР-КЛАСС // КЛУБ',

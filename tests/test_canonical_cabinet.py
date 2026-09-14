@@ -122,15 +122,16 @@ class TestCanonicalCabinet(unittest.TestCase):
         self.assertFalse(modal.is_visible())
 
     def test_04_education_section_six_real_lessons(self):
-        """Education section must contain 6 real master-classes and video player modal."""
+        """Education section must contain 7 real master-classes and video player modal."""
         self.page.click(".cabinet-tab-btn[data-tab='education']")
         pane = self.page.locator("#tab-education")
         self.assertTrue(pane.is_visible())
 
         cards = self.page.locator("#club-lessons-grid .club-lesson-card")
-        self.assertEqual(cards.count(), 6)
+        self.assertEqual(cards.count(), 7)
 
         text = pane.inner_text().replace('\xa0', ' ')
+        self.assertIn("DeepSeek + Codex OpenAI", text)
         self.assertIn("SKILLS: Навыки в нейронных сетях", text)
         self.assertIn("Как создавать сайты с помощью нейросетей. Обзор Stitch", text)
         self.assertIn("Как создавать нейро-фотосессии: FLOW", text)
