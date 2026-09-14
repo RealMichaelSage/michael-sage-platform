@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepSeek + OpenAI Codex — Михаил Пузырёв</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        :root {
+            --bg-dark: #07080b;
+            --pop-yellow: #FFDF00;
+            --pop-pink: #FF007F;
+            --pop-cyan: #00F0FF;
+            --pop-green: #39FF14;
+            --pop-purple: #B026FF;
+            --pop-white: #FFFFFF;
+            --thick-border: 4px solid #000000;
+            --thin-border: 2px solid #000000;
+            --hard-shadow: 8px 8px 0px #000000;
+            --hard-shadow-lg: 12px 12px 0px #000000;
+            --hard-shadow-sm: 4px 4px 0px #000000;
+            --card-opaque-dark: #15161E;
+            --card-opaque-light: #1E1F29;
+            --mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        @media (min-width: 1025px) {
+            *, *::before, *::after, html, body, a, button, input, select, textarea, [data-tip] {
+                cursor: none !important;
+            }
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: #FFFFFF;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Comic Pop-Art Custom Cursor */
+        .custom-cursor-dot {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 24px;
+            height: 24px;
+            background: var(--pop-yellow);
+            border: 3px solid #000000;
+            border-radius: 0;
+            pointer-events: none;
+            z-index: 2147483647 !important;
+            transform: translate(-50%, -50%);
+            box-shadow: 3px 3px 0px #000000;
+            transition: width 0.15s ease, height 0.15s ease, background-color 0.15s ease, opacity 0.15s ease, transform 0.1s ease;
+        }
+
+        .custom-cursor-dot::after {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: 6px;
+            height: 6px;
+            background: #FFFFFF;
+            border-radius: 0;
+        }
+
+        .custom-cursor-dot.hovered {
+            width: 34px;
+            height: 34px;
+            background: var(--pop-pink);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        /* Comic Speech Bubble Tooltip */
+        .comic-speech-bubble {
+            position: fixed;
+            z-index: 2147483646 !important;
+            pointer-events: none;
+            background: #FFFFFF;
+            color: #000000;
+            border: 3.5px solid #000000;
+            border-radius: 0;
+            padding: 10px 18px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 1.05rem;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            box-shadow: 6px 6px 0px #000000;
+            opacity: 0;
+            transform: scale(0.7) rotate(-3deg);
+            transition: opacity 0.18s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.18s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-width: 280px;
+            text-align: center;
+            line-height: 1.25;
+            white-space: normal;
+        }
+
+        .comic-speech-bubble::before {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 22px;
+            border-width: 15px 15px 0 0;
+            border-style: solid;
+            border-color: #000000 transparent transparent transparent;
+            display: block;
+            width: 0;
+        }
+
+        .comic-speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 25px;
+            border-width: 11px 11px 0 0;
+            border-style: solid;
+            border-color: #FFFFFF transparent transparent transparent;
+            display: block;
+            width: 0;
+        }
+
+        .comic-speech-bubble.flip-x::before {
+            left: auto;
+            right: 22px;
+            border-width: 15px 0 0 15px;
+            border-color: #000000 transparent transparent transparent;
+        }
+
+        .comic-speech-bubble.flip-x::after {
+            left: auto;
+            right: 25px;
+            border-width: 11px 0 0 11px;
+            border-color: #FFFFFF transparent transparent transparent;
+        }
+
+        .comic-speech-bubble.flip-y::before {
+            bottom: auto;
+            top: -15px;
+            border-width: 0 15px 15px 0;
+            border-color: transparent transparent #000000 transparent;
+        }
+
+        .comic-speech-bubble.flip-y::after {
+            bottom: auto;
+            top: -10px;
+            border-width: 0 11px 11px 0;
+            border-color: transparent transparent #FFFFFF transparent;
+        }
+
+        .comic-speech-bubble.visible {
+            opacity: 1;
+            transform: scale(1) rotate(-1.5deg);
+        }
+
+        /* Pop-Art Modal Popup System */
+        .pop-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(7, 8, 11, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 100000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 20px;
+        }
+
+        .pop-modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .pop-modal-card {
+            background: #181924;
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow-lg);
+            border-radius: 0;
+            width: 100%;
+            max-width: 680px;
+            padding: 32px 36px;
+            position: relative;
+            transform: scale(0.9) rotate(-1deg);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            color: #FFFFFF;
+        }
+
+        .pop-modal-overlay.active .pop-modal-card {
+            transform: scale(1) rotate(0deg);
+        }
+
+        .pop-modal-close-btn {
+            position: absolute;
+            top: 18px;
+            right: 20px;
+            background: var(--pop-pink);
+            color: #FFFFFF;
+            border: 3px solid #000000;
+            border-radius: 0;
+            box-shadow: 3px 3px 0px #000000;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: transform 0.15s ease, background-color 0.15s ease;
+        }
+
+        .pop-modal-close-btn:hover {
+            transform: scale(1.1);
+            background: var(--pop-yellow);
+            color: #000;
+        }
+
+        .pop-modal-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+            padding-right: 40px;
+        }
+
+        .pop-modal-icon {
+            font-size: 2.2rem;
+            background: var(--pop-cyan);
+            border: var(--thin-border);
+            width: 54px;
+            height: 54px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 3px 3px 0px #000000;
+            flex-shrink: 0;
+        }
+
+        .pop-modal-title-wrap h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            color: var(--pop-yellow);
+            text-transform: uppercase;
+            letter-spacing: -0.01em;
+            line-height: 1.1;
+        }
+
+        .pop-modal-badge {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 900;
+            background: var(--pop-pink);
+            color: #FFF;
+            padding: 3px 8px;
+            border: 2px solid #000;
+            display: inline-block;
+            margin-top: 4px;
+            text-transform: uppercase;
+        }
+
+        .pop-modal-body {
+            font-size: 1.15rem;
+            line-height: 1.65;
+            color: #E2E8F0;
+            border-top: var(--thin-border);
+            padding-top: 18px;
+        }
+
+        /* Animated Background */
+        .bg-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .neural-base {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('neural_bg.webp');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+            z-index: 1;
+            mix-blend-mode: screen;
+        }
+
+        .pop-sunburst {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-conic-gradient(
+                from 0deg,
+                rgba(255, 0, 127, 0.03) 0deg 8deg,
+                rgba(0, 240, 255, 0.03) 8deg 16deg,
+                transparent 16deg 24deg
+            );
+            z-index: 2;
+            animation: rotate-sunburst 90s linear infinite;
+            transform-origin: center center;
+        }
+
+        @keyframes rotate-sunburst {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .pop-halftone {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(rgba(255, 0, 127, 0.08) 14%, transparent 15%),
+                              radial-gradient(rgba(0, 240, 255, 0.08) 14%, transparent 15%);
+            background-size: 28px 28px;
+            background-position: 0 0, 14px 14px;
+            z-index: 3;
+            animation: drift-halftone 20s linear infinite;
+        }
+
+        @keyframes drift-halftone {
+            0% { background-position: 0 0, 14px 14px; }
+            100% { background-position: 56px 56px, 70px 70px; }
+        }
+
+        /* Slide Layout */
+        .presentation-container {
+            position: relative;
+            z-index: 10;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2vh 3vw;
+            max-width: 1620px;
+            width: 95vw;
+            margin: 0 auto;
+            height: calc(100vh - 72px);
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: 1.35fr 1fr;
+            gap: 3.5rem;
+            align-items: center;
+            opacity: 0;
+            transform: scale(0.97) rotate(-0.5deg);
+            pointer-events: none;
+            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+            pointer-events: auto;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Outfit', sans-serif;
+            text-transform: uppercase;
+            font-weight: 900;
+            letter-spacing: -0.01em;
+            text-wrap: balance;
+        }
+
+        p, li {
+            text-wrap: pretty;
+        }
+
+        /* Spacious Titles */
+        .pop-title-main {
+            font-size: clamp(3rem, 4.8vw, 4.8rem);
+            line-height: 1.15;
+            -webkit-text-stroke: 2.5px #000000;
+            text-shadow: 7px 7px 0px var(--pop-pink);
+            margin-top: 0.4rem;
+            margin-bottom: 1.6rem;
+            transform: rotate(-1.5deg);
+        }
+
+        .pop-title-section {
+            font-size: clamp(2.4rem, 3.8vw, 3.8rem);
+            line-height: 1.2;
+            -webkit-text-stroke: 2px #000000;
+            text-shadow: 6px 6px 0px var(--pop-cyan);
+            margin-top: 0.3rem;
+            margin-bottom: 1.4rem;
+        }
+
+        .pop-subtitle {
+            font-size: clamp(1.05rem, 1.4vw, 1.35rem);
+            font-weight: 900;
+            background: var(--pop-yellow);
+            color: #000000;
+            padding: 8px 18px;
+            display: inline-block;
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow-sm);
+            transform: rotate(1deg);
+            margin-bottom: 1.2rem;
+            letter-spacing: 0.03em;
+        }
+
+        .pop-badge {
+            background: var(--pop-pink);
+            color: #FFFFFF;
+            font-weight: 900;
+            font-size: 0.95rem;
+            padding: 6px 14px;
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow-sm);
+            display: inline-block;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .pop-card {
+            background: var(--card-opaque-dark);
+            border: var(--thick-border);
+            border-radius: 0;
+            padding: 24px 28px;
+            color: #FFFFFF;
+            font-size: clamp(1.15rem, 1.45vw, 1.45rem);
+            line-height: 1.65;
+            box-shadow: var(--hard-shadow);
+            margin-bottom: 1.2rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .pop-card:hover {
+            transform: scale(1.01);
+            box-shadow: 10px 10px 0px #000000;
+        }
+
+        .pop-card strong {
+            color: var(--pop-yellow);
+            font-weight: 900;
+        }
+
+        .card-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        /* Slide 2: About Me list & stickers */
+        .about-cards-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.1rem;
+            margin-top: 0.6rem;
+        }
+
+        .about-sticker {
+            background: var(--card-opaque-dark);
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow-sm);
+            padding: 16px 22px;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            font-size: clamp(1.15rem, 1.45vw, 1.45rem);
+            line-height: 1.6;
+            color: #FFFFFF;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+        }
+
+        .about-sticker:hover {
+            transform: translateX(6px);
+            border-color: var(--pop-cyan);
+            box-shadow: 8px 8px 0px #000000;
+        }
+
+        .about-sticker strong {
+            color: var(--pop-yellow);
+            font-weight: 900;
+        }
+
+        .sticker-icon {
+            background: var(--pop-yellow);
+            color: #000000;
+            min-width: 52px;
+            width: 52px;
+            height: 52px;
+            border-radius: 0;
+            border: 2.5px solid #000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.45rem;
+            font-weight: 900;
+            flex-shrink: 0;
+            box-shadow: 2px 2px 0px #000000;
+        }
+
+        .about-sticker span {
+            font-size: clamp(1.12rem, 1.38vw, 1.4rem);
+            line-height: 1.5;
+        }
+
+        .qrs-block {
+            display: flex;
+            gap: 1.4rem;
+            margin-top: 1.2rem;
+        }
+
+        .qr-card-pop {
+            background: var(--pop-yellow);
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow);
+            padding: 10px 14px;
+            border-radius: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            transform: rotate(-1.5deg);
+            transition: all 0.2s;
+        }
+
+        .qr-card-pop:hover {
+            transform: scale(1.05) rotate(0deg);
+            box-shadow: 10px 10px 0px #000000;
+        }
+
+        .qr-card-pop:nth-child(2) {
+            background: var(--pop-pink);
+            transform: rotate(1.5deg);
+        }
+
+        .qr-card-pop:nth-child(3) {
+            background: var(--pop-cyan);
+            transform: rotate(-1deg);
+        }
+
+        .qr-container-pop {
+            background: white;
+            padding: 6px;
+            border: var(--thin-border);
+            border-radius: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .qr-card-pop span {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            color: #000000;
+            font-size: 0.85rem;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .pop-qr-btn {
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            background: #000000;
+            color: #FFFFFF;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 0.82rem;
+            padding: 6px 8px;
+            border: 2px solid #000000;
+            border-radius: 0;
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.3);
+            text-decoration: none;
+            text-transform: uppercase;
+            margin-top: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .pop-qr-btn:hover {
+            background: #FFFFFF;
+            color: #000000;
+        }
+
+        /* Large 9:16 Vertical Poster Frame */
+        .pop-art-frame {
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow-lg);
+            border-radius: 0;
+            overflow: hidden;
+            aspect-ratio: 9 / 16;
+            height: calc(100vh - 130px);
+            max-height: 760px;
+            width: auto;
+            max-width: 440px;
+            margin: auto;
+            position: relative;
+            transform: rotate(1.2deg);
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: #000;
+        }
+
+        .slide.active .pop-art-frame {
+            transform: rotate(-0.8deg) scale(1.02);
+        }
+
+        .pop-art-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .corner-tag {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: var(--pop-yellow);
+            color: #000;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 0.85rem;
+            padding: 4px 10px;
+            border: var(--thin-border);
+            box-shadow: 3px 3px 0px #000;
+            z-index: 5;
+            text-transform: uppercase;
+        }
+
+        .stat-banner {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-top: 1.2rem;
+        }
+
+        .stat-box {
+            background: var(--card-opaque-light);
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow-sm);
+            padding: 14px;
+            text-align: center;
+        }
+
+        .stat-box .num {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(1.8rem, 2.2vw, 2.4rem);
+            font-weight: 900;
+            color: var(--col, var(--pop-cyan));
+            line-height: 1.1;
+            margin-bottom: 6px;
+        }
+
+        .stat-box .lbl {
+            font-size: 0.92rem;
+            color: #CBD5E1;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .code-box {
+            background: #000000;
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow);
+            padding: 16px;
+            font-family: var(--mono);
+            font-size: 0.95rem;
+            color: var(--pop-green);
+            line-height: 1.6;
+            margin-top: 1rem;
+        }
+
+        .code-box .comment {
+            color: #64748B;
+        }
+
+        .code-box .cmd {
+            color: var(--pop-yellow);
+        }
+
+        /* Footer Slide Buttons Panel */
+        .footer-controls-names {
+            position: relative;
+            z-index: 100;
+            width: 100%;
+            padding: 1vw 3vw 1.5vw 3vw;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            background: #0D0E15;
+            border-top: var(--thick-border);
+        }
+
+        .btn-slide-name {
+            background: var(--card-opaque-dark);
+            color: #FFFFFF;
+            border: var(--thin-border);
+            padding: 8px 14px;
+            border-radius: 0;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+            box-shadow: var(--hard-shadow-sm);
+        }
+
+        .btn-slide-name:hover {
+            background: var(--card-opaque-light);
+            transform: translateY(-2px);
+        }
+
+        .btn-slide-name.active {
+            background: var(--pop-yellow);
+            color: #000000;
+            border: var(--thick-border);
+            box-shadow: var(--hard-shadow-sm);
+            transform: scale(1.04) translateY(-2px);
+        }
+
+        /* Floating Nav Arrows */
+        .pop-nav-arrow {
+            position: fixed;
+            z-index: 9998;
+            background: var(--pop-yellow);
+            color: #000000;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 1.5rem;
+            width: 50px;
+            height: 60px;
+            border: 3.5px solid #000000;
+            border-radius: 0;
+            box-shadow: 4px 4px 0px #000000;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            user-select: none;
+        }
+
+        .pop-nav-arrow.arrow-prev {
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .pop-nav-arrow.arrow-next {
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .pop-nav-arrow:hover {
+            background: var(--pop-pink);
+            color: #ffffff;
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 6px 6px 0px #000000;
+        }
+
+        @media (max-width: 900px) {
+            .pop-nav-arrow { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Custom Cursor & Speech Bubble Tooltip -->
+    <div class="custom-cursor-dot" id="cursor-dot"></div>
+    <div class="comic-speech-bubble" id="speech-bubble">ИНФО</div>
+
+    <!-- Pop-up Modal Window -->
+    <div class="pop-modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+        <div class="pop-modal-card">
+            <button class="pop-modal-close-btn" onclick="closeModalDirect()">✕</button>
+            <div class="pop-modal-header">
+                <div class="pop-modal-icon" id="modal-icon">🚀</div>
+                <div class="pop-modal-title-wrap">
+                    <h3 id="modal-title">Заголовок</h3>
+                    <div class="pop-modal-badge" id="modal-badge">ИНФОРМАЦИЯ</div>
+                </div>
+            </div>
+            <div class="pop-modal-body" id="modal-body">
+                Текст модального окна...
+            </div>
+        </div>
+    </div>
+
+    <!-- Background Elements -->
+    <div class="bg-container">
+        <div class="neural-base"></div>
+        <div class="pop-sunburst"></div>
+        <div class="pop-halftone"></div>
+    </div>
+
+    <!-- Left & Right Floating Arrows (NO tooltip) -->
+    <div class="pop-nav-arrow arrow-prev" onclick="prevSlide()">❮</div>
+    <div class="pop-nav-arrow arrow-next" onclick="nextSlide()">❯</div>
+
+    <div class="presentation-container">
+
+        <!-- СЛАЙД 0: ТЕМА И ОБЛОЖКА (БЕЗ ВСЯКИХ ПОДСКАЗОК) -->
+        <div class="slide active" id="slide-0">
+            <div>
+                <div class="pop-badge">ОНЛАЙН-ПРАКТИКУМ &bull; LIVE</div>
+                <h1 class="pop-title-main">DEEPSEEK<br>+ CODEX</h1>
+                <div class="pop-subtitle">СВЯЗКА ВЕКА ДЛЯ&nbsp;ВАЙБКОДИНГА</div>
+                <div class="pop-card">
+                    Берём идеальный агентский интерфейс <strong>OpenAI Codex CLI</strong> и&nbsp;ставим внутрь реактивный, дешёвый и&nbsp;бесконечный мотор <strong>DeepSeek V4.1</strong>.
+                </div>
+                <div class="stat-banner">
+                    <div class="stat-box" style="--col: var(--pop-green);">
+                        <div class="num">1M</div>
+                        <div class="lbl">Контекст (токены)</div>
+                    </div>
+                    <div class="stat-box" style="--col: var(--pop-yellow);">
+                        <div class="num">&times;50</div>
+                        <div class="lbl">Дешевле OpenAI</div>
+                    </div>
+                    <div class="stat-box" style="--col: var(--pop-cyan);">
+                        <div class="num">Без&nbsp;VPN</div>
+                        <div class="lbl">Прямой доступ из&nbsp;РФ</div>
+                    </div>
+                </div>
+            </div>
+            <div class="pop-art-frame">
+                <img src="cover_vertical.jpg" alt="DeepSeek + Codex Обложка">
+                <div class="corner-tag">СКРИНКАСТ И&nbsp;ЭФИР</div>
+            </div>
+        </div>
+
+        <!-- СЛАЙД 1: СПИКЕР -->
+        <div class="slide" id="slide-1">
+            <div>
+                <h2 class="pop-title-section" style="text-shadow: 6px 6px 0px var(--pop-yellow); margin-bottom: 0.6rem;">Михаил Пузырёв</h2>
+                <div class="pop-subtitle" style="margin-bottom: 1rem; background: var(--pop-cyan);">ГЛАВНЫЙ ПО&nbsp;НЕЙРОСЕТЯМ</div>
+                
+                <div class="about-cards-list">
+                    <div class="about-sticker" data-tip="38+ сервисов за 2 месяца" onclick="openPopup('speaker_1', '38+ СЕРВИСОВ ЗА 2 МЕСЯЦА', 'РЕЗУЛЬТАТЫ', '🚀', '• Запустил десятки работающих систем: Telegram-боты, интерактивные калькуляторы, корпоративные базы знаний и медиа-ресурсы.<br><br>• Полный цикл: от&nbsp;формулировки гипотезы до&nbsp;боевого деплоя и&nbsp;первых платежей клиентов без&nbsp;привлечения сторонних разработчиков.')">
+                        <div class="sticker-icon">🚀</div>
+                        <span>Запустил за&nbsp;2 месяца <strong>более 38 работающих сервисов</strong> и&nbsp;систем для&nbsp;бизнеса.</span>
+                    </div>
+                    <div class="about-sticker" data-tip="Венчурные инвестиции" onclick="openPopup('speaker_2', 'БОЛЬШАЯ МЕДВЕДИЦА', 'ВЕНЧУР', '🐻', '• Член правления Ассоциации венчурных инвесторов «Большая медведица».<br><br>• Экспертиза в&nbsp;оценке технологических и&nbsp;бизнес-моделей, отборе масштабируемых проектов и&nbsp;структурировании сделок.')">
+                        <div class="sticker-icon" style="background: var(--pop-pink);">🐻</div>
+                        <span>Член правления Ассоциации венчурных инвесторов <strong>«Большая медведица»</strong>.</span>
+                    </div>
+                    <div class="about-sticker" data-tip="Оцифровка бизнес-процессов" onclick="openPopup('speaker_3', 'ОЦИФРОВКА БИЗНЕС-ПРОЦЕССОВ', 'ПРАКТИКА', '🛠️', '• Внедрение практического ИИ: от обработки лидов в CRM до автоматического разбора актов и выписок.<br><br>• Фокус на&nbsp;измеримом результате: сокращение фонда оплаты труда, устранение ошибок человеческого фактора и&nbsp;рост выручки.')">
+                        <div class="sticker-icon" style="background: var(--pop-green);">🛠️</div>
+                        <span>Автоматизирую рутину в&nbsp;реальном бизнесе: от&nbsp;отделов продаж до&nbsp;документооборота.</span>
+                    </div>
+                    <div class="about-sticker" data-tip="Аудит 3000+ компаний" onclick="openPopup('speaker_4', 'АУДИТ 3000+ КОМПАНИЙ', 'ОПЫТ', '💡', '• За годы трекинга и инвестиционного анализа разобрал более 3000 бизнесов и стартапов.<br><br>• Точно знаю ключевые узкие горлышки компаний: где&nbsp;утекают лиды, где&nbsp;сотрудники перегружены механической работой и&nbsp;как это устранить за&nbsp;дни.')">
+                        <div class="sticker-icon" style="background: var(--pop-yellow);">💡</div>
+                        <span><strong>Разобрал 3000+ стартапов и&nbsp;компаний:</strong> знаю, где&nbsp;теряются деньги и&nbsp;время.</span>
+                    </div>
+                </div>
+                <div class="qrs-block">
+                    <div class="qr-card-pop">
+                        <div class="qr-container-pop" id="qr-personal"></div>
+                        <span>Telegram<br>(@michael_sage)</span>
+                        <a href="https://t.me/michael_sage" target="_blank" class="pop-qr-btn">Написать 💬</a>
+                    </div>
+                    <div class="qr-card-pop">
+                        <div class="qr-container-pop" id="qr-channel"></div>
+                        <span>Канал<br>(@uncrn_sage)</span>
+                        <a href="https://t.me/uncrn_sage" target="_blank" class="pop-qr-btn">Читать 📢</a>
+                    </div>
+                    <div class="qr-card-pop">
+                        <div class="qr-container-pop" id="qr-site"></div>
+                        <span>Сайт<br>(a-sage.ru)</span>
+                        <a href="https://a-sage.ru" target="_blank" class="pop-qr-btn">Перейти 🌐</a>
+                    </div>
+                </div>
+            </div>
+            <div class="pop-art-frame">
+                <img src="mikhail_pop_art.webp" alt="Михаил Пузырёв">
+                <div class="corner-tag">A-SAGE.RU &bull; СТАЖ 10+ ЛЕТ</div>
+            </div>
+        </div>
+
+        <!-- СЛАЙД 2: ЧТО ТАКОЕ DEEPSEEK И OPENAI CODEX -->
+        <div class="slide" id="slide-2">
+            <div>
+                <div class="pop-badge" style="background: var(--pop-cyan); color:#000;">ДВА ГИГАНТА ИИ</div>
+                <h2 class="pop-title-section">КУЗОВ И&nbsp;МОТОР</h2>
+                <div class="pop-subtitle">ИДЕАЛЬНЫЙ СИМБИОЗ ДВУХ ЭКОСИСТЕМ</div>
+                
+                <div class="about-cards-list">
+                    <div class="about-sticker" data-tip="Развернуть разбор Codex CLI" onclick="openPopup('codex_info', 'OPENAI CODEX CLI', 'КУЗОВ И РУКИ АГЕНТА', '🤖', '• <strong>В&nbsp;чём главная ценность:</strong> OpenAI разработала один из&nbsp;лучших в&nbsp;мире агентских движков взаимодействия с&nbsp;кодом. Он живёт прямо в&nbsp;терминале и&nbsp;VS Code.<br><br>• <strong>Инструменты:</strong> умеет самостоятельно ориентироваться в&nbsp;файловой структуре, применять diff-патчи, создавать git-ветки, запускать bash-команды сборки и&nbsp;тестов.<br><br>• <strong>Главная проблема:</strong> модели OpenAI (gpt-5/o3) при&nbsp;таких объемах контекста быстро сжигают баланс API ($2-5 за&nbsp;пару часов) или&nbsp;упираются в&nbsp;жесткие лимиты сообщений.<br><br>• <strong>Решение:</strong> мы сохраняем идеальный кузов Codex, но&nbsp;меняем дорогой мотор!')">
+                        <div class="sticker-icon" style="background: var(--pop-pink); color: #fff;">🤖</div>
+                        <span><strong>OpenAI Codex:</strong> идеальный кузов, агентский CLI и&nbsp;руки в&nbsp;терминале.</span>
+                    </div>
+                    <div class="about-sticker" data-tip="Развернуть характеристики DeepSeek" onclick="openPopup('deepseek_info', 'DEEPSEEK V4.1 FLASH', 'МОТОР И БЕСКОНЕЧНОЕ ТОПЛИВО', '⚡', '• <strong>Гигантское окно:</strong> честные 1 048 576 токенов контекста — можно загрузить проект целиком без&nbsp;нарезки.<br><br>• <strong>Thinking Mode по&nbsp;умолчанию:</strong> перед генерацией патча модель строит детальную цепочку рассуждений, выявляя скрытые сайд-эффекты.<br><br>• <strong>Нативный Vision:</strong> модель умеет читать скриншоты UI и&nbsp;сразу писать верстку прямо в&nbsp;терминале.<br><br>• <strong>Копеечный кэш:</strong> Cache Hit стоит $0.003 за&nbsp;1M токенов (в&nbsp;50-100 раз дешевле аналогов!).<br><br>• <strong>Пропускная способность:</strong> лимит 2500 параллельных запросов без&nbsp;429 ошибок.')">
+                        <div class="sticker-icon" style="background: var(--pop-cyan); color: #000;">⚡</div>
+                        <span><strong>DeepSeek V4.1:</strong> реактивный мотор, 1M контекста и&nbsp;копеечный кэш.</span>
+                    </div>
+                    <div class="about-sticker" data-tip="Развернуть философию вайбкодинга" onclick="openPopup('vibe_info', 'ФИЛОСОФИЯ ВАЙБКОДИНГА', 'МЕТОДОЛОГИЯ 2026', '💡', '• <strong>Сдвиг парадигмы:</strong> мы больше не&nbsp;пишем код посимвольно вручную. Наша роль — архитекторы и&nbsp;дирижеры агентов.<br><br>• <strong>Почему важна дешевизна токенов:</strong> в&nbsp;процессе вайбкодинга мы запускаем агента десятками циклов подряд. Если каждый шаг стоит денег, разработчик начинает экономить и&nbsp;бояться экспериментировать.<br><br>• <strong>Свобода творчества:</strong> на&nbsp;связке Codex + DeepSeek стоимость часа непрерывного кодинга составляет 1-2 рубля. Вы получаете полную свободу сборки любых гипотез!')">
+                        <div class="sticker-icon" style="background: var(--pop-yellow); color: #000;">💡</div>
+                        <span><strong>Вайбкодинг:</strong> мы дирижируем агентом, а&nbsp;дешёвое топливо снимает страх ошибок.</span>
+                    </div>
+                </div>
+
+                <div class="stat-banner">
+                    <div class="stat-box" style="--col: var(--pop-pink);">
+                        <div class="num">Responses API</div>
+                        <div class="lbl">Нативная совместимость</div>
+                    </div>
+                    <div class="stat-box" style="--col: var(--pop-green);">
+                        <div class="num">1 048 576</div>
+                        <div class="lbl">Окно контекста</div>
+                    </div>
+                    <div class="stat-box" style="--col: var(--pop-yellow);">
+                        <div class="num">384K</div>
+                        <div class="lbl">Максимальный Output</div>
+                    </div>
+                </div>
+            </div>
+            <div class="pop-art-frame">
+                <img src="car_engine_vert.jpg" alt="Кузов и Мотор — DeepSeek + OpenAI Codex">
+                <div class="corner-tag">КУЗОВ И&nbsp;МОТОР</div>
+            </div>
+        </div>
+
+        <!-- СЛАЙД 3: ЗАЧЕМ СКРЕЩИВАТЬ -->
+        <div class="slide" id="slide-3">
+            <div>
+                <div class="pop-badge" style="background: var(--pop-green); color:#000;">ЖЕЛЕЗНАЯ ВЫГОДА</div>
+                <h2 class="pop-title-section">ЗАЧЕМ ИХ СКРЕЩИВАТЬ?</h2>
+                <div class="pop-subtitle">РЕАЛЬНЫЙ БОЕВОЙ ОПЫТ РАЗРАБОТКИ</div>
+                
+                <div class="about-cards-list">
+                    <div class="about-sticker" data-tip="Развернуть экономику Cache Hit" onclick="openPopup('cash_info', 'КЭШИРОВАНИЕ КОНТЕКСТА', 'ЭКОНОМИЯ x50', '💰', '• <strong>В&nbsp;чём магия кэша:</strong> агент Codex постоянно отсылает файлы проекта заново. При&nbsp;обычном API каждый запрос стоит дорого.<br><br>• <strong>Тариф DeepSeek:</strong> попадание в&nbsp;Cache Hit стоит всего $0.003 за&nbsp;1M токенов (30 копеек!).<br><br>• <strong>Реальная цифра:</strong> полный день плотной разработки обходится буквально в&nbsp;15-30 рублей против 1500+ рублей в&nbsp;OpenAI.')">
+                        <div class="sticker-icon" style="background: var(--pop-yellow); color: #000;">💰</div>
+                        <span><strong>Контекстный кэш ($0.003):</strong> день плотного кодинга стоит ~15&nbsp;₽ вместо 1&nbsp;500+&nbsp;₽.</span>
+                    </div>
+
+                    <div class="about-sticker" data-tip="Развернуть про доступ из РФ" onclick="openPopup('rf_info', 'ДОСТУП БЕЗ VPN И БЛОКИРОВОК', 'СТАБИЛЬНОСТЬ', '🛡️', '• <strong>Прямой доступ:</strong> платформа и&nbsp;API DeepSeek работают напрямую из&nbsp;РФ без&nbsp;VPN и&nbsp;прокси (в&nbsp;отличие от&nbsp;OpenAI, где&nbsp;регулярно ловят 403 и&nbsp;баны аккаунтов).<br><br>• <strong>Регистрация:</strong> без&nbsp;иностранных номеров телефонов и&nbsp;SMS-активаторов.<br><br>• <strong>Оплата API:</strong> для&nbsp;пополнения баланса напрямую на&nbsp;сайте используется Stripe (нужна зарубежная или&nbsp;виртуальная карта) либо WeChat/Alipay, но&nbsp;сами запросы и&nbsp;ключи не&nbsp;банятся.')">
+                        <div class="sticker-icon" style="background: var(--pop-cyan); color: #000;">🛡️</div>
+                        <span><strong>Прямой доступ из&nbsp;РФ:</strong> работа без&nbsp;VPN, прокси и&nbsp;страха блокировок IP.</span>
+                    </div>
+
+                    <div class="about-sticker" data-tip="Развернуть про масштаб проектов" onclick="openPopup('audit_info', 'НУЛЕВОЙ СТРАХ ОШИБОК', 'МАСШТАБ', '📂', '• <strong>Свобода экспериментов:</strong> можно натравить агента на&nbsp;аудит всех 100+ файлов проекта сразу.<br><br>• <strong>Глубокий рефакторинг:</strong> 1M окно позволяет модели видеть связи между базой, фронтендом и&nbsp;бэкендом одновременно.<br><br>• <strong>Все сессии на&nbsp;месте:</strong> история команд и&nbsp;хоткеи Codex CLI сохраняются на&nbsp;100%.')">
+                        <div class="sticker-icon" style="background: var(--pop-green); color: #000;">📂</div>
+                        <span><strong>Нулевой страх экспериментов:</strong> скормите агенту 100+ файлов репозитория сразу.</span>
+                    </div>
+                </div>
+
+                <div class="stat-banner" style="margin-top: 1.2rem;">
+                    <div class="stat-box" style="--col: var(--pop-yellow);">
+                        <div class="num">~15 ₽</div>
+                        <div class="lbl">День кодинга на&nbsp;DeepSeek</div>
+                    </div>
+                    <div class="stat-box" style="--col: var(--pop-pink);">
+                        <div class="num">1 500+ ₽</div>
+                        <div class="lbl">Тот же&nbsp;объём в&nbsp;OpenAI</div>
+                    </div>
+                    <div class="stat-box" style="--col: var(--pop-green);">
+                        <div class="num">100%</div>
+                        <div class="lbl">Хоткеи и&nbsp;сессии Codex</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pop-art-frame">
+                <img src="economy_savings_vert.jpg" alt="Экономика и выгода — DeepSeek + Codex">
+                <div class="corner-tag">ЭКОНОМИЯ X50</div>
+            </div>
+        </div>
+
+        <!-- СЛАЙД 4: ПЕРЕХОД К ПРАКТИКЕ -->
+        <div class="slide" id="slide-4">
+            <div>
+                <div class="pop-badge" style="background: var(--pop-yellow); color:#000;">ФИНАЛЬНЫЙ ШАГ</div>
+                <h2 class="pop-title-section">ПЕРЕХОДИМ К&nbsp;ПРАКТИКЕ!</h2>
+                <div class="pop-subtitle">ПРЯМО СЕЙЧАС В&nbsp;ТЕРМИНАЛЕ</div>
+                
+                <div class="about-cards-list">
+                    <div class="about-sticker" data-tip="Развернуть план привязки" onclick="openPopup('step_bind', 'ШАГ 1: ПОДКЛЮЧЕНИЕ', 'ТЕРМИНАЛ', '⚡', '• Запускаем официальный bash-скрипт конфигуратора DeepSeek.<br><br>• Выбираем флагманскую модель <strong>deepseek-flash</strong> (с&nbsp;поддержкой Vision и&nbsp;1M контекста).<br><br>• Вводим API-ключ DeepSeek Platform.<br><br>• Конфигуратор автоматически создает бэкап предыдущего профиля и&nbsp;настраивает models.json.')">
+                        <div class="sticker-icon" style="background: var(--pop-cyan); color: #000;">⚡</div>
+                        <span><strong>1. Подключение:</strong> официальный скрипт привязки DeepSeek Flash.</span>
+                    </div>
+
+                    <div class="about-sticker" data-tip="Развернуть план тестирования" onclick="openPopup('step_test', 'ШАГ 2: БОЕВОЙ ТЕСТ', 'ВАЙБКОДИНГ', '🚀', '• Запускаем команду <code>codex</code> в рабочей папке проекта.<br><br>• Проверяем стартовый баннер: модель переключена на&nbsp;<strong>deepseek-flash</strong>.<br><br>• Формулируем боевую задачу на&nbsp;русском языке: рефакторинг, поиск багов или&nbsp;верстка фичи.<br><br>• Наблюдаем за&nbsp;скоростью генерации и&nbsp;точностью diff-патчей.')">
+                        <div class="sticker-icon" style="background: var(--pop-pink); color: #fff;">🚀</div>
+                        <span><strong>2. Боевой тест:</strong> запуск Codex CLI и&nbsp;решение реальной задачи.</span>
+                    </div>
+
+                    <div class="about-sticker" data-tip="Развернуть план отката" onclick="openPopup('step_restore', 'ШАГ 3: МГНОВЕННЫЙ СБРОС', 'БЕЗОПАСНОСТЬ', '🛡️', '• Никаких необратимых изменений в системе!<br><br>• В&nbsp;любой момент запускаем скрипт и&nbsp;выбираем пункт [9] Restore default.<br><br>• Или&nbsp;в одну команду восстанавливаем config.toml из&nbsp;автоматически созданной папки бэкапа.<br><br>• Ваши прежние сессии OpenAI возвращаются мгновенно.')">
+                        <div class="sticker-icon" style="background: var(--pop-green); color: #000;">🛡️</div>
+                        <span><strong>3. Мгновенный сброс:</strong> возврат в&nbsp;дефолтный профиль OpenAI в&nbsp;1 клик.</span>
+                    </div>
+                </div>
+
+                <div class="stat-banner" style="margin-top: 1.2rem;">
+                    <div class="stat-box" style="--col: var(--pop-yellow);">
+                        <div class="num">100%</div>
+                        <div class="lbl">Безопасно для&nbsp;системы</div>
+                    </div>
+                    <div class="stat-box" style="--col: var(--pop-cyan);">
+                        <div class="num">Live</div>
+                        <div class="lbl">Показ живого экрана</div>
+                    </div>
+                    <div class="stat-box" style="--col: var(--pop-green);">
+                        <div class="num">1 клик</div>
+                        <div class="lbl">Откат к&nbsp;OpenAI</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pop-art-frame">
+                <img src="live_demo_vert.jpg" alt="Практика в прямом эфире">
+                <div class="corner-tag">LIVE DEMO</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="footer-controls-names" id="footer-nav">
+        <!-- Generated Dynamically via JS -->
+    </div>
+
+    <script>
+        const totalSlides = 5;
+        let currentSlide = 0;
+
+        const slideNames = [
+            "Старт",
+            "Спикер",
+            "Кузов и Мотор",
+            "Зачем скрещивать",
+            "💻 Практика"
+        ];
+
+        function showSlide(index) {
+            currentSlide = index;
+            document.querySelectorAll('.slide').forEach((slide, idx) => {
+                if (idx === index) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            document.querySelectorAll('.btn-slide-name').forEach((btn, idx) => {
+                if (idx === index) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+
+        function nextSlide() {
+            let next = currentSlide + 1;
+            if (next >= totalSlides) next = 0;
+            showSlide(next);
+        }
+
+        function prevSlide() {
+            let prev = currentSlide - 1;
+            if (prev < 0) prev = totalSlides - 1;
+            showSlide(prev);
+        }
+
+        // Generate Footer Buttons (Clean, without spammy tooltips)
+        const footerNav = document.getElementById('footer-nav');
+        slideNames.forEach((name, idx) => {
+            const btn = document.createElement('button');
+            btn.className = `btn-slide-name ${idx === 0 ? 'active' : ''}`;
+            btn.innerText = name;
+            btn.onclick = () => showSlide(idx);
+            footerNav.appendChild(btn);
+        });
+
+        // Keyboard Controls
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModalDirect();
+                return;
+            }
+            if (document.getElementById('modal-overlay').classList.contains('active')) {
+                return;
+            }
+
+            if (['PageDown', 'ArrowRight', 'ArrowDown', 'Space', 'Enter'].includes(e.code) || e.key === 'ArrowRight') {
+                e.preventDefault();
+                nextSlide();
+            } else if (['PageUp', 'ArrowLeft', 'ArrowUp', 'Backspace'].includes(e.code) || e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            }
+        });
+
+        // Dynamic QR Codes
+        window.addEventListener('DOMContentLoaded', () => {
+            const createQR = (id, text) => {
+                const el = document.getElementById(id);
+                if (el) {
+                    new QRCode(el, {
+                        text: text,
+                        width: 100,
+                        height: 100,
+                        colorDark: "#0B0C10",
+                        colorLight: "#FFFFFF",
+                        correctLevel: QRCode.CorrectLevel.H
+                    });
+                }
+            };
+
+            createQR("qr-personal", "https://t.me/michael_sage");
+            createQR("qr-channel", "https://t.me/uncrn_sage");
+            createQR("qr-site", "https://a-sage.ru");
+        });
+
+        // Modal Logic
+        function openPopup(id, title, badge, icon, bodyHtml) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-badge').innerText = badge;
+            document.getElementById('modal-icon').innerText = icon;
+            document.getElementById('modal-body').innerHTML = bodyHtml;
+            document.getElementById('modal-overlay').classList.add('active');
+        }
+
+        function closeModal(event) {
+            if (event.target.id === 'modal-overlay') {
+                closeModalDirect();
+            }
+        }
+
+        function closeModalDirect() {
+            document.getElementById('modal-overlay').classList.remove('active');
+        }
+
+        // Custom Cursor & Smart Speech Bubble Tooltip Engine
+        const cursorDot = document.getElementById('cursor-dot');
+        const speechBubble = document.getElementById('speech-bubble');
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        let bubbleVisible = false;
+
+        function updateBubblePosition() {
+            if (!bubbleVisible) return;
+
+            const bubbleRect = speechBubble.getBoundingClientRect();
+            const bubbleWidth = bubbleRect.width || 180;
+            const bubbleHeight = bubbleRect.height || 50;
+
+            const padding = 15;
+            let leftPos = mouseX + 22;
+            let topPos = mouseY - bubbleHeight - 16;
+            let flipX = false;
+            let flipY = false;
+
+            if (leftPos + bubbleWidth > window.innerWidth - padding) {
+                leftPos = mouseX - bubbleWidth - 22;
+                flipX = true;
+            }
+
+            if (topPos < padding) {
+                topPos = mouseY + 24;
+                flipY = true;
+            }
+
+            if (leftPos < padding) {
+                leftPos = padding;
+            }
+
+            if (flipX) speechBubble.classList.add('flip-x');
+            else speechBubble.classList.remove('flip-x');
+
+            if (flipY) speechBubble.classList.add('flip-y');
+            else speechBubble.classList.remove('flip-y');
+
+            speechBubble.style.left = `${leftPos}px`;
+            speechBubble.style.top = `${topPos}px`;
+        }
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            cursorDot.style.left = `${mouseX}px`;
+            cursorDot.style.top = `${mouseY}px`;
+
+            updateBubblePosition();
+        });
+
+        document.addEventListener('mouseover', (e) => {
+            const isClickable = e.target.closest('button, a, .pop-nav-arrow, .btn-slide-name, .about-sticker, [data-tip], .pop-card');
+            if (isClickable) {
+                cursorDot.classList.add('hovered');
+            } else {
+                cursorDot.classList.remove('hovered');
+            }
+
+            // ONLY show tooltip if explicitly on a meaningful data-tip element
+            const tipTarget = e.target.closest('[data-tip]');
+            if (tipTarget) {
+                const tip = tipTarget.getAttribute('data-tip');
+                if (tip) {
+                    speechBubble.innerHTML = tip;
+                    speechBubble.classList.add('visible');
+                    bubbleVisible = true;
+                    updateBubblePosition();
+                    return;
+                }
+            }
+            
+            if (bubbleVisible) {
+                speechBubble.classList.remove('visible');
+                bubbleVisible = false;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -48,6 +48,12 @@
     <priority>0.95</priority>
   </url>
   <url>
+    <loc>https://a-sage.ru/base/deepseek-in-codex/</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
     <loc>https://a-sage.ru/mentoring</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
