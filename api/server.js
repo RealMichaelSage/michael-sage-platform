@@ -234,6 +234,35 @@ const DEFAULT_TRIADS = {
   }
 };
 
+// ── 2.2 DAILY WEBRTC IN-MEMORY SIGNALING STORE (0 ₽, P2P Mesh) ──────────────
+const WEBRTC_ROOMS = {};
+
+function getWebrtcRoom(triadId) {
+  if (!WEBRTC_ROOMS[triadId]) {
+    WEBRTC_ROOMS[triadId] = {
+      peers: {}, // { [tgId]: { name, joinedAt, lastSeen } }
+      signals: [] // [ { id, from_id, to_id, type, data, timestamp } ]
+    };
+  }
+  return WEBRTC_ROOMS[triadId];
+}
+
+// Auto-clean stale peers and signals every 30s
+setInterval(() => {
+  const now = Date.now();
+  for (const [triadId, room] of Object.entries(WEBRTC_ROOMS)) {
+    for (const [peerId, peer] of Object.entries(room.peers)) {
+      if (now - peer.lastSeen > 45000) {
+        delete room.peers[peerId];
+      }
+    }
+    room.signals = room.signals.filter(s => now - s.timestamp < 30000);
+    if (Object.keys(room.peers).length === 0 && room.signals.length === 0) {
+      delete WEBRTC_ROOMS[triadId];
+    }
+  }
+}, 30000);
+
 function getMskDateString() {
   const d = new Date();
   const utc = d.getTime() + (d.getTimezoneOffset() * 60000);
@@ -1720,6 +1749,100 @@ const server = http.createServer(async (req, res) => {
           source: "fallback_error"
         });
       }
+    }
+
+    // ── 17. DAILY WEBRTC: JOIN ROOM (POST /api/daily/webrtc/join) ──
+    if (pathname === '/api/daily/webrtc/join' && req.method === 'POST') {
+      const body = await parseBody(req);
+      const triadId = String(body.triad_id || 'triad-01').trim();
+      const tgId = Number(body.telegram_id || 0);
+      const name = String(body.name || 'Участник').trim();
+
+      if (!tgId) {
+        return sendJson(res, 400, { ok: false, error: 'telegram_id is required' });
+      }
+
+      const room = getWebrtcRoom(triadId);
+      room.peers[tgId] = {
+        telegram_id: tgId,
+        name: name,
+        joinedAt: Date.now(),
+        lastSeen: Date.now()
+      };
+
+      const otherPeers = Object.values(room.peers).filter(p => p.telegram_id !== tgId && (Date.now() - p.lastSeen < 45000));
+      return sendJson(res, 200, { ok: true, peers: otherPeers });
+    }
+
+    // ── 18. DAILY WEBRTC: SEND SIGNAL (POST /api/daily/webrtc/signal) ──
+    if (pathname === '/api/daily/webrtc/signal' && req.method === 'POST') {
+      const body = await parseBody(req);
+      const triadId = String(body.triad_id || 'triad-01').trim();
+      const fromId = Number(body.from_id || 0);
+      const toId = Number(body.to_id || 0);
+      const type = String(body.type || '');
+      const data = body.data;
+
+      if (!fromId || !toId || !type || !data) {
+        return sendJson(res, 400, { ok: false, error: 'from_id, to_id, type, and data are required' });
+      }
+
+      const room = getWebrtcRoom(triadId);
+      if (room.peers[fromId]) {
+        room.peers[fromId].lastSeen = Date.now();
+      }
+
+      const signalItem = {
+        id: 'sig_' + crypto.randomBytes(6).toString('hex'),
+        from_id: fromId,
+        to_id: toId,
+        type: type,
+        data: data,
+        timestamp: Date.now()
+      };
+      room.signals.push(signalItem);
+
+      return sendJson(res, 200, { ok: true, signal_id: signalItem.id });
+    }
+
+    // ── 19. DAILY WEBRTC: POLL SIGNALS & PEERS (GET /api/daily/webrtc/poll) ──
+    if (pathname === '/api/daily/webrtc/poll' && req.method === 'GET') {
+      const triadId = String(reqUrl.searchParams.get('triad_id') || 'triad-01').trim();
+      const tgId = Number(reqUrl.searchParams.get('telegram_id') || 0);
+
+      if (!tgId) {
+        return sendJson(res, 400, { ok: false, error: 'telegram_id is required' });
+      }
+
+      const room = getWebrtcRoom(triadId);
+      if (room.peers[tgId]) {
+        room.peers[tgId].lastSeen = Date.now();
+      }
+
+      const mySignals = room.signals.filter(s => s.to_id === tgId);
+      // Remove consumed signals for this peer
+      room.signals = room.signals.filter(s => s.to_id !== tgId);
+
+      const activePeers = Object.values(room.peers).filter(p => p.telegram_id !== tgId && (Date.now() - p.lastSeen < 45000));
+
+      return sendJson(res, 200, {
+        ok: true,
+        peers: activePeers,
+        signals: mySignals
+      });
+    }
+
+    // ── 20. DAILY WEBRTC: LEAVE ROOM (POST /api/daily/webrtc/leave) ──
+    if (pathname === '/api/daily/webrtc/leave' && req.method === 'POST') {
+      const body = await parseBody(req);
+      const triadId = String(body.triad_id || 'triad-01').trim();
+      const tgId = Number(body.telegram_id || 0);
+
+      const room = getWebrtcRoom(triadId);
+      delete room.peers[tgId];
+      room.signals = room.signals.filter(s => s.from_id !== tgId && s.to_id !== tgId);
+
+      return sendJson(res, 200, { ok: true });
     }
 
     // 404 for unknown endpoints
