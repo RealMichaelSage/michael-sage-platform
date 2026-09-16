@@ -158,6 +158,8 @@
       font-size: 0.82rem;
       font-weight: 700;
       letter-spacing: 0.01em;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     /* Content Views */
@@ -1425,7 +1427,7 @@
 
       <div class="streak-badge-top" id="top-streak-badge">
         <span>🔥</span>
-        <span id="streak-counter-top">14 / 21 день (будни)</span>
+        <span id="streak-counter-top">1 / 21 день</span>
       </div>
     </header>
 
@@ -1572,21 +1574,12 @@
             </div>
           </div>
 
-          <!-- Members List -->
-          <div class="members-row-list" id="members-container">
-            <!-- Populated by JS -->
-          </div>
 
           <!-- Actions -->
           <div class="actions-stack">
             <button type="button" class="btn-call-connect" id="btn-call-link" onclick="toggleWebrtcCall()">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="23 7 16 12 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
               <span id="btn-call-link-text">Подключиться к&nbsp;созвону (ВКС)</span>
-            </button>
-
-            <button id="btn-attendance" class="btn-checkin-action" onclick="handleAttendanceCheckin()">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span>Я&nbsp;на созвоне (Отметиться)</span>
             </button>
           </div>
 
@@ -1606,9 +1599,9 @@
 
           <!-- Speaker Tabs -->
           <div class="speaker-tabs-friendly" id="speaker-tabs-wrapper">
-            <button class="speaker-btn-pill active" id="spk-tab-0" onclick="switchSpeaker(0)">1. Михаил</button>
-            <button class="speaker-btn-pill" id="spk-tab-1" onclick="switchSpeaker(1)">2. Дмитрий</button>
-            <button class="speaker-btn-pill" id="spk-tab-2" onclick="switchSpeaker(2)">3. Ксения</button>
+            <button class="speaker-btn-pill active" id="spk-tab-0" onclick="switchSpeaker(0)">Михаил</button>
+            <button class="speaker-btn-pill" id="spk-tab-1" onclick="switchSpeaker(1)">Дмитрий</button>
+            <button class="speaker-btn-pill" id="spk-tab-2" onclick="switchSpeaker(2)">Ксения</button>
           </div>
 
           <!-- Digits & Speaker -->
@@ -1652,10 +1645,10 @@
             </button>
           </div>
 
-          <!-- AI-стенографист (Gemini 2.5 Flash Audio, 0 ₽) -->
+          <!-- AI-стенографист (Умная аудиозапись, 0 ₽) -->
           <div class="voice-recorder-bar">
             <div class="voice-status-note" id="voice-rec-note">
-              🎙 <b>AI-стенографист</b>: включите запись во&nbsp;время своего 15-минутного слота&nbsp;— Gemini 2.5 Flash извлечёт инсайт и&nbsp;3 действия дня.
+              🎙 <b>AI-стенографист</b>: включите запись во&nbsp;время своего 15-минутного слота&nbsp;— нейросеть извлечёт инсайт и&nbsp;3 действия дня.
             </div>
             <button type="button" class="voice-rec-btn" id="btn-voice-rec" onclick="toggleVoiceRecording()">
               <span id="rec-dot-icon">🎙</span>
@@ -2246,7 +2239,7 @@
             document.getElementById('user-triad-header-label').innerText = `Тройка №0${data.triad.number || 1} · Созвон в ${data.triad.slot_time}`;
           }
 
-          const badgeText = `${data.active_streak || 14} / 21 день (будни)`;
+          const badgeText = `${data.active_streak || 1} / 21 день`;
           document.getElementById('streak-counter-top').innerText = badgeText;
           
           renderMembers(data.members);
@@ -2274,44 +2267,48 @@
       const tabsWrapper = document.getElementById('speaker-tabs-wrapper');
       if (!members || !members.length) return;
 
-      // Render Speaker Tabs with actual names
-      tabsWrapper.innerHTML = members.map((m, idx) => {
-        const shortName = m.name ? m.name.split(' ')[0] : `Участник ${idx + 1}`;
-        const activeClass = idx === STATE.currentSpeaker ? 'active' : '';
-        return `
-          <button class="speaker-btn-pill ${activeClass}" id="spk-tab-${idx}" onclick="switchSpeaker(${idx})">
-            ${idx + 1}. ${shortName}
-          </button>
-        `;
-      }).join('');
+      // Render Speaker Tabs with clean names (no numbers)
+      if (tabsWrapper) {
+        tabsWrapper.innerHTML = members.map((m, idx) => {
+          const shortName = m.name ? m.name.split(' ')[0] : `Участник`;
+          const activeClass = idx === STATE.currentSpeaker ? 'active' : '';
+          return `
+            <button class="speaker-btn-pill ${activeClass}" id="spk-tab-${idx}" onclick="switchSpeaker(${idx})">
+              ${shortName}
+            </button>
+          `;
+        }).join('');
+      }
 
-      // Render Members in Meeting Card
-      container.innerHTML = members.map((m, idx) => {
-        let statusBadge = '<span class="member-checkin-badge pending">⏳ Ожидание</span>';
-        if (m.has_checked_in) {
-          statusBadge = `<span class="member-checkin-badge attended">✅ Был (${m.checked_in_at || 'OK'})</span>`;
-        } else if (m.status === 'async') {
-          statusBadge = '<span class="member-checkin-badge" style="background:#38bdf820; color:#38bdf8;">✈️ Асинхрон</span>';
-        }
+      // Render Members in Meeting Card (if container exists)
+      if (container) {
+        container.innerHTML = members.map((m, idx) => {
+          let statusBadge = '<span class="member-checkin-badge pending">⏳ Ожидание</span>';
+          if (m.has_checked_in) {
+            statusBadge = `<span class="member-checkin-badge attended">✅ Был (${m.checked_in_at || 'OK'})</span>`;
+          } else if (m.status === 'async') {
+            statusBadge = '<span class="member-checkin-badge" style="background:#38bdf820; color:#38bdf8;">✈️ Асинхрон</span>';
+          }
 
-        const initial = (m.name || 'У')[0].toUpperCase();
-        const isMe = (m.telegram_id === STATE.user.telegram_id || (m.username && STATE.user.username && m.username.toLowerCase() === STATE.user.username.toLowerCase()));
+          const initial = (m.name || 'У')[0].toUpperCase();
+          const isMe = (m.telegram_id === STATE.user.telegram_id || (m.username && STATE.user.username && m.username.toLowerCase() === STATE.user.username.toLowerCase()));
 
-        return `
-          <div class="member-item-friendly">
-            <div class="member-left-part">
-              <div class="member-avatar-box">${initial}</div>
-              <div class="member-details">
-                <div class="member-name-text">
-                  ${m.name} ${m.role === 'captain' ? '👑' : ''} ${isMe ? '<span style="font-size:0.75rem; color:var(--green); font-weight:600;">(Вы)</span>' : ''}
+          return `
+            <div class="member-item-friendly">
+              <div class="member-left-part">
+                <div class="member-avatar-box">${initial}</div>
+                <div class="member-details">
+                  <div class="member-name-text">
+                    ${m.name} ${m.role === 'captain' ? '👑' : ''} ${isMe ? '<span style="font-size:0.75rem; color:var(--green); font-weight:600;">(Вы)</span>' : ''}
+                  </div>
+                  <div class="member-niche-text">${m.niche || 'Резидент'}</div>
                 </div>
-                <div class="member-niche-text">${m.niche || 'Резидент'}</div>
               </div>
+              ${statusBadge}
             </div>
-            ${statusBadge}
-          </div>
-        `;
-      }).join('');
+          `;
+        }).join('');
+      }
 
       // Pre-populate WebRTC slots with Triad partner names
       const otherMembers = members.filter(m => !(m.telegram_id === STATE.user.telegram_id || (m.username && STATE.user.username && m.username.toLowerCase() === STATE.user.username.toLowerCase())));
@@ -2342,7 +2339,7 @@
     // ══════════════════════════════════════════════════════════════
     async function handleAttendanceCheckin() {
       const btn = document.getElementById('btn-attendance');
-      btn.innerText = 'Фиксация...';
+      if (btn) btn.innerText = 'Фиксация...';
 
       playGongSound('single');
 
@@ -2358,13 +2355,17 @@
         });
         const data = await res.json();
         if (data && data.ok) {
-          btn.classList.add('checked');
-          btn.innerHTML = `<span>✅ Вы отметились (${data.checkin ? data.checkin.checked_in_at : 'OK'})</span>`;
+          if (btn) {
+            btn.classList.add('checked');
+            btn.innerHTML = `<span>✅ Вы отметились (${data.checkin ? data.checkin.checked_in_at : 'OK'})</span>`;
+          }
           await loadCockpitData();
         }
       } catch (err) {
-        btn.classList.add('checked');
-        btn.innerHTML = '<span>✅ Вы отметились на дейлике</span>';
+        if (btn) {
+          btn.classList.add('checked');
+          btn.innerHTML = '<span>✅ Вы отметились на дейлике</span>';
+        }
       }
     }
 
@@ -2381,7 +2382,7 @@
             status: 'async'
           })
         });
-        alert('Асинхронный дейлик зафиксирован! Стрик тройки защищен.');
+        alert('Асинхронный дейлик зафиксирован! Серия дней тройки защищена.');
         await loadCockpitData();
       } catch (e) {}
     }
@@ -2474,7 +2475,21 @@
           statusPill.classList.add('live');
         }
 
-        // 2. Register peer in room via backend
+        // 2. Auto-checkin attendance upon joining call
+        try {
+          const triadId = (STATE.triad && STATE.triad.id) ? STATE.triad.id : 'triad-01';
+          fetch('/api/daily/checkin', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              telegram_id: STATE.user.telegram_id,
+              triad_id: triadId,
+              status: 'live'
+            })
+          }).catch(e => console.warn('[Auto-checkin notice]:', e));
+        } catch(e) {}
+
+        // 3. Register peer in room via backend
         try {
           const triadId = (STATE.triad && STATE.triad.id) ? STATE.triad.id : 'triad-01';
           const joinRes = await fetch('/api/daily/webrtc/join', {
@@ -2953,7 +2968,7 @@
         if (btn) btn.classList.add('recording');
         if (dot) dot.innerText = '🔴';
         if (txt) txt.innerText = 'Стоп (AI-анализ)';
-        if (note) note.innerHTML = '🎙 <b>Идёт запись речи...</b> Говорите инсайты свободно. По окончании Gemini 2.5 Flash структурирует выжимку.';
+        if (note) note.innerHTML = '🎙 <b>Идёт запись речи...</b> Говорите инсайты свободно. По окончании AI-стенографист структурирует выжимку.';
       } catch (err) {
         console.error('[Mic Permission Error]:', err);
         alert('Не удалось получить доступ к микрофону: ' + err.message);
@@ -2974,7 +2989,7 @@
       if (btn) btn.classList.remove('recording');
       if (dot) dot.innerText = '⚡';
       if (txt) txt.innerText = 'Обработка...';
-      if (note) note.innerHTML = '⚡ <b>Gemini 2.5 Flash анализирует аудио...</b> Извлекаем главный инсайт и 3 действия.';
+      if (note) note.innerHTML = '⚡ <b>AI-стенографист анализирует речь...</b> Извлекаем главный инсайт и 3 действия.';
     }
 
     async function processVoiceWithGemini(blob, mimeType) {
@@ -3016,7 +3031,7 @@
             }
 
             switchView('insight');
-            showCallToast('✅ Gemini 2.5 Flash структурировал речь и заполнил форму инсайта!');
+            showCallToast('✅ AI-стенографист структурировал речь и заполнил форму инсайта!');
 
             if (note) note.innerHTML = '✅ <b>Инсайт извлечён!</b> Проверьте форму на вкладке «💡 Инсайт» и сохраните в хронику.';
           } else {
