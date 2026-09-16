@@ -4127,10 +4127,13 @@ input[type="reset"],
   height: 0 !important;
 }
 
+.prompt-box .btn-copy-prompt,
+.prompt-box-header .btn-copy-prompt,
 .prompt-box-wrapper .btn-copy-prompt {
   flex: 0 0 auto !important;
   width: auto !important;
   max-width: max-content !important;
+  white-space: nowrap !important;
 }
 
 .prompt-code-content {
@@ -4153,8 +4156,16 @@ input[type="reset"],
   margin-top: auto;
 }
 
-.btn-copy-prompt {
+.prompt-actions .btn-copy-prompt,
+.prompt-actions .btn-expand-prompt {
   flex: 1 1 auto;
+}
+
+.btn-copy-prompt {
+  flex: 0 0 auto;
+  width: auto;
+  max-width: max-content;
+  white-space: nowrap;
   background: var(--black);
   color: #ffffff;
   border: 1px solid var(--black);
