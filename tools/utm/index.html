@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Генератор UTM-меток для&nbsp;Telegram (до&nbsp;64 байт) | URL &&nbsp;Base64 | Михаил Пузырёв</title>
+  <meta name="description" content="Бесплатный онлайн-генератор UTM-меток для Telegram. Создание и сжатие диплинков (deep links) в формат Base64 URL-safe без превышения лимита в 64 байта для ботов и каналов.">
+  <meta name="keywords" content="utm генератор telegram, utm метки телеграм, telegram deep link, utm start 64 байта, base64 url safe telegram, проброс utm tilda, отслеживание рекламы telegram">
+  <meta name="author" content="Михаил Пузырёв">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+  <!-- Favicon Suite -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-title" content="Михаил Пузырёв">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="canonical" href="https://a-sage.ru/tools/utm/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Генератор UTM-меток для Telegram (до 64 байт) | URL & Base64">
+  <meta property="og:description" content="Сжатие диплинков в URL-safe Base64 без превышения лимита 64 байта для Telegram-ботов и каналов. Готовый скрипт сквозного проброса меток.">
+  <meta property="og:url" content="https://a-sage.ru/tools/utm/">
+  <meta property="og:site_name" content="Михаил Пузырёв — AI Архитектура & Внедрение">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:image" content="https://a-sage.ru/img/og-preview.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Генератор UTM-меток для Telegram (до 64 байт)">
+  <meta name="twitter:description" content="Создавайте диплинки в URL-safe Base64 с контролем лимита 64 байта для Telegram-ботов.">
+  <meta name="twitter:image" content="https://a-sage.ru/img/og-preview.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/style.css?v=3.0">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://a-sage.ru/tools/utm/#app",
+        "name": "Генератор UTM-меток для Telegram (до 64 байт)",
+        "url": "https://a-sage.ru/tools/utm/",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript",
+        "description": "Онлайн-инструмент для создания и сжатия UTM-меток в компактный URL-safe Base64 формат для Telegram deep links с контролем лимита в 64 байта.",
+        "author": {
+          "@type": "Person",
+          "name": "Михаил Пузырёв",
+          "url": "https://a-sage.ru/about"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "AiSAGE",
+          "url": "https://a-sage.ru"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Главная",
+            "item": "https://a-sage.ru/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Инструменты",
+            "item": "https://a-sage.ru/calculators"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "UTM-генератор для Telegram",
+            "item": "https://a-sage.ru/tools/utm/"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();
+    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    try {
+      if (window.location.search.indexOf('admin=sage') !== -1) {
+        localStorage.setItem('sage_disable_metrika', 'true');
+        console.log('[Analytics] Yandex Metrika disabled for admin');
+      } else if (window.location.search.indexOf('admin=clear') !== -1) {
+        localStorage.removeItem('sage_disable_metrika');
+        console.log('[Analytics] Yandex Metrika enabled');
+      }
+    } catch(e) {}
+
+    if ((window.location.hostname === 'a-sage.ru' || window.location.hostname === 'www.a-sage.ru') && (!window.localStorage || localStorage.getItem('sage_disable_metrika') !== 'true')) {
+      ym(101414837, "init", {
+           clickmap:true,
+           trackLinks:true,
+           accurateTrackBounce:true,
+           webvisor:true
+      });
+    }
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/101414837" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+
+  <style>
+    .utm-tool-frame {
+      max-width: 1440px;
+      margin: 0 auto;
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      box-sizing: border-box;
+      background: #ffffff;
+    }
+    .utm-hero {
+      padding-top: 116px;
+      padding-bottom: 40px;
+      padding-left: clamp(20px, 4.5vw, 64px);
+      padding-right: clamp(20px, 4.5vw, 64px);
+      border-bottom: 1px solid var(--border);
+      background: #ffffff;
+    }
+    .utm-section-block {
+      padding: 48px clamp(20px, 4.5vw, 64px) 56px;
+      border-bottom: 1px solid var(--border);
+    }
+    .utm-content-wrap {
+      max-width: 1100px;
+    }
+    .utm-content-wrap h2 {
+      font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: #09090b;
+      margin: 0 0 16px 0;
+      text-wrap: balance;
+    }
+    .utm-content-wrap p {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: #3f3f46;
+      margin-bottom: 20px;
+      text-wrap: pretty;
+    }
+
+    /* Generator Box */
+    .generator-panel {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+      padding: clamp(20px, 3vw, 36px);
+      margin: 28px 0;
+      border-radius: 0 !important;
+    }
+    .gen-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .gen-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .gen-field label {
+      display: block;
+      font-family: var(--mono);
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #27272a;
+      margin-bottom: 6px;
+      letter-spacing: 0.02em;
+    }
+    .gen-input-group {
+      display: flex;
+      align-items: stretch;
+      width: 100%;
+    }
+    .gen-prefix {
+      background: #f4f4f5;
+      border: 1px solid var(--border);
+      border-right: none;
+      padding: 10px 14px;
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      color: #71717a;
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      user-select: none;
+    }
+    .gen-input {
+      flex: 1;
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      font-family: var(--mono);
+      font-size: 0.88rem;
+      background: #ffffff;
+      color: #09090b;
+      border-radius: 0 !important;
+      outline: none;
+      transition: border-color 0.15s ease;
+      box-sizing: border-box;
+      width: 100%;
+    }
+    .gen-input:focus {
+      border-color: #09090b;
+    }
+    .gen-input-readonly {
+      background: #fafafa;
+      font-weight: 500;
+    }
+
+    /* Preset Chips */
+    .preset-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 16px 0 24px;
+      padding: 12px 16px;
+      background: #f9fafb;
+      border: 1px solid #f3f4f6;
+    }
+    .preset-label {
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: #6b7280;
+    }
+    .preset-btn {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 5px 12px;
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: #18181b;
+      cursor: pointer;
+      border-radius: 0 !important;
+      transition: all 0.15s ease;
+    }
+    .preset-btn:hover {
+      background: #09090b;
+      color: #ffffff;
+      border-color: #09090b;
+    }
+
+    /* Output Cards */
+    .output-section {
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid #e4e4e7;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .output-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .output-label {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #18181b;
+      letter-spacing: 0.02em;
+    }
+    .output-counter {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #71717a;
+    }
+    .output-counter.ok {
+      color: #10b981;
+    }
+    .output-counter.danger {
+      color: #ef4444;
+    }
+    .btn-copy-tool {
+      background: #09090b;
+      color: #ffffff;
+      border: 1px solid #09090b;
+      padding: 10px 20px;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 0 !important;
+      flex-shrink: 0;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+    .btn-copy-tool:hover {
+      background: #27272a;
+      border-color: #27272a;
+    }
+    .btn-copy-tool.copied {
+      background: #10b981 !important;
+      border-color: #10b981 !important;
+      color: #ffffff !important;
+    }
+
+    .alert-banner {
+      display: none;
+      padding: 12px 16px;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-left: 4px solid #ef4444;
+      color: #991b1b;
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      line-height: 1.5;
+      margin-top: 8px;
+    }
+
+    /* Comparison Table */
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 24px 0;
+      border: 1px solid var(--border);
+    }
+    .table-spec {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      text-align: left;
+    }
+    .table-spec th {
+      background: #f4f4f5;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #18181b;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+    }
+    .table-spec td {
+      padding: 12px 16px;
+      border-bottom: 1px solid #f4f4f5;
+      border-right: 1px solid var(--border);
+      color: #3f3f46;
+    }
+    .table-spec tr:last-child td {
+      border-bottom: none;
+    }
+    .table-spec code {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      background: #f4f4f5;
+      padding: 2px 6px;
+      color: #09090b;
+    }
+
+    /* Code Highlight Box */
+    .code-box {
+      border: 1px solid var(--border);
+      background: #ffffff;
+      margin: 20px 0;
+      position: relative;
+    }
+    .code-box-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 16px;
+      background: #f4f4f5;
+      border-bottom: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #27272a;
+    }
+    .code-box-body {
+      padding: 16px;
+      background: #09090b;
+      color: #34d399;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      line-height: 1.5;
+      overflow-x: auto;
+      margin: 0;
+    }
+
+    .guide-meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid #e4e4e7;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: #52525b;
+    }
+    .guide-meta-item strong {
+      color: #09090b;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER NAVIGATION -->
+  <header class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <strong>Михаил Пузыр<span class="accent-yo">ё</span>в</strong>
+        <span class="nav-logo-badge">UTM-ИНСТРУМЕНТ</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="/mentoring"><span class="nav-link-text">Наставничество 1-на-1</span></a></li>
+        <li><a href="/automation"><span class="nav-link-text">Внедрение &&nbsp;Разработка</span></a></li>
+        <li><a href="/corporate"><span class="nav-link-text">Компаниям</span></a></li>
+        <li><a href="/club/"><span class="nav-link-text">Клуб</span></a></li>
+        <li><a href="/about"><span class="nav-link-text">Обо&nbsp;мне &&nbsp;Кейсы</span></a></li>
+        <li><a href="/base"><span class="nav-link-text">База</span></a></li>
+      </ul>
+
+      <div class="nav-right">
+        <a href="/booking" class="nav-cta">Забронировать слот ↗</a>
+        <button class="nav-burger" aria-label="Открыть меню">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu">
+    <a href="/">Главная</a>
+    <a href="/mentoring">Наставничество 1-на-1</a>
+    <a href="/automation">Внедрение &&nbsp;Разработка</a>
+    <a href="/corporate">Компаниям</a>
+    <a href="/club/">Клуб</a>
+    <a href="/about">Обо мне &&nbsp;Кейсы</a>
+    <a href="/base">База</a>
+    <a href="/cabinet/">Личный Кабинет</a>
+    <a href="/booking" class="m-cta">Забронировать слот ↗</a>
+  </div>
+
+  <main>
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="utm-tool-frame utm-hero" data-nav-title="Генератор UTM">
+      <div style="font-family:var(--mono); font-size:0.8rem; color:var(--gray); margin-bottom:12px;">
+        <a href="/" style="text-decoration:underline; color:#52525b;">Главная</a> / <a href="/calculators" style="text-decoration:underline; color:#52525b;">Инструменты</a> / Генератор UTM-меток для&nbsp;Telegram
+      </div>
+      <div class="hero-badge">
+        <span class="dot"></span>
+        БЕСПЛАТНЫЙ ИНСТРУМЕНТ // TELEGRAM DEEP LINKING
+      </div>
+      <h1 class="hero-title" style="margin-top: 16px; margin-bottom: 14px; font-size: clamp(2rem, 3.8vw, 3.2rem);">
+        Генератор UTM-меток для&nbsp;Telegram (до&nbsp;64&nbsp;байт)
+      </h1>
+      <p class="hero-sub" style="max-width: 960px; font-size: 1.15rem; line-height: 1.6; color: #52525b;">
+        Создавайте и&nbsp;сжимайте диплинки (deep links) в&nbsp;формат <strong>URL-safe Base64</strong> без&nbsp;превышения жесткого лимита в&nbsp;64&nbsp;байта для&nbsp;корректной работы Telegram-ботов. Включает контроль длины на&nbsp;лету и&nbsp;готовый скрипт сквозного проброса меток с&nbsp;сайта в&nbsp;бота.
+      </p>
+
+      <div class="guide-meta-bar">
+        <div class="guide-meta-item">Автор: <strong>Михаил Пузырёв</strong></div>
+        <div class="guide-meta-item">Статус: <strong>Online / Реалтайм</strong></div>
+        <div class="guide-meta-item">Лимит Telegram: <strong>&le; 64 байта (start)</strong></div>
+        <div class="guide-meta-item">Кодировка: <strong>URL-safe Base64 (RFC 4648)</strong></div>
+        <div class="guide-meta-item">Канал: <a href="https://t.me/uncrn_sage" target="_blank" style="color:#10b981; font-weight:700; text-decoration:underline;">@uncrn_sage ↗</a></div>
+      </div>
+    </section>
+
+    <!-- SECTION 01: INTERACTIVE GENERATOR -->
+    <section id="generator" class="utm-tool-frame utm-section-block" data-nav-title="01. Генератор">
+      <div class="utm-content-wrap">
+        <div class="section-tag" style="color:#10b981;">// ИНТЕРАКТИВНЫЙ КОНСТРУКТОР</div>
+        <h2>Конструктор ссылок с&nbsp;контролем размера</h2>
+        <p>
+          Заполните параметры рекламной кампании. Генератор параллельно сформирует стандартную ссылку для&nbsp;сайта, Base64-ссылку и&nbsp;компактный диплинк для&nbsp;Telegram с&nbsp;сокращенными ключами (<code>s, m, c, o, t, r</code>).
+        </p>
+
+        <div class="generator-panel">
+          <!-- Top Inputs: Site & Telegram -->
+          <div class="gen-grid-2">
+            <div class="gen-field">
+              <label for="site-url">1. АДРЕС ВАШЕЙ СТРАНИЦЫ (САЙТ / ЛЕНДИНГ)</label>
+              <div class="gen-input-group">
+                <span class="gen-prefix">https://</span>
+                <input type="text" id="site-url" class="gen-input" placeholder="a-sage.ru/offer" oninput="recalcApp()">
+              </div>
+            </div>
+
+            <div class="gen-field">
+              <label for="tg-nick">2. НИК БОТА / КАНАЛА В&nbsp;TELEGRAM (БЕЗ&nbsp;@)</label>
+              <div class="gen-input-group">
+                <span class="gen-prefix">https://t.me/</span>
+                <input type="text" id="tg-nick" class="gen-input" placeholder="Michael_Sage_bot" oninput="recalcApp()">
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Presets -->
+          <div class="preset-bar">
+            <span class="preset-label">БЫСТРЫЕ ПРЕСЕТЫ:</span>
+            <button type="button" class="preset-btn" onclick="setPreset('yandex', 'cpc', 'direct')">Яндекс Директ</button>
+            <button type="button" class="preset-btn" onclick="setPreset('vk', 'targeted', 'target')">ВКонтакте</button>
+            <button type="button" class="preset-btn" onclick="setPreset('tg_ads', 'cpc', 'ads')">Telegram Ads</button>
+            <button type="button" class="preset-btn" onclick="setPreset('telegram', 'channel', 'post')">TG Канал / Пост</button>
+            <button type="button" class="preset-btn" onclick="setPreset('newsletter', 'email', 'digest')">Email-рассылка</button>
+            <button type="button" class="preset-btn" onclick="setPreset('blogger', 'influencer', 'collab')">Блогеры / Инфлюенсеры</button>
+          </div>
+
+          <!-- 6 UTM Parameters Grid -->
+          <div class="gen-grid-3">
+            <div class="gen-field">
+              <label for="utm-src">ИСТОЧНИК ТРАФИКА · utm_source (s)</label>
+              <input type="text" id="utm-src" class="gen-input" placeholder="yandex" oninput="recalcApp()">
+            </div>
+            <div class="gen-field">
+              <label for="utm-med">ТИП ТРАФИКА · utm_medium (m)</label>
+              <input type="text" id="utm-med" class="gen-input" placeholder="cpc" oninput="recalcApp()">
+            </div>
+            <div class="gen-field">
+              <label for="utm-cmp">НАЗВАНИЕ КАМПАНИИ · utm_campaign (c)</label>
+              <input type="text" id="utm-cmp" class="gen-input" placeholder="agent_launch" oninput="recalcApp()">
+            </div>
+            <div class="gen-field">
+              <label for="utm-cnt">СОДЕРЖАНИЕ ОБЪЯВЛЕНИЯ · utm_content (o)</label>
+              <input type="text" id="utm-cnt" class="gen-input" placeholder="banner_hero" oninput="recalcApp()">
+            </div>
+            <div class="gen-field">
+              <label for="utm-trm">КЛЮЧЕВОЕ СЛОВО · utm_term (t)</label>
+              <input type="text" id="utm-trm" class="gen-input" placeholder="vibe_coding" oninput="recalcApp()">
+            </div>
+            <div class="gen-field">
+              <label for="utm-ref">РЕФЕРАЛЬНЫЙ КОД / ПАРТНЕР · referralCode (r)</label>
+              <input type="text" id="utm-ref" class="gen-input" placeholder="sage777" oninput="recalcApp()">
+            </div>
+          </div>
+
+          <!-- Generated Results -->
+          <div class="output-section">
+            <!-- 1. Full Website Link -->
+            <div>
+              <div class="output-header">
+                <span class="output-label">ССЫЛКА ДЛЯ&nbsp;САЙТА (СТАНДАРТНАЯ С&nbsp;ПОЛНЫМИ UTM)</span>
+              </div>
+              <div class="gen-input-group">
+                <input type="text" id="out-site-full" class="gen-input gen-input-readonly" readonly placeholder="https://...">
+                <button type="button" class="btn-copy-tool" onclick="copyToolVal('out-site-full', this)">Копировать</button>
+              </div>
+            </div>
+
+            <!-- 2. Base64 Website Link -->
+            <div>
+              <div class="output-header">
+                <span class="output-label">ССЫЛКА ДЛЯ&nbsp;САЙТА (BASE64 URL-SAFE C КОРОТКИМИ КЛЮЧАМИ)</span>
+                <span id="count-site-b64" class="output-counter"></span>
+              </div>
+              <div class="gen-input-group">
+                <input type="text" id="out-site-b64" class="gen-input gen-input-readonly" readonly placeholder="https://.../?data=...">
+                <button type="button" class="btn-copy-tool" onclick="copyToolVal('out-site-b64', this)">Копировать</button>
+              </div>
+            </div>
+
+            <!-- 3. Standard Telegram Link -->
+            <div>
+              <div class="output-header">
+                <span class="output-label">СТАНДАРТНАЯ ССЫЛКА ДЛЯ&nbsp;TELEGRAM (МОЖНО РЕДАКТИРОВАТЬ ВРУЧНУЮ)</span>
+              </div>
+              <div class="gen-input-group">
+                <input type="text" id="out-tg-std" class="gen-input" oninput="manualTelegramInput()" placeholder="https://t.me/bot?start&...">
+                <button type="button" class="btn-copy-tool" onclick="copyToolVal('out-tg-std', this)">Копировать</button>
+              </div>
+            </div>
+
+            <!-- 4. Base64 Telegram Link (Primary) -->
+            <div>
+              <div class="output-header">
+                <span class="output-label" style="color:#09090b; font-weight:800;">ССЫЛКА ДЛЯ&nbsp;TELEGRAM (BASE64 URL-SAFE, ДО&nbsp;64 БАЙТ)</span>
+                <span id="count-tg-b64" class="output-counter ok">(0 / 64 байт)</span>
+              </div>
+              <div class="gen-input-group">
+                <input type="text" id="out-tg-b64" class="gen-input gen-input-readonly" style="font-weight:700; color:#09090b;" readonly placeholder="https://t.me/bot?start=...">
+                <button type="button" class="btn-copy-tool" style="background:#10b981; border-color:#10b981;" onclick="copyToolVal('out-tg-b64', this)">Копировать ссылку</button>
+              </div>
+              <div id="overflow-alert" class="alert-banner"></div>
+            </div>
+
+            <!-- Actions Bar -->
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-top:8px;">
+              <button type="button" class="preset-btn" onclick="clearAllForm()" style="padding:8px 16px;">Очистить все поля</button>
+              <div style="font-family:var(--mono); font-size:0.75rem; color:#71717a;">
+                Параметр <code>start</code> в&nbsp;Telegram передается боту при&nbsp;нажатии «Запустить».
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 02: FORWARDER SCRIPT -->
+    <section id="forwarder" class="utm-tool-frame utm-section-block" data-nav-title="02. Скрипт проброса">
+      <div class="utm-content-wrap">
+        <div class="section-tag" style="color:#10b981;">// СКВОЗНАЯ АНАЛИТИКА</div>
+        <h2>Скрипт сквозного проброса меток (Tilda / Web)</h2>
+        <p>
+          Если вы&nbsp;ведете платный трафик на&nbsp;лендинг, а&nbsp;целевым действием является переход в&nbsp;Telegram-бота, метки из&nbsp;адресной строки пользователя потеряются при&nbsp;клике по&nbsp;кнопке. Скрипт ниже автоматически подхватывает параметры страницы и&nbsp;дописывает их ко&nbsp;всем исходящим ссылкам на&nbsp;сайте.
+        </p>
+
+        <div class="code-box">
+          <div class="code-box-header">
+            <span>// HTML / JAVASCRIPT ДЛЯ&nbsp;ВСТАВКИ В&nbsp;&lt;HEAD&gt; ИЛИ&nbsp;БЛОК T123</span>
+            <button type="button" class="btn-copy-prompt" onclick="copySnippet('forwarder-script-code', this)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><rect x="9" y="9" width="13" height="13" rx="0"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span>Копировать скрипт</span>
+            </button>
+          </div>
+          <pre class="code-box-body"><code id="forwarder-script-code">&lt;!-- Скрипт сквозного проброса UTM-меток (AiSAGE) --&gt;
+&lt;script&gt;
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. Получаем строку запроса из URL страницы
+    var queryString = window.location.search;
+
+    // 2. Если параметры существуют, обрабатываем ссылки
+    if (queryString) {
+        var allLinks = document.querySelectorAll('a');
+        allLinks.forEach(function(link) {
+            var href = link.getAttribute('href');
+            // Пропускаем якорные ссылки (#) и системные вызовы
+            if (href && !href.startsWith('#') && !href.startsWith('javascript:')) {
+                // Корректно объединяем через ? или &
+                if (href.indexOf('?') !== -1) {
+                    link.href = href + '&' + queryString.substring(1);
+                } else {
+                    link.href = href + queryString;
+                }
+            }
+        });
+    }
+});
+&lt;/script&gt;</code></pre>
+        </div>
+
+        <div class="callout-box callout-emerald" style="padding:20px; background:#f0fdf4; border-left:4px solid #10b981; margin-top:24px;">
+          <div style="font-weight:700; color:#065f46; font-size:0.95rem; margin-bottom:6px;">Как&nbsp;установить на&nbsp;Тильде за&nbsp;30 секунд:</div>
+          <ol style="margin:0; padding-left:20px; font-size:0.92rem; color:#064e3b; line-height:1.6;">
+            <li>Добавьте на&nbsp;страницу лендинга блок <strong>T123 (HTML-код)</strong> из&nbsp;категории «Другое».</li>
+            <li>Вставьте скопированный скрипт в&nbsp;блок и&nbsp;нажмите «Сохранить и&nbsp;закрыть».</li>
+            <li>Опубликуйте страницу. Теперь при&nbsp;переходе на&nbsp;<code>yoursite.ru/?utm_source=yandex</code> все ссылки на&nbsp;странице автоматически получат этот параметр.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 03: TECHNICAL GUIDE & BOT DECODE -->
+    <section id="guide" class="utm-tool-frame utm-section-block" data-nav-title="03. Инженерия & Код бота">
+      <div class="utm-content-wrap">
+        <div class="section-tag" style="color:#10b981;">// ТЕХНИЧЕСКИЙ СТАНДАРТ</div>
+        <h2>Почему Telegram ограничивает параметр 64 байтами?</h2>
+        
+        <p>
+          В&nbsp;протоколе Telegram Bot API команда <code>/start [payload]</code> жестко ограничена спецификацией: длина параметра <code>start</code> не&nbsp;может превышать <strong>64 байта</strong> (ASCII-символов). Если попытаться передать обычную строку <code>utm_source=yandex&utm_medium=cpc&utm_campaign=brand</code>, ссылка моментально превысит лимит, и&nbsp;Telegram просто <strong>отбросит параметр</strong>. Пользователь попадет в&nbsp;бота, но&nbsp;бот получит пустой старт.
+        </p>
+
+        <h3>Таблица сокращения ключей параметров</h3>
+        <div class="table-scroll">
+          <table class="table-spec">
+            <thead>
+              <tr>
+                <th>Стандартный ключ</th>
+                <th>Короткий ключ</th>
+                <th>Назначение</th>
+                <th>Пример значения</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>utm_source</code></td>
+                <td><code>s</code></td>
+                <td>Источник трафика</td>
+                <td><code>ya</code>, <code>tg</code>, <code>vk</code></td>
+              </tr>
+              <tr>
+                <td><code>utm_medium</code></td>
+                <td><code>m</code></td>
+                <td>Тип рекламы / Канал</td>
+                <td><code>cpc</code>, <code>post</code>, <code>story</code></td>
+              </tr>
+              <tr>
+                <td><code>utm_campaign</code></td>
+                <td><code>c</code></td>
+                <td>Название рекламной кампании</td>
+                <td><code>sale</code>, <code>web26</code></td>
+              </tr>
+              <tr>
+                <td><code>utm_content</code></td>
+                <td><code>o</code></td>
+                <td>Идентификатор креатива/баннера</td>
+                <td><code>b1</code>, <code>v2</code></td>
+              </tr>
+              <tr>
+                <td><code>utm_term</code></td>
+                <td><code>t</code></td>
+                <td>Ключевое слово / таргетинг</td>
+                <td><code>agent</code>, <code>vibe</code></td>
+              </tr>
+              <tr>
+                <td><code>referralCode</code></td>
+                <td><code>r</code></td>
+                <td>ID партнера / Реферальный код</td>
+                <td><code>usr99</code>, <code>p12</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Как&nbsp;Telegram-бот декодирует метки на&nbsp;сервере</h3>
+        <p>
+          При&nbsp;нажатии на&nbsp;кнопку «Запустить» бот получает событие с&nbsp;текстом команды, например: <code>/start c315YSZtPWNwYyZjPXNhbGU</code>. Бот берет полезную нагрузку, восстанавливает URL-safe Base64 и&nbsp;парсит querystring.
+        </p>
+
+        <div class="code-box">
+          <div class="code-box-header">
+            <span>PYTHON (AIOGRAM 3.X / TELEBOT)</span>
+            <button type="button" class="btn-copy-prompt" onclick="copySnippet('bot-python-code', this)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><rect x="9" y="9" width="13" height="13" rx="0"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span>Копировать Python</span>
+            </button>
+          </div>
+          <pre class="code-box-body"><code id="bot-python-code">import base64
+from urllib.parse import parse_qs
+
+def decode_utm_payload(payload: str) -> dict:
+    """Декодирует URL-safe Base64 payload из команды /start в Telegram боте"""
+    try:
+        # Восстанавливаем паддинг '=' до кратности 4
+        padded = payload + '=' * (-len(payload) % 4)
+        # Декодируем URL-safe Base64 (- на +, _ на /)
+        raw_bytes = base64.urlsafe_b64decode(padded)
+        decoded_query = raw_bytes.decode('utf-8')
+        
+        # Парсим параметры s, m, c, o, t, r
+        parsed = parse_qs(decoded_query)
+        return {
+            'utm_source': parsed.get('s', [None])[0],
+            'utm_medium': parsed.get('m', [None])[0],
+            'utm_campaign': parsed.get('c', [None])[0],
+            'utm_content': parsed.get('o', [None])[0],
+            'utm_term': parsed.get('t', [None])[0],
+            'referral_code': parsed.get('r', [None])[0],
+        }
+    except Exception as e:
+        return {}
+
+# Пример в aiogram 3:
+# @dp.message(CommandStart(deep_link=True))
+# async def start_handler(message: Message, command: CommandObject):
+#     utm = decode_utm_payload(command.args)
+#     print("Источник рекламы:", utm.get('utm_source'))</code></pre>
+        </div>
+
+        <div class="code-box">
+          <div class="code-box-header">
+            <span>NODE.JS / TYPESCRIPT (TELEGRAF / GRAMMY)</span>
+            <button type="button" class="btn-copy-prompt" onclick="copySnippet('bot-node-code', this)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><rect x="9" y="9" width="13" height="13" rx="0"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span>Копировать Node.js</span>
+            </button>
+          </div>
+          <pre class="code-box-body"><code id="bot-node-code">function decodeUtmPayload(payload) {
+  try {
+    // Восстанавливаем символы Base64 и выравнивание
+    let base64 = payload.replace(/-/g, '+').replace(/_/g, '/');
+    while (base64.length % 4) base64 += '=';
+    
+    const decoded = Buffer.from(base64, 'base64').toString('utf-8');
+    const params = new URLSearchParams(decoded);
+
+    return {
+      utm_source: params.get('s'),
+      utm_medium: params.get('m'),
+      utm_campaign: params.get('c'),
+      utm_content: params.get('o'),
+      utm_term: params.get('t'),
+      referral_code: params.get('r')
+    };
+  } catch (err) {
+    return null;
+  }
+}
+
+// Пример в grammY:
+// bot.command('start', async (ctx) => {
+//   const payload = ctx.match;
+//   const utm = decodeUtmPayload(payload);
+// });</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 04: FAQ (ANTIGRAVITY HARNESS STANDARD) -->
+    <section id="faq" class="utm-tool-frame section section-border section-pad" data-nav-title="Вопросы">
+      <div class="utm-content-wrap">
+        <div class="section-tag">ЧАСТЫЕ ВОПРОСЫ</div>
+        <h2 class="section-title">Вопросы и&nbsp;ответы о&nbsp;диплинках в&nbsp;Telegram</h2>
+        
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-q" type="button">
+              <span>1. Почему нельзя передать стандартные UTM-метки прямо в&nbsp;ссылку Telegram?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                Telegram поддерживает только один параметр запуска для&nbsp;ботов: <code>?start=ПАРАМЕТР</code>. Знаки амперсанда (<code>&amp;</code>) и&nbsp;вопроса внутри этого значения парсер Telegram игнорирует либо&nbsp;ломает. Кроме того, длина параметра жестко ограничена 64 байтами. Перевод в&nbsp;URL-safe Base64 решает обе проблемы: убирает спецсимволы и&nbsp;позволяет уместить до&nbsp;5–6 сокращенных параметров в&nbsp;один компактный токен.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" type="button">
+              <span>2. Что&nbsp;произойдет, если длина ссылки превысит 64 байта?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                Если значение после <code>?start=</code> окажется длиннее 64 байт, клиент Telegram просто проигнорирует параметр. Пользователь откроет бота, нажмет кнопку «Запустить», но&nbsp;бот получит только команду <code>/start</code> без&nbsp;хвоста с&nbsp;метками. Сквозная конверсия и&nbsp;источник трафика будут потеряны. Именно поэтому наш счетчик выделяет превышение красным цветом.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" type="button">
+              <span>3. Чем&nbsp;URL-safe Base64 отличается от&nbsp;обычного Base64?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                В&nbsp;стандартном Base64 используются символы <code>+</code> и&nbsp;<code>/</code>, а&nbsp;в&nbsp;конце добавляется знак равенства <code>=</code> для&nbsp;выравнивания. В&nbsp;URL адресной строки символ <code>+</code> заменяется на&nbsp;пробел, а&nbsp;<code>/</code> ломает структуру пути. В&nbsp;<strong>URL-safe Base64 (RFC 4648)</strong> плюсы заменяются на&nbsp;дефисы (<code>-</code>), слэши на&nbsp;подчеркивания (<code>_</code>), а&nbsp;концевые знаки <code>=</code> просто обрезаются. Это гарантирует 100% стабильность ссылки в&nbsp;любых мессенджерах.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" type="button">
+              <span>4. Работает ли&nbsp;этот инструмент с&nbsp;кириллическими метками?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                Да, алгоритм генератора предварительно кодирует UTF-8 символы перед&nbsp;упаковкой в&nbsp;Base64. Однако учтите: каждый русский символ в&nbsp;UTF-8 занимает 2 байта, из-за&nbsp;чего длина Base64-строки растет быстрее. Для&nbsp;рекламы в&nbsp;Telegram настоятельно рекомендуется использовать короткую латиницу (например, <code>c=direct_msk</code> вместо <code>c=директ_москва</code>).
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" type="button">
+              <span>5. Можно ли&nbsp;использовать генератор внутри Личного Кабинета?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                Да, этот генератор полностью интегрирован в&nbsp;Личный Кабинет платформы (<a href="/cabinet/?tab=knowledge" style="text-decoration:underline; font-weight:700;">/cabinet/?tab=knowledge</a>). Вы&nbsp;можете открывать его прямо из&nbsp;панели управления в&nbsp;виде быстрого модального окна в&nbsp;1 клик без&nbsp;перехода на&nbsp;внешние страницы.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 05: CONTACT & PLATFORM CTA -->
+    <section id="contact" class="utm-tool-frame form-section" data-nav-title="Связь">
+      <div class="form-container" style="max-width:980px; margin:0 auto; padding:48px 24px;">
+        <div class="section-tag" style="color:#10b981;">// СВЯЗЬ &amp;&nbsp;РАЗРАБОТКА</div>
+        <h2 class="section-title" style="font-size:clamp(1.8rem, 3vw, 2.4rem); margin-bottom:12px;">Нужна сквозная аналитика или&nbsp;Telegram-бот под&nbsp;ключ?</h2>
+        <p style="font-size:1.05rem; color:#52525b; margin-bottom:28px; line-height:1.6;">
+          Разрабатываем автономных AI-агентов, кастомные воронки в&nbsp;Telegram и&nbsp;связываем рекламу с&nbsp;CRM и&nbsp;сквозной аналитикой. Забронируйте встречу или&nbsp;напишите в&nbsp;мессенджер.
+        </p>
+
+        <div style="display:flex; gap:16px; flex-wrap:wrap;">
+          <a href="/booking" class="btn-primary" style="padding:14px 28px; font-size:0.95rem;">Забронировать слот в&nbsp;Календаре ↗</a>
+          <a href="https://t.me/uncrn_sage" target="_blank" class="btn-secondary" style="padding:14px 24px; font-size:0.95rem;">Написать в&nbsp;Telegram ↗</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-copy">
+        ИП&nbsp;Пузырёв Михаил Михайлович · ИНН 500177901407 · ОГРНИП 318505300123140
+      </div>
+      <div class="footer-links">
+        <a href="/privacy">Политика конфиденциальности</a>
+        <a href="/terms">Пользовательское соглашение</a>
+        <a href="/offer-materials">Оферта материалов</a>
+        <a href="/offer-club">Оферта клуба</a>
+        <a href="https://t.me/uncrn_sage" target="_blank">Telegram</a>
+        <a href="/booking">Забронировать слот</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Core Scripts -->
+  <script src="/js/main.js?v=2.9"></script>
+  <script src="/js/auth.js?v=2.9"></script>
+
+  <!-- Generator Script -->
+  <script>
+    function recalcApp() {
+      const siteInput = (document.getElementById('site-url')?.value || '').trim().replace(/^https?:\/\//, '').replace(/\/$/, '');
+      const tgInput = (document.getElementById('tg-nick')?.value || '').trim().replace(/^https?:\/\/t\.me\//, '').replace(/^@/, '').replace(/\/$/, '');
+
+      const src = (document.getElementById('utm-src')?.value || '').trim();
+      const med = (document.getElementById('utm-med')?.value || '').trim();
+      const cmp = (document.getElementById('utm-cmp')?.value || '').trim();
+      const cnt = (document.getElementById('utm-cnt')?.value || '').trim();
+      const trm = (document.getElementById('utm-trm')?.value || '').trim();
+      const ref = (document.getElementById('utm-ref')?.value || '').trim();
+
+      const shortParams = [];
+      if (ref) shortParams.push(`r=${ref}`);
+      if (src) shortParams.push(`s=${src}`);
+      if (med) shortParams.push(`m=${med}`);
+      if (cmp) shortParams.push(`c=${cmp}`);
+      if (cnt) shortParams.push(`o=${cnt}`);
+      if (trm) shortParams.push(`t=${trm}`);
+
+      const longParams = [];
+      if (ref) longParams.push(`referralCode=${ref}`);
+      if (src) longParams.push(`utm_source=${src}`);
+      if (med) longParams.push(`utm_medium=${med}`);
+      if (cmp) longParams.push(`utm_campaign=${cmp}`);
+      if (cnt) longParams.push(`utm_content=${cnt}`);
+      if (trm) longParams.push(`utm_term=${trm}`);
+
+      const shortQuery = shortParams.join('&');
+      const longQuery = longParams.join('&');
+
+      // 1. Website Link Full & Base64
+      const outSiteFull = document.getElementById('out-site-full');
+      const outSiteB64 = document.getElementById('out-site-b64');
+      const countSiteB64 = document.getElementById('count-site-b64');
+
+      if (siteInput) {
+        if (longQuery) {
+          if (outSiteFull) outSiteFull.value = `https://${siteInput}?${longQuery}`;
+          try {
+            const b64 = btoa(unescape(encodeURIComponent(shortQuery))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+            if (outSiteB64) outSiteB64.value = `https://${siteInput}?data=${b64}`;
+            if (countSiteB64) {
+              countSiteB64.textContent = `(${b64.length} симв.)`;
+              countSiteB64.style.color = '#71717a';
+            }
+          } catch (e) {
+            if (outSiteB64) outSiteB64.value = '';
+          }
+        } else {
+          if (outSiteFull) outSiteFull.value = `https://${siteInput}`;
+          if (outSiteB64) outSiteB64.value = `https://${siteInput}`;
+          if (countSiteB64) countSiteB64.textContent = '';
+        }
+      } else {
+        if (outSiteFull) outSiteFull.value = '';
+        if (outSiteB64) outSiteB64.value = '';
+        if (countSiteB64) countSiteB64.textContent = '';
+      }
+
+      // 2. Telegram Links
+      const outTgStd = document.getElementById('out-tg-std');
+      const outTgB64 = document.getElementById('out-tg-b64');
+      const countTgB64 = document.getElementById('count-tg-b64');
+      const alertBox = document.getElementById('overflow-alert');
+
+      if (tgInput) {
+        const stdUrl = `https://t.me/${tgInput}${longQuery ? '?start&' + longQuery : ''}`;
+        if (outTgStd) outTgStd.value = stdUrl;
+
+        if (shortQuery) {
+          try {
+            const b64 = btoa(unescape(encodeURIComponent(shortQuery))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+            const b64Url = `https://t.me/${tgInput}?start=${b64}`;
+            if (outTgB64) outTgB64.value = b64Url;
+
+            const byteLen = b64.length;
+            if (countTgB64) {
+              countTgB64.textContent = `(${byteLen} / 64 байт)`;
+              if (byteLen > 64) {
+                countTgB64.className = 'output-counter danger';
+                if (alertBox) {
+                  alertBox.style.display = 'block';
+                  alertBox.innerHTML = `⚠️ <strong>Внимание: превышен лимит ${byteLen} байт из 64!</strong> Telegram отсечет параметр start. Бот не получит метки при переходе. Рекомендуем сократить значения меток до коротких аббревиатур.`;
+                }
+              } else {
+                countTgB64.className = 'output-counter ok';
+                if (alertBox) alertBox.style.display = 'none';
+              }
+            }
+          } catch (e) {
+            if (outTgB64) outTgB64.value = 'Ошибка кодирования';
+          }
+        } else {
+          if (outTgB64) outTgB64.value = `https://t.me/${tgInput}?start=`;
+          if (countTgB64) {
+            countTgB64.textContent = '(0 / 64 байт)';
+            countTgB64.className = 'output-counter ok';
+          }
+          if (alertBox) alertBox.style.display = 'none';
+        }
+      } else {
+        if (outTgStd) outTgStd.value = '';
+        if (outTgB64) outTgB64.value = '';
+        if (countTgB64) {
+          countTgB64.textContent = '(0 / 64 байт)';
+          countTgB64.className = 'output-counter';
+        }
+        if (alertBox) alertBox.style.display = 'none';
+      }
+    }
+
+    function manualTelegramInput() {
+      const stdInput = document.getElementById('out-tg-std');
+      if (!stdInput) return;
+      const val = stdInput.value.trim();
+      const match = val.match(/t\.me\/([^?]+)\?start(?:&|=)(.+)/);
+      if (match && match[1] && match[2]) {
+        const nick = match[1];
+        const rawParams = match[2];
+        const shortParams = rawParams
+          .replace(/utm_source=/g, 's=')
+          .replace(/utm_medium=/g, 'm=')
+          .replace(/utm_campaign=/g, 'c=')
+          .replace(/utm_content=/g, 'o=')
+          .replace(/utm_term=/g, 't=')
+          .replace(/referralCode=/g, 'r=');
+
+        try {
+          const b64 = btoa(unescape(encodeURIComponent(shortParams))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+          const outTgB64 = document.getElementById('out-tg-b64');
+          if (outTgB64) outTgB64.value = `https://t.me/${nick}?start=${b64}`;
+          const countTgB64 = document.getElementById('count-tg-b64');
+          const alertBox = document.getElementById('overflow-alert');
+          const byteLen = b64.length;
+          if (countTgB64) {
+            countTgB64.textContent = `(${byteLen} / 64 байт)`;
+            if (byteLen > 64) {
+              countTgB64.className = 'output-counter danger';
+              if (alertBox) {
+                alertBox.style.display = 'block';
+                alertBox.innerHTML = `⚠️ <strong>Превышен лимит ${byteLen} байт из 64!</strong> Сократите параметры.`;
+              }
+            } else {
+              countTgB64.className = 'output-counter ok';
+              if (alertBox) alertBox.style.display = 'none';
+            }
+          }
+        } catch (e) {}
+      }
+    }
+
+    function setPreset(src, med, cmp) {
+      const s = document.getElementById('utm-src');
+      const m = document.getElementById('utm-med');
+      const c = document.getElementById('utm-cmp');
+      if (s) s.value = src;
+      if (m) m.value = med;
+      if (c && !c.value) c.value = cmp;
+      recalcApp();
+    }
+
+    function clearAllForm() {
+      ['site-url', 'tg-nick', 'utm-src', 'utm-med', 'utm-cmp', 'utm-cnt', 'utm-trm', 'utm-ref', 'out-site-full', 'out-site-b64', 'out-tg-std', 'out-tg-b64'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+      const c1 = document.getElementById('count-site-b64');
+      if (c1) c1.textContent = '';
+      const c2 = document.getElementById('count-tg-b64');
+      if (c2) {
+        c2.textContent = '(0 / 64 байт)';
+        c2.className = 'output-counter ok';
+      }
+      const a = document.getElementById('overflow-alert');
+      if (a) a.style.display = 'none';
+    }
+
+    function copyToolVal(id, btn) {
+      const input = document.getElementById(id);
+      if (!input || !input.value) return;
+      const text = input.value;
+      const setCopied = () => {
+        const orig = btn.innerText;
+        btn.classList.add('copied');
+        btn.innerText = '✓ Скопировано';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.innerText = orig;
+        }, 2000);
+      };
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(setCopied).catch(() => fallbackCopy(text, setCopied));
+      } else {
+        fallbackCopy(text, setCopied);
+      }
+    }
+
+    function copySnippet(id, btn) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const text = el.innerText || el.textContent;
+      const setCopied = () => {
+        const orig = btn.innerHTML;
+        btn.classList.add('copied');
+        btn.innerHTML = `
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="square"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span style="color:#10b981; font-weight:700;">Скопировано!</span>
+        `;
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.innerHTML = orig;
+        }, 2500);
+      };
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text.trim()).then(setCopied).catch(() => fallbackCopy(text.trim(), setCopied));
+      } else {
+        fallbackCopy(text.trim(), setCopied);
+      }
+    }
+
+    function fallbackCopy(text, cb) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      try {
+        document.execCommand('copy');
+        cb();
+      } catch (e) {
+        console.error('Fallback copy failed', e);
+      }
+      document.body.removeChild(ta);
+    }
+
+    // Default prefill for fast demonstration
+    document.addEventListener('DOMContentLoaded', () => {
+      const siteEl = document.getElementById('site-url');
+      const tgEl = document.getElementById('tg-nick');
+      if (siteEl && !siteEl.value) siteEl.value = 'a-sage.ru/offer';
+      if (tgEl && !tgEl.value) tgEl.value = 'Michael_Sage_bot';
+      const s = document.getElementById('utm-src');
+      const m = document.getElementById('utm-med');
+      const c = document.getElementById('utm-cmp');
+      if (s && !s.value) s.value = 'yandex';
+      if (m && !m.value) m.value = 'cpc';
+      if (c && !c.value) c.value = 'agent';
+      recalcApp();
+    });
+  </script>
+</body>
+</html>
