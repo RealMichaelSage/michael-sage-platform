@@ -407,10 +407,10 @@ const Auth = {
   hasClubAccess() {
     const user = this.getUser();
     if (!user) return false;
-    const tgId = Number(user.telegram_id || 0);
+    const tgId = Number(user.telegram_id || user.id || 0);
     const uname = (user.username || '').replace(/^@/, '').toLowerCase();
     // Mikhail Sage is platform founder and has full access
-    if (uname === 'michael_sage' || uname === 'uncrn_sage' || tgId === 439634804 || tgId === 88472911) {
+    if (user.role === 'founder' || user.is_founder === true || uname === 'michael_sage' || uname === 'uncrn_sage' || tgId === 439634804 || tgId === 88472911) {
       return true;
     }
     // Resident of SAGE Neuro Family chat or Student of Mentorship
@@ -945,6 +945,8 @@ const Auth = {
         if (lockwall) lockwall.style.display = 'none';
         if (scrollspyRail) scrollspyRail.style.display = '';
       }
+
+      this.updateAccessUI();
     };
 
     if (document.readyState === 'loading') {
@@ -1613,6 +1615,92 @@ const Auth = {
         slot.innerHTML = `<button onclick="Auth.openModal()" class="m-cta" style="background:#f4f4f5; color:#18181b; border:1px solid #e4e4e7; width:100%; cursor:pointer;">👤 Войти / Регистрация ↗</button>`;
       }
     });
+
+    // Also update dynamic access badges and buttons
+    this.updateAccessUI();
+  },
+
+  // 7.1 Sync Dynamic Access UI for Protected Materials across Platform
+  updateAccessUI() {
+    const hasClub = this.hasClubAccess();
+    const hasPodcast = hasClub || this.hasPurchasedItem('podcast-guide-v2');
+    const isSubOrClub = this.isChannelSubscriber() || hasClub;
+
+    // 1. Podcast guide card on /base and /base.html
+    const podcastBadge = document.getElementById('badge-podcast-guide');
+    const podcastBtn = document.getElementById('btn-podcast-guide');
+    if (podcastBadge) {
+      if (hasPodcast) {
+        podcastBadge.style.background = '#064e3b';
+        podcastBadge.style.color = '#34d399';
+        podcastBadge.style.border = '1px solid #059669';
+        podcastBadge.textContent = hasClub ? '✓ ДОСТУПНО РЕЗИДЕНТУ' : '✓ ДОСТУП ОПЛАЧЕН';
+      } else {
+        podcastBadge.style.background = '#dc2626';
+        podcastBadge.style.color = '#ffffff';
+        podcastBadge.style.border = 'none';
+        podcastBadge.textContent = '🔒 КЛУБ / 490 ₽';
+      }
+    }
+    if (podcastBtn) {
+      if (hasPodcast) {
+        podcastBtn.innerHTML = 'Читать руководство ↗';
+      } else {
+        podcastBtn.innerHTML = 'Читать руководство (🔒 Резидентам или 490 ₽) ↗';
+      }
+    }
+
+    // 2. Podcast guide hero on /base/ai-podcast-guide/
+    const heroPodcastBadge = document.getElementById('hero-guide-access-badge');
+    const heroPodcastMeta = document.getElementById('hero-guide-access-meta');
+    if (heroPodcastBadge || heroPodcastMeta) {
+      if (hasPodcast) {
+        if (heroPodcastBadge) {
+          heroPodcastBadge.style.background = '#ecfdf5';
+          heroPodcastBadge.style.color = '#065f46';
+          heroPodcastBadge.style.borderColor = '#a7f3d0';
+          heroPodcastBadge.textContent = hasClub ? '✓ ДОСТУПНО РЕЗИДЕНТУ' : '✓ ДОСТУП РАЗБЛОКИРОВАН';
+        }
+        if (heroPodcastMeta) {
+          heroPodcastMeta.style.color = '#10b981';
+          heroPodcastMeta.textContent = hasClub ? '✓ Разблокировано (Резидент)' : '✓ Оплачено (Доступ открыт)';
+        }
+      } else {
+        if (heroPodcastBadge) {
+          heroPodcastBadge.style.background = '#fef2f2';
+          heroPodcastBadge.style.color = '#dc2626';
+          heroPodcastBadge.style.borderColor = '#fecaca';
+          heroPodcastBadge.textContent = '🔒 КЛУБ / 490 ₽';
+        }
+        if (heroPodcastMeta) {
+          heroPodcastMeta.style.color = '#dc2626';
+          heroPodcastMeta.textContent = '🔒 Резидентам или 490 ₽';
+        }
+      }
+    }
+
+    // 3. SAGE VPN card on /base
+    const vpnBadge = document.getElementById('badge-vpn-access');
+    const vpnNotice = document.getElementById('notice-vpn-access');
+    if (vpnBadge) {
+      if (isSubOrClub) {
+        vpnBadge.style.background = '#ecfdf5';
+        vpnBadge.style.color = '#065f46';
+        vpnBadge.style.borderColor = '#a7f3d0';
+        vpnBadge.textContent = hasClub ? '✓ ДОСТУПНО РЕЗИДЕНТУ' : '✓ ДОСТУПНО ПОДПИСЧИКУ';
+        if (vpnNotice) {
+          vpnNotice.innerHTML = '<span style="color:#10b981;">✓</span> Доступ открыт в @Michael_Sage_bot';
+        }
+      } else {
+        vpnBadge.style.background = '#f4f4f5';
+        vpnBadge.style.color = '#09090b';
+        vpnBadge.style.border = '1px solid #e4e4e7';
+        vpnBadge.textContent = '🔒 ЗАКРЫТЫЙ ДОСТУП';
+        if (vpnNotice) {
+          vpnNotice.innerHTML = '<span>🔒</span> Только для подписчиков канала и резидентов клуба';
+        }
+      }
+    }
   }
 };
 
@@ -1740,4 +1828,8 @@ window.addEventListener('asage_auth_changed', () => {
   if (Auth.isLoggedIn()) {
     Auth.fetchPurchasedItems();
   }
+});
+
+window.addEventListener('asage_purchases_updated', () => {
+  Auth.updateAccessUI();
 });
