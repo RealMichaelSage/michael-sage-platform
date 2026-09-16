@@ -1159,10 +1159,17 @@
       background: rgba(255, 255, 255, 0.05);
     }
 
+    .webrtc-btn.muted,
     .webrtc-btn.off {
-      background: rgba(239, 68, 68, 0.15);
-      color: #f87171;
-      border-color: rgba(239, 68, 68, 0.4);
+      background: rgba(239, 68, 68, 0.18) !important;
+      color: #f87171 !important;
+      border-color: rgba(239, 68, 68, 0.5) !important;
+    }
+
+    .webrtc-btn.muted:hover,
+    .webrtc-btn.off:hover {
+      background: rgba(239, 68, 68, 0.28) !important;
+      border-color: #ef4444 !important;
     }
 
     .webrtc-btn.hangup-red {
@@ -1175,6 +1182,70 @@
       background: #ef4444;
       color: #ffffff;
       border-color: #ef4444;
+    }
+
+    .webrtc-btn-pill {
+      padding: 8px 16px;
+      font-size: 0.84rem;
+      font-weight: 600;
+    }
+
+    .slot-local-quick-controls {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 10;
+    }
+
+    .slot-quick-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(13, 16, 23, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .slot-quick-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: scale(1.08);
+    }
+
+    .slot-quick-btn.muted,
+    .slot-quick-btn.off {
+      background: #ef4444 !important;
+      border-color: #f87171 !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 12px rgba(239, 68, 68, 0.5) !important;
+    }
+
+    @media (max-width: 640px) {
+      .hide-mobile {
+        display: none !important;
+      }
+      .webrtc-call-header {
+        padding: 10px 12px;
+      }
+      .webrtc-ctrl-group {
+        gap: 6px;
+      }
+      .webrtc-btn {
+        padding: 6px 10px;
+        font-size: 0.78rem;
+      }
     }
 
     .webrtc-call-footer-note {
@@ -1356,8 +1427,16 @@
               <span class="webrtc-timer-sync-pill" id="webrtc-time-remaining">45:00</span>
             </div>
             <div class="webrtc-ctrl-group">
-              <button class="webrtc-btn" onclick="toggleWebrtcFullscreen()" title="Во весь экран">⛶ Экран</button>
-              <button class="webrtc-btn hangup-red" onclick="closeWebrtcCall(true)" title="Завершить созвон">✕ Выйти</button>
+              <button type="button" class="webrtc-btn" id="btn-header-mic" onclick="toggleWebrtcMic()" title="Вкл / Выкл микрофон">
+                <span id="header-mic-icon">🎙</span>
+                <span class="hide-mobile" id="header-mic-text">Микрофон</span>
+              </button>
+              <button type="button" class="webrtc-btn" id="btn-header-cam" onclick="toggleWebrtcCam()" title="Вкл / Выкл камеру">
+                <span id="header-cam-icon">📷</span>
+                <span class="hide-mobile" id="header-cam-text">Камера</span>
+              </button>
+              <button type="button" class="webrtc-btn" onclick="toggleWebrtcFullscreen()" title="Во весь экран">⛶ <span class="hide-mobile">Экран</span></button>
+              <button type="button" class="webrtc-btn hangup-red" onclick="closeWebrtcCall(true)" title="Завершить созвон">✕ <span class="hide-mobile">Выйти</span></button>
             </div>
           </div>
 
@@ -1365,15 +1444,19 @@
           <div class="webrtc-video-grid" id="webrtc-video-grid">
             <!-- Slot 1: You (Local User) -->
             <div class="webrtc-video-slot" id="slot-local">
+              <div class="slot-local-quick-controls">
+                <button type="button" class="slot-quick-btn" id="btn-slot-mic" onclick="toggleWebrtcMic()" title="Вкл / Выкл микрофон">🎙</button>
+                <button type="button" class="slot-quick-btn" id="btn-slot-cam" onclick="toggleWebrtcCam()" title="Вкл / Выкл камеру">📷</button>
+              </div>
               <video id="webrtc-video-local" autoplay muted playsinline class="webrtc-video-stream mirrored"></video>
               <div id="placeholder-local" class="webrtc-avatar-placeholder" style="display:none;">
-                <div class="av-circle">М</div>
-                <div class="av-name">Камера выключена</div>
+                <div class="av-circle" id="av-circle-local">М</div>
+                <div class="av-name" id="av-name-local">Камера выключена</div>
               </div>
               <div class="webrtc-slot-meta">
                 <span class="webrtc-slot-name" id="label-name-local">Михаил Пузырёв 👑 (Вы)</span>
                 <div class="webrtc-slot-icons">
-                  <span id="mic-icon-local" title="Микрофон активен">🎙</span>
+                  <span id="mic-icon-local" title="Микрофон активен (нажмите, чтобы выключить)" style="cursor:pointer;" onclick="toggleWebrtcMic()">🎙</span>
                 </div>
               </div>
             </div>
@@ -1414,13 +1497,13 @@
           <!-- In-Call Floating Control Bar -->
           <div class="webrtc-action-bar">
             <div class="webrtc-ctrl-group">
-              <button type="button" class="webrtc-btn" id="btn-webrtc-mic" onclick="toggleWebrtcMic()">
+              <button type="button" class="webrtc-btn webrtc-btn-pill" id="btn-webrtc-mic" onclick="toggleWebrtcMic()">
                 <span id="webrtc-mic-icon">🎙</span>
-                <span id="webrtc-mic-text">Микрофон</span>
+                <span id="webrtc-mic-text">Микрофон: Вкл</span>
               </button>
-              <button type="button" class="webrtc-btn" id="btn-webrtc-cam" onclick="toggleWebrtcCam()">
+              <button type="button" class="webrtc-btn webrtc-btn-pill" id="btn-webrtc-cam" onclick="toggleWebrtcCam()">
                 <span id="webrtc-cam-icon">📷</span>
-                <span id="webrtc-cam-text">Камера</span>
+                <span id="webrtc-cam-text">Камера: Вкл</span>
               </button>
             </div>
             <div class="webrtc-call-footer-note">
@@ -2205,6 +2288,7 @@
         STATE.isCallActive = true;
         STATE.isMicMuted = false;
         STATE.isCamOff = false;
+        updateMicCamUI();
 
         const roomSlug = (STATE.triad && STATE.triad.name) ? STATE.triad.name : 'Тройка №01';
         const roomBadge = document.getElementById('webrtc-room-badge');
@@ -2426,63 +2510,110 @@
       }
     }
 
+    function updateMicCamUI() {
+      const isMuted = !!STATE.isMicMuted;
+      const isCamOff = !!STATE.isCamOff;
+
+      // 1. Bottom action bar buttons
+      const btnMic = document.getElementById('btn-webrtc-mic');
+      const micIcon = document.getElementById('webrtc-mic-icon');
+      const micText = document.getElementById('webrtc-mic-text');
+      if (btnMic) {
+        btnMic.classList.toggle('muted', isMuted);
+        btnMic.classList.toggle('off', isMuted);
+      }
+      if (micIcon) micIcon.innerText = isMuted ? '🔇' : '🎙';
+      if (micText) micText.innerText = isMuted ? 'Микрофон: Выкл' : 'Микрофон: Вкл';
+
+      const btnCam = document.getElementById('btn-webrtc-cam');
+      const camIcon = document.getElementById('webrtc-cam-icon');
+      const camText = document.getElementById('webrtc-cam-text');
+      if (btnCam) {
+        btnCam.classList.toggle('muted', isCamOff);
+        btnCam.classList.toggle('off', isCamOff);
+      }
+      if (camIcon) camIcon.innerText = isCamOff ? '🚫' : '📷';
+      if (camText) camText.innerText = isCamOff ? 'Камера: Выкл' : 'Камера: Вкл';
+
+      // 2. Header quick buttons
+      const headerBtnMic = document.getElementById('btn-header-mic');
+      const headerMicIcon = document.getElementById('header-mic-icon');
+      const headerMicText = document.getElementById('header-mic-text');
+      if (headerBtnMic) {
+        headerBtnMic.classList.toggle('muted', isMuted);
+        headerBtnMic.classList.toggle('off', isMuted);
+        headerBtnMic.title = isMuted ? 'Включить микрофон' : 'Выключить микрофон';
+      }
+      if (headerMicIcon) headerMicIcon.innerText = isMuted ? '🔇' : '🎙';
+      if (headerMicText) headerMicText.innerText = isMuted ? 'Микр. выкл' : 'Микрофон';
+
+      const headerBtnCam = document.getElementById('btn-header-cam');
+      const headerCamIcon = document.getElementById('header-cam-icon');
+      const headerCamText = document.getElementById('header-cam-text');
+      if (headerBtnCam) {
+        headerBtnCam.classList.toggle('muted', isCamOff);
+        headerBtnCam.classList.toggle('off', isCamOff);
+        headerBtnCam.title = isCamOff ? 'Включить камеру' : 'Выключить камеру';
+      }
+      if (headerCamIcon) headerCamIcon.innerText = isCamOff ? '🚫' : '📷';
+      if (headerCamText) headerCamText.innerText = isCamOff ? 'Кам. выкл' : 'Камера';
+
+      // 3. Slot floating overlay buttons
+      const slotBtnMic = document.getElementById('btn-slot-mic');
+      if (slotBtnMic) {
+        slotBtnMic.classList.toggle('muted', isMuted);
+        slotBtnMic.classList.toggle('off', isMuted);
+        slotBtnMic.innerText = isMuted ? '🔇' : '🎙';
+        slotBtnMic.title = isMuted ? 'Включить микрофон' : 'Выключить микрофон';
+      }
+
+      const slotBtnCam = document.getElementById('btn-slot-cam');
+      if (slotBtnCam) {
+        slotBtnCam.classList.toggle('muted', isCamOff);
+        slotBtnCam.classList.toggle('off', isCamOff);
+        slotBtnCam.innerText = isCamOff ? '🚫' : '📷';
+        slotBtnCam.title = isCamOff ? 'Включить камеру' : 'Выключить камеру';
+      }
+
+      // 4. Video slot badge
+      const localMic = document.getElementById('mic-icon-local');
+      if (localMic) {
+        localMic.innerText = isMuted ? '🔇' : '🎙';
+        localMic.title = isMuted ? 'Микрофон выключен (нажмите для включения)' : 'Микрофон активен (нажмите для выключения)';
+        localMic.style.opacity = isMuted ? '0.7' : '1';
+        localMic.style.color = isMuted ? '#f87171' : '';
+      }
+
+      const localVideo = document.getElementById('webrtc-video-local');
+      const placeholder = document.getElementById('placeholder-local');
+      if (localVideo) localVideo.style.display = isCamOff ? 'none' : 'block';
+      if (placeholder) placeholder.style.display = isCamOff ? 'flex' : 'none';
+    }
+
     function toggleWebrtcMic() {
-      if (!STATE.localStream) return;
+      if (!STATE.localStream) {
+        showCallToast('⚠️ Сначала подключитесь к созвону', 3000);
+        return;
+      }
       STATE.isMicMuted = !STATE.isMicMuted;
       STATE.localStream.getAudioTracks().forEach(track => {
         track.enabled = !STATE.isMicMuted;
       });
-
-      const btn = document.getElementById('btn-webrtc-mic');
-      const icon = document.getElementById('webrtc-mic-icon');
-      const text = document.getElementById('webrtc-mic-text');
-      const localMic = document.getElementById('mic-icon-local');
-
-      if (STATE.isMicMuted) {
-        if (btn) btn.classList.add('muted');
-        if (icon) icon.innerText = '🔇';
-        if (text) text.innerText = 'Микр. выкл';
-        if (localMic) {
-          localMic.innerText = '🔇';
-          localMic.style.opacity = '0.5';
-        }
-      } else {
-        if (btn) btn.classList.remove('muted');
-        if (icon) icon.innerText = '🎙';
-        if (text) text.innerText = 'Микрофон';
-        if (localMic) {
-          localMic.innerText = '🎙';
-          localMic.style.opacity = '1';
-        }
-      }
+      updateMicCamUI();
+      showCallToast(STATE.isMicMuted ? '🔇 Микрофон выключен' : '🎙 Микрофон включен', 2500);
     }
 
     function toggleWebrtcCam() {
-      if (!STATE.localStream) return;
+      if (!STATE.localStream) {
+        showCallToast('⚠️ Сначала подключитесь к созвону', 3000);
+        return;
+      }
       STATE.isCamOff = !STATE.isCamOff;
       STATE.localStream.getVideoTracks().forEach(track => {
         track.enabled = !STATE.isCamOff;
       });
-
-      const btn = document.getElementById('btn-webrtc-cam');
-      const icon = document.getElementById('webrtc-cam-icon');
-      const text = document.getElementById('webrtc-cam-text');
-      const localVideo = document.getElementById('webrtc-video-local');
-      const placeholder = document.getElementById('placeholder-local');
-
-      if (STATE.isCamOff) {
-        if (btn) btn.classList.add('muted');
-        if (icon) icon.innerText = '🚫';
-        if (text) text.innerText = 'Кам. выкл';
-        if (localVideo) localVideo.style.display = 'none';
-        if (placeholder) placeholder.style.display = 'flex';
-      } else {
-        if (btn) btn.classList.remove('muted');
-        if (icon) icon.innerText = '📷';
-        if (text) text.innerText = 'Камера';
-        if (localVideo) localVideo.style.display = 'block';
-        if (placeholder) placeholder.style.display = 'none';
-      }
+      updateMicCamUI();
+      showCallToast(STATE.isCamOff ? '🚫 Камера выключена' : '📷 Камера включена', 2500);
     }
 
     function toggleWebrtcFullscreen() {
@@ -2563,9 +2694,13 @@
         btnLink.style.background = 'var(--surface-card)';
         btnLink.style.borderColor = 'var(--border)';
       }
+
+      STATE.isMicMuted = false;
+      STATE.isCamOff = false;
+      updateMicCamUI();
     }
 
-    function showCallToast(msg) {
+    function showCallToast(msg, duration = 4000) {
       const old = document.querySelector('.call-warning-toast');
       if (old) old.remove();
 
@@ -2575,10 +2710,21 @@
       document.body.appendChild(toast);
       setTimeout(() => {
         toast.style.opacity = '0';
-        toast.style.transition = 'opacity 0.5s';
-        setTimeout(() => toast.remove(), 500);
-      }, 5000);
+        toast.style.transition = 'opacity 0.4s';
+        setTimeout(() => toast.remove(), 400);
+      }, duration);
     }
+
+    // Hotkeys during call: 'M' for mic, 'V' for video
+    document.addEventListener('keydown', (e) => {
+      if (!STATE.isCallActive) return;
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'm' || e.key === 'M' || e.key === 'ь' || e.key === 'Ь') {
+        toggleWebrtcMic();
+      } else if (e.key === 'v' || e.key === 'V' || e.key === 'м' || e.key === 'М') {
+        toggleWebrtcCam();
+      }
+    });
 
     // ══════════════════════════════════════════════════════════════
     // AI-СТЕНОГРАФИСТ (Gemini 2.5 Flash Audio API, 0 ₽)
