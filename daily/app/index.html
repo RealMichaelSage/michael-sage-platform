@@ -247,19 +247,42 @@
       gap: 6px;
       font-size: 0.78rem;
       font-weight: 600;
-      color: var(--green);
-      background: var(--green-soft);
       padding: 4px 10px;
       border-radius: var(--radius-full);
-      border: 1px solid var(--green-border);
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+    }
+
+    .meeting-status-pill.idle {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-muted);
+      border-color: var(--border);
+    }
+    .meeting-status-pill.idle .status-dot-pulse {
+      background: var(--text-dim);
+      box-shadow: none;
+      animation: none;
+    }
+
+    .meeting-status-pill.live {
+      color: var(--green);
+      background: var(--green-soft);
+      border-color: var(--green-border);
+    }
+    .meeting-status-pill.live .status-dot-pulse {
+      background: var(--green);
+      box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.4);
+      animation: pulse 1.4s infinite;
     }
 
     .status-dot-pulse {
       width: 8px;
       height: 8px;
-      background: var(--green);
+      background: var(--text-dim);
       border-radius: 50%;
-      box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.4);
+      transition: all 0.2s ease;
     }
 
     /* Triad Member List */
@@ -377,6 +400,19 @@
     .btn-call-connect:hover {
       background: #f4f4f5;
       transform: translateY(-1px);
+    }
+
+    .btn-call-connect.in-call {
+      background: rgba(239, 68, 68, 0.16) !important;
+      color: #f87171 !important;
+      border: 1px solid rgba(239, 68, 68, 0.45) !important;
+      box-shadow: none !important;
+    }
+
+    .btn-call-connect.in-call:hover {
+      background: #ef4444 !important;
+      color: #ffffff !important;
+      border-color: #ef4444 !important;
     }
 
     .btn-checkin-action {
@@ -1530,9 +1566,9 @@
               <span class="meeting-time-label">Сегодняшний созвон</span>
               <span class="meeting-time-val" id="meeting-slot-time">09:30 МСК</span>
             </div>
-            <div class="meeting-status-pill">
+            <div class="meeting-status-pill idle">
               <span class="status-dot-pulse"></span>
-              <span id="meeting-status-text">Комната открыта</span>
+              <span id="meeting-status-text">Готов к подключению</span>
             </div>
           </div>
 
@@ -2425,10 +2461,17 @@
         const roomBadge = document.getElementById('webrtc-room-badge');
         if (roomBadge) roomBadge.innerText = `Комната: ${roomSlug}`;
 
-        if (btnText) btnText.innerHTML = '✕ Свернуть видеозвонок';
+        if (btnText) btnText.innerHTML = '✕ Завершить участие в звонке';
         if (btnLink) {
-          btnLink.style.background = 'var(--surface-subtle)';
-          btnLink.style.borderColor = 'var(--border-light)';
+          btnLink.classList.add('in-call');
+        }
+
+        const statusText = document.getElementById('meeting-status-text');
+        const statusPill = document.querySelector('.meeting-status-pill');
+        if (statusText) statusText.innerText = 'Вы в эфире тройки';
+        if (statusPill) {
+          statusPill.classList.remove('idle');
+          statusPill.classList.add('live');
         }
 
         // 2. Register peer in room via backend
@@ -2822,8 +2865,17 @@
 
       if (btnText) btnText.innerHTML = 'Подключиться к&nbsp;созвону (ВКС)';
       if (btnLink) {
-        btnLink.style.background = 'var(--surface-card)';
-        btnLink.style.borderColor = 'var(--border)';
+        btnLink.style.background = '';
+        btnLink.style.borderColor = '';
+        btnLink.classList.remove('in-call');
+      }
+
+      const statusText = document.getElementById('meeting-status-text');
+      const statusPill = document.querySelector('.meeting-status-pill');
+      if (statusText) statusText.innerText = 'Готов к подключению';
+      if (statusPill) {
+        statusPill.classList.add('idle');
+        statusPill.classList.remove('live');
       }
 
       STATE.isMicMuted = false;
