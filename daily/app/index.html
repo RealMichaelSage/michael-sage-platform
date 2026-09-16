@@ -21,6 +21,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 
+  <!-- Telegram WebApp SDK -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
   <style>
     /* ══════════════════════════════════════════════════════════════
        FRIENDLY & CLEAN DESIGN SYSTEM (Daily Growth OS)
@@ -1328,18 +1331,24 @@
 
     .test-user-switcher {
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       gap: 6px;
       margin: 10px 16px 4px 16px;
-      padding: 4px 6px;
+      padding: 5px 8px;
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--border);
       border-radius: 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .test-user-switcher::-webkit-scrollbar {
+      display: none;
     }
     .switcher-pill-btn {
-      flex: 1;
-      padding: 6px 10px;
+      flex: 1 0 auto;
+      padding: 6px 12px;
       font-family: var(--mono);
       font-size: 0.74rem;
       font-weight: 600;
@@ -1360,6 +1369,7 @@
       background: var(--surface-hover);
       color: var(--text-bright);
       border-color: var(--border-light);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.3);
     }
   </style>
 </head>
@@ -1383,12 +1393,13 @@
       </div>
     </header>
 
-    <!-- TEST MEMBER SWITCHER (Михаил / @lookatshow / @Ksudamzy) -->
+    <!-- TEST MEMBER SWITCHER (Михаил / @lookatshow / @Ksudamzy / Кастом) -->
     <div class="test-user-switcher">
       <span style="font-size:0.72rem; color:var(--text-dim); font-family:var(--mono); margin-right:4px;">👤 Вход:</span>
-      <button class="switcher-pill-btn active" id="btn-switch-michael" onclick="switchActiveUser('michael_sage')">Михаил 👑</button>
-      <button class="switcher-pill-btn" id="btn-switch-lookatshow" onclick="switchActiveUser('lookatshow')">Дмитрий</button>
-      <button class="switcher-pill-btn" id="btn-switch-ksudamzy" onclick="switchActiveUser('ksudamzy')">@Ksudamzy</button>
+      <button type="button" class="switcher-pill-btn active" id="btn-switch-michael" onclick="switchActiveUser('michael_sage')">Михаил 👑</button>
+      <button type="button" class="switcher-pill-btn" id="btn-switch-lookatshow" onclick="switchActiveUser('lookatshow')">Дмитрий</button>
+      <button type="button" class="switcher-pill-btn" id="btn-switch-ksudamzy" onclick="switchActiveUser('ksudamzy')">@Ksudamzy</button>
+      <button type="button" class="switcher-pill-btn" id="btn-switch-custom" onclick="switchActiveUser('prompt_custom')">🔍 Другой...</button>
     </div>
 
     <!-- PAYWALL SCREEN (If not subscribed) -->
@@ -1969,26 +1980,74 @@
       'ksudamzy': { key: 'ksudamzy', telegram_id: 991002, username: 'Ksudamzy', name: 'Ксения', role: 'member' }
     };
 
-    function resolveUserContext() {
+    function resolveUserContext(forcedUserKey = null) {
       const params = new URLSearchParams(window.location.search);
       const rawUser = (params.get('username') || params.get('user') || params.get('u') || '').toLowerCase().replace('@', '');
       const idParam = Number(params.get('telegram_id') || params.get('id') || 0);
 
-      let matchedKey = null;
-      if (rawUser) {
+      // Native Telegram WebApp user object
+      let tgUser = null;
+      try {
+        if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user) {
+          tgUser = window.Telegram.WebApp.initDataUnsafe.user;
+        }
+      } catch(e) {}
+
+      let matchedKey = forcedUserKey;
+
+      // 1. Explicit search params (highest URL priority)
+      if (!matchedKey && rawUser) {
         matchedKey = Object.keys(PROFILES).find(k => k === rawUser || PROFILES[k].username.toLowerCase() === rawUser);
       }
       if (!matchedKey && idParam) {
         matchedKey = Object.keys(PROFILES).find(k => PROFILES[k].telegram_id === idParam);
       }
+
+      // 2. Saved active user in localStorage (for test switcher persistence across reloads)
       if (!matchedKey) {
         const saved = localStorage.getItem('daily_active_user');
-        if (saved && PROFILES[saved]) matchedKey = saved;
+        if (saved && (PROFILES[saved] || saved.startsWith('custom_') || saved.startsWith('tg_'))) {
+          matchedKey = saved;
+        }
       }
 
+      // 3. Telegram WebApp detection (automatic identification when opened in Telegram)
+      if (!matchedKey && tgUser) {
+        const tgUsername = (tgUser.username || '').toLowerCase();
+        const tgId = Number(tgUser.id);
+
+        matchedKey = Object.keys(PROFILES).find(k => 
+          (tgUsername && (k === tgUsername || PROFILES[k].username.toLowerCase() === tgUsername)) ||
+          (tgId && PROFILES[k].telegram_id === tgId)
+        );
+
+        if (!matchedKey) {
+          const dynamicName = [tgUser.first_name, tgUser.last_name].filter(Boolean).join(' ') || tgUser.username || 'Участник';
+          matchedKey = `tg_${tgId}`;
+          PROFILES[matchedKey] = {
+            key: matchedKey,
+            telegram_id: tgId,
+            username: tgUser.username || '',
+            name: dynamicName,
+            role: 'member'
+          };
+        }
+      }
+
+      // 4. Default fallback: founder
       if (!matchedKey) matchedKey = 'michael_sage';
 
-      const prof = PROFILES[matchedKey];
+      let prof = PROFILES[matchedKey];
+      if (!prof && matchedKey.startsWith('custom_')) {
+        try {
+          prof = JSON.parse(localStorage.getItem('daily_custom_profile') || '{}');
+        } catch(e) {}
+      }
+      if (!prof && matchedKey.startsWith('tg_')) {
+        prof = PROFILES[matchedKey];
+      }
+      if (!prof) prof = PROFILES['michael_sage'];
+
       STATE.user = {
         telegram_id: prof.telegram_id,
         username: prof.username,
@@ -2003,6 +2062,16 @@
       if (greeting) greeting.innerText = `Доброе утро, ${prof.name.split(' ')[0]} 👋`;
       if (avatarInit) avatarInit.innerText = (prof.name || 'U')[0].toUpperCase();
 
+      // Update local slot in WebRTC
+      const labelLocal = document.getElementById('label-name-local');
+      if (labelLocal) {
+        labelLocal.innerText = `${prof.name} ${prof.role === 'captain' ? '👑 ' : ''}(Вы)`;
+      }
+      const avCircleLocal = document.getElementById('av-circle-local');
+      if (avCircleLocal) {
+        avCircleLocal.innerText = (prof.name || 'U')[0].toUpperCase();
+      }
+
       // Update switcher pills
       ['michael', 'lookatshow', 'ksudamzy'].forEach(k => {
         const btn = document.getElementById(`btn-switch-${k}`);
@@ -2011,16 +2080,71 @@
           btn.classList.toggle('active', isCurrent);
         }
       });
+      const customBtn = document.getElementById('btn-switch-custom');
+      if (customBtn) {
+        const isStandard = ['michael_sage', 'lookatshow', 'ksudamzy'].includes(matchedKey);
+        customBtn.classList.toggle('active', !isStandard);
+        if (!isStandard) {
+          customBtn.innerText = `👤 ${prof.name.split(' ')[0]}`;
+        } else {
+          customBtn.innerText = '🔍 Другой...';
+        }
+      }
     }
 
-    function switchActiveUser(userKey) {
+    async function switchActiveUser(userKey) {
+      if (userKey === 'prompt_custom') {
+        const input = prompt('Введите имя или @username для входа (например: @lookatshow, Дмитрий, Ксения или своё имя):');
+        if (!input || !input.trim()) return;
+        const clean = input.trim().replace(/^@/, '').toLowerCase();
+        
+        if (clean === 'michael' || clean === 'michael_sage' || clean === 'михаил' || clean === 'михаил пузырёв') {
+          userKey = 'michael_sage';
+        } else if (clean === 'dmitry' || clean === 'дмитрий' || clean === 'lookatshow') {
+          userKey = 'lookatshow';
+        } else if (clean === 'ksenia' || clean === 'ксения' || clean === 'ksudamzy') {
+          userKey = 'ksudamzy';
+        } else {
+          // Dynamic custom profile
+          const customProf = {
+            key: `custom_${clean}`,
+            telegram_id: Math.floor(100000 + Math.random() * 900000),
+            username: clean,
+            name: input.trim(),
+            role: 'member'
+          };
+          localStorage.setItem('daily_custom_profile', JSON.stringify(customProf));
+          userKey = `custom_${clean}`;
+        }
+      }
+
+      if (STATE.isCallActive) {
+        closeWebrtcCall(false);
+      }
+
       localStorage.setItem('daily_active_user', userKey);
-      const url = new URL(window.location.href);
-      url.searchParams.set('user', userKey);
-      window.location.href = url.toString();
+
+      // Update URL query params without page reload (works reliably in WebApp and iframe)
+      if (window.history && window.history.replaceState) {
+        const url = new URL(window.location.href);
+        url.searchParams.set('user', userKey);
+        window.history.replaceState({}, '', url.toString());
+      }
+
+      resolveUserContext(userKey);
+      await loadCockpitData();
+      showCallToast(`👤 Вход выполнен: ${STATE.user.name}`, 2500);
     }
 
     document.addEventListener('DOMContentLoaded', async () => {
+      // Telegram WebApp init
+      if (window.Telegram && window.Telegram.WebApp) {
+        try {
+          window.Telegram.WebApp.ready();
+          window.Telegram.WebApp.expand();
+        } catch(e) {}
+      }
+
       resolveUserContext();
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/daily/app/sw.js').catch(e => console.warn('SW err:', e));
@@ -2042,6 +2166,13 @@
           STATE.user.is_subscribed = data.is_channel_subscriber || (data.role === 'founder');
         }
       } catch (err) {
+        STATE.user.is_subscribed = true;
+      }
+
+      // Always allow Triad #01 members through without paywall block
+      if ([439634804, 991001, 991002].includes(Number(STATE.user.telegram_id)) ||
+          ['michael_sage', 'lookatshow', 'ksudamzy'].includes((STATE.user.username || '').toLowerCase()) ||
+          STATE.user.telegram_id === 439634804) {
         STATE.user.is_subscribed = true;
       }
 
