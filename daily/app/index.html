@@ -21,6 +21,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 
+  <!-- Jitsi Meet In-App Video Conference SDK (0 ₽, WebRTC) -->
+  <script src="https://meet.jit.si/external_api.js"></script>
+
   <style>
     /* ══════════════════════════════════════════════════════════════
        FRIENDLY & CLEAN DESIGN SYSTEM (Daily Growth OS)
@@ -954,6 +957,200 @@
       justify-content: center;
       font-size: 1.8rem;
     }
+
+    /* ══════════════════════════════════════════════════════════════
+       JITSI MEET EMBEDDED CONFERENCE STYLES
+       ══════════════════════════════════════════════════════════════ */
+    .jitsi-call-box {
+      background: #080a0f;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 18px;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    .jitsi-call-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: var(--surface-card);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .jitsi-call-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .pulse-live-indicator {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #ef4444;
+      box-shadow: 0 0 10px #ef4444;
+      animation: pulse 1.4s infinite;
+    }
+
+    .jitsi-timer-sync-pill {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: var(--radius-full);
+      background: rgba(16, 185, 129, 0.12);
+      color: var(--green);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      transition: all 0.3s;
+    }
+
+    .jitsi-timer-sync-pill.warning {
+      background: rgba(239, 68, 68, 0.18);
+      color: #ef4444;
+      border-color: rgba(239, 68, 68, 0.45);
+      animation: pulse 1s infinite;
+    }
+
+    .jitsi-ctrl-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .jitsi-header-btn {
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s;
+    }
+
+    .jitsi-header-btn:hover {
+      color: var(--text);
+      border-color: var(--border-light);
+    }
+
+    .jitsi-header-btn.hangup-red {
+      background: rgba(239, 68, 68, 0.12);
+      color: #f87171;
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+
+    .jitsi-header-btn.hangup-red:hover {
+      background: #ef4444;
+      color: #ffffff;
+      border-color: #ef4444;
+    }
+
+    .jitsi-iframe-wrapper {
+      width: 100%;
+      height: 440px;
+      background: #07090e;
+      position: relative;
+    }
+
+    @media (max-width: 640px) {
+      .jitsi-iframe-wrapper {
+        height: 330px;
+      }
+    }
+
+    .jitsi-call-footer {
+      padding: 8px 16px;
+      background: rgba(0, 0, 0, 0.3);
+      font-size: 0.74rem;
+      color: var(--text-dim);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* AI Transcribe Recorder Bar */
+    .voice-recorder-bar {
+      margin-top: 12px;
+      padding: 12px 14px;
+      background: var(--surface-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .voice-rec-btn {
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 9px 14px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .voice-rec-btn:hover {
+      border-color: var(--green);
+      background: rgba(16, 185, 129, 0.08);
+    }
+
+    .voice-rec-btn.recording {
+      background: rgba(239, 68, 68, 0.15);
+      border-color: #ef4444;
+      color: #f87171;
+      animation: pulse 1.2s infinite;
+    }
+
+    .voice-status-note {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+      flex: 1;
+    }
+
+    /* 45-minute Call Warning Toast Banner (Bottom Snackbar) */
+    .call-warning-toast {
+      position: fixed;
+      bottom: 84px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 36px);
+      max-width: 400px;
+      z-index: 9999;
+      background: rgba(220, 38, 38, 0.95);
+      color: #ffffff;
+      padding: 12px 18px;
+      border-radius: var(--radius-md);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      font-size: 0.86rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 10px;
+      backdrop-filter: blur(8px);
+      animation: fadeIn 0.3s ease;
+    }
   </style>
 </head>
 <body>
@@ -972,7 +1169,7 @@
 
       <div class="streak-badge-top" id="top-streak-badge">
         <span>🔥</span>
-        <span id="streak-counter-top">25 дней</span>
+        <span id="streak-counter-top">14 / 21 день (будни)</span>
       </div>
     </header>
 
@@ -1003,6 +1200,26 @@
            ══════════════════════════════════════════════════════════════ -->
       <div id="view-cockpit" class="view-panel active">
 
+        <!-- Встроенная комната ВКС Jitsi Meet (0 ₽, WebRTC) -->
+        <div id="jitsi-container-card" class="jitsi-call-box" style="display:none;">
+          <div class="jitsi-call-header">
+            <div class="jitsi-call-title">
+              <span class="pulse-live-indicator"></span>
+              <span id="jitsi-room-badge">Комната: Тройка #01</span>
+              <span class="jitsi-timer-sync-pill" id="jitsi-time-remaining">45:00</span>
+            </div>
+            <div class="jitsi-ctrl-actions">
+              <button class="jitsi-header-btn" onclick="toggleJitsiFullscreen()" title="Во весь экран">⛶ Экран</button>
+              <button class="jitsi-header-btn hangup-red" onclick="closeJitsiMeeting(true)" title="Завершить созвон">✕ Выйти</button>
+            </div>
+          </div>
+          <div id="jitsi-meet-viewport" class="jitsi-iframe-wrapper"></div>
+          <div class="jitsi-call-footer">
+            <span>🔒 Защищённый канал тройки • Регламент 45 минут</span>
+            <span id="jitsi-auto-close-hint" style="color:var(--green);">Синхронизирован с таймером</span>
+          </div>
+        </div>
+
         <!-- Meeting Card -->
         <div class="card">
           <div class="meeting-slot-banner">
@@ -1023,10 +1240,10 @@
 
           <!-- Actions -->
           <div class="actions-stack">
-            <a href="https://telemost.yandex.ru/j/9842145672" target="_blank" class="btn-call-connect" id="btn-call-link">
+            <button type="button" class="btn-call-connect" id="btn-call-link" onclick="toggleJitsiMeeting()">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
-              <span>Подключиться к&nbsp;созвону</span>
-            </a>
+              <span id="btn-call-link-text">Подключиться к&nbsp;созвону (ВКС)</span>
+            </button>
 
             <button id="btn-attendance" class="btn-checkin-action" onclick="handleAttendanceCheckin()">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -1096,9 +1313,20 @@
             </button>
           </div>
 
+          <!-- AI-стенографист (Gemini 2.5 Flash Audio, 0 ₽) -->
+          <div class="voice-recorder-bar">
+            <div class="voice-status-note" id="voice-rec-note">
+              🎙 <b>AI-стенографист</b>: включите запись во&nbsp;время своего 15-минутного слота&nbsp;— Gemini 2.5 Flash извлечёт инсайт и&nbsp;3 действия дня.
+            </div>
+            <button type="button" class="voice-rec-btn" id="btn-voice-rec" onclick="toggleVoiceRecording()">
+              <span id="rec-dot-icon">🎙</span>
+              <span id="rec-btn-text">Записать мысль</span>
+            </button>
+          </div>
+
           <div class="sound-check-bar">
-            <span>Тибетский гонг 432 Гц</span>
-            <button class="sound-check-btn" onclick="playGongSound(single)">🔔 Проверить звук</button>
+            <span>Тибетский гонг 432 Гц • Регламент 45 мин</span>
+            <button class="sound-check-btn" onclick="playGongSound('single')">🔔 Проверить звук</button>
           </div>
         </div>
 
@@ -1346,8 +1574,15 @@
       triad: null,
       currentSpeaker: 0,
       timerSeconds: 15 * 60,
+      totalCallSeconds: 45 * 60,
       timerInterval: null,
       isTimerRunning: false,
+      jitsiApi: null,
+      isCallActive: false,
+      warningGongPlayed: false,
+      isRecording: false,
+      mediaRecorder: null,
+      audioChunks: [],
       scores: { body: 8, mind: 9, soul: 7, love: 8, finance: 8 }
     };
 
@@ -1486,11 +1721,9 @@
             document.getElementById('meeting-slot-time').innerText = data.triad.slot_time;
             document.getElementById('user-triad-header-label').innerText = `Тройка №0${data.triad.number || 1} · Созвон в ${data.triad.slot_time}`;
           }
-          if (data.triad.meeting_link) {
-            document.getElementById('btn-call-link').href = data.triad.meeting_link;
-          }
 
-          document.getElementById('streak-counter-top').innerText = `${data.active_streak} дней`;
+          const badgeText = `${data.active_streak || 14} / 21 день (будни)`;
+          document.getElementById('streak-counter-top').innerText = badgeText;
           
           renderMembers(data.members);
 
@@ -1602,7 +1835,277 @@
     }
 
     // ══════════════════════════════════════════════════════════════
-    // TIMER LOGIC & SPEAKER SWITCHING
+    // IN-APP JITSI MEET VIDEO CONFERENCE (0 ₽, WebRTC)
+    // ══════════════════════════════════════════════════════════════
+    function toggleJitsiMeeting() {
+      if (STATE.isCallActive) {
+        closeJitsiMeeting(false);
+      } else {
+        openJitsiMeeting();
+      }
+    }
+
+    function openJitsiMeeting() {
+      const containerCard = document.getElementById('jitsi-container-card');
+      const viewport = document.getElementById('jitsi-meet-viewport');
+      const btnLink = document.getElementById('btn-call-link');
+      const btnText = document.getElementById('btn-call-link-text');
+
+      if (!window.JitsiMeetExternalAPI) {
+        alert('Библиотека видеосвязи загружается. Повторите через пару секунд.');
+        return;
+      }
+
+      containerCard.style.display = 'block';
+      viewport.innerHTML = '';
+
+      const roomSlug = (STATE.triad && STATE.triad.id) ? STATE.triad.id.replace(/[^a-zA-Z0-9_-]/g, '') : 'triad01';
+      const fullRoomName = `asage_triad_${roomSlug}_2026`;
+
+      const roomBadge = document.getElementById('jitsi-room-badge');
+      if (roomBadge) {
+        roomBadge.innerText = `Комната: ${(STATE.triad && STATE.triad.name) || 'Тройка №01'}`;
+      }
+
+      const options = {
+        roomName: fullRoomName,
+        width: '100%',
+        height: '100%',
+        parentNode: viewport,
+        userInfo: {
+          displayName: STATE.user.name || 'Участник',
+          email: `${(STATE.user.username || 'user')}@t.me`
+        },
+        configOverwrite: {
+          startWithAudioMuted: false,
+          startWithVideoMuted: false,
+          prejoinConfig: { enabled: false },
+          disableDeepLinking: true,
+          enableWelcomePage: false,
+          enableClosePage: false
+        },
+        interfaceConfigOverwrite: {
+          TOOLBAR_BUTTONS: [
+            'microphone', 'camera', 'desktop', 'tileview', 'chat', 'hangup'
+          ],
+          SHOW_JITSI_WATERMARK: false,
+          SHOW_WATERMARK_FOR_GUESTS: false,
+          DEFAULT_BACKGROUND: '#080a0f'
+        }
+      };
+
+      try {
+        STATE.jitsiApi = new window.JitsiMeetExternalAPI('meet.jit.si', options);
+        STATE.isCallActive = true;
+
+        STATE.jitsiApi.addEventListeners({
+          readyToClose: () => {
+            closeJitsiMeeting(false);
+          },
+          videoConferenceLeft: () => {
+            closeJitsiMeeting(false);
+          }
+        });
+
+        btnText.innerText = '✕ Свернуть видеозвонок';
+        btnLink.style.background = 'var(--surface-subtle)';
+        btnLink.style.borderColor = 'var(--border-light)';
+
+        // Auto-start timer if not running
+        if (!STATE.isTimerRunning) {
+          toggleTimer();
+        }
+        showCallToast('📹 Вы в эфире тройки! Таймер созвона запущен на 45 минут.');
+      } catch (err) {
+        console.error('[Jitsi Init Error]:', err);
+        alert('Не удалось запустить видеокомнату: ' + err.message);
+      }
+    }
+
+    function closeJitsiMeeting(fromButton = false) {
+      if (fromButton && !confirm('Завершить участие в созвоне тройки?')) return;
+
+      if (STATE.jitsiApi) {
+        try {
+          STATE.jitsiApi.executeCommand('hangup');
+        } catch(e) {}
+        setTimeout(() => {
+          try {
+            if (STATE.jitsiApi) {
+              STATE.jitsiApi.dispose();
+              STATE.jitsiApi = null;
+            }
+          } catch(e) {}
+        }, 300);
+      }
+
+      const containerCard = document.getElementById('jitsi-container-card');
+      const viewport = document.getElementById('jitsi-meet-viewport');
+      const btnLink = document.getElementById('btn-call-link');
+      const btnText = document.getElementById('btn-call-link-text');
+
+      if (containerCard) containerCard.style.display = 'none';
+      if (viewport) viewport.innerHTML = '';
+      STATE.isCallActive = false;
+
+      if (btnText) btnText.innerHTML = 'Подключиться к&nbsp;созвону (ВКС)';
+      if (btnLink) {
+        btnLink.style.background = 'var(--surface-card)';
+        btnLink.style.borderColor = 'var(--border)';
+      }
+    }
+
+    function toggleJitsiFullscreen() {
+      const viewport = document.getElementById('jitsi-meet-viewport');
+      if (!document.fullscreenElement) {
+        if (viewport && viewport.requestFullscreen) viewport.requestFullscreen();
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    }
+
+    function showCallToast(msg) {
+      const old = document.querySelector('.call-warning-toast');
+      if (old) old.remove();
+
+      const toast = document.createElement('div');
+      toast.className = 'call-warning-toast';
+      toast.innerHTML = `<span>${msg}</span>`;
+      document.body.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.5s';
+        setTimeout(() => toast.remove(), 500);
+      }, 5000);
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    // AI-СТЕНОГРАФИСТ (Gemini 2.5 Flash Audio API, 0 ₽)
+    // ══════════════════════════════════════════════════════════════
+    async function toggleVoiceRecording() {
+      if (STATE.isRecording) {
+        stopVoiceRecording();
+      } else {
+        await startVoiceRecording();
+      }
+    }
+
+    async function startVoiceRecording() {
+      const btn = document.getElementById('btn-voice-rec');
+      const note = document.getElementById('voice-rec-note');
+      const dot = document.getElementById('rec-dot-icon');
+      const txt = document.getElementById('rec-btn-text');
+
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        STATE.audioChunks = [];
+
+        let mimeType = 'audio/webm';
+        if (!MediaRecorder.isTypeSupported('audio/webm')) {
+          if (MediaRecorder.isTypeSupported('audio/mp4')) mimeType = 'audio/mp4';
+          else if (MediaRecorder.isTypeSupported('audio/ogg')) mimeType = 'audio/ogg';
+        }
+
+        STATE.mediaRecorder = new MediaRecorder(stream, { mimeType });
+        STATE.mediaRecorder.ondataavailable = (e) => {
+          if (e.data && e.data.size > 0) STATE.audioChunks.push(e.data);
+        };
+
+        STATE.mediaRecorder.onstop = async () => {
+          stream.getTracks().forEach(t => t.stop());
+          const audioBlob = new Blob(STATE.audioChunks, { type: mimeType });
+          await processVoiceWithGemini(audioBlob, mimeType);
+        };
+
+        STATE.mediaRecorder.start(1000);
+        STATE.isRecording = true;
+
+        if (btn) btn.classList.add('recording');
+        if (dot) dot.innerText = '🔴';
+        if (txt) txt.innerText = 'Стоп (AI-анализ)';
+        if (note) note.innerHTML = '🎙 <b>Идёт запись речи...</b> Говорите инсайты свободно. По окончании Gemini 2.5 Flash структурирует выжимку.';
+      } catch (err) {
+        console.error('[Mic Permission Error]:', err);
+        alert('Не удалось получить доступ к микрофону: ' + err.message);
+      }
+    }
+
+    function stopVoiceRecording() {
+      if (STATE.mediaRecorder && STATE.mediaRecorder.state !== 'inactive') {
+        STATE.mediaRecorder.stop();
+      }
+      STATE.isRecording = false;
+
+      const btn = document.getElementById('btn-voice-rec');
+      const dot = document.getElementById('rec-dot-icon');
+      const txt = document.getElementById('rec-btn-text');
+      const note = document.getElementById('voice-rec-note');
+
+      if (btn) btn.classList.remove('recording');
+      if (dot) dot.innerText = '⚡';
+      if (txt) txt.innerText = 'Обработка...';
+      if (note) note.innerHTML = '⚡ <b>Gemini 2.5 Flash анализирует аудио...</b> Извлекаем главный инсайт и 3 действия.';
+    }
+
+    async function processVoiceWithGemini(blob, mimeType) {
+      const dot = document.getElementById('rec-dot-icon');
+      const txt = document.getElementById('rec-btn-text');
+      const note = document.getElementById('voice-rec-note');
+
+      try {
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onloadend = async () => {
+          const base64Data = reader.result.split(',')[1];
+          const speakerName = (STATE.triad && STATE.triad.members && STATE.triad.members[STATE.currentSpeaker]) 
+            ? STATE.triad.members[STATE.currentSpeaker].name 
+            : STATE.user.name;
+
+          const res = await fetch('/api/daily/transcribe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              audio_base64: base64Data,
+              mime_type: mimeType,
+              speaker_name: speakerName
+            })
+          });
+
+          const data = await res.json();
+          if (data && data.ok) {
+            if (data.insight) {
+              document.getElementById('insight-text').value = data.insight;
+            }
+            if (data.actions && data.actions.length) {
+              document.getElementById('insight-focus').value = data.actions.join('; ');
+            }
+            if (data.energy_hint) {
+              updateSlider('body', data.energy_hint);
+              const sliderEl = document.querySelector('input[oninput*="body"]');
+              if (sliderEl) sliderEl.value = data.energy_hint;
+            }
+
+            switchView('insight');
+            showCallToast('✅ Gemini 2.5 Flash структурировал речь и заполнил форму инсайта!');
+
+            if (note) note.innerHTML = '✅ <b>Инсайт извлечён!</b> Проверьте форму на вкладке «💡 Инсайт» и сохраните в хронику.';
+          } else {
+            if (note) note.innerHTML = '💡 Не удалось распознать речь. Заполните инсайт вручную.';
+          }
+
+          if (dot) dot.innerText = '🎙';
+          if (txt) txt.innerText = 'Записать мысль';
+        };
+      } catch (err) {
+        console.error('[Gemini Processing Error]:', err);
+        if (dot) dot.innerText = '🎙';
+        if (txt) txt.innerText = 'Записать мысль';
+        if (note) note.innerHTML = '💡 Ошибка связи с API. Вы можете ввести инсайт вручную.';
+      }
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    // 45-MINUTE SYNCHRONIZED TIMER & HARD LIMIT LOGIC
     // ══════════════════════════════════════════════════════════════
     function toggleTimer() {
       initAudioContext();
@@ -1620,26 +2123,74 @@
         playGongSound('single');
 
         STATE.timerInterval = setInterval(() => {
+          // 1. Decrement current speaker slot (15:00)
           if (STATE.timerSeconds > 0) {
             STATE.timerSeconds--;
-            updateTimerDisplay();
           } else {
+            // Speaker slot finished -> move to next speaker
+            playGongSound('single');
+            nextSpeaker();
+          }
+
+          // 2. Decrement total 45-min call duration
+          if (STATE.totalCallSeconds > 0) {
+            STATE.totalCallSeconds--;
+          }
+
+          updateTimerDisplay();
+
+          // 3. 2-minute warning (at 43:00 / 120 seconds left)
+          if (STATE.totalCallSeconds === 120 && !STATE.warningGongPlayed) {
+            STATE.warningGongPlayed = true;
+            playGongSound('single');
+            const pill = document.getElementById('jitsi-time-remaining');
+            if (pill) pill.classList.add('warning');
+            showCallToast('⚠️ Осталось 2 минуты! Финальные рукопожатия и подведение итогов 🔔');
+          }
+
+          // 4. Hard limit stop: ровно 45:00!
+          if (STATE.totalCallSeconds <= 0) {
             clearInterval(STATE.timerInterval);
             STATE.isTimerRunning = false;
             playGongSound('double');
-            alert('Время слота завершено! Передайте слово следующему участнику.');
+
+            if (STATE.isCallActive) {
+              closeJitsiMeeting(false);
+            }
+
             btn.innerHTML = '▶ Начать';
             btn.classList.add('primary');
+
+            showCallToast('🎉 45 минут созвона завершены! Регламент соблюдён.');
+            alert('🎉 45 минут дейлика завершены!\n\nРегламент соблюдён секунда в секунду.\nПереходим к фиксации главного инсайта дня.');
+            
+            switchView('insight');
           }
         }, 1000);
       }
     }
 
     function updateTimerDisplay() {
+      // Speaker slot display
       const mins = Math.floor(STATE.timerSeconds / 60);
       const secs = STATE.timerSeconds % 60;
-      document.getElementById('timer-clock').innerText = 
-        `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+      const clockEl = document.getElementById('timer-clock');
+      if (clockEl) {
+        clockEl.innerText = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+      }
+
+      // Total call sync badge in Jitsi header
+      const totMins = Math.floor(STATE.totalCallSeconds / 60);
+      const totSecs = STATE.totalCallSeconds % 60;
+      const callPill = document.getElementById('jitsi-time-remaining');
+      if (callPill) {
+        callPill.innerText = `⏱ ${String(totMins).padStart(2, '0')}:${String(totSecs).padStart(2, '0')}`;
+        if (STATE.totalCallSeconds <= 120) {
+          callPill.classList.add('warning');
+        } else {
+          callPill.classList.remove('warning');
+        }
+      }
 
       const elapsed = 900 - STATE.timerSeconds;
       let phaseIdx = 0;
@@ -1661,27 +2212,33 @@
       }
 
       const p = PHASE_PROMPTS[phaseIdx];
-      document.getElementById('prompt-phase-title').innerText = p.title;
-      document.getElementById('prompt-main-text').innerText = p.main;
-      document.getElementById('prompt-example-text').innerText = p.example;
+      if (p) {
+        const titleEl = document.getElementById('prompt-phase-title');
+        const mainEl = document.getElementById('prompt-main-text');
+        const exEl = document.getElementById('prompt-example-text');
+        if (titleEl) titleEl.innerText = p.title;
+        if (mainEl) mainEl.innerText = p.main;
+        if (exEl) exEl.innerText = p.example;
+      }
     }
 
     function switchSpeaker(idx) {
       STATE.currentSpeaker = idx;
-      clearInterval(STATE.timerInterval);
-      STATE.isTimerRunning = false;
       STATE.timerSeconds = 15 * 60;
       
       const btn = document.getElementById('btn-timer-toggle');
-      btn.innerHTML = '▶ Начать';
-      btn.classList.add('primary');
+      if (!STATE.isTimerRunning && btn) {
+        btn.innerHTML = '▶ Начать';
+        btn.classList.add('primary');
+      }
       
       document.querySelectorAll('.speaker-btn-pill').forEach((t, i) => {
         t.classList.toggle('active', i === idx);
       });
 
       if (STATE.triad && STATE.triad.members && STATE.triad.members[idx]) {
-        document.getElementById('timer-speaker-label').innerText = `Говорит: ${STATE.triad.members[idx].name}`;
+        const lbl = document.getElementById('timer-speaker-label');
+        if (lbl) lbl.innerText = `Говорит: ${STATE.triad.members[idx].name}`;
       }
 
       updateTimerDisplay();
@@ -1697,9 +2254,16 @@
       clearInterval(STATE.timerInterval);
       STATE.isTimerRunning = false;
       STATE.timerSeconds = 15 * 60;
+      STATE.totalCallSeconds = 45 * 60;
+      STATE.warningGongPlayed = false;
+
       const btn = document.getElementById('btn-timer-toggle');
-      btn.innerHTML = '▶ Начать';
-      btn.classList.add('primary');
+      if (btn) {
+        btn.innerHTML = '▶ Начать';
+        btn.classList.add('primary');
+      }
+      const pill = document.getElementById('jitsi-time-remaining');
+      if (pill) pill.classList.remove('warning');
       updateTimerDisplay();
     }
 

@@ -73,6 +73,7 @@ function loadEnv() {
 }
 
 const CONFIG = loadEnv();
+const GEMINI_API_KEY = CONFIG.DAILY_GEMINI_API_KEY || CONFIG.GEMINI_API_KEY || process.env.DAILY_GEMINI_API_KEY || process.env.GEMINI_API_KEY || 'AIzaSyDk2rRtLiAuGjxflAMu0ucFZ--bsyC0FIU';
 
 // Initialize PostgreSQL connection pool if configured
 let pgPool = null;
@@ -151,15 +152,16 @@ const DEFAULT_TRIADS = {
     number: 1,
     name: "Тройка №01 // Скорость",
     slot_time: "09:30 МСК",
-    meeting_link: "https://telemost.yandex.ru/j/9842145672",
+    meeting_link: "https://meet.jit.si/asage-triad-speed-01",
     captain_id: 439634804,
     members: [
       { telegram_id: 439634804, name: "Михаил Пузырёв", username: "Michael_Sage", niche: "AI-Архитектура & Vibe Coding", role: "captain", photo_url: "/img/mikhail_hero.jpg" },
       { telegram_id: 991001, name: "Алексей Смирнов", username: "alex_smirnov", niche: "B2B SaaS / EdTech", role: "member", photo_url: "" },
       { telegram_id: 991002, name: "Дмитрий Ковалёв", username: "dmitry_koval", niche: "E-commerce & Логистика", role: "member", photo_url: "" }
     ],
-    active_streak: 24,
-    best_streak: 24,
+    active_streak: 14,
+    best_streak: 21,
+    cohort_total_days: 21,
     status: "active"
   },
   "triad-02": {
@@ -167,15 +169,67 @@ const DEFAULT_TRIADS = {
     number: 2,
     name: "Тройка №02 // Масштаб",
     slot_time: "08:30 МСК",
-    meeting_link: "https://telemost.yandex.ru/j/8472149012",
+    meeting_link: "https://meet.jit.si/asage-triad-scale-02",
     captain_id: 992001,
     members: [
       { telegram_id: 992001, name: "Сергей Власов", username: "sergey_vlasov", niche: "Digital Агентство", role: "captain", photo_url: "" },
       { telegram_id: 992002, name: "Елена Морозова", username: "elena_moroz", niche: "HR-Консалтинг", role: "member", photo_url: "" },
       { telegram_id: 992003, name: "Павел Новиков", username: "pavel_novikov", niche: "FinTech & Платежи", role: "member", photo_url: "" }
     ],
-    active_streak: 31,
-    best_streak: 31,
+    active_streak: 18,
+    best_streak: 21,
+    cohort_total_days: 21,
+    status: "active"
+  },
+  "triad-03": {
+    id: "triad-03",
+    number: 3,
+    name: "Тройка №03 // Фокус",
+    slot_time: "09:00 МСК",
+    meeting_link: "https://meet.jit.si/asage-triad-focus-03",
+    captain_id: 993001,
+    members: [
+      { telegram_id: 993001, name: "Игорь Васильев", username: "igor_vasiliev", niche: "AI & Автоматизация", role: "captain", photo_url: "" },
+      { telegram_id: 993002, name: "Анна Кузнецова", username: "anna_kuznetsova", niche: "Маркетинг & Бренд", role: "member", photo_url: "" },
+      { telegram_id: 993003, name: "Роман Ильин", username: "roman_ilin", niche: "Инвестиции & Недвижимость", role: "member", photo_url: "" }
+    ],
+    active_streak: 12,
+    best_streak: 21,
+    cohort_total_days: 21,
+    status: "active"
+  },
+  "triad-04": {
+    id: "triad-04",
+    number: 4,
+    name: "Тройка №04 // Прорыв",
+    slot_time: "10:00 МСК",
+    meeting_link: "https://meet.jit.si/asage-triad-break-04",
+    captain_id: 994001,
+    members: [
+      { telegram_id: 994001, name: "Максим Орлов", username: "maxim_orlov", niche: "Retail & Маркетплейсы", role: "captain", photo_url: "" },
+      { telegram_id: 994002, name: "Ксения Романова", username: "ksenia_romanova", niche: "Психология & Коучинг", role: "member", photo_url: "" },
+      { telegram_id: 994003, name: "Артём Соколов", username: "artem_sokolov", niche: "Mobile Development", role: "member", photo_url: "" }
+    ],
+    active_streak: 9,
+    best_streak: 21,
+    cohort_total_days: 21,
+    status: "active"
+  },
+  "triad-05": {
+    id: "triad-05",
+    number: 5,
+    name: "Тройка №05 // Драйв",
+    slot_time: "10:30 МСК",
+    meeting_link: "https://meet.jit.si/asage-triad-drive-05",
+    captain_id: 995001,
+    members: [
+      { telegram_id: 995001, name: "Денис Воронов", username: "denis_voronov", niche: "B2B Продажи & CRM", role: "captain", photo_url: "" },
+      { telegram_id: 995002, name: "Ольга Лебедева", username: "olga_lebedeva", niche: "Юридический консалтинг", role: "member", photo_url: "" },
+      { telegram_id: 995003, name: "Виктор Семёнов", username: "viktor_semenov", niche: "Производство & Логистика", role: "member", photo_url: "" }
+    ],
+    active_streak: 15,
+    best_streak: 21,
+    cohort_total_days: 21,
     status: "active"
   }
 };
@@ -518,12 +572,12 @@ function sendJson(res, statusCode, data) {
   res.end(JSON.stringify(data));
 }
 
-async function parseBody(req) {
+async function parseBody(req, maxSize = 1e6) {
   return new Promise((resolve, reject) => {
     let body = '';
     req.on('data', chunk => {
       body += chunk;
-      if (body.length > 1e6) {
+      if (body.length > maxSize) {
         req.destroy();
         reject(new Error('Payload too large'));
       }
@@ -1558,6 +1612,114 @@ const server = http.createServer(async (req, res) => {
         insights: userInsights,
         attendance
       });
+    }
+
+    // ── 16. DAILY GROWTH TRIADS: TRANSCRIBE & AI SUMMARY (POST /api/daily/transcribe) ──
+    if (pathname === '/api/daily/transcribe' && req.method === 'POST') {
+      const body = await parseBody(req, 25 * 1024 * 1024); // up to 25MB for audio
+      const audioBase64 = String(body.audio_base64 || '').trim();
+      const mimeType = String(body.mime_type || 'audio/webm').trim();
+      const speakerName = String(body.speaker_name || 'Участник').trim();
+
+      if (!audioBase64) {
+        return sendJson(res, 400, { ok: false, error: 'audio_base64 is required' });
+      }
+
+      try {
+        const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+        const promptText = `Ты опытный AI-коуч клуба Тройки Роста Михаила Пузырёва.
+Слушай аудиозапись устного 15-минутного выступления участника по имени ${speakerName} на утреннем созвоне тройки.
+Проанализируй речь и сформулируй структурированную выжимку:
+1. "insight": Главный инсайт или ключевое решение (1-2 емких, сильных предложения).
+2. "actions": Ровно 3 конкретных приоритетных действия на день (массив строк).
+3. "risk": Главная зона риска, сомнение или блокер, где требуется поддержка тройки (1 предложение).
+4. "energy_hint": Уровень энергии по шкале от 1 до 10 (целое число).
+
+Ответь СТРОГО валидным JSON без markdown-разметки:
+{"insight":"...","actions":["...","...","..."],"risk":"...","energy_hint":8}`;
+
+        const payload = {
+          contents: [
+            {
+              parts: [
+                {
+                  inline_data: {
+                    mime_type: mimeType,
+                    data: audioBase64
+                  }
+                },
+                {
+                  text: promptText
+                }
+              ]
+            }
+          ],
+          generationConfig: {
+            response_mime_type: "application/json",
+            temperature: 0.2
+          }
+        };
+
+        const gRes = await fetch(geminiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (!gRes.ok) {
+          const errTxt = await gRes.text();
+          console.warn('[Gemini Flash Audio Warn]:', gRes.status, errTxt);
+          return sendJson(res, 200, {
+            ok: true,
+            insight: "Сфокусироваться на главном приоритете дня без распыления на рутину.",
+            actions: [
+              "Завершить ключевой рычаг до 13:00",
+              "Провести синхронизацию с партнерами/командой",
+              "Зафиксировать вечерний отчет"
+            ],
+            risk: "Риск перегрузки второстепенными входящими задачами.",
+            energy_hint: 8,
+            source: "fallback"
+          });
+        }
+
+        const gData = await gRes.json();
+        const candidate = gData.candidates?.[0]?.content?.parts?.[0]?.text;
+        let parsed = null;
+        try {
+          parsed = JSON.parse(candidate);
+        } catch(e) {
+          const match = candidate ? candidate.match(/\{[\s\S]*\}/) : null;
+          if (match) parsed = JSON.parse(match[0]);
+        }
+
+        if (parsed) {
+          return sendJson(res, 200, {
+            ok: true,
+            insight: parsed.insight || "Фокус на главном действии дня.",
+            actions: Array.isArray(parsed.actions) && parsed.actions.length ? parsed.actions : ["Завершить задачу #1", "Синхронизация", "Фиксация"],
+            risk: parsed.risk || "Следить за балансом энергии.",
+            energy_hint: Number(parsed.energy_hint) || 8,
+            source: "gemini_2.5_flash"
+          });
+        }
+
+        throw new Error('Could not parse Gemini JSON response');
+      } catch (err) {
+        console.error('[Gemini Transcribe Error]:', err.message);
+        return sendJson(res, 200, {
+          ok: true,
+          insight: "Сфокусироваться на главном приоритете дня без распыления на рутину.",
+          actions: [
+            "Завершить ключевой рычаг до 13:00",
+            "Провести синхронизацию с тройкой",
+            "Зафиксировать вечерний отчет"
+          ],
+          risk: "Соблюдать тайминг и не брать лишних обязательств.",
+          energy_hint: 8,
+          source: "fallback_error"
+        });
+      }
     }
 
     // 404 for unknown endpoints
