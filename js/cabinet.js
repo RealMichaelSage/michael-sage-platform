@@ -4,7 +4,7 @@
  * Canonical Tabs: knowledge | education | solutions | club | members | favorites | profile
  */
 
-// ── 1. GLOBAL STATE & UTILITIES ──────────────────────────────────────────────
+// ── 1. GLOBAL STATE &&nbsp;UTILITIES ──────────────────────────────────────────────
 let networkingMembersCache = [];
 let activeMemberRoleFilter = 'all';
 
@@ -20,7 +20,7 @@ function safeJsonParse(val, fallback = null) {
 const CLUB_LESSONS_DATA = [
   {
     id: 'lesson-codex-deepseek',
-    title: 'DeepSeek + Codex OpenAI: Связка века для вайбкодинга. Разбор и практика',
+    title: 'DeepSeek + Codex OpenAI: Связка века для&nbsp;вайбкодинга. Разбор и&nbsp;практика',
     badge: 'МАСТЕР-КЛАСС // CODEX + DEEPSEEK',
     type: 'video',
     platform: 'Kinescope',
@@ -29,12 +29,12 @@ const CLUB_LESSONS_DATA = [
     cover: '/assets/club-lessons/lesson_media_codex_deepseek.jpg',
     date: '14 сентября 2026',
     duration: '14 мин',
-    description: 'Пошаговый разбор и живая практика: как подключить китайский мотор DeepSeek с окном 1M токенов к OpenAI Codex (CLI, Desktop, VS Code), настроить нативный Responses API, разделить сессии и кодить в 50 раз дешевле.',
+    description: 'Пошаговый разбор и&nbsp;живая практика: как&nbsp;подключить китайский мотор DeepSeek с&nbsp;окном 1M токенов к&nbsp;OpenAI Codex (CLI, Desktop, VS Code), настроить нативный Responses API, разделить сессии и&nbsp;кодить в&nbsp;50 раз дешевле.',
     topics: ['DeepSeek', 'OpenAI Codex', 'Вайбкодинг', 'API-интеграция', 'CLI']
   },
   {
     id: 'lesson-969',
-    title: 'SKILLS: Навыки в нейронных сетях. Настраиваем агентов',
+    title: 'SKILLS: Навыки в&nbsp;нейронных сетях. Настраиваем агентов',
     badge: 'МАСТЕР-КЛАСС // КЛУБ',
     type: 'video',
     platform: 'Kinescope',
@@ -43,12 +43,12 @@ const CLUB_LESSONS_DATA = [
     cover: '/assets/club-lessons/lesson_media_969.jpg',
     date: '22 июня 2026',
     duration: '1ч 45мин',
-    description: 'Архитектура кастомных навыков (skills) для LLM-агентов. Как проектировать системные промпты, связывать инструменты через MCP и исключать галлюцинации моделей в проде.',
+    description: 'Архитектура кастомных навыков (skills) для&nbsp;LLM-агентов. Как&nbsp;проектировать системные промпты, связывать инструменты через MCP и&nbsp;исключать галлюцинации моделей в&nbsp;проде.',
     topics: ['AI-Агенты', 'Промпт-инжиниринг', 'MCP-серверы', 'Контекст']
   },
   {
     id: 'lesson-764',
-    title: 'Как создавать сайты с помощью нейросетей. Обзор Stitch',
+    title: 'Как создавать сайты с&nbsp;помощью нейросетей. Обзор Stitch',
     badge: 'ВИДЕО-УРОК // STITCH',
     type: 'video',
     platform: 'Kinescope',
@@ -57,7 +57,7 @@ const CLUB_LESSONS_DATA = [
     cover: '/assets/club-lessons/lesson_media_764.jpg',
     date: '29 апреля 2026',
     duration: '1ч 12мин',
-    description: 'Пошаговый пайплайн генерации веб-интерфейсов и адаптивных дизайн-систем через Google Stitch MCP. Экспорт чистого Tailwind/HTML и быстрая посадка на хостинг.',
+    description: 'Пошаговый пайплайн генерации веб-интерфейсов и&nbsp;адаптивных дизайн-систем через Google Stitch MCP. Экспорт чистого Tailwind/HTML и&nbsp;быстрая посадка на&nbsp;хостинг.',
     topics: ['Google Stitch', 'Vibe Coding', 'UI/UX', 'Tailwind']
   },
   {
@@ -71,7 +71,7 @@ const CLUB_LESSONS_DATA = [
     cover: '/assets/club-lessons/lesson_media_619.jpg',
     date: '6 апреля 2026',
     duration: '54 мин',
-    description: 'Полноценный разбор генератора FLOW для создания реалистичных коммерческих фотосессий, лукбуков для брендов и сохранения внешности моделей.',
+    description: 'Полноценный разбор генератора FLOW для&nbsp;создания реалистичных коммерческих фотосессий, лукбуков для&nbsp;брендов и&nbsp;сохранения внешности моделей.',
     topics: ['FLOW', 'Нейрофото', 'Face Lock', 'Промпты']
   },
   {
@@ -85,7 +85,7 @@ const CLUB_LESSONS_DATA = [
     cover: '/assets/club-lessons/lesson_media_615.jpg',
     date: '6 апреля 2026',
     duration: '1ч 20мин',
-    description: 'Глубокое погружение в Google NotebookLM: работа с базой знаний из сотен документов, генерация глубоких аудио-подкастов и извлечение инсайтов из PDF.',
+    description: 'Глубокое погружение в&nbsp;Google NotebookLM: работа с&nbsp;базой знаний из&nbsp;сотен документов, генерация глубоких аудио-подкастов и&nbsp;извлечение инсайтов из&nbsp;PDF.',
     topics: ['NotebookLM', 'База Знаний', 'RAG', 'Аудио-обзоры']
   },
   {
@@ -99,12 +99,12 @@ const CLUB_LESSONS_DATA = [
     cover: '/assets/club-lessons/lesson_media_546.jpg',
     date: '25 марта 2026',
     duration: '1ч 35мин',
-    description: 'Полный цикл производства аудио и видео-подкастов с помощью генеративных нейросетей: от сценария и структуры выпуска до клонирования голоса и сведения.',
+    description: 'Полный цикл производства аудио и&nbsp;видео-подкастов с&nbsp;помощью генеративных нейросетей: от&nbsp;сценария и&nbsp;структуры выпуска до&nbsp;клонирования голоса и&nbsp;сведения.',
     topics: ['Подкасты', 'Голосовые модели', 'Сценарии', 'ElevenLabs']
   },
   {
     id: 'lesson-332',
-    title: 'Мастер-класс «Промпт-дизайн и создание ассистентов»',
+    title: 'Мастер-класс «Промпт-дизайн и&nbsp;создание ассистентов»',
     badge: 'МАСТЕР-КЛАСС // АССИСТЕНТЫ',
     type: 'video',
     platform: 'Kinescope',
@@ -113,7 +113,7 @@ const CLUB_LESSONS_DATA = [
     cover: '/assets/club-lessons/lesson_media_332.jpg',
     date: '1 марта 2026',
     duration: '1ч 40мин',
-    description: 'Системный фреймворк создания надёжных промптов, ролевых моделей (GRACEF) и проектирования контекстных окон для цифровых ассистентов бизнеса.',
+    description: 'Системный фреймворк создания надёжных промптов, ролевых моделей (GRACEF) и&nbsp;проектирования контекстных окон для&nbsp;цифровых ассистентов бизнеса.',
     topics: ['Промпт-дизайн', 'GRACEF', 'Ассистенты', 'Системный промпт']
   }
 ];
@@ -164,7 +164,7 @@ function switchCabinetTab(tabId, btnElem = null) {
     activePane.style.display = 'block';
   }
 
-  // 3. Persist active tab & sync URL
+  // 3. Persist active tab &&nbsp;sync URL
   try {
     localStorage.setItem('asage_cabinet_tab', targetTab);
     const url = new URL(window.location.href);
@@ -191,7 +191,7 @@ function switchCabinetTab(tabId, btnElem = null) {
   }
 }
 
-// ── 4. RENDER CLUB LESSONS & VIDEO MODAL ──────────────────────────────────────
+// ── 4. RENDER CLUB LESSONS &&nbsp;VIDEO MODAL ──────────────────────────────────────
 function renderClubLessons() {
   const grid = document.getElementById('club-lessons-grid');
   const banner = document.getElementById('club-lessons-access-banner');
@@ -224,12 +224,12 @@ function renderClubLessons() {
             <div style="font-size:1.8rem;">🔒</div>
             <div>
               <strong style="display:block; font-size:1.05rem; color:#ffffff;">Материалы доступны резидентам клуба SAGE Neuro Family</strong>
-              <span style="font-size:0.88rem; color:#a1a1aa;">Эксклюзивные записи живых воркшопов и закрытые туториалы доступны участникам клуба по подписке (1 900 ₽ первый месяц, далее 1 500 ₽/мес).</span>
+              <span style="font-size:0.88rem; color:#a1a1aa;">Эксклюзивные записи живых воркшопов и&nbsp;закрытые туториалы доступны участникам клуба по&nbsp;подписке (1 900 ₽ первый месяц, далее 1 500 ₽/мес).</span>
             </div>
           </div>
           <div>
             <a href="https://web.tribute.tg/s/O6I" target="_blank" class="btn-primary" style="background:#ffffff; color:#09090b; border-color:#ffffff; padding:10px 20px; font-size:0.84rem; font-weight:700; font-family:var(--mono); text-decoration:none;">
-              Вступить в Клуб (1 900 ₽) ↗
+              Вступить в&nbsp;Клуб (1 900 ₽) ↗
             </a>
           </div>
         </div>
@@ -257,10 +257,10 @@ function renderClubLessons() {
       actionBtnHtml = `
         <div style="display:flex; flex-direction:column; gap:8px; width:100%;">
           <button onclick="Auth.initiatePayment({ itemId: '${l.id}', itemType: 'video', amount: 349, title: '${encodeURIComponent(l.title)}' })" class="btn-primary" style="padding:10px 14px; font-size:0.82rem; width:100%; justify-content:center; cursor:pointer; background:#09090b; color:#ffffff; font-weight:700; font-family:var(--mono); display:flex; align-items:center; gap:6px;">
-            <span>💳 Купить за 349 ₽</span> ↗
+            <span>💳 Купить за&nbsp;349 ₽</span> ↗
           </button>
           <a href="https://web.tribute.tg/s/O6I" target="_blank" class="btn-secondary" style="padding:9px 14px; font-size:0.82rem; width:100%; justify-content:center; text-align:center; text-decoration:none; background:#fafafa; color:#52525b; border:1px solid #d4d4d8; font-weight:600; display:inline-flex; align-items:center; gap:6px;">
-            <span>💎 Вступить в Клуб (все уроки)</span> ↗
+            <span>💎 Вступить в&nbsp;Клуб (все уроки)</span> ↗
           </a>
         </div>
       `;
@@ -355,11 +355,11 @@ function toggleClubLessonFavorite(e, lessonId) {
   if (badge && Auth.getFavorites) badge.innerText = Auth.getFavorites().length;
 }
 
-// ── 5. LIGHTING & CAMERA ANGLES GUIDE MODALS ─────────────────────────────────
+// ── 5. LIGHTING &&nbsp;CAMERA ANGLES GUIDE MODALS ─────────────────────────────────
 function openLightingGuideModal() {
   if (typeof Auth !== 'undefined' && !Auth.isChannelSubscriber()) {
     Auth.openChannelGateModal({
-      title: 'Шпаргалка по свету (20 схем)',
+      title: 'Шпаргалка по&nbsp;свету (20 схем)',
       onVerified: () => openLightingGuideModal()
     });
     return;
@@ -375,25 +375,25 @@ function openLightingGuideModal() {
 
   const lightingSchemes = [
     { name: '🌅 Golden Hour', desc: 'Тёплые золотистые оттенки, мягкие длинные тени, закатный вайб', prompt: 'golden hour lighting, warm golden tones, soft long shadows, cinematic sunset atmosphere' },
-    { name: '🌌 Blue Hour', desc: 'Холодный синий свет, рассветная или сумеречная атмосфера', prompt: 'blue hour lighting, cool deep blue tones, subtle shadows, dawn atmosphere' },
-    { name: '☁️ Overcast Light', desc: 'Мягкий рассеянный свет без резких теней, естественные цвета', prompt: 'overcast diffused lighting, soft even illumination, natural neutral colors' },
-    { name: '✨ Diffused Light', desc: 'Равномерный мягкий свет, идеален для студийных портретов', prompt: 'diffused studio lighting, soft flattering light, gentle falloff' },
-    { name: '🌇 Backlighting & Rim Light', desc: 'Источник света позади объекта, создаёт сияющий контур', prompt: 'strong backlighting, rim light, glowing silhouette edge, cinematic halo' },
-    { name: '🌿 Soft Ambient Light', desc: 'Нежное рассеянное освещение интерьера, уют и глубина', prompt: 'soft ambient light, cozy room illumination, natural gentle shadows' },
-    { name: '🖤 Low-Key Lighting', desc: 'Тёмный контрастный свет, глубокие тени и драматизм', prompt: 'dramatic low-key lighting, deep dark shadows, high contrast, moody chiaroscuro' },
-    { name: '🤍 High-Key Lighting', desc: 'Яркое, светлое с минимумом теней — чистота и свежесть', prompt: 'high-key lighting, bright airy scene, minimal soft shadows, pure clean look' },
-    { name: '🏠 Window Light', desc: 'Естественный свет из окна, мягкие блики и текстура кожи', prompt: 'natural window light, soft directional sunlight, organic shadow gradient' },
-    { name: '🌳 Dappled Light', desc: 'Солнечные блики и пятна сквозь листву — динамика и игра света', prompt: 'dappled sunlight filtering through foliage, organic light patterns, textured shadows' },
-    { name: '💡 Spotlight', desc: 'Фокус жесткого света на одном объекте, максимальная драма', prompt: 'intense direct spotlight, sharp dramatic focal beam, heavy contrast falloff' },
+    { name: '🌌 Blue Hour', desc: 'Холодный синий свет, рассветная или&nbsp;сумеречная атмосфера', prompt: 'blue hour lighting, cool deep blue tones, subtle shadows, dawn atmosphere' },
+    { name: '☁️ Overcast Light', desc: 'Мягкий рассеянный свет без&nbsp;резких теней, естественные цвета', prompt: 'overcast diffused lighting, soft even illumination, natural neutral colors' },
+    { name: '✨ Diffused Light', desc: 'Равномерный мягкий свет, идеален для&nbsp;студийных портретов', prompt: 'diffused studio lighting, soft flattering light, gentle falloff' },
+    { name: '🌇 Backlighting &&nbsp;Rim Light', desc: 'Источник света позади объекта, создаёт сияющий контур', prompt: 'strong backlighting, rim light, glowing silhouette edge, cinematic halo' },
+    { name: '🌿 Soft Ambient Light', desc: 'Нежное рассеянное освещение интерьера, уют и&nbsp;глубина', prompt: 'soft ambient light, cozy room illumination, natural gentle shadows' },
+    { name: '🖤 Low-Key Lighting', desc: 'Тёмный контрастный свет, глубокие тени и&nbsp;драматизм', prompt: 'dramatic low-key lighting, deep dark shadows, high contrast, moody chiaroscuro' },
+    { name: '🤍 High-Key Lighting', desc: 'Яркое, светлое с&nbsp;минимумом теней — чистота и&nbsp;свежесть', prompt: 'high-key lighting, bright airy scene, minimal soft shadows, pure clean look' },
+    { name: '🏠 Window Light', desc: 'Естественный свет из&nbsp;окна, мягкие блики и&nbsp;текстура кожи', prompt: 'natural window light, soft directional sunlight, organic shadow gradient' },
+    { name: '🌳 Dappled Light', desc: 'Солнечные блики и&nbsp;пятна сквозь листву — динамика и&nbsp;игра света', prompt: 'dappled sunlight filtering through foliage, organic light patterns, textured shadows' },
+    { name: '💡 Spotlight', desc: 'Фокус жесткого света на&nbsp;одном объекте, максимальная драма', prompt: 'intense direct spotlight, sharp dramatic focal beam, heavy contrast falloff' },
     { name: '🌆 Twilight Light', desc: 'Мягкий свет вечерних сумерек, кинематографичность', prompt: 'twilight evening light, dusky cinematic ambient, rich deep sky tones' },
-    { name: '🕯 Candlelight', desc: 'Тёплый мерцающий свет свечей, интимность и золотой оттенок', prompt: 'warm flickering candlelight, intimate golden glow, soft penumbra shadows' },
+    { name: '🕯 Candlelight', desc: 'Тёплый мерцающий свет свечей, интимность и&nbsp;золотой оттенок', prompt: 'warm flickering candlelight, intimate golden glow, soft penumbra shadows' },
     { name: '🎇 Neon Light', desc: 'Яркие неоновые огни, футуристичный киберпанк / ночной город', prompt: 'vibrant neon lighting, dual color cyan and magenta reflections, cyberpunk city night' },
     { name: '🌕 Moonlight', desc: 'Холодный серебристый ночной свет, магия луны', prompt: 'ethereal cool moonlight, silvery highlights, deep midnight shadows' },
     { name: '🚦 Street Light', desc: 'Желтоватое свечение уличных фонарей, городской вайб', prompt: 'warm sodium street lamp lighting, nighttime urban atmosphere, wet asphalt reflections' },
-    { name: '🔁 Bounced Light', desc: 'Отражённый свет от поверхностей, естественный fill-свет', prompt: 'bounced indirect illumination, soft ambient bounce, natural fill light' },
-    { name: '🌞 Lens Flare', desc: 'Анаморфотные солнечные блики в объективе, реализм', prompt: 'cinematic anamorphic lens flare, bright sun streak, photographic optical realism' },
+    { name: '🔁 Bounced Light', desc: 'Отражённый свет от&nbsp;поверхностей, естественный fill-свет', prompt: 'bounced indirect illumination, soft ambient bounce, natural fill light' },
+    { name: '🌞 Lens Flare', desc: 'Анаморфотные солнечные блики в&nbsp;объективе, реализм', prompt: 'cinematic anamorphic lens flare, bright sun streak, photographic optical realism' },
     { name: '🎥 Studio 3-Point Light', desc: 'Трехточечный студийный свет (Key, Fill, Backlight)', prompt: 'professional 3-point studio lighting, balanced key and fill light, crisp rim highlight' },
-    { name: '🔲 Pattern Light (Gobo)', desc: 'Свет с узорами через жалюзи или решётку, графичность', prompt: 'gobo patterned light, window blind shadows projected onto subject, graphic depth' }
+    { name: '🔲 Pattern Light (Gobo)', desc: 'Свет с&nbsp;узорами через жалюзи или&nbsp;решётку, графичность', prompt: 'gobo patterned light, window blind shadows projected onto subject, graphic depth' }
   ];
 
   let rowsHtml = lightingSchemes.map(s => `
@@ -409,11 +409,11 @@ function openLightingGuideModal() {
   modal.innerHTML = `
     <div class="guide-modal-content" style="background:#ffffff; max-width:840px; width:100%; max-height:85vh; overflow-y:auto; border:1px solid var(--border);">
       <div class="guide-modal-header" style="padding:20px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
-        <h3 style="margin:0; font-size:1.2rem; font-weight:800;">💡 Шпаргалка по свету (20 схем освещения)</h3>
+        <h3 style="margin:0; font-size:1.2rem; font-weight:800;">💡 Шпаргалка по&nbsp;свету (20 схем освещения)</h3>
         <button class="guide-modal-close-btn" onclick="closeGuideModal('guide-lighting-modal')" style="background:none; border:none; font-size:1.2rem; cursor:pointer;">✕</button>
       </div>
       <div class="guide-modal-body" style="padding:20px;">
-        <div style="font-family:var(--mono); font-size:0.75rem; font-weight:700; color:var(--gray); margin-bottom:12px;">// 20 КИНЕМАТОГРАФИЧЕСКИХ СХЕМ СВЕТА ДЛЯ NANO BANANA ОТ GOOGLE</div>
+        <div style="font-family:var(--mono); font-size:0.75rem; font-weight:700; color:var(--gray); margin-bottom:12px;">// 20 КИНЕМАТОГРАФИЧЕСКИХ СХЕМ СВЕТА ДЛЯ&nbsp;NANO BANANA ОТ&nbsp;GOOGLE</div>
         ${rowsHtml}
       </div>
     </div>
@@ -424,7 +424,7 @@ function openLightingGuideModal() {
 function openAnglesGuideModal() {
   if (typeof Auth !== 'undefined' && !Auth.isChannelSubscriber()) {
     Auth.openChannelGateModal({
-      title: 'Гид по ракурсам съемки (20 схем)',
+      title: 'Гид по&nbsp;ракурсам съемки (20 схем)',
       onVerified: () => openAnglesGuideModal()
     });
     return;
@@ -439,20 +439,20 @@ function openAnglesGuideModal() {
   modal.onclick = (e) => { if (e.target === modal) closeGuideModal('guide-angles-modal'); };
 
   const angles = [
-    { name: '📸 Анфас (Full Face)', desc: 'Прямой контакт глаза в глаза, открытость и симметрия', prompt: 'front view, centered headshot, direct gaze at camera, symmetrical composition' },
-    { name: '📐 3/4 ракурс (Three-quarter)', desc: 'Классический портретный поворот головы на 45 градусов', prompt: 'three-quarter view, 45 degree angle portrait, natural dimension and cheekbone definition' },
-    { name: '👤 Профиль (Profile)', desc: 'Строго боком, акцент на силуэте и контурах лица', prompt: 'side view, profile shot, silhouette focus, clean jawline contour' },
-    { name: '💫 Полуанфас (Semi-profile)', desc: 'Между 3/4 и профилем, акцент на скулах', prompt: 'semi-profile, subtle head turn, highlighting cheekbones and soft jawline' },
-    { name: '🚶 Со спины (Back View)', desc: 'Загадочность и эффект созерцания сцены', prompt: 'view from behind, back to camera, looking at horizon, mysterious mood' },
-    { name: '👁️ Уровень глаз (Eye Level)', desc: 'Нейтральная и реалистичная естественная перспектива', prompt: 'eye-level shot, natural perspective, direct human connection' },
+    { name: '📸 Анфас (Full Face)', desc: 'Прямой контакт глаза в&nbsp;глаза, открытость и&nbsp;симметрия', prompt: 'front view, centered headshot, direct gaze at camera, symmetrical composition' },
+    { name: '📐 3/4 ракурс (Three-quarter)', desc: 'Классический портретный поворот головы на&nbsp;45 градусов', prompt: 'three-quarter view, 45 degree angle portrait, natural dimension and cheekbone definition' },
+    { name: '👤 Профиль (Profile)', desc: 'Строго боком, акцент на&nbsp;силуэте и&nbsp;контурах лица', prompt: 'side view, profile shot, silhouette focus, clean jawline contour' },
+    { name: '💫 Полуанфас (Semi-profile)', desc: 'Между 3/4 и&nbsp;профилем, акцент на&nbsp;скулах', prompt: 'semi-profile, subtle head turn, highlighting cheekbones and soft jawline' },
+    { name: '🚶 Со&nbsp;спины (Back View)', desc: 'Загадочность и&nbsp;эффект созерцания сцены', prompt: 'view from behind, back to camera, looking at horizon, mysterious mood' },
+    { name: '👁️ Уровень глаз (Eye Level)', desc: 'Нейтральная и&nbsp;реалистичная естественная перспектива', prompt: 'eye-level shot, natural perspective, direct human connection' },
     { name: '⬆️ Нижний ракурс (Low Angle)', desc: 'Властный, монументальный ракурс снизу вверх', prompt: 'low angle shot, looking up at person, heroic perspective, imposing authority' },
-    { name: '⬇️ Верхний ракурс (High Angle)', desc: 'Взгляд сверху вниз, хрупкость или уязвимость', prompt: 'high angle shot, looking down at subject, emotional perspective' },
-    { name: '🦅 Птичий полет (Bird\'s Eye)', desc: 'Вид строго сверху (Top-down) с высоты', prompt: 'bird\'s eye view, top-down perspective, high altitude cinematic shot' },
-    { name: '🐜 Лягушачий ракурс (Worm\'s Eye)', desc: 'Экстремальный ракурс от самой поверхности земли', prompt: 'worm\'s eye view, ground level photography, extreme perspective looking straight up' },
+    { name: '⬇️ Верхний ракурс (High Angle)', desc: 'Взгляд сверху вниз, хрупкость или&nbsp;уязвимость', prompt: 'high angle shot, looking down at subject, emotional perspective' },
+    { name: '🦅 Птичий полет (Bird\'s Eye)', desc: 'Вид строго сверху (Top-down) с&nbsp;высоты', prompt: 'bird\'s eye view, top-down perspective, high altitude cinematic shot' },
+    { name: '🐜 Лягушачий ракурс (Worm\'s Eye)', desc: 'Экстремальный ракурс от&nbsp;самой поверхности земли', prompt: 'worm\'s eye view, ground level photography, extreme perspective looking straight up' },
     { name: '📐 Голландский угол (Dutch Angle)', desc: 'Заваленный горизонт, кинематографичное напряжение', prompt: 'dutch angle shot, tilted horizon, cinematic tension, dynamic framing' },
-    { name: '👀 Субъективный ракурс (POV)', desc: 'Вид от первого лица глазами главного героя', prompt: 'first person point of view, POV shot, immersive perspective, subjective camera' },
-    { name: '👥 Овершолдер (Over-the-shoulder)', desc: 'Взгляд через плечо собеседника в диалоге', prompt: 'over-the-shoulder shot, conversation framing, blurred foreground shoulder' },
-    { name: '🔍 Макро (Macro Detail)', desc: 'Сверхкрупный план текстуры глаза, кожи или элемента', prompt: 'extreme close-up, macro shot of an eye, hyper-detailed texture, depth of field' }
+    { name: '👀 Субъективный ракурс (POV)', desc: 'Вид от&nbsp;первого лица глазами главного героя', prompt: 'first person point of view, POV shot, immersive perspective, subjective camera' },
+    { name: '👥 Овершолдер (Over-the-shoulder)', desc: 'Взгляд через плечо собеседника в&nbsp;диалоге', prompt: 'over-the-shoulder shot, conversation framing, blurred foreground shoulder' },
+    { name: '🔍 Макро (Macro Detail)', desc: 'Сверхкрупный план текстуры глаза, кожи или&nbsp;элемента', prompt: 'extreme close-up, macro shot of an eye, hyper-detailed texture, depth of field' }
   ];
 
   let rowsHtml = angles.map(a => `
@@ -468,11 +468,11 @@ function openAnglesGuideModal() {
   modal.innerHTML = `
     <div class="guide-modal-content" style="background:#ffffff; max-width:840px; width:100%; max-height:85vh; overflow-y:auto; border:1px solid var(--border);">
       <div class="guide-modal-header" style="padding:20px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
-        <h3 style="margin:0; font-size:1.2rem; font-weight:800;">📸 Шпаргалка по ракурсам съемки (20 схем)</h3>
+        <h3 style="margin:0; font-size:1.2rem; font-weight:800;">📸 Шпаргалка по&nbsp;ракурсам съемки (20 схем)</h3>
         <button class="guide-modal-close-btn" onclick="closeGuideModal('guide-angles-modal')\" style="background:none; border:none; font-size:1.2rem; cursor:pointer;">✕</button>
       </div>
       <div class="guide-modal-body" style="padding:20px;">
-        <div style="font-family:var(--mono); font-size:0.75rem; font-weight:700; color:var(--gray); margin-bottom:12px;">// 20 РАКУРСОВ ДЛЯ ТОЧНОГО УПРАВЛЕНИЯ КАМЕРОЙ В НЕЙРОСЕТЯХ</div>
+        <div style="font-family:var(--mono); font-size:0.75rem; font-weight:700; color:var(--gray); margin-bottom:12px;">// 20 РАКУРСОВ ДЛЯ&nbsp;ТОЧНОГО УПРАВЛЕНИЯ КАМЕРОЙ В&nbsp;НЕЙРОСЕТЯХ</div>
         ${rowsHtml}
       </div>
     </div>
@@ -507,7 +507,411 @@ function copyGuidePrompt(text, btn) {
   }
 }
 
-// ── 6. PROFILE DISPLAY & EDITING ─────────────────────────────────────────────
+// ── 5.1 TELEGRAM UTM GENERATOR (≤ 64 BYTES BASE64) ───────────────────────────
+function openUtmGeneratorModal() {
+  if (typeof Auth !== 'undefined' && !Auth.isChannelSubscriber()) {
+    Auth.openChannelGateModal({
+      title: 'Генератор UTM-меток для&nbsp;Telegram',
+      onVerified: () => openUtmGeneratorModal()
+    });
+    return;
+  }
+
+  const existing = document.getElementById('guide-utm-modal');
+  if (existing) existing.remove();
+
+  const modal = document.createElement('div');
+  modal.id = 'guide-utm-modal';
+  modal.className = 'guide-modal-overlay';
+  modal.onclick = (e) => { if (e.target === modal) closeGuideModal('guide-utm-modal'); };
+
+  modal.innerHTML = `
+    <div class="guide-modal-content" style="background:#ffffff; max-width:880px; width:100%; max-height:88vh; overflow-y:auto; border:1px solid var(--border); box-shadow:0 10px 40px rgba(0,0,0,0.15); border-radius:0 !important;">
+      <div class="guide-modal-header" style="padding:18px 24px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; background:#fafafa;">
+        <div>
+          <h3 style="margin:0; font-size:1.2rem; font-weight:800; color:#09090b;">⚡ Генератор UTM-меток для&nbsp;Telegram (до&nbsp;64 байт)</h3>
+          <div style="font-family:var(--mono); font-size:0.72rem; font-weight:700; color:var(--gray); margin-top:3px;">// BASE64 URL-SAFE, КОНТРОЛЬ ЛИМИТА 64 БАЙТА И&nbsp;ПРОБРОС МЕТОК</div>
+        </div>
+        <button class="guide-modal-close-btn" onclick="closeGuideModal('guide-utm-modal')" style="background:none; border:none; font-size:1.3rem; cursor:pointer; padding:4px 8px; line-height:1;">✕</button>
+      </div>
+
+      <div class="guide-modal-body" style="padding:22px 24px;">
+        <div style="padding:12px 14px; background:#f4f4f5; border-left:3px solid #09090b; font-size:0.84rem; line-height:1.55; margin-bottom:20px; color:#27272a;">
+          Telegram-боты принимают параметр <code>?start=...</code> <strong>строго до&nbsp;64 байт</strong>. Длинные ссылки обрезаются или&nbsp;игнорируются. Генератор сокращает ключи (<code>s, m, c, o, t, r</code>) и&nbsp;кодирует их в&nbsp;компактный URL-safe Base64.
+        </div>
+
+        <!-- Section: URLs -->
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:16px; margin-bottom:18px;">
+          <div>
+            <label style="font-size:0.78rem; font-weight:700; color:#3f3f46; margin-bottom:5px; display:block; font-family:var(--mono);">1. АДРЕС ВАШЕЙ СТРАНИЦЫ</label>
+            <div style="display:flex; align-items:stretch;">
+              <span style="background:#f4f4f5; border:1px solid var(--border); border-right:none; padding:8px 10px; font-family:var(--mono); font-size:0.8rem; color:#71717a; display:flex; align-items:center;">https://</span>
+              <input type="text" id="utm-site-url" placeholder="a-sage.ru/offer" oninput="recalcUtmGenerator()" style="flex:1; border:1px solid var(--border); padding:8px 12px; font-family:var(--mono); font-size:0.82rem; border-radius:0; outline:none; background:#fff;">
+            </div>
+          </div>
+
+          <div>
+            <label style="font-size:0.78rem; font-weight:700; color:#3f3f46; margin-bottom:5px; display:block; font-family:var(--mono);">2. НИК БОТА / КАНАЛА В&nbsp;TELEGRAM</label>
+            <div style="display:flex; align-items:stretch;">
+              <span style="background:#f4f4f5; border:1px solid var(--border); border-right:none; padding:8px 10px; font-family:var(--mono); font-size:0.8rem; color:#71717a; display:flex; align-items:center;">https://t.me/</span>
+              <input type="text" id="utm-tg-nick" placeholder="Michael_Sage_bot" oninput="recalcUtmGenerator()" style="flex:1; border:1px solid var(--border); padding:8px 12px; font-family:var(--mono); font-size:0.82rem; border-radius:0; outline:none; background:#fff;">
+            </div>
+          </div>
+        </div>
+
+        <!-- Presets -->
+        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:18px; padding:8px 12px; background:#fafafa; border:1px solid #f4f4f5;">
+          <span style="font-family:var(--mono); font-size:0.72rem; font-weight:700; color:#71717a;">ПРЕСЕТЫ:</span>
+          <button type="button" onclick="applyUtmPreset('yandex', 'cpc')" class="btn-secondary" style="padding:3px 8px; font-size:0.72rem; font-family:var(--mono); border-radius:0; cursor:pointer;">Яндекс Директ</button>
+          <button type="button" onclick="applyUtmPreset('vk', 'targeted')" class="btn-secondary" style="padding:3px 8px; font-size:0.72rem; font-family:var(--mono); border-radius:0; cursor:pointer;">ВКонтакте</button>
+          <button type="button" onclick="applyUtmPreset('tg_ads', 'cpc')" class="btn-secondary" style="padding:3px 8px; font-size:0.72rem; font-family:var(--mono); border-radius:0; cursor:pointer;">Telegram Ads</button>
+          <button type="button" onclick="applyUtmPreset('telegram', 'channel')" class="btn-secondary" style="padding:3px 8px; font-size:0.72rem; font-family:var(--mono); border-radius:0; cursor:pointer;">TG Канал</button>
+          <button type="button" onclick="applyUtmPreset('newsletter', 'email')" class="btn-secondary" style="padding:3px 8px; font-size:0.72rem; font-family:var(--mono); border-radius:0; cursor:pointer;">Рассылка</button>
+        </div>
+
+        <!-- Section: 6 UTM Fields -->
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:14px; margin-bottom:24px; padding-bottom:20px; border-bottom:1px solid #f4f4f5;">
+          <div>
+            <label style="font-size:0.75rem; font-weight:700; color:#3f3f46; margin-bottom:4px; display:block; font-family:var(--mono);">ИСТОЧНИК КАМПАНИИ · utm_source (s)</label>
+            <input type="text" id="utm-src" placeholder="yandex" oninput="recalcUtmGenerator()" style="width:100%; border:1px solid var(--border); padding:8px 10px; font-family:var(--mono); font-size:0.82rem; border-radius:0; box-sizing:border-box; outline:none; background:#fff;">
+          </div>
+          <div>
+            <label style="font-size:0.75rem; font-weight:700; color:#3f3f46; margin-bottom:4px; display:block; font-family:var(--mono);">ТИП ТРАФИКА · utm_medium (m)</label>
+            <input type="text" id="utm-med" placeholder="cpc" oninput="recalcUtmGenerator()" style="width:100%; border:1px solid var(--border); padding:8px 10px; font-family:var(--mono); font-size:0.82rem; border-radius:0; box-sizing:border-box; outline:none; background:#fff;">
+          </div>
+          <div>
+            <label style="font-size:0.75rem; font-weight:700; color:#3f3f46; margin-bottom:4px; display:block; font-family:var(--mono);">НАЗВАНИЕ КАМПАНИИ · utm_campaign (c)</label>
+            <input type="text" id="utm-cmp" placeholder="agent_launch" oninput="recalcUtmGenerator()" style="width:100%; border:1px solid var(--border); padding:8px 10px; font-family:var(--mono); font-size:0.82rem; border-radius:0; box-sizing:border-box; outline:none; background:#fff;">
+          </div>
+          <div>
+            <label style="font-size:0.75rem; font-weight:700; color:#3f3f46; margin-bottom:4px; display:block; font-family:var(--mono);">СОДЕРЖАНИЕ ОБЪЯВЛЕНИЯ · utm_content (o)</label>
+            <input type="text" id="utm-cnt" placeholder="banner_01" oninput="recalcUtmGenerator()" style="width:100%; border:1px solid var(--border); padding:8px 10px; font-family:var(--mono); font-size:0.82rem; border-radius:0; box-sizing:border-box; outline:none; background:#fff;">
+          </div>
+          <div>
+            <label style="font-size:0.75rem; font-weight:700; color:#3f3f46; margin-bottom:4px; display:block; font-family:var(--mono);">КЛЮЧЕВОЕ СЛОВО · utm_term (t)</label>
+            <input type="text" id="utm-trm" placeholder="vibe_coding" oninput="recalcUtmGenerator()" style="width:100%; border:1px solid var(--border); padding:8px 10px; font-family:var(--mono); font-size:0.82rem; border-radius:0; box-sizing:border-box; outline:none; background:#fff;">
+          </div>
+          <div>
+            <label style="font-size:0.75rem; font-weight:700; color:#3f3f46; margin-bottom:4px; display:block; font-family:var(--mono);">РЕФЕРАЛЬНЫЙ КОД · referralCode (r)</label>
+            <input type="text" id="utm-ref" placeholder="sage777" oninput="recalcUtmGenerator()" style="width:100%; border:1px solid var(--border); padding:8px 10px; font-family:var(--mono); font-size:0.82rem; border-radius:0; box-sizing:border-box; outline:none; background:#fff;">
+          </div>
+        </div>
+
+        <!-- Generated Outputs -->
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          <!-- 1. Full Website URL -->
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+              <label style="font-size:0.76rem; font-weight:700; color:#3f3f46; font-family:var(--mono);">ССЫЛКА ДЛЯ&nbsp;САЙТА (СТАНДАРТНАЯ)</label>
+            </div>
+            <div style="display:flex;">
+              <input type="text" id="utm-out-site-full" readonly placeholder="https://..." style="flex:1; border:1px solid var(--border); border-right:none; padding:8px 12px; font-family:var(--mono); font-size:0.8rem; background:#fafafa; border-radius:0; outline:none;">
+              <button type="button" class="btn-secondary" onclick="copyUtmValue('utm-out-site-full', this)" style="padding:8px 16px; font-size:0.76rem; font-family:var(--mono); border-radius:0; cursor:pointer; flex-shrink:0;">Копировать</button>
+            </div>
+          </div>
+
+          <!-- 2. Base64 Website URL -->
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+              <label style="font-size:0.76rem; font-weight:700; color:#3f3f46; font-family:var(--mono);">ССЫЛКА ДЛЯ&nbsp;САЙТА (BASE64 URL-SAFE)</label>
+              <span id="utm-count-site-b64" style="font-family:var(--mono); font-size:0.72rem; color:#71717a;"></span>
+            </div>
+            <div style="display:flex;">
+              <input type="text" id="utm-out-site-b64" readonly placeholder="https://.../?data=..." style="flex:1; border:1px solid var(--border); border-right:none; padding:8px 12px; font-family:var(--mono); font-size:0.8rem; background:#fafafa; border-radius:0; outline:none;">
+              <button type="button" class="btn-secondary" onclick="copyUtmValue('utm-out-site-b64', this)" style="padding:8px 16px; font-size:0.76rem; font-family:var(--mono); border-radius:0; cursor:pointer; flex-shrink:0;">Копировать</button>
+            </div>
+          </div>
+
+          <!-- 3. Standard Telegram URL -->
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+              <label style="font-size:0.76rem; font-weight:700; color:#3f3f46; font-family:var(--mono);">СТАНДАРТНАЯ ССЫЛКА ДЛЯ&nbsp;TELEGRAM (МОЖНО РЕДАКТИРОВАТЬ)</label>
+            </div>
+            <div style="display:flex;">
+              <input type="text" id="utm-out-tg-std" oninput="encodeManualUtmUrl()" placeholder="https://t.me/bot?start&..." style="flex:1; border:1px solid var(--border); border-right:none; padding:8px 12px; font-family:var(--mono); font-size:0.8rem; background:#fafafa; border-radius:0; outline:none;">
+              <button type="button" class="btn-secondary" onclick="copyUtmValue('utm-out-tg-std', this)" style="padding:8px 16px; font-size:0.76rem; font-family:var(--mono); border-radius:0; cursor:pointer; flex-shrink:0;">Копировать</button>
+            </div>
+          </div>
+
+          <!-- 4. Base64 Telegram URL -->
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+              <label style="font-size:0.76rem; font-weight:700; color:#3f3f46; font-family:var(--mono);">ССЫЛКА ДЛЯ&nbsp;TELEGRAM (BASE64 URL-SAFE, ДО&nbsp;64 БАЙТ)</label>
+              <span id="utm-count-tg-b64" style="font-family:var(--mono); font-size:0.75rem; font-weight:700; color:#71717a;"></span>
+            </div>
+            <div style="display:flex;">
+              <input type="text" id="utm-out-tg-b64" readonly placeholder="https://t.me/bot?start=..." style="flex:1; border:1px solid var(--border); border-right:none; padding:8px 12px; font-family:var(--mono); font-size:0.8rem; background:#fafafa; border-radius:0; outline:none; font-weight:600;">
+              <button type="button" class="btn-secondary" onclick="copyUtmValue('utm-out-tg-b64', this)" style="padding:8px 16px; font-size:0.76rem; font-family:var(--mono); border-radius:0; cursor:pointer; flex-shrink:0; background:#09090b; color:#fff; border-color:#09090b;">Копировать</button>
+            </div>
+            <div id="utm-alert-overflow" style="display:none; margin-top:8px; padding:10px 14px; background:#fef2f2; border:1px solid #fecaca; color:#b91c1c; font-size:0.78rem; font-family:var(--mono); line-height:1.4;"></div>
+          </div>
+        </div>
+
+        <!-- Forwarder Script Details -->
+        <details style="margin-top:24px; border:1px solid var(--border); padding:12px 16px; background:#fafafa;">
+          <summary style="font-weight:700; cursor:pointer; font-size:0.86rem; display:flex; justify-content:space-between; align-items:center; user-select:none;">
+            <span>📋 Скрипт проброса UTM-меток на&nbsp;сайте (Tilda / Web)</span>
+            <span style="font-family:var(--mono); font-size:0.75rem; color:#10b981;">Развернуть ▾</span>
+          </summary>
+          <div style="margin-top:12px; font-size:0.82rem; color:#52525b; line-height:1.55;">
+            <p style="margin:0 0 10px 0;">
+              Вставьте этот код в&nbsp;<code>&lt;head&gt;</code> вашего сайта или&nbsp;блок T123 (HTML) на&nbsp;Тильде. Когда посетитель переходит по&nbsp;рекламе с&nbsp;UTM-метками, скрипт автоматически добавляет их ко&nbsp;всем кнопкам и&nbsp;ссылкам на&nbsp;странице (включая ссылки на&nbsp;Telegram-ботов).
+            </p>
+            <div style="position:relative;">
+              <pre style="background:#09090b; color:#34d399; font-family:var(--mono); font-size:0.75rem; padding:14px; overflow-x:auto; margin:0; line-height:1.45; border:1px solid var(--border);"><code id="utm-forwarder-code">&lt;!-- Скрипт сквозного проброса UTM-меток (AiSAGE) --&gt;
+&lt;script&gt;
+document.addEventListener('DOMContentLoaded', function() {
+    var queryString = window.location.search;
+    if (queryString) {
+        var allLinks = document.querySelectorAll('a');
+        allLinks.forEach(function(link) {
+            var href = link.getAttribute('href');
+            if (href && !href.startsWith('#') && !href.startsWith('javascript:')) {
+                link.href = href.indexOf('?') !== -1 ? href + '&' + queryString.substring(1) : href + queryString;
+            }
+        });
+    }
+});
+&lt;/script&gt;</code></pre>
+              <button type="button" class="btn-secondary" onclick="copyUtmSnippet('utm-forwarder-code', this)" style="position:absolute; top:8px; right:8px; padding:4px 10px; font-size:0.72rem; font-family:var(--mono); background:#27272a; border-color:#3f3f46; color:#fff; cursor:pointer;">Копировать код</button>
+            </div>
+          </div>
+        </details>
+
+        <!-- Footer actions -->
+        <div style="margin-top:24px; padding-top:16px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+          <button type="button" onclick="resetUtmGenerator()" class="btn-secondary" style="padding:6px 14px; font-size:0.75rem; font-family:var(--mono); cursor:pointer;">Очистить поля</button>
+          <a href="/tools/utm/" target="_blank" style="font-family:var(--mono); font-size:0.8rem; color:#09090b; font-weight:700; text-decoration:underline;">🔗 Открыть отдельной страницей (/tools/utm/) ↗</a>
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+}
+
+function applyUtmPreset(src, med) {
+  const s = document.getElementById('utm-src');
+  const m = document.getElementById('utm-med');
+  if (s) s.value = src;
+  if (m) m.value = med;
+  recalcUtmGenerator();
+}
+
+function recalcUtmGenerator() {
+  const siteInput = (document.getElementById('utm-site-url')?.value || '').trim().replace(/^https?:\/\//, '').replace(/\/$/, '');
+  const tgInput = (document.getElementById('utm-tg-nick')?.value || '').trim().replace(/^https?:\/\/t\.me\//, '').replace(/^@/, '').replace(/\/$/, '');
+
+  const src = (document.getElementById('utm-src')?.value || '').trim();
+  const med = (document.getElementById('utm-med')?.value || '').trim();
+  const cmp = (document.getElementById('utm-cmp')?.value || '').trim();
+  const cnt = (document.getElementById('utm-cnt')?.value || '').trim();
+  const trm = (document.getElementById('utm-trm')?.value || '').trim();
+  const ref = (document.getElementById('utm-ref')?.value || '').trim();
+
+  const shortParams = [];
+  if (ref) shortParams.push(`r=${ref}`);
+  if (src) shortParams.push(`s=${src}`);
+  if (med) shortParams.push(`m=${med}`);
+  if (cmp) shortParams.push(`c=${cmp}`);
+  if (cnt) shortParams.push(`o=${cnt}`);
+  if (trm) shortParams.push(`t=${trm}`);
+
+  const longParams = [];
+  if (ref) longParams.push(`referralCode=${ref}`);
+  if (src) longParams.push(`utm_source=${src}`);
+  if (med) longParams.push(`utm_medium=${med}`);
+  if (cmp) longParams.push(`utm_campaign=${cmp}`);
+  if (cnt) longParams.push(`utm_content=${cnt}`);
+  if (trm) longParams.push(`utm_term=${trm}`);
+
+  const shortQuery = shortParams.join('&');
+  const longQuery = longParams.join('&');
+
+  const siteFullEl = document.getElementById('utm-out-site-full');
+  const siteB64El = document.getElementById('utm-out-site-b64');
+  const siteB64Counter = document.getElementById('utm-count-site-b64');
+
+  if (siteInput) {
+    if (longQuery) {
+      if (siteFullEl) siteFullEl.value = `https://${siteInput}?${longQuery}`;
+      try {
+        const b64 = btoa(unescape(encodeURIComponent(shortQuery))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+        if (siteB64El) siteB64El.value = `https://${siteInput}?data=${b64}`;
+        if (siteB64Counter) {
+          siteB64Counter.textContent = `(${b64.length} симв.)`;
+          siteB64Counter.style.color = '#71717a';
+        }
+      } catch (e) {
+        if (siteB64El) siteB64El.value = '';
+      }
+    } else {
+      if (siteFullEl) siteFullEl.value = `https://${siteInput}`;
+      if (siteB64El) siteB64El.value = `https://${siteInput}`;
+      if (siteB64Counter) siteB64Counter.textContent = '';
+    }
+  } else {
+    if (siteFullEl) siteFullEl.value = '';
+    if (siteB64El) siteB64El.value = '';
+    if (siteB64Counter) siteB64Counter.textContent = '';
+  }
+
+  const tgStdEl = document.getElementById('utm-out-tg-std');
+  const tgB64El = document.getElementById('utm-out-tg-b64');
+  const tgCounter = document.getElementById('utm-count-tg-b64');
+  const alertBox = document.getElementById('utm-alert-overflow');
+
+  if (tgInput) {
+    const stdUrl = `https://t.me/${tgInput}${longQuery ? '?start&' + longQuery : ''}`;
+    if (tgStdEl) tgStdEl.value = stdUrl;
+
+    if (shortQuery) {
+      try {
+        const b64 = btoa(unescape(encodeURIComponent(shortQuery))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+        const b64Url = `https://t.me/${tgInput}?start=${b64}`;
+        if (tgB64El) tgB64El.value = b64Url;
+
+        const byteLen = b64.length;
+        if (tgCounter) {
+          tgCounter.textContent = `(${byteLen} / 64 байт)`;
+          if (byteLen > 64) {
+            tgCounter.style.color = '#ef4444';
+            tgCounter.style.fontWeight = '700';
+            if (alertBox) {
+              alertBox.style.display = 'block';
+              alertBox.innerHTML = `⚠️ <strong>Лимит превышен: ${byteLen} байт из&nbsp;64!</strong> Telegram отсекает параметр start длиннее 64 байт. Бот не&nbsp;получит метки. Сократите названия меток.`;
+            }
+          } else {
+            tgCounter.style.color = '#10b981';
+            tgCounter.style.fontWeight = '600';
+            if (alertBox) alertBox.style.display = 'none';
+          }
+        }
+      } catch (e) {
+        if (tgB64El) tgB64El.value = 'Ошибка кодирования';
+      }
+    } else {
+      if (tgB64El) tgB64El.value = `https://t.me/${tgInput}?start=`;
+      if (tgCounter) {
+        tgCounter.textContent = '(0 / 64 байт)';
+        tgCounter.style.color = '#71717a';
+      }
+      if (alertBox) alertBox.style.display = 'none';
+    }
+  } else {
+    if (tgStdEl) tgStdEl.value = '';
+    if (tgB64El) tgB64El.value = '';
+    if (tgCounter) tgCounter.textContent = '';
+    if (alertBox) alertBox.style.display = 'none';
+  }
+}
+
+function encodeManualUtmUrl() {
+  const stdInput = document.getElementById('utm-out-tg-std');
+  if (!stdInput) return;
+  const val = stdInput.value.trim();
+  const match = val.match(/t\.me\/([^?]+)\?start(?:&|=)(.+)/);
+  if (match && match[1] && match[2]) {
+    const nick = match[1];
+    const rawParams = match[2];
+    const shortParams = rawParams
+      .replace(/utm_source=/g, 's=')
+      .replace(/utm_medium=/g, 'm=')
+      .replace(/utm_campaign=/g, 'c=')
+      .replace(/utm_content=/g, 'o=')
+      .replace(/utm_term=/g, 't=')
+      .replace(/referralCode=/g, 'r=');
+
+    try {
+      const b64 = btoa(unescape(encodeURIComponent(shortParams))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+      const tgB64El = document.getElementById('utm-out-tg-b64');
+      if (tgB64El) tgB64El.value = `https://t.me/${nick}?start=${b64}`;
+      const tgCounter = document.getElementById('utm-count-tg-b64');
+      const alertBox = document.getElementById('utm-alert-overflow');
+      const byteLen = b64.length;
+      if (tgCounter) {
+        tgCounter.textContent = `(${byteLen} / 64 байт)`;
+        if (byteLen > 64) {
+          tgCounter.style.color = '#ef4444';
+          tgCounter.style.fontWeight = '700';
+          if (alertBox) {
+            alertBox.style.display = 'block';
+            alertBox.innerHTML = `⚠️ <strong>Лимит превышен: ${byteLen} байт из&nbsp;64!</strong> Сократите параметры.`;
+          }
+        } else {
+          tgCounter.style.color = '#10b981';
+          tgCounter.style.fontWeight = '600';
+          if (alertBox) alertBox.style.display = 'none';
+        }
+      }
+    } catch (e) {}
+  }
+}
+
+function copyUtmValue(id, btn) {
+  const input = document.getElementById(id);
+  if (!input || !input.value) return;
+  const text = input.value;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      const orig = btn.innerText;
+      btn.innerText = '✓ Скопировано';
+      btn.style.background = '#10b981';
+      btn.style.borderColor = '#10b981';
+      btn.style.color = '#fff';
+      setTimeout(() => {
+        btn.innerText = orig;
+        btn.style.background = '';
+        btn.style.borderColor = '';
+        btn.style.color = '';
+      }, 1500);
+    }).catch(() => {
+      prompt('Скопируйте ссылку:', text);
+    });
+  } else {
+    prompt('Скопируйте ссылку:', text);
+  }
+}
+
+function copyUtmSnippet(id, btn) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const text = el.innerText || el.textContent;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      const orig = btn.innerText;
+      btn.innerText = '✓ Скопировано';
+      btn.style.background = '#10b981';
+      btn.style.borderColor = '#10b981';
+      btn.style.color = '#fff';
+      setTimeout(() => {
+        btn.innerText = orig;
+        btn.style.background = '';
+        btn.style.borderColor = '';
+        btn.style.color = '';
+      }, 1500);
+    }).catch(() => {
+      prompt('Скопируйте код:', text);
+    });
+  } else {
+    prompt('Скопируйте код:', text);
+  }
+}
+
+function resetUtmGenerator() {
+  ['utm-site-url', 'utm-tg-nick', 'utm-src', 'utm-med', 'utm-cmp', 'utm-cnt', 'utm-trm', 'utm-ref', 'utm-out-site-full', 'utm-out-site-b64', 'utm-out-tg-std', 'utm-out-tg-b64'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  const c1 = document.getElementById('utm-count-site-b64');
+  if (c1) c1.textContent = '';
+  const c2 = document.getElementById('utm-count-tg-b64');
+  if (c2) c2.textContent = '';
+  const a = document.getElementById('utm-alert-overflow');
+  if (a) a.style.display = 'none';
+}
+
+// ── 6. PROFILE DISPLAY &&nbsp;EDITING ─────────────────────────────────────────────
 function updateCabinetProfile() {
   const user = typeof Auth !== 'undefined' && Auth.getUser ? Auth.getUser() : null;
   const loggedInContainer = document.getElementById('profile-container-logged-in');
@@ -519,7 +923,9 @@ function updateCabinetProfile() {
 
     document.body.classList.add('user-logged-in');
 
-    const displayName = (user.first_name + ' ' + (user.last_name || '')).trim() || user.username || 'Пользователь';
+    const fName = (user.first_name || '').trim();
+    const lName = (user.last_name || '').trim();
+    const displayName = (fName && lName && fName.includes(lName)) ? fName : (`${fName} ${lName}`.trim() || user.username || 'Пользователь');
     const nameEl = document.getElementById('user-display-name') || document.getElementById('cabinet-display-name');
     if (nameEl) nameEl.innerText = displayName;
 
@@ -590,7 +996,7 @@ function updateCabinetProfile() {
         bioWrap.style.fontStyle = 'normal';
         bioWrap.style.color = '#52525b';
       } else {
-        bioWrap.innerText = 'Нажмите «Настроить профиль», чтобы добавить информацию о деятельности и контакты.';
+        bioWrap.innerText = 'Нажмите «Настроить профиль», чтобы добавить информацию о&nbsp;деятельности и&nbsp;контакты.';
         bioWrap.style.display = 'block';
         bioWrap.style.fontStyle = 'italic';
         bioWrap.style.color = '#a1a1aa';
@@ -778,7 +1184,7 @@ function livePreviewProfile() {
   if (previewHandle) previewHandle.innerText = handle;
 
   const previewBio = document.getElementById('preview-user-bio');
-  if (previewBio) previewBio.innerText = bio || 'Описание деятельности и стек технологий...';
+  if (previewBio) previewBio.innerText = bio || 'Описание деятельности и&nbsp;стек технологий...';
 
   // Live preview avatar photo or initial
   const previewAvatarWrap = document.getElementById('preview-avatar-wrap');
@@ -823,7 +1229,7 @@ function livePreviewProfile() {
 
   const previewPrivacy = document.getElementById('preview-user-privacy');
   if (previewPrivacy) {
-    const privText = isChecked ? '🌐 В каталоге' : '🔒 Скрыт из каталога';
+    const privText = isChecked ? '🌐 В&nbsp;каталоге' : '🔒 Скрыт из&nbsp;каталога';
     const tgText = showTgChecked ? '💬 Telegram открыт' : '🛡️ Telegram скрыт';
     previewPrivacy.innerText = `${privText} • ${tgText}`;
     previewPrivacy.style.color = isChecked ? '#059669' : '#dc2626';
@@ -841,7 +1247,7 @@ function livePreviewProfile() {
 
   const dockBio = document.getElementById('dock-bio-wrap');
   if (dockBio) {
-    dockBio.innerText = bio || 'Описание деятельности и стек технологий...';
+    dockBio.innerText = bio || 'Описание деятельности и&nbsp;стек технологий...';
     dockBio.style.fontStyle = bio ? 'normal' : 'italic';
     dockBio.style.color = bio ? '#52525b' : '#a1a1aa';
   }
@@ -920,7 +1326,7 @@ async function handleProfileSave(event) {
   }
 }
 
-// ── 7. MEMBERS DIRECTORY & RECIPROCAL PRIVACY ────────────────────────────────
+// ── 7. MEMBERS DIRECTORY &&nbsp;RECIPROCAL PRIVACY ────────────────────────────────
 async function loadMembersDirectory() {
   const container = document.getElementById('members-grid-container');
   const searchWrapper = document.getElementById('members-search-wrapper');
@@ -939,7 +1345,7 @@ async function loadMembersDirectory() {
         <div style="font-size:2.4rem; margin-bottom:12px;">👥</div>
         <h3 style="font-size:1.3rem; font-weight:800; margin-bottom:10px;">Каталог Резидентов Клуба</h3>
         <p style="color:#52525b; font-size:0.92rem; line-height:1.55; max-width:500px; margin:0 auto 20px auto;">
-          База контактов и закрытый нетворкинг доступны резидентам сообщества SAGE Neuro Family. Войдите через Telegram, чтобы открыть каталог.
+          База контактов и&nbsp;закрытый нетворкинг доступны резидентам сообщества SAGE Neuro Family. Войдите через Telegram, чтобы открыть каталог.
         </p>
         <button onclick="if(typeof Auth!=='undefined') Auth.openLoginModal()" class="btn-primary" style="padding:12px 24px; font-size:0.86rem; cursor:pointer;">
           Войти через Telegram ↗
@@ -960,14 +1366,14 @@ async function loadMembersDirectory() {
         <div style="font-size:2.4rem; margin-bottom:12px;">💎</div>
         <h3 style="font-size:1.3rem; font-weight:800; margin-bottom:10px;">Доступно только Резидентам Клуба</h3>
         <p style="color:#52525b; font-size:0.92rem; line-height:1.55; max-width:520px; margin:0 auto 20px auto;">
-          Каталог участников и закрытый нетворкинг открыты только резидентам SAGE Neuro Family. Оформите подписку на закрытый клуб, чтобы войти в сообщество.
+          Каталог участников и&nbsp;закрытый нетворкинг открыты только резидентам SAGE Neuro Family. Оформите подписку на&nbsp;закрытый клуб, чтобы войти в&nbsp;сообщество.
         </p>
         <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
           <a href="https://web.tribute.tg/s/O6I" target="_blank" class="btn-primary" style="padding:12px 24px; font-size:0.86rem; text-decoration:none; display:inline-flex; align-items:center;">
-            Вступить в Клуб (1 900 ₽) ↗
+            Вступить в&nbsp;Клуб (1 900 ₽) ↗
           </a>
           <button onclick="switchCabinetTab('club')" class="btn-secondary" style="padding:12px 24px; font-size:0.86rem; cursor:pointer;">
-            Подробнее о Клубе ℹ
+            Подробнее о&nbsp;Клубе ℹ
           </button>
         </div>
       </div>
@@ -986,11 +1392,11 @@ async function loadMembersDirectory() {
         <div style="font-size:2.4rem; margin-bottom:12px;">🔒</div>
         <h3 style="font-size:1.3rem; font-weight:800; margin-bottom:10px;">Видимость вашего профиля отключена</h3>
         <p style="color:#52525b; font-size:0.92rem; line-height:1.55; max-width:540px; margin:0 auto 24px auto;">
-          В сообществе действует строгое правило взаимности: если вы скрываете свой профиль из каталога, вы также не видите других резидентов. Чтобы открыть каталог и обмениваться контактами, включите видимость профиля.
+          В&nbsp;сообществе действует строгое правило взаимности: если вы скрываете свой профиль из&nbsp;каталога, вы также не&nbsp;видите других резидентов. Чтобы открыть каталог и&nbsp;обмениваться контактами, включите видимость профиля.
         </p>
         <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
           <button onclick="enableProfileVisibility()" class="btn-primary" style="padding:12px 24px; font-size:0.86rem; font-family:var(--mono); cursor:pointer;">
-            Включить видимость и открыть каталог 👁
+            Включить видимость и&nbsp;открыть каталог 👁
           </button>
           <button onclick="switchCabinetTab('profile')" class="btn-secondary" style="padding:12px 24px; font-size:0.86rem; font-family:var(--mono); cursor:pointer;">
             Настройки профиля ⚙
@@ -1033,7 +1439,7 @@ async function loadMembersDirectory() {
         last_name: 'Пузырёв',
         username: 'Michael_Sage',
         role: 'club_member',
-        bio: 'AI-архитектор, основатель сообщества SAGE Neuro Family. Проектирование мультиагентных сред, Antigravity SDK и автоматизация бизнеса.',
+        bio: 'AI-архитектор, основатель сообщества SAGE Neuro Family. Проектирование мультиагентных сред, Antigravity SDK и&nbsp;автоматизация бизнеса.',
         channel_url: 'https://t.me/uncrn_sage',
         website_url: 'https://a-sage.ru',
         photo_url: '/img/mikhail_hero.jpg',
@@ -1089,7 +1495,7 @@ function renderMembersDirectory(members) {
     container.innerHTML = `
       <div style="grid-column:1/-1; background:#ffffff; border:1px solid var(--border); padding:48px 24px; text-align:center;">
         <div style="font-size:2rem; margin-bottom:12px;">👥</div>
-        <h3 style="font-size:1.2rem; font-weight:700; margin-bottom:8px;">Резиденты не найдены</h3>
+        <h3 style="font-size:1.2rem; font-weight:700; margin-bottom:8px;">Резиденты не&nbsp;найдены</h3>
         <p style="color:var(--gray); font-size:0.9rem; max-width:400px; margin:0 auto 16px auto;">
           Попробуйте изменить поисковый запрос.
         </p>
@@ -1103,7 +1509,9 @@ function renderMembersDirectory(members) {
 
   let html = '';
   filtered.forEach(m => {
-    const name = `${m.first_name || ''} ${m.last_name || ''}`.trim() || (m.show_telegram_contact && m.username ? '@' + m.username : 'Резидент Клуба');
+    const fName = (m.first_name || '').trim();
+    const lName = (m.last_name || '').trim();
+    const name = (fName && lName && fName.includes(lName)) ? fName : (`${fName} ${lName}`.trim() || (m.show_telegram_contact && m.username ? '@' + m.username : 'Резидент Клуба'));
     const isMikhail = (m.username && m.username.toLowerCase() === 'michael_sage') || m.telegram_id == 439634804 || m.telegram_id == 88472911;
     const roleBadge = isMikhail
       ? '<span class="badge-role club" style="font-size:0.68rem; padding:2px 6px; background:#09090b; color:#ffffff;">👑 Основатель</span>'
@@ -1141,7 +1549,7 @@ function renderMembersDirectory(members) {
           <div class="member-bio" style="font-size:0.88rem; color:#52525b; line-height:1.5; margin-bottom:16px;">${m.bio || 'Резидент клуба SAGE Neuro Family'}</div>
         </div>
         <div class="member-actions" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; border-top:1px solid #f4f4f5; padding-top:14px; margin-top:auto;">
-          ${linksHtml || '<span style="font-family:var(--mono); font-size:0.72rem; color:#a1a1aa;">Контакты не указаны</span>'}
+          ${linksHtml || '<span style="font-family:var(--mono); font-size:0.72rem; color:#a1a1aa;">Контакты не&nbsp;указаны</span>'}
         </div>
       </div>
     `;
@@ -1171,12 +1579,12 @@ function renderFavorites() {
     container.innerHTML = `
       <div style="background:#ffffff; border:1px solid var(--border); padding:48px 24px; text-align:center;">
         <div style="font-size:2rem; margin-bottom:12px;">⭐</div>
-        <h3 style="font-size:1.25rem; font-weight:700; margin-bottom:8px;">У вас пока нет закладок</h3>
+        <h3 style="font-size:1.25rem; font-weight:700; margin-bottom:8px;">У&nbsp;вас пока нет закладок</h3>
         <p style="color:var(--gray); font-size:0.95rem; max-width:480px; margin:0 auto 20px auto;">
-          Нажимайте на звездочку рядом с видео-уроками, промптами или терминами глоссария, чтобы сохранять их для быстрого доступа.
+          Нажимайте на&nbsp;звездочку рядом с&nbsp;видео-уроками, промптами или&nbsp;терминами глоссария, чтобы сохранять их для&nbsp;быстрого доступа.
         </p>
         <button onclick="switchCabinetTab('education')" class="btn-primary" style="padding:10px 20px; font-size:0.84rem;">
-          Перейти к видео-урокам ↗
+          Перейти к&nbsp;видео-урокам ↗
         </button>
       </div>
     `;
@@ -1230,7 +1638,7 @@ function removeFavorite(type, id) {
   if (badge && Auth.getFavorites) badge.innerText = Auth.getFavorites().length;
 }
 
-// ── 9. INITIALIZATION & LIFECYCLE ────────────────────────────────────────────
+// ── 9. INITIALIZATION &&nbsp;LIFECYCLE ────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
   updateCabinetProfile();
   renderClubLessons();

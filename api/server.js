@@ -701,7 +701,9 @@ const server = http.createServer(async (req, res) => {
               isClubResident = false;
               statusClub = 'not_participant';
             } else {
-              isClubResident = false;
+              // Bot could not check (chat not found, bot not in chat, or permission issue)
+              // IMPORTANT: Never demote existing residents on bot/chat configuration errors
+              isClubResident = existingLocal ? (existingLocal.is_club_resident === true || existingLocal.role === 'club_member') : false;
               statusClub = clubRes.error || 'unknown';
             }
           }
@@ -786,21 +788,46 @@ const server = http.createServer(async (req, res) => {
         const newStatus = cm.new_chat_member?.status;
         const isNowMember = ['creator', 'administrator', 'member', 'restricted'].includes(newStatus);
         const tgId = targetUser?.id;
+        const chatId = String(cm.chat?.id || '');
+        const chatType = cm.chat?.type || '';
+
+        console.log(`[Telegram Webhook] User ${tgId} (${targetUser?.username || ''}) status in chat ${chatId} (${cm.chat?.title || ''}) changed to: ${newStatus} (isMember: ${isNowMember})`);
+
         if (tgId && tgId !== 439634804 && tgId !== 88472911) {
-          console.log(`[Telegram Webhook] User ${tgId} status in chat ${cm.chat?.id} changed to: ${newStatus} (isMember: ${isNowMember})`);
-          upsertLocalUser({
+          const isClubChat = (chatId === String(CONFIG.TELEGRAM_CLUB_CHAT_ID) || chatId === String(CONFIG.TELEGRAM_DAILY_CHAT_ID) || chatType === 'group' || chatType === 'supergroup');
+          const isChannel = (chatId === '-1001980013362' || cm.chat?.username === 'uncrn_sage' || chatType === 'channel');
+
+          const updatePayload = {
             telegram_id: tgId,
-            role: isNowMember ? 'club_member' : 'member',
-            is_club_resident: isNowMember,
+            username: targetUser?.username || '',
+            first_name: targetUser?.first_name || '',
+            last_name: targetUser?.last_name || '',
             telegram_checked_at: new Date().toISOString()
-          });
+          };
+
+          if (isClubChat) {
+            updatePayload.role = isNowMember ? 'club_member' : 'member';
+            updatePayload.is_club_resident = isNowMember;
+          }
+          if (isChannel) {
+            updatePayload.is_channel_subscriber = isNowMember;
+          }
+
+          upsertLocalUser(updatePayload);
         }
       }
 
       // Handle my_chat_member update (bot added/removed as admin in a chat)
       if (body && body.my_chat_member) {
         const mcm = body.my_chat_member;
-        console.log(`[Telegram Webhook] Bot membership updated in chat ${mcm.chat?.id} (${mcm.chat?.title}): status=${mcm.new_chat_member?.status}`);
+        const chat = mcm.chat || {};
+        const newStatus = mcm.new_chat_member?.status;
+        console.log(`[Telegram Webhook] Bot membership updated in chat ${chat.id} (${chat.title}): status=${newStatus}`);
+
+        if (['administrator', 'member'].includes(newStatus) && ['group', 'supergroup'].includes(chat.type)) {
+          CONFIG.TELEGRAM_CLUB_CHAT_ID = String(chat.id);
+          console.log(`[Telegram Webhook] Automatically registered active club chat ID: ${chat.id} (${chat.title})`);
+        }
       }
 
       // Handle message (e.g. commands sent in chat)
@@ -951,10 +978,13 @@ const server = http.createServer(async (req, res) => {
 
       const sanitizedResidents = residents.map(u => {
         const canShowTg = Boolean(u.show_telegram_contact);
+        const fName = (u.first_name || '').trim();
+        const lName = (u.last_name || '').trim();
+        const cleanLast = (fName && lName && fName.includes(lName)) ? '' : lName;
         return {
           id: u.id,
-          first_name: u.first_name || '',
-          last_name: u.last_name || '',
+          first_name: fName,
+          last_name: cleanLast,
           username: canShowTg ? (u.username || '') : '',
           photo_url: u.photo_url || '',
           role: u.role,
