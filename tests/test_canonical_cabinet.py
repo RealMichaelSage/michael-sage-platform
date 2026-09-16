@@ -173,7 +173,11 @@ class TestCanonicalCabinet(unittest.TestCase):
         utm_card = cards.nth(4)
         self.assertIn("Генератор UTM-меток", utm_card.inner_text())
         self.assertIn("/tools/utm/", utm_card.inner_html())
-        self.assertIn("openUtmGeneratorModal", utm_card.inner_html())
+        self.assertIn("Открыть генератор UTM", utm_card.inner_html())
+
+        # Each solution card must have exactly ONE clean primary CTA button
+        for i in range(cards.count()):
+            self.assertEqual(cards.nth(i).locator(".cabinet-card-actions a, .cabinet-card-actions button").count(), 1)
 
         # No synthetic 10 items
         self.assertNotIn("Voice Transcriber Bot // Whisper", pane.inner_text())
