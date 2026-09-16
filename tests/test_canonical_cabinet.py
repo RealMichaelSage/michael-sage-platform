@@ -146,7 +146,7 @@ class TestCanonicalCabinet(unittest.TestCase):
         self.assertTrue(pane.is_visible())
 
         cards = pane.locator(".cabinet-card")
-        self.assertEqual(cards.count(), 4)
+        self.assertEqual(cards.count(), 5)
 
         # Sagemeet
         sagemeet_card = cards.nth(0)
@@ -168,6 +168,12 @@ class TestCanonicalCabinet(unittest.TestCase):
         tax_card = cards.nth(3)
         self.assertIn("Калькулятор Налогов", tax_card.inner_text())
         self.assertIn("calculator-tax", tax_card.inner_html())
+
+        # UTM Generator
+        utm_card = cards.nth(4)
+        self.assertIn("Генератор UTM-меток", utm_card.inner_text())
+        self.assertIn("/tools/utm/", utm_card.inner_html())
+        self.assertIn("openUtmGeneratorModal", utm_card.inner_html())
 
         # No synthetic 10 items
         self.assertNotIn("Voice Transcriber Bot // Whisper", pane.inner_text())
