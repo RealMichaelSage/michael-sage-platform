@@ -38,7 +38,7 @@ function loadEnv() {
     SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY || '',
     TELEGRAM_BOT_TOKEN: process.env.TELEGRAM_BOT_TOKEN || '8417136221:AAFu1U91WQXy_2SIyHYX1vvaP_cPxjahi7U',
     TELEGRAM_CHANNEL_USERNAME: process.env.TELEGRAM_CHANNEL_USERNAME || '@uncrn_sage',
-    TELEGRAM_CLUB_CHAT_ID: process.env.TELEGRAM_CLUB_CHAT_ID || '-1002283995819', // SAGE Neuro Family chat ID
+    TELEGRAM_CLUB_CHAT_ID: process.env.TELEGRAM_CLUB_CHAT_ID || '-1003802053746', // SAGE Neuro Family real chat ID
     TELEGRAM_DAILY_CHAT_ID: process.env.TELEGRAM_DAILY_CHAT_ID || '-5465772918', // SAGE Daily Growth Triads chat ID
     TOCHKA_API_URL: process.env.TOCHKA_API_URL || 'https://enter.tochka.com/uapi',
     TOCHKA_JWT_TOKEN: process.env.TOCHKA_JWT_TOKEN || process.env.TOCHKA_API_TOKEN || '',
