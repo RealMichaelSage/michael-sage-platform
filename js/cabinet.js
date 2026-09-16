@@ -526,132 +526,235 @@ function openUtmGeneratorModal() {
   modal.onclick = (e) => { if (e.target === modal) closeGuideModal('guide-utm-modal'); };
 
   modal.innerHTML = `
-    <div class="guide-modal-content" style="background:#ffffff; max-width:880px; width:100%; max-height:88vh; overflow-y:auto; border:1px solid var(--border); box-shadow:0 10px 40px rgba(0,0,0,0.15); border-radius:0 !important;">
-      <div class="guide-modal-header" style="padding:18px 24px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; background:#fafafa;">
+    <div class="guide-modal-content" style="background:#ffffff; max-width:960px; width:100%; max-height:90vh; overflow-y:auto; border:1px solid #18181b; box-shadow:0 12px 48px rgba(0,0,0,0.2); border-radius:0 !important;">
+      <div class="guide-modal-header" style="padding:16px 24px; border-bottom:1px solid #18181b; display:flex; justify-content:space-between; align-items:center; background:#f4f4f5;">
         <div>
-          <h3 style="margin:0; font-size:1.2rem; font-weight:800; color:#09090b;">⚡ Генератор UTM-меток для&nbsp;Telegram (до&nbsp;64 байт)</h3>
-          <div style="font-family:var(--mono); font-size:0.72rem; font-weight:700; color:var(--gray); margin-top:3px;">// BASE64 URL-SAFE, КОНТРОЛЬ ЛИМИТА 64 БАЙТА И&nbsp;ПРОБРОС МЕТОК</div>
+          <div style="font-family:var(--mono); font-size:0.72rem; font-weight:800; color:#10b981; letter-spacing:0.04em; margin-bottom:2px;">// TELEGRAM DEEP LINKING (≤ 64 BYTES)</div>
+          <h3 style="margin:0; font-size:1.25rem; font-weight:800; color:#09090b;">Генератор UTM-меток для&nbsp;Telegram</h3>
         </div>
-        <button class="guide-modal-close-btn" onclick="closeGuideModal('guide-utm-modal')" style="background:none; border:none; font-size:1.3rem; cursor:pointer; padding:4px 8px; line-height:1;">✕</button>
+        <button class="guide-modal-close-btn" onclick="closeGuideModal('guide-utm-modal')" style="background:#09090b; color:#fff; border:none; width:32px; height:32px; font-size:1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-weight:700;">✕</button>
       </div>
 
-      <div class="guide-modal-body" style="padding:22px 24px;">
-        <div style="padding:12px 14px; background:#f4f4f5; border-left:3px solid #09090b; font-size:0.84rem; line-height:1.55; margin-bottom:20px; color:#27272a;">
-          Telegram-боты принимают параметр <code>?start=...</code> <strong>строго до&nbsp;64 байт</strong>. Длинные ссылки обрезаются или&nbsp;игнорируются. Генератор сокращает ключи (<code>s, m, c, o, t, r</code>) и&nbsp;кодирует их в&nbsp;компактный URL-safe Base64.
+      <div class="guide-modal-body" style="padding:24px;">
+        <div style="padding:12px 16px; background:#fafafa; border:1px solid #e4e4e7; border-left:4px solid #09090b; font-size:0.86rem; line-height:1.55; margin-bottom:20px; color:#27272a;">
+          Telegram-боты принимают параметр <code>?start=...</code> <strong>строго до&nbsp;64 байт</strong>. Длинные ссылки обрезаются или&nbsp;игнорируются. Конструктор автоматически сжимает ключи (<code>s, m, c, o, t, r</code>) в&nbsp;компактный URL-safe Base64 и&nbsp;контролирует размер на&nbsp;лету.
         </div>
 
-        <!-- Section: URLs -->
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:16px; margin-bottom:18px;">
-          <div>
-            <label style="font-size:0.78rem; font-weight:700; color:#3f3f46; margin-bottom:5px; display:block; font-family:var(--mono);">1. АДРЕС ВАШЕЙ СТРАНИЦЫ</label>
-            <div style="display:flex; align-items:stretch;">
-              <span style="background:#f4f4f5; border:1px solid var(--border); border-right:none; padding:8px 10px; font-family:var(--mono); font-size:0.8rem; color:#71717a; display:flex; align-items:center;">https://</span>
-              <input type="text" id="utm-site-url" placeholder="a-sage.ru/offer" oninput="recalcUtmGenerator()" style="flex:1; border:1px solid var(--border); padding:8px 12px; font-family:var(--mono); font-size:0.82rem; border-radius:0; outline:none; background:#fff;">
+        <div class="gen-container" style="margin:0 0 20px;">
+          
+          <!-- ШАГ 01: КУДА ВЕДЕМ ТРАФИК -->
+          <div class="step-card">
+            <div class="step-card-header">
+              <div class="step-header-left">
+                <span class="step-num-badge">01</span>
+                <span class="step-title-text">КУДА ВЕДЕМ ТРАФИК (ЦЕЛЕВЫЕ АДРЕСА)</span>
+              </div>
+              <span class="step-tag-pill">ШАГ 1 ИЗ&nbsp;3</span>
+            </div>
+            <div class="step-card-body">
+              <div class="grid-2-cols">
+                <div>
+                  <div class="field-label">
+                    <span class="field-label-text">Адрес страницы сайта</span>
+                    <span class="field-label-tag">ЛЕНДИНГ</span>
+                  </div>
+                  <div class="gen-input-group">
+                    <span class="gen-prefix">https://</span>
+                    <input type="text" id="utm-site-url" class="gen-input" placeholder="a-sage.ru/offer" oninput="recalcUtmGenerator()">
+                  </div>
+                  <div class="field-hint">Страница, куда сначала переходит пользователь с&nbsp;рекламы</div>
+                </div>
+
+                <div>
+                  <div class="field-label">
+                    <span class="field-label-text">Telegram-бот или&nbsp;канал</span>
+                    <span class="field-label-tag">TELEGRAM БОТ</span>
+                  </div>
+                  <div class="gen-input-group">
+                    <span class="gen-prefix">https://t.me/</span>
+                    <input type="text" id="utm-tg-nick" class="gen-input" placeholder="Michael_Sage_bot" oninput="recalcUtmGenerator()">
+                  </div>
+                  <div class="field-hint">Ник бота без&nbsp;@ (куда бот передаст метки при&nbsp;нажатии Start)</div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div>
-            <label style="font-size:0.78rem; font-weight:700; color:#3f3f46; margin-bottom:5px; display:block; font-family:var(--mono);">2. НИК БОТА / КАНАЛА В&nbsp;TELEGRAM</label>
-            <div style="display:flex; align-items:stretch;">
-              <span style="background:#f4f4f5; border:1px solid var(--border); border-right:none; padding:8px 10px; font-family:var(--mono); font-size:0.8rem; color:#71717a; display:flex; align-items:center;">https://t.me/</span>
-              <input type="text" id="utm-tg-nick" placeholder="Michael_Sage_bot" oninput="recalcUtmGenerator()" style="flex:1; border:1px solid var(--border); padding:8px 12px; font-family:var(--mono); font-size:0.82rem; border-radius:0; outline:none; background:#fff;">
+          <!-- ШАГ 02: ПАРАМЕТРЫ РЕКЛАМЫ (UTM) -->
+          <div class="step-card">
+            <div class="step-card-header">
+              <div class="step-header-left">
+                <span class="step-num-badge">02</span>
+                <span class="step-title-text">ПАРАМЕТРЫ РЕКЛАМЫ (ОТКУДА ПРИШЕЛ КЛИЕНТ)</span>
+              </div>
+              <span class="step-tag-pill">ШАГ 2 ИЗ&nbsp;3</span>
+            </div>
+            <div class="step-card-body">
+              <!-- Presets -->
+              <div class="presets-box">
+                <div class="presets-title">⚡ БЫСТРЫЕ ШАБЛОНЫ ПОД&nbsp;РЕКЛАМНЫЕ КАНАЛЫ:</div>
+                <div class="presets-list">
+                  <button type="button" class="preset-btn" onclick="applyUtmPreset('yandex', 'cpc', 'direct')">Яндекс Директ</button>
+                  <button type="button" class="preset-btn" onclick="applyUtmPreset('vk', 'targeted', 'target')">ВКонтакте</button>
+                  <button type="button" class="preset-btn" onclick="applyUtmPreset('tg_ads', 'cpc', 'ads')">Telegram Ads</button>
+                  <button type="button" class="preset-btn" onclick="applyUtmPreset('telegram', 'channel', 'post')">TG Канал / Пост</button>
+                  <button type="button" class="preset-btn" onclick="applyUtmPreset('newsletter', 'email', 'digest')">Email-рассылка</button>
+                  <button type="button" class="preset-btn" onclick="applyUtmPreset('blogger', 'influencer', 'collab')">Блогеры / Инфлюенсеры</button>
+                </div>
+              </div>
+
+              <!-- Main 3 Tags -->
+              <div style="font-family:var(--mono); font-size:0.75rem; font-weight:800; color:#09090b; margin-bottom:10px; text-transform:uppercase;">
+                ОСНОВНЫЕ МЕТКИ КАМПАНИИ:
+              </div>
+              <div class="grid-3-cols" style="margin-bottom:20px;">
+                <div>
+                  <div class="field-label">
+                    <span class="field-label-text">Источник трафика</span>
+                    <span class="field-label-tag">utm_source · s</span>
+                  </div>
+                  <input type="text" id="utm-src" class="gen-input" placeholder="yandex" oninput="recalcUtmGenerator()">
+                  <div class="field-hint">ya, vk, tg, google, email</div>
+                </div>
+
+                <div>
+                  <div class="field-label">
+                    <span class="field-label-text">Тип рекламы</span>
+                    <span class="field-label-tag">utm_medium · m</span>
+                  </div>
+                  <input type="text" id="utm-med" class="gen-input" placeholder="cpc" oninput="recalcUtmGenerator()">
+                  <div class="field-hint">cpc, targeted, channel, stories</div>
+                </div>
+
+                <div>
+                  <div class="field-label">
+                    <span class="field-label-text">Название кампании</span>
+                    <span class="field-label-tag">utm_campaign · c</span>
+                  </div>
+                  <input type="text" id="utm-cmp" class="gen-input" placeholder="agent" oninput="recalcUtmGenerator()">
+                  <div class="field-hint">Краткое имя (латиницей)</div>
+                </div>
+              </div>
+
+              <!-- Optional 3 Tags -->
+              <div style="border-top:1px solid #e4e4e7; padding-top:16px;">
+                <div style="font-family:var(--mono); font-size:0.74rem; font-weight:800; color:#71717a; margin-bottom:10px; text-transform:uppercase;">
+                  ДОПОЛНИТЕЛЬНЫЕ ПАРАМЕТРЫ (ОПЦИОНАЛЬНО):
+                </div>
+                <div class="grid-3-cols">
+                  <div>
+                    <div class="field-label">
+                      <span class="field-label-text">Баннер / Объявление</span>
+                      <span class="field-label-tag">utm_content · o</span>
+                    </div>
+                    <input type="text" id="utm-cnt" class="gen-input" placeholder="banner_01" oninput="recalcUtmGenerator()">
+                  </div>
+
+                  <div>
+                    <div class="field-label">
+                      <span class="field-label-text">Ключевое слово</span>
+                      <span class="field-label-tag">utm_term · t</span>
+                    </div>
+                    <input type="text" id="utm-trm" class="gen-input" placeholder="vibe_coding" oninput="recalcUtmGenerator()">
+                  </div>
+
+                  <div>
+                    <div class="field-label">
+                      <span class="field-label-text">Реферальный ID</span>
+                      <span class="field-label-tag">referralCode · r</span>
+                    </div>
+                    <input type="text" id="utm-ref" class="gen-input" placeholder="sage777" oninput="recalcUtmGenerator()">
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
+
+          <!-- ШАГ 03: ВЫСОКОКОНТРАСТНЫЙ РЕЗУЛЬТАТ -->
+          <div class="step-card step-card-dark">
+            <div class="step-card-header dark">
+              <div class="step-header-left">
+                <span class="step-num-badge emerald">03</span>
+                <span class="step-title-text">ГОТОВЫЙ РЕЗУЛЬТАТ ДЛЯ&nbsp;ЗАПУСКА</span>
+              </div>
+              <span class="step-tag-pill">РЕАЛТАЙМ РАСЧЕТ</span>
+            </div>
+
+            <div class="step-card-body">
+              <!-- HERO TG BOX -->
+              <div class="hero-tg-box">
+                <div class="hero-tg-header">
+                  <span class="hero-tg-title">★ ГЛАВНЫЙ ДИПЛИНК ДЛЯ&nbsp;TELEGRAM (BASE64 URL-SAFE)</span>
+                  <span id="utm-count-tg-b64" class="counter-pill ok">● 0 / 64 БАЙТ · ЛИМИТ СОБЛЮДЕН</span>
+                </div>
+                
+                <div class="hero-tg-input-group">
+                  <input type="text" id="utm-out-tg-b64" class="hero-tg-input" readonly placeholder="https://t.me/bot?start=...">
+                  <button type="button" class="btn-copy-emerald" onclick="copyUtmValue('utm-out-tg-b64', this)">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"><rect x="9" y="9" width="13" height="13" rx="0"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Скопировать диплинк</span>
+                  </button>
+                </div>
+
+                <div id="utm-alert-overflow" class="overflow-alert-dark"></div>
+              </div>
+
+              <!-- SECONDARY OUTPUTS -->
+              <div class="secondary-outputs-box">
+                <div style="font-family:var(--mono); font-size:0.74rem; font-weight:800; color:#a1a1aa; text-transform:uppercase;">
+                  ДОПОЛНИТЕЛЬНЫЕ ВАРИАНТЫ ССЫЛОК:
+                </div>
+
+                <!-- 1. Full Site -->
+                <div class="sec-output-row">
+                  <div class="sec-output-label">
+                    <span>1. Ссылка для&nbsp;сайта (стандартная с&nbsp;полными UTM)</span>
+                  </div>
+                  <div class="sec-input-group">
+                    <input type="text" id="utm-out-site-full" class="sec-input" readonly placeholder="https://...">
+                    <button type="button" class="btn-copy-sec" onclick="copyUtmValue('utm-out-site-full', this)">Копировать</button>
+                  </div>
+                </div>
+
+                <!-- 2. Base64 Site -->
+                <div class="sec-output-row">
+                  <div class="sec-output-label">
+                    <span>2. Ссылка для&nbsp;сайта (Base64 URL-safe)</span>
+                    <span id="utm-count-site-b64" style="color:#71717a;"></span>
+                  </div>
+                  <div class="sec-input-group">
+                    <input type="text" id="utm-out-site-b64" class="sec-input" readonly placeholder="https://.../?data=...">
+                    <button type="button" class="btn-copy-sec" onclick="copyUtmValue('utm-out-site-b64', this)">Копировать</button>
+                  </div>
+                </div>
+
+                <!-- 3. Standard Telegram -->
+                <div class="sec-output-row">
+                  <div class="sec-output-label">
+                    <span>3. Стандартная ссылка для&nbsp;Telegram (можно редактировать)</span>
+                  </div>
+                  <div class="sec-input-group">
+                    <input type="text" id="utm-out-tg-std" class="sec-input" oninput="encodeManualUtmUrl()" placeholder="https://t.me/bot?start&...">
+                    <button type="button" class="btn-copy-sec" onclick="copyUtmValue('utm-out-tg-std', this)">Копировать</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bottom Action Bar -->
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-top:20px; padding-top:14px; border-top:1px solid #27272a;">
+                <button type="button" onclick="resetUtmGenerator()" class="btn-copy-sec" style="background:transparent; border-color:#3f3f46; color:#a1a1aa;">✕ Очистить все поля</button>
+                <a href="/tools/utm/" target="_blank" style="font-family:var(--mono); font-size:0.78rem; color:#34d399; font-weight:700; text-decoration:underline;">🔗 Открыть отдельной страницей (/tools/utm/) ↗</a>
+              </div>
+            </div>
+          </div>
+
         </div>
 
-        <!-- Presets -->
-        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:18px; padding:8px 12px; background:#fafafa; border:1px solid #f4f4f5;">
-          <span style="font-family:var(--mono); font-size:0.72rem; font-weight:700; color:#71717a;">ПРЕСЕТЫ:</span>
-          <button type="button" onclick="applyUtmPreset('yandex', 'cpc')" class="btn-secondary" style="padding:3px 8px; font-size:0.72rem; font-family:var(--mono); border-radius:0; cursor:pointer;">Яндекс Директ</button>
-          <button type="button" onclick="applyUtmPreset('vk', 'targeted')" class="btn-secondary" style="padding:3px 8px; font-size:0.72rem; font-family:var(--mono); border-radius:0; cursor:pointer;">ВКонтакте</button>
-          <button type="button" onclick="applyUtmPreset('tg_ads', 'cpc')" class="btn-secondary" style="padding:3px 8px; font-size:0.72rem; font-family:var(--mono); border-radius:0; cursor:pointer;">Telegram Ads</button>
-          <button type="button" onclick="applyUtmPreset('telegram', 'channel')" class="btn-secondary" style="padding:3px 8px; font-size:0.72rem; font-family:var(--mono); border-radius:0; cursor:pointer;">TG Канал</button>
-          <button type="button" onclick="applyUtmPreset('newsletter', 'email')" class="btn-secondary" style="padding:3px 8px; font-size:0.72rem; font-family:var(--mono); border-radius:0; cursor:pointer;">Рассылка</button>
-        </div>
-
-        <!-- Section: 6 UTM Fields -->
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:14px; margin-bottom:24px; padding-bottom:20px; border-bottom:1px solid #f4f4f5;">
-          <div>
-            <label style="font-size:0.75rem; font-weight:700; color:#3f3f46; margin-bottom:4px; display:block; font-family:var(--mono);">ИСТОЧНИК КАМПАНИИ · utm_source (s)</label>
-            <input type="text" id="utm-src" placeholder="yandex" oninput="recalcUtmGenerator()" style="width:100%; border:1px solid var(--border); padding:8px 10px; font-family:var(--mono); font-size:0.82rem; border-radius:0; box-sizing:border-box; outline:none; background:#fff;">
-          </div>
-          <div>
-            <label style="font-size:0.75rem; font-weight:700; color:#3f3f46; margin-bottom:4px; display:block; font-family:var(--mono);">ТИП ТРАФИКА · utm_medium (m)</label>
-            <input type="text" id="utm-med" placeholder="cpc" oninput="recalcUtmGenerator()" style="width:100%; border:1px solid var(--border); padding:8px 10px; font-family:var(--mono); font-size:0.82rem; border-radius:0; box-sizing:border-box; outline:none; background:#fff;">
-          </div>
-          <div>
-            <label style="font-size:0.75rem; font-weight:700; color:#3f3f46; margin-bottom:4px; display:block; font-family:var(--mono);">НАЗВАНИЕ КАМПАНИИ · utm_campaign (c)</label>
-            <input type="text" id="utm-cmp" placeholder="agent_launch" oninput="recalcUtmGenerator()" style="width:100%; border:1px solid var(--border); padding:8px 10px; font-family:var(--mono); font-size:0.82rem; border-radius:0; box-sizing:border-box; outline:none; background:#fff;">
-          </div>
-          <div>
-            <label style="font-size:0.75rem; font-weight:700; color:#3f3f46; margin-bottom:4px; display:block; font-family:var(--mono);">СОДЕРЖАНИЕ ОБЪЯВЛЕНИЯ · utm_content (o)</label>
-            <input type="text" id="utm-cnt" placeholder="banner_01" oninput="recalcUtmGenerator()" style="width:100%; border:1px solid var(--border); padding:8px 10px; font-family:var(--mono); font-size:0.82rem; border-radius:0; box-sizing:border-box; outline:none; background:#fff;">
-          </div>
-          <div>
-            <label style="font-size:0.75rem; font-weight:700; color:#3f3f46; margin-bottom:4px; display:block; font-family:var(--mono);">КЛЮЧЕВОЕ СЛОВО · utm_term (t)</label>
-            <input type="text" id="utm-trm" placeholder="vibe_coding" oninput="recalcUtmGenerator()" style="width:100%; border:1px solid var(--border); padding:8px 10px; font-family:var(--mono); font-size:0.82rem; border-radius:0; box-sizing:border-box; outline:none; background:#fff;">
-          </div>
-          <div>
-            <label style="font-size:0.75rem; font-weight:700; color:#3f3f46; margin-bottom:4px; display:block; font-family:var(--mono);">РЕФЕРАЛЬНЫЙ КОД · referralCode (r)</label>
-            <input type="text" id="utm-ref" placeholder="sage777" oninput="recalcUtmGenerator()" style="width:100%; border:1px solid var(--border); padding:8px 10px; font-family:var(--mono); font-size:0.82rem; border-radius:0; box-sizing:border-box; outline:none; background:#fff;">
-          </div>
-        </div>
-
-        <!-- Generated Outputs -->
-        <div style="display:flex; flex-direction:column; gap:16px;">
-          <!-- 1. Full Website URL -->
-          <div>
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-              <label style="font-size:0.76rem; font-weight:700; color:#3f3f46; font-family:var(--mono);">ССЫЛКА ДЛЯ&nbsp;САЙТА (СТАНДАРТНАЯ)</label>
-            </div>
-            <div style="display:flex;">
-              <input type="text" id="utm-out-site-full" readonly placeholder="https://..." style="flex:1; border:1px solid var(--border); border-right:none; padding:8px 12px; font-family:var(--mono); font-size:0.8rem; background:#fafafa; border-radius:0; outline:none;">
-              <button type="button" class="btn-secondary" onclick="copyUtmValue('utm-out-site-full', this)" style="padding:8px 16px; font-size:0.76rem; font-family:var(--mono); border-radius:0; cursor:pointer; flex-shrink:0;">Копировать</button>
-            </div>
-          </div>
-
-          <!-- 2. Base64 Website URL -->
-          <div>
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-              <label style="font-size:0.76rem; font-weight:700; color:#3f3f46; font-family:var(--mono);">ССЫЛКА ДЛЯ&nbsp;САЙТА (BASE64 URL-SAFE)</label>
-              <span id="utm-count-site-b64" style="font-family:var(--mono); font-size:0.72rem; color:#71717a;"></span>
-            </div>
-            <div style="display:flex;">
-              <input type="text" id="utm-out-site-b64" readonly placeholder="https://.../?data=..." style="flex:1; border:1px solid var(--border); border-right:none; padding:8px 12px; font-family:var(--mono); font-size:0.8rem; background:#fafafa; border-radius:0; outline:none;">
-              <button type="button" class="btn-secondary" onclick="copyUtmValue('utm-out-site-b64', this)" style="padding:8px 16px; font-size:0.76rem; font-family:var(--mono); border-radius:0; cursor:pointer; flex-shrink:0;">Копировать</button>
-            </div>
-          </div>
-
-          <!-- 3. Standard Telegram URL -->
-          <div>
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-              <label style="font-size:0.76rem; font-weight:700; color:#3f3f46; font-family:var(--mono);">СТАНДАРТНАЯ ССЫЛКА ДЛЯ&nbsp;TELEGRAM (МОЖНО РЕДАКТИРОВАТЬ)</label>
-            </div>
-            <div style="display:flex;">
-              <input type="text" id="utm-out-tg-std" oninput="encodeManualUtmUrl()" placeholder="https://t.me/bot?start&..." style="flex:1; border:1px solid var(--border); border-right:none; padding:8px 12px; font-family:var(--mono); font-size:0.8rem; background:#fafafa; border-radius:0; outline:none;">
-              <button type="button" class="btn-secondary" onclick="copyUtmValue('utm-out-tg-std', this)" style="padding:8px 16px; font-size:0.76rem; font-family:var(--mono); border-radius:0; cursor:pointer; flex-shrink:0;">Копировать</button>
-            </div>
-          </div>
-
-          <!-- 4. Base64 Telegram URL -->
-          <div>
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-              <label style="font-size:0.76rem; font-weight:700; color:#3f3f46; font-family:var(--mono);">ССЫЛКА ДЛЯ&nbsp;TELEGRAM (BASE64 URL-SAFE, ДО&nbsp;64 БАЙТ)</label>
-              <span id="utm-count-tg-b64" style="font-family:var(--mono); font-size:0.75rem; font-weight:700; color:#71717a;"></span>
-            </div>
-            <div style="display:flex;">
-              <input type="text" id="utm-out-tg-b64" readonly placeholder="https://t.me/bot?start=..." style="flex:1; border:1px solid var(--border); border-right:none; padding:8px 12px; font-family:var(--mono); font-size:0.8rem; background:#fafafa; border-radius:0; outline:none; font-weight:600;">
-              <button type="button" class="btn-secondary" onclick="copyUtmValue('utm-out-tg-b64', this)" style="padding:8px 16px; font-size:0.76rem; font-family:var(--mono); border-radius:0; cursor:pointer; flex-shrink:0; background:#09090b; color:#fff; border-color:#09090b;">Копировать</button>
-            </div>
-            <div id="utm-alert-overflow" style="display:none; margin-top:8px; padding:10px 14px; background:#fef2f2; border:1px solid #fecaca; color:#b91c1c; font-size:0.78rem; font-family:var(--mono); line-height:1.4;"></div>
-          </div>
-        </div>
-
-        <!-- Forwarder Script Details -->
-        <details style="margin-top:24px; border:1px solid var(--border); padding:12px 16px; background:#fafafa;">
-          <summary style="font-weight:700; cursor:pointer; font-size:0.86rem; display:flex; justify-content:space-between; align-items:center; user-select:none;">
+        <!-- Forwarder Script Collapsible -->
+        <details style="border:1px solid #18181b; padding:12px 16px; background:#fafafa;">
+          <summary style="font-weight:700; cursor:pointer; font-size:0.84rem; display:flex; justify-content:space-between; align-items:center; user-select:none;">
             <span>📋 Скрипт проброса UTM-меток на&nbsp;сайте (Tilda / Web)</span>
-            <span style="font-family:var(--mono); font-size:0.75rem; color:#10b981;">Развернуть ▾</span>
+            <span style="font-family:var(--mono); font-size:0.74rem; color:#10b981;">Развернуть ▾</span>
           </summary>
           <div style="margin-top:12px; font-size:0.82rem; color:#52525b; line-height:1.55;">
             <p style="margin:0 0 10px 0;">
@@ -667,7 +770,7 @@ document.addEventListener('DOMContentLoaded', function() {
         allLinks.forEach(function(link) {
             var href = link.getAttribute('href');
             if (href && !href.startsWith('#') && !href.startsWith('javascript:')) {
-                link.href = href.indexOf('?') !== -1 ? href + '&' + queryString.substring(1) : href + queryString;
+                link.href = href.indexOf('?') !== -1 ? href + '&amp;' + queryString.substring(1) : href + queryString;
             }
         });
     }
@@ -678,11 +781,6 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>
         </details>
 
-        <!-- Footer actions -->
-        <div style="margin-top:24px; padding-top:16px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-          <button type="button" onclick="resetUtmGenerator()" class="btn-secondary" style="padding:6px 14px; font-size:0.75rem; font-family:var(--mono); cursor:pointer;">Очистить поля</button>
-          <a href="/tools/utm/" target="_blank" style="font-family:var(--mono); font-size:0.8rem; color:#09090b; font-weight:700; text-decoration:underline;">🔗 Открыть отдельной страницей (/tools/utm/) ↗</a>
-        </div>
       </div>
     </div>
   `;
@@ -690,11 +788,13 @@ document.addEventListener('DOMContentLoaded', function() {
   document.body.appendChild(modal);
 }
 
-function applyUtmPreset(src, med) {
+function applyUtmPreset(src, med, cmp) {
   const s = document.getElementById('utm-src');
   const m = document.getElementById('utm-med');
-  if (s) s.value = src;
-  if (m) m.value = med;
+  const c = document.getElementById('utm-cmp');
+  if (s) s.value = src || '';
+  if (m) m.value = med || '';
+  if (c && cmp) c.value = cmp;
   recalcUtmGenerator();
 }
 
@@ -740,7 +840,6 @@ function recalcUtmGenerator() {
         if (siteB64El) siteB64El.value = `https://${siteInput}?data=${b64}`;
         if (siteB64Counter) {
           siteB64Counter.textContent = `(${b64.length} симв.)`;
-          siteB64Counter.style.color = '#71717a';
         }
       } catch (e) {
         if (siteB64El) siteB64El.value = '';
@@ -773,17 +872,16 @@ function recalcUtmGenerator() {
 
         const byteLen = b64.length;
         if (tgCounter) {
-          tgCounter.textContent = `(${byteLen} / 64 байт)`;
           if (byteLen > 64) {
-            tgCounter.style.color = '#ef4444';
-            tgCounter.style.fontWeight = '700';
+            tgCounter.textContent = `⚠️ ${byteLen} / 64 БАЙТ · ПРЕВЫШЕНИЕ!`;
+            tgCounter.className = 'counter-pill danger';
             if (alertBox) {
               alertBox.style.display = 'block';
               alertBox.innerHTML = `⚠️ <strong>Лимит превышен: ${byteLen} байт из&nbsp;64!</strong> Telegram отсекает параметр start длиннее 64 байт. Бот не&nbsp;получит метки. Сократите названия меток.`;
             }
           } else {
-            tgCounter.style.color = '#10b981';
-            tgCounter.style.fontWeight = '600';
+            tgCounter.textContent = `● ${byteLen} / 64 БАЙТ · ЛИМИТ СОБЛЮДЕН`;
+            tgCounter.className = 'counter-pill ok';
             if (alertBox) alertBox.style.display = 'none';
           }
         }
@@ -793,15 +891,18 @@ function recalcUtmGenerator() {
     } else {
       if (tgB64El) tgB64El.value = `https://t.me/${tgInput}?start=`;
       if (tgCounter) {
-        tgCounter.textContent = '(0 / 64 байт)';
-        tgCounter.style.color = '#71717a';
+        tgCounter.textContent = '● 0 / 64 БАЙТ · ЛИМИТ СОБЛЮДЕН';
+        tgCounter.className = 'counter-pill ok';
       }
       if (alertBox) alertBox.style.display = 'none';
     }
   } else {
     if (tgStdEl) tgStdEl.value = '';
     if (tgB64El) tgB64El.value = '';
-    if (tgCounter) tgCounter.textContent = '';
+    if (tgCounter) {
+      tgCounter.textContent = '● 0 / 64 БАЙТ';
+      tgCounter.className = 'counter-pill';
+    }
     if (alertBox) alertBox.style.display = 'none';
   }
 }
@@ -830,17 +931,16 @@ function encodeManualUtmUrl() {
       const alertBox = document.getElementById('utm-alert-overflow');
       const byteLen = b64.length;
       if (tgCounter) {
-        tgCounter.textContent = `(${byteLen} / 64 байт)`;
         if (byteLen > 64) {
-          tgCounter.style.color = '#ef4444';
-          tgCounter.style.fontWeight = '700';
+          tgCounter.textContent = `⚠️ ${byteLen} / 64 БАЙТ · ПРЕВЫШЕНИЕ!`;
+          tgCounter.className = 'counter-pill danger';
           if (alertBox) {
             alertBox.style.display = 'block';
             alertBox.innerHTML = `⚠️ <strong>Лимит превышен: ${byteLen} байт из&nbsp;64!</strong> Сократите параметры.`;
           }
         } else {
-          tgCounter.style.color = '#10b981';
-          tgCounter.style.fontWeight = '600';
+          tgCounter.textContent = `● ${byteLen} / 64 БАЙТ · ЛИМИТ СОБЛЮДЕН`;
+          tgCounter.className = 'counter-pill ok';
           if (alertBox) alertBox.style.display = 'none';
         }
       }
@@ -852,20 +952,18 @@ function copyUtmValue(id, btn) {
   const input = document.getElementById(id);
   if (!input || !input.value) return;
   const text = input.value;
+  const setCopied = () => {
+    const orig = btn.innerHTML;
+    btn.classList.add('copied');
+    btn.innerHTML = `✓ Скопировано`;
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = orig;
+    }, 1800);
+  };
+
   if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(text).then(() => {
-      const orig = btn.innerText;
-      btn.innerText = '✓ Скопировано';
-      btn.style.background = '#10b981';
-      btn.style.borderColor = '#10b981';
-      btn.style.color = '#fff';
-      setTimeout(() => {
-        btn.innerText = orig;
-        btn.style.background = '';
-        btn.style.borderColor = '';
-        btn.style.color = '';
-      }, 1500);
-    }).catch(() => {
+    navigator.clipboard.writeText(text).then(setCopied).catch(() => {
       prompt('Скопируйте ссылку:', text);
     });
   } else {
@@ -877,20 +975,18 @@ function copyUtmSnippet(id, btn) {
   const el = document.getElementById(id);
   if (!el) return;
   const text = el.innerText || el.textContent;
+  const setCopied = () => {
+    const orig = btn.innerHTML;
+    btn.classList.add('copied');
+    btn.innerHTML = `✓ Скопировано`;
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = orig;
+    }, 1800);
+  };
+
   if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(text).then(() => {
-      const orig = btn.innerText;
-      btn.innerText = '✓ Скопировано';
-      btn.style.background = '#10b981';
-      btn.style.borderColor = '#10b981';
-      btn.style.color = '#fff';
-      setTimeout(() => {
-        btn.innerText = orig;
-        btn.style.background = '';
-        btn.style.borderColor = '';
-        btn.style.color = '';
-      }, 1500);
-    }).catch(() => {
+    navigator.clipboard.writeText(text).then(setCopied).catch(() => {
       prompt('Скопируйте код:', text);
     });
   } else {
@@ -906,7 +1002,10 @@ function resetUtmGenerator() {
   const c1 = document.getElementById('utm-count-site-b64');
   if (c1) c1.textContent = '';
   const c2 = document.getElementById('utm-count-tg-b64');
-  if (c2) c2.textContent = '';
+  if (c2) {
+    c2.textContent = '● 0 / 64 БАЙТ';
+    c2.className = 'counter-pill ok';
+  }
   const a = document.getElementById('utm-alert-overflow');
   if (a) a.style.display = 'none';
 }

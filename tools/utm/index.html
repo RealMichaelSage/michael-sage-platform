@@ -162,49 +162,133 @@
       text-wrap: pretty;
     }
 
-    /* Generator Box */
-    .generator-panel {
+    /* ═════════════════════════════════════════════════════════════ */
+    /* HIGH-CONTRAST STEPPED GENERATOR ARCHITECTURE */
+    /* ═════════════════════════════════════════════════════════════ */
+    .gen-container {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      margin: 32px 0 40px;
+    }
+
+    .step-card {
+      border: 1px solid #18181b;
       background: #ffffff;
-      border: 1px solid var(--border);
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-      padding: clamp(20px, 3vw, 36px);
-      margin: 28px 0;
+      border-radius: 0 !important;
+      overflow: hidden;
+    }
+
+    .step-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      background: #f4f4f5;
+      border-bottom: 1px solid #18181b;
+    }
+    .step-card-header.dark {
+      background: #09090b;
+      border-bottom: 1px solid #27272a;
+    }
+
+    .step-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .step-num-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: #09090b;
+      color: #ffffff;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      font-weight: 800;
       border-radius: 0 !important;
     }
-    .gen-grid-2 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-      margin-bottom: 20px;
+    .step-num-badge.emerald {
+      background: #10b981;
+      color: #09090b;
     }
-    .gen-grid-3 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 16px;
-      margin-bottom: 24px;
-    }
-    .gen-field label {
-      display: block;
+
+    .step-title-text {
       font-family: var(--mono);
-      font-size: 0.76rem;
-      font-weight: 700;
-      color: #27272a;
-      margin-bottom: 6px;
-      letter-spacing: 0.02em;
+      font-size: 0.84rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: #09090b;
+      text-transform: uppercase;
     }
+    .step-card-header.dark .step-title-text {
+      color: #ffffff;
+    }
+
+    .step-tag-pill {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      background: #e4e4e7;
+      color: #27272a;
+      border-radius: 0 !important;
+    }
+    .step-card-header.dark .step-tag-pill {
+      background: #27272a;
+      color: #34d399;
+    }
+
+    .step-card-body {
+      padding: 24px;
+    }
+
+    /* FIELD BLOCKS */
+    .field-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .field-label-text {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #09090b;
+    }
+    .field-label-tag {
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: #09090b;
+      background: #f4f4f5;
+      padding: 2px 8px;
+      border: 1px solid #d4d4d8;
+    }
+    .field-hint {
+      font-size: 0.78rem;
+      color: #71717a;
+      margin-top: 4px;
+    }
+
+    /* INPUT CONTRAST */
     .gen-input-group {
       display: flex;
       align-items: stretch;
       width: 100%;
     }
     .gen-prefix {
-      background: #f4f4f5;
-      border: 1px solid var(--border);
+      background: #09090b;
+      border: 1px solid #09090b;
       border-right: none;
       padding: 10px 14px;
       font-family: var(--mono);
-      font-size: 0.85rem;
-      color: #71717a;
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: #ffffff;
       display: flex;
       align-items: center;
       white-space: nowrap;
@@ -212,51 +296,56 @@
     }
     .gen-input {
       flex: 1;
-      border: 1px solid var(--border);
-      padding: 10px 14px;
+      border: 1px solid #18181b;
+      padding: 11px 14px;
       font-family: var(--mono);
-      font-size: 0.88rem;
+      font-size: 0.92rem;
       background: #ffffff;
       color: #09090b;
       border-radius: 0 !important;
       outline: none;
-      transition: border-color 0.15s ease;
+      transition: all 0.15s ease;
       box-sizing: border-box;
       width: 100%;
     }
     .gen-input:focus {
       border-color: #09090b;
+      box-shadow: inset 0 0 0 1px #09090b;
     }
     .gen-input-readonly {
       background: #fafafa;
-      font-weight: 500;
+      font-weight: 600;
     }
 
-    /* Preset Chips */
-    .preset-bar {
+    /* PRESETS ROW */
+    .presets-box {
+      margin-bottom: 24px;
+      padding: 14px 18px;
+      background: #fafafa;
+      border: 1px solid #e4e4e7;
+      border-left: 4px solid #09090b;
+    }
+    .presets-title {
+      font-family: var(--mono);
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: #09090b;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+    .presets-list {
       display: flex;
-      align-items: center;
       gap: 8px;
       flex-wrap: wrap;
-      margin: 16px 0 24px;
-      padding: 12px 16px;
-      background: #f9fafb;
-      border: 1px solid #f3f4f6;
-    }
-    .preset-label {
-      font-family: var(--mono);
-      font-size: 0.74rem;
-      font-weight: 700;
-      color: #6b7280;
     }
     .preset-btn {
       background: #ffffff;
-      border: 1px solid var(--border);
-      padding: 5px 12px;
+      border: 1px solid #18181b;
+      padding: 7px 14px;
       font-family: var(--mono);
-      font-size: 0.74rem;
-      font-weight: 600;
-      color: #18181b;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #09090b;
       cursor: pointer;
       border-radius: 0 !important;
       transition: all 0.15s ease;
@@ -264,80 +353,190 @@
     .preset-btn:hover {
       background: #09090b;
       color: #ffffff;
-      border-color: #09090b;
     }
 
-    /* Output Cards */
-    .output-section {
-      margin-top: 28px;
-      padding-top: 24px;
-      border-top: 1px solid #e4e4e7;
-      display: flex;
-      flex-direction: column;
+    /* GRIDS */
+    .grid-2-cols {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 20px;
     }
-    .output-header {
+    .grid-3-cols {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+    }
+
+    /* STEP 3 DARK HERO OUTPUT */
+    .step-card-dark {
+      background: #09090b;
+      border: 2px solid #09090b;
+      color: #ffffff;
+    }
+    .hero-tg-box {
+      background: #18181b;
+      border: 2px solid #10b981;
+      padding: 22px;
+      margin-bottom: 24px;
+    }
+    .hero-tg-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 6px;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 12px;
     }
-    .output-label {
+    .hero-tg-title {
       font-family: var(--mono);
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: #18181b;
-      letter-spacing: 0.02em;
-    }
-    .output-counter {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: #71717a;
-    }
-    .output-counter.ok {
+      font-size: 0.9rem;
+      font-weight: 800;
       color: #10b981;
+      letter-spacing: 0.04em;
     }
-    .output-counter.danger {
-      color: #ef4444;
-    }
-    .btn-copy-tool {
-      background: #09090b;
-      color: #ffffff;
-      border: 1px solid #09090b;
-      padding: 10px 20px;
+    .counter-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
       font-family: var(--mono);
-      font-size: 0.8rem;
-      font-weight: 600;
-      cursor: pointer;
+      font-size: 0.76rem;
+      font-weight: 700;
       border-radius: 0 !important;
-      flex-shrink: 0;
-      transition: background 0.15s ease, border-color 0.15s ease;
     }
-    .btn-copy-tool:hover {
-      background: #27272a;
-      border-color: #27272a;
+    .counter-pill.ok {
+      background: #064e3b;
+      color: #34d399;
+      border: 1px solid #059669;
     }
-    .btn-copy-tool.copied {
-      background: #10b981 !important;
-      border-color: #10b981 !important;
-      color: #ffffff !important;
+    .counter-pill.danger {
+      background: #7f1d1d;
+      color: #fca5a5;
+      border: 1px solid #dc2626;
     }
 
-    .alert-banner {
+    .hero-tg-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    @media (min-width: 768px) {
+      .hero-tg-input-group {
+        flex-direction: row;
+      }
+    }
+    .hero-tg-input {
+      flex: 1;
+      background: #000000;
+      border: 1px solid #3f3f46;
+      color: #ffffff;
+      font-family: var(--mono);
+      font-size: 0.94rem;
+      font-weight: 600;
+      padding: 12px 16px;
+      outline: none;
+      border-radius: 0 !important;
+      user-select: text;
+    }
+    .btn-copy-emerald {
+      background: #10b981;
+      color: #09090b;
+      border: 1px solid #10b981;
+      padding: 12px 24px;
+      font-family: var(--mono);
+      font-size: 0.84rem;
+      font-weight: 800;
+      cursor: pointer;
+      border-radius: 0 !important;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .btn-copy-emerald:hover {
+      background: #34d399;
+      border-color: #34d399;
+    }
+    .btn-copy-emerald.copied {
+      background: #ffffff !important;
+      color: #09090b !important;
+      border-color: #ffffff !important;
+    }
+
+    .overflow-alert-dark {
       display: none;
       padding: 12px 16px;
-      background: #fef2f2;
-      border: 1px solid #fecaca;
+      background: #450a0a;
+      border: 1px solid #dc2626;
       border-left: 4px solid #ef4444;
-      color: #991b1b;
+      color: #fecaca;
       font-family: var(--mono);
       font-size: 0.82rem;
       line-height: 1.5;
-      margin-top: 8px;
+      margin-top: 12px;
     }
 
-    /* Comparison Table */
+    /* SECONDARY OUTPUTS ACCORDION */
+    .secondary-outputs-box {
+      border-top: 1px solid #27272a;
+      padding-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .sec-output-row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .sec-output-label {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--mono);
+      font-size: 0.76rem;
+      color: #a1a1aa;
+      font-weight: 700;
+    }
+    .sec-input-group {
+      display: flex;
+    }
+    .sec-input {
+      flex: 1;
+      background: #18181b;
+      border: 1px solid #3f3f46;
+      border-right: none;
+      color: #e4e4e7;
+      font-family: var(--mono);
+      font-size: 0.84rem;
+      padding: 10px 14px;
+      border-radius: 0 !important;
+      outline: none;
+    }
+    .btn-copy-sec {
+      background: #27272a;
+      color: #ffffff;
+      border: 1px solid #3f3f46;
+      padding: 10px 18px;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 0 !important;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .btn-copy-sec:hover {
+      background: #3f3f46;
+    }
+    .btn-copy-sec.copied {
+      background: #10b981;
+      border-color: #10b981;
+      color: #09090b;
+    }
+
+    /* TABLE & CODE */
     .table-scroll {
       width: 100%;
       overflow-x: auto;
@@ -377,7 +576,6 @@
       color: #09090b;
     }
 
-    /* Code Highlight Box */
     .code-box {
       border: 1px solid var(--border);
       background: #ffffff;
@@ -493,131 +691,237 @@
       </div>
     </section>
 
-    <!-- SECTION 01: INTERACTIVE GENERATOR -->
+    <!-- SECTION 01: HIGH-CONTRAST GENERATOR -->
     <section id="generator" class="utm-tool-frame utm-section-block" data-nav-title="01. Генератор">
       <div class="utm-content-wrap">
         <div class="section-tag" style="color:#10b981;">// ИНТЕРАКТИВНЫЙ КОНСТРУКТОР</div>
         <h2>Конструктор ссылок с&nbsp;контролем размера</h2>
         <p>
-          Заполните параметры рекламной кампании. Генератор параллельно сформирует стандартную ссылку для&nbsp;сайта, Base64-ссылку и&nbsp;компактный диплинк для&nbsp;Telegram с&nbsp;сокращенными ключами (<code>s, m, c, o, t, r</code>).
+          Сформируйте диплинк за&nbsp;3 простых шага: укажите целевой адрес, выберите рекламный источник и&nbsp;скопируйте готовый URL-safe Base64 код.
         </p>
 
-        <div class="generator-panel">
-          <!-- Top Inputs: Site & Telegram -->
-          <div class="gen-grid-2">
-            <div class="gen-field">
-              <label for="site-url">1. АДРЕС ВАШЕЙ СТРАНИЦЫ (САЙТ / ЛЕНДИНГ)</label>
-              <div class="gen-input-group">
-                <span class="gen-prefix">https://</span>
-                <input type="text" id="site-url" class="gen-input" placeholder="a-sage.ru/offer" oninput="recalcApp()">
+        <div class="gen-container">
+          
+          <!-- ═══════════════════════════════════════════════════════════ -->
+          <!-- STEP 1: DESTINATIONS -->
+          <!-- ═══════════════════════════════════════════════════════════ -->
+          <div class="step-card">
+            <div class="step-card-header">
+              <div class="step-header-left">
+                <span class="step-num-badge">01</span>
+                <span class="step-title-text">КУДА ВЕДЕМ ТРАФИК (ЦЕЛЕВЫЕ АДРЕСА)</span>
               </div>
+              <span class="step-tag-pill">ШАГ 1 ИЗ&nbsp;3</span>
             </div>
 
-            <div class="gen-field">
-              <label for="tg-nick">2. НИК БОТА / КАНАЛА В&nbsp;TELEGRAM (БЕЗ&nbsp;@)</label>
-              <div class="gen-input-group">
-                <span class="gen-prefix">https://t.me/</span>
-                <input type="text" id="tg-nick" class="gen-input" placeholder="Michael_Sage_bot" oninput="recalcApp()">
+            <div class="step-card-body">
+              <div class="grid-2-cols">
+                <!-- Site URL -->
+                <div>
+                  <div class="field-label">
+                    <span class="field-label-text">Адрес страницы сайта</span>
+                    <span class="field-label-tag">ЛЕНДИНГ</span>
+                  </div>
+                  <div class="gen-input-group">
+                    <span class="gen-prefix">https://</span>
+                    <input type="text" id="site-url" class="gen-input" placeholder="a-sage.ru/offer" oninput="recalcApp()">
+                  </div>
+                  <div class="field-hint">Страница, куда сначала переходит пользователь с&nbsp;рекламы</div>
+                </div>
+
+                <!-- Telegram Nick -->
+                <div>
+                  <div class="field-label">
+                    <span class="field-label-text">Telegram-бот или&nbsp;канал</span>
+                    <span class="field-label-tag">TELEGRAM БОТ</span>
+                  </div>
+                  <div class="gen-input-group">
+                    <span class="gen-prefix">https://t.me/</span>
+                    <input type="text" id="tg-nick" class="gen-input" placeholder="Michael_Sage_bot" oninput="recalcApp()">
+                  </div>
+                  <div class="field-hint">Ник бота без&nbsp;@ (куда бот передаст метки при&nbsp;нажатии Start)</div>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Quick Presets -->
-          <div class="preset-bar">
-            <span class="preset-label">БЫСТРЫЕ ПРЕСЕТЫ:</span>
-            <button type="button" class="preset-btn" onclick="setPreset('yandex', 'cpc', 'direct')">Яндекс Директ</button>
-            <button type="button" class="preset-btn" onclick="setPreset('vk', 'targeted', 'target')">ВКонтакте</button>
-            <button type="button" class="preset-btn" onclick="setPreset('tg_ads', 'cpc', 'ads')">Telegram Ads</button>
-            <button type="button" class="preset-btn" onclick="setPreset('telegram', 'channel', 'post')">TG Канал / Пост</button>
-            <button type="button" class="preset-btn" onclick="setPreset('newsletter', 'email', 'digest')">Email-рассылка</button>
-            <button type="button" class="preset-btn" onclick="setPreset('blogger', 'influencer', 'collab')">Блогеры / Инфлюенсеры</button>
-          </div>
-
-          <!-- 6 UTM Parameters Grid -->
-          <div class="gen-grid-3">
-            <div class="gen-field">
-              <label for="utm-src">ИСТОЧНИК ТРАФИКА · utm_source (s)</label>
-              <input type="text" id="utm-src" class="gen-input" placeholder="yandex" oninput="recalcApp()">
-            </div>
-            <div class="gen-field">
-              <label for="utm-med">ТИП ТРАФИКА · utm_medium (m)</label>
-              <input type="text" id="utm-med" class="gen-input" placeholder="cpc" oninput="recalcApp()">
-            </div>
-            <div class="gen-field">
-              <label for="utm-cmp">НАЗВАНИЕ КАМПАНИИ · utm_campaign (c)</label>
-              <input type="text" id="utm-cmp" class="gen-input" placeholder="agent_launch" oninput="recalcApp()">
-            </div>
-            <div class="gen-field">
-              <label for="utm-cnt">СОДЕРЖАНИЕ ОБЪЯВЛЕНИЯ · utm_content (o)</label>
-              <input type="text" id="utm-cnt" class="gen-input" placeholder="banner_hero" oninput="recalcApp()">
-            </div>
-            <div class="gen-field">
-              <label for="utm-trm">КЛЮЧЕВОЕ СЛОВО · utm_term (t)</label>
-              <input type="text" id="utm-trm" class="gen-input" placeholder="vibe_coding" oninput="recalcApp()">
-            </div>
-            <div class="gen-field">
-              <label for="utm-ref">РЕФЕРАЛЬНЫЙ КОД / ПАРТНЕР · referralCode (r)</label>
-              <input type="text" id="utm-ref" class="gen-input" placeholder="sage777" oninput="recalcApp()">
-            </div>
-          </div>
-
-          <!-- Generated Results -->
-          <div class="output-section">
-            <!-- 1. Full Website Link -->
-            <div>
-              <div class="output-header">
-                <span class="output-label">ССЫЛКА ДЛЯ&nbsp;САЙТА (СТАНДАРТНАЯ С&nbsp;ПОЛНЫМИ UTM)</span>
+          <!-- ═══════════════════════════════════════════════════════════ -->
+          <!-- STEP 2: CAMPAIGN PARAMETERS (UTM) -->
+          <!-- ═══════════════════════════════════════════════════════════ -->
+          <div class="step-card">
+            <div class="step-card-header">
+              <div class="step-header-left">
+                <span class="step-num-badge">02</span>
+                <span class="step-title-text">ПАРАМЕТРЫ РЕКЛАМЫ (ОТКУДА ПРИШЕЛ КЛИЕНТ)</span>
               </div>
-              <div class="gen-input-group">
-                <input type="text" id="out-site-full" class="gen-input gen-input-readonly" readonly placeholder="https://...">
-                <button type="button" class="btn-copy-tool" onclick="copyToolVal('out-site-full', this)">Копировать</button>
-              </div>
+              <span class="step-tag-pill">ШАГ 2 ИЗ&nbsp;3</span>
             </div>
 
-            <!-- 2. Base64 Website Link -->
-            <div>
-              <div class="output-header">
-                <span class="output-label">ССЫЛКА ДЛЯ&nbsp;САЙТА (BASE64 URL-SAFE C КОРОТКИМИ КЛЮЧАМИ)</span>
-                <span id="count-site-b64" class="output-counter"></span>
+            <div class="step-card-body">
+              <!-- Quick Presets Box -->
+              <div class="presets-box">
+                <div class="presets-title">⚡ БЫСТРЫЕ ШАБЛОНЫ ПОД&nbsp;РЕКЛАМНЫЕ КАНАЛЫ:</div>
+                <div class="presets-list">
+                  <button type="button" class="preset-btn" onclick="setPreset('yandex', 'cpc', 'direct')">Яндекс Директ</button>
+                  <button type="button" class="preset-btn" onclick="setPreset('vk', 'targeted', 'target')">ВКонтакте</button>
+                  <button type="button" class="preset-btn" onclick="setPreset('tg_ads', 'cpc', 'ads')">Telegram Ads</button>
+                  <button type="button" class="preset-btn" onclick="setPreset('telegram', 'channel', 'post')">TG Канал / Пост</button>
+                  <button type="button" class="preset-btn" onclick="setPreset('newsletter', 'email', 'digest')">Email-рассылка</button>
+                  <button type="button" class="preset-btn" onclick="setPreset('blogger', 'influencer', 'collab')">Блогеры / Инфлюенсеры</button>
+                </div>
               </div>
-              <div class="gen-input-group">
-                <input type="text" id="out-site-b64" class="gen-input gen-input-readonly" readonly placeholder="https://.../?data=...">
-                <button type="button" class="btn-copy-tool" onclick="copyToolVal('out-site-b64', this)">Копировать</button>
-              </div>
-            </div>
 
-            <!-- 3. Standard Telegram Link -->
-            <div>
-              <div class="output-header">
-                <span class="output-label">СТАНДАРТНАЯ ССЫЛКА ДЛЯ&nbsp;TELEGRAM (МОЖНО РЕДАКТИРОВАТЬ ВРУЧНУЮ)</span>
+              <!-- Primary 3 Tags -->
+              <div style="font-family:var(--mono); font-size:0.75rem; font-weight:800; color:#09090b; margin-bottom:12px; text-transform:uppercase;">
+                ОСНОВНЫЕ МЕТКИ КАМПАНИИ:
               </div>
-              <div class="gen-input-group">
-                <input type="text" id="out-tg-std" class="gen-input" oninput="manualTelegramInput()" placeholder="https://t.me/bot?start&...">
-                <button type="button" class="btn-copy-tool" onclick="copyToolVal('out-tg-std', this)">Копировать</button>
-              </div>
-            </div>
+              <div class="grid-3-cols" style="margin-bottom:24px;">
+                <div>
+                  <div class="field-label">
+                    <span class="field-label-text">Источник трафика</span>
+                    <span class="field-label-tag">utm_source · s</span>
+                  </div>
+                  <input type="text" id="utm-src" class="gen-input" placeholder="yandex" oninput="recalcApp()">
+                  <div class="field-hint">ya, vk, tg, google, email</div>
+                </div>
 
-            <!-- 4. Base64 Telegram Link (Primary) -->
-            <div>
-              <div class="output-header">
-                <span class="output-label" style="color:#09090b; font-weight:800;">ССЫЛКА ДЛЯ&nbsp;TELEGRAM (BASE64 URL-SAFE, ДО&nbsp;64 БАЙТ)</span>
-                <span id="count-tg-b64" class="output-counter ok">(0 / 64 байт)</span>
-              </div>
-              <div class="gen-input-group">
-                <input type="text" id="out-tg-b64" class="gen-input gen-input-readonly" style="font-weight:700; color:#09090b;" readonly placeholder="https://t.me/bot?start=...">
-                <button type="button" class="btn-copy-tool" style="background:#10b981; border-color:#10b981;" onclick="copyToolVal('out-tg-b64', this)">Копировать ссылку</button>
-              </div>
-              <div id="overflow-alert" class="alert-banner"></div>
-            </div>
+                <div>
+                  <div class="field-label">
+                    <span class="field-label-text">Тип рекламы</span>
+                    <span class="field-label-tag">utm_medium · m</span>
+                  </div>
+                  <input type="text" id="utm-med" class="gen-input" placeholder="cpc" oninput="recalcApp()">
+                  <div class="field-hint">cpc, targeted, channel, stories</div>
+                </div>
 
-            <!-- Actions Bar -->
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-top:8px;">
-              <button type="button" class="preset-btn" onclick="clearAllForm()" style="padding:8px 16px;">Очистить все поля</button>
-              <div style="font-family:var(--mono); font-size:0.75rem; color:#71717a;">
-                Параметр <code>start</code> в&nbsp;Telegram передается боту при&nbsp;нажатии «Запустить».
+                <div>
+                  <div class="field-label">
+                    <span class="field-label-text">Название кампании</span>
+                    <span class="field-label-tag">utm_campaign · c</span>
+                  </div>
+                  <input type="text" id="utm-cmp" class="gen-input" placeholder="agent" oninput="recalcApp()">
+                  <div class="field-hint">Краткое имя кампании (латиницей)</div>
+                </div>
+              </div>
+
+              <!-- Additional 3 Tags (Optional) -->
+              <div style="border-top:1px solid #e4e4e7; padding-top:18px;">
+                <div style="font-family:var(--mono); font-size:0.75rem; font-weight:800; color:#71717a; margin-bottom:12px; text-transform:uppercase;">
+                  ДОПОЛНИТЕЛЬНЫЕ ПАРАМЕТРЫ (ОПЦИОНАЛЬНО):
+                </div>
+                <div class="grid-3-cols">
+                  <div>
+                    <div class="field-label">
+                      <span class="field-label-text">Баннер / Объявление</span>
+                      <span class="field-label-tag">utm_content · o</span>
+                    </div>
+                    <input type="text" id="utm-cnt" class="gen-input" placeholder="banner_01" oninput="recalcApp()">
+                  </div>
+
+                  <div>
+                    <div class="field-label">
+                      <span class="field-label-text">Ключевое слово</span>
+                      <span class="field-label-tag">utm_term · t</span>
+                    </div>
+                    <input type="text" id="utm-trm" class="gen-input" placeholder="vibe_coding" oninput="recalcApp()">
+                  </div>
+
+                  <div>
+                    <div class="field-label">
+                      <span class="field-label-text">Реферальный ID / Партнер</span>
+                      <span class="field-label-tag">referralCode · r</span>
+                    </div>
+                    <input type="text" id="utm-ref" class="gen-input" placeholder="sage777" oninput="recalcApp()">
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+
+          <!-- ═══════════════════════════════════════════════════════════ -->
+          <!-- STEP 3: HIGH-CONTRAST HERO RESULT CARD -->
+          <!-- ═══════════════════════════════════════════════════════════ -->
+          <div class="step-card step-card-dark">
+            <div class="step-card-header dark">
+              <div class="step-header-left">
+                <span class="step-num-badge emerald">03</span>
+                <span class="step-title-text">ГОТОВЫЙ РЕЗУЛЬТАТ ДЛЯ&nbsp;ЗАПУСКА</span>
+              </div>
+              <span class="step-tag-pill">РЕАЛТАЙМ РАСЧЕТ</span>
+            </div>
+
+            <div class="step-card-body">
+              
+              <!-- HERO TG BOX (STAR OF THE SHOW) -->
+              <div class="hero-tg-box">
+                <div class="hero-tg-header">
+                  <span class="hero-tg-title">★ ГЛАВНЫЙ ДИПЛИНК ДЛЯ&nbsp;TELEGRAM (BASE64 URL-SAFE)</span>
+                  <span id="count-tg-b64" class="counter-pill ok">● 0 / 64 БАЙТ · ЛИМИТ СОБЛЮДЕН</span>
+                </div>
+                
+                <div class="hero-tg-input-group">
+                  <input type="text" id="out-tg-b64" class="hero-tg-input" readonly placeholder="https://t.me/bot?start=...">
+                  <button type="button" class="btn-copy-emerald" onclick="copyToolVal('out-tg-b64', this)">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"><rect x="9" y="9" width="13" height="13" rx="0"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Скопировать диплинк</span>
+                  </button>
+                </div>
+
+                <div id="overflow-alert" class="overflow-alert-dark"></div>
+              </div>
+
+              <!-- SECONDARY OUTPUTS -->
+              <div class="secondary-outputs-box">
+                <div style="font-family:var(--mono); font-size:0.75rem; font-weight:800; color:#a1a1aa; text-transform:uppercase;">
+                  ДОПОЛНИТЕЛЬНЫЕ ВАРИАНТЫ ССЫЛОК:
+                </div>
+
+                <!-- 1. Full Website Link -->
+                <div class="sec-output-row">
+                  <div class="sec-output-label">
+                    <span>1. Ссылка для&nbsp;сайта (стандартная с&nbsp;полными UTM)</span>
+                  </div>
+                  <div class="sec-input-group">
+                    <input type="text" id="out-site-full" class="sec-input" readonly placeholder="https://...">
+                    <button type="button" class="btn-copy-sec" onclick="copyToolVal('out-site-full', this)">Копировать</button>
+                  </div>
+                </div>
+
+                <!-- 2. Base64 Website Link -->
+                <div class="sec-output-row">
+                  <div class="sec-output-label">
+                    <span>2. Ссылка для&nbsp;сайта (Base64 URL-safe с&nbsp;короткими ключами)</span>
+                    <span id="count-site-b64" style="color:#71717a;"></span>
+                  </div>
+                  <div class="sec-input-group">
+                    <input type="text" id="out-site-b64" class="sec-input" readonly placeholder="https://.../?data=...">
+                    <button type="button" class="btn-copy-sec" onclick="copyToolVal('out-site-b64', this)">Копировать</button>
+                  </div>
+                </div>
+
+                <!-- 3. Standard TG Link -->
+                <div class="sec-output-row">
+                  <div class="sec-output-label">
+                    <span>3. Стандартная ссылка для&nbsp;Telegram (можно редактировать вручную)</span>
+                  </div>
+                  <div class="sec-input-group">
+                    <input type="text" id="out-tg-std" class="sec-input" oninput="manualTelegramInput()" placeholder="https://t.me/bot?start&...">
+                    <button type="button" class="btn-copy-sec" onclick="copyToolVal('out-tg-std', this)">Копировать</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bottom Bar -->
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-top:24px; padding-top:16px; border-top:1px solid #27272a;">
+                <button type="button" class="btn-copy-sec" onclick="clearAllForm()" style="background:transparent; border-color:#3f3f46; color:#a1a1aa;">✕ Очистить все поля</button>
+                <div style="font-family:var(--mono); font-size:0.75rem; color:#71717a;">
+                  Параметр <code>start</code> передается в&nbsp;бот при&nbsp;нажатии кнопки «Запустить».
+                </div>
+              </div>
+
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
@@ -976,7 +1280,6 @@ def decode_utm_payload(payload: str) -> dict:
             if (outSiteB64) outSiteB64.value = `https://${siteInput}?data=${b64}`;
             if (countSiteB64) {
               countSiteB64.textContent = `(${b64.length} симв.)`;
-              countSiteB64.style.color = '#71717a';
             }
           } catch (e) {
             if (outSiteB64) outSiteB64.value = '';
@@ -1010,15 +1313,16 @@ def decode_utm_payload(payload: str) -> dict:
 
             const byteLen = b64.length;
             if (countTgB64) {
-              countTgB64.textContent = `(${byteLen} / 64 байт)`;
               if (byteLen > 64) {
-                countTgB64.className = 'output-counter danger';
+                countTgB64.textContent = `⚠️ ${byteLen} / 64 БАЙТ · ПРЕВЫШЕНИЕ!`;
+                countTgB64.className = 'counter-pill danger';
                 if (alertBox) {
                   alertBox.style.display = 'block';
-                  alertBox.innerHTML = `⚠️ <strong>Внимание: превышен лимит ${byteLen} байт из 64!</strong> Telegram отсечет параметр start. Бот не получит метки при переходе. Рекомендуем сократить значения меток до коротких аббревиатур.`;
+                  alertBox.innerHTML = `⚠️ <strong>Внимание: превышен лимит ${byteLen} байт из 64!</strong> Telegram отсечет параметр start. Бот не получит метки при переходе. Рекомендуем сократить значения меток до коротких аббревиатур (например, ya вместо yandex).`;
                 }
               } else {
-                countTgB64.className = 'output-counter ok';
+                countTgB64.textContent = `● ${byteLen} / 64 БАЙТ · ЛИМИТ СОБЛЮДЕН`;
+                countTgB64.className = 'counter-pill ok';
                 if (alertBox) alertBox.style.display = 'none';
               }
             }
@@ -1028,8 +1332,8 @@ def decode_utm_payload(payload: str) -> dict:
         } else {
           if (outTgB64) outTgB64.value = `https://t.me/${tgInput}?start=`;
           if (countTgB64) {
-            countTgB64.textContent = '(0 / 64 байт)';
-            countTgB64.className = 'output-counter ok';
+            countTgB64.textContent = '● 0 / 64 БАЙТ · ЛИМИТ СОБЛЮДЕН';
+            countTgB64.className = 'counter-pill ok';
           }
           if (alertBox) alertBox.style.display = 'none';
         }
@@ -1037,8 +1341,8 @@ def decode_utm_payload(payload: str) -> dict:
         if (outTgStd) outTgStd.value = '';
         if (outTgB64) outTgB64.value = '';
         if (countTgB64) {
-          countTgB64.textContent = '(0 / 64 байт)';
-          countTgB64.className = 'output-counter';
+          countTgB64.textContent = '● 0 / 64 БАЙТ';
+          countTgB64.className = 'counter-pill';
         }
         if (alertBox) alertBox.style.display = 'none';
       }
@@ -1068,15 +1372,16 @@ def decode_utm_payload(payload: str) -> dict:
           const alertBox = document.getElementById('overflow-alert');
           const byteLen = b64.length;
           if (countTgB64) {
-            countTgB64.textContent = `(${byteLen} / 64 байт)`;
             if (byteLen > 64) {
-              countTgB64.className = 'output-counter danger';
+              countTgB64.textContent = `⚠️ ${byteLen} / 64 БАЙТ · ПРЕВЫШЕНИЕ!`;
+              countTgB64.className = 'counter-pill danger';
               if (alertBox) {
                 alertBox.style.display = 'block';
                 alertBox.innerHTML = `⚠️ <strong>Превышен лимит ${byteLen} байт из 64!</strong> Сократите параметры.`;
               }
             } else {
-              countTgB64.className = 'output-counter ok';
+              countTgB64.textContent = `● ${byteLen} / 64 БАЙТ · ЛИМИТ СОБЛЮДЕН`;
+              countTgB64.className = 'counter-pill ok';
               if (alertBox) alertBox.style.display = 'none';
             }
           }
@@ -1103,8 +1408,8 @@ def decode_utm_payload(payload: str) -> dict:
       if (c1) c1.textContent = '';
       const c2 = document.getElementById('count-tg-b64');
       if (c2) {
-        c2.textContent = '(0 / 64 байт)';
-        c2.className = 'output-counter ok';
+        c2.textContent = '● 0 / 64 БАЙТ';
+        c2.className = 'counter-pill ok';
       }
       const a = document.getElementById('overflow-alert');
       if (a) a.style.display = 'none';
@@ -1115,12 +1420,12 @@ def decode_utm_payload(payload: str) -> dict:
       if (!input || !input.value) return;
       const text = input.value;
       const setCopied = () => {
-        const orig = btn.innerText;
+        const orig = btn.innerHTML;
         btn.classList.add('copied');
-        btn.innerText = '✓ Скопировано';
+        btn.innerHTML = `✓ Скопировано`;
         setTimeout(() => {
           btn.classList.remove('copied');
-          btn.innerText = orig;
+          btn.innerHTML = orig;
         }, 2000);
       };
 
