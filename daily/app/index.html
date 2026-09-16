@@ -1254,6 +1254,42 @@
       backdrop-filter: blur(8px);
       animation: fadeIn 0.3s ease;
     }
+
+    .test-user-switcher {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      margin: 10px 16px 4px 16px;
+      padding: 4px 6px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 0;
+    }
+    .switcher-pill-btn {
+      flex: 1;
+      padding: 6px 10px;
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      font-weight: 600;
+      background: transparent;
+      color: var(--text-dim);
+      border: 1px solid transparent;
+      cursor: pointer;
+      border-radius: 0;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      text-align: center;
+    }
+    .switcher-pill-btn:hover {
+      color: var(--text-bright);
+      background: rgba(255, 255, 255, 0.06);
+    }
+    .switcher-pill-btn.active {
+      background: var(--surface-hover);
+      color: var(--text-bright);
+      border-color: var(--border-light);
+    }
   </style>
 </head>
 <body>
@@ -1275,6 +1311,14 @@
         <span id="streak-counter-top">14 / 21 день (будни)</span>
       </div>
     </header>
+
+    <!-- TEST MEMBER SWITCHER (Михаил / @lookatshow / @Ksudamzy) -->
+    <div class="test-user-switcher">
+      <span style="font-size:0.72rem; color:var(--text-dim); font-family:var(--mono); margin-right:4px;">👤 Вход:</span>
+      <button class="switcher-pill-btn active" id="btn-switch-michael" onclick="switchActiveUser('michael_sage')">Михаил 👑</button>
+      <button class="switcher-pill-btn" id="btn-switch-lookatshow" onclick="switchActiveUser('lookatshow')">@lookatshow</button>
+      <button class="switcher-pill-btn" id="btn-switch-ksudamzy" onclick="switchActiveUser('ksudamzy')">@Ksudamzy</button>
+    </div>
 
     <!-- PAYWALL SCREEN (If not subscribed) -->
     <div id="paywall-view" class="paywall-screen">
@@ -1338,12 +1382,12 @@
             <div class="webrtc-video-slot" id="slot-peer-1">
               <video id="webrtc-video-peer-1" autoplay playsinline class="webrtc-video-stream" style="display:none;"></video>
               <div id="placeholder-peer-1" class="webrtc-avatar-placeholder">
-                <div class="av-circle" id="av-circle-peer-1">А</div>
-                <div class="av-name" id="av-name-peer-1">Алексей Смирнов</div>
+                <div class="av-circle" id="av-circle-peer-1">L</div>
+                <div class="av-name" id="av-name-peer-1">Lookatshow</div>
                 <div class="av-status" id="av-status-peer-1">Ожидание подключения...</div>
               </div>
               <div class="webrtc-slot-meta">
-                <span class="webrtc-slot-name" id="label-name-peer-1">Алексей Смирнов</span>
+                <span class="webrtc-slot-name" id="label-name-peer-1">Lookatshow</span>
                 <div class="webrtc-slot-icons">
                   <span id="mic-icon-peer-1">🎙</span>
                 </div>
@@ -1354,12 +1398,12 @@
             <div class="webrtc-video-slot" id="slot-peer-2">
               <video id="webrtc-video-peer-2" autoplay playsinline class="webrtc-video-stream" style="display:none;"></video>
               <div id="placeholder-peer-2" class="webrtc-avatar-placeholder">
-                <div class="av-circle" id="av-circle-peer-2">Д</div>
-                <div class="av-name" id="av-name-peer-2">Дмитрий Ковалёв</div>
+                <div class="av-circle" id="av-circle-peer-2">К</div>
+                <div class="av-name" id="av-name-peer-2">Ксения</div>
                 <div class="av-status" id="av-status-peer-2">Ожидание подключения...</div>
               </div>
               <div class="webrtc-slot-meta">
-                <span class="webrtc-slot-name" id="label-name-peer-2">Дмитрий Ковалёв</span>
+                <span class="webrtc-slot-name" id="label-name-peer-2">Ксения</span>
                 <div class="webrtc-slot-icons">
                   <span id="mic-icon-peer-2">🎙</span>
                 </div>
@@ -1433,8 +1477,8 @@
           <!-- Speaker Tabs -->
           <div class="speaker-tabs-friendly" id="speaker-tabs-wrapper">
             <button class="speaker-btn-pill active" id="spk-tab-0" onclick="switchSpeaker(0)">1. Михаил</button>
-            <button class="speaker-btn-pill" id="spk-tab-1" onclick="switchSpeaker(1)">2. Алексей</button>
-            <button class="speaker-btn-pill" id="spk-tab-2" onclick="switchSpeaker(2)">3. Дмитрий</button>
+            <button class="speaker-btn-pill" id="spk-tab-1" onclick="switchSpeaker(1)">2. Lookatshow</button>
+            <button class="speaker-btn-pill" id="spk-tab-2" onclick="switchSpeaker(2)">3. Ксения</button>
           </div>
 
           <!-- Digits & Speaker -->
@@ -1624,26 +1668,26 @@
           <div style="display:flex; flex-direction:column; gap:12px;">
             <div class="member-item-friendly">
               <div class="member-left-part">
-                <div class="member-avatar-box">А</div>
+                <div class="member-avatar-box">L</div>
                 <div class="member-details">
-                  <div class="member-name-text">Алексей Смирнов</div>
-                  <div class="member-niche-text">B2B SaaS / EdTech</div>
+                  <div class="member-name-text">Lookatshow</div>
+                  <div class="member-niche-text">Медиа &amp; Продакшн</div>
                 </div>
               </div>
-              <a href="https://t.me/alex_smirnov" target="_blank" style="color:var(--blue); font-size:0.8rem; font-weight:600; text-decoration:none;">
+              <a href="https://t.me/lookatshow" target="_blank" style="color:var(--blue); font-size:0.8rem; font-weight:600; text-decoration:none;">
                 В&nbsp;Telegram ↗
               </a>
             </div>
 
             <div class="member-item-friendly">
               <div class="member-left-part">
-                <div class="member-avatar-box">Д</div>
+                <div class="member-avatar-box">К</div>
                 <div class="member-details">
-                  <div class="member-name-text">Дмитрий Ковалёв</div>
-                  <div class="member-niche-text">E-commerce &amp; Логистика</div>
+                  <div class="member-name-text">Ксения</div>
+                  <div class="member-niche-text">Развитие &amp; Продукт</div>
                 </div>
               </div>
-              <a href="https://t.me/dmitry_koval" target="_blank" style="color:var(--blue); font-size:0.8rem; font-weight:600; text-decoration:none;">
+              <a href="https://t.me/Ksudamzy" target="_blank" style="color:var(--blue); font-size:0.8rem; font-weight:600; text-decoration:none;">
                 В&nbsp;Telegram ↗
               </a>
             </div>
@@ -1835,7 +1879,66 @@
     // ══════════════════════════════════════════════════════════════
     // INITIALIZATION & SUBSCRIPTION CHECK
     // ══════════════════════════════════════════════════════════════
+    
+    const PROFILES = {
+      'michael_sage': { key: 'michael_sage', telegram_id: 439634804, username: 'Michael_Sage', name: 'Михаил Пузырёв', role: 'captain' },
+      'lookatshow': { key: 'lookatshow', telegram_id: 991001, username: 'lookatshow', name: 'Lookatshow', role: 'member' },
+      'ksudamzy': { key: 'ksudamzy', telegram_id: 991002, username: 'Ksudamzy', name: 'Ксения', role: 'member' }
+    };
+
+    function resolveUserContext() {
+      const params = new URLSearchParams(window.location.search);
+      const rawUser = (params.get('username') || params.get('user') || params.get('u') || '').toLowerCase().replace('@', '');
+      const idParam = Number(params.get('telegram_id') || params.get('id') || 0);
+
+      let matchedKey = null;
+      if (rawUser) {
+        matchedKey = Object.keys(PROFILES).find(k => k === rawUser || PROFILES[k].username.toLowerCase() === rawUser);
+      }
+      if (!matchedKey && idParam) {
+        matchedKey = Object.keys(PROFILES).find(k => PROFILES[k].telegram_id === idParam);
+      }
+      if (!matchedKey) {
+        const saved = localStorage.getItem('daily_active_user');
+        if (saved && PROFILES[saved]) matchedKey = saved;
+      }
+
+      if (!matchedKey) matchedKey = 'michael_sage';
+
+      const prof = PROFILES[matchedKey];
+      STATE.user = {
+        telegram_id: prof.telegram_id,
+        username: prof.username,
+        name: prof.name,
+        role: prof.role,
+        is_subscribed: true
+      };
+
+      // Update Topbar and greeting
+      const greeting = document.getElementById('user-greeting-name');
+      const avatarInit = document.getElementById('user-avatar-initial');
+      if (greeting) greeting.innerText = `Доброе утро, ${prof.name.split(' ')[0]} 👋`;
+      if (avatarInit) avatarInit.innerText = (prof.name || 'U')[0].toUpperCase();
+
+      // Update switcher pills
+      ['michael', 'lookatshow', 'ksudamzy'].forEach(k => {
+        const btn = document.getElementById(`btn-switch-${k}`);
+        if (btn) {
+          const isCurrent = (matchedKey === 'michael_sage' && k === 'michael') || (matchedKey === k);
+          btn.classList.toggle('active', isCurrent);
+        }
+      });
+    }
+
+    function switchActiveUser(userKey) {
+      localStorage.setItem('daily_active_user', userKey);
+      const url = new URL(window.location.href);
+      url.searchParams.set('user', userKey);
+      window.location.href = url.toString();
+    }
+
     document.addEventListener('DOMContentLoaded', async () => {
+      resolveUserContext();
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/daily/app/sw.js').catch(e => console.warn('SW err:', e));
       }
@@ -1898,10 +2001,15 @@
           
           renderMembers(data.members);
 
-          if (data.user_has_checked_in) {
-            const btn = document.getElementById('btn-attendance');
-            btn.classList.add('checked');
-            btn.innerHTML = '<span>✅ Вы отметились на дейлике</span>';
+          const btnAtt = document.getElementById('btn-attendance');
+          if (btnAtt) {
+            if (data.user_has_checked_in) {
+              btnAtt.classList.add('checked');
+              btnAtt.innerHTML = '<span>✅ Вы отметились на дейлике</span>';
+            } else {
+              btnAtt.classList.remove('checked');
+              btnAtt.innerHTML = '<span>✍️ Я на дейлике (отметиться)</span>';
+            }
           }
 
           renderInsightsHistory(data.recent_insights);
@@ -1937,7 +2045,7 @@
         }
 
         const initial = m.name ? m.name[0] : 'U';
-        const isMe = (m.telegram_id === STATE.user.telegram_id || m.username === STATE.user.username);
+        const isMe = (m.telegram_id === STATE.user.telegram_id || (m.username && STATE.user.username && m.username.toLowerCase() === STATE.user.username.toLowerCase()));
 
         return `
           <div class="member-item-friendly">
@@ -1956,7 +2064,7 @@
       }).join('');
 
       // Pre-populate WebRTC slots with Triad partner names
-      const otherMembers = members.filter(m => (m.telegram_id !== STATE.user.telegram_id && m.username !== STATE.user.username));
+      const otherMembers = members.filter(m => !(m.telegram_id === STATE.user.telegram_id || (m.username && STATE.user.username && m.username.toLowerCase() === STATE.user.username.toLowerCase())));
       if (otherMembers[0]) {
         STATE.webrtcSlotMapping[otherMembers[0].telegram_id] = 1;
         const lbl = document.getElementById('label-name-peer-1');
@@ -1976,7 +2084,7 @@
         if (avCircle) avCircle.innerText = (otherMembers[1].name || 'У')[0].toUpperCase();
       }
       const localLbl = document.getElementById('label-name-local');
-      if (localLbl) localLbl.innerText = `${STATE.user.name} 👑 (Вы)`;
+      if (localLbl) localLbl.innerText = `${STATE.user.name} ${STATE.user.role === 'captain' ? '👑 ' : ''}(Вы)`;
     }
 
     // ══════════════════════════════════════════════════════════════

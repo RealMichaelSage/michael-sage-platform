@@ -156,8 +156,8 @@ const DEFAULT_TRIADS = {
     captain_id: 439634804,
     members: [
       { telegram_id: 439634804, name: "Михаил Пузырёв", username: "Michael_Sage", niche: "AI-Архитектура & Vibe Coding", role: "captain", photo_url: "/img/mikhail_hero.jpg" },
-      { telegram_id: 991001, name: "Алексей Смирнов", username: "alex_smirnov", niche: "B2B SaaS / EdTech", role: "member", photo_url: "" },
-      { telegram_id: 991002, name: "Дмитрий Ковалёв", username: "dmitry_koval", niche: "E-commerce & Логистика", role: "member", photo_url: "" }
+      { telegram_id: 991001, name: "Lookatshow", username: "lookatshow", niche: "Медиа & Продакшн", role: "member", photo_url: "" },
+      { telegram_id: 991002, name: "Ксения", username: "Ksudamzy", niche: "Развитие & Продукт", role: "member", photo_url: "" }
     ],
     active_streak: 14,
     best_streak: 21,
