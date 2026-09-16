@@ -1316,7 +1316,7 @@
     <div class="test-user-switcher">
       <span style="font-size:0.72rem; color:var(--text-dim); font-family:var(--mono); margin-right:4px;">👤 Вход:</span>
       <button class="switcher-pill-btn active" id="btn-switch-michael" onclick="switchActiveUser('michael_sage')">Михаил 👑</button>
-      <button class="switcher-pill-btn" id="btn-switch-lookatshow" onclick="switchActiveUser('lookatshow')">@lookatshow</button>
+      <button class="switcher-pill-btn" id="btn-switch-lookatshow" onclick="switchActiveUser('lookatshow')">Дмитрий</button>
       <button class="switcher-pill-btn" id="btn-switch-ksudamzy" onclick="switchActiveUser('ksudamzy')">@Ksudamzy</button>
     </div>
 
@@ -1382,12 +1382,12 @@
             <div class="webrtc-video-slot" id="slot-peer-1">
               <video id="webrtc-video-peer-1" autoplay playsinline class="webrtc-video-stream" style="display:none;"></video>
               <div id="placeholder-peer-1" class="webrtc-avatar-placeholder">
-                <div class="av-circle" id="av-circle-peer-1">L</div>
-                <div class="av-name" id="av-name-peer-1">Lookatshow</div>
+                <div class="av-circle" id="av-circle-peer-1">Д</div>
+                <div class="av-name" id="av-name-peer-1">Дмитрий</div>
                 <div class="av-status" id="av-status-peer-1">Ожидание подключения...</div>
               </div>
               <div class="webrtc-slot-meta">
-                <span class="webrtc-slot-name" id="label-name-peer-1">Lookatshow</span>
+                <span class="webrtc-slot-name" id="label-name-peer-1">Дмитрий</span>
                 <div class="webrtc-slot-icons">
                   <span id="mic-icon-peer-1">🎙</span>
                 </div>
@@ -1477,7 +1477,7 @@
           <!-- Speaker Tabs -->
           <div class="speaker-tabs-friendly" id="speaker-tabs-wrapper">
             <button class="speaker-btn-pill active" id="spk-tab-0" onclick="switchSpeaker(0)">1. Михаил</button>
-            <button class="speaker-btn-pill" id="spk-tab-1" onclick="switchSpeaker(1)">2. Lookatshow</button>
+            <button class="speaker-btn-pill" id="spk-tab-1" onclick="switchSpeaker(1)">2. Дмитрий</button>
             <button class="speaker-btn-pill" id="spk-tab-2" onclick="switchSpeaker(2)">3. Ксения</button>
           </div>
 
@@ -1668,9 +1668,9 @@
           <div style="display:flex; flex-direction:column; gap:12px;">
             <div class="member-item-friendly">
               <div class="member-left-part">
-                <div class="member-avatar-box">L</div>
+                <div class="member-avatar-box">Д</div>
                 <div class="member-details">
-                  <div class="member-name-text">Lookatshow</div>
+                  <div class="member-name-text">Дмитрий</div>
                   <div class="member-niche-text">Медиа &amp; Продакшн</div>
                 </div>
               </div>
@@ -1882,7 +1882,7 @@
     
     const PROFILES = {
       'michael_sage': { key: 'michael_sage', telegram_id: 439634804, username: 'Michael_Sage', name: 'Михаил Пузырёв', role: 'captain' },
-      'lookatshow': { key: 'lookatshow', telegram_id: 991001, username: 'lookatshow', name: 'Lookatshow', role: 'member' },
+      'lookatshow': { key: 'lookatshow', telegram_id: 991001, username: 'lookatshow', name: 'Дмитрий', role: 'member' },
       'ksudamzy': { key: 'ksudamzy', telegram_id: 991002, username: 'Ksudamzy', name: 'Ксения', role: 'member' }
     };
 
@@ -2044,7 +2044,7 @@
           statusBadge = '<span class="member-checkin-badge" style="background:#38bdf820; color:#38bdf8;">✈️ Асинхрон</span>';
         }
 
-        const initial = m.name ? m.name[0] : 'U';
+        const initial = (m.name || 'У')[0].toUpperCase();
         const isMe = (m.telegram_id === STATE.user.telegram_id || (m.username && STATE.user.username && m.username.toLowerCase() === STATE.user.username.toLowerCase()));
 
         return `
