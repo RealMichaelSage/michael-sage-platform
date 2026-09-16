@@ -398,7 +398,6 @@
       </ul>
 
       <div class="nav-right">
-        <a href="/daily/app/" class="nav-cta" style="background:transparent; color:var(--black); border-color:var(--border); margin-right:8px; font-family:var(--mono); font-size:0.8rem;">ЛК / PWA ↗</a>
         <a href="#join" class="nav-cta" style="background:#09090b; color:#fff; border-color:#09090b;">Попробовать 1 дейлик ↓</a>
         <button class="nav-burger" aria-label="Открыть меню">
           <span></span>
@@ -411,7 +410,6 @@
 
   <!-- MOBILE MENU -->
   <div class="mobile-menu">
-    <a href="/daily/app/" style="font-weight:700; color:var(--black);">Личный кабинет & Дейли-Модератор ↗</a>
     <a href="#format">Формат триады</a>
     <a href="#timing">Регламент 45 минут</a>
     <a href="#rules">3 железных правила</a>
@@ -874,8 +872,11 @@
             <div class="price-feat">Защита тройки: авто-замена неактивных партнеров</div>
           </div>
 
-          <a href="#join" onclick="selectPlan('subscription')" class="btn-primary" style="background:#ffffff; color:#09090b; border-color:#ffffff; width:100%; text-align:center; padding:14px; margin-top:auto;">
-            Оформить подписку за&nbsp;5&nbsp;990&nbsp;₽ ↓
+          <a href="https://web.tribute.tg/s/16oh" target="_blank" class="btn-primary" style="background:#ffffff; color:#09090b; border-color:#ffffff; width:100%; text-align:center; padding:14px; margin-top:auto;">
+            Оформить подписку за&nbsp;5&nbsp;990&nbsp;₽ ↗
+          </a>
+          <a href="#join" onclick="selectPlan('subscription')" style="display:block; text-align:center; font-family:var(--mono); font-size:0.75rem; color:#a1a1aa; margin-top:10px; text-decoration:underline;">
+            или&nbsp;заполнить анкету с&nbsp;пожеланиями по&nbsp;слоту ↓
           </a>
         </div>
 
@@ -1269,10 +1270,10 @@
         }
       } catch (err) {}
 
-      // If Subscription: Initiate Payment via API or direct payment
+      // If Subscription: Save registration & redirect to official Tribute payment
       if (plan === 'subscription') {
         try {
-          const res = await fetch('/api/payment/create', {
+          fetch('/api/payment/create', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -1283,25 +1284,16 @@
               client_name: name,
               client_phone: phone,
               client_email: 'daily@a-sage.ru',
-              return_url: window.location.href.split('?')[0]
+              telegram: telegram,
+              slot: slot,
+              niche: niche
             })
-          });
+          }).catch(() => {});
+        } catch (err) {}
 
-          const data = await res.json();
-          if (data && data.ok && data.payment_url) {
-            // Redirect to Tochka Bank payment
-            window.location.href = data.payment_url;
-            return;
-          }
-        } catch (err) {
-          console.warn('[Payment Gateway Notice]: Falling back to direct Telegram coordination', err);
-        }
-
-        // Graceful fallback for subscription if payment link not returned
-        showSuccessState(
-          'Заявка на подписку 5 990 ₽ принята!',
-          `Спасибо, ${name}! Мы свяжемся с вами в Telegram (${telegram}) для выставления счета или ссылки на оплату и забронируем слот.`
-        );
+        // Instant redirect to official Tribute subscription link
+        window.location.href = 'https://web.tribute.tg/s/16oh';
+        return;
       } else {
         // Trial Plan: Instant confirmation
         showSuccessState(
