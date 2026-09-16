@@ -39,6 +39,7 @@ function loadEnv() {
     TELEGRAM_BOT_TOKEN: process.env.TELEGRAM_BOT_TOKEN || '8417136221:AAFu1U91WQXy_2SIyHYX1vvaP_cPxjahi7U',
     TELEGRAM_CHANNEL_USERNAME: process.env.TELEGRAM_CHANNEL_USERNAME || '@uncrn_sage',
     TELEGRAM_CLUB_CHAT_ID: process.env.TELEGRAM_CLUB_CHAT_ID || '-1002283995819', // SAGE Neuro Family chat ID
+    TELEGRAM_DAILY_CHAT_ID: process.env.TELEGRAM_DAILY_CHAT_ID || '-5465772918', // SAGE Daily Growth Triads chat ID
     TOCHKA_API_URL: process.env.TOCHKA_API_URL || 'https://enter.tochka.com/uapi',
     TOCHKA_JWT_TOKEN: process.env.TOCHKA_JWT_TOKEN || process.env.TOCHKA_API_TOKEN || '',
     TOCHKA_CUSTOMER_CODE: process.env.TOCHKA_CUSTOMER_CODE || '301392931',
@@ -137,6 +138,122 @@ const SEED_USERS = {
     show_telegram_contact: false
   }
 };
+
+
+// ── 2.1 DAILY GROWTH TRIADS DATA STORE ──────────────────────────────────────
+const DAILY_TRIADS_FILE = path.resolve(DATA_DIR, 'daily_triads.json');
+const DAILY_ATTENDANCE_FILE = path.resolve(DATA_DIR, 'daily_attendance.json');
+const DAILY_INSIGHTS_FILE = path.resolve(DATA_DIR, 'daily_insights.json');
+
+const DEFAULT_TRIADS = {
+  "triad-01": {
+    id: "triad-01",
+    number: 1,
+    name: "Тройка №01 // Скорость",
+    slot_time: "09:30 МСК",
+    meeting_link: "https://telemost.yandex.ru/j/9842145672",
+    captain_id: 439634804,
+    members: [
+      { telegram_id: 439634804, name: "Михаил Пузырёв", username: "Michael_Sage", niche: "AI-Архитектура & Vibe Coding", role: "captain", photo_url: "/img/mikhail_hero.jpg" },
+      { telegram_id: 991001, name: "Алексей Смирнов", username: "alex_smirnov", niche: "B2B SaaS / EdTech", role: "member", photo_url: "" },
+      { telegram_id: 991002, name: "Дмитрий Ковалёв", username: "dmitry_koval", niche: "E-commerce & Логистика", role: "member", photo_url: "" }
+    ],
+    active_streak: 24,
+    best_streak: 24,
+    status: "active"
+  },
+  "triad-02": {
+    id: "triad-02",
+    number: 2,
+    name: "Тройка №02 // Масштаб",
+    slot_time: "08:30 МСК",
+    meeting_link: "https://telemost.yandex.ru/j/8472149012",
+    captain_id: 992001,
+    members: [
+      { telegram_id: 992001, name: "Сергей Власов", username: "sergey_vlasov", niche: "Digital Агентство", role: "captain", photo_url: "" },
+      { telegram_id: 992002, name: "Елена Морозова", username: "elena_moroz", niche: "HR-Консалтинг", role: "member", photo_url: "" },
+      { telegram_id: 992003, name: "Павел Новиков", username: "pavel_novikov", niche: "FinTech & Платежи", role: "member", photo_url: "" }
+    ],
+    active_streak: 31,
+    best_streak: 31,
+    status: "active"
+  }
+};
+
+function getMskDateString() {
+  const d = new Date();
+  const utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+  const msk = new Date(utc + (3600000 * 3));
+  return msk.toISOString().split('T')[0];
+}
+
+function loadDailyTriads() {
+  try {
+    if (fs.existsSync(DAILY_TRIADS_FILE)) {
+      return JSON.parse(fs.readFileSync(DAILY_TRIADS_FILE, 'utf8'));
+    }
+  } catch (e) {}
+  return { ...DEFAULT_TRIADS };
+}
+
+function saveDailyTriads(triads) {
+  try {
+    fs.writeFileSync(DAILY_TRIADS_FILE, JSON.stringify(triads, null, 2), 'utf8');
+  } catch (e) {
+    console.error('[DailyStore] Error saving triads:', e.message);
+  }
+}
+
+function loadDailyAttendance() {
+  try {
+    if (fs.existsSync(DAILY_ATTENDANCE_FILE)) {
+      return JSON.parse(fs.readFileSync(DAILY_ATTENDANCE_FILE, 'utf8'));
+    }
+  } catch (e) {}
+  return [
+    { id: "att_init_1", date: getMskDateString(), triad_id: "triad-01", telegram_id: 991001, status: "attended", checked_in_at: "09:32" },
+    { id: "att_init_2", date: getMskDateString(), triad_id: "triad-01", telegram_id: 991002, status: "attended", checked_in_at: "09:35" }
+  ];
+}
+
+function saveDailyAttendance(records) {
+  try {
+    fs.writeFileSync(DAILY_ATTENDANCE_FILE, JSON.stringify(records, null, 2), 'utf8');
+  } catch (e) {
+    console.error('[DailyStore] Error saving attendance:', e.message);
+  }
+}
+
+function loadDailyInsights() {
+  try {
+    if (fs.existsSync(DAILY_INSIGHTS_FILE)) {
+      return JSON.parse(fs.readFileSync(DAILY_INSIGHTS_FILE, 'utf8'));
+    }
+  } catch (e) {}
+  return [
+    {
+      id: "ins_init_1",
+      date: getMskDateString(),
+      triad_id: "triad-01",
+      telegram_id: 439634804,
+      author_name: "Михаил Пузырёв",
+      insight_text: "Скорость создания продуктов через AI-агенты выше в 5 раз, если не пытаться вручную править мелкие стили, а задавать строгую архитектурную рамку.",
+      focus_tomorrow: "Запуск PWA и интеграция Telegram-подписки",
+      energy_score: 9,
+      sleep_hours: 8,
+      scores_5_tracks: { body: 9, mind: 9, soul: 8, relations: 8, scale: 9 },
+      created_at: new Date().toISOString()
+    }
+  ];
+}
+
+function saveDailyInsights(records) {
+  try {
+    fs.writeFileSync(DAILY_INSIGHTS_FILE, JSON.stringify(records, null, 2), 'utf8');
+  } catch (e) {
+    console.error('[DailyStore] Error saving insights:', e.message);
+  }
+}
 
 function loadLocalUsers() {
   try {
@@ -552,6 +669,8 @@ const server = http.createServer(async (req, res) => {
       let isClubResident = isFounder;
       let statusChannel = isFounder ? 'creator' : (isChannelSubscriber ? 'member' : 'unknown');
       let statusClub = isFounder ? 'creator' : 'unknown';
+      let isDailySubscriber = isFounder || (existingLocal ? Boolean(existingLocal.is_daily_subscriber) : false);
+      let statusDaily = isFounder ? 'creator' : (isDailySubscriber ? 'member' : 'unknown');
 
       // Live Telegram query
       if (!isFounder && CONFIG.TELEGRAM_BOT_TOKEN && effTgId) {
@@ -561,6 +680,10 @@ const server = http.createServer(async (req, res) => {
           if (chRes.ok) {
             isChannelSubscriber = chRes.isMember;
             statusChannel = chRes.status;
+          } else if (chRes.error && chRes.error.toLowerCase().includes('member list is inaccessible')) {
+            console.warn(`[Channel Check] Bot is not admin in ${CONFIG.TELEGRAM_CHANNEL_USERNAME}, granting graceful access to registered user`);
+            isChannelSubscriber = true;
+            statusChannel = 'member';
           }
         }
 
@@ -571,7 +694,6 @@ const server = http.createServer(async (req, res) => {
             isClubResident = clubRes.isMember;
             statusClub = clubRes.status;
           } else {
-            // Telegram returned error or status (user left, kicked, not found)
             if (clubRes.status === 'left' || clubRes.status === 'kicked') {
               isClubResident = false;
               statusClub = clubRes.status;
@@ -581,6 +703,25 @@ const server = http.createServer(async (req, res) => {
             } else {
               isClubResident = false;
               statusClub = clubRes.error || 'unknown';
+            }
+          }
+        }
+
+        // Check Daily Chat
+        if (CONFIG.TELEGRAM_DAILY_CHAT_ID) {
+          const dailyRes = await checkTelegramChatMember(CONFIG.TELEGRAM_DAILY_CHAT_ID, effTgId);
+          if (dailyRes.ok) {
+            isDailySubscriber = dailyRes.isMember;
+            statusDaily = dailyRes.status;
+          } else {
+            if (dailyRes.status === 'left' || dailyRes.status === 'kicked') {
+              isDailySubscriber = false;
+              statusDaily = dailyRes.status;
+            } else if (dailyRes.error && (dailyRes.error.toLowerCase().includes('user not found') || dailyRes.error.toLowerCase().includes('participant_id_invalid'))) {
+              isDailySubscriber = false;
+              statusDaily = 'not_participant';
+            } else {
+              statusDaily = dailyRes.error || 'unknown';
             }
           }
         }
@@ -596,6 +737,7 @@ const server = http.createServer(async (req, res) => {
           role: userRole,
           is_club_resident: isClubResident,
           is_channel_subscriber: isChannelSubscriber,
+          is_daily_subscriber: isDailySubscriber,
           telegram_checked_at: new Date().toISOString()
         });
       }
@@ -609,6 +751,7 @@ const server = http.createServer(async (req, res) => {
             role: userRole,
             is_channel_subscriber: isChannelSubscriber,
             is_club_resident: isClubResident,
+            is_daily_subscriber: isDailySubscriber,
             telegram_checked_at: new Date().toISOString()
           }
         ).catch(err => {
@@ -623,8 +766,10 @@ const server = http.createServer(async (req, res) => {
         role: userRole,
         is_channel_subscriber: isChannelSubscriber,
         is_club_resident: isClubResident,
+        is_daily_subscriber: isDailySubscriber,
         status_channel: statusChannel,
         status_club: statusClub,
+        status_daily: statusDaily,
         checked_at: new Date().toISOString()
       });
     }
@@ -1168,6 +1313,221 @@ const server = http.createServer(async (req, res) => {
       } catch (err) {
         return sendJson(res, 500, { ok: false, error: err.message });
       }
+    }
+
+
+    // ── 11. DAILY GROWTH TRIADS: COCKPIT (GET /api/daily/cockpit) ──
+    if (pathname === '/api/daily/cockpit' && req.method === 'GET') {
+      const tgId = Number(reqUrl.searchParams.get('telegram_id') || 0);
+      const username = (reqUrl.searchParams.get('username') || '').replace(/^@/, '').toLowerCase();
+
+      const triads = loadDailyTriads();
+      let userTriad = null;
+
+      for (const t of Object.values(triads)) {
+        if (t.members.some(m => m.telegram_id === tgId || (m.username && m.username.toLowerCase() === username))) {
+          userTriad = t;
+          break;
+        }
+      }
+
+      if (!userTriad) {
+        userTriad = triads['triad-01'];
+        if (tgId && !userTriad.members.some(m => m.telegram_id === tgId)) {
+          userTriad.members[0].telegram_id = tgId;
+          if (username) userTriad.members[0].username = username;
+          saveDailyTriads(triads);
+        }
+      }
+
+      const today = getMskDateString();
+      const attendance = loadDailyAttendance();
+      const todayAttendance = attendance.filter(a => a.date === today && a.triad_id === userTriad.id);
+
+      const memberStatus = userTriad.members.map(m => {
+        const checkin = todayAttendance.find(a => a.telegram_id === m.telegram_id);
+        return {
+          telegram_id: m.telegram_id,
+          name: m.name,
+          username: m.username,
+          niche: m.niche,
+          role: m.role,
+          photo_url: m.photo_url,
+          has_checked_in: !!checkin,
+          checked_in_at: checkin ? checkin.checked_in_at : null,
+          status: checkin ? checkin.status : 'pending'
+        };
+      });
+
+      const allCheckedIn = memberStatus.every(m => m.has_checked_in);
+      const userCheckin = memberStatus.find(m => m.telegram_id === tgId || (m.username && m.username.toLowerCase() === username));
+
+      const allInsights = loadDailyInsights();
+      const triadInsights = allInsights
+        .filter(i => i.triad_id === userTriad.id)
+        .slice(-10)
+        .reverse();
+
+      const localUsers = loadLocalUsers();
+      const localU = tgId ? localUsers[tgId] : null;
+      const isFounder = (tgId === 439634804 || tgId === 88472911 || username === 'michael_sage' || username === 'uncrn_sage');
+      const isSubscribed = isFounder || (localU ? Boolean(localU.is_daily_subscriber || localU.is_channel_subscriber || localU.is_club_resident) : false);
+
+      return sendJson(res, 200, {
+        ok: true,
+        today,
+        triad: userTriad,
+        members: memberStatus,
+        all_checked_in: allCheckedIn,
+        user_has_checked_in: userCheckin ? userCheckin.has_checked_in : false,
+        active_streak: userTriad.active_streak,
+        recent_insights: triadInsights,
+        is_subscribed: isSubscribed
+      });
+    }
+
+    // ── 12. DAILY GROWTH TRIADS: CHECKIN (POST /api/daily/checkin) ──
+    if (pathname === '/api/daily/checkin' && req.method === 'POST') {
+      const body = await parseBody(req);
+      const tgId = Number(body.telegram_id || 0);
+      const triadId = String(body.triad_id || 'triad-01').trim();
+      const status = body.status === 'async' ? 'async' : 'attended';
+      const today = getMskDateString();
+
+      if (!tgId) {
+        return sendJson(res, 400, { ok: false, error: 'telegram_id is required' });
+      }
+
+      const attendance = loadDailyAttendance();
+      let existing = attendance.find(a => a.date === today && a.telegram_id === tgId && a.triad_id === triadId);
+      const nowTime = new Date().toLocaleTimeString('ru-RU', { timeZone: 'Europe/Moscow', hour: '2-digit', minute: '2-digit' });
+
+      if (existing) {
+        existing.status = status;
+        existing.checked_in_at = nowTime;
+      } else {
+        existing = {
+          id: 'att_' + crypto.randomBytes(6).toString('hex'),
+          date: today,
+          triad_id: triadId,
+          telegram_id: tgId,
+          status: status,
+          checked_in_at: nowTime,
+          created_at: new Date().toISOString()
+        };
+        attendance.push(existing);
+      }
+      saveDailyAttendance(attendance);
+
+      const triads = loadDailyTriads();
+      const triad = triads[triadId];
+      let streakIncremented = false;
+
+      if (triad) {
+        const todayTriadCheckins = attendance.filter(a => a.date === today && a.triad_id === triadId);
+        const memberIds = triad.members.map(m => m.telegram_id);
+        const allPresent = memberIds.every(id => todayTriadCheckins.some(c => c.telegram_id === id));
+
+        if (allPresent && (!triad.last_streak_date || triad.last_streak_date !== today)) {
+          triad.active_streak = (triad.active_streak || 0) + 1;
+          triad.best_streak = Math.max(triad.best_streak || 0, triad.active_streak);
+          triad.last_streak_date = today;
+          streakIncremented = true;
+          saveDailyTriads(triads);
+        }
+      }
+
+      return sendJson(res, 200, {
+        ok: true,
+        checkin: existing,
+        active_streak: triad ? triad.active_streak : 0,
+        streak_incremented: streakIncremented
+      });
+    }
+
+    // ── 13. DAILY GROWTH TRIADS: INSIGHT (POST /api/daily/insight) ──
+    if (pathname === '/api/daily/insight' && req.method === 'POST') {
+      const body = await parseBody(req);
+      const tgId = Number(body.telegram_id || 0);
+      const triadId = String(body.triad_id || 'triad-01').trim();
+      const insightText = String(body.insight_text || '').trim();
+      const focusTomorrow = String(body.focus_tomorrow || '').trim();
+      const energyScore = Math.min(10, Math.max(1, Number(body.energy_score) || 8));
+      const sleepHours = Number(body.sleep_hours) || 7.5;
+      const scores = body.scores_5_tracks || { body: energyScore, mind: 8, soul: 8, relations: 8, scale: 8 };
+      const today = getMskDateString();
+
+      if (!tgId || !insightText) {
+        return sendJson(res, 400, { ok: false, error: 'telegram_id and insight_text are required' });
+      }
+
+      const insights = loadDailyInsights();
+      const record = {
+        id: 'ins_' + crypto.randomBytes(6).toString('hex'),
+        date: today,
+        triad_id: triadId,
+        telegram_id: tgId,
+        author_name: body.author_name || 'Участник',
+        insight_text: insightText,
+        focus_tomorrow: focusTomorrow,
+        energy_score: energyScore,
+        sleep_hours: sleepHours,
+        scores_5_tracks: scores,
+        created_at: new Date().toISOString()
+      };
+      insights.push(record);
+      saveDailyInsights(insights);
+
+      return sendJson(res, 200, { ok: true, insight: record });
+    }
+
+    // ── 14. DAILY GROWTH TRIADS: LEADERBOARD (GET /api/daily/leaderboard) ──
+    if (pathname === '/api/daily/leaderboard' && req.method === 'GET') {
+      const triads = loadDailyTriads();
+      const sortedTriads = Object.values(triads).sort((a, b) => (b.active_streak || 0) - (a.active_streak || 0));
+
+      const attendance = loadDailyAttendance();
+      const userCounts = {};
+      for (const a of attendance) {
+        userCounts[a.telegram_id] = (userCounts[a.telegram_id] || 0) + 1;
+      }
+
+      const users = loadLocalUsers();
+      const topParticipants = Object.keys(userCounts).map(tgId => {
+        const u = users[tgId] || {};
+        const fullName = u.first_name ? (u.last_name && !u.first_name.includes(u.last_name) ? `${u.first_name} ${u.last_name}` : u.first_name) : `Участник #${tgId}`;
+        return {
+          telegram_id: Number(tgId),
+          name: fullName.trim(),
+          username: u.username || '',
+          days_attended: userCounts[tgId],
+          role: u.role || 'member'
+        };
+      }).sort((a, b) => b.days_attended - a.days_attended);
+
+      return sendJson(res, 200, {
+        ok: true,
+        triads: sortedTriads,
+        top_participants: topParticipants
+      });
+    }
+
+    // ── 15. DAILY GROWTH TRIADS: HISTORY (GET /api/daily/history) ──
+    if (pathname === '/api/daily/history' && req.method === 'GET') {
+      const tgId = Number(reqUrl.searchParams.get('telegram_id') || 0);
+      if (!tgId) {
+        return sendJson(res, 400, { ok: false, error: 'telegram_id is required' });
+      }
+
+      const allInsights = loadDailyInsights();
+      const userInsights = allInsights.filter(i => i.telegram_id === tgId).reverse();
+      const attendance = loadDailyAttendance().filter(a => a.telegram_id === tgId).reverse();
+
+      return sendJson(res, 200, {
+        ok: true,
+        insights: userInsights,
+        attendance
+      });
     }
 
     // 404 for unknown endpoints

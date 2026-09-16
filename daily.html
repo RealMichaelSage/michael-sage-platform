@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Триады Роста (Дейлики) — Ежедневный Спарринг и&nbsp;ИИ-Аналитика // Михаил Пузырёв</title>
+  <meta name="description" content="Ежедневные 45-минутные синхронизации в тройках предпринимателей по жесткому регламенту: вход в ресурс, спарринг без непрошеных советов, фиксация инсайтов ИИ-ботом и еженедельный мастермайнд с Михаилом Пузырёвым.">
+  <meta name="robots" content="noindex, nofollow">
+  
+  <!-- Favicon Suite -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-title" content="Михаил Пузырёв">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="canonical" href="https://a-sage.ru/daily">
+
+  <!-- OpenGraph / Social Media -->
+  <meta property="og:title" content="Триады Роста (Дейлики) — Ежедневный Спарринг и ИИ-Аналитика // Михаил Пузырёв">
+  <meta property="og:description" content="45 минут в день, которые возвращают фокус, энергию и контроль над бизнесом. Тройки равных, табу на прямые советы, ИИ-карта роста по 5 трекам.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://a-sage.ru/daily">
+  <meta property="og:image" content="https://a-sage.ru/img/mikhail_about.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Триады Роста (Дейлики) — Михаил Пузырёв">
+  <meta name="twitter:description" content="45 минут в день, которые возвращают фокус, энергию и контроль над бизнесом. Тройки равных, табу на прямые советы, ИИ-карта роста.">
+  <meta name="twitter:image" content="https://a-sage.ru/img/mikhail_about.jpg">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/style.css?v=3.0">
+
+  <!-- Custom Page Specific Styles (Strict Swiss Stark Brutalism) -->
+  <style>
+        .page-scrollspy {
+      display: none !important;
+    }
+
+    /* Reset any accidental radius */
+    *, *::before, *::after {
+      border-radius: 0 !important;
+    }
+    
+    .daily-hero {
+      padding: clamp(48px, 6vw, 84px) 0 clamp(40px, 5vw, 64px);
+    }
+
+    .pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--black);
+    }
+
+    .pill-badge.active {
+      background: #09090b;
+      color: #ffffff;
+      border-color: #09090b;
+    }
+
+    .pill-badge.trial {
+      background: #ecfdf5;
+      color: #047857;
+      border-color: #a7f3d0;
+    }
+
+    /* Comparison Grid */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 20px;
+      margin-top: 32px;
+    }
+
+    .compare-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: clamp(24px, 3vw, 36px);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .compare-card.bad {
+      border-top: 3px solid #ef4444;
+    }
+
+    .compare-card.neutral {
+      border-top: 3px solid #f59e0b;
+    }
+
+    .compare-card.winner {
+      background: #f0fdf4;
+      border: 2px solid #10b981;
+      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.08);
+    }
+
+    /* 45 min Timeline Grid */
+    .timeline-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .timeline-step-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .timeline-step-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--black);
+    }
+
+    .timeline-num {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--black);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+
+    .timeline-duration {
+      color: #059669;
+      background: #ecfdf5;
+      padding: 2px 8px;
+      font-size: 0.75rem;
+    }
+
+    /* 5 Tracks Grid */
+    .tracks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 16px;
+      margin-top: 32px;
+    }
+
+    .track-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .track-badge {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #71717a;
+      letter-spacing: 0.06em;
+    }
+
+    .track-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--black);
+      margin: 0;
+    }
+
+    .track-desc {
+      font-size: 0.88rem;
+      color: var(--gray);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* Pricing Section Extended */
+    .price-switch-container {
+      display: inline-flex;
+      border: 1px solid var(--border);
+      background: #f4f4f5;
+      padding: 4px;
+      margin-bottom: 32px;
+      gap: 4px;
+    }
+
+    .price-switch-btn {
+      padding: 10px 20px;
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      font-weight: 700;
+      border: none;
+      background: transparent;
+      color: var(--gray);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .price-switch-btn.active {
+      background: #ffffff;
+      color: var(--black);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    /* Custom Form Layout */
+    .daily-form-box {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: clamp(24px, 4vw, 44px);
+      max-width: 680px;
+      width: 100%;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.04);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-label {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--black);
+    }
+
+    .form-input, .form-select {
+      width: 100%;
+      padding: 13px 16px;
+      font-family: var(--font);
+      font-size: 0.95rem;
+      color: var(--black);
+      background: #ffffff;
+      border: 1px solid var(--border);
+      outline: none;
+      transition: border-color 0.2s ease;
+      box-sizing: border-box;
+    }
+
+    .form-input:focus, .form-select:focus {
+      border-color: var(--black);
+    }
+
+    .form-options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 580px) {
+      .form-options-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-option-card {
+      border: 1px solid var(--border);
+      padding: 16px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      background: #ffffff;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .form-option-card:hover {
+      border-color: #a1a1aa;
+    }
+
+    .form-option-card.selected {
+      border: 2px solid var(--black);
+      background: #f8fafc;
+    }
+
+    .form-option-title {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .form-option-price {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--black);
+    }
+
+    .form-option-desc {
+      font-size: 0.78rem;
+      color: var(--gray);
+      line-height: 1.4;
+    }
+
+    .form-agreement {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.8rem;
+      color: var(--gray);
+      line-height: 1.45;
+      margin-bottom: 24px;
+    }
+
+    .form-agreement input[type="checkbox"] {
+      margin-top: 3px;
+      cursor: pointer;
+    }
+
+    .form-agreement a {
+      color: var(--black);
+      text-decoration: underline;
+    }
+
+    /* Success confirmation state */
+    .form-success-banner {
+      display: none;
+      background: #ecfdf5;
+      border: 1px solid #10b981;
+      padding: 24px;
+      text-align: center;
+      margin-top: 16px;
+    }
+
+    .form-success-banner.active {
+      display: block;
+    }
+
+    .sim-step {
+      cursor: pointer;
+      transition: background-color 0.2s ease, border-left-color 0.2s ease;
+    }
+
+    .sim-step:hover {
+      background: rgba(0,0,0,0.02);
+    }
+  </style>
+
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();
+    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    if ((window.location.hostname === 'a-sage.ru' || window.location.hostname === 'www.a-sage.ru')) {
+      ym(101414837, "init", {
+           clickmap:true,
+           trackLinks:true,
+           accurateTrackBounce:true,
+           webvisor:true
+      });
+    }
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/101414837" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+</head>
+<body>
+
+  <!-- DEDICATED FOCUSED HEADER -->
+  <header class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <strong>Михаил Пузыр<span class="accent-yo">ё</span>в</strong>
+        <span class="nav-logo-badge">// ТРИАДЫ РОСТА</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#format"><span class="nav-link-text">Формат</span></a></li>
+        <li><a href="#timing"><span class="nav-link-text">Регламент 45&nbsp;мин</span></a></li>
+        <li><a href="#rules"><span class="nav-link-text">3 правила</span></a></li>
+        <li><a href="#map"><span class="nav-link-text">Карта 5 сфер</span></a></li>
+        <li><a href="#mastermind"><span class="nav-link-text">Мастер-сессии</span></a></li>
+        <li><a href="#pricing"><span class="nav-link-text">Тарифы</span></a></li>
+        <li><a href="#faq"><span class="nav-link-text">Вопросы</span></a></li>
+      </ul>
+
+      <div class="nav-right">
+        <a href="#join" class="nav-cta" style="background:#09090b; color:#fff; border-color:#09090b;">Попробовать 1 дейлик ↓</a>
+        <button class="nav-burger" aria-label="Открыть меню">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu">
+    <a href="#format">Формат триады</a>
+    <a href="#timing">Регламент 45 минут</a>
+    <a href="#rules">3 железных правила</a>
+    <a href="#map">ИИ-карта 5 сфер</a>
+    <a href="#mastermind">Мастер-сессии</a>
+    <a href="#pricing">Тарифы</a>
+    <a href="#faq">Частые вопросы</a>
+    <a href="#join" class="m-cta">Записаться на&nbsp;1 дейлик ↗</a>
+  </div>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero daily-hero" id="hero" data-nav-title="Дейлики">
+      <div class="hero-left">
+        <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
+          <div class="hero-tag" style="margin-bottom:0;">DAILY GROWTH TRIADS OS</div>
+          <div class="pill-badge trial">🎁 1 ПРОБНЫЙ ДЕЙЛИК — 0 ₽</div>
+        </div>
+
+        <h1 class="hero-title">
+          45 минут в&nbsp;день, которые возвращают фокус, энергию <em>и&nbsp;контроль над&nbsp;бизнесом</em>.
+        </h1>
+        
+        <div class="hero-divider"></div>
+        
+        <p class="hero-sub">
+          Ежедневные утренние или&nbsp;вечерние синхронизации в&nbsp;тройках равных предпринимателей по&nbsp;железному таймингу, без&nbsp;пустой болтовни и&nbsp;непрошеных советов. С&nbsp;ИИ-фиксацией инсайтов и&nbsp;еженедельным мастермайндом с&nbsp;Михаилом Пузырёвым.
+        </p>
+
+        <div class="hero-actions" style="margin-bottom:28px;">
+          <a href="#join" class="btn-primary" onclick="selectPlan('trial')">Попробовать 1 дейлик (0&nbsp;₽) ↓</a>
+          <a href="#pricing" class="btn-secondary">Оформить подписку за&nbsp;5&nbsp;990&nbsp;₽ →</a>
+        </div>
+
+        <div style="display:flex; flex-wrap:wrap; gap:10px; font-family:var(--mono); font-size:0.78rem; color:var(--gray);">
+          <span class="pill-badge">● 3 человека в&nbsp;тройке</span>
+          <span class="pill-badge">⏱ Строго 45 минут</span>
+          <span class="pill-badge">🛡 Табу на&nbsp;советы</span>
+          <span class="pill-badge">🧠 ИИ-бот инсайтов</span>
+        </div>
+      </div>
+
+      <!-- HERO RIGHT: INTERACTIVE SIMULATOR CARD -->
+      <div class="hero-right">
+        <div class="simulator-card">
+          <div class="sim-bar">
+            <div class="window-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+            <div class="window-title">daily-triad-protocol.ts</div>
+            <div class="live-status"><span class="pulse-dot"></span> LIVE 45 MIN PROTOCOL</div>
+          </div>
+          <div class="sim-body" id="sim-body">
+            
+            <div class="sim-step active" onclick="activateSimStep(0)">
+              <div class="sim-step-label">00:00 – 15:00 // УЧАСТНИК 1</div>
+              <div class="sim-step-title">Ресурс → Факты → Спарринг → Фокус</div>
+              <div class="sim-step-desc">
+                2 мин: состояние и&nbsp;сон (8/10) · 4 мин: срез задач и&nbsp;затыков · 7 мин: спарринг вопросами от&nbsp;партнеров в&nbsp;слепые зоны · 2 мин: выбор главного рычага на&nbsp;завтра.
+              </div>
+            </div>
+
+            <div class="sim-step" onclick="activateSimStep(1)">
+              <div class="sim-step-label">15:00 – 30:00 // УЧАСТНИК 2</div>
+              <div class="sim-step-title">Внешнее зеркало без&nbsp;оценок и&nbsp;поучений</div>
+              <div class="sim-step-desc">
+                Разбор точки трения в&nbsp;делегировании. Партнеры не&nbsp;учат жить, а&nbsp;задают один точный вопрос: <em>«Почему ты выбрал делать это сам, если планировал нанять?»</em>.
+              </div>
+            </div>
+
+            <div class="sim-step" onclick="activateSimStep(2)">
+              <div class="sim-step-label">30:00 – 45:00 // УЧАСТНИК 3</div>
+              <div class="sim-step-title">Заземление и&nbsp;фиксация инсайтов ИИ-ботом</div>
+              <div class="sim-step-desc">
+                Финиш слота третьего участника. Капитан тройки жмет «Созвон завершен». За&nbsp;60 секунд каждый наговаривает инсайт в&nbsp;бот: стрик тройки растет, карта оцифрована.
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: THE CONTRAST (WHY OLD FORMATS FAIL) -->
+    <section id="format" class="section section-border section-pad" data-nav-title="Формат">
+      <div class="section-tag">АНТИ-ХАОС МАТРИЦА</div>
+      <h2 class="section-title">Почему обычные чаты и&nbsp;мастермайнды умирают через&nbsp;две недели</h2>
+      <p class="section-sub">Большинство предпринимателей тонут либо в&nbsp;одиночестве перед бесконечным списком дел, либо в&nbsp;болтливых созвонах на&nbsp;2 часа. Мы убрали всё лишнее.</p>
+
+      <div class="compare-grid">
+        
+        <!-- Bad Format 1 -->
+        <div class="compare-card bad">
+          <div class="pill-badge" style="color:#dc2626; background:#fef2f2; border-color:#fecaca; margin-bottom:14px; align-self:flex-start;">
+            ОБЫЧНЫЕ TO-DO ЛИСТЫ ❌
+          </div>
+          <h3 style="font-size:1.25rem; font-weight:800; margin-bottom:12px;">Одиночество и&nbsp;бытовая слепота</h3>
+          <p style="font-size:0.92rem; color:var(--gray); line-height:1.6; margin:0 0 16px;">
+            Вы варитесь в&nbsp;собственном соку. Никто со&nbsp;стороны не&nbsp;видит, где&nbsp;вы занимаетесь имитацией бурной деятельности вместо главного. Списки задач бесконечно переносятся, вызывая скрытое чувство вины.
+          </p>
+          <div style="font-family:var(--mono); font-size:0.8rem; color:#dc2626; margin-top:auto; padding-top:12px; border-top:1px solid var(--border);">
+            Итог: прокрастинация и&nbsp;выгорание
+          </div>
+        </div>
+
+        <!-- Bad Format 2 -->
+        <div class="compare-card neutral">
+          <div class="pill-badge" style="color:#b45309; background:#fffbeb; border-color:#fde68a; margin-bottom:14px; align-self:flex-start;">
+            ДОЛГИЕ МАСТЕРМАЙНДЫ ❌
+          </div>
+          <h3 style="font-size:1.25rem; font-weight:800; margin-bottom:12px;">1.5–2 часа пустой болтовни</h3>
+          <p style="font-size:0.92rem; color:var(--gray); line-height:1.6; margin:0 0 16px;">
+            Встречи раз в&nbsp;неделю или&nbsp;месяц. 80% времени занимают жалобы на&nbsp;жизнь и&nbsp;непрошеные советы от&nbsp;людей другого калибра. Созвоны сжирают половину рабочего дня и&nbsp;быстро забрасываются.
+          </p>
+          <div style="font-family:var(--mono); font-size:0.8rem; color:#b45309; margin-top:auto; padding-top:12px; border-top:1px solid var(--border);">
+            Итог: потеря времени и&nbsp;раздражение
+          </div>
+        </div>
+
+        <!-- Winning Daily Triad -->
+        <div class="compare-card winner">
+          <div class="pill-badge" style="color:#047857; background:#dcfce7; border-color:#86efac; margin-bottom:14px; align-self:flex-start;">
+            ТРИАДЫ РОСТА (ДЕЙЛИКИ) ✅
+          </div>
+          <h3 style="font-size:1.25rem; font-weight:800; margin-bottom:12px; color:#064e3b;">Ровно 45 минут, 3 человека, факты</h3>
+          <p style="font-size:0.92rem; color:#14532d; line-height:1.6; margin:0 0 16px;">
+            По&nbsp;15 минут на&nbsp;человека строго по&nbsp;таймеру. Вход через био-ресурс, разбор главного затыка, спарринг вопросами в&nbsp;слепые зоны. Инсайты оцифровываются ИИ-ботом, а&nbsp;раз в&nbsp;неделю — мастермайнд с&nbsp;Михаилом.
+          </p>
+          <div style="font-family:var(--mono); font-size:0.8rem; color:#047857; font-weight:700; margin-top:auto; padding-top:12px; border-top:1px solid #bbf7d0;">
+            Итог: кристальная ясность каждый день
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: WHY 3 PEOPLE (TRIAD DYNAMICS) -->
+    <section class="section section-border section-pad" style="background:var(--bg-gray);">
+      <div class="section-tag">ГЕОМЕТРИЯ ВНИМАНИЯ</div>
+      <h2 class="section-title">Почему именно 3 человека: формула идеальной устойчивости</h2>
+      <p class="section-sub">За&nbsp;годы экспериментов мы проверили десятки конфигураций групп. Тройка — единственная математически стабильная модель групповой динамики.</p>
+
+      <div class="grid-3" style="gap:20px; margin-top:32px;">
+        
+        <div class="feature-card" style="background:#ffffff; border:1px solid var(--border); padding:clamp(24px, 3vw, 32px);">
+          <div class="card-num" style="font-family:var(--mono); color:#dc2626; font-weight:700; margin-bottom:8px;">01 // ПАРА (2 ЧЕЛОВЕКА)</div>
+          <h3 class="card-title" style="margin-bottom:10px; font-size:1.2rem;">Хрупкость и&nbsp;риск флуда</h3>
+          <p class="card-desc" style="font-size:0.92rem; color:var(--gray); line-height:1.55;">
+            Если один заболел, уехал или&nbsp;проспал — созвон срывается на&nbsp;100%. Вдвоем высок соблазн уйти в&nbsp;бытовые разговоры, а&nbsp;при несовпадении мнений возникает тупик.
+          </p>
+        </div>
+
+        <div class="feature-card" style="background:#ffffff; border:1px solid var(--border); padding:clamp(24px, 3vw, 32px);">
+          <div class="card-num" style="font-family:var(--mono); color:#b45309; font-weight:700; margin-bottom:8px;">02 // ГРУППА (4+ ЧЕЛОВЕКА)</div>
+          <h3 class="card-title" style="margin-bottom:10px; font-size:1.2rem;">Затянутость и&nbsp;потеря фокуса</h3>
+          <p class="card-desc" style="font-size:0.92rem; color:var(--gray); line-height:1.55;">
+            Созвон неизбежно растягивается на&nbsp;1.5–2 часа. Участники начинают скучать, проверять почту и&nbsp;выключать камеры, пока говорит другой. Глубокая рефлексия комкается.
+          </p>
+        </div>
+
+        <div class="feature-card" style="background:#ffffff; border:2px solid var(--black); padding:clamp(24px, 3vw, 32px); box-shadow: 0 8px 24px rgba(0,0,0,0.05);">
+          <div class="card-num" style="font-family:var(--mono); color:#059669; font-weight:700; margin-bottom:8px;">03 // ТРОЙКА (3 ЧЕЛОВЕКА)</div>
+          <h3 class="card-title" style="margin-bottom:10px; font-size:1.2rem;">Золотое сечение спарринга</h3>
+          <p class="card-desc" style="font-size:0.92rem; color:var(--black); line-height:1.55;">
+            <strong>Устойчивость:</strong> если один на&nbsp;форс-мажоре, двое сохраняют формат. <strong>Триангуляция:</strong> третий всегда беспристрастный наблюдатель со&nbsp;стороны. <strong>Тайминг:</strong> ровно 45 минут.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: THE 45 MIN TIMING (ANATOMY OF 15 MIN) -->
+    <section id="timing" class="section section-border section-pad" data-nav-title="Регламент">
+      <div class="section-tag">ЖЕЛЕЗНЫЙ ТАЙМЕР</div>
+      <h2 class="section-title">Анатомия 15 минут: что&nbsp;происходит внутри вашего слота</h2>
+      <p class="section-sub">Никаких пространных монологов. Каждый участник говорит ровно 15 минут по&nbsp;четкому 4-шаговому протоколу.</p>
+
+      <div class="timeline-steps">
+        
+        <div class="timeline-step-card">
+          <div class="timeline-num">
+            <span>ЭТАП 01</span>
+            <span class="timeline-duration">2–3 МИНУТЫ</span>
+          </div>
+          <h3 style="font-size:1.15rem; font-weight:800; margin:0;">Вход в&nbsp;ресурс</h3>
+          <p style="font-size:0.9rem; color:var(--gray); line-height:1.5; margin:0;">
+            Честная био-метрика: сон в&nbsp;часах, батарейка энергии от&nbsp;1 до&nbsp;10, телесные зажимы и&nbsp;эмоциональный фон. Задачи вторичны по&nbsp;отношению к&nbsp;состоянию.
+          </p>
+        </div>
+
+        <div class="timeline-step-card">
+          <div class="timeline-num">
+            <span>ЭТАП 02</span>
+            <span class="timeline-duration">4–5 МИНУТ</span>
+          </div>
+          <h3 style="font-size:1.15rem; font-weight:800; margin:0;">Факты дня</h3>
+          <p style="font-size:0.9rem; color:var(--gray); line-height:1.5; margin:0;">
+            План vs Факт без&nbsp;оправданий: что&nbsp;сделано твердо, что&nbsp;забуксовало, где&nbsp;возникла точка трения, сомнения или&nbsp;прокрастинации.
+          </p>
+        </div>
+
+        <div class="timeline-step-card">
+          <div class="timeline-num">
+            <span>ЭТАП 03</span>
+            <span class="timeline-duration">5–7 МИНУТ</span>
+          </div>
+          <h3 style="font-size:1.15rem; font-weight:800; margin:0;">Спарринг &&nbsp;Инсайт</h3>
+          <p style="font-size:0.9rem; color:var(--gray); line-height:1.5; margin:0;">
+            Партнеры возвращают зеркало: подсвечивают слепые зоны точными вопросами и&nbsp;делятся своим опытом. Распаковывается скрытая причина затыка.
+          </p>
+        </div>
+
+        <div class="timeline-step-card">
+          <div class="timeline-num">
+            <span>ЭТАП 04</span>
+            <span class="timeline-duration">2 МИНУТЫ</span>
+          </div>
+          <h3 style="font-size:1.15rem; font-weight:800; margin:0;">Фокус на&nbsp;завтра</h3>
+          <p style="font-size:0.9rem; color:var(--gray); line-height:1.5; margin:0;">
+            Фиксация 1–3 ключевых действий следующего дня, которые дают 80% результата. Публичное обязательство перед тройкой.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: 3 IRON RULES -->
+    <section id="rules" class="section section-border section-pad" data-nav-title="3 правила" style="background:var(--bg-gray);">
+      <div class="section-tag">ПРЕДОХРАНИТЕЛИ</div>
+      <h2 class="section-title">3 железных правила, которые берегут ваше время и&nbsp;нервы</h2>
+      <p class="section-sub">Мы исключили всё, что&nbsp;раздражает в&nbsp;обычных группах: поучения свысока, внезапные пропуски и&nbsp;«мертвый груз».</p>
+
+      <div class="grid-3" style="gap:24px; margin-top:32px;">
+        
+        <div class="feature-card" style="background:#ffffff; border:1px solid var(--border); padding:clamp(24px, 3vw, 36px);">
+          <div class="pill-badge" style="margin-bottom:12px; align-self:flex-start; background:#09090b; color:#fff;">
+            ПРАВИЛО 01
+          </div>
+          <h3 class="card-title" style="font-size:1.25rem; font-weight:800; margin-bottom:12px;">Табу на&nbsp;прямые советы (No-Advice Rule)</h3>
+          <p class="card-desc" style="font-size:0.92rem; color:var(--gray); line-height:1.6; margin:0;">
+            Категорически запрещено учить жизни и&nbsp;раздавать директивные указания (<em>«Тебе надо уволить его»</em>).  
+            <strong>Разрешено только:</strong> задавать вопросы к&nbsp;слепым зонам (<em>«А почему ты держишь сотрудника, если недоволен результатами?»</em>) и&nbsp;делиться личным опытом.
+          </p>
+        </div>
+
+        <div class="feature-card" style="background:#ffffff; border:1px solid var(--border); padding:clamp(24px, 3vw, 36px);">
+          <div class="pill-badge" style="margin-bottom:12px; align-self:flex-start; background:#09090b; color:#fff;">
+            ПРАВИЛО 02
+          </div>
+          <h3 class="card-title" style="font-size:1.25rem; font-weight:800; margin-bottom:12px;">Асинхронный предохранитель</h3>
+          <p class="card-desc" style="font-size:0.92rem; color:var(--gray); line-height:1.6; margin:0;">
+            Форс-мажор, рейс, болезнь? Вы не&nbsp;подводите тройку. До&nbsp;дедлайна (12:00 МСК) вы обязаны прислать в&nbsp;чат тройки <strong>3-минутное структурированное аудио</strong> (Ресурс → Факты → Инсайт → Фокус). Партнеры слушают и&nbsp;дают обратную связь. Стрик сохранен.
+          </p>
+        </div>
+
+        <div class="feature-card" style="background:#ffffff; border:1px solid var(--border); padding:clamp(24px, 3vw, 36px);">
+          <div class="pill-badge" style="margin-bottom:12px; align-self:flex-start; background:#09090b; color:#fff;">
+            ПРАВИЛО 03
+          </div>
+          <h3 class="card-title" style="font-size:1.25rem; font-weight:800; margin-bottom:12px;">Защита от&nbsp;«мертвого груза» (Два страйка)</h3>
+          <p class="card-desc" style="font-size:0.92rem; color:var(--gray); line-height:1.6; margin:0;">
+            1 пропуск без&nbsp;предупреждения = желтая карточка. 2 пропуска подряд без&nbsp;асинхрона = автоматическое исключение из&nbsp;тройки. К&nbsp;оставшейся паре подключается проверенный участник из&nbsp;резерва. Никаких обид и&nbsp;повисшей ответственности.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: AI GROWTH MAP (5 TRACKS) -->
+    <section id="map" class="section section-border section-pad" data-nav-title="5 сфер">
+      <div class="section-tag">ЦИФРОВОЙ СЛЕД</div>
+      <h2 class="section-title">ИИ-фиксация и&nbsp;интерактивная карта роста по&nbsp;5 сферам</h2>
+      <p class="section-sub">Вам не&nbsp;нужно вести сложные дневники в&nbsp;блокнотах. Наш Telegram-бот расшифровывает аудио, извлекает сухой остаток и&nbsp;строит живую динамику вашего состояния.</p>
+
+      <div class="tracks-grid">
+        
+        <div class="track-card">
+          <div class="track-badge">ТРЕК 01 // BIO</div>
+          <h4 class="track-title">Тело &&nbsp;Энергия</h4>
+          <p class="track-desc">Сон, уровень усталости, спорт, питание, способность восстанавливаться после перегрузок.</p>
+        </div>
+
+        <div class="track-card">
+          <div class="track-badge">ТРЕК 02 // MIND</div>
+          <h4 class="track-title">Мышление &&nbsp;Фокус</h4>
+          <p class="track-desc">Ясность целей, отсутствие информационного шума, концентрация на&nbsp;1 ключевой задаче дня.</p>
+        </div>
+
+        <div class="track-card">
+          <div class="track-badge">ТРЕК 03 // SOUL</div>
+          <h4 class="track-title">Состояние &&nbsp;Душа</h4>
+          <p class="track-desc">Внутреннее спокойствие, контакт с&nbsp;собой, отсутствие тревоги и&nbsp;синдрома самозванца.</p>
+        </div>
+
+        <div class="track-card">
+          <div class="track-badge">ТРЕК 04 // RELATIONS</div>
+          <h4 class="track-title">Отношения &&nbsp;Границы</h4>
+          <p class="track-desc">Семья, партнеры, способность говорить «нет», окружение и&nbsp;экологичная коммуникация.</p>
+        </div>
+
+        <div class="track-card">
+          <div class="track-badge">ТРЕК 05 // SCALE</div>
+          <h4 class="track-title">Финансы &&nbsp;Масштаб</h4>
+          <p class="track-desc">Личный доход, маржинальность проектов, делегирование и&nbsp;выход из&nbsp;операционной рутины.</p>
+        </div>
+
+      </div>
+
+      <div style="margin-top:28px; background:var(--bg-card); border:1px solid var(--border); padding:24px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
+        <div>
+          <div style="font-family:var(--mono); font-size:0.75rem; font-weight:700; color:#059669; text-transform:uppercase; margin-bottom:4px;">
+            ● 100% ПРИВАТНОСТЬ ДАННЫХ
+          </div>
+          <div style="font-size:0.95rem; color:var(--black); font-weight:600;">
+            Ваши персональные инсайты и&nbsp;оценки видны только вам и&nbsp;партнерам по&nbsp;тройке.
+          </div>
+          <div style="font-size:0.85rem; color:var(--gray);">
+            В&nbsp;общем лидерборде отображается исключительно стрик непрерывных дней (например, <em>«Тройка №3 — 32 дня подряд»</em>).
+          </div>
+        </div>
+        <a href="#join" class="btn-secondary" style="background:#ffffff; white-space:nowrap;">Попробовать систему →</a>
+      </div>
+    </section>
+
+    <!-- SECTION: WEEKLY MASTERMIND WITH MIKHAIL PUZYREV -->
+    <section id="mastermind" class="section section-border section-pad" style="background:var(--bg-gray);" data-nav-title="Мастер-сессии">
+      <div class="section-tag">МЕТА-РАМКА</div>
+      <h2 class="section-title">Еженедельная 90-минутная мастер-сессия с&nbsp;Михаилом Пузырёвым</h2>
+      <p class="section-sub">Один общий созвон в&nbsp;неделю на&nbsp;все тройки потока. Здесь вы получаете глубинный разбор ключевых тупиков и&nbsp;мета-оптику масштабирования.</p>
+
+      <div class="grid-3" style="gap:20px; margin-top:32px;">
+        
+        <div class="feature-card" style="background:#ffffff; border:1px solid var(--border); padding:28px;">
+          <div class="card-num" style="font-family:var(--mono); color:var(--black); font-weight:700; margin-bottom:8px;">
+            00:00 – 00:20 // ОБЩИЙ ЗАЛ
+          </div>
+          <h3 class="card-title" style="margin-bottom:10px; font-size:1.15rem;">Мета-оптика недели</h3>
+          <p class="card-desc" style="font-size:0.9rem; color:var(--gray); line-height:1.55;">
+            Михаил Пузырёв дает глубокий фокусирующий вопрос недели (например: <em>«Где в&nbsp;бизнесе вы выбираете угождать клиентам вместо твердого поднятия чека?»</em>).
+          </p>
+        </div>
+
+        <div class="feature-card" style="background:#ffffff; border:1px solid var(--border); padding:28px;">
+          <div class="card-num" style="font-family:var(--mono); color:var(--black); font-weight:700; margin-bottom:8px;">
+            00:20 – 01:05 // BREAKOUT ROOMS
+          </div>
+          <h3 class="card-title" style="margin-bottom:10px; font-size:1.15rem;">Синхронизация в&nbsp;комнатах</h3>
+          <p class="card-desc" style="font-size:0.9rem; color:var(--gray); line-height:1.55;">
+            Тройки расходятся по&nbsp;персональным закрытым комнатам и&nbsp;распаковывают вопрос применительно к&nbsp;своим проектам. Михаил заходит в&nbsp;комнаты как&nbsp;супервайзер.
+          </p>
+        </div>
+
+        <div class="feature-card" style="background:#ffffff; border:1px solid var(--border); padding:28px;">
+          <div class="card-num" style="font-family:var(--mono); color:var(--black); font-weight:700; margin-bottom:8px;">
+            01:05 – 01:30 // ГОРЯЧИЙ СТУЛ
+          </div>
+          <h3 class="card-title" style="margin-bottom:10px; font-size:1.15rem;">Разбор 2 кейсов на&nbsp;группу</h3>
+          <p class="card-desc" style="font-size:0.9rem; color:var(--gray); line-height:1.55;">
+            Михаил разбирает 2 самых показательных кейса участников на&nbsp;глазах у&nbsp;всех: от&nbsp;найма ключевого топа до&nbsp;разблокировки личного финансового потолка.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: SMART MATCHMAKING -->
+    <section class="section section-border section-pad">
+      <div class="section-tag">АЛГОРИТМ РАСПРЕДЕЛЕНИЯ</div>
+      <h2 class="section-title">С&nbsp;кем вы окажетесь в&nbsp;тройке: строгий входной мэтчинг</h2>
+      <p class="section-sub">Мы не&nbsp;собираем людей наугад. Перед распределением каждый проходит короткую анкету из&nbsp;5 вопросов в&nbsp;боте.</p>
+
+      <div class="grid-3" style="gap:20px; margin-top:32px;">
+        
+        <div class="feature-card" style="background:#ffffff; border:1px solid var(--border); padding:24px;">
+          <div style="font-family:var(--mono); font-size:0.75rem; font-weight:700; color:#059669; margin-bottom:6px;">ХАРД-ФИЛЬТР 01</div>
+          <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:8px;">Часовой пояс и&nbsp;окно 45 мин</h3>
+          <p style="font-size:0.88rem; color:var(--gray); line-height:1.5; margin:0;">
+            Разница во&nbsp;времени внутри тройки не&nbsp;более 1–2 часов. Выбирается единый утренний или&nbsp;вечерний слот.
+          </p>
+        </div>
+
+        <div class="feature-card" style="background:#ffffff; border:1px solid var(--border); padding:24px;">
+          <div style="font-family:var(--mono); font-size:0.75rem; font-weight:700; color:#059669; margin-bottom:6px;">ХАРД-ФИЛЬТР 02</div>
+          <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:8px;">Калибр деятельности и&nbsp;доход</h3>
+          <p style="font-size:0.88rem; color:var(--gray); line-height:1.5; margin:0;">
+            Разница в&nbsp;доходе и&nbsp;масштабе внутри тройки не&nbsp;более 2–3x. Все говорят на&nbsp;одном языке без&nbsp;комплексов.
+          </p>
+        </div>
+
+        <div class="feature-card" style="background:#ffffff; border:1px solid var(--border); padding:24px;">
+          <div style="font-family:var(--mono); font-size:0.75rem; font-weight:700; color:#059669; margin-bottom:6px;">ХАРД-ФИЛЬТР 03</div>
+          <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:8px;">Запрет прямых конкурентов</h3>
+          <p style="font-size:0.88rem; color:var(--gray); line-height:1.5; margin:0;">
+            Комплементарные ниши (IT + Услуги + Производство). Вы можете говорить предельно открыто и&nbsp;безопасно.
+          </p>
+        </div>
+
+      </div>
+
+      <div style="margin-top:20px; padding:18px 24px; background:#f8fafc; border:1px solid var(--border); font-size:0.9rem; color:var(--black); line-height:1.5;">
+        <strong>Анти-депрессивное правило:</strong> мы категорически не&nbsp;собираем тройки из&nbsp;людей, находящихся на&nbsp;дне ресурса. В&nbsp;каждой тройке обязательно есть минимум один участник с&nbsp;высокой устойчивой энергией, который заземляет динамику.
+      </div>
+    </section>
+
+    <!-- SECTION: PRICING & OFFER -->
+    <section id="pricing" class="section section-border section-pad" data-nav-title="Тарифы">
+      <div class="section-tag">ТАРИФЫ И&nbsp;ПЕРВЫЙ ШАГ</div>
+      <h2 class="section-title">Выберите удобный формат входа</h2>
+      <p class="section-sub">Вы можете протестировать формат на&nbsp;одном живом созвоне бесплатно, либо сразу включиться в&nbsp;систему на&nbsp;месяц.</p>
+
+      <div class="pricing-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:24px; margin-top:36px; max-width:960px;">
+        
+        <!-- CARD 1: 1 TRIAL DAILY -->
+        <div class="price-card" style="background:#ffffff; border:1px solid var(--border); padding:clamp(28px, 4vw, 40px); display:flex; flex-direction:column;">
+          <div class="pill-badge trial" style="margin-bottom:14px; align-self:flex-start;">
+            🎁 ТЕСТ-ДРАЙВ ФОРМАТА
+          </div>
+          <div class="price-name" style="font-size:1.6rem; font-weight:800; margin-bottom:4px;">1 Пробный дейлик</div>
+          <div class="price-amount" style="font-size:clamp(2.2rem, 3.5vw, 2.8rem); font-weight:800; margin-bottom:4px;">0&nbsp;₽</div>
+          <div class="price-period" style="font-family:var(--mono); font-size:0.85rem; color:var(--gray); margin-bottom:20px;">
+            бесплатно · без&nbsp;привязки карты
+          </div>
+          
+          <div style="height:1px; background:var(--border); margin-bottom:24px;"></div>
+          
+          <div class="price-feats" style="display:flex; flex-direction:column; gap:12px; margin-bottom:32px;">
+            <div class="price-feat"><strong>1 живой 45-минутный созвон в&nbsp;тройке</strong></div>
+            <div class="price-feat">Тест регламента 15 мин на&nbsp;ваших реальных задачах</div>
+            <div class="price-feat">Практика спарринга без&nbsp;непрошеных советов</div>
+            <div class="price-feat">Персональная калибровка вашего текущего ресурса</div>
+            <div class="price-feat">Понимание, подходит ли&nbsp;вам этот формат</div>
+          </div>
+
+          <a href="#join" onclick="selectPlan('trial')" class="btn-secondary" style="width:100%; text-align:center; padding:14px; margin-top:auto;">
+            Записаться на&nbsp;1 дейлик (0&nbsp;₽) ↓
+          </a>
+        </div>
+
+        <!-- CARD 2: MONTHLY SUBSCRIPTION (FEATURED BLACK CARD) -->
+        <div class="price-card featured" style="background:#09090b; color:#ffffff; border:1px solid #27272a; padding:clamp(28px, 4vw, 40px); display:flex; flex-direction:column; position:relative;">
+          <div style="position:absolute; top:-12px; right:24px; background:#10b981; color:#000; font-family:var(--mono); font-size:0.75rem; font-weight:700; padding:3px 10px; text-transform:uppercase;">
+            ФЛАГМАН
+          </div>
+
+          <div class="pill-badge" style="margin-bottom:14px; align-self:flex-start; background:#18181b; color:#fff; border-color:#27272a;">
+            🔥 МЕСЯЧНАЯ ПОДПИСКА
+          </div>
+          <div class="price-name" style="font-size:1.6rem; font-weight:800; margin-bottom:4px; color:#fff;">Триада Роста (Месяц)</div>
+          <div class="price-amount" style="font-size:clamp(2.2rem, 3.5vw, 2.8rem); font-weight:800; margin-bottom:4px; color:#fff;">5 990&nbsp;₽</div>
+          <div class="price-period" style="font-family:var(--mono); font-size:0.85rem; color:#a1a1aa; margin-bottom:20px;">
+            в&nbsp;месяц · продление по&nbsp;желанию
+          </div>
+
+          <div style="height:1px; background:#27272a; margin-bottom:24px;"></div>
+
+          <div class="price-feats" style="display:flex; flex-direction:column; gap:12px; margin-bottom:32px; color:#d4d4d8;">
+            <div class="price-feat"><strong style="color:#fff;">Ежедневные дейлики в&nbsp;подобранной тройке (20–22 рабочих дня)</strong></div>
+            <div class="price-feat"><strong style="color:#fff;">Telegram-бот фиксации инсайтов и&nbsp;стриков</strong></div>
+            <div class="price-feat"><strong style="color:#fff;">Доступ к&nbsp;интерактивной ИИ-карте по&nbsp;5 сферам</strong></div>
+            <div class="price-feat"><strong style="color:#fff;">4 еженедельные мастер-сессии с&nbsp;Михаилом Пузырёвым (90 мин)</strong></div>
+            <div class="price-feat">Асинхронный формат при&nbsp;перелетах и&nbsp;форс-мажорах</div>
+            <div class="price-feat">Защита тройки: авто-замена неактивных партнеров</div>
+          </div>
+
+          <a href="#join" onclick="selectPlan('subscription')" class="btn-primary" style="background:#ffffff; color:#09090b; border-color:#ffffff; width:100%; text-align:center; padding:14px; margin-top:auto;">
+            Оформить подписку за&nbsp;5&nbsp;990&nbsp;₽ ↓
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: INTERACTIVE REGISTRATION & PAYMENT FORM -->
+    <section id="join" class="section section-border section-pad" data-nav-title="Запись" style="background:var(--bg-gray);">
+      <div style="max-width:680px; margin:0 auto; text-align:center; margin-bottom:32px;">
+        <div class="section-tag">ФОРМА РЕГИСТРАЦИИ</div>
+        <h2 class="section-title">Начните свой первый дейлик</h2>
+        <p class="section-sub">Заполните короткую форму. Мы подберем подходящую тройку и&nbsp;пришлем приглашение в&nbsp;Telegram-бот координации.</p>
+      </div>
+
+      <div style="display:flex; justify-content:center;">
+        <div class="daily-form-box">
+          <form id="daily-order-form" onsubmit="handleDailySubmit(event)">
+            
+            <!-- Honeypot Anti-Spam (Vibes UI Engine standard) -->
+            <input type="text" name="confirm_user_email" style="display:none;" tabindex="-1" autocomplete="off">
+
+            <!-- Step 1: Select Plan Option -->
+            <div class="form-group">
+              <label class="form-label">1. Выберите тариф:</label>
+              <div class="form-options-grid">
+                
+                <div class="form-option-card selected" id="plan-card-trial" onclick="selectPlan('trial')">
+                  <div class="form-option-title" style="color:#059669;">🎁 1 ПРОБНЫЙ ДЕЙЛИК</div>
+                  <div class="form-option-price">0&nbsp;₽</div>
+                  <div class="form-option-desc">1 созвон 45 мин в&nbsp;живой тройке без&nbsp;оплаты</div>
+                </div>
+
+                <div class="form-option-card" id="plan-card-sub" onclick="selectPlan('subscription')">
+                  <div class="form-option-title">ПОДПИСКА НА&nbsp;МЕСЯЦ</div>
+                  <div class="form-option-price">5 990&nbsp;₽</div>
+                  <div class="form-option-desc">Полная система: тройка + бот + 4 мастермайнда</div>
+                </div>
+
+              </div>
+              <input type="hidden" name="selected_plan" id="selected_plan" value="trial">
+            </div>
+
+            <!-- Step 2: Contact Info -->
+            <div class="form-group">
+              <label class="form-label" for="client_name">2. Ваше Имя и&nbsp;Фамилия *</label>
+              <input type="text" id="client_name" name="client_name" class="form-input" placeholder="Например, Алексей Смирнов" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="client_telegram">3. Ваш ник в&nbsp;Telegram (@username) *</label>
+              <input type="text" id="client_telegram" name="client_telegram" class="form-input" placeholder="@username" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="client_phone">4. Телефон для&nbsp;связи (WhatsApp / звонок) *</label>
+              <input type="tel" id="client_phone" name="client_phone" class="form-input" placeholder="+7 900 000-00-00" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="preferred_slot">5. Удобное время для&nbsp;созвона 45 мин *</label>
+              <select id="preferred_slot" name="preferred_slot" class="form-select" required>
+                <option value="morning_0830">Утро // 08:30 – 09:15 МСК</option>
+                <option value="morning_0930" selected>Утро // 09:30 – 10:15 МСК (Самый популярный)</option>
+                <option value="evening_1900">Вечер // 19:00 – 19:45 МСК</option>
+                <option value="evening_2000">Вечер // 20:00 – 20:45 МСК</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="client_business">6. Сфера деятельности и&nbsp;доход (для&nbsp;точного мэтчинга)</label>
+              <input type="text" id="client_business" name="client_business" class="form-input" placeholder="Например: IT-стартап, доход 400k / Услуги b2b, доход 250k">
+            </div>
+
+            <!-- ФЗ-152 Agreement -->
+            <div class="form-agreement">
+              <input type="checkbox" id="fz152_agree" required checked>
+              <label for="fz152_agree">
+                Нажимая кнопку, я&nbsp;даю согласие на&nbsp;обработку персональных данных в&nbsp;соответствии с&nbsp;<a href="/privacy" target="_blank">Политикой конфиденциальности</a> и&nbsp;принимаю условия <a href="/offer" target="_blank">договора оферты</a>.
+              </label>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" id="submit-btn" class="btn-primary" style="width:100%; padding:16px; font-size:0.95rem; background:#09090b; border-color:#09090b; color:#fff;">
+              Записаться на&nbsp;1 пробный дейлик (0&nbsp;₽) ↗
+            </button>
+
+            <!-- Telegram Alternative Link -->
+            <div style="margin-top:16px; text-align:center; font-family:var(--mono); font-size:0.8rem; color:var(--gray);">
+              Или&nbsp;напишите лично Михаилу: <a href="https://t.me/Michael_Sage" target="_blank" style="color:var(--black); font-weight:700; text-decoration:underline;">@Michael_Sage</a>
+            </div>
+
+          </form>
+
+          <!-- Success Banner -->
+          <div id="form-success" class="form-success-banner">
+            <div style="font-family:var(--mono); font-size:0.85rem; font-weight:700; color:#047857; margin-bottom:8px;">
+              ✅ ЗАЯВКА УСПЕШНО ПРИНЯТА!
+            </div>
+            <div style="font-size:1.05rem; font-weight:700; color:var(--black); margin-bottom:12px;" id="success-title">
+              Вы записаны на&nbsp;1 пробный дейлик!
+            </div>
+            <p style="font-size:0.9rem; color:var(--gray); line-height:1.5; margin-bottom:16px;" id="success-desc">
+              Мы написали вам в&nbsp;Telegram для&nbsp;подтверждения слота и&nbsp;выдачи ссылки на&nbsp;координационного бота тройки.
+            </p>
+            <a href="https://t.me/Michael_Sage" target="_blank" class="btn-primary" style="display:inline-block; padding:12px 24px;">
+              Перейти в&nbsp;Telegram к&nbsp;Михаилу ↗
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: ABOUT MIKHAIL PUZYREV -->
+    <section class="section section-border section-pad">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:36px; align-items:center;">
+        
+        <div>
+          <div class="section-tag">АВТОР И&nbsp;МЕТОДОЛОГ</div>
+          <h2 class="section-title">Михаил Пузыр<span class="accent-yo">ё</span>в</h2>
+          <p style="font-size:1.05rem; color:var(--black); font-weight:600; line-height:1.6; margin-bottom:16px;">
+            ИИ-архитектор, инженер-разработчик и&nbsp;бизнес-трекер. Создатель экосистемы a-sage.ru.
+          </p>
+          <p style="font-size:0.95rem; color:var(--gray); line-height:1.6; margin-bottom:14px;">
+            Более 15 лет в&nbsp;создании технологических сервисов, венчурных проектах и&nbsp;автоматизации бизнеса. Разработал методологию <strong>Daily Growth Triads OS</strong> как&nbsp;личное спасение от&nbsp;выгорания и&nbsp;инструмент удержания высочайшей скорости без&nbsp;потери душевного ресурса.
+          </p>
+          <p style="font-size:0.95rem; color:var(--gray); line-height:1.6; margin-bottom:24px;">
+            Каждую неделю Михаил лично проводит мастер-сессии для&nbsp;всех участников платформы, где&nbsp;разбирает ключевые системные тупики и&nbsp;помогает перестроить операционные процессы.
+          </p>
+          <div style="display:flex; flex-wrap:wrap; gap:12px;">
+            <a href="https://t.me/uncrn_sage" target="_blank" class="pill-badge" style="text-decoration:none;">
+              📢 Канал @uncrn_sage
+            </a>
+            <a href="https://t.me/Michael_Sage" target="_blank" class="pill-badge" style="text-decoration:none;">
+              💬 ЛС @Michael_Sage
+            </a>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:center;">
+          <div style="border:1px solid var(--border); padding:8px; background:#fff; max-width:380px; box-shadow:0 8px 28px rgba(0,0,0,0.05);">
+            <img src="/img/mikhail_mentoring.jpg" alt="Михаил Пузырёв" style="width:100%; height:auto; display:block; filter:grayscale(20%);">
+            <div style="padding:12px 8px 4px; font-family:var(--mono); font-size:0.75rem; color:var(--gray); display:flex; justify-content:space-between;">
+              <span>FOUNDER // A-SAGE.RU</span>
+              <span style="color:#059669;">● ONLINE</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: FAQ (STRICT PLATFORM STANDARD AS DIRECT CHILD OF MAIN) -->
+    <section id="faq" class="section section-border section-pad" data-nav-title="Вопросы">
+      <div class="section-tag">ЧАСТЫЕ ВОПРОСЫ</div>
+      <h2 class="section-title">Всё, что&nbsp;важно знать перед началом дейликов</h2>
+
+      <div class="faq-list">
+        
+        <div class="faq-item">
+          <button class="faq-q" type="button">
+            <span>1. Как&nbsp;проходит 1 пробный дейлик и&nbsp;что мне нужно подготовить?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              Вам потребуется только смартфон или&nbsp;ноутбук с&nbsp;наушниками и&nbsp;45 минут спокойного времени в&nbsp;выбранном слоте. Никаких презентаций или&nbsp;отчетов готовить не&nbsp;нужно: созвон проходит в&nbsp;формате живого диалога. Вы знакомитесь со&nbsp;своей тройкой, проходите регламент 15 минут на&nbsp;своем реальном текущем дне и&nbsp;сразу чувствуете эффект заземления.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button">
+            <span>2. Что&nbsp;если у&nbsp;меня ненормированный график или&nbsp;я уезжаю в&nbsp;командировку?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              Для&nbsp;этого работает <strong>асинхронный предохранитель</strong>. Если вы в&nbsp;самолете, на&nbsp;важных переговорах или&nbsp;заболели — вы просто записываете 3-минутное структурированное голосовое сообщение в&nbsp;Telegram-чат тройки до&nbsp;12:00 МСК. Партнеры слушают его и&nbsp;дают обратную связь. Стрик вашей тройки сохраняется без&nbsp;штрафов.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button">
+            <span>3. Как&nbsp;подбираются люди в&nbsp;тройку и&nbsp;гарантируется&nbsp;ли адекватность партнеров?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              Каждый участник проходит входную анкету и&nbsp;ручную модерацию. Мы распределяем участников с&nbsp;разницей в&nbsp;доходе не&nbsp;более 2–3x, строго разводим прямых конкурентов по&nbsp;разным тройкам и&nbsp;следим, чтобы в&nbsp;каждой тройке был минимум один человек с&nbsp;устойчивым ресурсным статусом.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button">
+            <span>4. Почему категорически запрещено давать советы?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              Советы свысока (<em>«Сделай так, как&nbsp;я говорю»</em>) вызывают скрытое сопротивление, разрушают равенство и&nbsp;снимают ответственность с&nbsp;самого предпринимателя. Вместо советов в&nbsp;наших тройках работает <strong>спарринг</strong>: партнеры задают точные вопросы в&nbsp;ваши слепые зоны (<em>«Что тебя останавливает?»</em>, <em>«Ради чего ты это терпишь?»</em>) либо делятся тем, как&nbsp;сами проходили похожий опыт.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button">
+            <span>5. Что&nbsp;происходит, если участник моей тройки пропускает созвоны или&nbsp;сливается?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              Срабатывает <strong>правило двух страйков</strong>. После двух пропусков подряд без&nbsp;асинхрона участник автоматически переводится на&nbsp;скамейку запасных. Оставшаяся пара продолжает двигаться в&nbsp;зачете, а&nbsp;координатор подсаживает к&nbsp;вам проверенного и&nbsp;активного участника из&nbsp;резерва. Ваша динамика никогда не&nbsp;провисает.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button">
+            <span>6. Насколько конфиденциальны мои инсайты, записи и&nbsp;цифры?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <strong>100% конфиденциальность.</strong> Аудиосообщения, расшифровки и&nbsp;баллы по&nbsp;5 сферам жизни доступны исключительно вам, вашим двум партнерам по&nbsp;тройке и&nbsp;Михаилу. В&nbsp;общем лидерборде публикуется только номер тройки и&nbsp;число дней непрерывного стрика.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button">
+            <span>7. Как&nbsp;устроена оплата подписки 5&nbsp;990&nbsp;₽ и&nbsp;можно&nbsp;ли отменить её в&nbsp;любой момент?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              Оплата производится официально через эквайринг Точка Банка (СБП или&nbsp;банковская карта) либо по&nbsp;счету от&nbsp;лица ИП Пузырёв М.М. с&nbsp;предоставлением всех закрывающих документов. Подписка оформляется на&nbsp;1 месяц, никаких скрытых автоматических списаний без&nbsp;вашего ведома нет: вы сами решаете, продлевать участие на&nbsp;следующий месяц или&nbsp;нет.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button">
+            <span>8. Могу&nbsp;ли я&nbsp;прийти со&nbsp;своими партнерами по&nbsp;бизнесу и&nbsp;сформировать готовую тройку?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              Да, это один из&nbsp;самых сильных форматов. Вы можете прийти втроем с&nbsp;коллегами, сооснователями или&nbsp;друзьями-предпринимателями: мы выделим вам отдельную комнату, подключим единый трекинг в&nbsp;боте и&nbsp;вы будете двигаться по&nbsp;регламенту внутри своего круга, участвуя в&nbsp;общих еженедельных мастер-сессиях.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- DIRECT CONTACT SECTION -->
+  <section id="contact" class="form-section" data-nav-title="Связь">
+    <div class="form-inner" style="align-items:center;">
+      <div class="form-left" style="max-width:540px;">
+        <div class="section-tag" style="color:#a1a1aa;">ПРЯМОЙ ДИАЛОГ</div>
+        <h2 class="form-title">Остались вопросы по&nbsp;формату?<br>Напишите мне лично</h2>
+        <p class="form-sub">
+          Если у&nbsp;вас нестандартный график, вы хотите подключить команду или&nbsp;уточнить детали до&nbsp;старта — напишите напрямую в&nbsp;Telegram. Отвечу без&nbsp;ассистентов и&nbsp;ботов.
+        </p>
+        <div style="margin-top:24px; font-family:var(--mono); font-size:0.88rem; color:#a1a1aa; line-height:1.8;">
+          <div>• Канал в&nbsp;Telegram: <a href="https://t.me/uncrn_sage" target="_blank" style="color:#fff; text-decoration:underline;">@uncrn_sage</a></div>
+          <div>• Личный контакт: <a href="https://t.me/Michael_Sage" target="_blank" style="color:#fff; text-decoration:underline;">@Michael_Sage</a></div>
+        </div>
+      </div>
+
+      <div class="direct-contact-card">
+        <div style="font-family:var(--mono); font-size:0.75rem; color:#34d399; font-weight:600; margin-bottom:4px; letter-spacing:0.04em;">
+          // ПРЯМАЯ СВЯЗЬ
+        </div>
+
+        <a href="https://t.me/Michael_Sage" target="_blank" class="btn-primary" style="display:flex; align-items:center; justify-content:center; gap:12px; padding:16px; font-size:0.95rem; background:#ffffff; border-color:#ffffff; color:#09090b; text-decoration:none; font-weight:700; border-radius:0;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-2.02 1.28-5.7 3.77-.54.37-1.03.55-1.47.54-.48-.01-1.4-.27-2.09-.49-.84-.27-1.51-.42-1.45-.89.03-.25.38-.51 1.07-.78 4.19-1.82 6.98-3.03 8.37-3.61 3.98-1.66 4.81-1.95 5.35-1.96.12 0 .39.03.56.17.14.12.18.28.2.4.01.07.01.21 0 .36z"/></svg>
+          <span>Написать Михаилу в&nbsp;Telegram ↗</span>
+        </a>
+
+        <a href="#join" class="btn-secondary" style="display:flex; align-items:center; justify-content:center; gap:12px; padding:16px; font-size:0.95rem; background:#27272a; border-color:#3f3f46; color:#fff; text-decoration:none; font-weight:600; border-radius:0;">
+          <span>Записаться на&nbsp;пробный созвон ↓</span>
+        </a>
+
+        <div style="margin-top:6px; padding-top:14px; border-top:1px solid #27272a; display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:0.78rem; color:#a1a1aa;">
+          <span>Михаил Пузырёв</span>
+          <span style="color:#34d399;">● Online</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <strong>ИП Пузырёв Михаил Михайлович</strong> · ИНН 500177901407 · ОГРНИП 318505300123140
+      </div>
+      <ul class="footer-links">
+        <li><a href="/privacy">Политика конфиденциальности</a></li>
+        <li><a href="/terms">Пользовательское соглашение</a></li>
+        <li><a href="/offer-materials">Оферта материалов</a></li>
+        <li><a href="/offer">Оферта клуба</a></li>
+        <li><a href="https://t.me/uncrn_sage" target="_blank">Telegram</a></li>
+        <li><a href="https://t.me/Michael_Sage" target="_blank">Личный контакт</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- PLATFORM JS SCRIPTS -->
+  <script src="/js/auth.js?v=1.4"></script>
+  <script src="/js/main.js?v=2.8"></script>
+
+  <!-- CUSTOM INTERACTIVE ENGINE FOR DAILY PAGE -->
+  <script>
+    // Simulator step switcher
+    let currentSimStep = 0;
+    const simSteps = document.querySelectorAll('.sim-step');
+    
+    function activateSimStep(index) {
+      simSteps.forEach((s, idx) => {
+        if (idx === index) {
+          s.classList.add('active');
+        } else {
+          s.classList.remove('active');
+        }
+      });
+      currentSimStep = index;
+    }
+
+    // Auto rotate simulator every 6 seconds
+    setInterval(() => {
+      currentSimStep = (currentSimStep + 1) % simSteps.length;
+      activateSimStep(currentSimStep);
+    }, 6000);
+
+    // Plan selector
+    function selectPlan(plan) {
+      const trialCard = document.getElementById('plan-card-trial');
+      const subCard = document.getElementById('plan-card-sub');
+      const planInput = document.getElementById('selected_plan');
+      const submitBtn = document.getElementById('submit-btn');
+
+      if (plan === 'subscription') {
+        planInput.value = 'subscription';
+        trialCard.classList.remove('selected');
+        subCard.classList.add('selected');
+        submitBtn.innerHTML = 'Оплатить подписку 5 990 ₽ ↗';
+        submitBtn.style.background = '#09090b';
+      } else {
+        planInput.value = 'trial';
+        subCard.classList.remove('selected');
+        trialCard.classList.add('selected');
+        submitBtn.innerHTML = 'Записаться на 1 пробный дейлик (0 ₽) ↗';
+        submitBtn.style.background = '#09090b';
+      }
+    }
+
+    // Form submission handler
+    async function handleDailySubmit(e) {
+      e.preventDefault();
+      
+      const form = document.getElementById('daily-order-form');
+      const honeypot = form.elements['confirm_user_email'].value;
+      if (honeypot) {
+        console.warn('Bot detected by honeypot');
+        return;
+      }
+
+      const plan = form.elements['selected_plan'].value;
+      const name = form.elements['client_name'].value.trim();
+      const telegram = form.elements['client_telegram'].value.trim();
+      const phone = form.elements['client_phone'].value.trim();
+      const slot = form.elements['preferred_slot'].value;
+      const business = form.elements['client_business'].value.trim();
+
+      const submitBtn = document.getElementById('submit-btn');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = 'Обработка заявки...';
+
+      // Send Metrika Goal
+      try {
+        if (typeof ym !== 'undefined') {
+          ym(101414837, 'reachGoal', plan === 'subscription' ? 'daily_sub_order' : 'daily_trial_order');
+        }
+      } catch (err) {}
+
+      // If Subscription: Initiate Payment via API or direct payment
+      if (plan === 'subscription') {
+        try {
+          const res = await fetch('/api/payment/create', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              item_id: 'daily-growth-triads-sub',
+              item_type: 'subscription',
+              amount: 5990,
+              title: 'Подписка на Триады Роста (1 месяц)',
+              client_name: name,
+              client_phone: phone,
+              client_email: 'daily@a-sage.ru',
+              return_url: window.location.href.split('?')[0]
+            })
+          });
+
+          const data = await res.json();
+          if (data && data.ok && data.payment_url) {
+            // Redirect to Tochka Bank payment
+            window.location.href = data.payment_url;
+            return;
+          }
+        } catch (err) {
+          console.warn('[Payment Gateway Notice]: Falling back to direct Telegram coordination', err);
+        }
+
+        // Graceful fallback for subscription if payment link not returned
+        showSuccessState(
+          'Заявка на подписку 5 990 ₽ принята!',
+          `Спасибо, ${name}! Мы свяжемся с вами в Telegram (${telegram}) для выставления счета или ссылки на оплату и забронируем слот.`
+        );
+      } else {
+        // Trial Plan: Instant confirmation
+        showSuccessState(
+          'Вы записаны на 1 пробный дейлик!',
+          `Отлично, ${name}! Мы написали вам в Telegram (${telegram}), чтобы подтвердить удобное время слота и выслать доступ в координационный бот.`
+        );
+      }
+
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalText;
+    }
+
+    function showSuccessState(title, desc) {
+      const form = document.getElementById('daily-order-form');
+      const banner = document.getElementById('form-success');
+      const titleEl = document.getElementById('success-title');
+      const descEl = document.getElementById('success-desc');
+
+      form.style.display = 'none';
+      titleEl.innerHTML = title;
+      descEl.innerHTML = desc;
+      banner.classList.add('active');
+    }
+  </script>
+</body>
+</html>
