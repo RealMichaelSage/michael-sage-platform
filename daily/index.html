@@ -218,134 +218,279 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     }
 
-    /* Custom Form Layout */
-    .daily-form-box {
-      background: #ffffff;
-      border: 1px solid var(--border);
-      padding: clamp(24px, 4vw, 44px);
-      max-width: 680px;
-      width: 100%;
-      box-shadow: 0 12px 36px rgba(0,0,0,0.04);
+    /* MODAL POPUP STYLES */
+    .daily-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 99999;
+      background: rgba(9, 9, 11, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      box-sizing: border-box;
+      opacity: 0;
+      transition: opacity 0.2s ease;
     }
 
-    .form-group {
+    .daily-modal-overlay.open {
+      display: flex;
+      opacity: 1;
+    }
+
+    .daily-modal-card {
+      background: #ffffff !important;
+      border: 1px solid #e4e4e7;
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.22);
+      max-width: 480px;
+      width: 100%;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+      padding: clamp(24px, 4vw, 36px);
+      position: relative;
+      border-radius: 0 !important;
+      box-sizing: border-box;
+      transform: scale(0.96);
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .daily-modal-overlay.open .daily-modal-card {
+      transform: scale(1);
+    }
+
+    .daily-modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 34px;
+      height: 34px;
+      background: #f4f4f5;
+      border: 1px solid #e4e4e7;
+      color: #09090b;
+      font-size: 18px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 0 !important;
+      transition: all 0.15s ease;
+    }
+
+    .daily-modal-close:hover {
+      background: #09090b;
+      color: #ffffff;
+      border-color: #09090b;
+    }
+
+    .daily-modal-tag {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #059669;
+      margin-bottom: 6px;
+    }
+
+    .daily-modal-title {
+      font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+      font-weight: 800;
+      color: #09090b;
+      line-height: 1.25;
+      margin-bottom: 6px;
+      text-wrap: balance;
+    }
+
+    .daily-modal-sub {
+      font-size: 0.85rem;
+      color: #71717a;
+      line-height: 1.45;
+      margin-bottom: 16px;
+      text-wrap: pretty;
+    }
+
+    .daily-modal-plan-badge {
+      background: #fafafa;
+      border: 1px solid #e4e4e7;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 20px;
+    }
+
+    .daily-modal-field {
+      margin-bottom: 16px;
       display: flex;
       flex-direction: column;
       gap: 6px;
     }
 
-    .form-label {
+    .daily-modal-label {
       font-family: var(--mono);
-      font-size: 0.78rem;
+      font-size: 0.74rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      color: var(--black);
+      color: #09090b;
     }
 
-    .form-input, .form-select {
-      width: 100%;
-      padding: 13px 16px;
-      font-family: var(--font);
-      font-size: 0.95rem;
-      color: var(--black);
-      background: #ffffff;
-      border: 1px solid var(--border);
-      outline: none;
-      transition: border-color 0.2s ease;
-      box-sizing: border-box;
+    /* GUARANTEED HIGH CONTRAST POPUP INPUTS - FIXES INVISIBLE INPUT BUG */
+    .daily-modal-input {
+      width: 100% !important;
+      box-sizing: border-box !important;
+      background-color: #ffffff !important;
+      background: #ffffff !important;
+      color: #09090b !important;
+      -webkit-text-fill-color: #09090b !important;
+      caret-color: #09090b !important;
+      border: 1px solid #d4d4d8 !important;
+      border-radius: 0 !important;
+      padding: 13px 15px !important;
+      font-family: var(--font, system-ui, -apple-system, sans-serif) !important;
+      font-size: 16px !important; /* Prevents auto zoom in iOS Safari */
+      line-height: 1.4 !important;
+      outline: none !important;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
     }
 
-    .form-input:focus, .form-select:focus {
-      border-color: var(--black);
+    .daily-modal-input:hover {
+      border-color: #a1a1aa !important;
+      background-color: #ffffff !important;
+      background: #ffffff !important;
     }
 
-    .form-options-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 20px;
+    .daily-modal-input:focus,
+    .daily-modal-input:focus-visible {
+      background-color: #ffffff !important;
+      background: #ffffff !important;
+      color: #09090b !important;
+      -webkit-text-fill-color: #09090b !important;
+      caret-color: #09090b !important;
+      border-color: #09090b !important;
+      box-shadow: 0 0 0 1px #09090b !important;
+      outline: none !important;
     }
 
-    @media (max-width: 580px) {
-      .form-options-grid {
-        grid-template-columns: 1fr;
-      }
+    .daily-modal-input::placeholder {
+      color: #a1a1aa !important;
+      -webkit-text-fill-color: #a1a1aa !important;
+      opacity: 1 !important;
     }
 
-    .form-option-card {
-      border: 1px solid var(--border);
-      padding: 16px;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      background: #ffffff;
-      transition: all 0.2s ease;
-      user-select: none;
+    /* Prevent browser autofill from making inputs dark or yellow */
+    .daily-modal-input:-webkit-autofill,
+    .daily-modal-input:-webkit-autofill:hover,
+    .daily-modal-input:-webkit-autofill:focus,
+    .daily-modal-input:-webkit-autofill:active {
+      -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+      -webkit-text-fill-color: #09090b !important;
+      caret-color: #09090b !important;
+      background-color: #ffffff !important;
+      transition: background-color 5000s ease-in-out 0s !important;
     }
 
-    .form-option-card:hover {
-      border-color: #a1a1aa;
-    }
-
-    .form-option-card.selected {
-      border: 2px solid var(--black);
-      background: #f8fafc;
-    }
-
-    .form-option-title {
-      font-family: var(--mono);
-      font-size: 0.82rem;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-
-    .form-option-price {
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: var(--black);
-    }
-
-    .form-option-desc {
-      font-size: 0.78rem;
-      color: var(--gray);
-      line-height: 1.4;
-    }
-
-    .form-agreement {
+    .daily-modal-agreement {
       display: flex;
       align-items: flex-start;
-      gap: 10px;
-      font-size: 0.8rem;
-      color: var(--gray);
-      line-height: 1.45;
-      margin-bottom: 24px;
+      gap: 8px;
+      margin-top: 14px;
+      margin-bottom: 18px;
+      font-size: 0.74rem;
+      line-height: 1.4;
+      color: #71717a;
     }
 
-    .form-agreement input[type="checkbox"] {
-      margin-top: 3px;
+    .daily-modal-agreement input[type="checkbox"] {
+      margin-top: 2px;
+      accent-color: #09090b;
       cursor: pointer;
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
     }
 
-    .form-agreement a {
-      color: var(--black);
+    .daily-modal-agreement a {
+      color: #09090b;
       text-decoration: underline;
     }
 
-    /* Success confirmation state */
-    .form-success-banner {
-      display: none;
-      background: #ecfdf5;
-      border: 1px solid #10b981;
-      padding: 24px;
-      text-align: center;
-      margin-top: 16px;
+    .daily-modal-submit {
+      width: 100% !important;
+      background: #09090b !important;
+      color: #ffffff !important;
+      border: 1px solid #09090b !important;
+      padding: 15px 20px !important;
+      font-family: var(--font, system-ui, sans-serif) !important;
+      font-size: 1rem !important;
+      font-weight: 700 !important;
+      cursor: pointer !important;
+      border-radius: 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
+      transition: background 0.15s ease, opacity 0.15s ease !important;
+      box-sizing: border-box !important;
     }
 
-    .form-success-banner.active {
-      display: block;
+    .daily-modal-submit:hover {
+      background: #27272a !important;
+      border-color: #27272a !important;
+    }
+
+    .daily-modal-submit:disabled {
+      opacity: 0.65 !important;
+      cursor: not-allowed !important;
+    }
+
+    .daily-modal-badges {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      padding: 10px;
+      background: #f4f4f5;
+      border: 1px solid #e4e4e7;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: #71717a;
+    }
+
+    .daily-modal-support {
+      margin-top: 12px;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: #71717a;
+    }
+
+    .daily-modal-support a {
+      color: #09090b;
+      font-weight: 700;
+      text-decoration: underline;
+    }
+
+    /* Global override for form inputs on daily page to prevent dark style.css leak */
+    .form-input, .form-select, .form-textarea {
+      background-color: #ffffff !important;
+      background: #ffffff !important;
+      color: #09090b !important;
+      -webkit-text-fill-color: #09090b !important;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      background-color: #ffffff !important;
+      background: #ffffff !important;
+      color: #09090b !important;
+      -webkit-text-fill-color: #09090b !important;
+      border-color: #09090b !important;
     }
 
     .sim-step {
@@ -398,7 +543,7 @@
       </ul>
 
       <div class="nav-right">
-        <a href="#join" class="nav-cta" style="background:#09090b; color:#fff; border-color:#09090b;">Доступ за&nbsp;10&nbsp;₽ ↓</a>
+        <button type="button" onclick="openDailyJoinModal()" class="nav-cta" style="background:#09090b; color:#fff; border-color:#09090b; cursor:pointer;">Доступ за&nbsp;10&nbsp;₽ 💳</button>
         <button class="nav-burger" aria-label="Открыть меню">
           <span></span>
           <span></span>
@@ -417,7 +562,7 @@
     <a href="#mastermind">Мастер-сессии</a>
     <a href="#pricing">Тариф</a>
     <a href="#faq">Частые вопросы</a>
-    <a href="#join" class="m-cta">Оформить доступ (10&nbsp;₽) ↗</a>
+    <a href="javascript:void(0)" onclick="openDailyJoinModal(); document.querySelector('.mobile-menu')?.classList.remove('open');" class="m-cta">Оформить доступ (10&nbsp;₽) ↗</a>
   </div>
 
   <main>
@@ -440,7 +585,7 @@
         </p>
 
         <div class="hero-actions" style="margin-bottom:28px;">
-          <a href="#join" class="btn-primary">Оформить доступ за&nbsp;10&nbsp;₽ 💳</a>
+          <button type="button" onclick="openDailyJoinModal()" class="btn-primary" style="cursor:pointer;">Оформить доступ за&nbsp;10&nbsp;₽ 💳</button>
           <a href="#pricing" class="btn-secondary">О&nbsp;формате и&nbsp;тарифе →</a>
         </div>
 
@@ -728,7 +873,7 @@
             В&nbsp;общем лидерборде отображается исключительно стрик непрерывных дней (например, <em>«Тройка №3 — 32 дня подряд»</em>).
           </div>
         </div>
-        <a href="#join" class="btn-secondary" style="background:#ffffff; white-space:nowrap;">Попробовать систему →</a>
+        <button type="button" onclick="openDailyJoinModal()" class="btn-secondary" style="background:#ffffff; white-space:nowrap; cursor:pointer;">Попробовать систему →</button>
       </div>
     </section>
 
@@ -848,124 +993,11 @@
             <div class="price-feat">4 еженедельные мастер-сессии с&nbsp;Михаилом Пузырёвым (90 мин)</div>
           </div>
 
-          <a href="#join" class="btn-primary" style="background:#ffffff; color:#09090b; border-color:#ffffff; width:100%; text-align:center; padding:14px; margin-top:auto;">
+          <button type="button" onclick="openDailyJoinModal()" class="btn-primary" style="background:#ffffff; color:#09090b; border-color:#ffffff; width:100%; text-align:center; padding:14px; margin-top:auto; cursor:pointer; font-weight:700;">
             Оформить доступ за&nbsp;10&nbsp;₽ ↗
-          </a>
+          </button>
         </div>
 
-      </div>
-    </section>
-
-    <!-- SECTION: INTERACTIVE REGISTRATION & PAYMENT FORM -->
-    <section id="join" class="section section-border section-pad" data-nav-title="Запись" style="background:var(--bg-gray);">
-      <div style="max-width:680px; margin:0 auto; text-align:center; margin-bottom:32px;">
-        <div class="section-tag">ФОРМА ПОДКЛЮЧЕНИЯ</div>
-        <h2 class="section-title">Начните свой первый дейлик</h2>
-        <p class="section-sub">Заполните короткую форму для&nbsp;подключения к&nbsp;платформе созвонов и&nbsp;Telegram-боту координации.</p>
-      </div>
-
-      <div style="display:flex; justify-content:center;">
-        <div class="daily-form-box">
-          <form id="daily-order-form" onsubmit="handleDailySubmit(event)">
-            
-            <!-- Honeypot Anti-Spam (Vibes UI Engine standard) -->
-            <input type="text" name="confirm_user_email" style="display:none;" tabindex="-1" autocomplete="off">
-
-            <!-- Step 1: Single Plan Indicator -->
-            <div class="form-group" style="margin-bottom:20px;">
-              <div style="background:#ffffff; border:1px solid var(--border); padding:16px 20px; display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                  <div style="font-family:var(--mono); font-size:0.75rem; font-weight:700; color:#059669; text-transform:uppercase;">ТАРИФ</div>
-                  <div style="font-size:1.05rem; font-weight:700; color:var(--black);">Доступ к&nbsp;Триадам Роста (Дейлики)</div>
-                  <div style="font-size:0.8rem; color:var(--gray); margin-top:2px;">Включает платформу, PWA, созвоны, Telegram-бот @triadadailybot и&nbsp;канал @uncrn_sage</div>
-                </div>
-                <div style="text-align:right;">
-                  <div style="font-size:1.5rem; font-weight:800; color:var(--black);">10&nbsp;₽</div>
-                </div>
-              </div>
-              <input type="hidden" name="selected_plan" id="selected_plan" value="subscription">
-            </div>
-
-            <!-- Step 2: Contact Info -->
-            <div class="form-group">
-              <label class="form-label" for="client_name">1. Ваше Имя и&nbsp;Фамилия *</label>
-              <input type="text" id="client_name" name="client_name" class="form-input" placeholder="Например, Алексей Смирнов" required>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="client_email">2. Электронная почта (для&nbsp;чека 54-ФЗ и&nbsp;входа) *</label>
-              <input type="email" id="client_email" name="client_email" class="form-input" placeholder="name@domain.ru" required>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="client_phone">3. Номер телефона *</label>
-              <input type="tel" id="client_phone" name="client_phone" class="form-input" placeholder="+7 900 000-00-00" required>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="client_telegram">4. Ваш Telegram (@username, по&nbsp;желанию)</label>
-              <input type="text" id="client_telegram" name="client_telegram" class="form-input" placeholder="@username">
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="preferred_slot">5. Удобное время для&nbsp;созвона 45 мин *</label>
-              <select id="preferred_slot" name="preferred_slot" class="form-select" required>
-                <option value="morning_0830">Утро // 08:30 – 09:15 МСК</option>
-                <option value="morning_0930" selected>Утро // 09:30 – 10:15 МСК (Самый популярный)</option>
-                <option value="evening_1900">Вечер // 19:00 – 19:45 МСК</option>
-                <option value="evening_2000">Вечер // 20:00 – 20:45 МСК</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="client_business">6. Сфера деятельности и&nbsp;доход (для&nbsp;точного мэтчинга)</label>
-              <input type="text" id="client_business" name="client_business" class="form-input" placeholder="Например: IT-стартап, доход 400k / Услуги b2b, доход 250k">
-            </div>
-
-            <!-- ФЗ-152 Agreement -->
-            <div class="form-agreement">
-              <input type="checkbox" id="fz152_agree" required checked>
-              <label for="fz152_agree">
-                Нажимая кнопку, я&nbsp;даю согласие на&nbsp;обработку персональных данных в&nbsp;соответствии с&nbsp;<a href="/privacy" target="_blank">Политикой конфиденциальности</a>, принимаю условия <a href="/offer" target="_blank">Договора оферты</a> и&nbsp;согласен на&nbsp;оплату доступа в&nbsp;размере 10&nbsp;₽.
-              </label>
-            </div>
-
-            <!-- Submit Button -->
-            <button type="submit" id="submit-btn" class="btn-primary" style="width:100%; padding:16px; font-size:0.95rem; background:#09090b; border-color:#09090b; color:#fff;">
-              Оформить доступ за&nbsp;10&nbsp;₽ 💳
-            </button>
-
-            <!-- Bank Acquiring Trust Badges -->
-            <div style="margin-top:16px; display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:16px; padding:12px; background:#f4f4f5; border:1px solid #e4e4e7; font-family:var(--mono); font-size:0.75rem; color:var(--gray);">
-              <span style="display:flex; align-items:center; gap:4px;">🔒 256-bit SSL</span>
-              <span style="display:flex; align-items:center; gap:4px;">💳 МИР / Visa / Mastercard</span>
-              <span style="display:flex; align-items:center; gap:4px;">🧾 Чек 54-ФЗ Точка Банк</span>
-            </div>
-
-            <!-- Telegram Alternative Link -->
-            <div style="margin-top:16px; text-align:center; font-family:var(--mono); font-size:0.8rem; color:var(--gray);">
-              Или&nbsp;напишите лично основателю: <a href="https://t.me/Michael_Sage" target="_blank" style="color:var(--black); font-weight:700; text-decoration:underline;">@Michael_Sage</a>
-            </div>
-
-          </form>
-
-          <!-- Success Banner -->
-          <div id="form-success" class="form-success-banner">
-            <div style="font-family:var(--mono); font-size:0.85rem; font-weight:700; color:#047857; margin-bottom:8px;">
-              ✅ ЗАЯВКА УСПЕШНО ПРИНЯТА!
-            </div>
-            <div style="font-size:1.05rem; font-weight:700; color:var(--black); margin-bottom:12px;" id="success-title">
-              Вы записаны на&nbsp;1 пробный дейлик!
-            </div>
-            <p style="font-size:0.9rem; color:var(--gray); line-height:1.5; margin-bottom:16px;" id="success-desc">
-              Мы написали вам в&nbsp;Telegram для&nbsp;подтверждения слота и&nbsp;выдачи ссылки на&nbsp;координационного бота тройки.
-            </p>
-            <a href="https://t.me/Michael_Sage" target="_blank" class="btn-primary" style="display:inline-block; padding:12px 24px;">
-              Перейти в&nbsp;Telegram к&nbsp;Михаилу ↗
-            </a>
-          </div>
-
-        </div>
       </div>
     </section>
 
@@ -1141,9 +1173,9 @@
           <span>Написать Михаилу в&nbsp;Telegram ↗</span>
         </a>
 
-        <a href="#join" class="btn-secondary" style="display:flex; align-items:center; justify-content:center; gap:12px; padding:16px; font-size:0.95rem; background:#27272a; border-color:#3f3f46; color:#fff; text-decoration:none; font-weight:600; border-radius:0;">
-          <span>Оформить доступ за&nbsp;10&nbsp;₽ ↓</span>
-        </a>
+        <button type="button" onclick="openDailyJoinModal()" class="btn-secondary" style="display:flex; align-items:center; justify-content:center; gap:12px; padding:16px; font-size:0.95rem; background:#27272a; border-color:#3f3f46; color:#fff; text-decoration:none; font-weight:600; border-radius:0; width:100%; cursor:pointer;">
+          <span>Оформить доступ за&nbsp;10&nbsp;₽ 💳</span>
+        </button>
 
         <div style="margin-top:6px; padding-top:14px; border-top:1px solid #27272a; display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:0.78rem; color:#a1a1aa;">
           <span>Михаил Пузырёв</span>
@@ -1169,6 +1201,70 @@
       </ul>
     </div>
   </footer>
+
+  <!-- MODAL POPUP: REGISTRATION & PAYMENT (10 RUB) -->
+  <div id="modal-daily-join" class="daily-modal-overlay" onclick="handleDailyModalBackdropClick(event)" aria-modal="true" role="dialog" aria-labelledby="modal-daily-title">
+    <div class="daily-modal-card" onclick="event.stopPropagation()">
+      <button type="button" class="daily-modal-close" onclick="closeDailyJoinModal()" aria-label="Закрыть">✕</button>
+      
+      <div class="daily-modal-tag">DAILY GROWTH TRIADS // ДОСТУП</div>
+      <h3 id="modal-daily-title" class="daily-modal-title">Подключение к&nbsp;Триадам Роста</h3>
+      <p class="daily-modal-sub">Заполните 3 поля для&nbsp;подключения к&nbsp;платформе созвонов и&nbsp;боту @triadadailybot</p>
+
+      <div class="daily-modal-plan-badge">
+        <div>
+          <div style="font-family:var(--mono); font-size:0.72rem; font-weight:700; color:#059669; text-transform:uppercase;">ЕДИНЫЙ ТАРИФ</div>
+          <div style="font-size:0.95rem; font-weight:700; color:#09090b; margin-top:2px;">Доступ к&nbsp;дейликам (1-й месяц)</div>
+        </div>
+        <div style="font-size:1.45rem; font-weight:800; color:#09090b; font-family:var(--mono);">10&nbsp;₽</div>
+      </div>
+
+      <form id="daily-popup-form" onsubmit="handlePopupSubmit(event)">
+        <!-- Honeypot Anti-Spam -->
+        <input type="text" name="confirm_user_email" style="display:none !important;" tabindex="-1" autocomplete="off">
+
+        <div class="daily-modal-field">
+          <label class="daily-modal-label" for="popup_name">1. Ваше имя *</label>
+          <input type="text" id="popup_name" name="name" class="daily-modal-input" placeholder="Например, Алексей Смирнов" required autocomplete="name">
+        </div>
+
+        <div class="daily-modal-field">
+          <label class="daily-modal-label" for="popup_email">2. Электронная почта * <span style="font-weight:400; text-transform:none; color:#71717a;">(для&nbsp;чека 54-ФЗ и&nbsp;входа)</span></label>
+          <input type="email" id="popup_email" name="email" class="daily-modal-input" placeholder="name@domain.ru" required autocomplete="email">
+        </div>
+
+        <div class="daily-modal-field">
+          <label class="daily-modal-label" for="popup_telegram">3. Ник в&nbsp;Telegram * <span style="font-weight:400; text-transform:none; color:#71717a;">(для&nbsp;координации в&nbsp;боте)</span></label>
+          <input type="text" id="popup_telegram" name="telegram" class="daily-modal-input" placeholder="@username" required autocomplete="off">
+        </div>
+
+        <!-- Agreement -->
+        <div class="daily-modal-agreement">
+          <input type="checkbox" id="popup_agree" required checked>
+          <label for="popup_agree">
+            Нажимая кнопку, я&nbsp;даю согласие на&nbsp;обработку персональных данных в&nbsp;соответствии с&nbsp;<a href="/privacy" target="_blank">Политикой конфиденциальности</a>, принимаю условия <a href="/offer" target="_blank">Договора оферты</a> и&nbsp;согласен на&nbsp;оплату доступа в&nbsp;размере 10&nbsp;₽.
+          </label>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" id="popup-submit-btn" class="daily-modal-submit">
+          Перейти к&nbsp;оплате 10&nbsp;₽ 💳
+        </button>
+
+        <!-- Trust badges -->
+        <div class="daily-modal-badges">
+          <span>🔒 256-bit SSL</span>
+          <span>💳 МИР / СБП / Карта</span>
+          <span>🧾 Чек 54-ФЗ Точка Банк</span>
+        </div>
+
+        <!-- Support -->
+        <div class="daily-modal-support">
+          Вопросы? Напишите лично основателю: <a href="https://t.me/Michael_Sage" target="_blank">@Michael_Sage</a>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- PLATFORM JS SCRIPTS -->
   <script src="/js/auth.js?v=1.4"></script>
@@ -1197,33 +1293,67 @@
       activateSimStep(currentSimStep);
     }, 6000);
 
-    // Plan selector
-    function selectPlan(plan) {
-      const joinEl = document.getElementById('join');
-      if (joinEl) joinEl.scrollIntoView({ behavior: 'smooth' });
+    // Modal management
+    function openDailyJoinModal() {
+      const modal = document.getElementById('modal-daily-join');
+      if (modal) {
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => {
+          const nameInput = document.getElementById('popup_name');
+          if (nameInput) nameInput.focus();
+        }, 100);
+      }
     }
 
-    // Form submission handler
-    async function handleDailySubmit(e) {
+    function closeDailyJoinModal() {
+      const modal = document.getElementById('modal-daily-join');
+      if (modal) {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    }
+
+    function handleDailyModalBackdropClick(e) {
+      if (e.target.id === 'modal-daily-join') {
+        closeDailyJoinModal();
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeDailyJoinModal();
+      }
+    });
+
+    // Hash check on load (#join triggers the popup)
+    if (window.location.hash === '#join') {
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+      openDailyJoinModal();
+    }
+
+    // Plan selector compatibility
+    function selectPlan(plan) {
+      openDailyJoinModal();
+    }
+
+    // Popup form submission handler
+    async function handlePopupSubmit(e) {
       e.preventDefault();
       
-      const form = document.getElementById('daily-order-form');
+      const form = document.getElementById('daily-popup-form');
       const honeypot = form.elements['confirm_user_email'].value;
       if (honeypot) {
         console.warn('Bot detected by honeypot');
         return;
       }
 
-      const plan = 'subscription';
-      const name = form.elements['client_name'].value.trim();
-      const email = form.elements['client_email'].value.trim();
-      const phone = form.elements['client_phone'].value.trim();
-      const telegram = (form.elements['client_telegram'] ? form.elements['client_telegram'].value.trim() : '');
-      const slot = form.elements['preferred_slot'].value;
-      const business = (form.elements['client_business'] ? form.elements['client_business'].value.trim() : '');
+      const name = form.elements['popup_name'].value.trim();
+      const email = form.elements['popup_email'].value.trim();
+      const telegram = form.elements['popup_telegram'].value.trim();
 
-      const submitBtn = document.getElementById('submit-btn');
-      const originalText = 'Оформить доступ за 10 ₽ 💳';
+      const submitBtn = document.getElementById('popup-submit-btn');
+      const originalText = 'Перейти к оплате 10 ₽ 💳';
       submitBtn.disabled = true;
       submitBtn.innerHTML = 'Подключение к банку...';
 
@@ -1236,52 +1366,35 @@
 
       // Call official Tochka Bank acquiring API for 10 rub access
       try {
-          const res = await fetch('/api/daily/subscribe', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              name,
-              email,
-              phone,
-              telegram,
-              slot,
-              business
-            })
-          });
-          const data = await res.json();
-          if (data && data.ok && data.paymentLink) {
-            localStorage.setItem('daily_pending_email', email);
-            localStorage.setItem('daily_pending_op_id', data.operationId);
-            window.location.href = data.paymentLink;
-            return;
-          } else {
-            alert(data?.error || 'Не удалось сформировать платёжную ссылку. Пожалуйста, проверьте введённый email или свяжитесь в Telegram: @Michael_Sage');
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = originalText;
-            return;
-          }
-        } catch (err) {
-          console.error('[Tochka Acquiring Error]:', err);
-          alert('Ошибка сети при связи с банком. Пожалуйста, повторите попытку или напишите напрямую основателю в Telegram: @Michael_Sage');
+        const res = await fetch('/api/daily/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name,
+            email,
+            telegram,
+            phone: ''
+          })
+        });
+        const data = await res.json();
+        if (data && data.ok && data.paymentLink) {
+          localStorage.setItem('daily_pending_email', email);
+          localStorage.setItem('daily_pending_op_id', data.operationId);
+          window.location.href = data.paymentLink;
+          return;
+        } else {
+          alert(data?.error || 'Не удалось сформировать платёжную ссылку. Пожалуйста, проверьте введённый email или свяжитесь в Telegram: @Michael_Sage');
           submitBtn.disabled = false;
           submitBtn.innerHTML = originalText;
           return;
         }
-
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = originalText;
-    }
-
-    function showSuccessState(title, desc) {
-      const form = document.getElementById('daily-order-form');
-      const banner = document.getElementById('form-success');
-      const titleEl = document.getElementById('success-title');
-      const descEl = document.getElementById('success-desc');
-
-      form.style.display = 'none';
-      titleEl.innerHTML = title;
-      descEl.innerHTML = desc;
-      banner.classList.add('active');
+      } catch (err) {
+        console.error('[Tochka Acquiring Error]:', err);
+        alert('Ошибка сети при связи с банком. Пожалуйста, повторите попытку или напишите напрямую основателю в Telegram: @Michael_Sage');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+        return;
+      }
     }
   </script>
 </body>
