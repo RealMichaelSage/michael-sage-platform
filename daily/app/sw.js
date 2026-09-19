@@ -1,4 +1,4 @@
-const CACHE_NAME = 'daily-growth-triads-v1';
+const CACHE_NAME = 'daily-growth-triads-v2-swiss';
 const ASSETS_TO_CACHE = [
   '/daily/app/',
   '/daily/app/index.html',
