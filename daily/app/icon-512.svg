@@ -1,10 +1,99 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192">
-  <rect width="192" height="192" fill="#09090b" rx="0"/>
-  <polygon points="96,32 164,152 28,152" fill="none" stroke="#10b981" stroke-width="8" stroke-linejoin="round"/>
-  <circle cx="96" cy="32" r="9" fill="#ffffff"/>
-  <circle cx="164" cy="152" r="9" fill="#ffffff"/>
-  <circle cx="28" cy="152" r="9" fill="#ffffff"/>
-  <text x="96" y="125" font-family="-apple-system, BlinkMacSystemFont, 'Space Grotesk', 'JetBrains Mono', sans-serif" font-weight="900" font-size="44" fill="#ffffff" text-anchor="middle">Ё</text>
-  <circle cx="85" cy="80" r="4.5" fill="#10b981"/>
-  <circle cx="107" cy="80" r="4.5" fill="#10b981"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <style>
+      <![CDATA[
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,800;0,900;1,900&family=JetBrains+Mono:wght@500;700;800&family=Nunito:wght@600;700;800&display=swap');
+    .triad-title {
+      font-family: 'Montserrat', -apple-system, sans-serif;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+]]>
+    </style>
+    <linearGradient id="triadCrimson" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff645e"/>
+      <stop offset="60%" stop-color="#dc4d47"/>
+      <stop offset="100%" stop-color="#b72e29"/>
+    </linearGradient>
+    <radialGradient id="centerCoreGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"/>
+      <stop offset="25%" stop-color="#ff645e" stop-opacity="0.8"/>
+      <stop offset="60%" stop-color="#dc4d47" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#dc4d47" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="darkVignette" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#282828"/>
+      <stop offset="100%" stop-color="#181818"/>
+    </radialGradient>
+    <filter id="intenseGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Dark Squircle (The 4 corners outside rx="112" are 100% transparent) -->
+  <rect width="512" height="512" rx="112" fill="url(#darkVignette)"/>
+  <rect width="508" height="508" x="2" y="2" rx="110" fill="none" stroke="#dc4d47" stroke-width="2" stroke-opacity="0.45"/>
+  <rect width="502" height="502" x="5" y="5" rx="107" fill="none" stroke="#ffffff" stroke-width="1" stroke-opacity="0.08"/>
+
+  
+  <!-- Background Aura -->
+  <circle cx="256" cy="266" r="160" fill="url(#centerCoreGlow)"/>
+
+  <!-- Orbital Geometric Reference Rings -->
+  <circle cx="256" cy="266" r="185" fill="none" stroke="#dc4d47" stroke-width="1.2" stroke-opacity="0.22" stroke-dasharray="6 8"/>
+  <circle cx="256" cy="266" r="140" fill="none" stroke="#e8e8e8" stroke-width="1" stroke-opacity="0.08"/>
+
+  <!-- Outer Base Triad Triangle Frame -->
+  <polygon points="256,91 408,354 104,354" fill="none" stroke="#e8e8e8" stroke-opacity="0.18" stroke-width="2"/>
+
+  <!-- High-Energy Segmented Crimson Rails -->
+  <!-- Top -> Bottom-Right -->
+  <line x1="256" y1="91" x2="408" y2="354" stroke="url(#triadCrimson)" stroke-width="6" stroke-linecap="round" stroke-dasharray="210 40" filter="url(#softGlow)"/>
+  <!-- Bottom-Right -> Bottom-Left -->
+  <line x1="408" y1="354" x2="104" y2="354" stroke="url(#triadCrimson)" stroke-width="6" stroke-linecap="round" stroke-dasharray="210 40" filter="url(#softGlow)"/>
+  <!-- Bottom-Left -> Top -->
+  <line x1="104" y1="354" x2="256" y2="91" stroke="url(#triadCrimson)" stroke-width="6" stroke-linecap="round" stroke-dasharray="210 40" filter="url(#softGlow)"/>
+
+  <!-- Inverted Inner Triangle (Synthesis Matrix) -->
+  <polygon points="256,354 180,222.5 332,222.5" fill="#dc4d47" fill-opacity="0.1" stroke="#dc4d47" stroke-width="2" stroke-opacity="0.8"/>
+
+  <!-- Convergence Rays into Center (Daily Alignment Vector) -->
+  <line x1="256" y1="91" x2="256" y2="266" stroke="#dc4d47" stroke-width="2.5" stroke-opacity="0.5" stroke-dasharray="4 4"/>
+  <line x1="408" y1="354" x2="256" y2="266" stroke="#dc4d47" stroke-width="2.5" stroke-opacity="0.5" stroke-dasharray="4 4"/>
+  <line x1="104" y1="354" x2="256" y2="266" stroke="#dc4d47" stroke-width="2.5" stroke-opacity="0.5" stroke-dasharray="4 4"/>
+
+  <!-- 3 Partner Power Nodes -->
+  <!-- Top Node (Co-founder 1) -->
+  <circle cx="256" cy="91" r="16" fill="#212121" stroke="#dc4d47" stroke-width="3.5"/>
+  <circle cx="256" cy="91" r="7" fill="#ff645e" filter="url(#softGlow)"/>
+  <circle cx="256" cy="91" r="2.5" fill="#ffffff"/>
+
+  <!-- Bottom-Right Node (Co-founder 2) -->
+  <circle cx="408" cy="354" r="16" fill="#212121" stroke="#dc4d47" stroke-width="3.5"/>
+  <circle cx="408" cy="354" r="7" fill="#ff645e" filter="url(#softGlow)"/>
+  <circle cx="408" cy="354" r="2.5" fill="#ffffff"/>
+
+  <!-- Bottom-Left Node (Co-founder 3) -->
+  <circle cx="104" cy="354" r="16" fill="#212121" stroke="#dc4d47" stroke-width="3.5"/>
+  <circle cx="104" cy="354" r="7" fill="#ff645e" filter="url(#softGlow)"/>
+  <circle cx="104" cy="354" r="2.5" fill="#ffffff"/>
+
+  <!-- Central Focus Node / Synthesis Core -->
+  <polygon points="256,238 280,280 232,280" fill="url(#triadCrimson)" filter="url(#intenseGlow)"/>
+  <circle cx="256" cy="266" r="6" fill="#ffffff" filter="url(#softGlow)"/>
+  <circle cx="256" cy="266" r="2.5" fill="#212121"/>
+
 </svg>

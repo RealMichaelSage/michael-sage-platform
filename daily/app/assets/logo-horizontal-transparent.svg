@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 280" width="1000" height="280">
+
   <defs>
     <style>
       <![CDATA[
@@ -7,6 +8,17 @@
       font-family: 'Montserrat', -apple-system, sans-serif;
       font-weight: 900;
       letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .triad-mono {
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+    .triad-sub {
+      font-family: 'Nunito', -apple-system, sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
     }
 ]]>
@@ -23,7 +35,7 @@
       <stop offset="100%" stop-color="#dc4d47" stop-opacity="0"/>
     </radialGradient>
     <radialGradient id="darkVignette" cx="50%" cy="50%" r="70%">
-      <stop offset="0%" stop-color="#282828"/>
+      <stop offset="0%" stop-color="#262626"/>
       <stop offset="100%" stop-color="#181818"/>
     </radialGradient>
     <filter id="intenseGlow" x="-50%" y="-50%" width="200%" height="200%">
@@ -43,12 +55,9 @@
     </filter>
   </defs>
 
-  <!-- Dark Squircle (The 4 corners outside rx="112" are 100% transparent) -->
-  <rect width="512" height="512" rx="112" fill="url(#darkVignette)"/>
-  <rect width="508" height="508" x="2" y="2" rx="110" fill="none" stroke="#dc4d47" stroke-width="2" stroke-opacity="0.45"/>
-  <rect width="502" height="502" x="5" y="5" rx="107" fill="none" stroke="#ffffff" stroke-width="1" stroke-opacity="0.08"/>
-
-  
+  <!-- Left Icon (scaled and centered) -->
+  <g transform="translate(45, 20) scale(0.47)">
+    
   <!-- Background Aura -->
   <circle cx="256" cy="266" r="160" fill="url(#centerCoreGlow)"/>
 
@@ -96,4 +105,35 @@
   <circle cx="256" cy="266" r="6" fill="#ffffff" filter="url(#softGlow)"/>
   <circle cx="256" cy="266" r="2.5" fill="#212121"/>
 
+  </g>
+
+  <!-- Typography Group -->
+  <g transform="translate(325, 0)">
+    <!-- Pill Tag -->
+    <g transform="translate(0, 52)">
+      <rect width="168" height="26" rx="4" fill="#dc4d47" fill-opacity="0.14" stroke="#dc4d47" stroke-width="1.2" stroke-opacity="0.5"/>
+      <circle cx="14" cy="13" r="3.5" fill="#dc4d47" filter="url(#softGlow)"/>
+      <text x="26" y="17.5" class="triad-mono" font-size="11" font-weight="700" fill="#ff645e">
+        DAILY OS // 3.0
+      </text>
+    </g>
+
+    <!-- Brand Main Heading -->
+    <text x="0" y="148" class="triad-title" font-size="62" fill="#f5f5f5">
+      ТРИАДА<tspan fill="#dc4d47">.</tspan>
+    </text>
+
+    <!-- Subtitle / Positioning -->
+    <text x="2" y="188" class="triad-sub" font-size="15" fill="#a8a8a8">
+      СИСТЕМА СИНХРОНИЗАЦИИ ОСНОВАТЕЛЕЙ
+    </text>
+
+    <!-- Specs Divider Line -->
+    <line x1="0" y1="212" x2="580" y2="212" stroke="#ffffff" stroke-opacity="0.12" stroke-width="1"/>
+
+    <!-- Micro Metadata Badges -->
+    <text x="0" y="232" class="triad-mono" font-size="11" fill="#787878">
+      15-MIN PROTOCOL  •  5 SPHERES RADAR  •  AI INSIGHTS
+    </text>
+  </g>
 </svg>

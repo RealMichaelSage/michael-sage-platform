@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+
   <defs>
     <style>
       <![CDATA[
@@ -7,6 +8,17 @@
       font-family: 'Montserrat', -apple-system, sans-serif;
       font-weight: 900;
       letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .triad-mono {
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+    .triad-sub {
+      font-family: 'Nunito', -apple-system, sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
     }
 ]]>
@@ -23,7 +35,7 @@
       <stop offset="100%" stop-color="#dc4d47" stop-opacity="0"/>
     </radialGradient>
     <radialGradient id="darkVignette" cx="50%" cy="50%" r="70%">
-      <stop offset="0%" stop-color="#282828"/>
+      <stop offset="0%" stop-color="#262626"/>
       <stop offset="100%" stop-color="#181818"/>
     </radialGradient>
     <filter id="intenseGlow" x="-50%" y="-50%" width="200%" height="200%">
@@ -43,12 +55,7 @@
     </filter>
   </defs>
 
-  <!-- Dark Squircle (The 4 corners outside rx="112" are 100% transparent) -->
-  <rect width="512" height="512" rx="112" fill="url(#darkVignette)"/>
-  <rect width="508" height="508" x="2" y="2" rx="110" fill="none" stroke="#dc4d47" stroke-width="2" stroke-opacity="0.45"/>
-  <rect width="502" height="502" x="5" y="5" rx="107" fill="none" stroke="#ffffff" stroke-width="1" stroke-opacity="0.08"/>
 
-  
   <!-- Background Aura -->
   <circle cx="256" cy="266" r="160" fill="url(#centerCoreGlow)"/>
 

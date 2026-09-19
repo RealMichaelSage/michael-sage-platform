@@ -1,17 +1,17 @@
-const CACHE_NAME = 'daily-growth-triads-v2-swiss';
+const CACHE_NAME = 'daily-growth-triads-v2-4-9';
 const ASSETS_TO_CACHE = [
   '/daily/app/',
   '/daily/app/index.html',
   '/daily/app/manifest.json',
-  '/favicon-96x96.png',
-  '/apple-touch-icon.png'
+  '/daily/app/version.json'
 ];
 
 self.addEventListener('install', (event) => {
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS_TO_CACHE);
-    }).then(() => self.skipWaiting())
+      return cache.addAll(ASSETS_TO_CACHE).catch(() => {});
+    })
   );
 });
 
@@ -19,27 +19,55 @@ self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
       return Promise.all(
-        keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
+        keys.map((key) => {
+          if (key !== CACHE_NAME) {
+            console.log('[SW] Purging old cache:', key);
+            return caches.delete(key);
+          }
+        })
       );
     }).then(() => self.clients.claim())
   );
 });
 
 self.addEventListener('fetch', (event) => {
-  // Network first, falling back to cache for API or fresh data
+  // Always network for API
   if (event.request.url.includes('/api/')) {
     event.respondWith(fetch(event.request));
     return;
   }
 
+  // Network First for HTML, navigation, and version requests
+  if (event.request.mode === 'navigate' || event.request.destination === 'document' || event.request.url.includes('index.html') || event.request.url.includes('version.json')) {
+    event.respondWith(
+      fetch(event.request, { cache: 'no-cache' })
+        .then((networkRes) => {
+          if (networkRes && networkRes.status === 200) {
+            const clone = networkRes.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+          }
+          return networkRes;
+        })
+        .catch(() => {
+          return caches.match(event.request).then((cached) => {
+            return cached || caches.match('/daily/app/index.html');
+          });
+        })
+    );
+    return;
+  }
+
+  // Stale-while-revalidate for static assets
   event.respondWith(
-    fetch(event.request).catch(() => {
-      return caches.match(event.request).then((res) => {
-        if (res) return res;
-        if (event.request.mode === 'navigate') {
-          return caches.match('/daily/app/index.html');
+    caches.match(event.request).then((cachedRes) => {
+      const fetchPromise = fetch(event.request).then((networkRes) => {
+        if (networkRes && networkRes.status === 200) {
+          const clone = networkRes.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
         }
-      });
+        return networkRes;
+      }).catch(() => {});
+      return cachedRes || fetchPromise;
     })
   );
 });
@@ -57,8 +85,8 @@ self.addEventListener('push', (event) => {
 
   const options = {
     body: data.body,
-    icon: '/apple-touch-icon.png',
-    badge: '/favicon-96x96.png',
+    icon: '/daily/app/assets/logo-app-icon-192.png',
+    badge: '/daily/app/assets/logo-app-icon-192.png',
     vibrate: [200, 100, 200],
     data: {
       url: data.url || '/daily/app/'
