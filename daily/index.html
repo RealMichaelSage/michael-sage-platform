@@ -926,17 +926,22 @@
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="client_telegram">3. Ваш ник в&nbsp;Telegram (@username) *</label>
-              <input type="text" id="client_telegram" name="client_telegram" class="form-input" placeholder="@username" required>
+              <label class="form-label" for="client_email">3. Электронная почта (для&nbsp;чека 54-ФЗ и&nbsp;входа) *</label>
+              <input type="email" id="client_email" name="client_email" class="form-input" placeholder="name@domain.ru" required>
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="client_phone">4. Телефон для&nbsp;связи (WhatsApp / звонок) *</label>
+              <label class="form-label" for="client_phone">4. Номер телефона (привязка карты) *</label>
               <input type="tel" id="client_phone" name="client_phone" class="form-input" placeholder="+7 900 000-00-00" required>
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="preferred_slot">5. Удобное время для&nbsp;созвона 45 мин *</label>
+              <label class="form-label" for="client_telegram">5. Ваш Telegram (@username, по&nbsp;желанию)</label>
+              <input type="text" id="client_telegram" name="client_telegram" class="form-input" placeholder="@username">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="preferred_slot">6. Удобное время для&nbsp;созвона 45 мин *</label>
               <select id="preferred_slot" name="preferred_slot" class="form-select" required>
                 <option value="morning_0830">Утро // 08:30 – 09:15 МСК</option>
                 <option value="morning_0930" selected>Утро // 09:30 – 10:15 МСК (Самый популярный)</option>
@@ -946,15 +951,15 @@
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="client_business">6. Сфера деятельности и&nbsp;доход (для&nbsp;точного мэтчинга)</label>
+              <label class="form-label" for="client_business">7. Сфера деятельности и&nbsp;доход (для&nbsp;точного мэтчинга)</label>
               <input type="text" id="client_business" name="client_business" class="form-input" placeholder="Например: IT-стартап, доход 400k / Услуги b2b, доход 250k">
             </div>
 
-            <!-- ФЗ-152 Agreement -->
+            <!-- ФЗ-152 Agreement & Recurring consent -->
             <div class="form-agreement">
               <input type="checkbox" id="fz152_agree" required checked>
               <label for="fz152_agree">
-                Нажимая кнопку, я&nbsp;даю согласие на&nbsp;обработку персональных данных в&nbsp;соответствии с&nbsp;<a href="/privacy" target="_blank">Политикой конфиденциальности</a> и&nbsp;принимаю условия <a href="/offer" target="_blank">договора оферты</a>.
+                Нажимая кнопку, я&nbsp;даю согласие на&nbsp;обработку персональных данных в&nbsp;соответствии с&nbsp;<a href="/privacy" target="_blank">Политикой конфиденциальности</a>, принимаю условия <a href="/offer" target="_blank">Договора оферты</a> и&nbsp;согласен на&nbsp;ежемесячное автопродление подписки за&nbsp;5&nbsp;990&nbsp;₽/мес с&nbsp;правом отмены в&nbsp;любой момент в&nbsp;1 клик в&nbsp;личном кабинете.
               </label>
             </div>
 
@@ -963,9 +968,16 @@
               Записаться на&nbsp;1 пробный дейлик (0&nbsp;₽) ↗
             </button>
 
+            <!-- Bank Acquiring Trust Badges -->
+            <div style="margin-top:16px; display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:16px; padding:12px; background:#f4f4f5; border:1px solid #e4e4e7; font-family:var(--mono); font-size:0.75rem; color:var(--gray);">
+              <span style="display:flex; align-items:center; gap:4px;">🔒 256-bit SSL</span>
+              <span style="display:flex; align-items:center; gap:4px;">💳 МИР / Visa / Mastercard</span>
+              <span style="display:flex; align-items:center; gap:4px;">🧾 Чек 54-ФЗ Точка Банк</span>
+            </div>
+
             <!-- Telegram Alternative Link -->
             <div style="margin-top:16px; text-align:center; font-family:var(--mono); font-size:0.8rem; color:var(--gray);">
-              Или&nbsp;напишите лично Михаилу: <a href="https://t.me/Michael_Sage" target="_blank" style="color:var(--black); font-weight:700; text-decoration:underline;">@Michael_Sage</a>
+              Или&nbsp;напишите лично основателю: <a href="https://t.me/Michael_Sage" target="_blank" style="color:var(--black); font-weight:700; text-decoration:underline;">@Michael_Sage</a>
             </div>
 
           </form>
@@ -1110,12 +1122,12 @@
 
         <div class="faq-item">
           <button class="faq-q" type="button">
-            <span>7. Как&nbsp;устроена оплата подписки 5&nbsp;990&nbsp;₽ и&nbsp;можно&nbsp;ли отменить её в&nbsp;любой момент?</span>
+            <span>7. Как&nbsp;устроена оплата подписки 5&nbsp;990&nbsp;₽ и&nbsp;как&nbsp;её отменить?</span>
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-a">
             <div class="faq-a-inner">
-              Оплата производится официально через эквайринг Точка Банка (СБП или&nbsp;банковская карта) либо по&nbsp;счету от&nbsp;лица ИП Пузырёв М.М. с&nbsp;предоставлением всех закрывающих документов. Подписка оформляется на&nbsp;1 месяц, никаких скрытых автоматических списаний без&nbsp;вашего ведома нет: вы сами решаете, продлевать участие на&nbsp;следующий месяц или&nbsp;нет.
+              Оплата производится официально через защищенный интернет-эквайринг <strong>АО&nbsp;«ТОЧКА»</strong> любой банковской картой РФ (МИР, Visa, Mastercard). Сервис «Чеки» банка автоматически формирует фискальный чек по&nbsp;54-ФЗ и&nbsp;отправляет его на&nbsp;указанный вами email. Подписка оформляется с&nbsp;периодичностью 1 месяц (5&nbsp;990&nbsp;₽/мес). Вы вправе в&nbsp;любой момент отключить автопродление в&nbsp;1 клик в&nbsp;личном кабинете (раздел «Профиль») или&nbsp;написав напрямую в&nbsp;Telegram основателю <a href="https://t.me/Michael_Sage" target="_blank" style="color:var(--black); text-decoration:underline;">@Michael_Sage</a>. Доступ сохранится до&nbsp;конца оплаченного периода.
             </div>
           </div>
         </div>
@@ -1178,15 +1190,15 @@
   <footer class="footer">
     <div class="footer-inner">
       <div>
-        <strong>ИП Пузырёв Михаил Михайлович</strong> · ИНН 500177901407 · ОГРНИП 318505300123140
+        <strong>ИП Пузырёв Михаил Михайлович</strong> · ИНН 500177901407 · ОГРНИП 318505300123140<br>
+        <span style="font-size:0.8rem; color:var(--gray);">Банк: АО&nbsp;«ТОЧКА» · БИК 044525104 · К/С 30101810745374525104 · Поддержка: строго в&nbsp;Telegram <a href="https://t.me/Michael_Sage" target="_blank" style="color:var(--black); text-decoration:underline;">@Michael_Sage</a></span>
       </div>
       <ul class="footer-links">
         <li><a href="/privacy">Политика конфиденциальности</a></li>
         <li><a href="/terms">Пользовательское соглашение</a></li>
-        <li><a href="/offer-materials">Оферта материалов</a></li>
-        <li><a href="/offer">Оферта клуба</a></li>
-        <li><a href="https://t.me/uncrn_sage" target="_blank">Telegram</a></li>
-        <li><a href="https://t.me/Michael_Sage" target="_blank">Личный контакт</a></li>
+        <li><a href="/offer">Оферта и&nbsp;подписка</a></li>
+        <li><a href="https://t.me/uncrn_sage" target="_blank">Telegram-канал</a></li>
+        <li><a href="https://t.me/Michael_Sage" target="_blank">Поддержка @Michael_Sage</a></li>
       </ul>
     </div>
   </footer>
@@ -1229,7 +1241,7 @@
         planInput.value = 'subscription';
         trialCard.classList.remove('selected');
         subCard.classList.add('selected');
-        submitBtn.innerHTML = 'Оплатить подписку 5 990 ₽ ↗';
+        submitBtn.innerHTML = 'Оформить подписку за 5 990 ₽/мес 💳';
         submitBtn.style.background = '#09090b';
       } else {
         planInput.value = 'trial';
@@ -1253,15 +1265,16 @@
 
       const plan = form.elements['selected_plan'].value;
       const name = form.elements['client_name'].value.trim();
-      const telegram = form.elements['client_telegram'].value.trim();
+      const email = form.elements['client_email'].value.trim();
       const phone = form.elements['client_phone'].value.trim();
+      const telegram = (form.elements['client_telegram'] ? form.elements['client_telegram'].value.trim() : '');
       const slot = form.elements['preferred_slot'].value;
       const business = form.elements['client_business'].value.trim();
 
       const submitBtn = document.getElementById('submit-btn');
       const originalText = submitBtn.innerHTML;
       submitBtn.disabled = true;
-      submitBtn.innerHTML = 'Обработка заявки...';
+      submitBtn.innerHTML = 'Подключение к банку...';
 
       // Send Metrika Goal
       try {
@@ -1270,35 +1283,45 @@
         }
       } catch (err) {}
 
-      // If Subscription: Save registration & redirect to official Tribute payment
+      // If Subscription: Call official Tochka Bank recurring acquiring API
       if (plan === 'subscription') {
         try {
-          fetch('/api/payment/create', {
+          const res = await fetch('/api/daily/subscribe', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              item_id: 'daily-growth-triads-sub',
-              item_type: 'subscription',
-              amount: 5990,
-              title: 'Подписка на Триады Роста (1 месяц)',
-              client_name: name,
-              client_phone: phone,
-              client_email: 'daily@a-sage.ru',
-              telegram: telegram,
-              slot: slot,
-              niche: niche
+              name,
+              email,
+              phone,
+              telegram,
+              slot,
+              business
             })
-          }).catch(() => {});
-        } catch (err) {}
-
-        // Instant redirect to official Tribute subscription link
-        window.location.href = 'https://web.tribute.tg/s/16oh';
-        return;
+          });
+          const data = await res.json();
+          if (data && data.ok && data.paymentLink) {
+            localStorage.setItem('daily_pending_email', email);
+            localStorage.setItem('daily_pending_op_id', data.operationId);
+            window.location.href = data.paymentLink;
+            return;
+          } else {
+            alert(data?.error || 'Не удалось сформировать платёжную ссылку. Пожалуйста, проверьте введённый email или свяжитесь в Telegram: @Michael_Sage');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+            return;
+          }
+        } catch (err) {
+          console.error('[Tochka Acquiring Error]:', err);
+          alert('Ошибка сети при связи с банком. Пожалуйста, повторите попытку или напишите напрямую основателю в Telegram: @Michael_Sage');
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+          return;
+        }
       } else {
         // Trial Plan: Instant confirmation
         showSuccessState(
           'Вы записаны на 1 пробный дейлик!',
-          `Отлично, ${name}! Мы написали вам в Telegram (${telegram}), чтобы подтвердить удобное время слота и выслать доступ в координационный бот.`
+          `Отлично, ${name}! Мы свяжемся с вами по контактам (${email} / ${phone}), чтобы подтвердить удобное время слота.`
         );
       }
 

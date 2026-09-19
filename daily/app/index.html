@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Дейлики // Тройки Роста</title>
+  <title>ТРИАДЫ РОСТА // Личный Кабинет &amp;&nbsp;Таймер Дейликов</title>
   
   <!-- PWA Metadata -->
   <link rel="manifest" href="/daily/app/manifest.json">
@@ -16,48 +16,65 @@
   <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   
-  <!-- Fonts -->
+  <!-- Fonts: Space Grotesk & JetBrains Mono (Swiss Stark Standard) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- Telegram WebApp SDK -->
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <!-- Telegram WebApp SDK (Local Bundle, Non-blocking) -->
+  <script src="/daily/app/telegram-web-app.js" defer></script>
 
   <style>
     /* ══════════════════════════════════════════════════════════════
-       FRIENDLY & CLEAN DESIGN SYSTEM (Daily Growth OS)
+       SWISS STARK BRUTALISM ENGINE (cabinet.html Inherited Design)
+       Strict Rule: Zero Border-Radius (border-radius: 0px !important;)
+       Strict Rule: Space Grotesk (UI) + JetBrains Mono (Data/Tech)
+       Strict Rule: Monochrome Contrast with Semantic Accents
        ══════════════════════════════════════════════════════════════ */
     *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      border-radius: 0px !important;
       -webkit-tap-highlight-color: transparent;
     }
 
     :root {
       --bg: #09090b;
-      --surface: #121317;
-      --surface-card: #18191f;
-      --surface-subtle: #20222b;
-      --border: #262934;
-      --border-light: #323646;
-      --text: #f4f4f6;
-      --text-muted: #9ba1b0;
-      --text-dim: #656b7c;
+      --bg-card: #18181b;
+      --bg-card-subtle: #27272a;
+      --bg-card-alt: #111113;
+      --border: #27272a;
+      --border-focus: #52525b;
+      --border-light: #3f3f46;
+      --border-subtle: #1f1f23;
+      
+      --white: #ffffff;
+      --text: #ffffff;
+      --text-muted: #a1a1aa;
+      --text-dim: #71717a;
+      --gray: #a1a1aa;
+      --gray-dark: #71717a;
+      
       --green: #10b981;
-      --green-soft: rgba(16, 185, 129, 0.12);
-      --green-border: rgba(16, 185, 129, 0.35);
-      --orange: #f97316;
-      --orange-soft: rgba(249, 115, 22, 0.12);
+      --green-dark: #059669;
+      --green-bg: #064e3b;
+      --green-border: #059669;
+      
+      --red: #ef4444;
+      --red-bg: #450a0a;
+      --red-border: #dc2626;
+      
+      --amber: #f59e0b;
+      --amber-bg: #3b2d07;
+      --amber-border: #d97706;
+      
       --blue: #38bdf8;
-      --blue-soft: rgba(56, 189, 248, 0.12);
-      --font: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      --mono: "JetBrains Mono", monospace;
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-      --radius-full: 9999px;
+      --blue-bg: #082f49;
+      --blue-border: #0284c7;
+      
+      --font: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --mono: 'JetBrains Mono', monospace;
     }
 
     html, body {
@@ -72,10 +89,10 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Container */
+    /* ── APP SHELL & RESPONSIVE DESKTOP FRAME ── */
     .app-wrapper {
       width: 100%;
-      max-width: 540px;
+      max-width: 1240px;
       margin: 0 auto;
       min-height: 100vh;
       display: flex;
@@ -84,102 +101,265 @@
       background: var(--bg);
       border-left: 1px solid var(--border);
       border-right: 1px solid var(--border);
-      padding-bottom: 84px;
+      padding-bottom: 32px;
     }
 
-    @media (min-width: 768px) {
+    @media (max-width: 959px) {
       .app-wrapper {
-        max-width: 680px;
+        max-width: 600px;
+        padding-bottom: 84px; /* Space for mobile bottom dock */
       }
     }
 
-    /* Top Bar */
+    /* ── TOPBAR: SWISS ENGINEERING BAR ── */
     .app-topbar {
       position: sticky;
       top: 0;
       z-index: 50;
-      background: rgba(9, 9, 11, 0.92);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      background: rgba(9, 9, 11, 0.96);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
-      padding: 14px 18px;
+      padding: 12px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 16px;
     }
 
-    .topbar-user {
+    .app-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: -0.02em;
+    }
+
+    .app-brand-badge {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      background: #ffffff;
+      color: #09090b;
+      padding: 2px 7px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Desktop Inline Tab Nav (Hidden on mobile) */
+    .desktop-tabs-bar {
+      display: none;
+      align-items: center;
+      gap: 2px;
+    }
+
+    @media (min-width: 960px) {
+      .desktop-tabs-bar {
+        display: flex;
+      }
+    }
+
+    .desktop-tab-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      font-family: var(--mono);
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 7px 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .desktop-tab-btn:hover {
+      color: var(--white);
+      background: var(--bg-card);
+      border-color: var(--border);
+    }
+
+    .desktop-tab-btn.active {
+      color: #09090b;
+      background: #ffffff;
+      border-color: #ffffff;
+    }
+
+    /* Topbar Right Meta */
+    .topbar-right {
       display: flex;
       align-items: center;
       gap: 12px;
     }
 
-    .user-avatar-circle {
-      width: 38px;
-      height: 38px;
-      background: linear-gradient(135deg, #10b981, #059669);
+    .app-user-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--text);
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border);
+      padding: 5px 12px;
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+
+    .app-user-pill:hover {
+      border-color: var(--border-light);
+    }
+
+    .app-user-avatar {
+      width: 24px;
+      height: 24px;
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-light);
       color: #ffffff;
-      font-weight: 700;
-      font-size: 0.95rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: var(--radius-full);
-      box-shadow: 0 2px 10px rgba(16, 185, 129, 0.25);
-    }
-
-    .user-text-meta {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .user-greeting {
-      font-size: 0.96rem;
-      font-weight: 700;
-      color: var(--text);
-      line-height: 1.2;
-    }
-
-    .user-triad-sub {
-      font-size: 0.76rem;
-      color: var(--text-muted);
-      font-weight: 500;
+      font-weight: 800;
+      font-size: 0.72rem;
+      font-family: var(--mono);
     }
 
     .streak-badge-top {
+      background: var(--bg-card-alt);
+      border: 1px solid var(--amber-border);
+      color: var(--amber);
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      font-weight: 800;
+      padding: 5px 10px;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      background: var(--orange-soft);
-      border: 1px solid rgba(249, 115, 22, 0.3);
-      color: #ffedd5;
-      padding: 6px 12px;
-      border-radius: var(--radius-full);
-      font-size: 0.82rem;
-      font-weight: 700;
-      letter-spacing: 0.01em;
-      white-space: nowrap;
-      flex-shrink: 0;
+      gap: 5px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
     }
 
-    /* Content Views */
+    /* ── SECONDARY SUB-HEADER: SLOT & TEST SWITCHER ── */
+    .app-subbar {
+      background: var(--bg-card-alt);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 767px) {
+      .app-subbar {
+        padding: 8px 14px;
+        gap: 8px;
+      }
+      .subbar-slot-info {
+        font-size: 0.7rem;
+        flex-wrap: wrap;
+      }
+      .test-user-switcher {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 2px;
+      }
+    }
+
+    .subbar-slot-info {
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .subbar-slot-tag {
+      background: #18181b;
+      border: 1px solid var(--border);
+      color: var(--white);
+      padding: 2px 7px;
+      font-weight: 700;
+    }
+
+    .test-user-switcher {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .switcher-pill-btn {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      background: var(--bg-card);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 4px 9px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-transform: uppercase;
+    }
+
+    .switcher-pill-btn:hover {
+      color: var(--white);
+      border-color: var(--border-light);
+    }
+
+    .switcher-pill-btn.active {
+      background: #ffffff;
+      color: #09090b;
+      border-color: #ffffff;
+    }
+
+    /* ── CONTENT PANELS ── */
     .view-panel {
       display: none;
-      padding: 16px 18px;
+      padding: 20px;
       flex-direction: column;
-      gap: 16px;
+      gap: 20px;
     }
 
     .view-panel.active {
       display: flex;
     }
 
-    /* Friendly Card Component */
+    /* ── DESKTOP COCKPIT 2-COLUMN GRID ── */
+    .cockpit-desktop-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 100%;
+    }
+
+    @media (min-width: 960px) {
+      .cockpit-desktop-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.15fr;
+        gap: 24px;
+        align-items: start;
+      }
+    }
+
+    .cockpit-col-left, .cockpit-col-right {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 100%;
+    }
+
+    /* ── CARDS (SWISS STARK SPEC) ── */
     .card {
-      background: var(--surface);
+      background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 20px;
+      padding: 22px;
       display: flex;
       flex-direction: column;
       gap: 16px;
@@ -190,33 +370,39 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+      margin-bottom: 4px;
     }
 
     .card-title-main {
-      font-size: 1.05rem;
+      font-family: var(--mono);
+      font-size: 0.82rem;
       font-weight: 700;
-      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--white);
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
     .card-badge-soft {
-      font-size: 0.75rem;
-      font-weight: 600;
-      padding: 3px 8px;
-      border-radius: var(--radius-full);
-      background: var(--surface-subtle);
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      background: var(--bg-card-subtle);
       color: var(--text-muted);
-      border: 1px solid var(--border);
+      border: 1px solid var(--border-light);
+      text-transform: uppercase;
     }
 
-    /* Meeting Card Elements */
+    /* ── MEETING SLOT BANNER ── */
     .meeting-slot-banner {
-      background: var(--surface-card);
+      background: var(--bg-card-alt);
       border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 14px 16px;
+      padding: 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -229,80 +415,342 @@
     }
 
     .meeting-time-label {
-      font-size: 0.74rem;
+      font-family: var(--mono);
+      font-size: 0.7rem;
       color: var(--text-muted);
       text-transform: uppercase;
-      font-weight: 600;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.05em;
+      font-weight: 700;
     }
 
     .meeting-time-val {
-      font-size: 1.15rem;
+      font-family: var(--mono);
+      font-size: 1.35rem;
       font-weight: 800;
       color: #ffffff;
-      font-family: var(--font);
+      letter-spacing: -0.02em;
     }
 
     .meeting-status-pill {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      font-size: 0.78rem;
-      font-weight: 600;
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      font-weight: 700;
+      text-transform: uppercase;
       padding: 4px 10px;
-      border-radius: var(--radius-full);
       border: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.05);
+      background: var(--bg-card);
       color: var(--text-muted);
-      transition: all 0.2s ease;
     }
 
     .meeting-status-pill.idle {
-      background: rgba(255, 255, 255, 0.05);
+      background: var(--bg-card);
       color: var(--text-muted);
       border-color: var(--border);
-    }
-    .meeting-status-pill.idle .status-dot-pulse {
-      background: var(--text-dim);
-      box-shadow: none;
-      animation: none;
     }
 
     .meeting-status-pill.live {
       color: var(--green);
-      background: var(--green-soft);
+      background: var(--green-bg);
       border-color: var(--green-border);
-    }
-    .meeting-status-pill.live .status-dot-pulse {
-      background: var(--green);
-      box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.4);
-      animation: pulse 1.4s infinite;
     }
 
     .status-dot-pulse {
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       background: var(--text-dim);
-      border-radius: 50%;
-      transition: all 0.2s ease;
     }
 
-    /* Triad Member List */
-    .members-row-list {
+    .meeting-status-pill.live .status-dot-pulse {
+      background: var(--green);
+      box-shadow: 0 0 6px rgba(16, 185, 129, 0.7);
+    }
+
+    /* ── PRIMARY CTA BUTTON: CONNECT / ATTEND ── */
+    .btn-call-connect {
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       gap: 10px;
+      width: 100%;
+      background: #ffffff;
+      color: #09090b;
+      font-family: var(--mono);
+      font-weight: 800;
+      font-size: 0.92rem;
+      padding: 16px;
+      border: 1px solid #ffffff;
+      text-decoration: none;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      transition: all 0.15s ease;
     }
 
-    .member-item-friendly {
-      background: var(--surface-card);
+    .btn-call-connect:hover {
+      background: #e4e4e7;
+    }
+
+    .btn-call-connect.in-call {
+      background: var(--red-bg) !important;
+      color: #fca5a5 !important;
+      border-color: var(--red-border) !important;
+    }
+
+    .btn-checkin-action {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      background: var(--bg-card-alt);
+      color: var(--text);
+      font-family: var(--mono);
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 14px;
       border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 12px 14px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      transition: all 0.15s ease;
+    }
+
+    .btn-checkin-action:hover {
+      background: var(--bg-card-subtle);
+      border-color: var(--border-light);
+    }
+
+    .btn-checkin-action.checked {
+      background: var(--green-bg);
+      border-color: var(--green-border);
+      color: #34d399;
+      pointer-events: none;
+    }
+
+    .async-link-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      transition: border-color 0.2s;
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      color: var(--text-dim);
+      padding-top: 4px;
+    }
+
+    .async-link-row button {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      text-decoration: underline;
+      font-family: var(--mono);
+      font-size: 0.74rem;
+    }
+
+    /* ── WEBRTC MESH VIDEO BOX ── */
+    .webrtc-call-box {
+      background: #09090b;
+      border: 1px solid var(--border-light);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .webrtc-call-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+    }
+
+    .webrtc-call-title {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .webrtc-timer-sync-pill {
+      background: #18181b;
+      border: 1px solid var(--border);
+      color: var(--green);
+      padding: 2px 6px;
+      font-size: 0.7rem;
+    }
+
+    .webrtc-ctrl-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .webrtc-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--white);
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 6px 10px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      text-transform: uppercase;
+    }
+
+    .webrtc-btn:hover {
+      background: var(--bg-card-subtle);
+    }
+
+    .webrtc-btn.hangup-red {
+      background: var(--red-bg);
+      border-color: var(--red-border);
+      color: #fca5a5;
+    }
+
+    .webrtc-video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+    }
+
+    .webrtc-video-slot {
+      position: relative;
+      background: #111113;
+      border: 1px solid var(--border);
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .webrtc-video-stream {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .webrtc-video-stream.mirrored {
+      transform: scaleX(-1);
+    }
+
+    .webrtc-avatar-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .av-circle {
+      width: 44px;
+      height: 44px;
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-light);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-weight: 800;
+      font-size: 1.1rem;
+    }
+
+    .av-name {
+      font-family: var(--font);
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .av-status {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--text-dim);
+    }
+
+    .webrtc-slot-meta {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(9, 9, 11, 0.88);
+      border-top: 1px solid var(--border);
+      padding: 4px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+    }
+
+    .webrtc-slot-name {
+      color: var(--white);
+      font-weight: 700;
+    }
+
+    .slot-local-quick-controls {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      z-index: 10;
+      display: flex;
+      gap: 4px;
+    }
+
+    .slot-quick-btn {
+      background: rgba(9, 9, 11, 0.8);
+      border: 1px solid var(--border);
+      color: #ffffff;
+      font-size: 0.72rem;
+      padding: 3px 6px;
+      cursor: pointer;
+    }
+
+    .webrtc-action-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border);
+      padding-top: 10px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .webrtc-call-footer-note {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--text-dim);
+    }
+
+    /* ── MEMBERS LIST (SWISS SPEC) ── */
+    .members-row-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .member-item-friendly {
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      transition: border-color 0.15s;
     }
 
     .member-item-friendly:hover {
@@ -316,17 +764,17 @@
     }
 
     .member-avatar-box {
-      width: 40px;
-      height: 40px;
-      border-radius: var(--radius-md);
-      background: var(--surface-subtle);
+      width: 36px;
+      height: 36px;
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-light);
       color: #ffffff;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 700;
-      font-size: 0.95rem;
-      border: 1px solid var(--border);
+      font-family: var(--mono);
+      font-weight: 800;
+      font-size: 0.85rem;
       flex-shrink: 0;
     }
 
@@ -336,180 +784,86 @@
     }
 
     .member-name-text {
-      font-size: 0.92rem;
+      font-family: var(--font);
+      font-size: 0.9rem;
       font-weight: 700;
-      color: var(--text);
+      color: var(--white);
       display: flex;
       align-items: center;
       gap: 6px;
     }
 
     .member-niche-text {
-      font-size: 0.78rem;
+      font-family: var(--mono);
+      font-size: 0.74rem;
       color: var(--text-muted);
     }
 
     .member-checkin-badge {
-      font-size: 0.74rem;
-      font-weight: 600;
-      padding: 5px 10px;
-      border-radius: var(--radius-full);
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      white-space: nowrap;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
 
     .member-checkin-badge.attended {
-      background: var(--green-soft);
-      color: var(--green);
+      background: var(--green-bg);
+      color: #34d399;
       border: 1px solid var(--green-border);
     }
 
     .member-checkin-badge.pending {
-      background: var(--surface-subtle);
+      background: var(--bg-card-subtle);
       color: var(--text-dim);
       border: 1px solid var(--border);
     }
 
-    /* Main CTA Buttons */
-    .actions-stack {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .btn-call-connect {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      width: 100%;
-      background: #ffffff;
-      color: #09090b;
-      font-family: var(--font);
-      font-weight: 700;
-      font-size: 1rem;
-      padding: 15px;
-      border-radius: var(--radius-md);
-      border: none;
-      text-decoration: none;
-      cursor: pointer;
-      box-shadow: 0 4px 16px rgba(255, 255, 255, 0.1);
-      transition: all 0.2s ease;
-    }
-
-    .btn-call-connect:hover {
-      background: #f4f4f5;
-      transform: translateY(-1px);
-    }
-
-    .btn-call-connect.in-call {
-      background: rgba(239, 68, 68, 0.16) !important;
-      color: #f87171 !important;
-      border: 1px solid rgba(239, 68, 68, 0.45) !important;
-      box-shadow: none !important;
-    }
-
-    .btn-call-connect.in-call:hover {
-      background: #ef4444 !important;
-      color: #ffffff !important;
-      border-color: #ef4444 !important;
-    }
-
-    .btn-checkin-action {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      width: 100%;
-      background: var(--surface-card);
-      color: var(--text);
-      font-family: var(--font);
-      font-weight: 600;
-      font-size: 0.95rem;
-      padding: 14px;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border-light);
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .btn-checkin-action:hover {
-      background: var(--surface-subtle);
-      border-color: var(--green);
-      color: #ffffff;
-    }
-
-    .btn-checkin-action.checked {
-      background: var(--green-soft);
-      border-color: var(--green);
-      color: var(--green);
-      pointer-events: none;
-    }
-
-    .async-link-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8rem;
-      color: var(--text-dim);
-    }
-
-    .async-link-row button {
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      cursor: pointer;
-      text-decoration: underline;
-      font-size: 0.8rem;
-      font-family: var(--font);
-    }
-
-    /* ══════════════════════════════════════════════════════════════
-       TIMER FACILITATOR (Clean, Calm, Friendly)
-       ══════════════════════════════════════════════════════════════ */
+    /* ── FACILITATOR CONSOLE & 45-MIN TIMER ── */
     .timer-card {
-      background: var(--surface);
+      background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
       padding: 22px;
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 16px;
     }
 
     .speaker-tabs-friendly {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      background: var(--surface-card);
+      gap: 6px;
+      background: var(--bg-card-alt);
       padding: 4px;
-      border-radius: var(--radius-md);
       border: 1px solid var(--border);
     }
 
     .speaker-btn-pill {
       background: transparent;
-      border: none;
+      border: 1px solid transparent;
       color: var(--text-muted);
-      font-family: var(--font);
-      font-size: 0.82rem;
-      font-weight: 600;
-      padding: 10px 6px;
-      border-radius: 10px;
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 8px 4px;
       cursor: pointer;
+      text-align: center;
       transition: all 0.15s ease;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
+    .speaker-btn-pill:hover {
+      color: var(--white);
+    }
+
     .speaker-btn-pill.active {
       background: #ffffff;
       color: #09090b;
-      font-weight: 700;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      border-color: #ffffff;
     }
 
     .timer-hero-area {
@@ -517,60 +871,61 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      padding: 12px 0;
+      padding: 10px 0;
       gap: 6px;
     }
 
     .timer-big-digits {
       font-family: var(--mono);
-      font-size: clamp(3.2rem, 10vw, 4.4rem);
-      font-weight: 700;
-      letter-spacing: -0.02em;
+      font-size: clamp(3.4rem, 11vw, 4.8rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
       color: #ffffff;
       line-height: 1;
     }
 
     .timer-speaker-sub {
-      font-size: 0.88rem;
+      font-family: var(--mono);
+      font-size: 0.82rem;
       color: var(--text-muted);
-      font-weight: 500;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
 
-    /* Phase Timeline */
+    /* 4-Phase Timeline Bar */
     .timeline-segments {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 6px;
+      grid-template-columns: 2fr 3fr 4fr 2fr;
+      gap: 5px;
       width: 100%;
-      margin: 4px 0;
+      margin: 8px 0;
     }
 
     .segment-bar {
-      height: 5px;
-      background: var(--surface-subtle);
-      border-radius: var(--radius-full);
-      transition: background 0.3s;
+      height: 4px;
+      background: var(--bg-card-subtle);
+      transition: background 0.2s;
     }
 
     .segment-bar.active {
       background: var(--green);
-      box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
     }
 
     .segment-bar.done {
-      background: var(--green);
-      opacity: 0.5;
+      background: var(--green-dark);
     }
 
-    /* Friendly Prompt Box */
+    /* Dynamic Live Prompt Box */
     .coach-prompt-card {
-      background: var(--surface-card);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-md);
-      padding: 16px 18px;
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--green);
+      padding: 14px 16px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
     }
 
     .prompt-header-row {
@@ -580,238 +935,249 @@
     }
 
     .prompt-phase-name {
-      font-size: 0.8rem;
-      font-weight: 700;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 800;
       color: var(--green);
       text-transform: uppercase;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.05em;
     }
 
     .prompt-gong-indicator {
-      font-size: 0.74rem;
+      font-family: var(--mono);
+      font-size: 0.7rem;
       color: var(--text-dim);
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
+      text-transform: uppercase;
     }
 
     .prompt-main-question {
-      font-size: 0.96rem;
+      font-size: 0.92rem;
       font-weight: 600;
-      color: var(--text);
+      color: var(--white);
       line-height: 1.45;
     }
 
     .prompt-tip-small {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-muted);
       line-height: 1.4;
       border-top: 1px solid var(--border);
-      padding-top: 8px;
+      padding-top: 6px;
       margin-top: 2px;
+      font-style: italic;
     }
 
-    /* Timer Button Controls */
+    /* Timer Action Controls */
     .timer-ctrls-grid {
       display: grid;
       grid-template-columns: 2fr 1.5fr 1fr;
-      gap: 10px;
+      gap: 8px;
     }
 
     .btn-ctrl {
-      font-family: var(--font);
-      font-size: 0.9rem;
+      font-family: var(--mono);
+      font-size: 0.82rem;
       font-weight: 700;
-      padding: 13px 10px;
-      border-radius: var(--radius-md);
+      padding: 12px 10px;
       border: 1px solid var(--border);
-      background: var(--surface-card);
-      color: var(--text);
+      background: var(--bg-card-alt);
+      color: var(--white);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
-      transition: all 0.15s;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      transition: all 0.15s ease;
     }
 
     .btn-ctrl:hover {
-      background: var(--surface-subtle);
+      background: var(--bg-card-subtle);
       border-color: var(--border-light);
     }
 
     .btn-ctrl.primary {
-      background: var(--green);
-      color: #000000;
-      border-color: var(--green);
+      background: #ffffff;
+      color: #09090b;
+      border-color: #ffffff;
+      font-weight: 800;
     }
 
     .btn-ctrl.primary:hover {
-      background: #059669;
+      background: #e4e4e7;
     }
 
+    /* Voice Stenographer Bar */
+    .voice-recorder-bar {
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border);
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .voice-status-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .voice-rec-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      color: var(--white);
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 8px 14px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-transform: uppercase;
+    }
+
+    .voice-rec-btn.recording {
+      background: var(--red-bg);
+      border-color: var(--red-border);
+      color: #fca5a5;
+      animation: pulse 1.2s infinite;
+    }
+
+    /* Tibetan Gong Sound Bar */
     .sound-check-bar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 4px 4px 0;
-      font-size: 0.78rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
       color: var(--text-dim);
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
     }
 
     .sound-check-btn {
-      background: none;
+      background: transparent;
       border: 1px solid var(--border);
       color: var(--text-muted);
-      font-size: 0.75rem;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 700;
       padding: 4px 10px;
-      border-radius: var(--radius-full);
       cursor: pointer;
-      font-family: var(--font);
-      font-weight: 600;
+      text-transform: uppercase;
     }
 
     .sound-check-btn:hover {
-      color: var(--text);
+      color: var(--white);
       border-color: var(--border-light);
     }
 
-    /* ══════════════════════════════════════════════════════════════
-       VIEW 2: INSIGHT (Friendly Note & Sliders)
-       ══════════════════════════════════════════════════════════════ */
+    /* ── INSIGHT / DIARY FORM ── */
     .input-group {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
     }
 
     .input-label-friendly {
-      font-size: 0.88rem;
-      font-weight: 600;
-      color: var(--text);
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
 
-    .friendly-textarea {
+    .friendly-textarea, .friendly-input {
       width: 100%;
-      background: var(--surface-card);
+      background: #09090b;
       border: 1px solid var(--border);
-      border-radius: var(--radius-md);
       color: #ffffff;
       font-family: var(--font);
       font-size: 0.92rem;
-      padding: 14px;
-      resize: vertical;
-      min-height: 80px;
+      padding: 12px 14px;
       outline: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.15s ease;
     }
 
     .friendly-textarea:focus, .friendly-input:focus {
-      border-color: var(--green);
+      border-color: #ffffff;
     }
 
-    .friendly-input {
-      width: 100%;
-      background: var(--surface-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      color: #ffffff;
-      font-family: var(--font);
-      font-size: 0.92rem;
-      padding: 13px 14px;
-      outline: none;
-      transition: border-color 0.2s;
+    .friendly-textarea {
+      min-height: 90px;
+      resize: vertical;
     }
 
     .sliders-box {
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border);
+      padding: 16px;
       display: flex;
       flex-direction: column;
-      gap: 14px;
-      background: var(--surface-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 16px;
+      gap: 12px;
     }
 
     .slider-item {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 4px;
     }
 
     .slider-title-row {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      font-size: 0.84rem;
-      font-weight: 600;
-      color: var(--text);
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--white);
     }
 
     .slider-val-tag {
-      font-family: var(--mono);
-      font-size: 0.84rem;
-      font-weight: 700;
       color: var(--green);
-      background: var(--green-soft);
-      padding: 2px 8px;
-      border-radius: var(--radius-full);
     }
 
     .friendly-range {
-      -webkit-appearance: none;
       width: 100%;
-      height: 6px;
-      background: var(--surface-subtle);
-      border-radius: var(--radius-full);
-      outline: none;
-    }
-
-    .friendly-range::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: var(--green);
+      accent-color: var(--green);
       cursor: pointer;
-      box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
     }
 
     .btn-save-insight {
       width: 100%;
-      background: var(--green);
-      color: #000000;
-      font-family: var(--font);
-      font-weight: 700;
-      font-size: 0.96rem;
-      padding: 15px;
-      border-radius: var(--radius-md);
-      border: none;
+      background: #ffffff;
+      color: #09090b;
+      border: 1px solid #ffffff;
+      padding: 14px;
+      font-family: var(--mono);
+      font-size: 0.88rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: background 0.2s;
+      transition: all 0.15s ease;
     }
 
     .btn-save-insight:hover {
-      background: #059669;
+      background: #e4e4e7;
     }
 
-    /* ══════════════════════════════════════════════════════════════
-       VIEW 3: DYNAMICS (Progress & Notes)
-       ══════════════════════════════════════════════════════════════ */
+    /* ── DYNAMICS & METRICS ── */
     .metrics-summary-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
+      gap: 12px;
     }
 
     .metric-card-mini {
-      background: var(--surface-card);
+      background: var(--bg-card-alt);
       border: 1px solid var(--border);
-      border-radius: var(--radius-md);
       padding: 14px;
       display: flex;
       flex-direction: column;
@@ -819,84 +1185,47 @@
     }
 
     .metric-label {
-      font-size: 0.76rem;
+      font-family: var(--mono);
+      font-size: 0.7rem;
       color: var(--text-muted);
-      font-weight: 500;
+      text-transform: uppercase;
+      font-weight: 700;
     }
 
     .metric-score {
-      font-size: 1.4rem;
-      font-weight: 800;
-      color: #ffffff;
       font-family: var(--mono);
+      font-size: 1.5rem;
+      font-weight: 800;
     }
 
-    .insight-note-card {
-      background: var(--surface-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .note-meta {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 0.76rem;
-      color: var(--text-dim);
-    }
-
-    .note-text {
-      font-size: 0.92rem;
-      color: var(--text);
-      line-height: 1.45;
-    }
-
-    .note-focus-badge {
-      background: var(--surface-subtle);
-      border-radius: var(--radius-sm);
-      padding: 6px 10px;
-      font-size: 0.8rem;
-      color: var(--orange);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-weight: 600;
-    }
-
-    /* ══════════════════════════════════════════════════════════════
-       VIEW 4: TRIAD & RULES
-       ══════════════════════════════════════════════════════════════ */
+    /* Rules in Triad view */
     .rule-item {
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border);
+      padding: 12px 14px;
       display: flex;
       gap: 12px;
       align-items: flex-start;
-      background: var(--surface-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 14px;
     }
 
     .rule-num {
       width: 24px;
       height: 24px;
-      background: var(--surface-subtle);
-      border-radius: 50%;
-      color: var(--green);
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-light);
+      color: #ffffff;
+      font-family: var(--mono);
+      font-weight: 800;
+      font-size: 0.78rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.8rem;
-      font-weight: 700;
       flex-shrink: 0;
     }
 
     .rule-title {
-      font-size: 0.9rem;
       font-weight: 700;
+      font-size: 0.9rem;
       color: #ffffff;
       margin-bottom: 2px;
     }
@@ -904,34 +1233,90 @@
     .rule-desc {
       font-size: 0.82rem;
       color: var(--text-muted);
-      line-height: 1.4;
+      line-height: 1.45;
     }
 
-    /* ══════════════════════════════════════════════════════════════
-       BOTTOM DOCK (Friendly Navigation)
-       ══════════════════════════════════════════════════════════════ */
+    /* ── PROFILE & CABINET VIEW ── */
+    .profile-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border);
+      padding: 14px;
+    }
+
+    .profile-meta-item {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .profile-meta-label {
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .profile-meta-val {
+      color: var(--white);
+      font-weight: 600;
+    }
+
+    .pill-badge {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border: 1px solid var(--border);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* ── PAYWALL SCREEN ── */
+    .paywall-screen {
+      display: none;
+      padding: 48px 24px;
+      text-align: center;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      margin: auto 0;
+    }
+
+    .paywall-lock-icon {
+      font-size: 2.2rem;
+      margin-bottom: 4px;
+    }
+
+    /* ── MOBILE BOTTOM NAVIGATION DOCK ── */
     .app-dock {
       position: fixed;
       bottom: 0;
       left: 50%;
       transform: translateX(-50%);
       width: 100%;
-      max-width: 540px;
+      max-width: 600px;
       z-index: 50;
-      background: rgba(9, 9, 11, 0.94);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      background: rgba(9, 9, 11, 0.96);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       border-top: 1px solid var(--border);
       border-left: 1px solid var(--border);
       border-right: 1px solid var(--border);
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      padding: 8px 6px calc(8px + env(safe-area-inset-bottom, 0px));
+      grid-template-columns: repeat(5, 1fr);
+      padding: 6px 4px calc(6px + env(safe-area-inset-bottom, 0px));
     }
 
-    @media (min-width: 768px) {
+    @media (min-width: 960px) {
       .app-dock {
-        max-width: 680px;
+        display: none !important;
       }
     }
 
@@ -945,469 +1330,32 @@
       border: none;
       color: var(--text-dim);
       padding: 8px 4px;
-      font-family: var(--font);
-      font-size: 0.74rem;
-      font-weight: 600;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
       cursor: pointer;
       transition: all 0.15s ease;
-      border-radius: var(--radius-md);
     }
 
     .dock-tab svg {
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       fill: none;
       stroke: currentColor;
       stroke-width: 2;
-      transition: transform 0.15s ease;
     }
 
     .dock-tab.active {
-      color: #ffffff;
-      background: var(--surface-subtle);
+      color: var(--white);
+      background: var(--bg-card);
+      box-shadow: inset 0 -2px 0 var(--white);
     }
 
-    .dock-tab.active svg {
-      stroke: var(--green);
-      transform: scale(1.05);
-    }
-
-    /* Paywall Friendly Screen */
-    .paywall-screen {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 80vh;
-      padding: 32px 24px;
-      text-align: center;
-      gap: 16px;
-    }
-
-    .paywall-lock-icon {
-      width: 64px;
-      height: 64px;
-      border-radius: var(--radius-lg);
-      background: var(--surface-card);
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.8rem;
-    }
-
-    /* ══════════════════════════════════════════════════════════════
-       NATIVE WEBRTC P2P 3-CAMERA CONFERENCE STYLES (0 ₽, No Login)
-       ══════════════════════════════════════════════════════════════ */
-    .webrtc-call-box {
-      background: #080a0f;
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      margin-bottom: 18px;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
-      animation: fadeIn 0.25s ease-out;
-    }
-
-    .webrtc-call-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 16px;
-      background: var(--surface-card);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .webrtc-call-title {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .pulse-live-indicator {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: #10b981;
-      box-shadow: 0 0 10px #10b981;
-      animation: pulse 1.4s infinite;
-    }
-
-    .webrtc-timer-sync-pill {
-      font-family: var(--mono);
-      font-size: 0.8rem;
-      font-weight: 700;
-      padding: 3px 8px;
-      border-radius: var(--radius-full);
-      background: rgba(16, 185, 129, 0.12);
-      color: var(--green);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      transition: all 0.3s;
-    }
-
-    .webrtc-timer-sync-pill.warning {
-      background: rgba(239, 68, 68, 0.18);
-      color: #ef4444;
-      border-color: rgba(239, 68, 68, 0.45);
-      animation: pulse 1s infinite;
-    }
-
-    /* 3-Video Responsive Grid */
-    .webrtc-video-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      padding: 12px;
-      background: #040508;
-    }
-
-    @media (max-width: 768px) {
-      .webrtc-video-grid {
-        grid-template-columns: 1fr;
-        gap: 8px;
-      }
-    }
-
-    .webrtc-video-slot {
-      position: relative;
-      aspect-ratio: 4 / 3;
-      background: #0c0e14;
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .webrtc-video-stream {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      background: #000;
-    }
-
-    .webrtc-video-stream.mirrored {
-      transform: scaleX(-1);
-    }
-
-    .webrtc-avatar-placeholder {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      background: #0d1017;
-      color: var(--text-dim);
-      z-index: 1;
-    }
-
-    .webrtc-avatar-placeholder .av-circle {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: var(--surface-subtle);
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .webrtc-avatar-placeholder .av-name {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--text-muted);
-    }
-
-    .webrtc-avatar-placeholder .av-status {
-      font-size: 0.7rem;
-      color: var(--text-dim);
-    }
-
-    .webrtc-slot-meta {
-      position: absolute;
-      bottom: 8px;
-      left: 8px;
-      right: 8px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(0, 0, 0, 0.72);
-      backdrop-filter: blur(8px);
-      padding: 4px 10px;
-      border-radius: var(--radius-full);
-      font-size: 0.74rem;
-      color: #ffffff;
-      z-index: 2;
-    }
-
-    .webrtc-slot-name {
-      font-weight: 600;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .webrtc-slot-icons {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    /* Action bar controls */
-    .webrtc-action-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 16px;
-      background: var(--surface-card);
-      border-top: 1px solid var(--border);
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .webrtc-ctrl-group {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .webrtc-btn {
-      background: var(--surface-subtle);
-      border: 1px solid var(--border);
-      color: var(--text);
-      font-size: 0.8rem;
-      font-weight: 600;
-      padding: 7px 12px;
-      border-radius: var(--radius-full);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.15s;
-    }
-
-    .webrtc-btn:hover {
-      border-color: var(--border-light);
-      background: rgba(255, 255, 255, 0.05);
-    }
-
-    .webrtc-btn.muted,
-    .webrtc-btn.off {
-      background: rgba(239, 68, 68, 0.18) !important;
-      color: #f87171 !important;
-      border-color: rgba(239, 68, 68, 0.5) !important;
-    }
-
-    .webrtc-btn.muted:hover,
-    .webrtc-btn.off:hover {
-      background: rgba(239, 68, 68, 0.28) !important;
-      border-color: #ef4444 !important;
-    }
-
-    .webrtc-btn.hangup-red {
-      background: rgba(239, 68, 68, 0.15);
-      color: #f87171;
-      border-color: rgba(239, 68, 68, 0.3);
-    }
-
-    .webrtc-btn.hangup-red:hover {
-      background: #ef4444;
-      color: #ffffff;
-      border-color: #ef4444;
-    }
-
-    .webrtc-btn-pill {
-      padding: 8px 16px;
-      font-size: 0.84rem;
-      font-weight: 600;
-    }
-
-    .slot-local-quick-controls {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      z-index: 10;
-    }
-
-    .slot-quick-btn {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: rgba(13, 16, 23, 0.8);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #ffffff;
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-    }
-
-    .slot-quick-btn:hover {
-      background: rgba(255, 255, 255, 0.25);
-      border-color: rgba(255, 255, 255, 0.5);
-      transform: scale(1.08);
-    }
-
-    .slot-quick-btn.muted,
-    .slot-quick-btn.off {
-      background: #ef4444 !important;
-      border-color: #f87171 !important;
-      color: #ffffff !important;
-      box-shadow: 0 0 12px rgba(239, 68, 68, 0.5) !important;
-    }
-
-    @media (max-width: 640px) {
-      .hide-mobile {
-        display: none !important;
-      }
-      .webrtc-call-header {
-        padding: 10px 12px;
-      }
-      .webrtc-ctrl-group {
-        gap: 6px;
-      }
-      .webrtc-btn {
-        padding: 6px 10px;
-        font-size: 0.78rem;
-      }
-    }
-
-    .webrtc-call-footer-note {
-      font-size: 0.74rem;
-      color: var(--text-dim);
-    }
-
-    /* AI Transcribe Recorder Bar */
-    .voice-recorder-bar {
-      margin-top: 12px;
-      padding: 12px 14px;
-      background: var(--surface-card);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-md);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .voice-rec-btn {
-      background: var(--surface-subtle);
-      border: 1px solid var(--border);
-      color: var(--text);
-      font-size: 0.82rem;
-      font-weight: 700;
-      padding: 9px 14px;
-      border-radius: var(--radius-full);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      white-space: nowrap;
-      transition: all 0.2s;
-    }
-
-    .voice-rec-btn:hover {
-      border-color: var(--green);
-      background: rgba(16, 185, 129, 0.08);
-    }
-
-    .voice-rec-btn.recording {
-      background: rgba(239, 68, 68, 0.15);
-      border-color: #ef4444;
-      color: #f87171;
-      animation: pulse 1.2s infinite;
-    }
-
-    .voice-status-note {
-      font-size: 0.76rem;
-      color: var(--text-muted);
-      line-height: 1.35;
-      flex: 1;
-    }
-
-    /* 45-minute Call Warning Toast Banner (Bottom Snackbar) */
-    .call-warning-toast {
-      position: fixed;
-      bottom: 84px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: calc(100% - 36px);
-      max-width: 400px;
-      z-index: 9999;
-      background: rgba(220, 38, 38, 0.95);
-      color: #ffffff;
-      padding: 12px 18px;
-      border-radius: var(--radius-md);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-      font-size: 0.86rem;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      gap: 10px;
-      backdrop-filter: blur(8px);
-      animation: fadeIn 0.3s ease;
-    }
-
-    .test-user-switcher {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      gap: 6px;
-      margin: 10px 16px 4px 16px;
-      padding: 5px 8px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border);
-      border-radius: 0;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-    .test-user-switcher::-webkit-scrollbar {
-      display: none;
-    }
-    .switcher-pill-btn {
-      flex: 1 0 auto;
-      padding: 6px 12px;
-      font-family: var(--mono);
-      font-size: 0.74rem;
-      font-weight: 600;
-      background: transparent;
-      color: var(--text-dim);
-      border: 1px solid transparent;
-      cursor: pointer;
-      border-radius: 0;
-      transition: all 0.15s ease;
-      white-space: nowrap;
-      text-align: center;
-    }
-    .switcher-pill-btn:hover {
-      color: var(--text-bright);
-      background: rgba(255, 255, 255, 0.06);
-    }
-    .switcher-pill-btn.active {
-      background: var(--surface-hover);
-      color: var(--text-bright);
-      border-color: var(--border-light);
-      box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
     }
   </style>
 </head>
@@ -1415,251 +1363,324 @@
 
   <div class="app-wrapper">
 
-    <!-- TOPBAR -->
+    <!-- ── TOPBAR ── -->
     <header class="app-topbar">
-      <div class="topbar-user">
-        <div class="user-avatar-circle" id="user-avatar-initial">М</div>
-        <div class="user-text-meta">
-          <div class="user-greeting" id="user-greeting-name">Доброе утро, Михаил 👋</div>
-          <div class="user-triad-sub" id="user-triad-header-label">Тройка №01 · Созвон в&nbsp;09:30 МСК</div>
-        </div>
+      <div class="app-brand">
+        <span>ТРИАДЫ РОСТА</span>
+        <span class="app-brand-badge">PWA OS</span>
       </div>
 
-      <div class="streak-badge-top" id="top-streak-badge">
-        <span>🔥</span>
-        <span id="streak-counter-top">1 / 21 день</span>
+      <!-- Desktop Inline Navigation Bar (Inherited from cabinet.html) -->
+      <nav class="desktop-tabs-bar" role="tablist">
+        <button class="desktop-tab-btn active" id="desk-tab-btn-cockpit" onclick="switchView('cockpit')">
+          <span>⏱ Дейлик</span>
+        </button>
+        <button class="desktop-tab-btn" id="desk-tab-btn-insight" onclick="switchView('insight')">
+          <span>📝 Инсайт</span>
+        </button>
+        <button class="desktop-tab-btn" id="desk-tab-btn-dynamics" onclick="switchView('dynamics')">
+          <span>📈 Динамика</span>
+        </button>
+        <button class="desktop-tab-btn" id="desk-tab-btn-leaderboard" onclick="switchView('leaderboard')">
+          <span>👥 Тройка</span>
+        </button>
+        <button class="desktop-tab-btn" id="desk-tab-btn-profile" onclick="switchView('profile')">
+          <span>👤 Кабинет</span>
+        </button>
+      </nav>
+
+      <div class="topbar-right">
+        <div class="app-user-pill" id="user-pill" onclick="switchView('profile')" title="Открыть профиль и кабинет">
+          <div class="app-user-avatar" id="user-avatar-initial">М</div>
+          <span id="user-greeting-name" style="font-weight:700;">Михаил</span>
+          <span style="color:var(--green); font-size:0.7rem;">●</span>
+        </div>
+
+        <div class="streak-badge-top" id="top-streak-badge">
+          <span>🔥</span>
+          <span id="streak-counter-top">25 ДНЕЙ</span>
+        </div>
       </div>
     </header>
 
-    <!-- TEST MEMBER SWITCHER (Михаил / @lookatshow / @Ksudamzy / Кастом) -->
-    <div class="test-user-switcher">
-      <span style="font-size:0.72rem; color:var(--text-dim); font-family:var(--mono); margin-right:4px;">👤 Вход:</span>
-      <button type="button" class="switcher-pill-btn active" id="btn-switch-michael" onclick="switchActiveUser('michael_sage')">Михаил 👑</button>
-      <button type="button" class="switcher-pill-btn" id="btn-switch-lookatshow" onclick="switchActiveUser('lookatshow')">Дмитрий</button>
-      <button type="button" class="switcher-pill-btn" id="btn-switch-ksudamzy" onclick="switchActiveUser('ksudamzy')">@Ksudamzy</button>
-      <button type="button" class="switcher-pill-btn" id="btn-switch-custom" onclick="switchActiveUser('prompt_custom')">🔍 Другой...</button>
+    <!-- ── SUBBAR: BREADCRUMB & MEMBER SWITCHER ── -->
+    <div class="app-subbar">
+      <div class="subbar-slot-info">
+        <span class="subbar-slot-tag" id="user-triad-header-label">// ТРОЙКА №01 // СКОРОСТЬ</span>
+        <span>• Слот созвона: 09:30 – 10:15 МСК • Регламент 45 мин</span>
+      </div>
+
+      <!-- Quick Switcher between triad members -->
+      <div class="test-user-switcher">
+        <span style="font-size:0.7rem; color:var(--text-dim); font-family:var(--mono); margin-right:2px;">Вход:</span>
+        <button type="button" class="switcher-pill-btn active" id="btn-switch-michael" onclick="switchActiveUser('michael_sage')">Михаил 👑</button>
+        <button type="button" class="switcher-pill-btn" id="btn-switch-lookatshow" onclick="switchActiveUser('lookatshow')">Дмитрий</button>
+        <button type="button" class="switcher-pill-btn" id="btn-switch-ksudamzy" onclick="switchActiveUser('ksudamzy')">Ксения</button>
+        <button type="button" class="switcher-pill-btn" id="btn-switch-custom" onclick="switchActiveUser('prompt_custom')">+ Другой</button>
+      </div>
     </div>
 
-    <!-- PAYWALL SCREEN (If not subscribed) -->
+    <!-- ── PAYWALL SCREEN (If not subscribed) ── -->
     <div id="paywall-view" class="paywall-screen">
-      <div class="paywall-lock-icon">🔒</div>
-      <h1 style="font-size:1.4rem; font-weight:800; line-height:1.3;">
-        Закрытый клубный доступ
+      <div class="app-brand-badge" style="display:inline-block; margin-bottom:8px;">🔒 ЗАКРЫТЫЙ РЕЗИДЕНТСКИЙ ДОСТУП</div>
+      <h1 style="font-size:1.6rem; font-weight:800; line-height:1.2; letter-spacing:-0.02em;">
+        Закрытый доступ к&nbsp;Триадам Роста
       </h1>
-      <p style="font-size:0.92rem; color:var(--text-muted); max-width:380px;">
-        Для&nbsp;участия в&nbsp;тройке, работы с&nbsp;таймером и&nbsp;фиксации инсайтов оформите ежемесячную подписку в&nbsp;Tribute.
+      <p style="font-size:0.92rem; color:var(--text-muted); max-width:420px; line-height:1.5;">
+        Для&nbsp;участия в&nbsp;утренних созвонах тройки, работы с&nbsp;таймером и&nbsp;фиксации инсайтов оформите официальную ежемесячную подписку.
       </p>
       
-      <a href="https://web.tribute.tg/s/16oh" target="_blank" class="btn-call-connect" style="margin-top:8px; max-width:340px;">
-        Оформить подписку за&nbsp;5 990 ₽ ↗
+      <a href="/daily/#join" class="btn-call-connect" style="margin-top:8px; max-width:380px; text-decoration:none;">
+        Оформить подписку за&nbsp;5 990 ₽/мес 💳
       </a>
 
-      <button onclick="bypassForFounder()" style="background:transparent; border:none; color:var(--text-dim); font-size:0.78rem; text-decoration:underline; cursor:pointer; margin-top:12px;">
-        Вход основателя (Michael_Sage)
+      <div style="font-size:0.75rem; color:var(--text-dim); margin-top:6px; font-family:var(--mono);">
+        Банковский интернет-эквайринг АО «ТОЧКА» • Кассовые чеки 54-ФЗ
+      </div>
+
+      <button onclick="bypassForFounder()" style="background:transparent; border:none; color:var(--text-dim); font-size:0.76rem; text-decoration:underline; cursor:pointer; margin-top:12px; font-family:var(--mono);">
+        [Вход основателя: Michael_Sage]
       </button>
     </div>
 
-    <!-- MAIN APP VIEWS -->
+    <!-- ── MAIN APP VIEWS ── -->
     <main id="app-content">
 
       <!-- ══════════════════════════════════════════════════════════════
-           VIEW 1: ДЕЙЛИК (Созвон, Тройка и Таймер)
+           VIEW 1: ДЕЙЛИК (Двухколоночный Cockpit на десктопе)
            ══════════════════════════════════════════════════════════════ -->
       <div id="view-cockpit" class="view-panel active">
 
-        <!-- Нативная видеосвязь WebRTC (0 ₽, без сторонней регистрации) -->
-        <div id="webrtc-call-box" class="webrtc-call-box" style="display:none;">
-          <div class="webrtc-call-header">
-            <div class="webrtc-call-title">
-              <span class="pulse-live-indicator"></span>
-              <span id="webrtc-room-badge">Комната: Тройка #01</span>
-              <span class="webrtc-timer-sync-pill" id="webrtc-time-remaining">45:00</span>
-            </div>
-            <div class="webrtc-ctrl-group">
-              <button type="button" class="webrtc-btn" id="btn-header-mic" onclick="toggleWebrtcMic()" title="Вкл / Выкл микрофон">
-                <span id="header-mic-icon">🎙</span>
-                <span class="hide-mobile" id="header-mic-text">Микрофон</span>
-              </button>
-              <button type="button" class="webrtc-btn" id="btn-header-cam" onclick="toggleWebrtcCam()" title="Вкл / Выкл камеру">
-                <span id="header-cam-icon">📷</span>
-                <span class="hide-mobile" id="header-cam-text">Камера</span>
-              </button>
-              <button type="button" class="webrtc-btn" onclick="toggleWebrtcFullscreen()" title="Во весь экран">⛶ <span class="hide-mobile">Экран</span></button>
-              <button type="button" class="webrtc-btn hangup-red" onclick="closeWebrtcCall(true)" title="Завершить созвон">✕ <span class="hide-mobile">Выйти</span></button>
-            </div>
-          </div>
+        <div class="cockpit-desktop-grid">
 
-          <!-- 3-Camera Grid -->
-          <div class="webrtc-video-grid" id="webrtc-video-grid">
-            <!-- Slot 1: You (Local User) -->
-            <div class="webrtc-video-slot" id="slot-local">
-              <div class="slot-local-quick-controls">
-                <button type="button" class="slot-quick-btn" id="btn-slot-mic" onclick="toggleWebrtcMic()" title="Вкл / Выкл микрофон">🎙</button>
-                <button type="button" class="slot-quick-btn" id="btn-slot-cam" onclick="toggleWebrtcCam()" title="Вкл / Выкл камеру">📷</button>
+          <!-- ── LEFT COLUMN: ВКС, СТАТУС И ТРОЙКА ── -->
+          <div class="cockpit-col-left">
+
+            <!-- Нативная видеосвязь WebRTC (0 ₽, без сторонней регистрации) -->
+            <div id="webrtc-call-box" class="webrtc-call-box" style="display:none;">
+              <div class="webrtc-call-header">
+                <div class="webrtc-call-title">
+                  <span class="status-dot-pulse" style="background:var(--green);"></span>
+                  <span id="webrtc-room-badge">// КОМНАТА: ТРОЙКА #01</span>
+                  <span class="webrtc-timer-sync-pill" id="webrtc-time-remaining">45:00</span>
+                </div>
+                <div class="webrtc-ctrl-group">
+                  <button type="button" class="webrtc-btn" id="btn-header-mic" onclick="toggleWebrtcMic()" title="Вкл / Выкл микрофон">
+                    <span id="header-mic-icon">🎙</span>
+                    <span id="header-mic-text">Микрофон</span>
+                  </button>
+                  <button type="button" class="webrtc-btn" id="btn-header-cam" onclick="toggleWebrtcCam()" title="Вкл / Выкл камеру">
+                    <span id="header-cam-icon">📷</span>
+                    <span id="header-cam-text">Камера</span>
+                  </button>
+                  <button type="button" class="webrtc-btn" onclick="toggleWebrtcFullscreen()" title="Во весь экран">⛶ Экран</button>
+                  <button type="button" class="webrtc-btn hangup-red" onclick="closeWebrtcCall(true)" title="Завершить созвон">✕ Выйти</button>
+                </div>
               </div>
-              <video id="webrtc-video-local" autoplay muted playsinline class="webrtc-video-stream mirrored"></video>
-              <div id="placeholder-local" class="webrtc-avatar-placeholder" style="display:none;">
-                <div class="av-circle" id="av-circle-local">М</div>
-                <div class="av-name" id="av-name-local">Камера выключена</div>
+
+              <!-- 3-Camera Grid -->
+              <div class="webrtc-video-grid" id="webrtc-video-grid">
+                <!-- Slot 1: You (Local User) -->
+                <div class="webrtc-video-slot" id="slot-local">
+                  <div class="slot-local-quick-controls">
+                    <button type="button" class="slot-quick-btn" id="btn-slot-mic" onclick="toggleWebrtcMic()" title="Вкл / Выкл микрофон">🎙</button>
+                    <button type="button" class="slot-quick-btn" id="btn-slot-cam" onclick="toggleWebrtcCam()" title="Вкл / Выкл камеру">📷</button>
+                  </div>
+                  <video id="webrtc-video-local" autoplay muted playsinline class="webrtc-video-stream mirrored"></video>
+                  <div id="placeholder-local" class="webrtc-avatar-placeholder" style="display:none;">
+                    <div class="av-circle" id="av-circle-local">М</div>
+                    <div class="av-name" id="av-name-local">Камера выключена</div>
+                  </div>
+                  <div class="webrtc-slot-meta">
+                    <span class="webrtc-slot-name" id="label-name-local">Михаил Пузырёв 👑 (Вы)</span>
+                    <div class="webrtc-slot-icons">
+                      <span id="mic-icon-local" title="Микрофон активен" style="cursor:pointer;" onclick="toggleWebrtcMic()">🎙</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slot 2: Peer 1 -->
+                <div class="webrtc-video-slot" id="slot-peer-1">
+                  <video id="webrtc-video-peer-1" autoplay playsinline class="webrtc-video-stream" style="display:none;"></video>
+                  <div id="placeholder-peer-1" class="webrtc-avatar-placeholder">
+                    <div class="av-circle" id="av-circle-peer-1">Д</div>
+                    <div class="av-name" id="av-name-peer-1">Дмитрий</div>
+                    <div class="av-status" id="av-status-peer-1">Ожидание подключения...</div>
+                  </div>
+                  <div class="webrtc-slot-meta">
+                    <span class="webrtc-slot-name" id="label-name-peer-1">Дмитрий</span>
+                    <div class="webrtc-slot-icons">
+                      <span id="mic-icon-peer-1">🎙</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slot 3: Peer 2 -->
+                <div class="webrtc-video-slot" id="slot-peer-2">
+                  <video id="webrtc-video-peer-2" autoplay playsinline class="webrtc-video-stream" style="display:none;"></video>
+                  <div id="placeholder-peer-2" class="webrtc-avatar-placeholder">
+                    <div class="av-circle" id="av-circle-peer-2">К</div>
+                    <div class="av-name" id="av-name-peer-2">Ксения</div>
+                    <div class="av-status" id="av-status-peer-2">Ожидание подключения...</div>
+                  </div>
+                  <div class="webrtc-slot-meta">
+                    <span class="webrtc-slot-name" id="label-name-peer-2">Ксения</span>
+                    <div class="webrtc-slot-icons">
+                      <span id="mic-icon-peer-2">🎙</span>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="webrtc-slot-meta">
-                <span class="webrtc-slot-name" id="label-name-local">Михаил Пузырёв 👑 (Вы)</span>
-                <div class="webrtc-slot-icons">
-                  <span id="mic-icon-local" title="Микрофон активен (нажмите, чтобы выключить)" style="cursor:pointer;" onclick="toggleWebrtcMic()">🎙</span>
+
+              <!-- In-Call Floating Control Bar -->
+              <div class="webrtc-action-bar">
+                <div class="webrtc-ctrl-group">
+                  <button type="button" class="webrtc-btn" id="btn-webrtc-mic" onclick="toggleWebrtcMic()">
+                    <span id="webrtc-mic-icon">🎙</span>
+                    <span id="webrtc-mic-text">Микрофон: Вкл</span>
+                  </button>
+                  <button type="button" class="webrtc-btn" id="btn-webrtc-cam" onclick="toggleWebrtcCam()">
+                    <span id="webrtc-cam-icon">📷</span>
+                    <span id="webrtc-cam-text">Камера: Вкл</span>
+                  </button>
+                </div>
+                <div class="webrtc-call-footer-note">
+                  <span>🔒 Прямой P2P шифрованный канал • Регламент 45 минут</span>
                 </div>
               </div>
             </div>
 
-            <!-- Slot 2: Peer 1 -->
-            <div class="webrtc-video-slot" id="slot-peer-1">
-              <video id="webrtc-video-peer-1" autoplay playsinline class="webrtc-video-stream" style="display:none;"></video>
-              <div id="placeholder-peer-1" class="webrtc-avatar-placeholder">
-                <div class="av-circle" id="av-circle-peer-1">Д</div>
-                <div class="av-name" id="av-name-peer-1">Дмитрий</div>
-                <div class="av-status" id="av-status-peer-1">Ожидание подключения...</div>
+            <!-- Meeting Status & Primary Call Card -->
+            <div class="card">
+              <div class="card-header-clean">
+                <span class="card-title-main">
+                  ● СЕГОДНЯШНИЙ СОЗВОН
+                </span>
+                <span class="meeting-status-pill idle" id="meeting-status-pill-wrap">
+                  <span class="status-dot-pulse"></span>
+                  <span id="meeting-status-text">Готов к&nbsp;подключению</span>
+                </span>
               </div>
-              <div class="webrtc-slot-meta">
-                <span class="webrtc-slot-name" id="label-name-peer-1">Дмитрий</span>
-                <div class="webrtc-slot-icons">
-                  <span id="mic-icon-peer-1">🎙</span>
+
+              <div class="meeting-slot-banner">
+                <div class="meeting-time-box">
+                  <span class="meeting-time-label">Слот утренней синхронизации</span>
+                  <span class="meeting-time-val" id="meeting-slot-time">09:30 МСК</span>
+                </div>
+                <div class="subbar-slot-tag">
+                  РЕГЛАМЕНТ: 45 МИН
                 </div>
               </div>
-            </div>
 
-            <!-- Slot 3: Peer 2 -->
-            <div class="webrtc-video-slot" id="slot-peer-2">
-              <video id="webrtc-video-peer-2" autoplay playsinline class="webrtc-video-stream" style="display:none;"></video>
-              <div id="placeholder-peer-2" class="webrtc-avatar-placeholder">
-                <div class="av-circle" id="av-circle-peer-2">К</div>
-                <div class="av-name" id="av-name-peer-2">Ксения</div>
-                <div class="av-status" id="av-status-peer-2">Ожидание подключения...</div>
+              <!-- Actions -->
+              <div class="actions-stack">
+                <button type="button" class="btn-call-connect" id="btn-call-link" onclick="toggleWebrtcCall()">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="23 7 16 12 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+                  <span id="btn-call-link-text">Подключиться к&nbsp;созвону (ВКС)</span>
+                </button>
+
+                <button type="button" class="btn-checkin-action" id="btn-attendance" onclick="handleAttendanceCheckin()">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span>Я&nbsp;на дейлике (Отметиться)</span>
+                </button>
               </div>
-              <div class="webrtc-slot-meta">
-                <span class="webrtc-slot-name" id="label-name-peer-2">Ксения</span>
-                <div class="webrtc-slot-icons">
-                  <span id="mic-icon-peer-2">🎙</span>
+
+              <!-- Members List inside meeting card -->
+              <div style="border-top: 1px solid var(--border); padding-top: 14px; margin-top: 2px;">
+                <div style="font-family:var(--mono); font-size:0.72rem; color:var(--text-muted); text-transform:uppercase; font-weight:700; margin-bottom:8px;">
+                  Состав тройки #01:
+                </div>
+                <div class="members-row-list" id="members-container">
+                  <!-- Populated by JS -->
                 </div>
               </div>
+
+              <div class="async-link-row">
+                <span>Форс-мажор в&nbsp;бизнесе?</span>
+                <button onclick="handleAsyncCheckin()">Сдать отчёт асинхронно ✈️</button>
+              </div>
             </div>
+
           </div>
 
-          <!-- In-Call Floating Control Bar -->
-          <div class="webrtc-action-bar">
-            <div class="webrtc-ctrl-group">
-              <button type="button" class="webrtc-btn webrtc-btn-pill" id="btn-webrtc-mic" onclick="toggleWebrtcMic()">
-                <span id="webrtc-mic-icon">🎙</span>
-                <span id="webrtc-mic-text">Микрофон: Вкл</span>
-              </button>
-              <button type="button" class="webrtc-btn webrtc-btn-pill" id="btn-webrtc-cam" onclick="toggleWebrtcCam()">
-                <span id="webrtc-cam-icon">📷</span>
-                <span id="webrtc-cam-text">Камера: Вкл</span>
-              </button>
+          <!-- ── RIGHT COLUMN: КОНСОЛЬ ТАЙМЕРА (45 МИНУТ) ── -->
+          <div class="cockpit-col-right">
+
+            <div class="timer-card">
+              <div class="card-header-clean">
+                <span class="card-title-main">
+                  ⏱ ТАЙМЕР СОЗВОНА
+                </span>
+                <span class="card-badge-soft">45 МИНУТ • 3 СЛОТА ПО&nbsp;15М</span>
+              </div>
+
+              <!-- Speaker Tabs -->
+              <div class="speaker-tabs-friendly" id="speaker-tabs-wrapper">
+                <button class="speaker-btn-pill active" id="spk-tab-0" onclick="switchSpeaker(0)">1. Михаил</button>
+                <button class="speaker-btn-pill" id="spk-tab-1" onclick="switchSpeaker(1)">2. Дмитрий</button>
+                <button class="speaker-btn-pill" id="spk-tab-2" onclick="switchSpeaker(2)">3. Ксения</button>
+              </div>
+
+              <!-- Digits & Speaker -->
+              <div class="timer-hero-area">
+                <div class="timer-big-digits" id="timer-clock">15:00</div>
+                <div class="timer-speaker-sub" id="timer-speaker-label">Спикер: Михаил Пузырёв</div>
+                
+                <!-- Phase Segments -->
+                <div class="timeline-segments">
+                  <div class="segment-bar active" id="pbar-0" title="Самочувствие (0-2:30)"></div>
+                  <div class="segment-bar" id="pbar-1" title="Факты (2:30-7:00)"></div>
+                  <div class="segment-bar" id="pbar-2" title="Спарринг (7:00-13:00)"></div>
+                  <div class="segment-bar" id="pbar-3" title="Фокус (13:00-15:00)"></div>
+                </div>
+              </div>
+
+              <!-- Live Prompt Card -->
+              <div class="coach-prompt-card">
+                <div class="prompt-header-row">
+                  <span class="prompt-phase-name" id="prompt-phase-title">1. Ресурс и&nbsp;самочувствие (2-3 мин)</span>
+                  <span class="prompt-gong-indicator">🔔 Гонг активен</span>
+                </div>
+                <div class="prompt-main-question" id="prompt-main-text">
+                  Спикер заземляется и&nbsp;честно называет состояние: сколько спал, уровень батарейки (1–10) и&nbsp;что забирает силы.
+                </div>
+                <div class="prompt-tip-small" id="prompt-example-text">
+                  💡 Подсказка: задачи вторичны по&nbsp;отношению к&nbsp;состоянию. Не&nbsp;переходите к&nbsp;делам, пока не&nbsp;прозвучало честное самочувствие.
+                </div>
+              </div>
+
+              <!-- Controls -->
+              <div class="timer-ctrls-grid">
+                <button class="btn-ctrl primary" id="btn-timer-toggle" onclick="toggleTimer()">
+                  ▶ Начать
+                </button>
+                <button class="btn-ctrl" onclick="nextSpeaker()">
+                  След. ➔
+                </button>
+                <button class="btn-ctrl" onclick="resetTimer()">
+                  ↺ Сброс
+                </button>
+              </div>
+
+              <!-- AI-стенографист (Умная аудиозапись, 0 ₽) -->
+              <div class="voice-recorder-bar">
+                <div class="voice-status-note" id="voice-rec-note">
+                  🎙 <b>AI-стенографист</b>: включите запись во&nbsp;время 15-минутного слота&nbsp;— нейросеть извлечёт инсайт и&nbsp;3 действия.
+                </div>
+                <button type="button" class="voice-rec-btn" id="btn-voice-rec" onclick="toggleVoiceRecording()">
+                  <span id="rec-dot-icon">🎙</span>
+                  <span id="rec-btn-text">Записать мысль</span>
+                </button>
+              </div>
+
+              <div class="sound-check-bar">
+                <span>Тибетский гонг 432 Гц • Автоматический сигнал фаз</span>
+                <button class="sound-check-btn" onclick="playGongSound('single')">🔔 Проверить звук</button>
+              </div>
             </div>
-            <div class="webrtc-call-footer-note">
-              <span>🔒 Прямой P2P шифрованный канал • Регламент 45 минут</span>
-            </div>
-          </div>
-        </div>
 
-        <!-- Meeting Card -->
-        <div class="card">
-          <div class="meeting-slot-banner">
-            <div class="meeting-time-box">
-              <span class="meeting-time-label">Сегодняшний созвон</span>
-              <span class="meeting-time-val" id="meeting-slot-time">09:30 МСК</span>
-            </div>
-            <div class="meeting-status-pill idle">
-              <span class="status-dot-pulse"></span>
-              <span id="meeting-status-text">Готов к подключению</span>
-            </div>
           </div>
 
-
-          <!-- Actions -->
-          <div class="actions-stack">
-            <button type="button" class="btn-call-connect" id="btn-call-link" onclick="toggleWebrtcCall()">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="23 7 16 12 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
-              <span id="btn-call-link-text">Подключиться к&nbsp;созвону (ВКС)</span>
-            </button>
-          </div>
-
-          <div class="async-link-row">
-            <button onclick="handleAsyncCheckin()">Форс-мажор? Сдать отчёт асинхронно ✈️</button>
-          </div>
-        </div>
-
-        <!-- Friendly Timer Card -->
-        <div class="timer-card">
-          <div class="card-header-clean">
-            <span class="card-title-main">
-              ⏱ Таймер созвона
-            </span>
-            <span class="card-badge-soft">45 минут</span>
-          </div>
-
-          <!-- Speaker Tabs -->
-          <div class="speaker-tabs-friendly" id="speaker-tabs-wrapper">
-            <button class="speaker-btn-pill active" id="spk-tab-0" onclick="switchSpeaker(0)">Михаил</button>
-            <button class="speaker-btn-pill" id="spk-tab-1" onclick="switchSpeaker(1)">Дмитрий</button>
-            <button class="speaker-btn-pill" id="spk-tab-2" onclick="switchSpeaker(2)">Ксения</button>
-          </div>
-
-          <!-- Digits & Speaker -->
-          <div class="timer-hero-area">
-            <div class="timer-big-digits" id="timer-clock">15:00</div>
-            <div class="timer-speaker-sub" id="timer-speaker-label">Говорит: Михаил Пузырёв</div>
-            
-            <!-- Phase Segments -->
-            <div class="timeline-segments">
-              <div class="segment-bar active" id="pbar-0" title="Самочувствие (0-2:30)"></div>
-              <div class="segment-bar" id="pbar-1" title="Факты (2:30-7:00)"></div>
-              <div class="segment-bar" id="pbar-2" title="Спарринг (7:00-13:00)"></div>
-              <div class="segment-bar" id="pbar-3" title="Фокус (13:00-15:00)"></div>
-            </div>
-          </div>
-
-          <!-- Friendly Prompt Card -->
-          <div class="coach-prompt-card">
-            <div class="prompt-header-row">
-              <span class="prompt-phase-name" id="prompt-phase-title">1. Ресурс и&nbsp;самочувствие (2-3 мин)</span>
-              <span class="prompt-gong-indicator">🔔 Гонг активен</span>
-            </div>
-            <div class="prompt-main-question" id="prompt-main-text">
-              Спикер заземляется и&nbsp;честно называет состояние: сколько спал, уровень батарейки (1–10) и&nbsp;что забирает силы.
-            </div>
-            <div class="prompt-tip-small" id="prompt-example-text">
-              💡 Подсказка: задачи вторичны по&nbsp;отношению к&nbsp;состоянию. Не&nbsp;переходите к&nbsp;делам, пока не&nbsp;прозвучало честное самочувствие.
-            </div>
-          </div>
-
-          <!-- Controls -->
-          <div class="timer-ctrls-grid">
-            <button class="btn-ctrl primary" id="btn-timer-toggle" onclick="toggleTimer()">
-              ▶ Начать
-            </button>
-            <button class="btn-ctrl" onclick="nextSpeaker()">
-              След. ➔
-            </button>
-            <button class="btn-ctrl" onclick="resetTimer()">
-              ↺
-            </button>
-          </div>
-
-          <!-- AI-стенографист (Умная аудиозапись, 0 ₽) -->
-          <div class="voice-recorder-bar">
-            <div class="voice-status-note" id="voice-rec-note">
-              🎙 <b>AI-стенографист</b>: включите запись во&nbsp;время своего 15-минутного слота&nbsp;— нейросеть извлечёт инсайт и&nbsp;3 действия дня.
-            </div>
-            <button type="button" class="voice-rec-btn" id="btn-voice-rec" onclick="toggleVoiceRecording()">
-              <span id="rec-dot-icon">🎙</span>
-              <span id="rec-btn-text">Записать мысль</span>
-            </button>
-          </div>
-
-          <div class="sound-check-bar">
-            <span>Тибетский гонг 432 Гц • Регламент 45 мин</span>
-            <button class="sound-check-btn" onclick="playGongSound('single')">🔔 Проверить звук</button>
-          </div>
         </div>
 
       </div>
@@ -1670,8 +1691,8 @@
       <div id="view-insight" class="view-panel">
         <div class="card">
           <div class="card-header-clean">
-            <span class="card-title-main">💡 Мысль с&nbsp;дейлика</span>
-            <span class="card-badge-soft">Оцифровка</span>
+            <span class="card-title-main">// ОЦИФРОВКА ИНСАЙТОВ ДНЯ</span>
+            <span class="card-badge-soft">Хроника</span>
           </div>
 
           <div class="input-group">
@@ -1685,7 +1706,9 @@
           </div>
 
           <div class="sliders-box">
-            <span style="font-size:0.86rem; font-weight:700; color:#fff;">Оцените баланс сфер (1 - 10):</span>
+            <div style="font-family:var(--mono); font-size:0.75rem; font-weight:700; color:#fff; text-transform:uppercase;">
+              Баланс ключевых сфер (1 - 10):
+            </div>
 
             <div class="slider-item">
               <div class="slider-title-row">
@@ -1740,8 +1763,8 @@
       <div id="view-dynamics" class="view-panel">
         <div class="card">
           <div class="card-header-clean">
-            <span class="card-title-main">📊 Личная динамика</span>
-            <span class="card-badge-soft">Неделя 36</span>
+            <span class="card-title-main">// ЛИЧНАЯ ДИНАМИКА УЧАСТНИКА</span>
+            <span class="card-badge-soft">Стрик 21 день</span>
           </div>
 
           <div class="metrics-summary-grid">
@@ -1756,11 +1779,11 @@
           </div>
 
           <div style="display:flex; flex-direction:column; gap:8px;">
-            <div style="display:flex; justify-content:space-between; font-size:0.82rem; color:var(--text-muted);">
-              <span>Дисциплина месяца</span>
+            <div style="display:flex; justify-content:space-between; font-family:var(--mono); font-size:0.78rem; color:var(--text-muted);">
+              <span>Дисциплина месяца:</span>
               <strong style="color:var(--text);">25 из&nbsp;25 дейликов (100%)</strong>
             </div>
-            <div style="height:6px; background:var(--surface-subtle); border-radius:var(--radius-full); overflow:hidden;">
+            <div style="height:4px; background:var(--bg-card-subtle); overflow:hidden;">
               <div style="width:100%; height:100%; background:var(--green);"></div>
             </div>
           </div>
@@ -1768,37 +1791,37 @@
 
         <div class="card">
           <div class="card-header-clean">
-            <span class="card-title-main">📜 Недавние инсайты</span>
+            <span class="card-title-main">// ХРОНИКА ПОСЛЕДНИХ ИНСАЙТОВ</span>
           </div>
-          <div id="insights-history-list" style="display:flex; flex-direction:column; gap:12px;">
+          <div id="insights-history-list" style="display:flex; flex-direction:column; gap:10px;">
             <!-- Populated by JS -->
           </div>
         </div>
       </div>
 
       <!-- ══════════════════════════════════════════════════════════════
-           VIEW 4: ТРОЙКА (Партнеры и правила)
+           VIEW 4: ТРОЙКА (Партнеры и регламент)
            ══════════════════════════════════════════════════════════════ -->
       <div id="view-leaderboard" class="view-panel">
         
         <!-- Triad Partners Card -->
         <div class="card">
           <div class="card-header-clean">
-            <span class="card-title-main">👥 Партнеры по&nbsp;тройке</span>
+            <span class="card-title-main">// СОСТАВ ТРОЙКИ РОСТА</span>
             <span class="card-badge-soft">Тройка №01</span>
           </div>
 
-          <div style="display:flex; flex-direction:column; gap:12px;">
+          <div style="display:flex; flex-direction:column; gap:8px;">
             <div class="member-item-friendly">
               <div class="member-left-part">
                 <div class="member-avatar-box">Д</div>
                 <div class="member-details">
-                  <div class="member-name-text">Дмитрий</div>
-                  <div class="member-niche-text">Медиа &amp; Продакшн</div>
+                  <div class="member-name-text">Дмитрий Лукашов</div>
+                  <div class="member-niche-text">Медиа &amp; Продакшн • Слот 2</div>
                 </div>
               </div>
-              <a href="https://t.me/lookatshow" target="_blank" style="color:var(--blue); font-size:0.8rem; font-weight:600; text-decoration:none;">
-                В&nbsp;Telegram ↗
+              <a href="https://t.me/lookatshow" target="_blank" style="color:var(--blue); font-family:var(--mono); font-size:0.75rem; font-weight:700; text-decoration:none; text-transform:uppercase;">
+                Telegram ↗
               </a>
             </div>
 
@@ -1806,37 +1829,37 @@
               <div class="member-left-part">
                 <div class="member-avatar-box">К</div>
                 <div class="member-details">
-                  <div class="member-name-text">Ксения</div>
-                  <div class="member-niche-text">Развитие &amp; Продукт</div>
+                  <div class="member-name-text">Ксения Валикова</div>
+                  <div class="member-niche-text">Развитие &amp; Продукт • Слот 3</div>
                 </div>
               </div>
-              <a href="https://t.me/Ksudamzy" target="_blank" style="color:var(--blue); font-size:0.8rem; font-weight:600; text-decoration:none;">
-                В&nbsp;Telegram ↗
+              <a href="https://t.me/Ksudamzy" target="_blank" style="color:var(--blue); font-family:var(--mono); font-size:0.75rem; font-weight:700; text-decoration:none; text-transform:uppercase;">
+                Telegram ↗
               </a>
             </div>
           </div>
         </div>
 
-        <!-- 3 Friendly Rules Card -->
+        <!-- 3 Strict Rules Card -->
         <div class="card">
           <div class="card-header-clean">
-            <span class="card-title-main">🤝 Правила сильной тройки</span>
+            <span class="card-title-main">// 3 НЕПРЕЛОЖНЫХ ПРАВИЛА ТРОЙКИ</span>
           </div>
 
-          <div style="display:flex; flex-direction:column; gap:10px;">
+          <div style="display:flex; flex-direction:column; gap:8px;">
             <div class="rule-item">
               <div class="rule-num">1</div>
               <div>
                 <div class="rule-title">Пунктуальность секунда в&nbsp;секунду</div>
-                <div class="rule-desc">Начинаем ровно в&nbsp;09:30. 45 минут таймера ценят время каждого предпринимателя.</div>
+                <div class="rule-desc">Начинаем ровно в&nbsp;09:30 МСК. 45 минут таймера ценят рабочее время каждого предпринимателя.</div>
               </div>
             </div>
 
             <div class="rule-item">
               <div class="rule-num">2</div>
               <div>
-                <div class="rule-title">Только личный опыт — без&nbsp;советов</div>
-                <div class="rule-desc">Делимся через Я-сообщения: «у меня такое было, сработало вот это». Без&nbsp;поучений.</div>
+                <div class="rule-title">Только личный опыт — без&nbsp;прямых советов</div>
+                <div class="rule-desc">Делимся через Я-сообщения: «у меня такое было в&nbsp;компании, помогло вот это решение». Без&nbsp;поучений.</div>
               </div>
             </div>
 
@@ -1844,7 +1867,7 @@
               <div class="rule-num">3</div>
               <div>
                 <div class="rule-title">Полная конфиденциальность</div>
-                <div class="rule-desc">Все цифры, затыки и&nbsp;стратегии остаются строго внутри вашей тройки.</div>
+                <div class="rule-desc">Все цифры, затыки, выручка и&nbsp;стратегии остаются строго внутри вашей тройки.</div>
               </div>
             </div>
           </div>
@@ -1853,21 +1876,104 @@
         <!-- Notification Card -->
         <div class="card">
           <div class="card-header-clean">
-            <span class="card-title-main">🔔 Напоминания о&nbsp;дейлике</span>
+            <span class="card-title-main">// PUSH-НАПОМИНАНИЯ О&nbsp;СОЗВОНЕ</span>
           </div>
-          <p style="font-size:0.88rem; color:var(--text-muted); margin:0;">
-            Получайте push-уведомление на&nbsp;телефон за&nbsp;15 минут до&nbsp;старта созвона.
+          <p style="font-size:0.86rem; color:var(--text-muted); margin:0;">
+            Получайте push-уведомление на&nbsp;телефон за&nbsp;15 минут до&nbsp;старта дейлика.
           </p>
           <button class="btn-checkin-action" onclick="enablePushNotifications()">
-            🔔 Включить напоминания
+            🔔 Включить push-напоминания
           </button>
+        </div>
+
+      </div>
+
+      <!-- ══════════════════════════════════════════════════════════════
+           VIEW 5: ПРОФИЛЬ И КАБИНЕТ (ТОЧКА БАНК ЭКВАЙРИНГ)
+           ══════════════════════════════════════════════════════════════ -->
+      <div id="view-profile" class="view-panel">
+        
+        <!-- User Profile Card -->
+        <div class="card">
+          <div class="card-header-clean">
+            <span class="card-title-main">// ЛИЧНЫЙ КАБИНЕТ РЕЗИДЕНТА</span>
+            <span class="card-badge-soft">Участник</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:16px; margin-bottom:12px;">
+            <div class="app-user-avatar" id="prof-avatar" style="width:64px; height:64px; font-size:1.6rem; border:2px solid var(--border-light);">М</div>
+            <div>
+              <div style="font-size:1.35rem; font-weight:800; color:#ffffff; letter-spacing:-0.02em;" id="prof-name">Михаил Пузырёв</div>
+              <div style="font-size:0.82rem; color:var(--text-muted); font-family:var(--mono);" id="prof-email">i@michaelpuzyrev.ru</div>
+            </div>
+          </div>
+
+          <div class="profile-meta-grid">
+            <div class="profile-meta-item">
+              <span class="profile-meta-label">Слот созвона</span>
+              <span class="profile-meta-val" id="prof-slot">09:30 – 10:15 МСК</span>
+            </div>
+            <div class="profile-meta-item">
+              <span class="profile-meta-label">Тройка роста</span>
+              <span class="profile-meta-val" id="prof-triad">Тройка №01</span>
+            </div>
+            <div class="profile-meta-item">
+              <span class="profile-meta-label">Telegram Аккаунт</span>
+              <span class="profile-meta-val" id="prof-tg">@Michael_Sage</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Subscription Management Card -->
+        <div class="card" style="border: 1px solid var(--green);">
+          <div class="card-header-clean">
+            <span class="card-title-main">// ПОДПИСКА И&nbsp;ЭКВАЙРИНГ (ТОЧКА БАНК)</span>
+            <span class="pill-badge" id="sub-status-badge" style="background:var(--green-bg); color:#34d399; border-color:var(--green-border);">● Активна</span>
+          </div>
+
+          <div style="font-size:0.88rem; color:var(--text); line-height:1.5; display:flex; flex-direction:column; gap:8px;">
+            <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border); padding-bottom:6px;">
+              <span style="color:var(--text-muted);">Тариф:</span>
+              <strong style="font-family:var(--mono);">Триады Роста — 5 990 ₽/мес</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border); padding-bottom:6px;">
+              <span style="color:var(--text-muted);">Автопродление:</span>
+              <strong id="sub-auto-renew-label" style="font-family:var(--mono); color:#34d399;">Включено</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border); padding-bottom:6px;">
+              <span style="color:var(--text-muted);">Кассовый чек:</span>
+              <span style="font-family:var(--mono); font-size:0.8rem; color:var(--text-muted);">54-ФЗ (на&nbsp;email)</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; padding-bottom:4px;">
+              <span style="color:var(--text-muted);">Договор-оферта:</span>
+              <a href="/offer#section-4" target="_blank" style="color:var(--blue); font-family:var(--mono); font-size:0.8rem; text-decoration:none;">
+                Раздел 4 (Подписки) ↗
+              </a>
+            </div>
+          </div>
+
+          <button type="button" id="btn-cancel-sub" onclick="openCancelModal()" style="margin-top:10px; background:transparent; border:1px solid var(--border); color:var(--red); font-family:var(--mono); font-size:0.76rem; font-weight:700; text-transform:uppercase; padding:10px 14px; cursor:pointer;">
+            Отменить автопродление подписки
+          </button>
+        </div>
+
+        <!-- Official Support Card -->
+        <div class="card">
+          <div class="card-header-clean">
+            <span class="card-title-main">// СЛУЖБА ПОДДЕРЖКИ И&nbsp;ОСНОВАТЕЛЬ</span>
+          </div>
+          <p style="font-size:0.86rem; color:var(--text-muted); line-height:1.5; margin:0 0 12px 0;">
+            По&nbsp;любым вопросам доступа, смены тройки, расписания созвонов или&nbsp;оплат пишите напрямую основателю платформы:
+          </p>
+          <a href="https://t.me/Michael_Sage" target="_blank" class="btn-call-connect" style="text-decoration:none; padding:14px; font-size:0.86rem; text-align:center;">
+            Написать Михаилу в&nbsp;Telegram (@Michael_Sage) ↗
+          </a>
         </div>
 
       </div>
 
     </main>
 
-    <!-- BOTTOM NAVIGATION DOCK -->
+    <!-- ── BOTTOM NAVIGATION DOCK (Mobile only) ── -->
     <nav class="app-dock">
       <button class="dock-tab active" id="tab-btn-cockpit" onclick="switchView('cockpit')">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
@@ -1888,7 +1994,33 @@
         <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
         <span>Тройка</span>
       </button>
+
+      <button class="dock-tab" id="tab-btn-profile" onclick="switchView('profile')">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        <span>Кабинет</span>
+      </button>
     </nav>
+
+    <!-- ── MODAL: CANCEL SUBSCRIPTION CONFIRMATION ── -->
+    <div id="modal-cancel-sub" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.88); z-index:999; align-items:center; justify-content:center; padding:16px;">
+      <div style="background:#18181b; border:1px solid #27272a; max-width:440px; width:100%; padding:24px;">
+        <div style="font-family:var(--mono); font-size:0.75rem; color:var(--red); font-weight:700; margin-bottom:6px; text-transform:uppercase;">
+          // ОТМЕНА АВТОПРОДЛЕНИЯ
+        </div>
+        <h3 style="margin:0 0 10px 0; font-size:1.2rem; font-weight:800; color:#fff;">Отключить автопродление?</h3>
+        <p style="font-size:0.86rem; color:var(--text-muted); line-height:1.5; margin:0 0 20px 0;">
+          Вы уверены, что&nbsp;хотите отключить автопродление подписки? Следующее списание в&nbsp;размере 5&nbsp;990&nbsp;₽ не&nbsp;произойдёт. Доступ сохранится до&nbsp;конца оплаченного периода.
+        </p>
+        <div style="display:flex; gap:10px;">
+          <button type="button" onclick="confirmCancelSubscription()" style="flex:1; padding:12px; background:var(--red-bg); border:1px solid var(--red-border); color:#fca5a5; font-family:var(--mono); font-size:0.78rem; font-weight:800; text-transform:uppercase; cursor:pointer;">
+            Да, отключить
+          </button>
+          <button type="button" onclick="closeCancelModal()" style="flex:1; padding:12px; background:#27272a; border:1px solid var(--border-light); color:#fff; font-family:var(--mono); font-size:0.78rem; font-weight:700; text-transform:uppercase; cursor:pointer;">
+            Оставить
+          </button>
+        </div>
+      </div>
+    </div>
 
   </div>
 
@@ -2005,12 +2137,35 @@
     
     const PROFILES = {
       'michael_sage': { key: 'michael_sage', telegram_id: 439634804, username: 'Michael_Sage', name: 'Михаил Пузырёв', role: 'captain' },
-      'lookatshow': { key: 'lookatshow', telegram_id: 991001, username: 'lookatshow', name: 'Дмитрий', role: 'member' },
-      'ksudamzy': { key: 'ksudamzy', telegram_id: 991002, username: 'Ksudamzy', name: 'Ксения', role: 'member' }
+      'lookatshow': { key: 'lookatshow', telegram_id: 271162109, username: 'lookatshow', name: 'Дмитрий Лукашов', role: 'member' },
+      'ksudamzy': { key: 'ksudamzy', telegram_id: 525973592, username: 'Ksudamzy', name: 'Ксения Валикова', role: 'member' }
     };
 
-    function resolveUserContext(forcedUserKey = null) {
+    async function resolveUserContext(forcedUserKey = null) {
       const params = new URLSearchParams(window.location.search);
+      const authToken = params.get('auth_token') || params.get('token');
+      if (authToken) {
+        try {
+          const tokenRes = await fetch(`/api/auth/token-login?token=${encodeURIComponent(authToken)}`);
+          const tokenData = await tokenRes.json();
+          if (tokenData && tokenData.ok && tokenData.user) {
+            const u = tokenData.user;
+            const uKey = u.username ? u.username.toLowerCase() : `tg_${u.telegram_id}`;
+            PROFILES[uKey] = {
+              key: uKey,
+              telegram_id: Number(u.telegram_id),
+              username: u.username || '',
+              name: u.name || 'Участник',
+              role: u.role || 'member'
+            };
+            localStorage.setItem('daily_active_user', uKey);
+            forcedUserKey = uKey;
+          }
+        } catch(e) {
+          console.warn('[Token Login error]:', e);
+        }
+      }
+
       const rawUser = (params.get('username') || params.get('user') || params.get('u') || '').toLowerCase().replace('@', '');
       const idParam = Number(params.get('telegram_id') || params.get('id') || 0);
 
@@ -2025,17 +2180,29 @@
       let matchedKey = forcedUserKey;
 
       // 1. Explicit search params (highest URL priority)
-      if (!matchedKey && rawUser) {
-        matchedKey = Object.keys(PROFILES).find(k => k === rawUser || PROFILES[k].username.toLowerCase() === rawUser);
-      }
-      if (!matchedKey && idParam) {
-        matchedKey = Object.keys(PROFILES).find(k => PROFILES[k].telegram_id === idParam);
+      if (!matchedKey && (rawUser || idParam)) {
+        matchedKey = Object.keys(PROFILES).find(k => 
+          (rawUser && (k === rawUser || PROFILES[k].username.toLowerCase() === rawUser)) ||
+          (idParam && (PROFILES[k].telegram_id === idParam || (k === 'lookatshow' && idParam === 991001) || (k === 'ksudamzy' && idParam === 991002)))
+        );
+        if (!matchedKey) {
+          const dynamicName = params.get('name') || rawUser || 'Участник';
+          const dynamicKey = idParam ? `tg_${idParam}` : `user_${rawUser}`;
+          PROFILES[dynamicKey] = {
+            key: dynamicKey,
+            telegram_id: idParam || 0,
+            username: rawUser || '',
+            name: dynamicName,
+            role: 'member'
+          };
+          matchedKey = dynamicKey;
+        }
       }
 
       // 2. Saved active user in localStorage (for test switcher persistence across reloads)
       if (!matchedKey) {
         const saved = localStorage.getItem('daily_active_user');
-        if (saved && (PROFILES[saved] || saved.startsWith('custom_') || saved.startsWith('tg_'))) {
+        if (saved && (PROFILES[saved] || saved.startsWith('custom_') || saved.startsWith('tg_') || saved.startsWith('user_'))) {
           matchedKey = saved;
         }
       }
@@ -2047,7 +2214,7 @@
 
         matchedKey = Object.keys(PROFILES).find(k => 
           (tgUsername && (k === tgUsername || PROFILES[k].username.toLowerCase() === tgUsername)) ||
-          (tgId && PROFILES[k].telegram_id === tgId)
+          (tgId && (PROFILES[k].telegram_id === tgId || (k === 'lookatshow' && tgId === 991001) || (k === 'ksudamzy' && tgId === 991002)))
         );
 
         if (!matchedKey) {
@@ -2088,7 +2255,7 @@
       // Update Topbar and greeting
       const greeting = document.getElementById('user-greeting-name');
       const avatarInit = document.getElementById('user-avatar-initial');
-      if (greeting) greeting.innerText = `Доброе утро, ${prof.name.split(' ')[0]} 👋`;
+      if (greeting) greeting.innerText = prof.name ? prof.name.split(' ')[0] : 'Михаил';
       if (avatarInit) avatarInit.innerText = (prof.name || 'U')[0].toUpperCase();
 
       // Update local slot in WebRTC
@@ -2160,7 +2327,7 @@
         window.history.replaceState({}, '', url.toString());
       }
 
-      resolveUserContext(userKey);
+      await resolveUserContext(userKey);
       await loadCockpitData();
       showCallToast(`👤 Вход выполнен: ${STATE.user.name}`, 2500);
     }
@@ -2174,7 +2341,7 @@
         } catch(e) {}
       }
 
-      resolveUserContext();
+      await resolveUserContext();
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/daily/app/sw.js').catch(e => console.warn('SW err:', e));
       }
@@ -2183,6 +2350,36 @@
     });
 
     async function checkSubscriptionAndLoad() {
+      // 1. Check URL parameters for Tochka Bank redirect or pending subscription
+      const urlParams = new URLSearchParams(window.location.search);
+      const opId = urlParams.get('operationId') || urlParams.get('op_id') || urlParams.get('uuid') || localStorage.getItem('daily_pending_op_id') || '';
+      const pendingEmail = urlParams.get('email') || localStorage.getItem('daily_pending_email') || '';
+      const isSubRedirect = (urlParams.get('subscription') === 'active' || urlParams.get('subscribed') === '1');
+
+      if (opId || pendingEmail || isSubRedirect) {
+        try {
+          const checkUrl = `/api/daily/check-subscription?operationId=${encodeURIComponent(opId)}&email=${encodeURIComponent(pendingEmail)}`;
+          const subRes = await fetch(checkUrl);
+          const subData = await subRes.json();
+          if (subData && subData.ok && (subData.is_subscribed || subData.status === 'Active' || isSubRedirect)) {
+            STATE.user.is_subscribed = true;
+            if (subData.profile) {
+              STATE.user.name = subData.profile.name || subData.profile.first_name || STATE.user.name;
+              STATE.user.email = subData.profile.email || pendingEmail;
+              STATE.user.telegram_id = subData.profile.telegram_id || STATE.user.telegram_id;
+              STATE.user.username = subData.profile.username || STATE.user.username;
+            }
+            if (subData.subscription) {
+              STATE.subscription = subData.subscription;
+            }
+            showCallToast('💳 Подписка активна! Доступ открыт', 3000);
+          }
+        } catch (e) {
+          console.warn('[Check Sub Error]:', e);
+        }
+      }
+
+      // 2. Fallback check for founder / Telegram context
       try {
         const res = await fetch('/api/check-telegram', {
           method: 'POST',
@@ -2192,14 +2389,14 @@
         const data = await res.json();
         
         if (data && data.ok) {
-          STATE.user.is_subscribed = data.is_channel_subscriber || (data.role === 'founder');
+          STATE.user.is_subscribed = STATE.user.is_subscribed || data.is_channel_subscriber || (data.role === 'founder');
         }
       } catch (err) {
-        STATE.user.is_subscribed = true;
+        // network graceful degradation
       }
 
       // Always allow Triad #01 members through without paywall block
-      if ([439634804, 991001, 991002].includes(Number(STATE.user.telegram_id)) ||
+      if ([439634804, 271162109, 525973592, 991001, 991002].includes(Number(STATE.user.telegram_id)) ||
           ['michael_sage', 'lookatshow', 'ksudamzy'].includes((STATE.user.username || '').toLowerCase()) ||
           STATE.user.telegram_id === 439634804) {
         STATE.user.is_subscribed = true;
@@ -2214,6 +2411,7 @@
       document.getElementById('paywall-view').style.display = 'none';
       document.getElementById('app-content').style.display = 'block';
 
+      updateProfileView();
       await loadCockpitData();
     }
 
@@ -2221,7 +2419,90 @@
       STATE.user.is_subscribed = true;
       document.getElementById('paywall-view').style.display = 'none';
       document.getElementById('app-content').style.display = 'block';
+      updateProfileView();
       loadCockpitData();
+    }
+
+    function updateProfileView() {
+      const nameEl = document.getElementById('prof-name');
+      const emailEl = document.getElementById('prof-email');
+      const avatarEl = document.getElementById('prof-avatar');
+      const slotEl = document.getElementById('prof-slot');
+      const triadEl = document.getElementById('prof-triad');
+      const tgEl = document.getElementById('prof-tg');
+      const badgeEl = document.getElementById('sub-status-badge');
+      const renewEl = document.getElementById('sub-auto-renew-label');
+      const cancelBtn = document.getElementById('btn-cancel-sub');
+
+      if (nameEl) nameEl.textContent = STATE.user.name || 'Предприниматель';
+      if (emailEl) emailEl.textContent = STATE.user.email || localStorage.getItem('daily_pending_email') || 'i@michaelpuzyrev.ru';
+      if (avatarEl) avatarEl.textContent = (STATE.user.name || 'М').charAt(0).toUpperCase();
+      if (slotEl) slotEl.textContent = STATE.user.slot || '09:30 – 10:15 МСК';
+      if (triadEl) triadEl.textContent = STATE.triad?.name || 'Тройка №01';
+      if (tgEl) tgEl.textContent = STATE.user.username ? ('@' + STATE.user.username.replace(/^@/, '')) : 'Не привязан';
+
+      const isSub = STATE.user.is_subscribed;
+      if (badgeEl) {
+        if (isSub) {
+          badgeEl.textContent = '● Активна';
+          badgeEl.style.color = '#34d399';
+          badgeEl.style.borderColor = '#059669';
+          badgeEl.style.background = '#064e3b';
+        } else {
+          badgeEl.textContent = '○ Не активна';
+          badgeEl.style.color = '#f87171';
+          badgeEl.style.borderColor = '#dc2626';
+          badgeEl.style.background = '#450a0a';
+        }
+      }
+      if (renewEl) {
+        renewEl.textContent = isSub ? 'Включено' : 'Отключено';
+        renewEl.style.color = isSub ? '#34d399' : '#f87171';
+      }
+      if (cancelBtn) {
+        cancelBtn.style.display = isSub ? 'block' : 'none';
+      }
+    }
+
+    function openCancelModal() {
+      const modal = document.getElementById('modal-cancel-sub');
+      if (modal) modal.style.display = 'flex';
+    }
+
+    function closeCancelModal() {
+      const modal = document.getElementById('modal-cancel-sub');
+      if (modal) modal.style.display = 'none';
+    }
+
+    async function confirmCancelSubscription() {
+      closeCancelModal();
+      const opId = STATE.subscription?.operation_id || localStorage.getItem('daily_pending_op_id') || '';
+      const email = STATE.user?.email || localStorage.getItem('daily_pending_email') || '';
+      const tgId = STATE.user?.telegram_id || 0;
+
+      try {
+        const res = await fetch('/api/daily/cancel-subscription', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ operationId: opId, email, telegram_id: tgId })
+        });
+        const data = await res.json();
+        if (data && data.ok) {
+          showCallToast('✅ Автопродление успешно отключено', 3500);
+          const renewEl = document.getElementById('sub-auto-renew-label');
+          if (renewEl) {
+            renewEl.textContent = 'Отключено';
+            renewEl.style.color = '#f87171';
+          }
+          const cancelBtn = document.getElementById('btn-cancel-sub');
+          if (cancelBtn) cancelBtn.style.display = 'none';
+        } else {
+          alert(data?.error || 'Не удалось отменить подписку. Пожалуйста, напишите основателю в Telegram: @Michael_Sage');
+        }
+      } catch (err) {
+        console.error('[Cancel Sub Error]:', err);
+        alert('Ошибка связи с сервером. Пожалуйста, напишите напрямую в Telegram: @Michael_Sage');
+      }
     }
 
     // ══════════════════════════════════════════════════════════════
@@ -2259,6 +2540,12 @@
         }
       } catch (err) {
         console.warn('[Cockpit Load Notice]:', err);
+        // Default Triad #01 members fallback
+        renderMembers([
+          { telegram_id: 439634804, username: 'Michael_Sage', name: 'Михаил Пузырёв', role: 'captain', niche: 'AI Архитектура & Vibe Coding', has_checked_in: true, checked_in_at: '09:31' },
+          { telegram_id: 271162109, username: 'lookatshow', name: 'Дмитрий Лукашов', role: 'member', niche: 'Медиа & Продакшн', has_checked_in: false },
+          { telegram_id: 525973592, username: 'Ksudamzy', name: 'Ксения Валикова', role: 'member', niche: 'Развитие & Продукт', has_checked_in: false }
+        ]);
       }
     }
 
@@ -3281,13 +3568,19 @@
     // ══════════════════════════════════════════════════════════════
     function switchView(viewName) {
       document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.dock-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.dock-tab, .desktop-tab-btn').forEach(t => t.classList.remove('active'));
 
       const targetView = document.getElementById(`view-${viewName}`);
       const targetBtn = document.getElementById(`tab-btn-${viewName}`);
 
       if (targetView) targetView.classList.add('active');
       if (targetBtn) targetBtn.classList.add('active');
+      const targetDeskBtn = document.getElementById(`desk-tab-btn-${viewName}`);
+      if (targetDeskBtn) targetDeskBtn.classList.add('active');
+
+      if (viewName === 'profile') {
+        updateProfileView();
+      }
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -3307,5 +3600,6 @@
       });
     }
   </script>
+
 </body>
 </html>
